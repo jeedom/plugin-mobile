@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info>
+    <id>mobile</id>
+    <name>Mobile</name>
+    <description>Plugin pour l'application Mobile</description>
+    <icon>fa fa-mobile</icon>
+    <licence>AGPL</licence>
+    <author>Alexandre Orilia</author>
+    <installation>Aucune</installation>
+    <require>1.203</require>
+    <category>programming</category>
+    <version>0.1 Alpha</version>
+</info>
+

@@ -27,7 +27,7 @@ class mobile extends eqLogic {
     /*     * ***********************Methode static*************************** */
 	public static function updatemobile() {
 		log::remove('mobile_update');
-		$cmd = 'sudo apt-get install -y php5-gd; sudo dpkg --configure -a';
+		$cmd = '/bin/bash ' .dirname(__FILE__) . '/../../ressources/install.sh';
 		$cmd .= ' >> '.log::getPathToLog('mobile_update').' 2>&1 &';
 		exec($cmd);
 	}

@@ -25,7 +25,12 @@ class mobile extends eqLogic {
 
 
     /*     * ***********************Methode static*************************** */
-
+	public static function updatemobile() {
+		log::remove('mobile_update');
+		$cmd = 'sudo apt-get install -y php5-gd; sudo dpkg --configure -a';
+		$cmd .= ' >> '.log::getPathToLog('mobile_update').' 2>&1 &';
+		exec($cmd);
+	}
     /*
      * Fonction exécutée automatiquement toutes les minutes par Jeedom
       public static function cron() {

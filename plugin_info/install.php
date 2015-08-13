@@ -19,7 +19,7 @@
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 function mobile_install() {
-    
+    exec('sudo apt-get install -y php5-gd; sudo dpkg --configure -a &');
 }
 
 function mobile_update() {

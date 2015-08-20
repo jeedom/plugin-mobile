@@ -31,6 +31,19 @@ class mobile extends eqLogic {
 		$cmd .= ' >> '.log::getPathToLog('mobile_update').' 2>&1 &';
 		exec($cmd);
 	}
+	
+	public static function json_for_qrcode($id_app,$urlinterne,$urlexterne,$api_jeedom){
+		
+		$request_qrcode = array(
+				'id_app' =>  $id_app,
+				'urlinterne' => $urlinterne,
+				'urlexterne' => $urlexterne,
+				'api_jeedom' => $api_jeedom
+			);
+	
+		$qrcode = json_encode($request_qrcode);
+		return $qrcode;
+	}
     /*
      * Fonction exécutée automatiquement toutes les minutes par Jeedom
       public static function cron() {

@@ -1,9 +1,28 @@
 <?php
+ini_set('display_errors', 1);
 if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
 sendVarToJS('eqType', 'mobile');
+include_file('3rdparty','qrcode/qrlib','php','mobile');
 $eqLogics = eqLogic::byType('mobile');
+// On creer l'adresse interne complete //
+$adresseinterne = config::byKey('internalProtocol').''.config::byKey('internalAddr').':'.config::byKey('internalPort').''.config::byKey('internalComplement');
+
+$api = config::byKey('api');
+
+if(config::byKey('market::allowDNS') == 1){
+	$type_dns = "{{DNS activé}}";
+	$adresseexterne = config::byKey('jeedom::url');
+}else{
+	$type_dns = "{{DNS non activé}}";
+	if(config::byKey('externalAddr') == ''){
+		$adresseexterne = '{{Merci de vérifier vos configurations réseau}}';
+	}else{
+		$adresseexterne = config::byKey('externalProtocol').''.config::byKey('externalAddr').':'.config::byKey('externalPort').''.config::byKey('externalComplement');
+	}
+}
+
 ?>
 
 <div class="row row-overflow">
@@ -36,7 +55,7 @@ foreach ($eqLogics as $eqLogic) {
 foreach ($eqLogics as $eqLogic) {
 	echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >';
 	echo "<center>";
-	echo '<img src="plugins/weather/doc/images/template_icon.png" height="105" width="95" />';
+		echo '<img src="plugins/mobile/doc/images/mobile_icon.png" height="105" width="95" />';
 	echo "</center>";
 	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
 	echo '</div>';
@@ -79,25 +98,53 @@ foreach (object::all() as $object) {
                         <input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>
                     </div>
                 </div>
+                <legend>{{Mobile}}</legend>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">{{template param 1}}</label>
+                    <label class="col-sm-3 control-label">{{Type de Mobile :}}</label>
                     <div class="col-sm-3">
-                        <input type="text" class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="city" placeholder="param1"/>
+                        <select class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="type_mobile">
+                        	<option value="ios">iPhone</option>
+                        	<option value="android">Android</option>
+                        	<option value="windows">Windows</option>
+                        </select>
+                    </div><br /><br />
+                    <label class="col-sm-3 control-label">{{Adresse interne :}}</label>
+                    <div class="col-sm-3">
+                    	<input type="text" class="eqLogicAttr configuration form-control" placeholder="<?php echo $adresseinterne; ?>" DISABLED />
                     </div>
+                    <br /><br />
+                    <label class="col-sm-3 control-label">{{Adresse externe :}}</label>
+                    <div class="col-sm-3">
+                    	<select disabled class="eqLogicAttr configuration form-control"><option><?php echo $type_dns; ?></option></select>
+                    </div>
+                    <div class="col-sm-3">
+                    	<input type="text" class="eqLogicAttr configuration form-control" placeholder="<?php echo $adresseexterne; ?>" DISABLED />
+                    </div>
+                    <br /><br />
+                    <label class="col-sm-3 control-label">{{Votre clé API :}}</label>
+                    <div class="col-sm-3">
+                    	<input type="text" class="eqLogicAttr configuration form-control" placeholder="<?php echo $api; ?>" DISABLED />
+                    </div>
+                    <br /><br />
+                    <center>{{Si vos configurations réseau ne sont pas bonne vous pouvez les changer : Général > Administration > Configuration}}</center>
+                    <br /><br />
+                    <center>
+                    <?php 
+                    	//On creer le QRcode//
+                    	$qrcode = mobile::json_for_qrcode('ID',$adresseinterne,$adresseexterne,$api);
+	                    $filename = dirname(__FILE__) .'/../../3rdparty/qrcode/temp/qrcode.png';
+						$errorCorrectionLevel = 'L';
+						$matrixPointSize = 4;
+						QRcode::png($qrcode, $filename, $errorCorrectionLevel, $matrixPointSize, 2);
+						//On montre le QRCode//
+						$filename = '../plugins/mobile/3rdparty/qrcode/temp/qrcode.png';
+						echo '<img src="'.$filename.'" />';
+	                    
+                    ?>
+                    </center>
                 </div>
             </fieldset>
         </form>
-
-        <legend>{{Mobile}}</legend>
-        <table id="table_cmd" class="table table-bordered table-condensed">
-            <thead>
-                <tr>
-                    <th>{{Nom}}</th><th>{{Type}}</th><th>{{Action}}</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
 
         <form class="form-horizontal">
             <fieldset>

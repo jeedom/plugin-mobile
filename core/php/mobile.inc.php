@@ -17,10 +17,12 @@
 */
 
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
+include_file('3rdparty', 'qrcode/qrlib', 'php','mobile');
 /*
  * Non obligatoire mais peut etre utilise si vous voulez charger en meme tant que votre
  * plugin des librairies externe (ne pas oublier d'adapter plugin_info/info.xml
  * 
  * 
  */
+ 
 ?>

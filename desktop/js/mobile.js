@@ -50,3 +50,158 @@ function addCmdToTable(_cmd) {
     }
     jeedom.cmd.changeType($('#table_cmd tbody tr:last'), init(_cmd.subType));
 }
+
+/* ****** TEST ISS ******** */
+
+$('.bt_saveISSConfig').on('click',function(){
+    var imperihome = {};
+    $('tr.imperihome').each(function(){
+        imperihome[$(this).attr('data-cmd_id')] = $(this).getValues('.imperihomeAttr')[0]
+    });
+    $('tr.imperihomeScenario').each(function(){
+        imperihome['scenario'+$(this).attr('data-scenario_id')] = $(this).getValues('.imperihomeAttr')[0]
+    });
+     $.ajax({// fonction permettant de faire de l'ajax
+            type: "POST", // méthode de transmission des données au fichier php
+            url: "plugins/imperihome/core/ajax/imperihome.ajax.php", // url du fichier php
+            data: {
+                action: "saveISSConfig",
+                config: json_encode(imperihome),
+            },
+            dataType: 'json',
+            error: function (request, status, error) {
+                handleAjaxError(request, status, error);
+            },
+            success: function (data) { // si l'appel a bien fonctionné
+            if (data.state != 'ok') {
+                $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                return;
+            }
+            $('#div_alert').showAlert({message: '{{Sauvegarde réalisée avec succès}}', level: 'success'});
+        }
+    });
+});
+
+$('#bt_selectAllISS').on('click', function () {
+    $('.imperihomeAttr').each(function() { //loop through each checkbox
+        this.setValues(true);  //select all checkboxes with class "checkbox1"               
+    });
+});
+
+$('#bt_unselectAllISS').on('click', function () {
+    $('.imperihomeAttr').each(function() { //loop through each checkbox
+        this.setValues(false);  //select all checkboxes with class "checkbox1"               
+    });
+});
+
+$('.bt_newAdvancedDevice').on('click',function(){
+    $('#md_modal').dialog({title: "{{Mode avancé ISS}}"});
+    $('#md_modal').load('index.php?v=d&plugin=imperihome&modal=config.eqISS&ISSeqId=new').dialog('open');
+});
+
+loadConf();
+loadAdvancedConf();
+
+function loadConf(){
+    $.ajax({// fonction permettant de faire de l'ajax
+        type: "POST", // méthode de transmission des données au fichier php
+        url: "plugins/imperihome/core/ajax/imperihome.ajax.php", // url du fichier php
+        data: {
+            action: "loadISSConfig",
+        },
+        dataType: 'json',
+        error: function (request, status, error) {
+            handleAjaxError(request, status, error);
+        },
+        success: function (data) { // si l'appel a bien fonctionné
+            if (data.state != 'ok') {
+                $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                return;
+            }
+            var imperihome = data.result;
+            for(var i in data.result){
+                if(i.indexOf('scenario') != -1){
+                    $('tr.imperihomeScenario[data-scenario_id='+i.replace("scenario", "")+']').setValues(data.result[i],'.imperihomeAttr');
+                }else{
+                    $('tr.imperihome[data-cmd_id='+i+']').setValues(data.result[i],'.imperihomeAttr');
+                }
+            }
+
+            $('.bt_createManualConfig').on('click',function(){
+                $('#md_modal').dialog({title: "{{Mode avancé ISS}}"});
+                $('#md_modal').load('index.php?v=d&plugin=imperihome&modal=config.eqISS&ISSeqId=' + $( this ).data('id')).dialog('open');
+            });
+        }
+    });
+}
+
+function loadAdvancedConf(){
+    $('#cmdListAdvanced tbody')
+        .find('tr')
+        .remove()
+    ;
+
+    $.ajax({// fonction permettant de faire de l'ajax
+        type: "POST", // méthode de transmission des données au fichier php
+        url: "plugins/imperihome/core/ajax/imperihome.ajax.php", // url du fichier php
+        data: {
+            action: "loadAdvancedISSConfig",
+        },
+        dataType: 'json',
+        error: function (request, status, error) {
+            handleAjaxError(request, status, error);
+        },
+        success: function (data) { // si l'appel a bien fonctionné
+            if (data.state != 'ok') {
+                $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                return;
+            }
+
+            for(var i in data.result){
+                var tr = '<tr>';
+                tr += '<td>' + data.result[i].humanName + ' (manual' + data.result[i].id + ')</td>';
+                tr += '<td><span class="label label-info" style="font-size : 1em;">' + data.result[i].type + '</span></td>';
+                tr += '<td><a class="btn btn-danger btn-xs pull-right bt_deleteAdvancedConfig" data-id="' + data.result[i].id + '"><i class="fa fa-minus"></i> Supprimer</a><a class="btn btn-warning btn-xs pull-right bt_editAdvancedConfig" data-id="' + data.result[i].id + '"><i class="fa"></i> Modifier</a></td>';
+                tr += '</tr>';
+                $('#cmdListAdvanced tbody').append(tr);
+            }
+
+            $('.bt_editAdvancedConfig').on('click',function(){
+                $('#md_modal').dialog({title: "{{Mode avancé ISS}}"});
+                $('#md_modal').load('index.php?v=d&plugin=imperihome&modal=config.eqISS&ISSeqId=' + $( this ).data('id')).dialog('open');
+            });
+
+            $('.bt_deleteAdvancedConfig').on('click', function() {
+
+                    bootbox.confirm('<b>Etes-vous sûr de vouloir supprimer cet équipement?</b><br>', function(deviceId){
+                        return function(result) {
+                        if (result) {
+                            $.ajax({// fonction permettant de faire de l'ajax
+                                type: "POST", // méthode de transmission des données au fichier php
+                                url: "plugins/imperihome/core/ajax/imperihome.ajax.php", // url du fichier php
+                                data: {
+                                    action: "deleteAdvancedDevice",
+                                    deviceId: deviceId
+                                },
+                                dataType: 'json',
+                                error: function (request, status, error) {
+                                    handleAjaxError(request, status, error);
+                                },
+                                success: function (data) { // si l'appel a bien fonctionné
+                                    if (data.state != 'ok') {
+                                        $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                                        return;
+                                    }
+                                    
+                                    $('#div_alert').showAlert({message: '{{Suppression réalisée avec succès}}', level: 'success'});
+                                    loadAdvancedConf();
+                                }
+                            });
+                        }
+                    };
+
+                    }($( this ).data('id')));
+            });
+        }
+    });
+}

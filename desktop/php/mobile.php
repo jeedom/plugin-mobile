@@ -1,15 +1,17 @@
 <?php
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
 sendVarToJS('eqType', 'mobile');
 include_file('3rdparty','qrcode/qrlib','php','mobile');
+$invisible = null;
 $eqLogics = eqLogic::byType('mobile');
 // On creer l'adresse interne complete //
 $adresseinterne = config::byKey('internalProtocol').''.config::byKey('internalAddr').':'.config::byKey('internalPort').''.config::byKey('internalComplement');
 
 $api = config::byKey('api');
+$utilisateur = config::byKey('market::username');
 
 if(config::byKey('market::allowDNS') == 1){
 	$type_dns = "{{DNS activé}}";
@@ -18,8 +20,10 @@ if(config::byKey('market::allowDNS') == 1){
 	$type_dns = "{{DNS non activé}}";
 	if(config::byKey('externalAddr') == ''){
 		$adresseexterne = '{{Merci de vérifier vos configurations réseau}}';
+		$invisible = 1;
 	}else{
 		$adresseexterne = config::byKey('externalProtocol').''.config::byKey('externalAddr').':'.config::byKey('externalPort').''.config::byKey('externalComplement');
+		$invisible = 0;
 	}
 }
 
@@ -126,12 +130,20 @@ foreach (object::all() as $object) {
                     	<input type="text" class="eqLogicAttr configuration form-control" placeholder="<?php echo $api; ?>" DISABLED />
                     </div>
                     <br /><br />
+                     <label class="col-sm-3 control-label">{{Nom d'utilisateur :}}</label>
+                    <div class="col-sm-3">
+                    	<input type="text" class="eqLogicAttr configuration form-control" placeholder="<?php echo $utilisateur; ?>" DISABLED />
+                    </div>
+                    <br /><br />
                     <center>{{Si vos configurations réseau ne sont pas bonne vous pouvez les changer : Général > Administration > Configuration}}</center>
                     <br /><br />
                     <center>
                     <?php 
+                    if($invisible == 1){
+	                    echo '<center><span class="label label-danger">Attention vous n\'avez pas configuré l\'adresse externe.</span></center>';
+                    }else{
                     	//On creer le QRcode//
-                    	$qrcode = mobile::json_for_qrcode('ID',$adresseinterne,$adresseexterne,$api);
+                    	$qrcode = mobile::json_for_qrcode($eqLogic->getId(),$adresseinterne,$adresseexterne,$api,$utilisateur);
 	                    $filename = dirname(__FILE__) .'/../../3rdparty/qrcode/temp/qrcode.png';
 						$errorCorrectionLevel = 'L';
 						$matrixPointSize = 4;
@@ -139,14 +151,128 @@ foreach (object::all() as $object) {
 						//On montre le QRCode//
 						$filename = '../plugins/mobile/3rdparty/qrcode/temp/qrcode.png';
 						echo '<img src="'.$filename.'" />';
-	                    
+	                    }
                     ?>
                     </center>
                 </div>
             </fieldset>
         </form>
+<!-- TEST ISS -->
+<legend>{{Plugin compatible :}}</legend>
+<div class="tab-content">
+	<div role="tabpanel" class="tab-pane active" id="configISS">
+		<table class="table table-bordered table-condensed tablesorter" id="cmdList">
+			<thead>
+				<tr>
+					<th>{{Objet}}</th>
+					<th>{{Equipement}}</th>
+					<th>{{Type}}</th>
+					<th>{{Commande}}</th>
+					<th>{{Transmettre}}</th>
+					<th>{{Type App}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+foreach (eqLogic::all() as $eqLogic) {
+	if ($eqLogic->getIsEnable() == 0) {
+		continue;
+	}
+	$object = $eqLogic->getObject();
+	if (is_object($object) && $object->getIsVisible() == 0) {
+		continue;
+	}
+	$cmds = $eqLogic->getCmd('info');
+	if (count($cmds) == 0) {
+		continue;
+	}
 
-        <form class="form-horizontal">
+	$countCmd = 0;
+	foreach ($cmds as $cmd) {
+		if (method_exists($cmd, 'imperihomeCmd') && !$cmd->imperihomeCmd()) {
+			continue;
+		}
+		$countCmd++;
+	}
+
+	$firstLine = true;
+	foreach ($cmds as $cmd) {
+		if (method_exists($cmd, 'imperihomeCmd') && !$cmd->imperihomeCmd()) {
+			continue;
+		}		
+		if($eqLogic->getEqType_name() == 'openzwave'){
+			
+		}else{
+		if ($firstLine) {
+			$firstLine = false;
+			echo '<tr class="imperihome" data-cmd_id="' . $cmd->getId() . '">';
+			echo '<td rowspan="' . $countCmd . '">';
+			if (is_object($object)) {
+				echo $object->getName();
+			} else {
+				echo __('Aucun', __FILE__);
+			}
+			echo '</td>';
+			echo '<td rowspan="' . $countCmd . '">';
+			echo $eqLogic->getName();
+			echo '</td>';
+			echo '<td rowspan="' . $countCmd . '">';
+			echo $eqLogic->getEqType_name();
+			echo '</td>';
+		} else {
+			echo '<tr class="tablesorter-childRow imperihome" data-cmd_id="' . $cmd->getId() . '">';
+		}
+
+		echo '<td>';
+		echo $cmd->getName();
+		echo '</td>';
+		echo '<td>';
+		echo '<input type="checkbox" class="imperihomeAttr bootstrapSwitch" data-size="small" data-label-text="{{Transmettre}}" data-l1key="cmd_transmit" />';
+		echo '</td>';
+		echo '<td>';
+		echo '<span class="label label-info" style="font-size : 1em;">' . mobile::convertType($cmd) . '</span>';
+		echo '<span class="btn btn-warning btn-xs pull-right expertModeVisible bt_createManualConfig" data-id="' . $cmd->getId() . '"><i class="fa fa-wrench"></i></span>';
+		echo '</td>';
+		echo '</tr>';
+		}
+	}
+}
+
+foreach (scenario::all() as $scenario) {
+	$object = $scenario->getObject();
+	echo '<tr class="imperihomeScenario" data-scenario_id="' . $scenario->getId() . '">';
+	echo '<td>';
+	if (is_object($object)) {
+		echo $object->getName();
+	} else {
+		echo __('Aucun', __FILE__);
+	}
+	echo '</td>';
+	echo '<td>';
+	echo $scenario->getName();
+	echo '</td>';
+	echo '<td> {{Scénario}}';
+	echo '</td>';
+	echo '<td></td>';
+	echo '<td>';
+	echo '<input type="checkbox" class="imperihomeAttr bootstrapSwitch" data-size="small" data-l1key="scenario_transmit" data-label-text="{{Transmettre}}" />';
+	echo '</td>';
+	echo '<td>';
+	echo ' <span class="label label-info" style="font-size : 1em;">Scene</span>';
+	echo '</td>';
+	echo '</tr>';
+}
+?>
+
+			</tbody>
+		</table>
+	</div>
+	
+	
+	
+</div>
+
+		<form class="form-horizontal">
             <fieldset>
                 <div class="form-actions">
                     <a class="btn btn-danger eqLogicAction" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
@@ -154,6 +280,7 @@ foreach (object::all() as $object) {
                 </div>
             </fieldset>
         </form>
+
 
     </div>
 </div>

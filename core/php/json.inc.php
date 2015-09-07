@@ -24,25 +24,31 @@
  $api = $_GET['api'];
  $demande = $_GET['demande'];
  $id = $_GET['id'];
+ 
+ // Variable Archi
+ $date_archi = $_GET['date_archi'];
+ $id_mobile = $_GET['id_mobile'];
+ $json_archi = $_GET['json_archi'];
 
  // On teste l'apiKey de la box
  if ($api != config::byKey('api') || config::byKey('api') == '') {
 	connection::failed();
-	echo "{'retour': 'API_failed'}";
+	echo "{'return':'API_failed'}";
 	die();
 }
 
 // On teste les demmandes effectuées
-if ($demande == 'pieces'){
-	echo mobile::pieces($id);
-}elseif($demande == 'decouverte'){
-	echo mobile::decouverte($id);
-}elseif($demande == 'commande'){
-	echo mobile::commande($id);
-}elseif($demande == 'scenario'){
-	echo mobile::scenario($id);
+if ($demande == 'complet'){
+	//Premiere demande faite par l'application
+	echo mobile::decouverte('valide');
+	echo mobile::pieces('all');
+	echo mobile::scenario('all');
 }elseif($demande == 'test'){
-	echo "{'retour': 'Perfect'}";
+	echo "{'return':'perfect'}";
+}elseif($demande == 'archi'){
+	echo mobile::archi($date_archi,$id_mobile,$json_archi);
+}else{
+	echo "{'return':'no_command'}";
 }
 
 

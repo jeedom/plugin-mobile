@@ -25,12 +25,25 @@ class mobile extends eqLogic {
 
 
     /*     * ***********************Methode static*************************** */
+    
+    /**************************************************************************************/
+	/*                                                                                    */
+	/*                        Permet d'installer les dépendances                          */
+	/*                                                                                    */
+	/**************************************************************************************/
+	
 	public static function updatemobile() {
 		log::remove('mobile_update');
 		$cmd = '/bin/bash ' .dirname(__FILE__) . '/../../ressources/install.sh';
 		$cmd .= ' >> '.log::getPathToLog('mobile_update').' 2>&1 &';
 		exec($cmd);
 	}
+	
+	/**************************************************************************************/
+	/*                                                                                    */
+	/*                         Permet de creer le Json du QRCode                          */
+	/*                                                                                    */
+	/**************************************************************************************/
 	
 	public static function json_for_qrcode($id_app,$urlinterne,$urlexterne,$api_jeedom,$utilisateur){
 		
@@ -46,14 +59,26 @@ class mobile extends eqLogic {
 		return $qrcode;
 	}
 	
-	public static function check_plugin_mobile(){
-		//permet de check tout les plugin compatible App Mobile
+	/**************************************************************************************/
+	/*                                                                                    */
+	/*           Permet de valider quel plugin est compatible avec l'app mobile           */
+	/*                                                                                    */
+	/**************************************************************************************/
+	
+	public function check_plugin_mobile(){
+	
+		$plugin_valide = array('openzwave');
 		
-		
+		return $plugin_valide;
 	}
 	
+	/**************************************************************************************/
+	/*                                                                                    */
+	/*                  Permet de connaitre les pieces de la box jeedom                   */
+	/*                                                                                    */
+	/**************************************************************************************/
+	
 	public function pieces(){
-		//Permet de connaitre les pieces de la box jeedom.
 		$response = array();
 		foreach (object::all() as $object) {
 			$response[] = array(
@@ -65,153 +90,126 @@ class mobile extends eqLogic {
 			'id' => 99999,
 			'name' => __('Aucun', __FILE__),
 		);
-		return json_encode(array("pieces" => $response));	
+		return json_encode(array("objet" => $response));	
 	}
 	
+	
+	/**************************************************************************************/
+	/*                                                                                    */
+	/*            Permet de decouvrir tout les modules de la Jeedom compatible            */
+	/*                                                                                    */
+	/**************************************************************************************/
+	
 	public function decouverte($type){
-		//Permet de decouvrir tout les modules de la Jeedom
 		if($type == 'all'){
-			return json_encode(utils::o2a(eqLogic::all()));
+			return json_encode(array("decouverte" => utils::o2a(eqLogic::all())));
+		}elseif($type == 'valide'){
+			$array_plugin = mobile::check_plugin_mobile();
+			$json_decouverte_valide = array();
+			$plugin_object_present = array();
+			foreach($array_plugin as $key => $value){
+				$plugin_object = utils::o2a(eqLogic::byType($value));
+					foreach($plugin_object as $key => $value){
+						if($value['isEnable'] == 1){
+							$object = array('id' => $value['id'], 'name' => $value['name'], 'logicalId' => $value['logicalId'], 'object_id' => $value['object_id'], 'eqType_name' => $value['eqType_name'], 'category' => $value['category'],'commands' => mobile::commande($value['id']));
+							array_push($plugin_object_present, $object);
+						}
+					}
+			}
+			$json_decouverte_valide = array('decouverte' => $plugin_object_present);
+			$json_decouverte_valide = json_encode($json_decouverte_valide);
+			return $json_decouverte_valide;
 		}else{
 			return json_encode(utils::o2a(eqLogic::byObjectId($type)));
 		}
 	}
 	
-	public function commande($type){
-		if($type == 'all'){
-			return json_encode(utils::o2a(cmd::all()));
-		}else{
-			return json_encode(utils::o2a(cmd::byEqLogicId($type)));
-		}
-	}
+	/**************************************************************************************/
+	/*                                                                                    */
+	/*                      Permet de decouvrir tout les scenarios                        */
+	/*                                                                                    */
+	/**************************************************************************************/
 	
 	public function scenario($type){
 		if($type == 'all'){
-			return json_encode(utils::o2a(scenario::all()));
+			$scenario = utils::o2a(scenario::all());
+				$json_scenario = array();
+				foreach($scenario as $key => $value){
+					if($value['isActive'] == 1){
+						$scenar = array('id' => $value['id'],'name' => $value['name'],'state' => $value['state'], 'lastLaunch' => $value['lastLaunch'], 'display' => $value['display'], 'description' => $value['description']);
+						array_push($json_scenario, $scenar);
+					}
+				}
+			return json_encode(array("scenario" => $json_scenario));
 		}else{
-			return json_encode(scenario::byId($type));
+			$scenario = utils::o2a(scenario::byId($type));
+			$json_scenario = array('id' => $scenario['id'],'name' => $scenario['name'],'state' => $scenario['state'], 'lastLaunch' => $scenario['lastLaunch'], 'display' => $scenario['display'], 'description' => $scenario['description']);
+			return json_encode($json_scenario);
 		}
 	}
 	
-	public function convertType($cmd) {
-		switch ($cmd->getEqType()) {
-			case "presence":
-				return 'MultiSwitch';
-			case "camera":
-				return 'Camera';
-			case 'Store':
-				return 'Shutter';
-			case 'ipx800_relai':
-			case 'ipx800_bouton':
-				return 'Switch';
+	/**************************************************************************************/
+	/*                                                                                    */
+	/*           Permet de recuperer ou de sauvegarder l'architecture de l'app            */
+	/*                                                                                    */
+	/**************************************************************************************/
+	
+	public function archi($date_archi,$id_mobile,$json_archi){
+		$lien_archi = dirname(__FILE__) . '/../../core/json/archi_mobile_'.$id_mobile.'.json';
+		if(file_exists($lien_archi)){
+			$json_archi_in = json_decode(file_get_contents($lien_archi));
+		}else{
+			file_put_contents($lien_archi);
+			$json_archi_in = array();
 		}
-		if (strpos(strtolower($cmd->getTemplate('dashboard')), 'door') !== false) {
-			return 'Door';
+		if($json_archi_in['date'] > $date_archi){
+			// On envoi le Json de la structure
+			return $json_archi_in;	
+		}else{
+			// On sauvegarde le Json
+			file_put_contents($lien_archi,$json_archi);
+			return "{'return':'save_archi'}";
 		}
-		if (strpos(strtolower($cmd->getTemplate('dashboard')), 'window') !== false) {
-			return 'Door';
-		}
-		if (strpos(strtolower($cmd->getTemplate('dashboard')), 'porte_garage') !== false) {
-			return 'Door';
-		}
-		if (strpos(strtolower($cmd->getTemplate('dashboard')), 'presence') !== false) {
-			return 'Motion';
-		}
-		if (strpos(strtolower($cmd->getTemplate('dashboard')), 'store') !== false) {
-			return 'Shutter';
-		}
-		if (strpos(strtolower($cmd->getTemplate('dashboard')), 'fire') !== false) {
-			return 'Smoke';
-		}
-		if (strpos(strtolower($cmd->getTemplate('dashboard')), 'light') !== false) {
-			return 'Dimmer';
-		}
-		if ($cmd->getSubType() == 'binary' && strtolower($cmd->getName()) == 'co') {
-			return 'CO2Alert';
-		}
-		if ($cmd->getSubType() == 'binary' && (strpos(strtolower($cmd->getName()), __('fumée', __FILE__)) !== false || strpos(strtolower($cmd->getName()), __('smoke', __FILE__)) !== false)) {
-			return 'Smoke';
-		}
-		if (strpos(strtolower($cmd->getName()), __('humidité', __FILE__)) !== false) {
-			$cache = cache::byKey('issConfig');
-			$issConfig = json_decode($cache->getValue('{}'), true);
-			foreach ($cmd->getEqLogic()->getCmd('info') as $info) {
-				if ($info->getUnite() == '°C') {
-					if (isset($issConfig[$info->getId()]) && $issConfig[$info->getId()]['cmd_transmit'] == 1) {
-						return 'TempHygro';
-					}
-				}
-			}
-			return 'Hygrometry';
-		}
-		if (strtolower($cmd->getName()) == __('uv', __FILE__)) {
-			return 'UV';
-		}
-		$eqlogic = $cmd->getEqLogic();
-		if (strpos(strtolower($cmd->getName()), __('etat', __FILE__)) !== false) {
-			if (strpos(strtolower($eqlogic->getName()), __('fenêtre', __FILE__)) !== false || strpos(strtolower($eqlogic->getName()), __('fenetre', __FILE__)) !== false || strpos(strtolower($eqlogic->getName()), __('porte', __FILE__)) !== false) {
-				return 'Door';
-			}
-		}
-
-		switch ($cmd->getSubtype()) {
-			case 'numeric':
-				switch (strtolower($cmd->getUnite())) {
-					case '°c':
-						$cache = cache::byKey('issConfig');
-						$issConfig = json_decode($cache->getValue('{}'), true);
-						foreach ($cmd->getEqLogic()->getCmd('info') as $info) {
-							if (strpos(strtolower($info->getName()), __('humidité', __FILE__)) !== false) {
-								if (isset($issConfig[$info->getId()]) && $issConfig[$info->getId()]['cmd_transmit'] == 1) {
-									return 'TempHygro';
-								}
-							}
-						}
-						return 'Temperature';
-					case '%':
-						if (count(cmd::byValue($cmd->getId(), 'action')) == 0) {
-							return 'GenericSensor';
-						}
-						return 'Dimmer';
-					case 'pa':
-						return 'Pressure';
-					case 'db':
-						return 'Noise';
-					case 'km/h':
-						return 'Wind';
-					case 'mm/h':
-						return 'Rain';
-					case 'mm':
-						return 'Rain';
-					case 'm3':
-						return 'Flood';
-					case 'ppm':
-						return 'CO2';
-					case 'lux':
-						return 'Luminosity';
-					case 'w':
-						return 'Electricity';
-					case 'kwh':
-						return 'Electricity';
-				}
-				return 'GenericSensor';
-			case 'binary':
-				if (count(cmd::byValue($cmd->getId(), 'action')) == 0) {
-					return 'GenericSensor';
-				}
-				return 'Switch';
-
-		}
-		foreach ($eqlogic->getCmd() as $cmd) {
-			if ($cmd->getSubtype() == 'color') {
-				return 'RGBLight';
-			}
-		}
-		if ($cmd->getType() == 'action') {
-			return 'Switch';
-		}
-		return 'GenericSensor';
 	}
+	
+	/**************************************************************************************/
+	/*                                                                                    */
+	/*          Permet de recuperer les commandes compatible avec l'app Mobile            */
+	/*                                                                                    */
+	/**************************************************************************************/
+	public function commande($type){
+		//Permet de decouvrir tout les commandes
+		if($type == 'all'){
+			$Json_commande = array();
+			$commande_plugin = utils::o2a(cmd::all());
+			foreach($commande_plugin as $key => $value){
+				if($value['type'] !== 'action'){
+					$valeur_cmd = cmd::byId($value['id'])->execCmd();
+				}else{
+					$valeur_cmd = $value['value'];
+				}
+				$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['appmobile'], 'display' => $value['display'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd);
+					
+					array_push($Json_commande, $commande_complet_json);	
+				}	
+			return json_encode(array('commands' => $Json_commande));
+		}else{
+			$Json_commande = array();
+			$commande_plugin = utils::o2a(cmd::byEqLogicId($type));
+				foreach($commande_plugin as $key => $value){
+									if($value['type'] !== 'action'){
+					$valeur_cmd = cmd::byId($value['id'])->execCmd();
+				}else{
+					$valeur_cmd = $value['value'];
+				}
+					$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['appmobile'], 'display' => $value['display'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd);
+					
+					array_push($Json_commande, $commande_complet_json);	
+				}	
+			return $Json_commande;
+		}
+	}
+	
     /*
      * Fonction exécutée automatiquement toutes les minutes par Jeedom
       public static function cron() {

@@ -90,7 +90,7 @@ class mobile extends eqLogic {
 			'id' => 99999,
 			'name' => __('Aucun', __FILE__),
 		);
-		return json_encode(array("objet" => $response));	
+		return array("objet" => $response);	
 	}
 	
 	
@@ -117,10 +117,8 @@ class mobile extends eqLogic {
 					}
 			}
 			$json_decouverte_valide = array('decouverte' => $plugin_object_present);
-			$json_decouverte_valide = json_encode($json_decouverte_valide);
+			//$json_decouverte_valide = json_encode($json_decouverte_valide);
 			return $json_decouverte_valide;
-		}else{
-			return json_encode(utils::o2a(eqLogic::byObjectId($type)));
 		}
 	}
 	
@@ -140,11 +138,7 @@ class mobile extends eqLogic {
 						array_push($json_scenario, $scenar);
 					}
 				}
-			return json_encode(array("scenario" => $json_scenario));
-		}else{
-			$scenario = utils::o2a(scenario::byId($type));
-			$json_scenario = array('id' => $scenario['id'],'name' => $scenario['name'],'state' => $scenario['state'], 'lastLaunch' => $scenario['lastLaunch'], 'display' => $scenario['display'], 'description' => $scenario['description']);
-			return json_encode($json_scenario);
+			return array("scenario" => $json_scenario);
 		}
 	}
 	
@@ -188,11 +182,11 @@ class mobile extends eqLogic {
 				}else{
 					$valeur_cmd = $value['value'];
 				}
-				$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['appmobile'], 'display' => $value['display'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd);
+				$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['appmobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd);
 					
 					array_push($Json_commande, $commande_complet_json);	
-				}	
-			return json_encode(array('commands' => $Json_commande));
+				}
+			return array('commands' => $Json_commande);
 		}else{
 			$Json_commande = array();
 			$commande_plugin = utils::o2a(cmd::byEqLogicId($type));
@@ -202,7 +196,7 @@ class mobile extends eqLogic {
 				}else{
 					$valeur_cmd = $value['value'];
 				}
-					$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['appmobile'], 'display' => $value['display'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd);
+					$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['appmobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd);
 					
 					array_push($Json_commande, $commande_complet_json);	
 				}	

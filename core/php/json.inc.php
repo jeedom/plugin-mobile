@@ -20,39 +20,55 @@
  ob_start();
  require_once dirname(__FILE__) . "/../../../../core/php/core.inc.php";
  
- // on creer les variable de reception
- $api = $_GET['api'];
- $demande = $_GET['demande'];
- $id = $_GET['id'];
- 
- // Variable Archi
- $date_archi = $_GET['date_archi'];
- $id_mobile = $_GET['id_mobile'];
- $json_archi = $_GET['json_archi'];
+	/**************************************************************************************/
+	/*                                                                                    */
+	/*                 On créé les Variables que l'on reçoit par le mobile                */
+	/*                                                                                    */
+	/**************************************************************************************/
+	$api = $_GET['api'];
+	$demande = $_GET['demande'];
+	$id = $_GET['id'];
+	// Variable Archi
+	$date_archi = $_GET['date_archi'];
+	$id_mobile = $_GET['id_mobile'];
+	$json_archi = $_GET['json_archi'];
 
- // On teste l'apiKey de la box
+	/**************************************************************************************/
+	/*                                                                                    */
+	/*                         On test l'API key de la demande                            */
+	/*                                                                                    */
+	/**************************************************************************************/
  if ($api != config::byKey('api') || config::byKey('api') == '') {
 	connection::failed();
 	echo "{'return':'API_failed'}";
 	die();
 }
 
-// On teste les demmandes effectuées
+	/**************************************************************************************/
+	/*                                                                                    */
+	/*                             On traite la demande JSON                              */
+	/*                                                                                    */
+	/**************************************************************************************/
 if ($demande == 'complet'){
-	//Premiere demande faite par l'application
-	echo mobile::decouverte('valide');
-	echo mobile::pieces('all');
-	echo mobile::scenario('all');
+	$json_complet = array(mobile::decouverte('valide'),mobile::pieces('all'),mobile::scenario('all'));
+	echo json_encode(array('return' => $json_complet));
 }elseif($demande == 'test'){
-	echo "{'return':'perfect'}";
+	//$json_test = array('return' => 'perfect');
+	//echo json_encode($json_test);
+	echo 'perfect';
 }elseif($demande == 'archi'){
 	echo mobile::archi($date_archi,$id_mobile,$json_archi);
 }else{
-	echo "{'return':'no_command'}";
+	$json_test = array('return' => 'no_command');
+	echo json_encode($json_test);
 }
 
 
-
+	/**************************************************************************************/
+	/*                                                                                    */
+	/*                                          END                                       */
+	/*                                                                                    */
+	/**************************************************************************************/
 $out = ob_get_clean();
 echo trim(substr($out, strpos($out, '{')));
 ?>

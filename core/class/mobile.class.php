@@ -204,6 +204,15 @@ class mobile extends eqLogic {
 		}
 	}
 	
+	public function cmd($id_cmd){
+	
+		$valeur_cmd = cmd::byId($id_cmd)->execCmd();
+		$Json_commande = array("id" => $id_cmd,"valeur" => $valeur_cmd);
+		return $Json_commande;
+		
+	}
+	
+	
     /*
      * Fonction exécutée automatiquement toutes les minutes par Jeedom
       public static function cron() {

@@ -58,6 +58,10 @@ if ($demande == 'complet'){
 	echo 'perfect';
 }elseif($demande == 'archi'){
 	echo mobile::archi($date_archi,$id_mobile,$json_archi);
+}elseif($demande == 'cmd'){
+	$json_cmd = mobile::cmd($id);
+	echo json_encode($json_cmd);
+	
 }else{
 	$json_test = array('return' => 'no_command');
 	echo json_encode($json_test);

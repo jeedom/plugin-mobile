@@ -67,7 +67,7 @@ class mobile extends eqLogic {
 	
 	public function check_plugin_mobile(){
 	
-		$plugin_valide = array('openzwave');
+		$plugin_valide = array('openzwave','sonos3');
 		
 		return $plugin_valide;
 	}
@@ -204,15 +204,30 @@ class mobile extends eqLogic {
 		}
 	}
 	
-	public function cmd($id_cmd){
-	
+	/**************************************************************************************/
+	/*                                                                                    */
+	/*         Permet de d'executer les commandes compatible avec l'app Mobile            */
+	/*                                                                                    */
+	/**************************************************************************************/
+	public function cmd($id_cmd,$valeur_demande){
+		if($valeur_demande !== null){
+			$option = array("slider"=>$valeur_demande);
+		}else{
+			$option = null;
+		}
 		$valeur_cmd = cmd::byId($id_cmd)->execCmd();
+		
+		
+		$cmd = cmd::byId($id_cmd);
+			if(is_object($cmd)){
+				$valeur_cmd = $cmd->execCmd($option,2);
+			}
+		
+		
 		$Json_commande = array("id" => $id_cmd,"valeur" => $valeur_cmd);
 		return $Json_commande;
 		
 	}
-	
-	
     /*
      * Fonction exécutée automatiquement toutes les minutes par Jeedom
       public static function cron() {

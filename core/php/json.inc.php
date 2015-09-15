@@ -28,6 +28,7 @@
 	$api = $_GET['api'];
 	$demande = $_GET['demande'];
 	$id = $_GET['id'];
+	$valeur = $_GET['valeur'];
 	// Variable Archi
 	$date_archi = $_GET['date_archi'];
 	$id_mobile = $_GET['id_mobile'];
@@ -59,9 +60,12 @@ if ($demande == 'complet'){
 }elseif($demande == 'archi'){
 	echo mobile::archi($date_archi,$id_mobile,$json_archi);
 }elseif($demande == 'cmd'){
-	$json_cmd = mobile::cmd($id);
+	if($valeur !== null){
+	$json_cmd = mobile::cmd($id,$valeur);
+	}else{
+		$json_cmd = mobile::cmd($id);
+	}
 	echo json_encode($json_cmd);
-	
 }else{
 	$json_test = array('return' => 'no_command');
 	echo json_encode($json_test);

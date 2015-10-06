@@ -51,14 +51,16 @@
 	/*                                                                                    */
 	/**************************************************************************************/
 if ($demande == 'complet'){
-	$json_complet = array(mobile::decouverte('valide'),mobile::pieces('all'),mobile::scenario('all'));
+	$json_complet = array(mobile::decouverte('valide','all'),mobile::pieces('all'),mobile::scenario('all'),mobile::Plugin_valide_func());
 	echo json_encode(array('return' => $json_complet));
 }elseif($demande == 'test'){
 	//$json_test = array('return' => 'perfect');
 	//echo json_encode($json_test);
 	echo 'perfect';
 }elseif($demande == 'archi'){
-	echo mobile::archi($date_archi,$id_mobile,$json_archi);
+	echo mobile::archi('sauvegarde',$date_archi,$id_mobile,$json_archi);
+}elseif($demande == 'commande'){
+	echo json_encode(mobile::decouverte('valide','info'));
 }elseif($demande == 'cmd'){
 	if($valeur !== null){
 	$json_cmd = mobile::cmd($id,$valeur);
@@ -66,6 +68,8 @@ if ($demande == 'complet'){
 		$json_cmd = mobile::cmd($id);
 	}
 	echo json_encode($json_cmd);
+}elseif($demande == 'plugin'){
+	echo json_encode(mobile::Plugin_valide_func());
 }else{
 	$json_test = array('return' => 'no_command');
 	echo json_encode($json_test);

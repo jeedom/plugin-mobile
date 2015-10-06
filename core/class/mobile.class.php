@@ -67,7 +67,7 @@ class mobile extends eqLogic {
 	
 	public function check_plugin_mobile(){
 	
-		$plugin_valide = array('openzwave','sonos3');
+		$plugin_valide = array('openzwave','rfxcom','weather','thermostat','camera','mode');
 		
 		return $plugin_valide;
 	}
@@ -84,11 +84,13 @@ class mobile extends eqLogic {
 			$response[] = array(
 				'id' => $object->getId(),
 				'name' => $object->getName(),
+				'ordre' => $object->getPosition(),
 			);
 		}
 		$response[] = array(
 			'id' => 99999,
 			'name' => __('Aucun', __FILE__),
+			'order' => $object->getPosition(),
 		);
 		return array("objet" => $response);	
 	}
@@ -100,24 +102,35 @@ class mobile extends eqLogic {
 	/*                                                                                    */
 	/**************************************************************************************/
 	
-	public function decouverte($type){
+	public function decouverte($type,$track){
 		if($type == 'all'){
 			return json_encode(array("decouverte" => utils::o2a(eqLogic::all())));
 		}elseif($type == 'valide'){
 			$array_plugin = mobile::check_plugin_mobile();
 			$json_decouverte_valide = array();
 			$plugin_object_present = array();
+			$arraycommande = array();
 			foreach($array_plugin as $key => $value){
 				$plugin_object = utils::o2a(eqLogic::byType($value));
 					foreach($plugin_object as $key => $value){
 						if($value['isEnable'] == 1){
-							$object = array('id' => $value['id'], 'name' => $value['name'], 'logicalId' => $value['logicalId'], 'object_id' => $value['object_id'], 'eqType_name' => $value['eqType_name'], 'category' => $value['category'],'commands' => mobile::commande($value['id']));
-							array_push($plugin_object_present, $object);
+							if($track == 'all'){
+								if($value['category'] == null){
+									$value['category'] = 'nok';
+								}
+								$object = array('id' => $value['id'], 'name' => $value['name'], 'logicalId' => $value['logicalId'], 'object_id' => $value['object_id'], 'eqType_name' => $value['eqType_name'], 'category' => $value['category'],'commands' => mobile::commande($value['id']));
+								array_push($plugin_object_present, $object);
+							}elseif($track == 'info'){
+								$arraycommande = mobile::commande($value['id'],'ok',$arraycommande);
+							}
 						}
 					}
 			}
-			$json_decouverte_valide = array('decouverte' => $plugin_object_present);
-			//$json_decouverte_valide = json_encode($json_decouverte_valide);
+			if($track == 'all'){
+				$json_decouverte_valide = array('decouverte' => $plugin_object_present);
+			}elseif($track == 'info'){
+				$json_decouverte_valide = array('commande' => $arraycommande);
+			}
 			return $json_decouverte_valide;
 		}
 	}
@@ -144,26 +157,28 @@ class mobile extends eqLogic {
 	
 	/**************************************************************************************/
 	/*                                                                                    */
-	/*           Permet de recuperer ou de sauvegarder l'architecture de l'app            */
+	/*    Permet de recuperer ou de sauvegarder l'architecture de l'app et de la creer    */
 	/*                                                                                    */
 	/**************************************************************************************/
 	
-	public function archi($date_archi,$id_mobile,$json_archi){
-		$lien_archi = dirname(__FILE__) . '/../../core/json/archi_mobile_'.$id_mobile.'.json';
-		if(file_exists($lien_archi)){
-			$json_archi_in = json_decode(file_get_contents($lien_archi));
-		}else{
-			file_put_contents($lien_archi);
-			$json_archi_in = array();
-		}
-		if($json_archi_in['date'] > $date_archi){
-			// On envoi le Json de la structure
-			return $json_archi_in;	
-		}else{
-			// On sauvegarde le Json
-			file_put_contents($lien_archi,$json_archi);
-			return "{'return':'save_archi'}";
-		}
+	public function archi($type,$date_archi,$id_mobile,$json_archi){
+			$lien_archi = dirname(__FILE__) . '/../../core/json/archi_mobile_'.$id_mobile.'.json';
+		if($type == 'sauvegarde'){
+			if(file_exists($lien_archi)){
+				$json_archi_in = json_decode(file_get_contents($lien_archi));
+			}else{
+				file_put_contents($lien_archi);
+				$json_archi_in = array();
+			}
+			if($json_archi_in['date'] > $date_archi){
+				// On envoi le Json de la structure
+				return $json_archi_in;	
+			}else{
+				// On sauvegarde le Json
+				file_put_contents($lien_archi,$json_archi);
+				return "{'return':'save_archi'}";
+			}
+		}	
 	}
 	
 	/**************************************************************************************/
@@ -171,7 +186,7 @@ class mobile extends eqLogic {
 	/*          Permet de recuperer les commandes compatible avec l'app Mobile            */
 	/*                                                                                    */
 	/**************************************************************************************/
-	public function commande($type){
+	public function commande($type,$info,$arraycommande){
 		//Permet de decouvrir tout les commandes
 		if($type == 'all'){
 			$Json_commande = array();
@@ -191,16 +206,27 @@ class mobile extends eqLogic {
 			$Json_commande = array();
 			$commande_plugin = utils::o2a(cmd::byEqLogicId($type));
 				foreach($commande_plugin as $key => $value){
-									if($value['type'] !== 'action'){
-					$valeur_cmd = cmd::byId($value['id'])->execCmd();
+				if($info == 'ok'){
+					if($value['type'] == 'info'){
+						$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['appmobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $value['value']);
+						array_push($arraycommande, $commande_complet_json);
+					}	
 				}else{
-					$valeur_cmd = $value['value'];
-				}
+					if($value['type'] !== 'action'){
+						$valeur_cmd = cmd::byId($value['id'])->execCmd();
+					}else{
+						$valeur_cmd = $value['value'];
+					}
 					$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['appmobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd);
 					
-					array_push($Json_commande, $commande_complet_json);	
+					array_push($Json_commande, $commande_complet_json);
 				}	
-			return $Json_commande;
+				}	
+			if($info == 'ok'){
+				return $arraycommande;
+			}else{
+				return $Json_commande;
+			}
 		}
 	}
 	
@@ -228,6 +254,33 @@ class mobile extends eqLogic {
 		return $Json_commande;
 		
 	}
+	
+	
+	
+	/**************************************************************************************/
+	/*                                                                                    */
+	/*                  Permet d'avoir les infos des plugins compatible                   */
+	/*                                                                                    */
+	/**************************************************************************************/
+	public function Plugin_valide_func(){
+		$plugin_ok = array();
+		$plugin_list = utils::o2a(plugin::listPlugin());
+		$array_plugin = mobile::check_plugin_mobile();
+			foreach($plugin_list as $key => $value){
+				$plugin_test_en_cours = $value['id'];
+					foreach($array_plugin as $key_array => $value_array){
+						if($value_array == $plugin_test_en_cours){
+							$plugin_ok_complet = array('id' => $value['id'],'name' => $value['name'] ,'description' => $value['description']);
+							array_push($plugin_ok, $plugin_ok_complet);
+						}
+					}
+			}
+		return array("plugin" => $plugin_ok);
+	}
+	
+	
+	
+	
     /*
      * Fonction exécutée automatiquement toutes les minutes par Jeedom
       public static function cron() {

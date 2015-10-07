@@ -168,6 +168,4 @@ foreach (object::all() as $object) {
 
     </div>
 </div>
-
-<?php include_file('desktop', 'mobile', 'js', 'mobile');?>
 <?php include_file('core', 'plugin.template', 'js');?>

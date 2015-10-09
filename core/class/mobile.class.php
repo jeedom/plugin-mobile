@@ -67,7 +67,7 @@ class mobile extends eqLogic {
 	
 	public function check_plugin_mobile(){
 	
-		$plugin_valide = array('openzwave','rfxcom','weather','thermostat','camera','mode');
+		$plugin_valide = array('openzwave','rfxcom');
 		
 		return $plugin_valide;
 	}
@@ -90,7 +90,7 @@ class mobile extends eqLogic {
 		$response[] = array(
 			'id' => 99999,
 			'name' => __('Aucun', __FILE__),
-			'order' => $object->getPosition(),
+			'ordre' => $object->getPosition(),
 		);
 		return array("objet" => $response);	
 	}
@@ -197,7 +197,7 @@ class mobile extends eqLogic {
 				}else{
 					$valeur_cmd = $value['value'];
 				}
-				$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['appmobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd);
+				$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['mobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd);
 					
 					array_push($Json_commande, $commande_complet_json);	
 				}
@@ -208,7 +208,8 @@ class mobile extends eqLogic {
 				foreach($commande_plugin as $key => $value){
 				if($info == 'ok'){
 					if($value['type'] == 'info'){
-						$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['appmobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $value['value']);
+					$valeur_cmd = cmd::byId($value['id'])->execCmd();
+						$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['mobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd);
 						array_push($arraycommande, $commande_complet_json);
 					}	
 				}else{
@@ -217,7 +218,7 @@ class mobile extends eqLogic {
 					}else{
 						$valeur_cmd = $value['value'];
 					}
-					$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['appmobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd);
+					$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['mobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd);
 					
 					array_push($Json_commande, $commande_complet_json);
 				}	

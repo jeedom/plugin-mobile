@@ -150,7 +150,7 @@ foreach (object::all() as $object) {
 							$matrixPointSize = 4;
 							QRcode::png($qrcode, $filename, $errorCorrectionLevel, $matrixPointSize, 2);
 							//On montre le QRCode//
-							$filename = '../plugins/mobile/3rdparty/qrcode/temp/qrcode.png';
+							$filename = 'plugins/mobile/3rdparty/qrcode/temp/qrcode.png';
 							echo '<img src="'.$filename.'" />';
 						}
 					}

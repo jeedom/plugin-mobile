@@ -72,6 +72,49 @@ class mobile extends eqLogic {
 		return $plugin_valide;
 	}
 	
+	
+	/**************************************************************************************/
+	/*                                                                                    */
+	/*                  Class Loic permet d'avoir un Tag par Action                       */
+	/*                                                                                    */
+	/**************************************************************************************/
+	
+	public static function getGenericType($cmd_id){
+	
+		$cmd = cmd::byId($cmd_id);
+		if ($cmd->getDisplay('generic_type') != '') {
+			return $cmd->getDisplay('generic_type');
+		}
+		$category = $cmd->getEqLogic()->getPrimaryCategory();
+		$type = strtoupper($category) . '_';
+		if ($cmd->getType() == 'action') {
+			if ($cmd->getSubtype() == 'other') {
+				$name = strtolower($cmd->getName());
+				if ($category = 'heating' && strpos($name, 'cool') !== false) {
+					$type = 'COOL_';
+				}
+				if (strpos($name, 'off') !== false) {
+					return $type . 'OFF';
+				}
+				if (strpos($name, 'on') !== false) {
+					return $type . 'ON';
+				}
+			}
+			return $type . strtoupper($cmd->getSubtype());
+		} else {
+			switch ($cmd->getUnite()) {
+				case 'W':
+					return $type . 'POWER';
+				case 'kWh':
+					return $type . 'CONSUMPTION';
+			}
+			return $type . 'STATE';
+		}
+	}
+	
+	
+
+	
 	/**************************************************************************************/
 	/*                                                                                    */
 	/*                  Permet de connaitre les pieces de la box jeedom                   */
@@ -197,7 +240,10 @@ class mobile extends eqLogic {
 				}else{
 					$valeur_cmd = $value['value'];
 				}
-				$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['mobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd);
+				
+				$tag = mobile::getGenericType($value['id']);
+				
+				$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['mobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd, 'tag' => $tag);
 					
 					array_push($Json_commande, $commande_complet_json);	
 				}
@@ -208,8 +254,9 @@ class mobile extends eqLogic {
 				foreach($commande_plugin as $key => $value){
 				if($info == 'ok'){
 					if($value['type'] == 'info'){
+					$tag = mobile::getGenericType($value['id']);
 					$valeur_cmd = cmd::byId($value['id'])->execCmd();
-						$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['mobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd);
+						$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['mobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd, 'tag' => $tag);
 						array_push($arraycommande, $commande_complet_json);
 					}	
 				}else{
@@ -218,7 +265,8 @@ class mobile extends eqLogic {
 					}else{
 						$valeur_cmd = $value['value'];
 					}
-					$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['mobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd);
+					$tag = mobile::getGenericType($value['id']);
+					$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['mobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd, 'tag' => $tag);
 					
 					array_push($Json_commande, $commande_complet_json);
 				}	
@@ -277,10 +325,7 @@ class mobile extends eqLogic {
 					}
 			}
 		return array("plugin" => $plugin_ok);
-	}
-	
-	
-	
+	}	
 	
     /*
      * Fonction exécutée automatiquement toutes les minutes par Jeedom

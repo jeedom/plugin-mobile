@@ -246,7 +246,7 @@ class mobile extends eqLogic {
 	/*          Permet de recuperer les commandes compatible avec l'app Mobile            */
 	/*                                                                                    */
 	/**************************************************************************************/
-	public function commande($type,$info,$arraycommande){
+	public function commande($type,$info = null,$arraycommande = null){
 		//Permet de decouvrir tout les commandes
 		if($type == 'all'){
 			$Json_commande = array();
@@ -260,7 +260,19 @@ class mobile extends eqLogic {
 				
 				$tag = mobile::getGenericType($value['id']);
 				
-				$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => if(isset($value['order'])){$value['order']}else{null}, 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => if(isset($value['unite'])){$value['unite']}else{null}, 'template' => if(isset($value['template']['mobile'])){$value['template']['mobile']}else{null}, 'invertBinary' => if(isset($value['display']['invertBinary'])){$value['display']['invertBinary']}else{null}, 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd, 'tag' => $tag);
+				if(isset($value['template']['mobile'])){
+					$template_mobile = $value['template']['mobile'];
+				}else{
+					$template_mobile = '';
+				}
+				
+				if(isset($value['display']['invertBinary'])){
+					$invertbinarry = $value['display']['invertBinary'];
+				}else{
+					$invertbinarry = '';
+				}
+				
+				$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $template_mobile, 'invertBinary' => $invertbinarry, 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd, 'tag' => $tag);
 					
 					array_push($Json_commande, $commande_complet_json);	
 				}
@@ -269,11 +281,24 @@ class mobile extends eqLogic {
 			$Json_commande = array();
 			$commande_plugin = utils::o2a(cmd::byEqLogicId($type));
 				foreach($commande_plugin as $key => $value){
-				if($info == 'ok'){
+				if(isset($info) == 'ok'){
 					if($value['type'] == 'info'){
 					$tag = mobile::getGenericType($value['id']);
 					$valeur_cmd = cmd::byId($value['id'])->execCmd();
-						$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => if(isset($value['order'])){$value['order']}else{null}, 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => if(isset($value['unite'])){$value['unite']}else{null}, 'template' => if(isset($value['template']['mobile'])){$value['template']['mobile']}else{null}, 'invertBinary' => if(isset($value['display']['invertBinary'])){$value['display']['invertBinary']}else{null}, 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd, 'tag' => $tag);
+					
+					if(isset($value['template']['mobile'])){
+					$template_mobile = $value['template']['mobile'];
+				}else{
+					$template_mobile = '';
+				}
+				
+				if(isset($value['display']['invertBinary'])){
+					$invertbinarry = $value['display']['invertBinary'];
+				}else{
+					$invertbinarry = '';
+				}
+					
+						$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $template_mobile, 'invertBinary' => $invertbinarry, 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd, 'tag' => $tag);
 						array_push($arraycommande, $commande_complet_json);
 					}	
 				}else{
@@ -283,12 +308,25 @@ class mobile extends eqLogic {
 						$valeur_cmd = $value['value'];
 					}
 					$tag = mobile::getGenericType($value['id']);
-					$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => if(isset($value['order'])){$value['order']}else{null}, 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => if(isset($value['unite'])){$value['unite']}else{null}, 'template' => if(isset($value['template']['mobile'])){$value['template']['mobile']}else{null}, 'invertBinary' => if(isset($value['display']['invertBinary'])){$value['display']['invertBinary']}else{null}, 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd, 'tag' => $tag);
+					
+						if(isset($value['template']['mobile'])){
+					$template_mobile = $value['template']['mobile'];
+				}else{
+					$template_mobile = null;
+				}
+				
+				if(isset($value['display']['invertBinary'])){
+					$invertbinarry = $value['display']['invertBinary'];
+				}else{
+					$invertbinarry = null;
+				}
+					
+					$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $template_mobile, 'invertBinary' => $invertbinarry, 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd, 'tag' => $tag);
 					
 					array_push($Json_commande, $commande_complet_json);
 				}	
-				}	
-			if($info == 'ok'){
+				}
+			if(isset($info) == 'ok'){
 				return $arraycommande;
 			}else{
 				return $Json_commande;

@@ -25,14 +25,35 @@
 	/*                 On créé les Variables que l'on reçoit par le mobile                */
 	/*                                                                                    */
 	/**************************************************************************************/
+	if(isset($_GET['api'])){
 	$api = $_GET['api'];
+	}
+	if(isset($_GET['demande'])){
 	$demande = $_GET['demande'];
+	}
+	if(isset($_GET['id'])){
 	$id = $_GET['id'];
+	}
+	if(isset($_GET['valeur'])){
 	$valeur = $_GET['valeur'];
-	// Variable Archi
+	}
+	if(isset($_GET['date_archi'])){
 	$date_archi = $_GET['date_archi'];
+	}
+	if(isset($_GET['id_mobile'])){
 	$id_mobile = $_GET['id_mobile'];
+	}
+	if(isset($_GET['json_archi'])){
 	$json_archi = $_GET['json_archi'];
+	}
+	//$api = $_GET['api'];
+	//$demande = $_GET['demande'];
+	//$id = $_GET['id'];
+	//$valeur = $_GET['valeur'];
+	// Variable Archi
+	//$date_archi = $_GET['date_archi'];
+	//$id_mobile = $_GET['id_mobile'];
+	//$json_archi = $_GET['json_archi'];
 
 	/**************************************************************************************/
 	/*                                                                                    */

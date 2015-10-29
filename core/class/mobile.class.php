@@ -107,7 +107,24 @@ class mobile extends eqLogic {
 					return $type . 'POWER';
 				case 'kWh':
 					return $type . 'CONSUMPTION';
+				case '°C':
+					return $type . 'TEMPERATURE';
+				case 'Lux':
+					return $type . 'BRIGHTNESS';
 			}
+			$name = strtolower($cmd->getName());
+			if (strpos($name, 'Présence') !== false) {
+					return $type . 'PRESENCE';
+				}
+			if (strpos($name, 'Batterie') !== false) {
+					return $type . 'BATTERY';
+				}
+			if (strpos($name, 'Fumées') !== false) {
+					return $type . 'FUMES';
+				}
+			if (strpos($name, 'Anti Sabotage') !== false) {
+					return $type . 'TAMPER';
+				}	
 			return $type . 'STATE';
 		}
 	}
@@ -243,7 +260,7 @@ class mobile extends eqLogic {
 				
 				$tag = mobile::getGenericType($value['id']);
 				
-				$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['mobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd, 'tag' => $tag);
+				$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => if(isset($value['order'])){$value['order']}else{null}, 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => if(isset($value['unite'])){$value['unite']}else{null}, 'template' => if(isset($value['template']['mobile'])){$value['template']['mobile']}else{null}, 'invertBinary' => if(isset($value['display']['invertBinary'])){$value['display']['invertBinary']}else{null}, 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd, 'tag' => $tag);
 					
 					array_push($Json_commande, $commande_complet_json);	
 				}
@@ -256,7 +273,7 @@ class mobile extends eqLogic {
 					if($value['type'] == 'info'){
 					$tag = mobile::getGenericType($value['id']);
 					$valeur_cmd = cmd::byId($value['id'])->execCmd();
-						$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['mobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd, 'tag' => $tag);
+						$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => if(isset($value['order'])){$value['order']}else{null}, 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => if(isset($value['unite'])){$value['unite']}else{null}, 'template' => if(isset($value['template']['mobile'])){$value['template']['mobile']}else{null}, 'invertBinary' => if(isset($value['display']['invertBinary'])){$value['display']['invertBinary']}else{null}, 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd, 'tag' => $tag);
 						array_push($arraycommande, $commande_complet_json);
 					}	
 				}else{
@@ -266,7 +283,7 @@ class mobile extends eqLogic {
 						$valeur_cmd = $value['value'];
 					}
 					$tag = mobile::getGenericType($value['id']);
-					$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => $value['order'], 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => $value['unite'], 'template' => $value['template']['mobile'], 'invertBinary' => $value['display']['invertBinary'], 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd, 'tag' => $tag);
+					$commande_complet_json = array('id' => $value['id'], 'name' => $value['name'], 'order' => if(isset($value['order'])){$value['order']}else{null}, 'type' => $value['type'], 'subType' => $value['subType'], 'unite' => if(isset($value['unite'])){$value['unite']}else{null}, 'template' => if(isset($value['template']['mobile'])){$value['template']['mobile']}else{null}, 'invertBinary' => if(isset($value['display']['invertBinary'])){$value['display']['invertBinary']}else{null}, 'isVisible' => $value['isVisible'], 'value' => $valeur_cmd, 'tag' => $tag);
 					
 					array_push($Json_commande, $commande_complet_json);
 				}	

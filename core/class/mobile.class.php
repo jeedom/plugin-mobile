@@ -86,6 +86,7 @@ class mobile extends eqLogic {
 			return $cmd->getDisplay('generic_type');
 		}
 		$category = $cmd->getEqLogic()->getPrimaryCategory();
+		$name_eq = strtolower($cmd->getEqLogic()->getName());
 		$type = strtoupper($category) . '_';
 		if ($cmd->getType() == 'action') {
 			if ($cmd->getSubtype() == 'other') {
@@ -99,6 +100,12 @@ class mobile extends eqLogic {
 				if (strpos($name, 'on') !== false) {
 					return $type . 'ON';
 				}
+				if (strpos($name, 'up') !== false) {
+					return $type . 'UP';
+				}
+				if (strpos($name, 'down') !== false) {
+					return $type . 'DOWN';
+				}
 			}
 			return $type . strtoupper($cmd->getSubtype());
 		} else {
@@ -108,23 +115,32 @@ class mobile extends eqLogic {
 				case 'kWh':
 					return $type . 'CONSUMPTION';
 				case '°C':
-					return $type . 'TEMPERATURE';
+					return 'TEMPERATURE';
 				case 'Lux':
-					return $type . 'BRIGHTNESS';
+					return 'BRIGHTNESS';
 			}
 			$name = strtolower($cmd->getName());
-			if (strpos($name, 'Présence') !== false) {
-					return $type . 'PRESENCE';
+			if (strpos($name, 'présence') !== false) {
+					return 'PRESENCE';
 				}
-			if (strpos($name, 'Batterie') !== false) {
-					return $type . 'BATTERY';
+			if (strpos($name, 'batterie') !== false) {
+					return 'BATTERY';
 				}
-			if (strpos($name, 'Fumées') !== false) {
-					return $type . 'FUMES';
-				}
-			if (strpos($name, 'Anti Sabotage') !== false) {
-					return $type . 'TAMPER';
+			if (strpos($name, 'fumées') !== false) {
+					return 'FUMES';
 				}	
+			if (strpos($name, 'température') !== false) {
+					return 'TEMPERATURE';
+				}
+			if (strpos($name, 'luminosité') !== false) {
+					return 'BRIGHTNESS';
+				}
+			if (strpos($name, 'fuite') !== false) {
+					return 'FLIGHT';
+				}
+			if (strpos($name_eq, 'porte') !== false || strpos($name_eq, 'door') !== false || strpos($name_eq, 'fenetre') !== false || strpos($name_eq, 'fenêtre') !== false) {
+				return 'OPENING';
+			}
 			return $type . 'STATE';
 		}
 	}

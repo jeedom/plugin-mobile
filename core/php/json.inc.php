@@ -75,9 +75,10 @@ if ($demande == 'complet'){
 	$json_complet = array(mobile::decouverte('valide','all'),mobile::pieces('all'),mobile::scenario('all'),mobile::Plugin_valide_func());
 	echo json_encode(array('return' => $json_complet));
 }elseif($demande == 'test'){
-	//$json_test = array('return' => 'perfect');
-	//echo json_encode($json_test);
-	echo 'perfect';
+	$nginx = config::byKey('nodeJsKey');
+	$json_test = array('return' => 'perfect','nodekey' => $nginx);
+	echo json_encode($json_test);
+	//echo 'perfect';
 }elseif($demande == 'archi'){
 	echo mobile::archi('sauvegarde',$date_archi,$id_mobile,$json_archi);
 }elseif($demande == 'commande'){

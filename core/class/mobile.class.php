@@ -160,7 +160,7 @@ class mobile extends eqLogic {
 	/*                                                                                    */
 	/**************************************************************************************/
 
-	public static function scenario($type) {
+	public static function scenario() {
 		$return = array();
 		foreach (scenario::all() as $scenario) {
 			if ($scenario->getIsActive() == 1) {

@@ -181,7 +181,7 @@ class mobile extends eqLogic {
 					$return[] = utils::o2a($scenario);
 				}
 			}
-			return array('scenario' => $json_scenario);
+			return array('scenario' => $return);
 		}
 	}
 

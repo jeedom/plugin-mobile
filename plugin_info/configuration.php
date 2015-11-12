@@ -23,26 +23,19 @@ if (!isConnect()) {
 }
 ?>
 <form class="form-horizontal">
-	<div class="form-group">
-		<fieldset>
-			<label class="col-lg-2 control-label">{{Droits Sudo : }}</label>
-			<?php
+	<?php
 if (jeedom::isCapable('sudo')) {
-	echo '<div class="col-lg-2"><span class="label label-success">OK</span></div>';
+	echo '<div class="form-group">
+		<label class="col-lg-4 control-label">{{Dépendance}}</label>
+		<div class="col-lg-3">
+			<a class="btn btn-warning bt_installDeps"><i class="fa fa-check"></i> {{Installer/Mettre à jour}}</a>
+		</div>
+	</div>';
 } else {
-	echo '<div class="col-lg-2"><span class="label label-danger">NOK</span>    <span><a href="https://jeedom.fr/doc/documentation/installation/fr_FR/doc-installation.html#_etape_4_définition_des_droits_root_à_jeedom"><i class="fa fa-question-circle"></i></a></span></div>';
+	echo '<div class="alert alert danger">{{Jeedom n\'a pas les droits sudo sur votre système, il faut lui ajouter pour qu\'il puisse installer le démon openzwave, voir <a target="_blank" href="https://jeedom.fr/doc/documentation/installation/fr_FR/doc-installation.html#autre">ici</a> partie 1.7.4}}</div>';
 }
 ?>
-		</fieldset>
-	</div>
-	<fieldset>
-		<div class="form-group">
-			<label class="col-lg-2 control-label">{{Dépendances :}}</label>
-			<div class="col-lg-2">
-				<a class="btn btn-danger" id="bt_installDeps"><i class="fa fa-check"></i> {{Installer}}</a>
-			</div>
-		</div>
-	</fieldset>
+</fieldset>
 </form>
 <script>
 	$('#bt_installDeps').on('click',function(){

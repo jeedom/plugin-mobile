@@ -23,7 +23,7 @@ if (!is_object($jsonrpc)) {
 }
 $params = $jsonrpc->getParams();
 
-if ($jsonrpc->getMethod() == 'complet') {
+if ($jsonrpc->getMethod() == 'full') {
 	$jsonrpc->makeSuccess(array(
 		'eqLogics' => mobile::discovery('valide', 'all'),
 		'objects' => mobile::object('all'),

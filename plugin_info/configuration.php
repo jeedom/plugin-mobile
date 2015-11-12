@@ -27,7 +27,7 @@ if (!isConnect()) {
 		<fieldset>
 			<label class="col-lg-2 control-label">{{Droits Sudo : }}</label>
 			<?php
-if (exec('sudo cat /etc/sudoers') != "") {
+if (jeedom::isCapable('sudo')) {
 	echo '<div class="col-lg-2"><span class="label label-success">OK</span></div>';
 } else {
 	echo '<div class="col-lg-2"><span class="label label-danger">NOK</span>    <span><a href="https://jeedom.fr/doc/documentation/installation/fr_FR/doc-installation.html#_etape_4_définition_des_droits_root_à_jeedom"><i class="fa fa-question-circle"></i></a></span></div>';

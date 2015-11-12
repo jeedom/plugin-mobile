@@ -33,10 +33,6 @@ if ($jsonrpc->getMethod() == 'sync') {
 	));
 }
 
-if ($jsonrpc->getMethod() == 'archi') {
-	$jsonrpc->makeSuccess(mobile::archi('sauvegarde', $params['date_archi'], $params['id_mobile'], $params['json_archi']));
-}
-
 if ($jsonrpc->getMethod() == 'eqLogics') {
 	$jsonrpc->makeSuccess(mobile::discovery(true));
 }

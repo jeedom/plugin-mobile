@@ -172,30 +172,6 @@ class mobile extends eqLogic {
 
 	/**************************************************************************************/
 	/*                                                                                    */
-	/*    Permet de recuperer ou de sauvegarder l'architecture de l'app et de la creer    */
-	/*                                                                                    */
-	/**************************************************************************************/
-
-	public static function archi($type, $date_archi, $id_mobile, $json_archi) {
-		$json_archi_in = array();
-		$filename = dirname(__FILE__) . '/../../data/json/archi_mobile_' . $id_mobile . '.json';
-		if ($type == 'sauvegarde') {
-			if (file_exists($filename)) {
-				$json_archi_in = json_decode(file_get_contents($filename));
-			}
-			if (isset($json_archi_in['date']) && $json_archi_in['date'] > $date_archi) {
-				// On envoi le Json de la structure
-				return $json_archi_in;
-			} else {
-				// On sauvegarde le Json
-				file_put_contents($filename, $json_archi);
-				return 'save_archi';
-			}
-		}
-	}
-
-	/**************************************************************************************/
-	/*                                                                                    */
 	/*          Permet de recuperer les commandes compatible avec l'app Mobile            */
 	/*                                                                                    */
 	/**************************************************************************************/

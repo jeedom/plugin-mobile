@@ -259,28 +259,6 @@ class mobile extends eqLogic {
 
 	/**************************************************************************************/
 	/*                                                                                    */
-	/*         Permet de d'executer les commandes compatible avec l'app Mobile            */
-	/*                                                                                    */
-	/**************************************************************************************/
-	public static function cmd($id_cmd, $valeur_demande) {
-		$cmd = cmd::byId($id_cmd);
-		if (!is_object($cmd)) {
-			throw new Exception(__('Commande non trouvée : ', __FILE__) . $id_cmd);
-		}
-		if ($cmd->getType() == 'action') {
-			$option = null;
-			if ($valeur_demande !== null) {
-				$option = array('slider' => $valeur_demande);
-			}
-			$valeur_cmd = $cmd->execCmd($option);
-		} else {
-			$valeur_cmd = $cmd->execCmd(null, 2);
-		}
-		return array('id' => $cmd->getId(), 'valeur' => $valeur_cmd);
-	}
-
-	/**************************************************************************************/
-	/*                                                                                    */
 	/*                  Permet d'avoir les infos des plugins compatible                   */
 	/*                                                                                    */
 	/**************************************************************************************/

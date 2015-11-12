@@ -46,7 +46,7 @@ switch (init('demande')) {
 		echo mobile::archi('sauvegarde', init('date_archi'), init('id_mobile'), init('json_archi'));
 		break;
 	case 'commande':
-		echo json_encode(mobile::decouverte('valide', 'info'));
+		echo json_encode(mobile::discovery('valide', 'info'));
 		break;
 	case 'cmd':
 		echo json_encode(mobile::cmd(init('id'), init('valeur', null)));

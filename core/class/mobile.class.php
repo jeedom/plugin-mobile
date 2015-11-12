@@ -139,23 +139,19 @@ class mobile extends eqLogic {
 	/*                                                                                    */
 	/**************************************************************************************/
 
-	public static function discovery($type, $track) {
-		if ($type == 'all') {
-			return json_encode(array('decouverte' => utils::o2a(eqLogic::all())));
-		} elseif ($type == 'valide') {
-			$return = array();
-			foreach (self::$_PLUGIN_COMPATIBILITY as $plugin_type) {
-				$eqLogics = eqLogic::byType($plugin_type, true);
-				if (is_array($eqLogics)) {
-					foreach ($eqLogics as $eqLogic) {
-						$eqLogic_array = utils::o2a($eqLogic);
-						$eqLogic_array['commands'] = self::getPrepareCommand($eqLogic, ($track == 'info'));
-						$return[] = $eqLogic_array;
-					}
+	public static function discovery($cmdInfoOnly = false) {
+		$return = array();
+		foreach (self::$_PLUGIN_COMPATIBILITY as $plugin_type) {
+			$eqLogics = eqLogic::byType($plugin_type, true);
+			if (is_array($eqLogics)) {
+				foreach ($eqLogics as $eqLogic) {
+					$eqLogic_array = utils::o2a($eqLogic);
+					$eqLogic_array['commands'] = self::getPrepareCommand($eqLogic, $cmdInfoOnly);
+					$return[] = $eqLogic_array;
 				}
 			}
-			return $return;
 		}
+		return $return;
 	}
 
 	/**************************************************************************************/
@@ -165,15 +161,13 @@ class mobile extends eqLogic {
 	/**************************************************************************************/
 
 	public static function scenario($type) {
-		if ($type == 'all') {
-			$return = array();
-			foreach (scenario::all() as $scenario) {
-				if ($scenario->getIsActive() == 1) {
-					$return[] = utils::o2a($scenario);
-				}
+		$return = array();
+		foreach (scenario::all() as $scenario) {
+			if ($scenario->getIsActive() == 1) {
+				$return[] = utils::o2a($scenario);
 			}
-			return $return;
 		}
+		return $return;
 	}
 
 	/**************************************************************************************/

@@ -25,9 +25,9 @@ $params = $jsonrpc->getParams();
 
 if ($jsonrpc->getMethod() == 'full') {
 	$jsonrpc->makeSuccess(array(
-		'eqLogics' => mobile::discovery('valide', 'all'),
-		'objects' => mobile::object('all'),
-		'scenarios' => mobile::scenario('all'),
+		'eqLogics' => mobile::discovery(),
+		'objects' => mobile::object(),
+		'scenarios' => mobile::scenario(),
 		'plugins' => mobile::getAllowPlugin(),
 	));
 }
@@ -41,7 +41,7 @@ if ($jsonrpc->getMethod() == 'archi') {
 }
 
 if ($jsonrpc->getMethod() == 'eqLogics') {
-	$jsonrpc->makeSuccess(mobile::discovery('valide', 'info'));
+	$jsonrpc->makeSuccess(mobile::discovery(true));
 }
 
 if ($jsonrpc->getMethod() == 'plugins') {

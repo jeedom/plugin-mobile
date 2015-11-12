@@ -23,17 +23,14 @@ if (!is_object($jsonrpc)) {
 }
 $params = $jsonrpc->getParams();
 
-if ($jsonrpc->getMethod() == 'full') {
+if ($jsonrpc->getMethod() == 'sync') {
 	$jsonrpc->makeSuccess(array(
 		'eqLogics' => mobile::discovery(),
 		'objects' => mobile::object(),
 		'scenarios' => mobile::scenario(),
 		'plugins' => mobile::getAllowPlugin(),
+		'nodekey' => config::byKey('nodeJsKey'),
 	));
-}
-
-if ($jsonrpc->getMethod() == 'test') {
-	$jsonrpc->makeSuccess(array('nodekey' => config::byKey('nodeJsKey')));
 }
 
 if ($jsonrpc->getMethod() == 'archi') {

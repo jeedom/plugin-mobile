@@ -15,65 +15,35 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 if (!isConnect('admin')) {
-	throw new Exception('{{401 - Accs non autorisŽ}}');
+	throw new Exception('{{401 - Accés non autorisé}}');
 }
 ?>
-<div id='div_updatemobileAlert' style="display: none;"></div>
-<pre id='pre_mobileupdate' style='overflow: auto; height: 90%;with:90%;'></pre>
+<div id='div_updateMobileAlert' style="display: none;"></div>
 
+<a class="btn btn-warning pull-right" data-state="1" id="bt_mobileLogStopStart"><i class="fa fa-pause"></i> {{Pause}}</a>
+<input class="form-control pull-right" id="in_mobileLogSearch" style="width : 300px;" placeholder="{{Rechercher}}" />
+<br/><br/><br/>
+<pre id='pre_mobileupdate' style='overflow: auto; height: 90%;with:90%;'></pre>
 
 <script>
 	$.ajax({
 		type: 'POST',
 		url: 'plugins/mobile/core/ajax/mobile.ajax.php',
 		data: {
-			action: 'updatemobile'
+			action: 'updatemobile',
 		},
 		dataType: 'json',
 		global: false,
 		error: function (request, status, error) {
-			handleAjaxError(request, status, error, $('#div_updatemobileAlert'));
+			handleAjaxError(request, status, error, $('#div_updateMobileAlert'));
 		},
 		success: function () {
-			getmobileLog(1);
+			jeedom.log.autoupdate({
+               log : 'mobile_update',
+               display : $('#pre_mobileupdate'),
+               search : $('#in_mobileLogSearch'),
+               control : $('#bt_mobileLogStopStart'),
+           });
 		}
 	});
-	function getmobileLog(_autoUpdate) {
-		$.ajax({
-			type: 'POST',
-			url: 'core/ajax/log.ajax.php',
-			data: {
-				action: 'get',
-				logfile: 'mobile_update',
-			},
-			dataType: 'json',
-			global: false,
-			error: function (request, status, error) {
-				setTimeout(function () {
-					getJeedomLog(_autoUpdate, _log)
-				}, 1000);
-			},
-			success: function (data) {
-				if (data.state != 'ok') {
-					$('#div_alert').showAlert({message: data.result, level: 'danger'});
-					return;
-				}
-				var log = '';
-				var regex = /<br\s*[\/]?>/gi;
-				for (var i in data.result.reverse()) {
-					log += data.result[i][2].replace(regex, "\n");
-				}
-				$('#pre_mobileupdate').text(log);
-				$('#pre_mobileupdate').scrollTop($('#pre_mobileupdate').height() + 200000);
-				if (!$('#pre_mobileupdate').is(':visible')) {
-					_autoUpdate = 0;
-				}
-				if (init(_autoUpdate, 0) == 1) {
-					setTimeout(function () {
-						getmobileLog(_autoUpdate)
-					}, 1000);
-				}
-			}
-		});
-	}
 </script>

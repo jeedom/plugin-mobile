@@ -130,7 +130,7 @@ class mobile extends eqLogic {
 			'name' => __('Aucun', __FILE__),
 			'ordre' => -1,
 		);
-		return array('objet' => $response);
+		return $response;
 	}
 
 	/**************************************************************************************/
@@ -154,12 +154,7 @@ class mobile extends eqLogic {
 					}
 				}
 			}
-			if ($track == 'all') {
-				return array('decouverte' => $return);
-			} elseif ($track == 'info') {
-				return array('commande' => $return);
-			}
-			return array();
+			return $return;
 		}
 	}
 
@@ -177,7 +172,7 @@ class mobile extends eqLogic {
 					$return[] = utils::o2a($scenario);
 				}
 			}
-			return array('scenario' => $return);
+			return $return;
 		}
 	}
 
@@ -200,7 +195,7 @@ class mobile extends eqLogic {
 			} else {
 				// On sauvegarde le Json
 				file_put_contents($filename, $json_archi);
-				return json_encode(array('return' => 'save_archi'));
+				return 'save_archi';
 			}
 		}
 	}
@@ -240,7 +235,7 @@ class mobile extends eqLogic {
 
 			}
 		}
-		return array('plugin' => $return);
+		return $return;
 	}
 
 	/**************************************************************************************/
@@ -251,11 +246,11 @@ class mobile extends eqLogic {
 
 	public function getQrCode() {
 		$request_qrcode = array(
-			'id_app' => $this->getId(),
-			'urlinterne' => network::getNetworkAccess('internal'),
-			'urlexterne' => network::getNetworkAccess('external'),
+			'eqLogic_id' => $this->getId(),
+			'url_internal' => network::getNetworkAccess('internal'),
+			'url_external' => network::getNetworkAccess('external'),
 			'api_jeedom' => config::byKey('api'),
-			'utilisateur' => config::byKey('market::username'),
+			'market_user' => config::byKey('market::username'),
 		);
 		if (!file_exists(dirname(__FILE__) . '/../../data')) {
 			mkdir(dirname(__FILE__) . '/../../data');

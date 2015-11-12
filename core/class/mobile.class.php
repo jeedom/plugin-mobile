@@ -150,10 +150,10 @@ class mobile extends eqLogic {
 					foreach ($eqLogics as $eqLogic) {
 						if ($track == 'all') {
 							$eqLogic_array = utils::o2a($eqLogic);
-							$eqLogic_array['commands'] = self::commande($eqLogic->getId());
+							$eqLogic_array['commands'] = self::getPrepareCommand($eqLogic);
 							$return[] = $eqLogic_array;
 						} elseif ($track == 'info') {
-							$return[] = self::commande($eqLogic->getId(), true);
+							$return[] = self::getPrepareCommand($eqLogic, true);
 						}
 					}
 				}
@@ -214,44 +214,24 @@ class mobile extends eqLogic {
 	/*          Permet de recuperer les commandes compatible avec l'app Mobile            */
 	/*                                                                                    */
 	/**************************************************************************************/
-	public static function commande($type, $infoOnly = null) {
-		//Permet de decouvrir tout les commandes
+	public static function getPrepareCommand($eqLogic, $infoOnly = null) {
 		$return = array();
-		if ($type == 'all') {
-			foreach (cmd::all() as $cmd) {
-				$json_cmd = utils::o2a($cmd);
-				if ($cmd->getType() !== 'action') {
-					$json_cmd['value'] = $cmd->execCmd(null, 2);
-				} else {
-					$json_cmd['value'] = $cmd->getConfiguration('lastCmdValue');
-				}
-				$json_cmd['tag'] = mobile::getGenericType($cmd);
-				$return[] = $json_cmd;
-			}
-			return array('commands' => $return);
+		if ($infoOnly) {
+			$cmds = $eqLogic->getCmd('info');
 		} else {
-			$json_command = array();
-			foreach (cmd::byEqLogicId($type) as $cmd) {
-				if ($infoOnly) {
-					if ($cmd->getType() == 'info') {
-						$json_cmd = utils::o2a($cmd);
-						$json_cmd['tag'] = mobile::getGenericType($cmd);
-						$json_cmd['value'] = $cmd->execCmd(null, 2);
-						$arraycommande[] = $json_cmd;
-					}
-				} else {
-					$json_cmd = utils::o2a($cmd);
-					if ($cmd->getType() !== 'action') {
-						$json_cmd['value'] = $cmd->execCmd(null, 2);
-					} else {
-						$json_cmd['value'] = $cmd->getConfiguration('lastCmdValue');
-					}
-					$json_cmd['tag'] = mobile::getGenericType($cmd);
-					$return[] = $json_cmd;
-				}
-			}
-			return $return;
+			$cmds = $eqLogic->getCmd();
 		}
+		foreach ($cmds as $cmd) {
+			$json_cmd = utils::o2a($cmd);
+			$json_cmd['tag'] = mobile::getGenericType($cmd);
+			if ($cmd->getType() !== 'action') {
+				$json_cmd['value'] = $cmd->execCmd(null, 2);
+			} else {
+				$json_cmd['value'] = $cmd->getConfiguration('lastCmdValue');
+			}
+			$return[] = $json_cmd;
+		}
+		return $return;
 	}
 
 	/**************************************************************************************/

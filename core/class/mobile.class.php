@@ -150,10 +150,10 @@ class mobile extends eqLogic {
 					foreach ($eqLogics as $eqLogic) {
 						if ($track == 'all') {
 							$eqLogic_array = utils::o2a($eqLogic);
-							$eqLogic_array['commands'] = mobile::commande($eqLogic->getId());
+							$eqLogic_array['commands'] = self::commande($eqLogic->getId());
 							$return[] = $eqLogic_array;
 						} elseif ($track == 'info') {
-							$return = mobile::commande($eqLogic->getId(), 'ok', $return);
+							$return[] = self::commande($eqLogic->getId(), true);
 						}
 					}
 				}
@@ -214,12 +214,9 @@ class mobile extends eqLogic {
 	/*          Permet de recuperer les commandes compatible avec l'app Mobile            */
 	/*                                                                                    */
 	/**************************************************************************************/
-	public static function commande($type, $info = null, $arraycommande = null) {
+	public static function commande($type, $infoOnly = null) {
 		//Permet de decouvrir tout les commandes
 		$return = array();
-		if ($info == 'ok') {
-			$return = $arraycommande;
-		}
 		if ($type == 'all') {
 			foreach (cmd::all() as $cmd) {
 				$json_cmd = utils::o2a($cmd);
@@ -235,7 +232,7 @@ class mobile extends eqLogic {
 		} else {
 			$json_command = array();
 			foreach (cmd::byEqLogicId($type) as $cmd) {
-				if ($info == 'ok') {
+				if ($infoOnly) {
 					if ($cmd->getType() == 'info') {
 						$json_cmd = utils::o2a($cmd);
 						$json_cmd['tag'] = mobile::getGenericType($cmd);

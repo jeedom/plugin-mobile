@@ -48,11 +48,8 @@ switch (init('demande')) {
 	case 'commande':
 		echo json_encode(mobile::discovery('valide', 'info'));
 		break;
-	case 'cmd':
-		echo json_encode(mobile::cmd(init('id'), init('valeur', null)));
-		break;
 	case 'plugin':
-		echo json_encode(mobile::Plugin_valide_func());
+		echo json_encode(mobile::getAllowPlugin());
 		break;
 	default:
 		echo json_encode(array('return' => 'no_command'));

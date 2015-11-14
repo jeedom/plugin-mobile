@@ -28,7 +28,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 		'eqLogics' => mobile::discovery($params['allowPlugin']),
 		'objects' => mobile::object(),
 		'scenarios' => mobile::scenario(),
-		'config' => array('datetime' => strtotime('now'), 'nodeJsKey' => config::byKey('nodeJsKey')),
+		'config' => array('datetime' => getmicrotime(), 'nodeJsKey' => config::byKey('nodeJsKey')),
 	));
 }
 
@@ -59,21 +59,6 @@ if ($jsonrpc->getMethod() == 'updateObjectValue') {
 			continue;
 		}
 		$return[] = mobile::buildEqlogic($eqLogic);
-	}
-	$jsonrpc->makeSuccess($return);
-}
-
-if ($jsonrpc->getMethod() == 'changes') {
-	$return = array('datetime' => strtotime('now'), 'result' => array());
-	$cache = cache::byKey('nodejs_event');
-	$values = json_decode($cache->getValue('[]'), true);
-	if (count($values) > 0) {
-		foreach ($values as $value) {
-			if ($value['datetime'] <= $params['datetime']) {
-				break;
-			}
-			$return['result'][] = $value;
-		}
 	}
 	$jsonrpc->makeSuccess($return);
 }

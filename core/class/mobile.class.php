@@ -139,19 +139,32 @@ class mobile extends eqLogic {
 	/*                                                                                    */
 	/**************************************************************************************/
 
-	public static function discovery($cmdInfoOnly = false) {
+	public static function discovery($plugin = array()) {
 		$return = array();
-		foreach (self::$_PLUGIN_COMPATIBILITY as $plugin_type) {
+		foreach ($plugin as $plugin_type) {
 			$eqLogics = eqLogic::byType($plugin_type, true);
 			if (is_array($eqLogics)) {
 				foreach ($eqLogics as $eqLogic) {
-					$eqLogic_array = utils::o2a($eqLogic);
-					$eqLogic_array['commands'] = self::getPrepareCommand($eqLogic, $cmdInfoOnly);
-					$return[] = $eqLogic_array;
+					$return[] = self::buildEqlogic($eqLogic);
 				}
 			}
 		}
 		return $return;
+	}
+
+	public static function buildEqlogic($_eqLogic) {
+		$eqLogic_array = utils::o2a($_eqLogic);
+		foreach ($_eqLogic->getCmd() as $cmd) {
+			$json_cmd = utils::o2a($cmd);
+			$json_cmd['tag'] = mobile::getGenericType($cmd);
+			$json_cmd['currentValue'] = self::getCmdValue($cmd);
+			$eqLogic_array['cmd'][] = $json_cmd;
+		}
+		return $eqLogic_array;
+	}
+
+	public static function getCmdValue($_cmd) {
+		return ($_cmd->getType() !== 'action') ? $_cmd->execCmd(null, 2) : $_cmd->getConfiguration('lastCmdValue');
 	}
 
 	/**************************************************************************************/
@@ -166,27 +179,6 @@ class mobile extends eqLogic {
 			if ($scenario->getIsActive() == 1) {
 				$return[] = utils::o2a($scenario);
 			}
-		}
-		return $return;
-	}
-
-	/**************************************************************************************/
-	/*                                                                                    */
-	/*          Permet de recuperer les commandes compatible avec l'app Mobile            */
-	/*                                                                                    */
-	/**************************************************************************************/
-	public static function getPrepareCommand($eqLogic, $infoOnly = false) {
-		$return = array();
-		if ($infoOnly) {
-			$cmds = $eqLogic->getCmd('info');
-		} else {
-			$cmds = $eqLogic->getCmd();
-		}
-		foreach ($cmds as $cmd) {
-			$json_cmd = utils::o2a($cmd);
-			$json_cmd['tag'] = mobile::getGenericType($cmd);
-			$json_cmd['value'] = ($cmd->getType() !== 'action') ? $cmd->execCmd(null, 2) : $cmd->getConfiguration('lastCmdValue');
-			$return[] = $json_cmd;
 		}
 		return $return;
 	}
@@ -242,11 +234,11 @@ class mobileCmd extends cmd {
 	/*     * *********************Methode d'instance************************* */
 
 	/*
-	 * Non obligatoire permet de demander de ne pas supprimer les commandes même si elles ne sont pas dans la nouvelle configuration de l'équipement envoyé en JS
-	public function dontRemoveCmd() {
-	return true;
-	}
-	 */
+											 * Non obligatoire permet de demander de ne pas supprimer les commandes même si elles ne sont pas dans la nouvelle configuration de l'équipement envoyé en JS
+											public function dontRemoveCmd() {
+											return true;
+											}
+											 */
 
 	public function execute($_options = array()) {
 		return false;

@@ -63,5 +63,18 @@ if ($jsonrpc->getMethod() == 'updateObjectValue') {
 	$jsonrpc->makeSuccess($return);
 }
 
+if ($jsonrpc->getMethod() == 'event') {
+	$eqLogic = eqLogic::byId($params['eqLogic_id']);
+	if (!is_object($eqLogic)) {
+		throw new Exception(__('EqLogic inconnu : ', __FILE__) . $params['eqLogic_id']);
+	}
+	$cmd = $eqLogic->getCmd(null,$params['cmd_logicalId'])
+	if (!is_object($cmd)) {
+		throw new Exception(__('Cmd inconnu : ', __FILE__) . $params['cmd_logicalId']);
+	}
+	$cmd->event($params['value']);
+	$jsonrpc->makeSuccess();
+}
+
 throw new Exception(__('Aucune demande', __FILE__));
 ?>

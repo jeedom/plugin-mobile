@@ -28,7 +28,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 		'eqLogics' => mobile::discovery($params['allowPlugin']),
 		'objects' => mobile::object(),
 		'scenarios' => mobile::scenario(),
-		'config' => array('datetime' => getmicrotime(), 'nodeJsKey' => config::byKey('nodeJsKey')),
+		'config' => array('datetime' => getmicrotime()),
 	));
 }
 

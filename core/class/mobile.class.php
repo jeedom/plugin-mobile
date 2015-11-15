@@ -211,8 +211,6 @@ class mobile extends eqLogic {
 			'eqLogic_id' => $this->getId(),
 			'url_internal' => network::getNetworkAccess('internal'),
 			'url_external' => network::getNetworkAccess('external'),
-			'api_jeedom' => config::byKey('api'),
-			'market_user' => config::byKey('market::username'),
 		);
 		if (!file_exists(dirname(__FILE__) . '/../../data')) {
 			mkdir(dirname(__FILE__) . '/../../data');

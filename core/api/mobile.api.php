@@ -68,7 +68,7 @@ if ($jsonrpc->getMethod() == 'event') {
 	if (!is_object($eqLogic)) {
 		throw new Exception(__('EqLogic inconnu : ', __FILE__) . $params['eqLogic_id']);
 	}
-	$cmd = $eqLogic->getCmd(null,$params['cmd_logicalId'])
+	$cmd = $eqLogic->getCmd(null, $params['cmd_logicalId']);
 	if (!is_object($cmd)) {
 		throw new Exception(__('Cmd inconnu : ', __FILE__) . $params['cmd_logicalId']);
 	}

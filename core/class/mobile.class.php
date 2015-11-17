@@ -42,76 +42,6 @@ class mobile extends eqLogic {
 
 	/**************************************************************************************/
 	/*                                                                                    */
-	/*                  Class Loic permet d'avoir un Tag par Action                       */
-	/*                                                                                    */
-	/**************************************************************************************/
-
-	public static function getGenericType($cmd) {
-		if ($cmd->getDisplay('generic_type') != '') {
-			return $cmd->getDisplay('generic_type');
-		}
-		$category = $cmd->getEqLogic()->getPrimaryCategory();
-		$name_eq = strtolower($cmd->getEqLogic()->getName());
-		$type = strtoupper($category) . '_';
-		if ($cmd->getType() == 'action') {
-			if ($cmd->getSubtype() == 'other') {
-				$name = strtolower($cmd->getName());
-				if ($category = 'heating' && strpos($name, 'cool') !== false) {
-					$type = 'COOL_';
-				}
-				if (strpos($name, 'off') !== false) {
-					return $type . 'OFF';
-				}
-				if (strpos($name, 'on') !== false) {
-					return $type . 'ON';
-				}
-				if (strpos($name, 'up') !== false) {
-					return $type . 'UP';
-				}
-				if (strpos($name, 'down') !== false) {
-					return $type . 'DOWN';
-				}
-			}
-			return $type . strtoupper($cmd->getSubtype());
-		} else {
-			switch ($cmd->getUnite()) {
-				case 'W':
-					return $type . 'POWER';
-				case 'kWh':
-					return $type . 'CONSUMPTION';
-				case '°C':
-					return 'TEMPERATURE';
-				case 'Lux':
-					return 'BRIGHTNESS';
-			}
-			$name = strtolower($cmd->getName());
-			if (strpos($name, 'présence') !== false) {
-				return 'PRESENCE';
-			}
-			if (strpos($name, 'batterie') !== false) {
-				return 'BATTERY';
-			}
-			if (strpos($name, 'fumées') !== false) {
-				return 'FUMES';
-			}
-			if (strpos($name, 'température') !== false) {
-				return 'TEMPERATURE';
-			}
-			if (strpos($name, 'luminosité') !== false) {
-				return 'BRIGHTNESS';
-			}
-			if (strpos($name, 'fuite') !== false) {
-				return 'FLIGHT';
-			}
-			if (strpos($name_eq, 'porte') !== false || strpos($name_eq, 'door') !== false || strpos($name_eq, 'fenetre') !== false || strpos($name_eq, 'fenêtre') !== false) {
-				return 'OPENING';
-			}
-			return $type . 'STATE';
-		}
-	}
-
-	/**************************************************************************************/
-	/*                                                                                    */
 	/*                  Permet de connaitre les pieces de la box jeedom                   */
 	/*                                                                                    */
 	/**************************************************************************************/
@@ -156,7 +86,7 @@ class mobile extends eqLogic {
 		$eqLogic_array = utils::o2a($_eqLogic);
 		foreach ($_eqLogic->getCmd() as $cmd) {
 			$json_cmd = utils::o2a($cmd);
-			$json_cmd['tag'] = mobile::getGenericType($cmd);
+			$json_cmd['tag'] = $cmd->getGenericType();
 			$json_cmd['currentValue'] = self::getCmdValue($cmd);
 			$eqLogic_array['cmd'][] = $json_cmd;
 		}

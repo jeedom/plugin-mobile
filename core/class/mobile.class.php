@@ -85,16 +85,9 @@ class mobile extends eqLogic {
 	public static function buildEqlogic($_eqLogic) {
 		$eqLogic_array = utils::o2a($_eqLogic);
 		foreach ($_eqLogic->getCmd() as $cmd) {
-			$json_cmd = utils::o2a($cmd);
-			$json_cmd['tag'] = $cmd->getGenericType();
-			$json_cmd['currentValue'] = self::getCmdValue($cmd);
-			$eqLogic_array['cmd'][] = $json_cmd;
+			$eqLogic_array['cmd'][] = $cmd->exportApi();
 		}
 		return $eqLogic_array;
-	}
-
-	public static function getCmdValue($_cmd) {
-		return ($_cmd->getType() !== 'action') ? $_cmd->execCmd(null, 2) : $_cmd->getConfiguration('lastCmdValue');
 	}
 
 	/**************************************************************************************/

@@ -32,37 +32,6 @@ if ($jsonrpc->getMethod() == 'sync') {
 	));
 }
 
-if ($jsonrpc->getMethod() == 'updateEqLogicValue') {
-	$eqLogic = eqLogic::byId($params['id']);
-	if (!is_object($eqLogic)) {
-		throw new Exception(__('EqLogic inconnu : ', __FILE__) . $params['id']);
-	}
-	$jsonrpc->makeSuccess(mobile::buildEqlogic($eqLogic));
-}
-
-if ($jsonrpc->getMethod() == 'updateCmdValue') {
-	$cmd = cmd::byId($params['id']);
-	if (!is_object($cmd)) {
-		throw new Exception(__('Cmd inconnu : ', __FILE__) . $params['id']);
-	}
-	$jsonrpc->makeSuccess(mobile::getCmdValue($cmd));
-}
-
-if ($jsonrpc->getMethod() == 'updateObjectValue') {
-	$object = object::byId($params['id']);
-	if (!is_object($object)) {
-		throw new Exception(__('Object inconnu : ', __FILE__) . $params['id']);
-	}
-	$return = array();
-	foreach ($object->getEqLogic() as $eqLogic) {
-		if (!in_array($eqLogic->getEqType_name(), $params['allowPlugin'])) {
-			continue;
-		}
-		$return[] = mobile::buildEqlogic($eqLogic);
-	}
-	$jsonrpc->makeSuccess($return);
-}
-
 if ($jsonrpc->getMethod() == 'event') {
 	$eqLogic = eqLogic::byId($params['eqLogic_id']);
 	if (!is_object($eqLogic)) {

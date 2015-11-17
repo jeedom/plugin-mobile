@@ -51,11 +51,13 @@ class mobile extends eqLogic {
 		foreach ($plugin as $plugin_type) {
 			$eqLogics = eqLogic::byType($plugin_type, true);
 			if (is_array($eqLogics)) {
-				$eqLogic_array = utils::o2a($_eqLogic);
-				foreach ($_eqLogic->getCmd() as $cmd) {
-					$eqLogic_array['cmd'][] = $cmd->exportApi();
+				foreach ($eqLogics as $eqLogic) {
+					$eqLogic_array = utils::o2a($eqLogic);
+					foreach ($eqLogic->getCmd() as $cmd) {
+						$eqLogic_array['cmd'][] = $cmd->exportApi();
+					}
+					$return[] = $eqLogic_array;
 				}
-				$return[] = $eqLogic_array;
 			}
 		}
 		return $return;

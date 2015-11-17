@@ -28,12 +28,12 @@ foreach ($eqLogics as $eqLogic) {
 
     <div class="eqLogicThumbnailContainer">
       <div class="cursor eqLogicAction" data-action="add" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
-       <center>
-        <i class="fa fa-plus-circle" style="font-size : 7em;color:#94ca02;"></i>
-    </center>
-    <span style="font-size : 1.1em;position:relative; top : 23px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>Ajouter</center></span>
-</div>
-<?php
+         <center>
+            <i class="fa fa-plus-circle" style="font-size : 7em;color:#94ca02;"></i>
+        </center>
+        <span style="font-size : 1.1em;position:relative; top : 23px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>Ajouter</center></span>
+    </div>
+    <?php
 foreach ($eqLogics as $eqLogic) {
 	echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >';
 	echo "<center>";
@@ -73,36 +73,48 @@ foreach (object::all() as $object) {
                        </div>
                    </div>
                    <div class="form-group">
-                     <label class="col-sm-3 control-label"></label>
-                     <div class="col-sm-8">
-                         <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Activer}}" data-l1key="isEnable" checked/>
-                         <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Visible}}" data-l1key="isVisible" checked/>
-                     </div>
-                 </div>
-                 <div class="form-group">
+                       <label class="col-sm-3 control-label"></label>
+                       <div class="col-sm-8">
+                           <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Activer}}" data-l1key="isEnable" checked/>
+                           <input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Visible}}" data-l1key="isVisible" checked/>
+                       </div>
+                   </div>
+                   <div class="form-group">
                     <label class="col-sm-3 control-label">{{Type de Mobile}}</label>
                     <div class="col-sm-3">
                         <select class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="type_mobile">
-                         <option value="ios">iPhone</option>
-                         <option value="android">Android</option>
-                         <option value="windows">Windows</option>
-                     </select>
-                 </div>
-             </div>
-         </fieldset>
-     </form>
- </div>
- <div class="col-lg-6">
+                           <option value="ios">iPhone</option>
+                           <option value="android">Android</option>
+                           <option value="windows">Windows</option>
+                       </select>
+                   </div>
+               </div>
+               <div class="form-group">
+                    <label class="col-sm-3 control-label">{{Utilisateurs}}</label>
+                    <div class="col-sm-3">
+                        <select class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="affect_user">
+                        <option value="">{{Aucun}}</option>
+                          <?php
+foreach (user::all() as $user) {
+	echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
+}
+?>
+                       </select>
+                   </div>
+               </div>
+           </fieldset>
+       </form>
+   </div>
+   <div class="col-lg-6">
     <form class="form-horizontal">
         <fieldset>
-        <legend>{{Mobile}}</legend>
+            <legend>{{Mobile}}</legend>
             <center>
-             <div class="qrCodeImg"></div>
-         </center>
-     </div>
- </fieldset>
+               <div class="qrCodeImg"></div>
+           </center>
+       </div>
+   </fieldset>
 </form>
-</div>
 </div>
 <legend>{{Commande}}</legend>
 <table id="table_cmd" class="table table-bordered table-condensed">

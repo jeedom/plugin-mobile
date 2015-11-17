@@ -212,6 +212,13 @@ class mobile extends eqLogic {
 			'url_internal' => network::getNetworkAccess('internal'),
 			'url_external' => network::getNetworkAccess('external'),
 		);
+		if ($this->getConfiguration('affect_user') != '') {
+			$username = user::byId($this->getConfiguration('affect_user'));
+			if (is_object($username)) {
+				$request_qrcode['username'] = $username->getLogin();
+				$request_qrcode['apikey'] = $username->getHash();
+			}
+		}
 		if (!file_exists(dirname(__FILE__) . '/../../data')) {
 			mkdir(dirname(__FILE__) . '/../../data');
 		}

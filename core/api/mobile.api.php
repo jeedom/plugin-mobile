@@ -26,8 +26,8 @@ $params = $jsonrpc->getParams();
 if ($jsonrpc->getMethod() == 'sync') {
 	$jsonrpc->makeSuccess(array(
 		'eqLogics' => mobile::discovery($params['allowPlugin']),
-		'objects' => mobile::object(),
-		'scenarios' => mobile::scenario(),
+		'objects' => utils::o2a(object::all()),
+		'scenarios' => utils::o2a(scenario::all()),
 		'config' => array('datetime' => getmicrotime()),
 	));
 }

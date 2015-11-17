@@ -42,29 +42,6 @@ class mobile extends eqLogic {
 
 	/**************************************************************************************/
 	/*                                                                                    */
-	/*                  Permet de connaitre les pieces de la box jeedom                   */
-	/*                                                                                    */
-	/**************************************************************************************/
-
-	public static function object() {
-		$response = array();
-		foreach (object::all() as $object) {
-			$response[] = array(
-				'id' => $object->getId(),
-				'name' => $object->getName(),
-				'ordre' => $object->getPosition(),
-			);
-		}
-		$response[] = array(
-			'id' => 99999,
-			'name' => __('Aucun', __FILE__),
-			'ordre' => -1,
-		);
-		return $response;
-	}
-
-	/**************************************************************************************/
-	/*                                                                                    */
 	/*            Permet de decouvrir tout les modules de la Jeedom compatible            */
 	/*                                                                                    */
 	/**************************************************************************************/
@@ -88,39 +65,6 @@ class mobile extends eqLogic {
 			$eqLogic_array['cmd'][] = $cmd->exportApi();
 		}
 		return $eqLogic_array;
-	}
-
-	/**************************************************************************************/
-	/*                                                                                    */
-	/*                      Permet de decouvrir tout les scenarios                        */
-	/*                                                                                    */
-	/**************************************************************************************/
-
-	public static function scenario() {
-		$return = array();
-		foreach (scenario::all() as $scenario) {
-			if ($scenario->getIsActive() == 1) {
-				$return[] = utils::o2a($scenario);
-			}
-		}
-		return $return;
-	}
-
-	/**************************************************************************************/
-	/*                                                                                    */
-	/*                  Permet d'avoir les infos des plugins compatible                   */
-	/*                                                                                    */
-	/**************************************************************************************/
-	public static function getAllowPlugin() {
-		$return = array();
-		foreach (self::$_PLUGIN_COMPATIBILITY as $plugin_id) {
-			try {
-				$return[] = utils::o2a(plugin::byId($plugin_id));
-			} catch (Exception $e) {
-
-			}
-		}
-		return $return;
 	}
 
 	/**************************************************************************************/

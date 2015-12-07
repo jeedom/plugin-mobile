@@ -5,10 +5,10 @@
     <description>Plugin pour l'application Mobile</description>
     <icon>fa fa-mobile</icon>
     <licence>AGPL</licence>
-    <author>Alexandre Orilia</author>
+    <author>Jeedom // Loic/Alexandre</author>
     <installation>Aucune</installation>
-    <require>1.103</require>
+    <require>2.000</require>
     <category>communication</category>
-    <version>0.1 Alpha</version>
+    <version>0.1 Beta</version>
 </info>
 

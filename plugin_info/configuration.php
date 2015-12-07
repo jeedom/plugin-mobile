@@ -28,11 +28,11 @@ if (jeedom::isCapable('sudo')) {
 	echo '<div class="form-group">
 		<label class="col-lg-4 control-label">{{Dépendance}}</label>
 		<div class="col-lg-3">
-			<a class="btn btn-warning bt_installDeps"><i class="fa fa-check"></i> {{Installer/Mettre à jour}}</a>
+			<a class="btn btn-warning bt_installDeps" id="bt_installDeps"><i class="fa fa-check"></i> {{Installer/Mettre à jour}}</a>
 		</div>
 	</div>';
 } else {
-	echo '<div class="alert alert danger">{{Jeedom n\'a pas les droits sudo sur votre système, il faut lui ajouter pour qu\'il puisse installer le démon openzwave, voir <a target="_blank" href="https://jeedom.fr/doc/documentation/installation/fr_FR/doc-installation.html#autre">ici</a> partie 1.7.4}}</div>';
+	echo '<div class="alert alert danger">{{Jeedom n\'a pas les droits sudo sur votre système, il faut lui ajouter pour qu\'il puisse installer les dépendances, voir <a target="_blank" href="https://jeedom.fr/doc/documentation/installation/fr_FR/doc-installation.html#autre">ici</a> partie 1.7.4}}</div>';
 }
 ?>
 </fieldset>

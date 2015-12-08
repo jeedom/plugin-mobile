@@ -1,7 +1,11 @@
+touch /tmp/dependancy_mobile_in_progress
 #!/bin/bash
-echo "########### Installation en cours ##########"
+
+echo "Launch install of mobile"
 sudo apt-get update
-sudo dpkg --configure -a
 sudo apt-get install -y php5-gd
+
 sudo dpkg --configure -a
-echo "########### Fin ##########"
+
+echo "Everything is successfully installed!"
+rm /tmp/dependancy_mobile_in_progress

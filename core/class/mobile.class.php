@@ -21,6 +21,30 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 include_file('3rdparty', 'qrcode/qrlib', 'php', 'mobile');
 
 class mobile extends eqLogic {
+
+	/*     * *************************Dependancy****************************** */
+	public static function dependancy_info() {
+		$return = array();
+		$return['log'] = 'mobile_update';
+		if (file_exists('/tmp/dependancy_mobile_in_progress')) {
+			$return['state'] = 'in_progress';
+		} else {
+			if (function_exists("gd_info")) {
+				$return['state'] = 'ok';
+			} else {
+				$return['state'] = 'nok';
+			}
+		}
+		return $return;
+	}
+	public static function dependancy_install() {
+		log::remove('mobile_update');
+		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../ressources/install.sh';
+		$cmd .= ' >> ' . log::getPathToLog('mobile_update') . ' 2>&1 &';
+		exec($cmd);
+	}
+
+
 	/*     * *************************Attributs****************************** */
 
 	private static $_PLUGIN_COMPATIBILITY = array('openzwave', 'rfxcom');

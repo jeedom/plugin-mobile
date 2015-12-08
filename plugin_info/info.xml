@@ -10,5 +10,6 @@
     <require>2.000</require>
     <category>communication</category>
     <version>0.1 Beta</version>
+    <hasDependency>1</hasDependency>
 </info>
 

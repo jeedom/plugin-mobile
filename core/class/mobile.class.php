@@ -18,36 +18,11 @@
 
 /* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
-include_file('3rdparty', 'qrcode/qrlib', 'php', 'mobile');
 
 class mobile extends eqLogic {
-
-	/*     * *************************Dependancy****************************** */
-	public static function dependancy_info() {
-		$return = array();
-		$return['log'] = 'mobile_update';
-		if (file_exists('/tmp/dependancy_mobile_in_progress')) {
-			$return['state'] = 'in_progress';
-		} else {
-			if (function_exists("gd_info")) {
-				$return['state'] = 'ok';
-			} else {
-				$return['state'] = 'nok';
-			}
-		}
-		return $return;
-	}
-	public static function dependancy_install() {
-		log::remove('mobile_update');
-		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../ressources/install.sh';
-		$cmd .= ' >> ' . log::getPathToLog('mobile_update') . ' 2>&1 &';
-		exec($cmd);
-	}
-
-
 	/*     * *************************Attributs****************************** */
 
-	private static $_PLUGIN_COMPATIBILITY = array('openzwave', 'rfxcom');
+	private static $_PLUGIN_COMPATIBILITY = array('openzwave', 'rfxcom', 'edisio', 'ipx800', 'mySensors', 'Zibasedom', 'virtual', 'camera');
 
 	/*     * ***********************Methode static*************************** */
 
@@ -95,22 +70,19 @@ class mobile extends eqLogic {
 
 	public function getQrCode() {
 		$request_qrcode = array(
-			'eqLogic_id' => $this->getId(),
+          		'eqLogic_id' => $this->getId(),
 			'url_internal' => network::getNetworkAccess('internal'),
 			'url_external' => network::getNetworkAccess('external'),
-		);
-		if ($this->getConfiguration('affect_user') != '') {
-			$username = user::byId($this->getConfiguration('affect_user'));
-			if (is_object($username)) {
-				$request_qrcode['username'] = $username->getLogin();
-				$request_qrcode['apikey'] = $username->getHash();
-			}
+          	);
+      	if ($this->getConfiguration('affect_user') != '') {
+		$username = user::byId($this->getConfiguration('affect_user'));
+		if (is_object($username)) {
+			$request_qrcode['username'] = $username->getLogin();
+			$request_qrcode['apikey'] = $username->getHash();
 		}
-		if (!file_exists(dirname(__FILE__) . '/../../data')) {
-			mkdir(dirname(__FILE__) . '/../../data');
-		}
-		QRcode::png(json_encode($request_qrcode), dirname(__FILE__) . '/../../data/qrcode.png', 'L', 4, 2);
-		return 'plugins/mobile/data/qrcode.png?' . strtotime('now');
+	}
+      	$retour = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl='.json_encode($request_qrcode);
+	return $retour;
 	}
 
 	/*     * *********************Méthodes d'instance************************* */

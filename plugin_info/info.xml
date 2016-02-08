@@ -9,7 +9,6 @@
     <installation>Aucune</installation>
     <require>2.000</require>
     <category>communication</category>
-    <version>0.2 Beta</version>
-    <hasDependency>0</hasDependency>
+    <version>0.2</version>
 </info>
 

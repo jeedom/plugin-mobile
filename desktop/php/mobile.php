@@ -15,7 +15,7 @@ $eqLogics = eqLogic::byType('mobile');
                 <li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/></li>
                 <?php
 foreach ($eqLogics as $eqLogic) {
-	echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName() . '</a></li>';
+	echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
 }
 ?>
            </ul>
@@ -23,7 +23,7 @@ foreach ($eqLogics as $eqLogic) {
    </div>
 
    <div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
-    <legend>{{Mes téléphones mobiles}}
+    <legend><i class="icon techno-listening3"></i>  {{Mes Téléphones Mobiles}}
     </legend>
 
     <div class="eqLogicThumbnailContainer">
@@ -33,16 +33,24 @@ foreach ($eqLogics as $eqLogic) {
         </center>
         <span style="font-size : 1.1em;position:relative; top : 23px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>Ajouter</center></span>
     </div>
-    <?php
-foreach ($eqLogics as $eqLogic) {
-	echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >';
-	echo "<center>";
-	echo '<img src="plugins/mobile/doc/images/mobile_icon.png" height="105" width="95" />';
-	echo "</center>";
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
-	echo '</div>';
-}
-?>
+	 <?php
+				foreach ($eqLogics as $eqLogic) {
+					$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
+                    echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
+                    echo "<center>";
+					$file = 'plugins/mobile/doc/images/' . $eqLogic->getConfiguration('type_mobile') . '.png';
+                    if (file_exists($file)) {
+                        $path = 'plugins/mobile/doc/images/' . $eqLogic->getConfiguration('type_mobile') . '.png';
+						echo '<img src="'.$path.'" height="105" width="105" />';
+                    } else {
+                        $path = 'plugins/mobile/doc/images/mobile_icon.png';
+						echo '<img src="'.$path.'" height="105" width="105" />';
+                    }
+                    echo "</center>";
+                    echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
+                    echo '</div>';
+                }
+    ?>
 </div>
 </div>
 
@@ -108,7 +116,7 @@ foreach (user::all() as $user) {
    <div class="col-lg-6">
     <form class="form-horizontal">
         <fieldset>
-            <legend>{{Mobile}}</legend>
+            <legend><i class="icon techno-listening3"></i>  {{Mobile}}</legend>
             <center>
                <div class="qrCodeImg"></div>
            </center>
@@ -116,6 +124,7 @@ foreach (user::all() as $user) {
    </fieldset>
 </form>
 </div>
+<!--
 <legend>{{Commande}}</legend>
 <table id="table_cmd" class="table table-bordered table-condensed">
     <thead>
@@ -126,11 +135,11 @@ foreach (user::all() as $user) {
     <tbody>
     </tbody>
 </table>
+-->
 <div class="form-actions">
     <a class="btn btn-danger eqLogicAction" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
     <a class="btn btn-success eqLogicAction" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
 </div>
-
 </div>
 </div>
 <?php include_file('desktop', 'mobile', 'js', 'mobile');?>

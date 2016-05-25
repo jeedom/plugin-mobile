@@ -22,7 +22,7 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 class mobile extends eqLogic {
 	/*     * *************************Attributs****************************** */
 
-	private static $_PLUGIN_COMPATIBILITY = array('openzwave', 'rfxcom', 'edisio', 'ipx800', 'mySensors', 'Zibasedom', 'virtual', 'camera','apcupsd', 'btsniffer', 'dsc', 'h801', 'rflink', 'mysensors', 'relaynet', 'remora', 'unipi', 'playbulb', 'doorbird','netatmoThermostat');
+	//private static $_PLUGIN_COMPATIBILITY = array('openzwave', 'rfxcom', 'edisio', 'ipx800', 'mySensors', 'Zibasedom', 'virtual', 'camera','apcupsd', 'btsniffer', 'dsc', 'h801', 'rflink', 'mysensors', 'relaynet', 'remora', 'unipi', 'playbulb', 'doorbird','netatmoThermostat');
 
 	/*     * ***********************Methode static*************************** */
 
@@ -52,6 +52,7 @@ class mobile extends eqLogic {
 			if (is_array($eqLogics)) {
 				foreach ($eqLogics as $eqLogic) {
                   	$i = 0;
+                  if(($eqLogic->getIsVisible() == 1 && $eqLogic->getObject_id() !== null) || $eqLogic->getEqType_name() == 'camera' || $eqLogic->getEqType_name() == 'netatmoThermostat' || $eqLogic->getEqType_name() == 'thermostat' || $eqLogic->getEqType_name() == 'alarm' || $eqLogic->getEqType_name() == 'weather'){
 					$eqLogic_array = utils::o2a($eqLogic);
 					foreach ($eqLogic->getCmd() as $cmd) {
                     	if($cmd->getDisplay('generic_type') != 'GENERIC_ERROR' && $cmd->getDisplay('generic_type') != null && $cmd->getDisplay('generic_type') != 'DONT'){
@@ -63,6 +64,7 @@ class mobile extends eqLogic {
                     	$return[] = $eqLogic_array;
                     }
 				}
+                }
 			}
 		}
 		return $return;

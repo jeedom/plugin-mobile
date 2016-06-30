@@ -64,7 +64,7 @@ class mobile extends eqLogic {
 		if (file_exists('/tmp/homebridge_in_progress')) {
 			return;
 		}
-		if(self::check_ios == 0){
+		if(self::check_ios() == 0){
 			config::save('deamonAutoMode',0,'mobile');
 			return;
 		}

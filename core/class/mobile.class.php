@@ -66,6 +66,7 @@ class mobile extends eqLogic {
 		}
 		if(self::check_ios == 0){
 			config::save('deamonAutoMode',0,'mobile');
+			return;
 		}
 		
 		log::remove('homebridge_update');

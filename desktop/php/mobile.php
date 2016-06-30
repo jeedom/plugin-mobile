@@ -124,18 +124,6 @@ foreach (user::all() as $user) {
    </fieldset>
 </form>
 </div>
-<!--
-<legend>{{Commande}}</legend>
-<table id="table_cmd" class="table table-bordered table-condensed">
-    <thead>
-        <tr>
-            <th>{{Nom}}</th><th>{{Option}}</th><th>{{Action}}</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
--->
 <div class="form-actions">
     <a class="btn btn-danger eqLogicAction" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
     <a class="btn btn-success eqLogicAction" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>

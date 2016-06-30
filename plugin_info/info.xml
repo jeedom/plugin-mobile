@@ -8,6 +8,8 @@
     <author>Jeedom</author>
     <installation>Aucune</installation>
     <require>2.2</require>
+    <hasDependency>1</hasDependency>
+    <hasOwnDeamon>1</hasOwnDeamon>
     <category>communication</category>
     <version>0.3</version>
 </info>

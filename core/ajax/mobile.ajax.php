@@ -30,6 +30,16 @@ try {
 		mobile::updatemobile();
 		ajax::success();
 	}
+	
+	if (init('action') == 'eraseHomebridgeCache') {
+		mobile::eraseHomebridgeCache();
+		ajax::success();
+	}
+	
+	if (init('action') == 'regenerateHomebridgeConf') {
+		mobile::generate_file();
+		ajax::success();
+	}
 
 	if (init('action') == 'getQrCode') {
 		$eqLogic = mobile::byId(init('id'));

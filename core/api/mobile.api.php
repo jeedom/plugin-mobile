@@ -35,6 +35,15 @@ if ($jsonrpc->getMethod() == 'sync') {
 	));
 }
 
+if ($jsonrpc->getMethod() == 'idUniq') {
+	$jsonrpc->makeSuccess(mobile::getIdUniq($params));	
+}
+
+if ($jsonrpc->getMethod() == 'version') {
+	$mobile_update = update::byName('mobile');
+	$jsonrpc->makeSuccess("{version : '".$mobile_update->getLocalVersion()."'}");	
+}
+
 if ($jsonrpc->getMethod() == 'event') {
 	$eqLogic = eqLogic::byId($params['eqLogic_id']);
 	if (!is_object($eqLogic)) {

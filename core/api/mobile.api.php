@@ -25,7 +25,7 @@ if (!is_object($jsonrpc)) {
 }
 $params = $jsonrpc->getParams();
 $PluginsuportedMobile = $params['allowPlugin'];
-$Pluginsuported = ['openzwave','rfxcom','edisio','mpower', 'ipx800', 'mySensors', 'Zibasedom', 'virtual', 'camera','netatmoWeather','weather','philipsHue','enocean','wifipower','alarm','mode','apcupsd', 'btsniffer','dsc','h801','rflink','mysensors','relaynet','remora','unipi','playbulb','doorbird','eibd','ipx800','ipx800v2','boxio','thermostat','netatmoThermostat'];
+$Pluginsuported = ['openzwave','rfxcom','edisio','mpower', 'ipx800', 'mySensors', 'Zibasedom', 'virtual', 'camera','netatmoWeather','weather','philipsHue','enocean','wifipower','alarm','mode','apcupsd', 'btsniffer','dsc','h801','rflink','mysensors','relaynet','remora','unipi','playbulb','doorbird','eibd','ipx800','ipx800v2','boxio','thermostat','netatmoThermostat','espeasy'];
 if ($jsonrpc->getMethod() == 'sync') {
 	$jsonrpc->makeSuccess(array(
 		'eqLogics' => mobile::discovery_eqLogic($Pluginsuported),

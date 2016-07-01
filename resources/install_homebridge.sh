@@ -4,7 +4,7 @@ touch /tmp/compilation_ozw_in_progress
 echo 0 > /tmp/homebridge_in_progress
 echo "Lancement de l'installation/mise à jour des dépendances homebridge"
 
-sudo apt-get install libavahi-compat-libdnssd-dev
+sudo apt-get install -y libavahi-compat-libdnssd-dev
 echo 10 > /tmp/homebridge_in_progress
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 echo 20 > /tmp/homebridge_in_progress

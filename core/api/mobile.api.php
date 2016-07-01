@@ -41,8 +41,8 @@ if ($jsonrpc->getMethod() == 'idUniq') {
 }
 
 if ($jsonrpc->getMethod() == 'version') {
-	$mobile_update = update::byName('mobile');
-	$jsonrpc->makeSuccess("{version : '".$mobile_update->getLocalVersion()."'}");	
+	$mobile_update = update::byLogicalId('mobile');
+	$jsonrpc->makeSuccess($mobile_update->getLocalVersion());	
 }
 
 if ($jsonrpc->getMethod() == 'event') {

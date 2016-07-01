@@ -28,7 +28,8 @@ $PluginsuportedMobile = $params['allowPlugin'];
 $Pluginsuported = ['openzwave','rfxcom','edisio','mpower', 'ipx800', 'mySensors', 'Zibasedom', 'virtual', 'camera','netatmoWeather','weather','philipsHue','enocean','wifipower','alarm','mode','apcupsd', 'btsniffer','dsc','h801','rflink','mysensors','relaynet','remora','unipi','playbulb','doorbird','eibd','ipx800','ipx800v2','boxio','thermostat','netatmoThermostat'];
 if ($jsonrpc->getMethod() == 'sync') {
 	$jsonrpc->makeSuccess(array(
-		'eqLogics' => mobile::discovery($Pluginsuported),
+		'eqLogics' => mobile::discovery_eqLogic($Pluginsuported),
+		'cmds' => mobile::discovery_cmd($Pluginsuported),
 		'objects' => utils::o2a(object::all()),
 		'scenarios' => utils::o2a(scenario::all()),
 		'config' => array('datetime' => getmicrotime()),

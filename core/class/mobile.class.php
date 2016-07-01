@@ -180,7 +180,23 @@ class mobile extends eqLogic {
 	/*                                                                                    */
 	/**************************************************************************************/
 
-	public static function discovery($plugin = array()) {
+	public static function discovery_eqLogic($plugin = array()){
+		$return = array();
+		foreach ($plugin as $plugin_type) {
+			$eqLogics = eqLogic::byType($plugin_type, true);
+			if (is_array($eqLogics)) {
+				foreach ($eqLogics as $eqLogic) {
+                  if(($eqLogic->getIsVisible() == 1 && $eqLogic->getObject_id() !== null) || $eqLogic->getEqType_name() == 'camera' || $eqLogic->getEqType_name() == 'netatmoThermostat' || $eqLogic->getEqType_name() == 'thermostat' || $eqLogic->getEqType_name() == 'alarm' || $eqLogic->getEqType_name() == 'weather'){
+					$eqLogic_array = utils::o2a($eqLogic);
+                    	$return[] = $eqLogic_array;
+				}
+                }
+			}
+		}
+		return $return;
+	}
+	
+	public static function discovery_cmd($plugin = array()){
 		$return = array();
 		foreach ($plugin as $plugin_type) {
 			$eqLogics = eqLogic::byType($plugin_type, true);
@@ -188,15 +204,14 @@ class mobile extends eqLogic {
 				foreach ($eqLogics as $eqLogic) {
                   	$i = 0;
                   if(($eqLogic->getIsVisible() == 1 && $eqLogic->getObject_id() !== null) || $eqLogic->getEqType_name() == 'camera' || $eqLogic->getEqType_name() == 'netatmoThermostat' || $eqLogic->getEqType_name() == 'thermostat' || $eqLogic->getEqType_name() == 'alarm' || $eqLogic->getEqType_name() == 'weather'){
-					$eqLogic_array = utils::o2a($eqLogic);
 					foreach ($eqLogic->getCmd() as $cmd) {
                     	if($cmd->getDisplay('generic_type') != 'GENERIC_ERROR' && $cmd->getDisplay('generic_type') != null && $cmd->getDisplay('generic_type') != 'DONT'){
-                      		$eqLogic_array['cmd'][] = $cmd->exportApi();
+                      		$cmd_array[] = $cmd->exportApi();
                       		$i++;
                       	}
 					}
                   	if($i > 0){
-                    	$return[] = $eqLogic_array;
+                    	$return = $cmd_array;
                     }
 				}
                 }

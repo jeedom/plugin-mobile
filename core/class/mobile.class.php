@@ -69,9 +69,9 @@ class mobile extends eqLogic {
 			return;
 		}
 		
-		log::remove('homebridge_update');
+		log::remove('mobile_homebridge_update');
 		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../resources/install_homebridge.sh';
-		$cmd .= ' >> ' . log::getPathToLog('homebridge_update') . ' 2>&1 &';
+		$cmd .= ' >> ' . log::getPathToLog('mobile_homebridge_update') . ' 2>&1 &';
 		exec($cmd);
 		self::generate_file();
 		
@@ -120,8 +120,8 @@ class mobile extends eqLogic {
 			throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
 		}
 		$cmd = '/usr/lib/node_modules/homebridge/bin/homebridge -D -U '.dirname(__FILE__) . '/../../resources/homebridge';
-		log::add('homebridge', 'info', 'Lancement démon homebridge : ' . $cmd);
-		exec($cmd . ' >> ' . log::getPathToLog('homebridge') . ' 2>&1 &');
+		log::add('mobile_homebridge', 'info', 'Lancement démon homebridge : ' . $cmd);
+		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 		$i = 0;
 		while ($i < 30) {
 			$deamon_info = self::deamon_info();
@@ -132,11 +132,11 @@ class mobile extends eqLogic {
 			$i++;
 		}
 		if ($i >= 30) {
-			log::add('homebridge', 'error', 'Impossible de lancer le démon homebridge, relancer le démon en debug et vérifiez la log', 'unableStartDeamon');
+			log::add('mobile_homebridge', 'error', 'Impossible de lancer le démon homebridge, relancer le démon en debug et vérifiez la log', 'unableStartDeamon');
 			return false;
 		}
 		message::removeAll('homebridge', 'unableStartDeamon');
-		log::add('homebridge', 'info', 'Démon homebridge lancé');
+		log::add('mobile_homebridge', 'info', 'Démon homebridge lancé');
 	}
 	public static function deamon_stop() {
 		$deamon_info = self::deamon_info();

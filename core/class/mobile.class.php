@@ -46,8 +46,10 @@ class mobile extends eqLogic {
 		$return['log'] = 'homebridge_update';
 		$return['progress_file'] = '/tmp/homebridge_in_progress';
 		$state = '';
+		$no_ios = 1;
 		foreach (eqLogic::byType('mobile') as $mobile){
 			if($mobile->getConfiguration('type_mobile') == "ios"){
+				$no_ios = 0;
 				if (shell_exec('ls /usr/bin/homebridge 2>/dev/null | wc -l') == 1) {
 					$state = 'ok';
 				}else{
@@ -55,7 +57,9 @@ class mobile extends eqLogic {
 				}
 			}
 		}
-		
+		if($no_ios == 1){
+			$state = 'ok';
+		}
 		$return['state'] = $state;
 		return $return;
 	}
@@ -119,7 +123,7 @@ class mobile extends eqLogic {
 		if ($deamon_info['launchable'] != 'ok') {
 			throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
 		}
-		$cmd = '/usr/lib/node_modules/homebridge/bin/homebridge -D -U '.dirname(__FILE__) . '/../../resources/homebridge';
+		$cmd = 'homebridge -D -U '.dirname(__FILE__) . '/../../resources/homebridge';
 		log::add('mobile_homebridge', 'info', 'Lancement démon homebridge : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 		$i = 0;

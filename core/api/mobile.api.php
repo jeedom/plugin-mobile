@@ -37,8 +37,8 @@ if ($jsonrpc->getMethod() == 'sync') {
 }
 
 if ($jsonrpc->getMethod() == 'Iq') {
-	$platform = init($params['platform']);
-	$user = user::byHash(init($params['apikey']));
+	$platform = $params['platform'];
+	$user = user::byHash($params['apikey']);
 	$userId = $user->getId();
 	$mobile = new eqLogic;
 	$mobile->setEqType_name('mobile');

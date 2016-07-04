@@ -231,10 +231,12 @@ class mobile extends eqLogic {
 	/**************************************************************************************/
 
 	public function getQrCode() {
+		$key = $this->getLogicalId();
 		$request_qrcode = array(
-          		'eqLogic_id' => $this->getId(),
+          	'eqLogic_id' => $this->getId(),
 			'url_internal' => network::getNetworkAccess('internal'),
 			'url_external' => network::getNetworkAccess('external'),
+			'Iq' => $key
           	);
       	if ($this->getConfiguration('affect_user') != '') {
 		$username = user::byId($this->getConfiguration('affect_user'));
@@ -245,6 +247,19 @@ class mobile extends eqLogic {
 	}
       	$retour = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl='.json_encode($request_qrcode);
 	return $retour;
+	}
+	
+	/**************************************************************************************/
+	/*                                                                                    */
+	/*                         Permet de creer l'ID Unique du téléphone                   */
+	/*                                                                                    */
+	/**************************************************************************************/
+	
+	public function postInsert() {
+		$key = config::genKey(32);
+		$this->setLogicalId($key);
+		$this->save();
+	
 	}
 
 	/*     * *********************Méthodes d'instance************************* */

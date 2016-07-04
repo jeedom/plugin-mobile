@@ -36,8 +36,18 @@ if ($jsonrpc->getMethod() == 'sync') {
 	));
 }
 
-if ($jsonrpc->getMethod() == 'idUniq') {
-	$jsonrpc->makeSuccess(mobile::getIdUniq($params));	
+if ($jsonrpc->getMethod() == 'Iq') {
+	$platform = init('platform');
+	$user = user::byHash(init('apikey'));
+	$userId = $user->getId();
+	$mobile = new eqLogic;
+	$mobile->setEqType_name('mobile');
+	$mobile->setName($platform.'-'.config::genKey(3));
+	$mobile->setConfiguration('type_mobile',$platform);
+	$mobile->setConfiguration('affect_user',$userId);
+	$mobile->setIsEnable(1);
+	$mobile->save();
+	$jsonrpc->makeSuccess($mobile->getLogicalId());	
 }
 
 if ($jsonrpc->getMethod() == 'version') {

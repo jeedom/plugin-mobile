@@ -24,7 +24,7 @@ if (!is_object($jsonrpc)) {
 	throw new Exception(__('JSONRPC object not defined', __FILE__), -32699);
 }
 $params = $jsonrpc->getParams();
-$PluginsuportedMobile = $params['allowPlugin'];
+//$PluginsuportedMobile = $params['allowPlugin'];
 $Pluginsuported = ['openzwave','rfxcom','edisio','mpower', 'ipx800', 'mySensors', 'Zibasedom', 'virtual', 'camera','netatmoWeather','weather','philipsHue','enocean','wifipower','alarm','mode','apcupsd', 'btsniffer','dsc','h801','rflink','mysensors','relaynet','remora','unipi','playbulb','doorbird','eibd','ipx800','ipx800v2','boxio','thermostat','netatmoThermostat','espeasy'];
 if ($jsonrpc->getMethod() == 'sync') {
 	$jsonrpc->makeSuccess(array(
@@ -37,8 +37,8 @@ if ($jsonrpc->getMethod() == 'sync') {
 }
 
 if ($jsonrpc->getMethod() == 'Iq') {
-	$platform = init('platform');
-	$user = user::byHash(init('apikey'));
+	$platform = init($params['platform']);
+	$user = user::byHash(init($params['apikey']));
 	$userId = $user->getId();
 	$mobile = new eqLogic;
 	$mobile->setEqType_name('mobile');

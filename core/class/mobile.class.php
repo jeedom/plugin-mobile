@@ -50,7 +50,7 @@ class mobile extends eqLogic {
 		foreach (eqLogic::byType('mobile') as $mobile){
 			if($mobile->getConfiguration('type_mobile') == "ios"){
 				$no_ios = 0;
-				if (shell_exec('ls /usr/bin/homebridge 2>/dev/null | wc -l') == 1) {
+				if (shell_exec('ls /usr/bin/homebridge 2>/dev/null | wc -l') == 1 || shell_exec('ls /usr/local/bin/homebridge 2>/dev/null | wc -l') == 1) {
 					$state = 'ok';
 				}else{
 					$state = 'nok';
@@ -110,6 +110,11 @@ class mobile extends eqLogic {
 		$return = array();
 		$return['log'] = 'homebridge';
 		$return['state'] = 'nok';
+		if(self::check_ios() == 0){
+			$return['state'] = 'ok';
+			$return['launchable'] = 'ok';
+			return $return;
+		}
 		$result = exec("ps -eo pid,command | grep 'homebridge' | grep -v grep | awk '{print $1}'");
 		if ($result <> 0) {
             $return['state'] = 'ok';

@@ -112,7 +112,7 @@ class mobile extends eqLogic {
 		$return['state'] = 'nok';
 		if(self::check_ios() == 0){
 			$return['state'] = 'ok';
-			$return['launchable'] = 'ok';
+			$return['launchable'] = 'nok';
 			return $return;
 		}
 		$result = exec("ps -eo pid,command | grep 'homebridge' | grep -v grep | awk '{print $1}'");
@@ -126,7 +126,11 @@ class mobile extends eqLogic {
 		self::deamon_stop();
 		$deamon_info = self::deamon_info();
 		if ($deamon_info['launchable'] != 'ok') {
-			throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
+			if(self::check_ios() == 0){
+				return false;
+			}else{
+				throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
+			}
 		}
 		$cmd = 'homebridge -D -U '.dirname(__FILE__) . '/../../resources/homebridge';
 		log::add('mobile_homebridge', 'info', 'Lancement démon homebridge : ' . $cmd);

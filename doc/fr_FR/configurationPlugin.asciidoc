@@ -15,6 +15,7 @@ Pour Ajouter un téléphone : *Plugins* --> *Communication* --> *App Mobile* -->
 image::../images/mobile2.png[]
 
 Voici les paramètres à renseigner :
+
 * *Nom de l'équipement mobile* : Nom du téléphone
 * *Activer* : Activation de l'accès pour ce mobile
 * *Type de Mobile* : Sélection de l'OS du téléphone (iOS, Android)

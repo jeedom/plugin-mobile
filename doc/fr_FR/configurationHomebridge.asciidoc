@@ -5,11 +5,13 @@ Si vous disposez d'équipements mobiles iOS, vous pouvez activer Homebridge afin
 Si vous avez déclaré au moins un équipement sous iOS, vous verrez dans la configuration du plugin une section Homebridge.(*Plugins* --> *Gestion des plugins* --> *App Mobile*)
 
 *Installation des dépendances*
+
 image::../images/mobile4.png[]
 
 Afin d'installer les dépendances nécessaires, il est nécessaire de cliquer sur le bouton *Relancer*.
 
 *Configuration* 
+
 image::../images/mobile5.png[]
 
 Dans la configuration de Homebridge, vous pouvez :

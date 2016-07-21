@@ -1,0 +1,7 @@
+== Configuration de l'application Mobile
+
+Au 1er lancement de l'application Mobile, un tutorial vous sera proposé afin de vous accompagner dans la configuration de celle-ci.
+
+
+*A COMPLETER AVEC LA VIDEO ???*
+

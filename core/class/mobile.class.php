@@ -112,7 +112,7 @@ class mobile extends eqLogic {
 		$return['state'] = 'nok';
 		if(self::check_ios() == 0){
 			$return['state'] = 'ok';
-			$return['launchable'] = 'nok';
+			$return['launchable'] = 'ok';
 			return $return;
 		}
 		$result = exec("ps -eo pid,command | grep 'homebridge' | grep -v grep | awk '{print $1}'");
@@ -130,6 +130,10 @@ class mobile extends eqLogic {
 				return false;
 			}else{
 				throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
+			}
+		}else{
+			if(self::check_ios() == 0){
+				return false;
 			}
 		}
 		$cmd = 'homebridge -D -U '.dirname(__FILE__) . '/../../resources/homebridge';

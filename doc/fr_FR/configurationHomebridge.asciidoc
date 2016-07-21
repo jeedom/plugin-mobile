@@ -26,12 +26,14 @@ Pour intéragir avec Homebridge, vous disposez de 2 possibilités :
 
 * *iOS 10* : Si vous disposez d'un iDevice sous iOS 10 (actuellement en beta) vous pouvez simplement rajouter Jeedom via l'application *Domicile*.
 quelques screens:
+
 image::../images/mobile6.jpg[] 
 
 image::../images/mobile9.jpg[]
 	
 * *Applications compatibles Homekit* : Vous trouverez sur l'App Store quelques applications compatibles Homekit. La plus complète à l'heure actuelle est celle d'Elgato : EVE.
 quelques screens:
+
 image::../images/mobile7.jpg[]
 
 image::../images/mobile8.jpg[]

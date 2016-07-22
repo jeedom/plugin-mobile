@@ -93,7 +93,7 @@ foreach (object::all() as $object) {
                         <select class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="type_mobile">
                            <option value="ios">iPhone</option>
                            <option value="android">Android</option>
-                           <option value="windows">Windows</option>
+                           <!--<option value="windows">Windows</option>-->
                        </select>
                    </div>
                </div>

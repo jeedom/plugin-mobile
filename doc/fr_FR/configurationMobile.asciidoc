@@ -1,5 +1,15 @@
 == Configuration de l'application Mobile
 
+Vous trouverez les applications sur les stores mobiles : 
+
+*Android Google Play*
+
+image::../images/Google_Play_FR.png[link="https://play.google.com/store/apps/details?id=fr.jeedom.jeedom"]
+
+*Apple App Store*
+
+image::../images/App_Store_FR.png[link="https://itunes.apple.com/fr/app/jeedom/id1010855094?mt=8"]
+
 Au 1er lancement de l'application Mobile, un tutorial vous sera proposé afin de vous accompagner dans la configuration de celle-ci.
 
 Après avoir téléchargé et installé votre application mobile Jeedom, lancez l’application sur votre smartphone.

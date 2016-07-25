@@ -2,6 +2,15 @@
 
 Au 1er lancement de l'application Mobile, un tutorial vous sera proposé afin de vous accompagner dans la configuration de celle-ci.
 
+Après avoir téléchargé et installé votre application mobile Jeedom, lancez l’application sur votre smartphone.
 
-*A COMPLETER AVEC LA VIDEO ???*
+Vous arrivez alors dans un didacticiel de configuration, certaines étapes ont étés faites précédemment. (suivez le)
+
+Vous aurez ensuite le choix entre une configuration manuelle ou automatique par QRcode.
+Si vous optez pour la configuration par QRcode, il suffit de flasher le QRcode présent sur le plugin App Mobile dans l’équipement smartphone créé précédemment. Dans ce cas, l’application va récupérer automatiquement toute la configuration de votre Jeedom  et se connecter automatiquement. Lorsqu’il sera connecté chez vous en Wifi, l’application utilisera automatiquement l’adresse Jeedom ethernet interne à votre réseau. Lorsque vous serez connecté en 4G ou 3G, il utilisera le service DNS Jeedom pour se connecter à votre Jeedom.
+Si vous optez pour la configuration manuelle, dans ce cas il faudra rentrer à la main, l’adresse IP interne et externe de votre Jeedom. Cette option est réservée à un public averti.
+
+L’application va se synchroniser et vous arrivez sur sa page d’accueil (précédée par un mini guide de présentation).
+
+L’application mobile Jeedom est maintenant prête à fonctionner.
 

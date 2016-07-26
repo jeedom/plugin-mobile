@@ -26,6 +26,19 @@ class mobile extends eqLogic {
 
 	/*     * ***********************Methode static*************************** */
 
+	public static function Pluginsuported() {
+		
+		$Pluginsuported = ['openzwave','rfxcom','edisio','mpower', 'ipx800', 'mySensors', 'Zibasedom', 'virtual', 'camera','netatmoWeather','weather','philipsHue','enocean','wifipower','alarm','mode','apcupsd', 'btsniffer','dsc','h801','rflink','mysensors','relaynet','remora','unipi','playbulb','doorbird','eibd','ipx800','ipx800v2','boxio','thermostat','netatmoThermostat','espeasy'];
+		
+		return $Pluginsuported;
+		
+	}
+	
+	public static function PluginWidget() {
+		$PluginWidget = ['alarm','camera','thermostat','netatmoThermostat','weather'];	
+		return $PluginWidget;
+	}
+
 	/**************************************************************************************/
 	/*                                                                                    */
 	/*                        Permet d'installer les dépendances                          */

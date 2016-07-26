@@ -5,6 +5,9 @@ if (!isConnect('admin')) {
 }
 sendVarToJS('eqType', 'mobile');
 $eqLogics = eqLogic::byType('mobile');
+$plugins = plugin::listPlugin(true);
+$plugin_compatible = mobile::Pluginsuported();
+$plugin_widget = mobile::PluginWidget();
 ?>
 
 <div class="row row-overflow">
@@ -32,7 +35,7 @@ foreach ($eqLogics as $eqLogic) {
             <i class="fa fa-plus-circle" style="font-size : 7em;color:#94ca02;"></i>
         </center>
         <span style="font-size : 1.1em;position:relative; top : 23px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>Ajouter</center></span>
-    </div>
+	</div>
 	 <?php
 				foreach ($eqLogics as $eqLogic) {
 					$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
@@ -51,6 +54,68 @@ foreach ($eqLogics as $eqLogic) {
                     echo '</div>';
                 }
     ?>
+</div>
+    <legend><i class="fa fa-check-circle-o"></i>  {{Le(s) Plugin(s) Compatible(s)}}
+    </legend>
+    <div class="eqLogicThumbnailContainer">
+    	<?php
+    	foreach ($plugins as $plugin){
+    		if($plugin->getId() != 'mobile'){
+    		if(in_array($plugin->getId(), $plugin_compatible)){
+    		?>
+    		<div class="cursor eqLogicAction" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
+				<center>
+				<?php
+					if (file_exists(dirname(__FILE__) . '/../../../../' . $plugin->getPathImgIcon())) {
+		echo '<img class="img-responsive" style="width : 120px;" src="' . $plugin->getPathImgIcon() . '" />';
+		echo "</center>";
+	} else {
+		echo '<i class="' . $plugin->getIcon() . '" style="font-size : 6em;margin-top:20px;"></i>';
+		echo "</center>";
+		echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $plugin->getName() . '</center></span>';
+	}
+	if(in_array($plugin->getId(), $plugin_widget)){
+		echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>{{Plugin Spécial}}</center></span>';
+	}else{
+		echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>{{Via Type générique}}</center></span>';
+	}
+				?>
+			</div>
+			<?php
+			}
+			}
+    	}
+		?>
+</div>
+<legend><i class="fa fa-times-circle-o"></i>  {{Le(s) Plugin(s) Non Testé(s)}}
+    </legend>
+    </legend>
+    <div class="eqLogicThumbnailContainer">
+    	<?php
+    	foreach ($plugins as $plugin){
+    		if($plugin->getId() != 'mobile'){
+    		if(!in_array($plugin->getId(), $plugin_compatible)){
+    		?>
+    		<div class="cursor eqLogicAction" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
+				<center>
+				<?php
+					if (file_exists(dirname(__FILE__) . '/../../../../' . $plugin->getPathImgIcon())) {
+		echo '<img class="img-responsive" style="width : 120px;" src="' . $plugin->getPathImgIcon() . '" />';
+		echo "</center>";
+	} else {
+		echo '<i class="' . $plugin->getIcon() . '" style="font-size : 6em;margin-top:20px;"></i>';
+		echo "</center>";
+		echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $plugin->getName() . '</center></span>';
+	}
+	
+	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>{{Non transmis à l\'app}}</center></span>';
+				?>
+			</div>
+			<?php
+			}
+			}
+    	}
+		?>
 </div>
 </div>
 

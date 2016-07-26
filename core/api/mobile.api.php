@@ -23,17 +23,20 @@ global $jsonrpc;
 if (!is_object($jsonrpc)) {
 	throw new Exception(__('JSONRPC object not defined', __FILE__), -32699);
 }
+
 $params = $jsonrpc->getParams();
-//$PluginsuportedMobile = $params['allowPlugin'];
-$Pluginsuported = ['openzwave','rfxcom','edisio','mpower', 'ipx800', 'mySensors', 'Zibasedom', 'virtual', 'camera','netatmoWeather','weather','philipsHue','enocean','wifipower','alarm','mode','apcupsd', 'btsniffer','dsc','h801','rflink','mysensors','relaynet','remora','unipi','playbulb','doorbird','eibd','ipx800','ipx800v2','boxio','thermostat','netatmoThermostat','espeasy'];
+$Pluginsuported = mobile::Pluginsuported();
+
 if ($jsonrpc->getMethod() == 'sync') {
-	$jsonrpc->makeSuccess(array(
+	$sync_array = array(
 		'eqLogics' => mobile::discovery_eqLogic($Pluginsuported),
 		'cmds' => mobile::discovery_cmd($Pluginsuported),
 		'objects' => utils::o2a(object::all()),
 		'scenarios' => utils::o2a(scenario::all()),
 		'config' => array('datetime' => getmicrotime()),
-	));
+	);
+	log::add('mobile', 'debug', 'Demande de Sync : ' . json_encode($sync_array));
+	$jsonrpc->makeSuccess($sync_array);
 }
 
 if ($jsonrpc->getMethod() == 'Iq') {

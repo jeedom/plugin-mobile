@@ -4,7 +4,7 @@ touch /tmp/homebridge_in_progress
 echo 0 > /tmp/homebridge_in_progress
 echo "Lancement de l'installation/mise à jour des dépendances homebridge"
 
-sudo apt-get install -y libavahi-compat-libdnssd-dev
+sudo apt-get install -y avahi-daemon avahi-discover libnss-mdns libavahi-compat-libdnssd-dev
 echo 10 > /tmp/homebridge_in_progress
 actual=`nodejs -v`;
 actual=`nodejs -v`;
@@ -16,6 +16,8 @@ else
   echo "KO, version obsolète à upgrader";
   echo "Suppression du Nodejs existant et installation du paquet recommandé"
   sudo apt-get -y --purge autoremove nodejs npm
+  sudo npm rm -g homebridge
+  sudo npm rebuild
   arch=`arch`;
   echo 30 > /tmp/mySensors_dep
   if [[ $arch == "armv6l" ]]

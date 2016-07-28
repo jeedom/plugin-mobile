@@ -38,7 +38,7 @@ $plugin = plugin::byId($_GET['plugin_id']);
 ?>
 	</center>
 	<div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
-		<legend><i class="icon techno-listening3"></i>  {{Envoi au près de l'app mobile}}
+		<legend><i class="fa fa-info"></i>  {{Envoi au près de l'app mobile}}
     </legend>
     <?php
     if(in_array($plugin->getId(), $plugin_widget)){
@@ -62,19 +62,19 @@ $plugin = plugin::byId($_GET['plugin_id']);
 	<?php
 	if($generique_ok == true){
 	echo '<div class="col-lg-10 col-md-9 col-sm-8 eqLogicPluginDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">';
-	echo '<legend><i class="icon techno-listening3"></i>  {{Type Générique du Plugin}}
-    </legend>';
+	echo '<legend><i class="fa fa-building"></i>  {{Type Générique du Plugin}}
+    <div class="form-actions pull-right">
+		<a class="btn btn-success eqLogicAction"  style="padding:0px 3px 0px 3px;" onclick="SavePlugin()"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
+	</div></legend>';
     ?>
     <div class="EnregistrementDisplay"></div>
-    <div class="form-actions">
-		<a class="btn btn-success eqLogicAction" onclick="SavePlugin()"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
-	</div>
+    
     <?php
     	$tableau_cmd = array();
 		$eqLogics = eqLogic::byType($_GET['plugin_id']);
 		foreach ($eqLogics as $eqLogic){
 		echo '<div class="panel panel-primary">';
-		echo '<div class="panel-heading">'.$eqLogic->getHumanName(true,true).'</div>';
+		echo '<div class="panel-heading">'.$eqLogic->getHumanName(true).'<a class="btn btn-mini btn-success eqLogicAction pull-right" style="padding:0px 3px 0px 3px;cursor:pointer;" onclick="SavePlugin()"><i class="fa fa-floppy-o"></i></a></div>';
 			$cmds = null;
 			$cmds = cmd::byEqLogicId($eqLogic->getId());
 			echo '<table class="table TableCMD">';
@@ -91,6 +91,18 @@ $plugin = plugin::byId($_GET['plugin_id']);
 				echo '</td>';
 				echo '<td>';
 				echo $cmd->getName();
+				$display_icon = 'none';
+				$icon ='';
+				if (in_array($cmd->getDisplay('generic_type'), ['GENERIC','GENERIC_ACTION'])) {
+					$display_icon = 'block';
+					$icon = $cmd->getDisplay('icon');
+				}
+				echo '<div class="iconeGeneric pull-right" style="display:' . $display_icon . ';">
+				<div>
+                <span class="cmdAttr label label-info cursor" data-l1key="display" data-l2key="icon" style="font-size : 1.2em;" >' . $icon . '</span>
+                <a class="cmdAction btn btn-default btn-sm" data-l1key="chooseIcon"><i class="fa fa-flag"></i> {{Icône}}</a>
+				</div>
+				</div>';
 				echo '</td>';
 				echo '<td>';
 				?><select class="cmdAttr form-control" data-l1key="display" data-l2key="generic_type" data-cmd_id="<?php echo $cmd->getId(); ?>">
@@ -131,13 +143,6 @@ $plugin = plugin::byId($_GET['plugin_id']);
     }
 ?>
           </select>
-          <div class="col-lg-3 col-md-4 col-sm-5 col-xs-6 iconeGeneric" style="display:none;">
-         <label class="col-lg-3 col-md-3 col-sm-3 col-xs-6 control-label">{{Icône}}</label>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                <span class="cmdAttr label label-info cursor" data-l1key="display" data-l2key="icon" style="font-size : 1.5em;" ></span>
-                <a class="cmdAction btn btn-default btn-sm" data-l1key="chooseIcon"><i class="fa fa-flag"></i> {{Icône}}</a>
-            </div>
-        </div>
           <?php
 				echo '</td>';
 				echo '</tr>';
@@ -146,7 +151,7 @@ $plugin = plugin::byId($_GET['plugin_id']);
 			echo '</div>';
 		}
 		?>
-			<div class="form-actions">
+			<div class="form-actions pull-right">
 		<a class="btn btn-success eqLogicAction" onclick="SavePlugin()" ><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
 	</div>
 
@@ -205,9 +210,4 @@ $('.cmdAttr[data-l1key=display][data-l2key=generic_type]').on('change', function
         cmdLine.find('.cmdAttr[data-l1key=display][data-l2key=icon]').empty();
     }
 });
-$(document).ready(function(){
-    if ($('.cmdAttr[data-l1key=display][data-l2key=generic_type]').value() == 'GENERIC' || $('.cmdAttr[data-l1key=display][data-l2key=generic_type]').value() == 'GENERIC_ACTION') {
-        var cmdLine = $(this).closest('.cmdLine');
-		cmdLine.find('.iconeGeneric').show();
-    }
-});</script>
+</script>

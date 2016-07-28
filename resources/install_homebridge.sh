@@ -15,9 +15,9 @@ then
 else
   echo "KO, version obsolète à upgrader";
   echo "Suppression du Nodejs existant et installation du paquet recommandé"
-  sudo apt-get -y --purge autoremove nodejs npm
   sudo npm rm -g homebridge
   sudo npm rebuild
+  sudo apt-get -y --purge autoremove nodejs npm
   arch=`arch`;
   echo 30 > /tmp/mySensors_dep
   if [[ $arch == "armv6l" ]]

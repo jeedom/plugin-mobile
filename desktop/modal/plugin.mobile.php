@@ -85,7 +85,7 @@ $plugin = plugin::byId($_GET['plugin_id']);
 			</tr>';
 			foreach ($cmds as $cmd){
 			array_push($tableau_cmd, $cmd->getId());
-				echo '<tr>';
+				echo '<tr class="cmdLine">';
 				echo '<td>';
 				echo '<span class="cmdAttr" data-l1key="id">'.$cmd->getId().'</span>';
 				echo '</td>';
@@ -197,15 +197,17 @@ $('body').undelegate('.cmdAttr[data-l1key=display][data-l2key=icon]', 'click').d
 });
 
 $('.cmdAttr[data-l1key=display][data-l2key=generic_type]').on('change', function () {
+	var cmdLine = $(this).closest('.cmdLine');
     if ($(this).value() == 'GENERIC' || $(this).value() == 'GENERIC_ACTION') {
-        $('.iconeGeneric').show();
+		cmdLine.find('.iconeGeneric').show();
     } else {
-        $('.iconeGeneric').hide();
-        $('.cmdAttr[data-l1key=display][data-l2key=icon]').empty();
+        cmdLine.find('.iconeGeneric').hide();
+        cmdLine.find('.cmdAttr[data-l1key=display][data-l2key=icon]').empty();
     }
 });
 $(document).ready(function(){
     if ($('.cmdAttr[data-l1key=display][data-l2key=generic_type]').value() == 'GENERIC' || $('.cmdAttr[data-l1key=display][data-l2key=generic_type]').value() == 'GENERIC_ACTION') {
-        $('.iconeGeneric').show();
+        var cmdLine = $(this).closest('.cmdLine');
+		cmdLine.find('.iconeGeneric').show();
     }
 });</script>

@@ -28,7 +28,7 @@ class mobile extends eqLogic {
 
 	public static function Pluginsuported() {
 		
-		$Pluginsuported = ['openzwave','rfxcom','edisio','mpower', 'ipx800', 'mySensors', 'Zibasedom', 'virtual', 'camera','netatmoWeather','weather','philipsHue','enocean','wifipower','alarm','mode','apcupsd', 'btsniffer','dsc','h801','rflink','mysensors','relaynet','remora','unipi','playbulb','doorbird','eibd','ipx800','ipx800v2','boxio','thermostat','netatmoThermostat','espeasy'];
+		$Pluginsuported = ['openzwave','rfxcom','edisio','mpower', 'ipx800', 'mySensors', 'Zibasedom', 'virtual', 'camera','weather','philipsHue','enocean','wifipower','alarm','mode','apcupsd', 'btsniffer','dsc','rflink','mysensors','relaynet','remora','unipi','eibd','ipx800','ipx800v2','boxio','thermostat','netatmoThermostat','espeasy'];
 		
 		return $Pluginsuported;
 		
@@ -233,7 +233,7 @@ class mobile extends eqLogic {
 			if (is_array($eqLogics)) {
 				foreach ($eqLogics as $eqLogic) {
                   	$i = 0;
-                  if(($eqLogic->getIsVisible() == 1 && $eqLogic->getObject_id() !== null) || $eqLogic->getEqType_name() == 'camera' || $eqLogic->getEqType_name() == 'netatmoThermostat' || $eqLogic->getEqType_name() == 'thermostat' || $eqLogic->getEqType_name() == 'alarm' || $eqLogic->getEqType_name() == 'weather'){
+                  if($eqLogic->getObject_id() !== null && ($eqLogic->getIsVisible() == 1 || $eqLogic->getEqType_name() == 'camera' || $eqLogic->getEqType_name() == 'netatmoThermostat' || $eqLogic->getEqType_name() == 'thermostat' || $eqLogic->getEqType_name() == 'alarm' || $eqLogic->getEqType_name() == 'weather')){
 					foreach ($eqLogic->getCmd() as $cmd) {
                     	if($cmd->getDisplay('generic_type') != 'GENERIC_ERROR' && $cmd->getDisplay('generic_type') != null && $cmd->getDisplay('generic_type') != 'DONT'){
                       		$cmd_array[] = $cmd->exportApi();

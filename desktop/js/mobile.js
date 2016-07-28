@@ -15,7 +15,10 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
+function clickplugin(id_plugin,name_plugin){
+	$('#md_modal').dialog({title: "{{Configuration Mobile du Plugin "+name_plugin+"}}"});
+    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin.mobile&plugin_id=' +id_plugin).dialog('open');
+}
 
 /*
  * Fonction pour l'ajout de commande, appellé automatiquement par plugin.template

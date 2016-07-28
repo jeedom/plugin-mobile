@@ -63,7 +63,7 @@ foreach ($eqLogics as $eqLogic) {
     		if($plugin->getId() != 'mobile'){
     		if(in_array($plugin->getId(), $plugin_compatible)){
     		?>
-    		<div class="cursor eqLogicAction" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
+    		<div class="cursor eqLogicAction" onclick="clickplugin('<?php echo $plugin->getId(); ?>','<?php echo $plugin->getName(); ?>')" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
 				<center>
 				<?php
 					if (file_exists(dirname(__FILE__) . '/../../../../' . $plugin->getPathImgIcon())) {

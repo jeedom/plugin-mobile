@@ -22,6 +22,7 @@ if (!isConnect('admin')) {
 $plugin_compatible = mobile::Pluginsuported();
 $plugin_widget = mobile::PluginWidget();
 $plugin = plugin::byId($_GET['plugin_id']);
+sendVarToJS('pluginId', $_GET['plugin_id']);
 ?>
 
 <div class="row row-overflow">
@@ -47,15 +48,17 @@ $plugin = plugin::byId($_GET['plugin_id']);
     	echo '</div>';
     	$generique_ok = false;
     }else if(in_array($plugin->getId(), $plugin_compatible)){
-    	echo '<div class="alert alert-info" role="alert">';
+    	echo '<div class="alert alert-info div_plugin_configuration" role="alert">';
 	    echo '{{Le Plugin est compatible mais il vous faut peux être vérifier les Types génériques des commandes}}';
-	    echo '</div>';
-	    $generique_ok = true;
+		echo '<label class="checkbox-inline pull-right"><input type="checkbox" class="configKey" data-l1key="sendToApp" checked/>{{Activer}}</label>';
+		echo '</div>';
+		$generique_ok = true;
     }else{
-    	echo '<div class="alert alert-danger" role="alert">';
-	    echo '{{Le Plugin n\'est pas compatible}}';
-	    echo '</div>';
-	    $generique_ok = false;
+    	echo '<div class="alert alert-danger div_plugin_configuration" role="alert">';
+	    echo '{{Le Plugin n\'est pas compatible, vous pouvez l\'activer si vous le souhaitez}}';
+		echo '<label class="checkbox-inline pull-right"><input type="checkbox" class="configKey" data-l1key="sendToApp" unchecked/>{{Activer}}</label>';
+		echo '</div>';
+	    $generique_ok = true;
     }
     ?>
 	</div>
@@ -186,6 +189,17 @@ function SavePlugin(){
       }
       
 	  });
+	  
+	  jeedom.config.save({
+    configuration: $('.div_plugin_configuration').getValues('.configKey')[0],
+    plugin: pluginId,
+    error: function (error) {
+       $('.EnregistrementDisplay').showAlert({message: error.message, level: 'danger'});
+    },
+    success: function () {
+       $('.EnregistrementDisplay').showAlert({message: '{{Sauvegarde effectuée}}', level: 'success'});
+    }
+  });
   
 }
 
@@ -195,6 +209,7 @@ $('body').undelegate('.cmdAction[data-l1key=chooseIcon]', 'click').delegate('.cm
     chooseIcon(function (_icon) {
         iconeGeneric.find('.cmdAttr[data-l1key=display][data-l2key=icon]').empty().append(_icon);
    });
+   $(this).closest('tr').attr('data-change','1');
 });
 
 $('body').undelegate('.cmdAttr[data-l1key=display][data-l2key=icon]', 'click').delegate('.cmdAttr[data-l1key=display][data-l2key=icon]', 'click', function () {

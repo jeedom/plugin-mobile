@@ -92,9 +92,17 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
     <?php
     	$tableau_cmd = array();
 		$eqLogics = eqLogic::byType($_GET['plugin_id']);
+		echo '<div class="panel-group" id="accordionConfiguration">';
 		foreach ($eqLogics as $eqLogic){
-		echo '<div class="panel panel-primary">';
-		echo '<div class="panel-heading">'.$eqLogic->getHumanName(true).'<a class="btn btn-mini btn-success eqLogicAction pull-right" style="padding:0px 3px 0px 3px;cursor:pointer;" onclick="SavePlugin()"><i class="fa fa-floppy-o"></i></a></div>';
+		echo '<div class="panel panel-default">';
+		echo ' <div class="panel-heading">
+                <h3 class="panel-title">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionConfiguration" href="#config_'.$eqLogic->getId().'" style="text-decoration:none;">'.$eqLogic->getHumanName(true).'<a class="btn btn-mini btn-success eqLogicAction pull-right" style="padding:0px 3px 0px 3px;cursor:pointer;" onclick="SavePlugin()"><i class="fa fa-floppy-o" style="color:white;"></i></a>
+                    </a>
+                </h3>
+            </div>';
+			echo '<div id="config_'.$eqLogic->getId().'" class="panel-collapse collapse">';
+			echo '<div class="panel-body">';
 			$cmds = null;
 			$cmds = cmd::byEqLogicId($eqLogic->getId());
 			echo '<table class="table TableCMD">';
@@ -169,7 +177,12 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 			}
 			echo '</table>';
 			echo '</div>';
+			echo '</div>';
+			
+			echo '</div>';
+			
 		}
+		echo '</div>';
 		?>
 			<div class="form-actions pull-right">
 		<a class="btn btn-success eqLogicAction" onclick="SavePlugin()" ><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>

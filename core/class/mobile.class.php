@@ -259,6 +259,39 @@ class mobile extends eqLogic {
                   if($eqLogic->getObject_id() !== null && ($eqLogic->getIsVisible() == 1 || $eqLogic->getEqType_name() == 'camera' || $eqLogic->getEqType_name() == 'netatmoThermostat' || $eqLogic->getEqType_name() == 'thermostat' || $eqLogic->getEqType_name() == 'alarm' || $eqLogic->getEqType_name() == 'weather')){
 					foreach ($eqLogic->getCmd() as $cmd) {
                     	if($cmd->getDisplay('generic_type') != 'GENERIC_ERROR' && $cmd->getDisplay('generic_type') != null && $cmd->getDisplay('generic_type') != 'DONT'){
+                      		
+                      		$generictype_cmd = $cmd->getDisplay('generic_type',null);
+                      		$icon_cmd = $cmd->getDisplay('icon',null);
+                      		$maxValue = $cmd->getConfiguration('maxValue',null);
+                      		$minValue = $cmd->getConfiguration('minValue',null);
+                      		
+                      		$virgule = 0;
+                      		$display_cmd = '{"generic_type" :"'.$generictype_cmd.'","icon":"'.$icon_cmd.'"}';
+                      		if($maxValue != null){
+                      			$textMaxValue = '"maxValue":"'.$maxValue.'"';
+                      			$virgule++;
+                      		}else{
+                      			$textMaxValue = '';
+                      		}
+                      		if($minValue != null){
+                      			$textMinValue = '"minValue":"'.$minValue.'"';
+                      			$virgule++;
+                      		}else{
+                      			$textMinValue = '';
+                      		}
+                      		
+                      		if($virgule == 2){
+                      			$Configuration_cmd = '{'.$textMinValue.','.$textMaxValue'}';
+                      		}else{
+                      			$Configuration_cmd = '{'.$textMinValue.''.$textMaxValue.'}';
+                      		}
+                      		
+                      		$cmd_type = $cmd->exportApi();
+                      		$cmd_type['Display'] = $display_cmd;
+                      		$cmd_type['Configuration'] = $Configuration_cmd;
+                      		
+                      		log::add('mobile', 'debug', 'Demande cmd : ' . json_encode($cmd_type));
+                      		
                       		$cmd_array[] = $cmd->exportApi();
                       		$i++;
                       	}

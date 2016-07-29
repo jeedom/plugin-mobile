@@ -38,6 +38,29 @@ class mobile extends eqLogic {
 		$PluginWidget = ['alarm','camera','thermostat','netatmoThermostat','weather'];	
 		return $PluginWidget;
 	}
+	
+	public static function PluginToSend() {
+		$PluginToSend=[];
+		$plugins = plugin::listPlugin(true);
+		$plugin_compatible = mobile::Pluginsuported();
+		$plugin_widget = mobile::PluginWidget();
+		foreach ($plugins as $plugin){
+			$plugId = $plugin->getId();
+			if ($plugId == 'mobile') {
+				continue;
+			} else if (in_array($plugId,$plugin_widget)) {
+				array_push($PluginToSend, $plugId);
+			} else if (in_array($plugId,$plugin_compatible) && !in_array($plugId,$plugin_widget) && config::byKey('sendToApp', $plugId, 1) == 1){
+				array_push($PluginToSend, $plugId);
+			} else if (!in_array($plugId,$plugin_compatible) && config::byKey('sendToApp', $plugId, 0) == 1){
+				array_push($PluginToSend, $plugId);
+			} else {
+				continue;
+			}
+		}
+		return $PluginToSend;
+		
+	}
 
 	/**************************************************************************************/
 	/*                                                                                    */

@@ -28,7 +28,6 @@ foreach ($eqLogics as $eqLogic) {
    <div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
     <legend><i class="icon techno-listening3"></i>  {{Mes Téléphones Mobiles}}
     </legend>
-
     <div class="eqLogicThumbnailContainer">
       <div class="cursor eqLogicAction" data-action="add" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
          <center>
@@ -75,9 +74,13 @@ foreach ($eqLogics as $eqLogic) {
 		echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $plugin->getName() . '</center></span>';
 	}
 	if(in_array($plugin->getId(), $plugin_widget)){
-		echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>{{Plugin Spécial}}</center></span>';
+		echo '<center><span class="label label-success" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Il sera disponible dans la liste des plugins de l\'application, il aura aussi une intégration appronfondie sur le dashboard">{{Plugin Spécial}}</span></center>';
 	}else{
-		echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>{{Via Type générique}}</center></span>';
+		if (config::byKey('sendToApp', $plugin->getId(), 1) == 1) {
+			echo '<center><span class="label label-info" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Il sera visible dans les pièces de l\'application mobile, pour certains d\'entre eux il peut être nécessaire de configurer les generic type (virtuels, scripts etc..). Il peut être désactivé pour ne pas être transmis">{{Via Type générique}}</span></center>';
+		} else {
+			echo '<center><span class="label label-danger" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="N\'est pas transmis à l\'application, vous pouvez le transmettre à l\'application en l\'activant et configurant les generic type">{{Non transmis}}</span></center>';
+		}
 	}
 				?>
 			</div>
@@ -96,7 +99,7 @@ foreach ($eqLogics as $eqLogic) {
     		if($plugin->getId() != 'mobile'){
     		if(!in_array($plugin->getId(), $plugin_compatible)){
     		?>
-    		<div class="cursor eqLogicAction" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
+    		<div class="cursor eqLogicAction" onclick="clickplugin('<?php echo $plugin->getId(); ?>','<?php echo $plugin->getName(); ?>')" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
 				<center>
 				<?php
 					if (file_exists(dirname(__FILE__) . '/../../../../' . $plugin->getPathImgIcon())) {
@@ -107,9 +110,11 @@ foreach ($eqLogics as $eqLogic) {
 		echo "</center>";
 		echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $plugin->getName() . '</center></span>';
 	}
-	
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>{{Non transmis à l\'app}}</center></span>';
-				?>
+	if (config::byKey('sendToApp', $plugin->getId(), 0) == 1) {
+		echo '<center><span class="label label-warning" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Vous avez activé la transmission de ce plugin en se basant sur les generic type">{{Transmis à l\'app}}</span></center>';
+	} else {
+		echo '<center><span class="label label-danger" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="N\'est pas transmis à l\'application, vous pouvez le transmettre à l\'application en l\'activant et configurant les generic type">{{Non transmis}}</span></center>';
+	}			?>
 			</div>
 			<?php
 			}

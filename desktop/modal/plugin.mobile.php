@@ -38,7 +38,7 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 	}
 ?>
 	</center>
-	<div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
+	<div class="col-lg-12 col-md-12 col-sm-12 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
 		<legend><i class="fa fa-info"></i>  {{Envoi au près de l'app mobile}}
     </legend>
     <?php
@@ -50,13 +50,21 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
     }else if(in_array($plugin->getId(), $plugin_compatible)){
     	echo '<div class="alert alert-info div_plugin_configuration" role="alert">';
 	    echo '{{Le Plugin est compatible mais il vous faut peux être vérifier les Types génériques des commandes}}';
-		echo '<label class="checkbox-inline pull-right"><input type="checkbox" class="configKey" data-l1key="sendToApp" checked/>{{Activer}}</label>';
+		$check = 'checked';
+		if (config::byKey('sendToApp', $plugin->getId(), 1) == 0) {
+			$check = 'unchecked';
+		}
+		echo '<label class="checkbox-inline pull-right"><input type="checkbox" class="configKey" data-l1key="sendToApp" ' . $check .'/>{{Activer}}</label>';
 		echo '</div>';
 		$generique_ok = true;
     }else{
     	echo '<div class="alert alert-danger div_plugin_configuration" role="alert">';
 	    echo '{{Le Plugin n\'est pas compatible, vous pouvez l\'activer si vous le souhaitez}}';
-		echo '<label class="checkbox-inline pull-right"><input type="checkbox" class="configKey" data-l1key="sendToApp" unchecked/>{{Activer}}</label>';
+		$check = 'unchecked';
+		if (config::byKey('sendToApp', $plugin->getId(), 0) == 1) {
+			$check = 'checked';
+		}
+		echo '<label class="checkbox-inline pull-right"><input type="checkbox" class="configKey" data-l1key="sendToApp" ' . $check .'/>{{Activer}}</label>';
 		echo '</div>';
 	    $generique_ok = true;
     }
@@ -64,7 +72,7 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 	</div>
 	<?php
 	if($generique_ok == true){
-	echo '<div class="col-lg-10 col-md-9 col-sm-8 eqLogicPluginDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">';
+	echo '<div class="col-lg-12 col-md-12 col-sm-12 eqLogicPluginDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">';
 	echo '<legend><i class="fa fa-building"></i>  {{Type Générique du Plugin}}
     <div class="form-actions pull-right">
 		<a class="btn btn-success eqLogicAction"  style="padding:0px 3px 0px 3px;" onclick="SavePlugin()"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>

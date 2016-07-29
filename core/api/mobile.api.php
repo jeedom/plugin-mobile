@@ -25,12 +25,12 @@ if (!is_object($jsonrpc)) {
 }
 
 $params = $jsonrpc->getParams();
-$Pluginsuported = mobile::Pluginsuported();
+$PluginToSend = mobile::PluginToSend();
 
 if ($jsonrpc->getMethod() == 'sync') {
 	$sync_array = array(
-		'eqLogics' => mobile::discovery_eqLogic($Pluginsuported),
-		'cmds' => mobile::discovery_cmd($Pluginsuported),
+		'eqLogics' => mobile::discovery_eqLogic($PluginToSend),
+		'cmds' => mobile::discovery_cmd($PluginToSend),
 		'objects' => utils::o2a(object::all()),
 		'scenarios' => utils::o2a(scenario::all()),
 		'config' => array('datetime' => getmicrotime()),

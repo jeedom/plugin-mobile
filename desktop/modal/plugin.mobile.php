@@ -39,13 +39,22 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 ?>
 	</center>
 	<div class="col-lg-12 col-md-12 col-sm-12 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
-		<legend><i class="fa fa-info"></i>  {{Envoi au près de l'app mobile}}
+		<legend><i class="fa fa-info"></i>  {{Envoi auprès de l'app mobile}}
     </legend>
     <?php
     if(in_array($plugin->getId(), $plugin_widget)){
     	echo '<div class="alert alert-success" role="alert">';
     	echo '{{Le Plugin est entièrement compatible, il ne nécessite aucune action de votre part}}';
     	echo '</div>';
+		echo '<center>';
+		$path = dirname(__FILE__) . '/../../core/template/images/' . $plugin->getId();
+        $files = scandir($path);
+        foreach ($files as $imgname){
+			 if (!in_array($imgname, ['.','..'])){
+				echo '<img src="plugins/mobile/core/template/images/' . $plugin->getId() . '/' . $imgname . '" height="500"/>';
+			 }
+        }
+        echo '</center>';
     	$generique_ok = false;
     }else if(in_array($plugin->getId(), $plugin_compatible)){
     	echo '<div class="alert alert-info div_plugin_configuration" role="alert">';

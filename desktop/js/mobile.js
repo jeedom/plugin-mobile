@@ -14,12 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
-
+ $('#bt_healthmobile').on('click', function () {
+    $('#md_modal').dialog({title: "{{Santé Mobile}}"});
+    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=health').dialog('open');
+})
 function clickplugin(id_plugin,name_plugin){
 	$('#md_modal').dialog({title: "{{Configuration Mobile du Plugin "+name_plugin+"}}"});
     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin.mobile&plugin_id=' +id_plugin).dialog('open');
 }
-
+$('li').click(function(){
+	 setTimeout(function(){
+		$('.eqLogicThumbnailContainer').packery();
+		},50);
+ });
 /*
  * Fonction pour l'ajout de commande, appellé automatiquement par plugin.template
  */

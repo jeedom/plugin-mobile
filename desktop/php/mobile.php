@@ -26,15 +26,36 @@ foreach ($eqLogics as $eqLogic) {
    </div>
 
    <div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
+   <ul class="nav nav-tabs" role="tablist">
+		<li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipements}}</a></li>
+		<li role="presentation"><a href="#plugintab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Plugins}}</a></li>
+	</ul>
+	<div class="tab-content">
+	<div role="tabpanel" class="tab-pane active" id="eqlogictab">
+	<legend><i class="fa fa-cog"></i>  {{Gestion}}</legend>
+     <div class="eqLogicThumbnailContainer">
+	 <div class="cursor eqLogicAction" data-action="add" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
+         <center>
+            <i class="fa fa-plus-circle" style="font-size : 5em;color:#94ca02;"></i>
+        </center>
+        <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>Ajouter</center></span>
+	</div>
+      <div class="cursor eqLogicAction" data-action="gotoPluginConf" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
+        <center>
+          <i class="fa fa-wrench" style="font-size : 5em;color:#767676;"></i>
+      </center>
+      <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Configuration}}</center></span>
+  </div>
+  <div class="cursor" id="bt_healthmobile" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
+    <center>
+      <i class="fa fa-medkit" style="font-size : 5em;color:#767676;"></i>
+  </center>
+  <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Santé}}</center></span>
+</div>
+</div>
     <legend><i class="icon techno-listening3"></i>  {{Mes Téléphones Mobiles}}
     </legend>
     <div class="eqLogicThumbnailContainer">
-      <div class="cursor eqLogicAction" data-action="add" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
-         <center>
-            <i class="fa fa-plus-circle" style="font-size : 7em;color:#94ca02;"></i>
-        </center>
-        <span style="font-size : 1.1em;position:relative; top : 23px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>Ajouter</center></span>
-	</div>
 	 <?php
 				foreach ($eqLogics as $eqLogic) {
 					$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
@@ -54,6 +75,8 @@ foreach ($eqLogics as $eqLogic) {
                 }
     ?>
 </div>
+</div>
+	<div role="tabpanel" class="tab-pane" id="plugintab">
     <legend><i class="fa fa-check-circle-o"></i>  {{Le(s) Plugin(s) Compatible(s)}}
     </legend>
     <div class="eqLogicThumbnailContainer">
@@ -74,12 +97,12 @@ foreach ($eqLogics as $eqLogic) {
 		echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $plugin->getName() . '</center></span>';
 	}
 	if(in_array($plugin->getId(), $plugin_widget)){
-		echo '<center><span class="label label-success" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Il sera disponible dans la liste des plugins de l\'application, il aura aussi une intégration appronfondie sur le dashboard">{{Plugin Spécial}}</span></center>';
+		echo '<center><span class="label label-success" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Il est disponible dans la liste des plugins de l\'application, il a aussi une intégration appronfondie sur le dashboard">{{Plugin Spécial}}</span></center>';
 	}else{
 		if (config::byKey('sendToApp', $plugin->getId(), 1) == 1) {
-			echo '<center><span class="label label-info" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Il sera visible dans les pièces de l\'application mobile, pour certains d\'entre eux il peut être nécessaire de configurer les generic type (virtuels, scripts etc..). Il peut être désactivé pour ne pas être transmis">{{Via Type générique}}</span></center>';
+			echo '<center><span class="label label-info" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Il est visible dans les pièces de l\'application mobile, pour certains d\'entre eux il peut être nécessaire de configurer les types génériques (virtuels, scripts etc..). Il peut être désactivé pour ne pas être transmis">{{Via Type générique}}</span></center>';
 		} else {
-			echo '<center><span class="label label-danger" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="N\'est pas transmis à l\'application, vous pouvez le transmettre à l\'application en l\'activant et configurant les generic type">{{Non transmis}}</span></center>';
+			echo '<center><span class="label label-danger" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="N\'est pas transmis à l\'application, vous pouvez le transmettre à l\'application en l\'activant et configurant les types génériques">{{Non transmis}}</span></center>';
 		}
 	}
 				?>
@@ -91,7 +114,6 @@ foreach ($eqLogics as $eqLogic) {
 		?>
 </div>
 <legend><i class="fa fa-times-circle-o"></i>  {{Le(s) Plugin(s) Non Testé(s)}}
-    </legend>
     </legend>
     <div class="eqLogicThumbnailContainer">
     	<?php
@@ -111,9 +133,9 @@ foreach ($eqLogics as $eqLogic) {
 		echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $plugin->getName() . '</center></span>';
 	}
 	if (config::byKey('sendToApp', $plugin->getId(), 0) == 1) {
-		echo '<center><span class="label label-warning" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Vous avez activé la transmission de ce plugin en se basant sur les generic type">{{Transmis à l\'app}}</span></center>';
+		echo '<center><span class="label label-warning" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Vous avez activé la transmission de ce plugin en se basant sur les types génériques">{{Transmis à l\'app}}</span></center>';
 	} else {
-		echo '<center><span class="label label-danger" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="N\'est pas transmis à l\'application, vous pouvez le transmettre à l\'application en l\'activant et configurant les generic type">{{Non transmis}}</span></center>';
+		echo '<center><span class="label label-danger" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="N\'est pas transmis à l\'application, vous pouvez le transmettre à l\'application en l\'activant et configurant les types génériques">{{Non transmis}}</span></center>';
 	}			?>
 			</div>
 			<?php
@@ -123,7 +145,8 @@ foreach ($eqLogics as $eqLogic) {
 		?>
 </div>
 </div>
-
+</div>
+</div>
 <div class="col-lg-10 col-md-9 col-sm-8 eqLogic" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
     <div class="row">
         <div class="col-lg-6">

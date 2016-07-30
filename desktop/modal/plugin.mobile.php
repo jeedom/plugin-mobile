@@ -255,4 +255,7 @@ $('.cmdAttr[data-l1key=display][data-l2key=generic_type]').on('change', function
         cmdLine.find('.cmdAttr[data-l1key=display][data-l2key=icon]').empty();
     }
 });
+$('#md_modal').on('dialogclose', function () {
+   location.reload();
+})
 </script>

@@ -22,11 +22,19 @@ function clickplugin(id_plugin,name_plugin){
 	$('#md_modal').dialog({title: "{{Configuration Mobile du Plugin "+name_plugin+"}}"});
     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin.mobile&plugin_id=' +id_plugin).dialog('open');
 }
+
 $('li').click(function(){
 	 setTimeout(function(){
 		$('.eqLogicThumbnailContainer').packery();
 		},50);
  });
+var hash = document.location.hash;
+if (hash) {
+    $('.nav-tabs a[href="'+hash+'"]').tab('show');
+} 
+$('.nav-tabs a').on('shown.bs.tab', function (e) {
+    window.location.hash = e.target.hash;
+});
 /*
  * Fonction pour l'ajout de commande, appellé automatiquement par plugin.template
  */

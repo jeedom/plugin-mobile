@@ -195,7 +195,7 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 </div>
 
 <script>
-
+var changed=0;
 // CHANGE CLICK
 $('.cmdAttr').on('change click',function(){
    $(this).closest('tr').attr('data-change','1');
@@ -203,6 +203,7 @@ $('.cmdAttr').on('change click',function(){
 
 // SAUVEGARDE
 function SavePlugin(){
+   changed=1;
    var cmds = [];
    $('.TableCMD tr').each(function(){
    	if($(this).attr('data-change') == '1'){
@@ -230,7 +231,6 @@ function SavePlugin(){
        $('.EnregistrementDisplay').showAlert({message: '{{Sauvegarde effectuée}}', level: 'success'});
     }
   });
-  
 }
 
 // ICONE
@@ -256,6 +256,8 @@ $('.cmdAttr[data-l1key=display][data-l2key=generic_type]').on('change', function
     }
 });
 $('#md_modal').on('dialogclose', function () {
-   location.reload();
+   if(changed==1) {
+	   location.reload();
+   }
 })
 </script>

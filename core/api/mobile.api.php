@@ -31,8 +31,8 @@ if ($jsonrpc->getMethod() == 'sync') {
 	$sync_array = array(
 		'eqLogics' => mobile::discovery_eqLogic($PluginToSend),
 		'cmds' => mobile::discovery_cmd($PluginToSend),
-		'objects' => utils::o2a(object::all()),
-		'scenarios' => utils::o2a(scenario::all()),
+		'objects' => mobile::discovery_object(),
+		'scenarios' => mobile::discovery_scenario(),
 		'config' => array('datetime' => getmicrotime()),
 	);
 	log::add('mobile', 'debug', 'Demande de Sync : ' . json_encode($sync_array));

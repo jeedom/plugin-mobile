@@ -239,10 +239,11 @@ class mobile extends eqLogic {
 			$eqLogics = eqLogic::byType($plugin_type, true);
 			if (is_array($eqLogics)) {
 				foreach ($eqLogics as $eqLogic) {
-                  if(($eqLogic->getIsVisible() == 1 && $eqLogic->getObject_id() !== null) || $eqLogic->getEqType_name() == 'camera' || $eqLogic->getEqType_name() == 'netatmoThermostat' || $eqLogic->getEqType_name() == 'thermostat' || $eqLogic->getEqType_name() == 'alarm' || $eqLogic->getEqType_name() == 'weather'){
+                  if($eqLogic->getObject_id() !== null && $eqLogic->getIsEnable() == 1 && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
 					$eqLogic_array = utils::o2a($eqLogic);
-                    	$return[] = $eqLogic_array;
-				}
+					unset($eqLogic_array['eqReal_id'],$eqLogic_array['configuration'], $eqLogic_array['specificCapatibilities'],$eqLogic_array['timeout'],$eqLogic_array['category'],$eqLogic_array['display']);
+                    $return[] = $eqLogic_array;
+					}
                 }
 			}
 		}
@@ -256,18 +257,68 @@ class mobile extends eqLogic {
 			if (is_array($eqLogics)) {
 				foreach ($eqLogics as $eqLogic) {
                   	$i = 0;
-                  if($eqLogic->getObject_id() !== null && ($eqLogic->getIsVisible() == 1 || $eqLogic->getEqType_name() == 'camera' || $eqLogic->getEqType_name() == 'netatmoThermostat' || $eqLogic->getEqType_name() == 'thermostat' || $eqLogic->getEqType_name() == 'alarm' || $eqLogic->getEqType_name() == 'weather')){
+                  if($eqLogic->getObject_id() !== null && $eqLogic->getIsEnable() == 1 && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
 					foreach ($eqLogic->getCmd() as $cmd) {
-                    	if($cmd->getDisplay('generic_type') != 'GENERIC_ERROR' && $cmd->getDisplay('generic_type') != null && $cmd->getDisplay('generic_type') != 'DONT'){
-                      		$cmd_array[] = $cmd->exportApi();
+                    	if($cmd->getDisplay('generic_type') != null && !in_array($cmd->getDisplay('generic_type'),['GENERIC_ERROR','DONT'])){
+                      		$cmd_array = $cmd->exportApi();
+							$maxValue = $cmd_array['configuration']['maxValue'];
+							$minValue = $cmd_array['configuration']['minValue'];
+							$generic_type = $cmd_array['display']['generic_type'];
+							$icon = $cmd_array['display']['icon'];
+							$invertBinary = $cmd_array['display']['invertBinary'];
+							$title_disable = $cmd_array['display']['title_disable'];
+							$title_placeholder = $cmd_array['display']['title_placeholder'];
+							$message_placeholder = $cmd_array['display']['message_placeholder'];
+							unset($cmd_array['isHistorized'],$cmd_array['configuration'], $cmd_array['template'], $cmd_array['display'], $cmd_array['html']);
+							$cmd_array['configuration']['maxValue'] = $maxValue;
+							$cmd_array['configuration']['minValue'] = $minValue;
+							$cmd_array['display']['generic_type'] = $generic_type;
+							if ($icon != null) {
+								$cmd_array['display']['icon'] = $icon;
+							}
+							if ($invertBinary != null) {
+								$cmd_array['display']['invertBinary'] = $invertBinary;
+							}
+							if ($title_disable != null) {
+								$cmd_array['display']['title_disable'] = $title_disable;
+							}
+							if ($title_placeholder != null) {
+								$cmd_array['display']['title_placeholder'] = $title_placeholder;
+							}
+							if ($message_placeholder != null) {
+								$cmd_array['display']['message_placeholder'] = $message_placeholder;
+							}
+							$cmds_array[] = $cmd_array;
                       		$i++;
                       	}
 					}
                   	if($i > 0){
-                    	$return = $cmd_array;
+                    	$return = $cmds_array;
                     }
 				}
                 }
+			}
+		}
+		return $return;
+	}
+	
+	public static function discovery_object() {
+		$return = utils::o2a(object::all());
+		foreach ($return as &$object){
+			unset($object['configuration'],$object['display']['tagColor'], $object['display']['tagTextColor']);
+		}
+		return $return;
+	}
+	 
+	public static function discovery_scenario() {
+		$return = utils::o2a(scenario::all());
+		foreach ($return as &$scenario){
+			if ($scenario['display']['name'] != ''){
+				$scenario['name'] = $scenario['display']['name'];
+			}
+			unset($scenario['mode'],$scenario['schedule'], $scenario['scenarioElement'],$scenario['trigger'],$scenario['timeout'],$scenario['description'],$scenario['configuration'],$scenario['type'],$scenario['display']['name']);
+			if ($scenario['display'] == [] || $scenario['display']['icon'] == ''){
+				unset($scenario['display']);
 			}
 		}
 		return $return;

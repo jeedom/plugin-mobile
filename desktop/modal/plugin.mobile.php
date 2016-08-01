@@ -51,7 +51,7 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
         $files = scandir($path);
         foreach ($files as $imgname){
 			 if (!in_array($imgname, ['.','..'])){
-				echo '<img margin="20px" src="plugins/mobile/core/template/images/' . $plugin->getId() . '/' . $imgname . '" height="500"/>';
+				echo '<img style="margin-left:20px;" src="plugins/mobile/core/template/images/' . $plugin->getId() . '/' . $imgname . '" height="500"/>';
 			 }
         }
         echo '</center>';

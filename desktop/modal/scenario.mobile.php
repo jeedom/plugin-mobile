@@ -48,20 +48,7 @@ sendVarToJS('scenario', $_GET['scenario_id']);
 
 <script>
 var changed=0;
-$("#bt_saveScenario").on('click', function (event) {
-	changed=1;
-    jeedom.scenario.save({
-            scenario: $('.div_scenario_configuration').getValues('.scenarioAttr')[0],
-            error: function (error) {
-                $('.EnregistrementDisplay').showAlert({message: error.message, level: 'danger'});
-            },
-            success: function (data) {
-                modifyWithoutSave = false;
-               $('.EnregistrementDisplay').showAlert({message: '{{Sauvegarde effectuée avec succès}}', level: 'success'});
-            }
-        });
-    return false;
-});
+
 $('#md_modal').on('dialogclose', function () {
    if(changed==1) {
 	   location.reload();

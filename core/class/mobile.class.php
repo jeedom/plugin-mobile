@@ -239,7 +239,7 @@ class mobile extends eqLogic {
 			$eqLogics = eqLogic::byType($plugin_type, true);
 			if (is_array($eqLogics)) {
 				foreach ($eqLogics as $eqLogic) {
-                  if($eqLogic->getObject_id() !== null && $eqLogic->getIsEnable() == 1 && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
+                  if($eqLogic->getObject_id() !== null && object::byId($eqLogic->getObject_id())->getDisplay('sendToApp', 1) == 1 && $eqLogic->getIsEnable() == 1 && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
 					$eqLogic_array = utils::o2a($eqLogic);
 					unset($eqLogic_array['eqReal_id'],$eqLogic_array['configuration'], $eqLogic_array['specificCapatibilities'],$eqLogic_array['timeout'],$eqLogic_array['category'],$eqLogic_array['display']);
                     $return[] = $eqLogic_array;
@@ -257,7 +257,7 @@ class mobile extends eqLogic {
 			if (is_array($eqLogics)) {
 				foreach ($eqLogics as $eqLogic) {
                   	$i = 0;
-                  if($eqLogic->getObject_id() !== null && $eqLogic->getIsEnable() == 1 && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
+                  if($eqLogic->getObject_id() !== null && object::byId($eqLogic->getObject_id())->getDisplay('sendToApp', 1) == 1 && $eqLogic->getIsEnable() == 1 && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
 					foreach ($eqLogic->getCmd() as $cmd) {
                     	if($cmd->getDisplay('generic_type') != null && !in_array($cmd->getDisplay('generic_type'),['GENERIC_ERROR','DONT'])){
                       		$cmd_array = $cmd->exportApi();
@@ -271,7 +271,9 @@ class mobile extends eqLogic {
 							$message_placeholder = $cmd_array['display']['message_placeholder'];
 							unset($cmd_array['isHistorized'],$cmd_array['configuration'], $cmd_array['template'], $cmd_array['display'], $cmd_array['html']);
 							$cmd_array['configuration']['maxValue'] = $maxValue;
-							$cmd_array['configuration']['minValue'] = $minValue;
+							if ($minValue != null) {
+								$cmd_array['configuration']['minValue'] = $minValue;
+							}
 							$cmd_array['display']['generic_type'] = $generic_type;
 							if ($icon != null) {
 								$cmd_array['display']['icon'] = $icon;
@@ -288,6 +290,15 @@ class mobile extends eqLogic {
 							if ($message_placeholder != null) {
 								$cmd_array['display']['message_placeholder'] = $message_placeholder;
 							}
+							if ($cmd_array['currentValue'] == null || $cmd_array['currentValue'] == ""){
+								unset($cmd_array['currentValue']);
+							}
+							if ($cmd_array['value'] == null || $cmd_array['value'] == ""){
+								unset($cmd_array['value']);
+							}
+							if ($cmd_array['unite'] == null || $cmd_array['unite'] == ""){
+								unset($cmd_array['unite']);
+							}
 							$cmds_array[] = $cmd_array;
                       		$i++;
                       	}
@@ -303,23 +314,35 @@ class mobile extends eqLogic {
 	}
 	
 	public static function discovery_object() {
-		$return = utils::o2a(object::all());
-		foreach ($return as &$object){
-			unset($object['configuration'],$object['display']['tagColor'], $object['display']['tagTextColor']);
+		$all = utils::o2a(object::all());
+		$return = array();
+		foreach ($all as &$object){
+			if (isset($object['display']['sendToApp']) && $object['display']['sendToApp'] == "0") {
+				continue;
+			} else {
+				unset($object['configuration'],$object['display']['tagColor'], $object['display']['tagTextColor']);
+				$return[]=$object;
+			}
 		}
 		return $return;
 	}
 	 
 	public static function discovery_scenario() {
-		$return = utils::o2a(scenario::all());
-		foreach ($return as &$scenario){
-			if ($scenario['display']['name'] != ''){
-				$scenario['name'] = $scenario['display']['name'];
-			}
-			unset($scenario['mode'],$scenario['schedule'], $scenario['scenarioElement'],$scenario['trigger'],$scenario['timeout'],$scenario['description'],$scenario['configuration'],$scenario['type'],$scenario['display']['name']);
-			if ($scenario['display'] == [] || $scenario['display']['icon'] == ''){
-				unset($scenario['display']);
-			}
+		$all = utils::o2a(scenario::all());
+		$return = array();
+		foreach ($all as &$scenario){
+			if (isset($scenario['display']['sendToApp']) && $scenario['display']['sendToApp'] == "0") {
+				continue;
+			} else {
+				if ($scenario['display']['name'] != ''){
+					$scenario['name'] = $scenario['display']['name'];
+				}
+				unset($scenario['mode'],$scenario['schedule'], $scenario['scenarioElement'],$scenario['trigger'],$scenario['timeout'],$scenario['description'],$scenario['configuration'],$scenario['type'],$scenario['display']['name']);
+				if ($scenario['display'] == [] || $scenario['display']['icon'] == ''){
+					unset($scenario['display']);
+				}
+				$return[]=$scenario;
+			}	
 		}
 		return $return;
 	}

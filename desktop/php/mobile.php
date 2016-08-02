@@ -29,6 +29,8 @@ foreach ($eqLogics as $eqLogic) {
    <ul class="nav nav-tabs" role="tablist">
 		<li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipements}}</a></li>
 		<li role="presentation"><a href="#plugintab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Plugins}}</a></li>
+		<li role="presentation"><a href="#objecttab" aria-controls="profile" role="tab" data-toggle="tab"><i class="icon maison-house112"></i> {{Pièces}}</a></li>
+		<li role="presentation"><a href="#scenariotab" aria-controls="profile" role="tab" data-toggle="tab"><i class="icon jeedom-clap_cinema"></i> {{Scénarios}}</a></li>
 	</ul>
 	<div class="tab-content">
 	<div role="tabpanel" class="tab-pane active" id="eqlogictab">
@@ -142,6 +144,48 @@ foreach ($eqLogics as $eqLogic) {
 			}
     	}
 		?>
+</div>
+</div>
+<div role="tabpanel" class="tab-pane" id="objecttab">
+    <legend><i class="icon maison-modern13"></i>  {{Les Pièces}}
+    </legend>
+    <div class="eqLogicThumbnailContainer">
+    	 <?php
+		 $allObject = object::buildTree(null, false);
+foreach ($allObject as $object) {
+	$opacity = '';
+	if ($object->getDisplay('sendToApp', 1) == 0) {
+		$opacity = 'opacity:0.3;';
+	}
+	echo '<div class="objectDisplayCard cursor" data-object_id="' . $object->getId() . '" onclick="clickobject(\''. $object->getId(). '\',\''. $object->getName() .'\')" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;'.$opacity.'">';
+	echo "<center>";
+	echo str_replace('></i>', ' style="font-size : 6em;color:#767676;"></i>', $object->getDisplay('icon', '<i class="fa fa-lemon-o"></i>'));
+	echo "</center>";
+	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $object->getName() . '</center></span>';
+	echo '</div>';
+}
+?>
+</div>
+</div>
+<div role="tabpanel" class="tab-pane" id="scenariotab">
+    <legend><i class="icon jeedom-clap_cinema"></i>  {{Les Scénarios}}
+    </legend>
+    <div class="eqLogicThumbnailContainer">
+    	 <?php
+		 $allScenario = scenario::all();
+foreach ($allScenario as $scenario) {
+		$opacity = '';
+		if ($scenario->getDisplay('sendToApp', 1) == 0) {
+			$opacity = 'opacity:0.3;';
+		}
+		echo '<div class="scenarioDisplayCard cursor" data-scenario_id="' . $scenario->getId() . '" data-type="' . $scenario->getType() . '" onclick="clickscenario(\''. $scenario->getId(). '\',\''. $scenario->getName() .'\')" style="background-color : #ffffff; height : 140px;margin-bottom : 35px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
+		echo "<center>";
+		echo '<img src="core/img/scenario.png" height="90" width="85" />';
+		echo "</center>";
+		echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $scenario->getHumanName(true, true,true,true) . '</center></span>';
+		echo '</div>';
+}
+?>
 </div>
 </div>
 </div>

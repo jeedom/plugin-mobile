@@ -248,7 +248,7 @@ $('body').undelegate('.cmdAttr[data-l1key=display][data-l2key=icon]', 'click').d
 
 $('.cmdAttr[data-l1key=display][data-l2key=generic_type]').on('change', function () {
 	var cmdLine = $(this).closest('.cmdLine');
-    if ($(this).value() == 'GENERIC' || $(this).value() == 'GENERIC_ACTION') {
+    if ($(this).value() == 'GENERIC_INFO' || $(this).value() == 'GENERIC_ACTION') {
 		cmdLine.find('.iconeGeneric').show();
     } else {
         cmdLine.find('.iconeGeneric').hide();

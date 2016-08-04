@@ -121,7 +121,7 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 				echo $cmd->getName();
 				$display_icon = 'none';
 				$icon ='';
-				if (in_array($cmd->getDisplay('generic_type'), ['GENERIC','GENERIC_ACTION'])) {
+				if (in_array($cmd->getDisplay('generic_type'), ['GENERIC_INFO','GENERIC_ACTION'])) {
 					$display_icon = 'block';
 					$icon = $cmd->getDisplay('icon');
 				}

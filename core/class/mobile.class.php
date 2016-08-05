@@ -290,7 +290,7 @@ class mobile extends eqLogic {
 							if ($message_placeholder != null) {
 								$cmd_array['display']['message_placeholder'] = $message_placeholder;
 							}
-							if ($cmd_array['currentValue'] == null || $cmd_array['currentValue'] == ""){
+							if ($cmd_array['type'] == 'action'){
 								unset($cmd_array['currentValue']);
 							}
 							if ($cmd_array['value'] == null || $cmd_array['value'] == ""){

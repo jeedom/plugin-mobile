@@ -19,7 +19,7 @@ else
   sudo npm rebuild
   sudo apt-get -y --purge autoremove nodejs npm
   arch=`arch`;
-  echo 30 > /tmp/mySensors_dep
+  echo 30 > /tmp/homebridge_in_progress
   if [[ $arch == "armv6l" ]]
   then
     echo "Raspberry 1 détecté, utilisation du paquet pour armv6"

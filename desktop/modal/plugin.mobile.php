@@ -92,12 +92,20 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
     <?php
     	$tableau_cmd = array();
 		$eqLogics = eqLogic::byType($_GET['plugin_id']);
+		$checkHomebridge = '';
 		echo '<div class="panel-group" id="accordionConfiguration">';
 		foreach ($eqLogics as $eqLogic){
+			if(mobile::check_ios() == 1){
+				$check = 'checked';
+				if ($eqLogic->getConfiguration('sendToHomebridge', 1) == 0) {
+					$check = 'unchecked';
+				}
+				$checkHomebridge = '<small><label style="cursor:default;margin-left:5px">{{  Envoyer à Homebridge  }}<input style="display:inline-block" type="checkbox" class="eqLogicAttr configuration" data-l1key="configuration" data-l2key="sendToHomebridge"' . $check .'/></label></small>';;
+			}
 		echo '<div class="panel panel-default">';
 		echo ' <div class="panel-heading">
                 <h3 class="panel-title">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionConfiguration" href="#config_'.$eqLogic->getId().'" style="text-decoration:none;">'.$eqLogic->getHumanName(true).'<a class="btn btn-mini btn-success eqLogicAction pull-right" style="padding:0px 3px 0px 3px;cursor:pointer;" onclick="SavePlugin()"><i class="fa fa-floppy-o" style="color:white;"></i></a>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionConfiguration" href="#config_'.$eqLogic->getId().'" style="text-decoration:none"><span class="eqLogicAttr hidden" data-l1key="id">'.$eqLogic->getId().'</span>'.$eqLogic->getHumanName(true). '<a class="btn btn-mini btn-success eqLogicAction pull-right" style="padding:0px 3px 0px 3px;cursor:pointer;" onclick="SavePlugin()"><i class="fa fa-floppy-o" style="color:white;"></i></a>'.$checkHomebridge.'
                     </a>
                 </h3>
             </div>';
@@ -105,7 +113,7 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 			echo '<div class="panel-body">';
 			$cmds = null;
 			$cmds = cmd::byEqLogicId($eqLogic->getId());
-			echo '<table class="table TableCMD">';
+			echo '<table id=' . $eqLogic->getId() . ' class="table TableCMD">';
 			echo '<tr>
 				<th>{{Id Cmd}}</th>
 				<th>{{Nom de la Commande}}</th>
@@ -209,7 +217,19 @@ function SavePlugin(){
    	if($(this).attr('data-change') == '1'){
        cmds.push($(this).getValues('.cmdAttr')[0]);
     }
-   });      
+   });
+   $('.panel-title').each(function(){
+   	   jeedom.eqLogic.simpleSave({
+	       eqLogic : $(this).getValues('.eqLogicAttr')[0],
+	       error: function (error) {
+	           $('.EnregistrementDisplay').showAlert({message: error.message, level: 'danger'});
+	       },
+	       success: function (data) {
+	          $('.EnregistrementDisplay').showAlert({message: '{{Modifications sauvegardées avec succès}}', level: 'success'});
+	      }
+	  });
+   });
+
    jeedom.cmd.multiSave({
        cmds : cmds,
        error: function (error) {

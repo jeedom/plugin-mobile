@@ -162,12 +162,18 @@ sendVarToJS('object', $_GET['object_id']);
 
 <script>
 var changed=0;
+var eqLogicsHomebridge = [];
 // CHANGE CLICK
 $('.cmdAttr').on('change click',function(){
    $(this).closest('tr').attr('data-change','1');
 });
 $('.objectAttr').on('change click',function(){
    changed=1;
+});
+$('.eqLogicAttr').on('change click',function(){
+	var eqLogic = $(this).closest('.panel-title').getValues('.eqLogicAttr')[0];
+	eqLogicsHomebridge.push(eqLogic);
+	
 });
 
 // SAUVEGARDE
@@ -178,14 +184,24 @@ function SaveObject(){
        cmds.push($(this).getValues('.cmdAttr')[0]);
     }
    });
-   $('.panel-title').each(function(){
+   var eqLogicsHomebridgeFiltered = [];
+   $.each(eqLogicsHomebridge, function(index, eqLogic) {
+	    var eqLogics = $.grep(eqLogicsHomebridgeFiltered, function (e) {
+	        return eqLogic.id === e.id;
+	    });
+	    if (eqLogics.length === 0) {
+	      eqLogicsHomebridgeFiltered.push(eqLogic);
+	    }
+	});
+   $.each(eqLogicsHomebridgeFiltered ,function(index, eqLogic){
    	   jeedom.eqLogic.simpleSave({
-	       eqLogic : $(this).getValues('.eqLogicAttr')[0],
+	       eqLogic : eqLogic,
 	       error: function (error) {
 	           $('.EnregistrementDisplay').showAlert({message: error.message, level: 'danger'});
 	       },
 	       success: function (data) {
 	          $('.EnregistrementDisplay').showAlert({message: '{{Modifications sauvegardées avec succès}}', level: 'success'});
+	          eqLogicsHomebridge = [];
 	      }
 	  });
    });

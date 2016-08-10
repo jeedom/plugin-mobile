@@ -92,6 +92,14 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
     <?php
     	$tableau_cmd = array();
 		$eqLogics = eqLogic::byType($_GET['plugin_id']);
+		$subClasses = config::byKey('subClass', $_GET['plugin_id'], '');
+		if ($subClasses != ''){
+			$subClassesList = explode(';',$subClasses);
+			foreach ($subClassesList as $subClass){
+				$subEqLogics = eqLogic::byType($subClass);
+				$eqLogics = array_merge ($eqLogics, $subEqLogics);
+			}
+		}
 		$checkHomebridge = '';
 		echo '<div class="panel-group" id="accordionConfiguration">';
 		foreach ($eqLogics as $eqLogic){
@@ -103,9 +111,14 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 				$checkHomebridge = '<small><label style="cursor:default;margin-left:5px">{{  Envoyer à Homebridge  }}<input style="display:inline-block" type="checkbox" class="eqLogicAttr configuration" data-l1key="configuration" data-l2key="sendToHomebridge"' . $check .'/></label></small>';;
 			}
 		echo '<div class="panel panel-default">';
+		if ($eqLogic->getEqType_name() != $_GET['plugin_id']){
+			$subClassName = ' (' . $eqLogic->getEqType_name() . ') ';
+		} else {
+			$subClassName = '';
+		}
 		echo ' <div class="panel-heading">
                 <h3 class="panel-title">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionConfiguration" href="#config_'.$eqLogic->getId().'" style="text-decoration:none"><span class="eqLogicAttr hidden" data-l1key="id">'.$eqLogic->getId().'</span>'.$eqLogic->getHumanName(true). '<a class="btn btn-mini btn-success eqLogicAction pull-right" style="padding:0px 3px 0px 3px;cursor:pointer;" onclick="SavePlugin()"><i class="fa fa-floppy-o" style="color:white;"></i></a>'.$checkHomebridge.'
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionConfiguration" href="#config_'.$eqLogic->getId().'" style="text-decoration:none"><span class="eqLogicAttr hidden" data-l1key="id">'.$eqLogic->getId().'</span>'.$eqLogic->getHumanName(true). $subClassName . '<a class="btn btn-mini btn-success eqLogicAction pull-right" style="padding:0px 3px 0px 3px;cursor:pointer;" onclick="SavePlugin()"><i class="fa fa-floppy-o" style="color:white;"></i></a>'.$checkHomebridge.'
                     </a>
                 </h3>
             </div>';
@@ -208,10 +221,11 @@ var changed=0;
 $('.cmdAttr').on('change click',function(){
    $(this).closest('tr').attr('data-change','1');
 });
-
+$('.configKey').on('change click',function(){
+   changed=1;
+});
 // SAUVEGARDE
 function SavePlugin(){
-   changed=1;
    var cmds = [];
    $('.TableCMD tr').each(function(){
    	if($(this).attr('data-change') == '1'){

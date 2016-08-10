@@ -179,8 +179,8 @@ function SaveObject(){
     }
    });
    $('.panel-title').each(function(){
-   	   jeedom.object.save({
-	       object : $(this).getValues('.objectAttr')[0],
+   	   jeedom.eqLogic.simpleSave({
+	       eqLogic : $(this).getValues('.eqLogicAttr')[0],
 	       error: function (error) {
 	           $('.EnregistrementDisplay').showAlert({message: error.message, level: 'danger'});
 	       },

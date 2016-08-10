@@ -53,6 +53,13 @@ class mobile extends eqLogic {
 			} else if (in_array($plugId,$plugin_compatible) && !in_array($plugId,$plugin_widget) && config::byKey('sendToApp', $plugId, 1) == 1){
 				array_push($PluginToSend, $plugId);
 			} else if (!in_array($plugId,$plugin_compatible) && config::byKey('sendToApp', $plugId, 0) == 1){
+				$subClasses = config::byKey('subClass', $plugId, '');
+				if ($subClasses != ''){
+					$subClassesList = explode(';',$subClasses);
+					foreach ($subClassesList as $subClass){
+						array_push($PluginToSend, $subClass);
+					}
+				}
 				array_push($PluginToSend, $plugId);
 			} else {
 				continue;
@@ -239,10 +246,10 @@ class mobile extends eqLogic {
 			$eqLogics = eqLogic::byType($plugin_type, true);
 			if (is_array($eqLogics)) {
 				foreach ($eqLogics as $eqLogic) {
-                  if($eqLogic->getObject_id() !== null && object::byId($eqLogic->getObject_id())->getDisplay('sendToApp', 1) == 1 && $eqLogic->getIsEnable() == 1 && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
-					$eqLogic_array = utils::o2a($eqLogic);
-					unset($eqLogic_array['eqReal_id'],$eqLogic_array['configuration'], $eqLogic_array['specificCapatibilities'],$eqLogic_array['timeout'],$eqLogic_array['category'],$eqLogic_array['display']);
-                    $return[] = $eqLogic_array;
+					if($eqLogic->getObject_id() !== null && object::byId($eqLogic->getObject_id())->getDisplay('sendToApp', 1) == 1 && $eqLogic->getIsEnable() == 1 && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
+						$eqLogic_array = utils::o2a($eqLogic);
+						unset($eqLogic_array['eqReal_id'],$eqLogic_array['configuration'], $eqLogic_array['specificCapatibilities'],$eqLogic_array['timeout'],$eqLogic_array['category'],$eqLogic_array['display']);
+						$return[] = $eqLogic_array;
 					}
                 }
 			}

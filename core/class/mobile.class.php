@@ -302,6 +302,8 @@ class mobile extends eqLogic {
 							}
 							if ($cmd_array['value'] == null || $cmd_array['value'] == ""){
 								unset($cmd_array['value']);
+							}else{
+								$cmd_array['value'] = str_replace("#","",$cmd_array['value']);	
 							}
 							if ($cmd_array['unite'] == null || $cmd_array['unite'] == ""){
 								unset($cmd_array['unite']);

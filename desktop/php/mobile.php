@@ -30,7 +30,7 @@ foreach ($eqLogics as $eqLogic) {
 		<li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipements}}</a></li>
 		<li role="presentation"><a href="#plugintab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Plugins}}</a></li>
 		<li role="presentation"><a href="#objecttab" aria-controls="profile" role="tab" data-toggle="tab"><i class="icon maison-house112"></i> {{Pièces}}</a></li>
-		<li role="presentation"><a href="#scenariotab" aria-controls="profile" role="tab" data-toggle="tab"><i class="icon jeedom-clap_cinema"></i> {{Scénarios}}</a></li>
+		<!--<li role="presentation"><a href="#scenariotab" aria-controls="profile" role="tab" data-toggle="tab"><i class="icon jeedom-clap_cinema"></i> {{Scénarios}}</a></li>-->
 	</ul>
 	<div class="tab-content">
 	<div role="tabpanel" class="tab-pane active" id="eqlogictab">

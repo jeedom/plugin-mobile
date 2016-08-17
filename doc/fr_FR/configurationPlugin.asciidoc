@@ -28,3 +28,16 @@ image::../images/mobile3.png[]
 
 Après avoir sauvegardé, vous obtiendrez un QRCode permettant à l'application de se configurer toute seule.
 
+== Configuration des plugins et commandes que reçoit l'app
+
+Après l'initialisation du Plugin Mobile vous avez la possibilité de remanier les types génériques des commandes, des plugins et des pièces.
+
+image::../images/mobile10.png[]
+
+En cliquant sur un plugin, vous pouvez l'autoriser ou non à dialoguer avec l'application mobile, et configurer chacun des types génériques associés à des commandes.
+
+image::../images/mobile11.png[]
+
+En cliquant sur une pièce, vous pouvez l'autoriser ou non à être présente dans l'application mobile, et configurer chacun des types génériques associés à ses commandes.
+
+image::../images/mobile12.png[]

@@ -301,7 +301,8 @@ class mobile extends eqLogic {
 								unset($cmd_array['currentValue']);
 							}
 							if ($cmd_array['value'] == null || $cmd_array['value'] == ""){
-								unset($cmd_array['value']);
+								//unset($cmd_array['value']);
+								$cmd_array['value'] = '';
 							}else{
 								$cmd_array['value'] = str_replace("#","",$cmd_array['value']);	
 							}

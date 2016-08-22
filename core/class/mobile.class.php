@@ -266,7 +266,7 @@ class mobile extends eqLogic {
                   	$i = 0;
                   if($eqLogic->getObject_id() !== null && object::byId($eqLogic->getObject_id())->getDisplay('sendToApp', 1) == 1 && $eqLogic->getIsEnable() == 1 && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
 					foreach ($eqLogic->getCmd() as $cmd) {
-                    	if($cmd->getDisplay('generic_type') != null && !in_array($cmd->getDisplay('generic_type'),['GENERIC_ERROR','DONT'])){
+                    	if($cmd->getDisplay('generic_type') != null && !in_array($cmd->getDisplay('generic_type'),['GENERIC_ERROR','DONT']) && ($cmd->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
                       		$cmd_array = $cmd->exportApi();
 							$maxValue = $cmd_array['configuration']['maxValue'];
 							$minValue = $cmd_array['configuration']['minValue'];
@@ -301,8 +301,7 @@ class mobile extends eqLogic {
 								unset($cmd_array['currentValue']);
 							}
 							if ($cmd_array['value'] == null || $cmd_array['value'] == ""){
-								//unset($cmd_array['value']);
-								$cmd_array['value'] = '';
+								unset($cmd_array['value']);
 							}else{
 								$cmd_array['value'] = str_replace("#","",$cmd_array['value']);	
 							}

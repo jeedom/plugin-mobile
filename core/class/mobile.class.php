@@ -259,6 +259,12 @@ class mobile extends eqLogic {
 	
 	public static function discovery_cmd($plugin = array()){
 		$return = array();
+		$genericisvisible = array();
+		foreach (jeedom::getConfiguration('cmd::generic_type') as $key => $info) {
+		        if ($info['family'] !== 'generic') {
+		            array_push($genericisvisible, $info['name']);
+		        }
+		}
 		foreach ($plugin as $plugin_type) {
 			$eqLogics = eqLogic::byType($plugin_type, true);
 			if (is_array($eqLogics)) {
@@ -266,7 +272,7 @@ class mobile extends eqLogic {
                   	$i = 0;
                   if($eqLogic->getObject_id() !== null && object::byId($eqLogic->getObject_id())->getDisplay('sendToApp', 1) == 1 && $eqLogic->getIsEnable() == 1 && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
 					foreach ($eqLogic->getCmd() as $cmd) {
-                    	if($cmd->getDisplay('generic_type') != null && !in_array($cmd->getDisplay('generic_type'),['GENERIC_ERROR','DONT']) && ($cmd->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
+                    	if($cmd->getDisplay('generic_type') != null && !in_array($cmd->getDisplay('generic_type'),['GENERIC_ERROR','DONT']) && ($cmd->getIsVisible() == 1 || in_array($cmd->getDisplay('generic_type'), $genericisvisible))){
                       		$cmd_array = $cmd->exportApi();
 							$maxValue = $cmd_array['configuration']['maxValue'];
 							$minValue = $cmd_array['configuration']['minValue'];

@@ -261,8 +261,8 @@ class mobile extends eqLogic {
 		$return = array();
 		$genericisvisible = array();
 		foreach (jeedom::getConfiguration('cmd::generic_type') as $key => $info) {
-		        if ($info['family'] !== 'generic') {
-		            array_push($genericisvisible, $info['name']);
+		        if ($info['family'] !== 'Generic') {
+		            array_push($genericisvisible, $key);
 		        }
 		}
 		foreach ($plugin as $plugin_type) {

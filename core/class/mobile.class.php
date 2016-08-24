@@ -276,6 +276,8 @@ class mobile extends eqLogic {
                       		$cmd_array = $cmd->exportApi();
 							$maxValue = $cmd_array['configuration']['maxValue'];
 							$minValue = $cmd_array['configuration']['minValue'];
+							$actionCodeAccess = $cmd_array['configuration']['actionCodeAccess'];
+							$actionConfirm = $cmd_array['configuration']['actionConfirm'];
 							$generic_type = $cmd_array['display']['generic_type'];
 							$icon = $cmd_array['display']['icon'];
 							$invertBinary = $cmd_array['display']['invertBinary'];
@@ -313,6 +315,12 @@ class mobile extends eqLogic {
 							}
 							if ($cmd_array['unite'] == null || $cmd_array['unite'] == ""){
 								unset($cmd_array['unite']);
+							}
+							if($actionCodeAccess !== null){
+								$cmd_array['configuration']['actionCodeAccess'] = true;
+							}
+							if($actionConfirm !== null){
+								$cmd_array['configuration']['actionConfirm'] = true;
 							}
 							$cmds_array[] = $cmd_array;
                       		$i++;

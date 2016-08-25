@@ -178,7 +178,7 @@
 .Fumée
 |=======================
 |Image|type générique attendu|Partie Dev plugin tiers|Description
-|image:../images/FLOOD_1.jpg[width=300,align="center"]|-Fumée
+|image:../images/SMOKE_1.jpg[width=300,align="center"]|-Fumée
 
 -Température (optionnel)|-SMOKE
 

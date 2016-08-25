@@ -92,3 +92,39 @@
 
 -ENERGY_SLIDER|Retour d'état présent, le bouton de gauche permet de switcher entre on et off et le slider permet de controler l'intensité
 |=======================
+
+.Les Volets
+[options="header"]
+|=======================
+|Image|type générique attendu|Partie Dev plugin tiers|Description
+|image:../images/FLAP_1.jpg[width=300,align="center"]|-Volet Bouton Monter
+
+-Volet Bouton Descendre
+
+-Volet Bouton Stop
+
+-Volet Etat(optionnel)|-FLAP_UP
+
+-FLAP_DOWN
+
+-FLAP_STOP
+
+-FLAP_STATE (optionnel)|présence de trois boutons "Monter", "Descendre" et "Stop", optionnellement un retour d'état.
+|image:../images/FLAP_2.jpg[width=300,align="center"]|-Volet Bouton Monter
+
+-Volet Bouton Descendre
+
+-Volet Bouton Stop
+
+-Volet Etat
+
+-Volet Bouton Slider|-FLAP_UP
+
+-FLAP_DOWN
+
+-FLAP_STOP
+
+-FLAP_STATE
+
+-FLAP_SLIDER|Presence d'un slider, avec bouton monter descente en switch (avec icone etat)
+|=======================

@@ -6,6 +6,8 @@ include::configurationPlugin.asciidoc[]
 
 include::configurationMobile.asciidoc[]
 
+include::configurationTypeGenerique.asciidoc[]
+
 include::configurationHomebridge.asciidoc[]
 
 include::TroubleshootingMobile.asciidoc[]

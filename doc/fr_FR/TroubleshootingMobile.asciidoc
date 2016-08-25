@@ -1,0 +1,17 @@
+== FAQ
+
+-> Je suis sur Android version de l'app (1.0.1 ou 1.0.0) je n'arrive pas a accéder à mes pièces et meme à la configuration de l'app.
+
+- Vous avez eu un popup vous avertissant d'un souci sur les paramètres d'accessibilité, il vous suffit donc de vous rendre dans les paramètres d'accessibilité de votre mobile et de décocher les applications utilisant cette options. (un correctif sera apporté prochainement sur l'app)
+  
+-> J'ai un message dans une des lignes de mes modules me disant qu'il quand un Type Générique !
+
+- En lisant ce message il vous dit quel type de générique il manque pour créer un template compatible, il suffit juste de l'appliquer, reportez-vous a la doc chapitre Type Générique.
+
+-> J'ai un souci sur un des plugins dit complètement intégré (météo, thermostat, alarme, camera) !
+
+- N'hésitez pas a accéder a votre module et de bien cliquer sur sauvegarder a nouveau, cela permettra de re-inclure les types génériques au module.
+
+-> Impossible de mettre une info sur l'accueil de l'app !
+
+- cela est normal, ça sera disponible sur la version 1.1.

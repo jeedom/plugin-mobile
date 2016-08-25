@@ -224,7 +224,7 @@
 .Ouvrant
 |=======================
 |Image|type générique attendu|Partie Dev plugin tiers|Description
-|image:../images/OPENNING.jpg[width=300,align="center"]|-Porte / Fenêtre
+|image:../images/OPENING.jpg[width=300,align="center"]|-Porte / Fenêtre
 
 -Temperature (optionnel)
 

@@ -2,18 +2,18 @@
 
 === Tableaux des templates de l'application
 
-.Les Lumières
-[options="header,footer"]
-|=======================
-|Template|Image|type générique attendu|Partie Dev plugin tiers
-|1|
+image::../images/LIGHT_1.jpg[width=150,align="center"]
 
-|-Lumière Bouton On
+.Les Lumières
+[options="header"]
+|=======================
+|Image|type générique attendu|Partie Dev plugin tiers
+|image::../images/LIGHT_1.jpg[width=50,align="center"]|-Lumière Bouton On
 
 -Lumière Bouton Off|-LIGHT_ON
 
 -LIGHT_OFF
-|2|image|-Lumière Bouton On
+|image|-Lumière Bouton On
 
 -Lumière Bouton Off
 
@@ -22,7 +22,7 @@
 -LIGHT_OFF
 
 -LIGHT_STATE
-|3|image|-Lumière Bouton On
+|image|-Lumière Bouton On
 
 -Lumière Bouton Off
 
@@ -35,7 +35,7 @@
 -LIGHT_STATE
 
 -LIGHT_SLIDER
-|4|image|-Lumière Bouton On
+|image|-Lumière Bouton On
 
 -Lumière Bouton Off
 

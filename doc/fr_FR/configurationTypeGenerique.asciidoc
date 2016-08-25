@@ -1,1 +1,63 @@
 == Comment bien configurer ses type générique
+
+=== Tableaux des templates de l'application
+
+.Les Lumières
+[options="header,footer"]
+|=======================
+|Template|Image|type générique attendu|Partie Dev plugin tiers
+|1|
+
+|-Lumière Bouton On
+
+-Lumière Bouton Off|-LIGHT_ON
+
+-LIGHT_OFF
+|2|image|-Lumière Bouton On
+
+-Lumière Bouton Off
+
+-Lumière Etat|-LIGHT_ON
+
+-LIGHT_OFF
+
+-LIGHT_STATE
+|3|image|-Lumière Bouton On
+
+-Lumière Bouton Off
+
+-Lumière Etat
+
+-Lumière Slider|-LIGHT_ON
+
+-LIGHT_OFF
+
+-LIGHT_STATE
+
+-LIGHT_SLIDER
+|4|image|-Lumière Bouton On
+
+-Lumière Bouton Off
+
+-Lumière Etat
+
+-Lumière Slider
+
+-Lumière Couleur (info)
+
+-Lumière Couleur (action)
+
+-Lumière Mode (optionnel, il sert à avoir des modes de lumieres exemple arc-en-ciel sur les philips Hue)|-LIGHT_ON
+
+-LIGHT_OFF
+
+-LIGHT_STATE
+
+-LIGHT_SLIDER
+
+-LIGHT_COLOR
+
+-LIGHT_SET_COLOR
+
+-LIGHT_MODE
+|=======================

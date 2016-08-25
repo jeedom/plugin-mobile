@@ -5,12 +5,12 @@
 .Les Lumières
 [options="header"]
 |=======================
-|Image|type générique attendu|Partie Dev plugin tiers
+|Image|type générique attendu|Partie Dev plugin tiers|Description
 |image:../images/LIGHT_1.jpg[width=300,align="center"]|-Lumière Bouton On
 
 -Lumière Bouton Off|-LIGHT_ON
 
--LIGHT_OFF
+-LIGHT_OFF|présence de deux boutons "On" et "Off" pas de retour d'état.
 |image:../images/LIGHT_2.jpg[width=300,align="center"]|-Lumière Bouton On
 
 -Lumière Bouton Off
@@ -19,7 +19,7 @@
 
 -LIGHT_OFF
 
--LIGHT_STATE
+-LIGHT_STATE|Retour d'état présent, le bouton de gauche permet de switcher entre on et off
 |image:../images/LIGHT_3.jpg[width=300,align="center"]|-Lumière Bouton On
 
 -Lumière Bouton Off
@@ -32,7 +32,7 @@
 
 -LIGHT_STATE
 
--LIGHT_SLIDER
+-LIGHT_SLIDER|Retour d'état présent, le bouton de gauche permet de switcher entre on et off et le slider permet de controler l'intensité
 |image:../images/LIGHT_4.jpg[width=300,align="center"]|-Lumière Bouton On
 
 -Lumière Bouton Off
@@ -57,5 +57,5 @@
 
 -LIGHT_SET_COLOR
 
--LIGHT_MODE
+-LIGHT_MODE|Retour d'état présent, le bouton de gauche permet de switcher entre on et off et le slider permet de controler l'intensité, dans le cercle la couleur de la lampe est presente et lors d'un clique dans le cercle vous pouvez changer la couleur et activer un mode.
 |=======================

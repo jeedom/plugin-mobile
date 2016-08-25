@@ -59,3 +59,36 @@
 
 -LIGHT_MODE|Retour d'état présent, le bouton de gauche permet de switcher entre on et off et le slider permet de controler l'intensité, dans le cercle la couleur de la lampe est presente et lors d'un clique dans le cercle vous pouvez changer la couleur et activer un mode.
 |=======================
+
+.Les Prises
+[options="header"]
+|=======================
+|Image|type générique attendu|Partie Dev plugin tiers|Description
+|image:../images/ENERGY_1.jpg[width=300,align="center"]|-Prise Bouton On
+
+-Prise Bouton Off|-ENERGY_ON
+
+-ENERGY_OFF|présence de deux boutons "On" et "Off" pas de retour d'état.
+|image:../images/ENERGY_2.jpg[width=300,align="center"]|-Prise Bouton On
+
+-Prise Bouton Off
+
+-Prise Etat|-ENERGY_ON
+
+-ENERGY_OFF
+
+-ENERGY_STATE|Retour d'état présent, le bouton de gauche permet de switcher entre on et off
+|image:../images/ENERGY_3.jpg[width=300,align="center"]|-Prise Bouton On
+
+-Prise Bouton Off
+
+-Prise Etat
+
+-Prise Slider|-ENERGY_ON
+
+-ENERGY_OFF
+
+-ENERGY_STATE
+
+-ENERGY_SLIDER|Retour d'état présent, le bouton de gauche permet de switcher entre on et off et le slider permet de controler l'intensité
+|=======================

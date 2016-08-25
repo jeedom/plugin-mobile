@@ -132,7 +132,7 @@
 .Inondation
 |=======================
 |Image|type générique attendu|Partie Dev plugin tiers|Description
-|image:../images/FLOOD_1.jpg[width=300,align="center"]|-Inondation
+|image:../images/FLOOD.jpg[width=300,align="center"]|-Inondation
 
 -Température (optionnel)
 
@@ -150,7 +150,7 @@
 .Serrure
 |=======================
 |Image|type générique attendu|Partie Dev plugin tiers|Description
-|image:../images/LOCK_1.jpg[width=300,align="center"]|-Serrure Etat
+|image:../images/LOCK.jpg[width=300,align="center"]|-Serrure Etat
 
 -Serrure Bouton Ouvrir
 
@@ -164,7 +164,7 @@
 .Sirène
 |=======================
 |Image|type générique attendu|Partie Dev plugin tiers|Description
-|image:../images/SIREN_1.jpg[width=300,align="center"]|-Sirène Etat
+|image:../images/SIREN.jpg[width=300,align="center"]|-Sirène Etat
 
 -Sirène Bouton On
 
@@ -178,7 +178,7 @@
 .Fumée
 |=======================
 |Image|type générique attendu|Partie Dev plugin tiers|Description
-|image:../images/SMOKE_1.jpg[width=300,align="center"]|-Fumée
+|image:../images/SMOKE.jpg[width=300,align="center"]|-Fumée
 
 -Température (optionnel)|-SMOKE
 
@@ -188,7 +188,7 @@
 .Temperature
 |=======================
 |Image|type générique attendu|Partie Dev plugin tiers|Description
-|image:../images/TEMPERATURE_1.jpg[width=300,align="center"]|-Temperature
+|image:../images/TEMPERATURE.jpg[width=300,align="center"]|-Temperature
 
 -Humidité (optionnel)|-TEMPERATURE
 
@@ -198,7 +198,7 @@
 .Présence
 |=======================
 |Image|type générique attendu|Partie Dev plugin tiers|Description
-|image:../images/PRESENCE_1.jpg[width=300,align="center"]|-Précence
+|image:../images/PRESENCE.jpg[width=300,align="center"]|-Précence
 
 -Temperature (optionnel)
 
@@ -224,7 +224,7 @@
 .Ouvrant
 |=======================
 |Image|type générique attendu|Partie Dev plugin tiers|Description
-|image:../images/OPENNING_1.jpg[width=300,align="center"]|-Porte / Fenêtre
+|image:../images/OPENNING.jpg[width=300,align="center"]|-Porte / Fenêtre
 
 -Temperature (optionnel)
 
@@ -236,7 +236,7 @@
 .Fil pilote
 |=======================
 |Image|type générique attendu|Partie Dev plugin tiers|Description
-|image:../images/HEATING_1.jpg[width=300,align="center"]|-Chauffage fil pilote Bouton ON
+|image:../images/HEATING.jpg[width=300,align="center"]|-Chauffage fil pilote Bouton ON
 
 -Chauffage fil pilote Bouton OFF
 
@@ -256,11 +256,11 @@
 .Generique Action
 |=======================
 |Image|type générique attendu|Partie Dev plugin tiers|Description
-|image:../images/ACTION_1.jpg[width=300,align="center"]|-Generic (action)|-GENERIC_ACTION|Le bouton prend la forme du type de l'action, si defaut alors c'est un toggle, si message, alors vous avez une enveloppe, si slider vous avez un slider etc..
+|image:../images/ACTION.jpg[width=300,align="center"]|-Generic (action)|-GENERIC_ACTION|Le bouton prend la forme du type de l'action, si defaut alors c'est un toggle, si message, alors vous avez une enveloppe, si slider vous avez un slider etc..
 |=======================
 
 .Generique Info
 |=======================
 |Image|type générique attendu|Partie Dev plugin tiers|Description
-|image:../images/INFO_1.jpg[width=300,align="center"]|-Generic (info)|-GENERIC_INFO|Le bouton prend la forme du type de l'info.
+|image:../images/INFO.jpg[width=300,align="center"]|-Generic (info)|-GENERIC_INFO|Le bouton prend la forme du type de l'info.
 |=======================

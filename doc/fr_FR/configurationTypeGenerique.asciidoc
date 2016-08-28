@@ -1,4 +1,4 @@
-== Comment bien configurer ses type générique
+== Comment bien configurer ses types génériques
 
 === Tableaux des templates de l'application
 
@@ -10,7 +10,7 @@
 
 -Lumière Bouton Off|-LIGHT_ON
 
--LIGHT_OFF|présence de deux boutons "On" et "Off" pas de retour d'état.
+-LIGHT_OFF|présence de deux boutons "On" et "Off", pas de retour d'état.
 |image:../images/LIGHT_2.jpg[width=300,align="center"]|-Lumière Bouton On
 
 -Lumière Bouton Off
@@ -32,7 +32,7 @@
 
 -LIGHT_STATE
 
--LIGHT_SLIDER|Retour d'état présent, le bouton de gauche permet de switcher entre on et off et le slider permet de controler l'intensité
+-LIGHT_SLIDER|Retour d'état présent, le bouton de gauche permet de switcher entre on et off et le slider permet de contrôler l'intensité
 |image:../images/LIGHT_4.jpg[width=300,align="center"]|-Lumière Bouton On
 
 -Lumière Bouton Off
@@ -45,7 +45,7 @@
 
 -Lumière Couleur (action)
 
--Lumière Mode (optionnel, il sert à avoir des modes de lumieres exemple arc-en-ciel sur les philips Hue)|-LIGHT_ON
+-Lumière Mode (optionnel, il sert à avoir des modes de lumière, par exemple arc-en-ciel sur les Philips Hue)|-LIGHT_ON
 
 -LIGHT_OFF
 
@@ -57,7 +57,7 @@
 
 -LIGHT_SET_COLOR
 
--LIGHT_MODE|Retour d'état présent, le bouton de gauche permet de switcher entre on et off et le slider permet de controler l'intensité, dans le cercle la couleur de la lampe est presente et lors d'un clique dans le cercle vous pouvez changer la couleur et activer un mode.
+-LIGHT_MODE|Retour d'état présent, le bouton de gauche permet de switcher entre on et off et le slider permet de contrôler l'intensité. Dans le cercle la couleur de la lampe est présente et lors d'un clic dans celui-ci vous pouvez changer la couleur et activer un mode.
 |=======================
 
 .Les Prises
@@ -68,7 +68,7 @@
 
 -Prise Bouton Off|-ENERGY_ON
 
--ENERGY_OFF|présence de deux boutons "On" et "Off" pas de retour d'état.
+-ENERGY_OFF|présence de deux boutons "On" et "Off", pas de retour d'état.
 |image:../images/ENERGY_2.jpg[width=300,align="center"]|-Prise Bouton On
 
 -Prise Bouton Off
@@ -90,7 +90,7 @@
 
 -ENERGY_STATE
 
--ENERGY_SLIDER|Retour d'état présent, le bouton de gauche permet de switcher entre on et off et le slider permet de controler l'intensité
+-ENERGY_SLIDER|Retour d'état présent, le bouton de gauche permet de switcher entre on et off et le slider permet de contrôler l'intensité
 |=======================
 
 .Les Volets
@@ -109,7 +109,7 @@
 
 -FLAP_STOP
 
--FLAP_STATE (optionnel)|présence de trois boutons "Monter", "Descendre" et "Stop", optionnellement un retour d'état.
+-FLAP_STATE (optionnel)|présence de trois boutons "Monter", "Descendre" et "Stop", retour d'état optionnel.
 |image:../images/FLAP_2.jpg[width=300,align="center"]|-Volet Bouton Monter
 
 -Volet Bouton Descendre
@@ -126,7 +126,7 @@
 
 -FLAP_STATE
 
--FLAP_SLIDER|Presence d'un slider, avec bouton monter descente en switch (avec icone etat)
+-FLAP_SLIDER|Présence d'un slider, avec un bouton Monter/Descendre en switch (avec icône d'état)
 |=======================
 
 .Inondation
@@ -144,7 +144,7 @@
 
 -HUMIDITY (optionnel)
 
--SABOTAGE (optionnel)|Permet d'avoir sont flood sensor complet sur une seul ligne.
+-SABOTAGE (optionnel)|Permet d'avoir son capteur d'inondation complet sur une seule ligne.
 |=======================
 
 .Serrure
@@ -182,13 +182,13 @@
 
 -Température (optionnel)|-SMOKE
 
--TEMPERATURE (optionnel)|Permet d'avoir sont smoke sensor complet sur une seul ligne.
+-TEMPERATURE (optionnel)|Permet d'avoir son capteur de fumées complet sur une seule ligne.
 |=======================
 
-.Temperature
+.Température
 |=======================
 |Image|type générique attendu|Partie Dev plugin tiers|Description
-|image:../images/TEMPERATURE.jpg[width=300,align="center"]|-Temperature
+|image:../images/TEMPERATURE.jpg[width=300,align="center"]|-Température
 
 -Humidité (optionnel)|-TEMPERATURE
 
@@ -198,9 +198,9 @@
 .Présence
 |=======================
 |Image|type générique attendu|Partie Dev plugin tiers|Description
-|image:../images/PRESENCE.jpg[width=300,align="center"]|-Précence
+|image:../images/PRESENCE.jpg[width=300,align="center"]|-Présence
 
--Temperature (optionnel)
+-Température (optionnel)
 
 -Luminosité (optionnel)
 
@@ -226,11 +226,11 @@
 |Image|type générique attendu|Partie Dev plugin tiers|Description
 |image:../images/OPENING.jpg[width=300,align="center"]|-Porte / Fenêtre
 
--Temperature (optionnel)
+-Température (optionnel)
 
 |-OPENING / OPENING_WINDOW
 
--TEMPERATURE (optionnel)|Voir image, (a savoir que vous pouvez choisir entre fenetre et porte).
+-TEMPERATURE (optionnel)|Voir image, (à savoir que vous pouvez choisir entre fenêtre et porte).
 |=======================
 
 .Fil pilote
@@ -248,19 +248,19 @@
 
 -HEATING_STATE
 
--HEATING_OTHER|Les boutons ON/OFF et Etat permettent de creer le bouton tout a gauche du template et les "Chauffage fil pilote Bouton" sont la pour rajouter des boutons (5 max)
+-HEATING_OTHER|Les boutons ON/OFF et Etat permettent de créer le bouton tout à gauche du template et les "Chauffage fil pilote Bouton" sont là pour rajouter des boutons (5 max)
 |=======================
 
-=== LES JOCKERS
+=== LES JOKERS
 
-.Generique Action
+.Générique Action
 |=======================
 |Image|type générique attendu|Partie Dev plugin tiers|Description
-|image:../images/ACTION.jpg[width=300,align="center"]|-Generic (action)|-GENERIC_ACTION|Le bouton prend la forme du type de l'action, si defaut alors c'est un toggle, si message, alors vous avez une enveloppe, si slider vous avez un slider etc..
+|image:../images/ACTION.jpg[width=300,align="center"]|-Action générique|-GENERIC_ACTION|Le bouton prend la forme du type de l'action. Par défaut c'est un toggle, si c'est un message alors vous avez une enveloppe, si slider vous avez un slider etc.
 |=======================
 
-.Generique Info
+.Générique Info
 |=======================
 |Image|type générique attendu|Partie Dev plugin tiers|Description
-|image:../images/INFO.jpg[width=300,align="center"]|-Generic (info)|-GENERIC_INFO|Le bouton prend la forme du type de l'info.
+|image:../images/INFO.jpg[width=300,align="center"]|-Information générique|-GENERIC_INFO|Le bouton prend la forme du type de l'info.
 |=======================

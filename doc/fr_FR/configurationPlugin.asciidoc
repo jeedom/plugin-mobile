@@ -22,7 +22,7 @@ Voici les paramètres à renseigner :
 * *Utilisateur* : Utilisateur associé à cet accès
 
 [TIP]
-Le choix de l'utilisateur est important car il détermine les équipements auxquels nous aurons accès en fonction des droits utilisateurs.
+Le choix de l'utilisateur est important car il détermine les équipements auxquels celui-ci aura accès en fonction de ses droits.
 
 image::../images/mobile3.png[]
 
@@ -34,7 +34,7 @@ Après l'initialisation du Plugin Mobile vous avez la possibilité de remanier l
 
 image::../images/mobile10.png[]
 
-En cliquant sur un plugin, vous pouvez l'autoriser ou non à dialoguer avec l'application mobile, et configurer chacun des types génériques associés à des commandes.
+En cliquant sur un plugin, vous pouvez l'autoriser ou non à dialoguer avec l'application mobile, et configurer chacun des types génériques associés à ses commandes.
 
 image::../images/mobile11.png[]
 

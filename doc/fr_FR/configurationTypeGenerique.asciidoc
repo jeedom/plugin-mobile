@@ -1,5 +1,12 @@
 == Comment bien configurer ses types génériques
 
+=== Les Génériques Types dans le plugin Mobile
+
+Mieux que des mots voici les génériques types d'une lumières avec toutes les commandes (voir le tableau Lumière plus bas) :
+
+image:../images/generic_type_in_plugin.jpg[align="center"]
+
+
 === Tableaux des templates de l'application
 
 .Les Lumières

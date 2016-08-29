@@ -4,11 +4,13 @@ Vous trouverez les applications sur les stores mobiles :
 
 *Android Google Play*
 
-image::../images/Google_Play_FR.png[link="https://play.google.com/store/apps/details?id=fr.jeedom.jeedom"]
+image:../images/Google_Play_FR.png[link="https://play.google.com/store/apps/details?id=fr.jeedom.jeedom"]
 
 *Apple App Store*
 
-image::../images/App_Store_FR.png[link="https://itunes.apple.com/fr/app/jeedom/id1010855094?mt=8"]
+image:../images/App_Store_FR.png[link="https://itunes.apple.com/fr/app/jeedom/id1010855094?mt=8"]
+
+=== Premier lancement de l'app
 
 Au 1er lancement de l'application Mobile, un tutorial vous sera proposé afin de vous accompagner dans la configuration de celle-ci.
 
@@ -24,3 +26,37 @@ L’application va se synchroniser et vous arrivez sur sa page d’accueil (pré
 
 L’application mobile Jeedom est maintenant prête à fonctionner.
 
+=== Les Favoris
+
+Sur l'application vous pouvez avoir des Favoris (raccourci de différente commande, plugin, scénario).
+
+Voici donc la marche a suivre :
+
+Cliquez sur un des + sur l'accueil de l'app :
+
+image:../images/mobile_dashboard_1.PNG[align="center",width="200px"]
+
+Vous arriverez sur la selection du type de raccourci :
+
+image:../images/mobile_dashboard_2.PNG[align="center",width="200px"]
+
+Nous allons prendre Action, il nous propose donc des Pièces\Objets :
+
+image:../images/mobile_dashboard_3.PNG[align="center",width="200px"]
+
+Puis de selectionner l'action que l'on veux en raccourci :
+
+image:../images/mobile_dashboard_4.PNG[align="center",width="200px"]
+
+Nous Pouvons personnaliser la couleur de celle-ci (pour le moment trois couleurs) :
+
+image:../images/mobile_dashboard_5.PNG[align="center",width="200px"]
+
+Ainsi que ses deux textes associés :
+
+image:../images/mobile_dashboard_6.PNG[align="center",width="200px"]
+image:../images/mobile_dashboard_7.PNG[align="center",width="200px"]
+
+Voila vous avez maitenant un raccourci de votre commande (pour la 1.1 il y aura la commande On/Off dans sur la meme touche).
+
+image:../images/mobile_dashboard_8.PNG[align="center",width="200px"]

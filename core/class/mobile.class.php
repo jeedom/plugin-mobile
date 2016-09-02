@@ -316,8 +316,10 @@ class mobile extends eqLogic {
 							if ($cmd_array['unite'] == null || $cmd_array['unite'] == ""){
 								unset($cmd_array['unite']);
 							}
-							if($actionCodeAccess !== null || $actionCodeAccess !== ''){
-								$cmd_array['configuration']['actionCodeAccess'] = true;
+							if($actionCodeAccess !== null ){
+								if($actionCodeAccess !== ''){
+									$cmd_array['configuration']['actionCodeAccess'] = true;
+								}
 							}
 							if($actionConfirm !== null){
 								$cmd_array['configuration']['actionConfirm'] = true;

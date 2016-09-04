@@ -28,35 +28,35 @@ L’application mobile Jeedom est maintenant prête à fonctionner.
 
 === Les Favoris
 
-Sur l'application vous pouvez avoir des Favoris (raccourci de différente commande, plugin, scénario).
+Sur l'application vous pouvez avoir des Favoris (raccourcis de commandes, plugins, scénarios).
 
-Voici donc la marche a suivre :
+Voici donc la marche à suivre pour en créer :
 
-Cliquez sur un des + sur l'accueil de l'app :
+Cliquez sur un des + sur l'écran d'accueil de l'application :
 
 image:../images/mobile_dashboard_1.PNG[align="center",width="200px"]
 
-Vous arriverez sur la selection du type de raccourci :
+Vous arriverez sur la page de sélection du type de raccourci :
 
 image:../images/mobile_dashboard_2.PNG[align="center",width="200px"]
 
-Nous allons prendre Action, il nous propose donc des Pièces\Objets :
+Par exemple, nous allons prendre Action, il nous propose donc des Pièces/Objets :
 
 image:../images/mobile_dashboard_3.PNG[align="center",width="200px"]
 
-Puis de selectionner l'action que l'on veux en raccourci :
+Il vous suffit alors de sélectionner l'action que vous souhaitez en raccourci :
 
 image:../images/mobile_dashboard_4.PNG[align="center",width="200px"]
 
-Nous Pouvons personnaliser la couleur de celle-ci (pour le moment trois couleurs) :
+Il est ensuite possible de personnaliser la couleur de celle-ci (pour le moment trois couleurs sont proposées) :
 
 image:../images/mobile_dashboard_5.PNG[align="center",width="200px"]
 
-Ainsi que ses deux textes associés :
+Ainsi que les deux textes associés :
 
 image:../images/mobile_dashboard_6.PNG[align="center",width="200px"]
 image:../images/mobile_dashboard_7.PNG[align="center",width="200px"]
 
-Voila vous avez maitenant un raccourci de votre commande (pour la 1.1 il y aura la commande On/Off dans sur la meme touche).
+Voilà, vous avez maitenant un raccourci de votre commande (dans la version 1.1 il est prévu que les commandes On/Off apparaissent sur la même touche).
 
 image:../images/mobile_dashboard_8.PNG[align="center",width="200px"]

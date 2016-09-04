@@ -2,7 +2,7 @@
 
 === Les Génériques Types dans le plugin Mobile
 
-Mieux que des mots voici les génériques types d'une lumières avec toutes les commandes (voir le tableau Lumière plus bas) :
+Mieux que des mots, voici un exemple des génériques types pour une lumière avec toutes ses commandes (voir aussi le tableau Lumière plus bas) :
 
 image:../images/generic_type_in_plugin.jpg[align="center"]
 

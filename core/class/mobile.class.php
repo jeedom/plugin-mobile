@@ -322,7 +322,9 @@ class mobile extends eqLogic {
 								}
 							}
 							if($actionConfirm !== null){
-								$cmd_array['configuration']['actionConfirm'] = true;
+								if($actionConfirm == 1){
+									$cmd_array['configuration']['actionConfirm'] = true;
+								}
 							}
 							$cmds_array[] = $cmd_array;
                       		$i++;

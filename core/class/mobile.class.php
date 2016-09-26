@@ -126,10 +126,16 @@ class mobile extends eqLogic {
 	
 	public static function generate_file(){
 		self::deamon_stop();
+		$user = user::byId(config::byKey('user_homebridge','mobile',1,true));
+		if(is_object($user)){
+			$apikey = $user->getHash();
+		}else{
+			$apikey = config::byKey('api');
+		}
 		$response = array();
 		$response['bridge'] = array();
-		$response['bridge']['name'] = "Jeedom";
-		$response['bridge']['username'] = "CC:22:3D:E3:CE:30";
+		$response['bridge']['name'] = config::byKey('name_homebridge','mobile','Jeedom',true);
+		$response['bridge']['username'] = config::byKey('mac_homebridge','mobile','CC:22:3D:E3:CE:30',true);
 		$response['bridge']['port'] = 51826;
 		$response['bridge']['pin'] = config::byKey('pin_homebridge','mobile','031-45-154',true);
 		
@@ -138,7 +144,7 @@ class mobile extends eqLogic {
 		$plateform['platform'] = "Jeedom";
 		$plateform['name'] = "Jeedom";
 		$plateform['url'] = network::getNetworkAccess('internal');
-		$plateform['apikey'] = config::byKey('api');
+		$plateform['apikey'] = $apikey;
 		$plateform['pollerperiod'] = 5;
 		$response['platforms'] = array();
 		$response['platforms'][] = $plateform;

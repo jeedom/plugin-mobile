@@ -16,7 +16,7 @@ image::../images/mobile5.png[]
 
 Dans la configuration de Homebridge, vous pouvez :
 
-* *Utilisateur* : Permet a Homebridge d'utiliser l'ApiKey d'un utilisateur de votre Jeedom.
+* *Utilisateur* : Permet à Homebridge d'utiliser l'ApiKey d'un utilisateur de votre Jeedom.
 * *Nom Homebridge* : Permet de renommer votre pont Homebridge. *ATTENTION : le changement de nom Homebridge vous obligera à reconfigurer vos applications Homekit*
 * *Mac Homebridge* : Permet d'avoir plusieurs ponts Homebridge. *ATTENTION : le changement de la Mac Homebridge vous obligera à reconfigurer vos applications Homekit*
 * *Suppression du cache* : Permet de vider complètement les informations connues par Homebridge. Au prochain démarrage, Homebridge rescanera l'ensemble des éléments de Jeedom afin de les générer. *ATTENTION : la suppression du cache vous obligera à reconfigurer vos applications Homekit*

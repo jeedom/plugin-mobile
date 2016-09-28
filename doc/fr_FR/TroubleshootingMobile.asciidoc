@@ -18,4 +18,8 @@ TIP: Cela est normal, ça sera disponible sur la version 1.1.
 
 -> J'ai l'application qui prend enormement de memoire dans mon telephone !
 
-TIP: Il y avait un bug sur les version 1.0.0 et 1.0.1 sur la partie Camera, il vaut maintenant avec la 1.0.2 aller dans configuration et supprimer le cache (dans l'app mobile). le souci ne ce reproduira plus avec la 1.0.2
+TIP: Il y avait un bug sur les version 1.0.0 et 1.0.1 sur la partie Camera, il vaut maintenant avec la 1.0.2 aller dans configuration et supprimer le cache (dans l'app mobile). le souci ne ce reproduira plus avec la 1.0.2, pour supprimer le cache sans surprimer l'app, il suffit d'aller dans la configuration de votre App Mobile et de cliquer sur "supprimer le cache".
+
+-> J'ai mon Homebridge qui n'execute pas les commandes !
+
+TIP: il faut bien mettre a jour le plugin App Mobile, puis dans la configuration des dependances il suffit de renseigner un utilisateur avec des droits d'executions sur les commandes.

@@ -28,7 +28,7 @@ class mobile extends eqLogic {
 
 	public static function Pluginsuported() {
 		
-		$Pluginsuported = ['openzwave','rfxcom','edisio','mpower', 'mySensors', 'Zibasedom', 'virtual', 'camera','weather','philipsHue','enocean','wifipower','alarm','mode','apcupsd', 'btsniffer','dsc','rflink','mysensors','relaynet','remora','unipi','eibd','thermostat','netatmoThermostat','espeasy','jeelink','teleinfo','tahoma','protexiom'];
+		$Pluginsuported = ['openzwave','rfxcom','edisio','mpower', 'mySensors', 'Zibasedom', 'virtual', 'camera','weather','philipsHue','enocean','wifipower','alarm','mode','apcupsd', 'btsniffer','dsc','rflink','mysensors','relaynet','remora','unipi','eibd','thermostat','netatmoThermostat','espeasy','jeelink','teleinfo','tahoma','protexiom','lifx'];
 		
 		return $Pluginsuported;
 		
@@ -299,38 +299,51 @@ class mobile extends eqLogic {
 							if ($icon != null) {
 								$cmd_array['display']['icon'] = $icon;
 							}
-							if ($invertBinary != null) {
-								$cmd_array['display']['invertBinary'] = $invertBinary;
+							if(isset($invertBinary)){
+								if ($invertBinary != null) {
+									$cmd_array['display']['invertBinary'] = $invertBinary;
+								}
 							}
-							if ($title_disable != null) {
-								$cmd_array['display']['title_disable'] = $title_disable;
+							if(isset($title_disable)){
+								if ($title_disable != null) {
+									$cmd_array['display']['title_disable'] = $title_disable;
+								}
 							}
-							if ($title_placeholder != null) {
-								$cmd_array['display']['title_placeholder'] = $title_placeholder;
+							if(isset($title_placeholder)){
+								if ($title_placeholder != null) {
+									$cmd_array['display']['title_placeholder'] = $title_placeholder;
+								}
 							}
-							if ($message_placeholder != null) {
-								$cmd_array['display']['message_placeholder'] = $message_placeholder;
+							if(isset($message_placeholder)){
+								if ($message_placeholder != null) {
+									$cmd_array['display']['message_placeholder'] = $message_placeholder;
+								}
+							}
+							if(isset($actionCodeAccess)){
+								if($actionCodeAccess !== null ){
+									if($actionCodeAccess !== ''){
+										$cmd_array['configuration']['actionCodeAccess'] = true;
+									}
+								}
+							}
+							if(isset($actionConfirm)){
+								if($actionConfirm !== null){
+									if($actionConfirm == 1){
+										$cmd_array['configuration']['actionConfirm'] = true;
+									}
+								}
 							}
 							if ($cmd_array['type'] == 'action'){
 								unset($cmd_array['currentValue']);
 							}
 							if ($cmd_array['value'] == null || $cmd_array['value'] == ""){
-								unset($cmd_array['value']);
+								//unset($cmd_array['value']);
+								$cmd_array['value'] == "0";
 							}else{
 								$cmd_array['value'] = str_replace("#","",$cmd_array['value']);	
 							}
 							if ($cmd_array['unite'] == null || $cmd_array['unite'] == ""){
 								unset($cmd_array['unite']);
-							}
-							if($actionCodeAccess !== null ){
-								if($actionCodeAccess !== ''){
-									$cmd_array['configuration']['actionCodeAccess'] = true;
-								}
-							}
-							if($actionConfirm !== null){
-								if($actionConfirm == 1){
-									$cmd_array['configuration']['actionConfirm'] = true;
-								}
 							}
 							$cmds_array[] = $cmd_array;
                       		$i++;

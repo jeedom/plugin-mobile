@@ -263,6 +263,7 @@ foreach (user::all() as $user) {
 <div class="form-actions">
     <a class="btn btn-danger eqLogicAction" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
     <a class="btn btn-success eqLogicAction" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
+    <a class="btn btn-info" id="info_app"><i class="fa fa-question-circle"></i> {{Infos envoyées à l'app}}</a>
 </div>
 </div>
 </div>

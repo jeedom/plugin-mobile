@@ -35,7 +35,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 		'scenarios' => mobile::discovery_scenario(),
 		'config' => array('datetime' => getmicrotime()),
 	);
-	log::add('mobile', 'debug', 'Demande de Sync : ' . json_encode($sync_array));
+	log::add('mobile', 'debug', 'Demande de Sync');
 	$jsonrpc->makeSuccess($sync_array);
 }
 

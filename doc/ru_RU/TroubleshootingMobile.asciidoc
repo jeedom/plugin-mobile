@@ -1,0 +1,25 @@
+== FAQ
+
+-> Je suis sur Android version de l'app (1.0.1 ou 1.0.0) je n'arrive pas à accéder à mes pièces ni même à la configuration de l'app.
+
+CAUTION: Vous avez eu un popup vous avertissant d'un souci sur les paramètres d'accessibilité, il vous suffit donc de vous rendre dans les paramètres d'accessibilité de votre mobile et de décocher les applications utilisant cette option. (Un correctif sera apporté prochainement sur l'app)
+  
+-> J'ai un message dans une des lignes de mes modules me disant qu'il manque un Type Générique !
+
+TIP: En lisant ce message, il vous dit quel type générique manque pour créer un template compatible. Il suffit juste de l'appliquer. Reportez-vous à la link:https://www.jeedom.com/doc/documentation/plugins/mobile/fr_FR/mobile#_configuration_des_plugins_et_commandes_que_reçoit_l_app[doc chapitre Type Générique].
+
+-> J'ai un souci sur un des plugins dit complètement intégré (météo, thermostat, alarme, caméra) !
+
+TIP: N'hésitez pas à accéder à votre module et de bien cliquer sur sauvegarder à nouveau, cela permettra de ré-inclure les types génériques associés au module.
+
+-> Impossible de mettre une info sur l'accueil de l'app !
+
+TIP: Cela est normal, ça sera disponible sur la version 1.1.
+
+-> J'ai l'application qui prend enormement de memoire dans mon telephone !
+
+TIP: Il y avait un bug sur les versions 1.0.0 et 1.0.1 sur la partie Camera. Le souci ne ce reproduira plus avec la 1.0.2, pour supprimer le cache sans surprimer l'app, il suffit d'aller dans la configuration de votre App Mobile et de cliquer sur "supprimer le cache".
+
+-> J'ai mon Homebridge qui n'execute pas les commandes !
+
+TIP: il faut bien mettre a jour le plugin App Mobile, puis dans la configuration des dépendances, il suffit de renseigner un utilisateur avec des droits d'executions sur les commandes.

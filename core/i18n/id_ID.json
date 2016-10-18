@@ -1,6 +1,40 @@
 {
-    "plugins/template/plugin_info/info.xml": {
-        "Plugin template pour la création de plugin": "Plugin template untuk kreasi plugin",
-        "Aucune": "Aucune"
+    "plugins\/mobile\/plugin_info\/info.xml": {
+        "Plugin pour l'application Mobile": "Plugin pour l'application Mobile",
+        "Aucune": "Tak ada"
+    },
+    "plugins\/mobile\/desktop\/php\/mobile.php": {
+        "Ajouter un mobile": "Ajouter un mobile",
+        "Rechercher": "Mencari",
+        "Mes Téléphones Mobiles": "Mes Téléphones Mobiles",
+        "Général": "Umum",
+        "Nom de l'équipement mobile": "Nom de l'équipement mobile",
+        "Nom de l'équipement template": "Nama peralatan contoh",
+        "Objet parent": "Objek induk",
+        "Aucun": "Tak ada",
+        "Activer": "Mengaktifkan",
+        "Visible": "Terlihat",
+        "Type de Mobile": "Type de Mobile",
+        "Utilisateurs": "Pengguna",
+        "Mobile": "Mobile",
+        "Homebridge": "Homebridge",
+        "Informations": "Informasi",
+        "Homebridge est un logiciel tiers permettant d'interconnecter Homekit avec différents systèmes domotiques.": "Homebridge est un logiciel tiers permettant d'interconnecter Homekit avec différents systèmes domotiques.",
+        "Dépendances": "Dépendances",
+        "Nom": "Nama",
+        "Statut": "Status",
+        "Installation": "Installation",
+        "Dernière installation": "Dernière installation",
+        "Démon": "Démon",
+        "Configuration": "Konfigurasi",
+        "(Re)Démarrer": "(Re)Démarrer",
+        "Arrêter": "Berhenti",
+        "Gestion automatique": "Otomatis manajemen",
+        "Dernier lancement": "Dernier lancement",
+        "Commande": "Pesanan",
+        "Option": "Pilihan",
+        "Action": "Tindakan",
+        "Supprimer": "Menghapus",
+        "Sauvegarder": "Menyimpan"
     }
 }

@@ -1,6 +1,40 @@
 {
-    "plugins/template/plugin_info/info.xml": {
-        "Plugin template pour la création de plugin": "Plugin de plantilla para la creación de plugin",
-        "Aucune": "Aucune"
+    "plugins\/mobile\/plugin_info\/info.xml": {
+        "Plugin pour l'application Mobile": "Plugin para la app móvil",
+        "Aucune": "Ninguna"
+    },
+    "plugins\/mobile\/desktop\/php\/mobile.php": {
+        "Ajouter un mobile": "Añadir un móvil",
+        "Rechercher": "Buscar",
+        "Mes Téléphones Mobiles": "Mis móviles",
+        "Général": "Principal",
+        "Nom de l'équipement mobile": "Nombre del dispositivo móvil",
+        "Nom de l'équipement template": "Nombre del dispositivo plantilla",
+        "Objet parent": "Objeto padre",
+        "Aucun": "Ningún",
+        "Activer": "Activar",
+        "Visible": "Visible",
+        "Type de Mobile": "Tipo de móvil",
+        "Utilisateurs": "Usuarios",
+        "Mobile": "Móvil",
+        "Homebridge": "Homebridge",
+        "Informations": "Informaciones",
+        "Homebridge est un logiciel tiers permettant d'interconnecter Homekit avec différents systèmes domotiques.": "Homebridge es un software de terceros para interconectar el Homekit con varios sistemas de automatización del hogar.",
+        "Dépendances": "Dependencias:",
+        "Nom": "Nombre",
+        "Statut": "Estado",
+        "Installation": "Instalación",
+        "Dernière installation": "Última instalación",
+        "Démon": "Demonio",
+        "Configuration": "Configuración ",
+        "(Re)Démarrer": "(Re)Iniciar",
+        "Arrêter": "Parar",
+        "Gestion automatique": "Gestión automática",
+        "Dernier lancement": "Última ejecución",
+        "Commande": "Comando",
+        "Option": "Opción",
+        "Action": "Acción",
+        "Supprimer": "Borrar",
+        "Sauvegarder": "Guardar"
     }
 }

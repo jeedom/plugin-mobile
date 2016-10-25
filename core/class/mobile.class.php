@@ -397,8 +397,7 @@ class mobile extends eqLogic {
 		$all = utils::o2a(mesage::all());
 		$return = array();
 		foreach ($all as &$message){
-				$return[]=$message;
-			}	
+				$return[]=$message;	
 		}
 		return $return;
 	}

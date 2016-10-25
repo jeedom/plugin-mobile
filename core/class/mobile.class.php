@@ -394,7 +394,7 @@ class mobile extends eqLogic {
 	}
 	
 	public static function discovery_message() {
-		$all = utils::o2a(mesage::all());
+		$all = utils::o2a(message::all());
 		$return = array();
 		foreach ($all as &$message){
 				$return[]=$message;	

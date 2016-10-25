@@ -33,6 +33,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 		'cmds' => mobile::discovery_cmd($PluginToSend),
 		'objects' => mobile::discovery_object(),
 		'scenarios' => mobile::discovery_scenario(),
+		'messages' => mobile::discovery_message(),
 		'config' => array('datetime' => getmicrotime()),
 	);
 	log::add('mobile', 'debug', 'Demande de Sync');

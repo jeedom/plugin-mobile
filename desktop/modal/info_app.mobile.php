@@ -26,6 +26,7 @@ $sync_array = array(
 	'cmds' => mobile::discovery_cmd($PluginToSend),
 	'objects' => mobile::discovery_object(),
 	'scenarios' => mobile::discovery_scenario(),
+	'messages' => mobile::discovery_message(),
 	'config' => array('datetime' => getmicrotime()),
 );
 
@@ -47,6 +48,8 @@ $sync_array = array(
 <pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($sync_array['cmds']); ?></pre>
 <h3>{{Scénarios :}}</h3>
 <pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($sync_array['scenarios']); ?></pre>
+<h3>{{Messages :}}</h3>
+<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($sync_array['messages']); ?></pre>
 <h3>{{Configurations :}}</h3>
 <pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($sync_array['config']); ?></pre>
 

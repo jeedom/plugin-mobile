@@ -35,7 +35,7 @@ class mobile extends eqLogic {
 	}
 	
 	public static function PluginWidget() {
-		$PluginWidget = ['alarm','camera','thermostat','netatmoThermostat','weather'];	
+		$PluginWidget = ['alarm','camera','thermostat','netatmoThermostat','weather','mode'];	
 		return $PluginWidget;
 	}
 	

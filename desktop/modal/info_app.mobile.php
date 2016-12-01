@@ -21,15 +21,27 @@ if (!isConnect('admin')) {
 
 $PluginToSend = mobile::PluginToSend();
 
-$sync_array = array(
+/*$sync_array = array(
 	'eqLogics' => mobile::discovery_eqLogic($PluginToSend),
 	'cmds' => mobile::discovery_cmd($PluginToSend),
 	'objects' => mobile::discovery_object(),
 	'scenarios' => mobile::discovery_scenario(),
 	'messages' => mobile::discovery_message(),
-	'config' => array('datetime' => getmicrotime()),
-);
+	'config' => array('datetime' => getmicrotime())
+);*/
 
+$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($PluginToSend),mobile::discovery_eqLogic($PluginToSend));
+	$eqLogics = $sync_new[1];
+	$cmds = $sync_new[0];
+	
+	$sync_array = array(
+		'eqLogics' => $eqLogics['eqLogics'],
+		'cmds' => $cmds['cmds'],
+		'objects' => mobile::discovery_object(),
+		'scenarios' => mobile::discovery_scenario(),
+		'messages' => mobile::discovery_message(),
+		'config' => array('datetime' => getmicrotime()),
+	);
 ?>
 <h3>JSON valide :<h3>
 <pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php
@@ -52,4 +64,3 @@ $sync_array = array(
 <pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($sync_array['messages']); ?></pre>
 <h3>{{Configurations :}}</h3>
 <pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($sync_array['config']); ?></pre>
-

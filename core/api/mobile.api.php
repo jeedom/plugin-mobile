@@ -28,14 +28,27 @@ $params = $jsonrpc->getParams();
 $PluginToSend = mobile::PluginToSend();
 
 if ($jsonrpc->getMethod() == 'sync') {
+	$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($PluginToSend),mobile::discovery_eqLogic($PluginToSend));
+	$eqLogics = $sync_new[1];
+	$cmds = $sync_new[0];
+	
 	$sync_array = array(
+		'eqLogics' => $eqLogics['eqLogics'],
+		'cmds' => $cmds['cmds'],
+		'objects' => mobile::discovery_object(),
+		'scenarios' => mobile::discovery_scenario(),
+		'messages' => mobile::discovery_message(),
+		'config' => array('datetime' => getmicrotime()),
+	);
+	/*$sync_array = array(
 		'eqLogics' => mobile::discovery_eqLogic($PluginToSend),
 		'cmds' => mobile::discovery_cmd($PluginToSend),
 		'objects' => mobile::discovery_object(),
 		'scenarios' => mobile::discovery_scenario(),
 		'messages' => mobile::discovery_message(),
 		'config' => array('datetime' => getmicrotime()),
-	);
+	);*/
+	
 	log::add('mobile', 'debug', 'Demande de Sync');
 	$jsonrpc->makeSuccess($sync_array);
 }

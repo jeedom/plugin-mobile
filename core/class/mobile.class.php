@@ -397,12 +397,19 @@ class mobile extends eqLogic {
 		$plage_cmd = mobile::discovery_multi($cmds);
 		$eqLogic_array = array();
 		$nbr_cmd = count($plage_cmd);
-		log::add('mobile', 'info', 'plage cmd > '.json_encode($plage_cmd).' // nombre > '.$nbr_cmd);
+		log::add('mobile', 'debug', 'plage cmd > '.json_encode($plage_cmd).' // nombre > '.$nbr_cmd);
 		if($nbr_cmd != 0){
 			$i = 0;
 			while($i < $nbr_cmd){
 				log::add('mobile', 'info', 'nbr cmd > '.$i.' // id > '.$plage_cmd[$i]);
 				$eqLogic_id = $cmds[$plage_cmd[$i]]['eqLogic_id'];
+				$name_cmd = $cmds[$plage_cmd[$i]]['name'];
+				foreach ($eqLogics as &$eqLogic){
+					if($eqLogic['id'] == $eqLogic_id){
+						$eqLogic_name = $eqLogic['name'].' / '.$name_cmd;
+					}
+				}
+				log::add('mobile', 'debug', 'nouveau nom > '.$eqLogic_name);
 				$id = $cmds[$plage_cmd[$i]]['id'];
 				$new_eqLogic_id = '999'.$eqLogic_id.''.$id;
 				$cmds[$plage_cmd[$i]]['eqLogic_id'] = $new_eqLogic_id;
@@ -411,12 +418,12 @@ class mobile extends eqLogic {
 				$j = 0;
 				while($j < $nbr_keys){
 					if($cmds[$keys[$j]]['value'] == $cmds[$plage_cmd[$i]]['id'] && $cmds[$keys[$j]]['type'] == 'action'){
-						log::add('mobile', 'info', 'Changement de l\'action > '.$cmds[$keys[$j]]['id']);
+						log::add('mobile', 'debug', 'Changement de l\'action > '.$cmds[$keys[$j]]['id']);
 						$cmds[$keys[$j]]['eqLogic_id'] = $new_eqLogic_id;
 					}
 					$j++;
 				}
-				array_push($eqLogic_array,array($eqLogic_id, $new_eqLogic_id));
+				array_push($eqLogic_array,array($eqLogic_id, $new_eqLogic_id, $eqLogic_name));
 				$i++;
 			}
 			
@@ -425,10 +432,9 @@ class mobile extends eqLogic {
 				$keys = array_keys($column_eqlogic, $eqlogic_array_one[0]);
 				$new_eqLogic = $eqLogics[$keys[0]];
 				$new_eqLogic['id'] = $eqlogic_array_one[1];
+				$new_eqLogic['name'] = $eqlogic_array_one[2];
 				array_push($eqLogics, $new_eqLogic);
-			}
-			
-			log::add('mobile', 'info', 'eqlogics > '.json_encode($eqLogics));		
+			}	
 		
 		$new_cmds = array('cmds' => $cmds);
 		$new_eqLogic = array('eqLogics' => $eqLogics);

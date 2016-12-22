@@ -1,0 +1,43 @@
+L'application mobile Jeedom nécessite l'installation de ce plugin afin que la box puisse dialoguer avec l'application Mobile.
+
+== Configuration du plugin Mobile
+
+Après installation du plugin, il vous suffit de l'activer :
+
+image::../images/mobile1.png[]
+
+*Configuration* 
+
+Pour configurer le plugin, vous devez ajouter les téléphones qui pourront accéder à Jeedom.
+
+Pour Ajouter un téléphone : *Plugins* --> *Communication* --> *App Mobile* --> *Ajouter*
+
+image::../images/mobile2.png[]
+
+Voici les paramètres à renseigner :
+
+* *Nom de l'équipement mobile* : Nom du téléphone
+* *Activer* : Activation de l'accès pour ce mobile
+* *Type de Mobile* : Sélection de l'OS du téléphone (iOS, Android)
+* *Utilisateur* : Utilisateur associé à cet accès
+
+[TIP]
+Le choix de l'utilisateur est important car il détermine les équipements auxquels celui-ci aura accès en fonction de ses droits.
+
+image::../images/mobile3.png[]
+
+Après avoir sauvegardé, vous obtiendrez un QRCode permettant à l'application de se configurer toute seule.
+
+== Configuration des plugins et commandes que reçoit l'app
+
+Après l'initialisation du Plugin Mobile vous avez la possibilité de remanier les types génériques des commandes, des plugins et des pièces.
+
+image::../images/mobile10.png[]
+
+En cliquant sur un plugin, vous pouvez l'autoriser ou non à dialoguer avec l'application mobile, et configurer chacun des types génériques associés à ses commandes.
+
+image::../images/mobile11.png[]
+
+En cliquant sur une pièce, vous pouvez l'autoriser ou non à être présente dans l'application mobile, et configurer chacun des types génériques associés à ses commandes.
+
+image::../images/mobile12.png[]

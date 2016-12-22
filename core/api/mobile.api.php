@@ -41,8 +41,40 @@ if ($jsonrpc->getMethod() == 'sync') {
 		'config' => array('datetime' => getmicrotime()),
 	);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	log::add('mobile', 'debug', 'Demande de Sync : ' . json_encode($sync_array));
 =======
+=======
+	
+	log::add('mobile', 'debug', 'Demande de Sync');
+	$jsonrpc->makeSuccess($sync_array);
+}
+
+if ($jsonrpc->getMethod() == 'sync_homebridge') {
+	$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($PluginToSend),mobile::discovery_eqLogic($PluginToSend));
+	$eqLogics = $sync_new[1];
+	$cmds = $sync_new[0];
+	$i = 0;
+	while($i <= count($eqLogics)){
+		if(isset($eqLogics[$i]["configuration"]["sendToHomebridge"])){
+			if($eqLogics[$i]["configuration"]["sendToHomebridge"] == 0){
+				unset($eqLogics, $i);	
+			}
+		}else{
+			unset($eqLogics, $i);
+		}   
+	$i++;	
+	}
+	
+	$sync_array = array(
+		'eqLogics' => $eqLogics['eqLogics'],
+		'cmds' => $cmds['cmds'],
+		'objects' => mobile::discovery_object(),
+		'scenarios' => mobile::discovery_scenario(),
+		'messages' => mobile::discovery_message(),
+		'config' => array('datetime' => getmicrotime()),
+	);
+>>>>>>> beta
 	
 	log::add('mobile', 'debug', 'Demande de Sync');
 	$jsonrpc->makeSuccess($sync_array);

@@ -1,20 +1,20 @@
-Si vous disposez d'équipements mobiles iOS, vous pouvez activer Homebridge afin de contrôler votre Jeedom via Homekit.
+Wenn Sie Mobile iOS-Geräte haben, können Sie Homebridge aktivieren, um Ihr Jeedom über Homekit zu kontrollieren.
 
 == Homebridge Konfiguration
 
-Si vous avez déclaré au moins un équipement sous iOS, vous verrez dans la configuration du plugin une section Homebridge.(*Plugins* --> *Gestion des plugins* --> *App Mobile*)
+Wenn Sie mindestens ein Gerät unter iOS angegeben haben, werden Sie in der Plugin Konfiguration einen Abschnitt Homebridge sehen. (*Plugins* --> *Plugin Verwaltung* --> *Mobile App*)
 
 *Installation der Abhängigkeit*
 
 image::../images/mobile4.png[]
 
-Afin d'installer les dépendances nécessaires, il est nécessaire de cliquer sur le bouton *Relancer*.
+Um die notwendigen Abhängigkeiten zu installieren, ist es notwendig auf die Schaltfläche *Ankurbeln* zu klicken.
 
 *Konfiguration* 
 
 image::../images/mobile5.png[]
 
-Dans la configuration de Homebridge, vous pouvez :
+In der Konfiguration von Homebridge haben Sie :
 
 * *Utilisateur* : Permet à Homebridge d'utiliser l'ApiKey d'un utilisateur de votre Jeedom.
 * *Nom Homebridge* : Permet de renommer votre pont Homebridge. *ATTENTION : le changement de nom Homebridge vous obligera à reconfigurer vos applications Homekit*

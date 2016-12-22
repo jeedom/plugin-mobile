@@ -40,12 +40,6 @@ if ($jsonrpc->getMethod() == 'sync') {
 		'messages' => mobile::discovery_message(),
 		'config' => array('datetime' => getmicrotime()),
 	);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	log::add('mobile', 'debug', 'Demande de Sync : ' . json_encode($sync_array));
-=======
-=======
-	
 	log::add('mobile', 'debug', 'Demande de Sync');
 	$jsonrpc->makeSuccess($sync_array);
 }
@@ -74,8 +68,6 @@ if ($jsonrpc->getMethod() == 'sync_homebridge') {
 		'messages' => mobile::discovery_message(),
 		'config' => array('datetime' => getmicrotime()),
 	);
->>>>>>> beta
-	
 	log::add('mobile', 'debug', 'Demande de Sync');
 	$jsonrpc->makeSuccess($sync_array);
 }
@@ -106,7 +98,6 @@ if ($jsonrpc->getMethod() == 'sync_homebridge') {
 	);
 	
 	log::add('mobile', 'debug', 'Demande de Sync');
->>>>>>> master
 	$jsonrpc->makeSuccess($sync_array);
 }
 

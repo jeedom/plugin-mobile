@@ -28,15 +28,24 @@ class mobile extends eqLogic {
 
 	public static function Pluginsuported() {
 		
+<<<<<<< HEAD
 		$Pluginsuported = ['openzwave','rfxcom','edisio','mpower', 'mySensors', 'Zibasedom', 'virtual', 'camera','weather','philipsHue','enocean','wifipower','alarm','mode','apcupsd', 'btsniffer','dsc','rflink','mysensors','relaynet','remora','unipi','eibd','thermostat','netatmoThermostat','espeasy','jeelink','teleinfo','tahoma','protexiom'];
+=======
+		$Pluginsuported = ['openzwave','rfxcom','edisio','mpower', 'mySensors', 'Zibasedom', 'virtual', 'camera','weather','philipsHue','enocean','wifipower','alarm','mode','apcupsd', 'btsniffer','dsc','rflink','mysensors','relaynet','remora','unipi','eibd','thermostat','netatmoThermostat','espeasy','jeelink','teleinfo','tahoma','protexiom','lifx','wattlet'];
+>>>>>>> master
 		
 		return $Pluginsuported;
 		
 	}
 	
 	public static function PluginWidget() {
-		$PluginWidget = ['alarm','camera','thermostat','netatmoThermostat','weather'];	
+		$PluginWidget = ['alarm','camera','thermostat','netatmoThermostat','weather','mode'];	
 		return $PluginWidget;
+	}
+	
+	public static function PluginMultiInEqLogic(){
+		$PluginMulti = ['LIGHT_STATE','ENERGY_STATE','FLAP_STATE','HEATING_STATE','SIREN_STATE','LOCK_STATE'];
+		return $PluginMulti;
 	}
 	
 	public static function PluginToSend() {
@@ -280,6 +289,7 @@ class mobile extends eqLogic {
 					foreach ($eqLogic->getCmd() as $cmd) {
                     	if($cmd->getDisplay('generic_type') != null && !in_array($cmd->getDisplay('generic_type'),['GENERIC_ERROR','DONT']) && ($cmd->getIsVisible() == 1 || in_array($cmd->getDisplay('generic_type'), $genericisvisible) || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
                       		$cmd_array = $cmd->exportApi();
+                      		
 							$maxValue = $cmd_array['configuration']['maxValue'];
 							$minValue = $cmd_array['configuration']['minValue'];
 							$actionCodeAccess = $cmd_array['configuration']['actionCodeAccess'];
@@ -346,6 +356,85 @@ class mobile extends eqLogic {
 		return $return;
 	}
 	
+	public static function discovery_multi($cmds) {
+		$array_final = array();
+		$tableData = mobile::PluginMultiInEqLogic();
+		foreach ($cmds as &$cmd) {
+			if(in_array($cmd['generic_type'], $tableData)){
+				$keys = array_keys(array_column($cmds,'eqLogic_id'), $cmd['eqLogic_id']);
+				$trueKeys = array_keys(array_column($cmds,'generic_type'), $cmd['generic_type']);
+				if(count($keys) > 1 && count($trueKeys) > 1){
+					$result =  array_intersect($keys, $trueKeys);
+					if(count($result) > 1){
+						$array_final = array_merge_recursive($array_final, $result);
+					}
+				}
+				
+			}
+		}
+		$dif = array();
+		$array_cmd_multi = array();
+		foreach ($array_final as &$array_fi){
+			if(!in_array($array_fi, $dif)){
+				array_push($dif, $array_fi);
+				array_push($array_cmd_multi,$array_fi);
+			}
+		}
+		
+		return $array_cmd_multi;
+	}
+	
+	public static function change_cmdAndeqLogic($cmds,$eqLogics){
+		$plage_cmd = mobile::discovery_multi($cmds);
+		$eqLogic_array = array();
+		$nbr_cmd = count($plage_cmd);
+		log::add('mobile', 'debug', 'plage cmd > '.json_encode($plage_cmd).' // nombre > '.$nbr_cmd);
+		if($nbr_cmd != 0){
+			$i = 0;
+			while($i < $nbr_cmd){
+				log::add('mobile', 'info', 'nbr cmd > '.$i.' // id > '.$plage_cmd[$i]);
+				$eqLogic_id = $cmds[$plage_cmd[$i]]['eqLogic_id'];
+				$name_cmd = $cmds[$plage_cmd[$i]]['name'];
+				foreach ($eqLogics as &$eqLogic){
+					if($eqLogic['id'] == $eqLogic_id){
+						$eqLogic_name = $eqLogic['name'].' / '.$name_cmd;
+					}
+				}
+				log::add('mobile', 'debug', 'nouveau nom > '.$eqLogic_name);
+				$id = $cmds[$plage_cmd[$i]]['id'];
+				$new_eqLogic_id = '999'.$eqLogic_id.''.$id;
+				$cmds[$plage_cmd[$i]]['eqLogic_id'] = $new_eqLogic_id;
+				$keys = array_keys(array_column($cmds,'eqLogic_id'),$eqLogic_id);
+				$nbr_keys = count($keys);
+				$j = 0;
+				while($j < $nbr_keys){
+					if($cmds[$keys[$j]]['value'] == $cmds[$plage_cmd[$i]]['id'] && $cmds[$keys[$j]]['type'] == 'action'){
+						log::add('mobile', 'debug', 'Changement de l\'action > '.$cmds[$keys[$j]]['id']);
+						$cmds[$keys[$j]]['eqLogic_id'] = $new_eqLogic_id;
+					}
+					$j++;
+				}
+				array_push($eqLogic_array,array($eqLogic_id, $new_eqLogic_id, $eqLogic_name));
+				$i++;
+			}
+			
+			$column_eqlogic = array_column($eqLogics,'id');
+			foreach ($eqLogic_array as &$eqlogic_array_one) {
+				$keys = array_keys($column_eqlogic, $eqlogic_array_one[0]);
+				$new_eqLogic = $eqLogics[$keys[0]];
+				$new_eqLogic['id'] = $eqlogic_array_one[1];
+				$new_eqLogic['name'] = $eqlogic_array_one[2];
+				array_push($eqLogics, $new_eqLogic);
+			}	
+		
+		$new_cmds = array('cmds' => $cmds);
+		$new_eqLogic = array('eqLogics' => $eqLogics);
+		$news = array($new_cmds,$new_eqLogic);
+			
+		}
+		return $news;
+	}
+	
 	public static function discovery_object() {
 		$all = utils::o2a(object::all());
 		$return = array();
@@ -376,6 +465,15 @@ class mobile extends eqLogic {
 				}
 				$return[]=$scenario;
 			}	
+		}
+		return $return;
+	}
+	
+	public static function discovery_message() {
+		$all = utils::o2a(message::all());
+		$return = array();
+		foreach ($all as &$message){
+				$return[]=$message;	
 		}
 		return $return;
 	}

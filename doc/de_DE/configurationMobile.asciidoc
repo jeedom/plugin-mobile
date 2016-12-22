@@ -10,7 +10,11 @@ image:../images/Google_Play_FR.png[link="https://play.google.com/store/apps/deta
 
 image:../images/App_Store_FR.png[link="https://itunes.apple.com/fr/app/jeedom/id1010855094?mt=8"]
 
+<<<<<<< HEAD
 === Premier lancement de l'app
+=======
+=== Zuerst starten Sie die App
+>>>>>>> master
 
 Bei dem 1 Start der mobilen Anwendung, wird eine Tutorial angeboten, das Ihnen bei der Konfiguration begleiten wird.
 
@@ -26,11 +30,19 @@ Die Anwendung wird synchronisiert und Sie kommen auf seine Homepage (mit einem v
 
 Die mobile Jeedom Anwendung ist jetzt betriebsbereit.
 
+<<<<<<< HEAD
 === Les Favoris
 
 Sur l'application vous pouvez avoir des Favoris (raccourcis de commandes, plugins, scénarios).
 
 Voici donc la marche à suivre pour en créer :
+=======
+=== Favoriten
+
+Auf der Anwendung haben Sie die Favoriten (Verknüpfungen zu Befehlen, Plugins, Szenarien).
+
+Hier also ist der zu folgende Ablauf, zum erstellen :
+>>>>>>> master
 
 Cliquez sur un des + sur l'écran d'accueil de l'application :
 

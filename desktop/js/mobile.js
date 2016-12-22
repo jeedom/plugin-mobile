@@ -18,10 +18,6 @@
     $('#md_modal').dialog({title: "{{Santé Mobile}}"});
     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=health').dialog('open');
 })
- $('#info_app').on('click', function(){
-	$('#md_modal').dialog({title: "{{Informations envoyées à l'app}}"});
-	$('#md_modal').load('index.php?v=d&plugin=mobile&modal=info_app.mobile').dialog('open');
-})
 function clickplugin(id_plugin,name_plugin){
 	$('#md_modal').dialog({title: "{{Configuration Mobile du Plugin "+name_plugin+"}}"});
     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin.mobile&plugin_id=' +id_plugin).dialog('open');

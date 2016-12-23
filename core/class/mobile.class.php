@@ -457,13 +457,11 @@ class mobile extends eqLogic {
 				$new_eqLogic['id'] = $eqlogic_array_one[1];
 				$new_eqLogic['name'] = $eqlogic_array_one[2];
 				array_push($eqLogics, $new_eqLogic);
-			}	
-		
+			}		
+		}
 		$new_cmds = array('cmds' => $cmds);
 		$new_eqLogic = array('eqLogics' => $eqLogics);
 		$news = array($new_cmds,$new_eqLogic);
-			
-		}
 		return $news;
 	}
 	

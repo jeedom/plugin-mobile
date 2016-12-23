@@ -28,7 +28,9 @@ $params = $jsonrpc->getParams();
 $PluginToSend = mobile::PluginToSend();
 
 if ($jsonrpc->getMethod() == 'sync') {
+	log::add('mobile', 'debug', 'Demande de Sync');
 	$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($PluginToSend),mobile::discovery_eqLogic($PluginToSend));
+	log::add('mobile', 'debug', 'Sync cmd et eqlogics > '.json_encode($sync_new));
 	$eqLogics = $sync_new[1];
 	$cmds = $sync_new[0];
 	
@@ -40,13 +42,13 @@ if ($jsonrpc->getMethod() == 'sync') {
 		'messages' => mobile::discovery_message(),
 		'config' => array('datetime' => getmicrotime()),
 	);
-	
-	log::add('mobile', 'debug', 'Demande de Sync');
 	$jsonrpc->makeSuccess($sync_array);
 }
 
 if ($jsonrpc->getMethod() == 'sync_homebridge') {
+	log::add('mobile', 'debug', 'Demande de Sync Homebridge');
 	$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($PluginToSend),mobile::discovery_eqLogic($PluginToSend));
+	log::add('mobile', 'debug', 'Sync cmd et eqlogics > '.json_encode($sync_new));
 	$eqLogics = $sync_new[1];
 	$cmds = $sync_new[0];
 	$i = 0;

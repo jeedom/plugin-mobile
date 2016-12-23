@@ -288,14 +288,24 @@ class mobile extends eqLogic {
                       		
 							$maxValue = $cmd_array['configuration']['maxValue'];
 							$minValue = $cmd_array['configuration']['minValue'];
-							$actionCodeAccess = $cmd_array['configuration']['actionCodeAccess'];
-							$actionConfirm = $cmd_array['configuration']['actionConfirm'];
+							if(isset($cmd_array['configuration']['actionCodeAccess'])){
+								$actionCodeAccess = $cmd_array['configuration']['actionCodeAccess'];
+							}
+							if(isset($cmd_array['configuration']['actionConfirm'])){
+								$actionConfirm = $cmd_array['configuration']['actionConfirm'];
+							}
 							$generic_type = $cmd_array['display']['generic_type'];
 							$icon = $cmd_array['display']['icon'];
 							$invertBinary = $cmd_array['display']['invertBinary'];
-							$title_disable = $cmd_array['display']['title_disable'];
-							$title_placeholder = $cmd_array['display']['title_placeholder'];
-							$message_placeholder = $cmd_array['display']['message_placeholder'];
+							if(isset($cmd_array['display']['title_disable'])){
+								$title_disable = $cmd_array['display']['title_disable'];
+							}
+							if(isset($cmd_array['display']['title_placeholder'])){
+								$title_disable = $cmd_array['display']['title_placeholder'];
+							}
+							if(isset($cmd_array['display']['message_placeholder'])){
+								$title_disable = $cmd_array['display']['message_placeholder'];
+							}
 							unset($cmd_array['isHistorized'],$cmd_array['configuration'], $cmd_array['template'], $cmd_array['display'], $cmd_array['html']);
 							$cmd_array['configuration']['maxValue'] = $maxValue;
 							if ($minValue != null) {

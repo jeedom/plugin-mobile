@@ -317,12 +317,21 @@ class mobile extends eqLogic {
 							if(isset($minValue)){
 								if ($minValue != null) {
 									$cmd_array['display']['minValue'] = $minValue;
+								}else{
+									$cmd_array['display']['minValue'] = $minValue;
 								}
+							}else{
+								$cmd_array['display']['minValue'] = "0";
+									
 							}
 							if(isset($maxValue)){
 								if ($maxValue != null) {
 									$cmd_array['display']['maxValue'] = $maxValue;
+								}else{
+									$cmd_array['display']['maxValue'] = "100";
 								}
+							}else{
+								$cmd_array['display']['maxValue'] = "100";
 							}
 							$cmd_array['display']['generic_type'] = $generic_type;
 							if (isset($icon)){

@@ -314,7 +314,6 @@ class mobile extends eqLogic {
 								$message_placeholder = $cmd_array['display']['message_placeholder'];
 							}
 							unset($cmd_array['isHistorized'],$cmd_array['configuration'], $cmd_array['template'], $cmd_array['display'], $cmd_array['html']);
-							$cmd_array['configuration']['maxValue'] = $maxValue;
 							if ($minValue != null) {
 								$cmd_array['configuration']['minValue'] = $minValue;
 							}

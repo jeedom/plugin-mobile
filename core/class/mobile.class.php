@@ -325,7 +325,7 @@ class mobile extends eqLogic {
 								}
 							}
 							$cmd_array['display']['generic_type'] = $generic_type;
-							if ($icon != null) {
+							if (isset($icon)){
 								$cmd_array['display']['icon'] = $icon;
 							}
 							if(isset($invertBinary)){

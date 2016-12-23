@@ -314,8 +314,15 @@ class mobile extends eqLogic {
 								$message_placeholder = $cmd_array['display']['message_placeholder'];
 							}
 							unset($cmd_array['isHistorized'],$cmd_array['configuration'], $cmd_array['template'], $cmd_array['display'], $cmd_array['html']);
-							if ($minValue != null) {
-								$cmd_array['configuration']['minValue'] = $minValue;
+							if(isset($minValue)){
+								if ($minValue != null) {
+									$cmd_array['display']['minValue'] = $minValue;
+								}
+							}
+							if(isset($maxValue)){
+								if ($maxValue != null) {
+									$cmd_array['display']['maxValue'] = $maxValue;
+								}
 							}
 							$cmd_array['display']['generic_type'] = $generic_type;
 							if ($icon != null) {

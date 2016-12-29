@@ -57,9 +57,7 @@ if ($jsonrpc->getMethod() == 'sync_homebridge') {
 			if($eqLogics[$i]["configuration"]["sendToHomebridge"] == 0){
 				unset($eqLogics, $i);	
 			}
-		}else{
-			unset($eqLogics, $i);
-		}   
+		}
 	$i++;	
 	}
 	
@@ -68,7 +66,6 @@ if ($jsonrpc->getMethod() == 'sync_homebridge') {
 		'cmds' => $cmds['cmds'],
 		'objects' => mobile::discovery_object(),
 		'scenarios' => mobile::discovery_scenario(),
-		'messages' => mobile::discovery_message(),
 		'config' => array('datetime' => getmicrotime()),
 	);
 	

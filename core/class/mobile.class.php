@@ -259,6 +259,9 @@ class mobile extends eqLogic {
 				foreach ($eqLogics as $eqLogic) {
 					if($eqLogic->getObject_id() !== null && object::byId($eqLogic->getObject_id())->getDisplay('sendToApp', 1) == 1 && $eqLogic->getIsEnable() == 1 && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
 						$eqLogic_array = utils::o2a($eqLogic);
+						if(isset($eqLogic_array["configuration"]["sendToHomebridge"])){
+							$eqLogic_array["sendToHomebridge"] = $eqLogic_array["configuration"]["sendToHomebridge"];
+						}
 						unset($eqLogic_array['eqReal_id'],$eqLogic_array['configuration'], $eqLogic_array['specificCapatibilities'],$eqLogic_array['timeout'],$eqLogic_array['category'],$eqLogic_array['display']);
 						$return[] = $eqLogic_array;
 					}
@@ -434,13 +437,11 @@ class mobile extends eqLogic {
 				$new_eqLogic['id'] = $eqlogic_array_one[1];
 				$new_eqLogic['name'] = $eqlogic_array_one[2];
 				array_push($eqLogics, $new_eqLogic);
-			}	
-		
+			}		
+		}
 		$new_cmds = array('cmds' => $cmds);
 		$new_eqLogic = array('eqLogics' => $eqLogics);
 		$news = array($new_cmds,$new_eqLogic);
-			
-		}
 		return $news;
 	}
 	

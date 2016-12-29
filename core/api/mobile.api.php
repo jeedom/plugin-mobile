@@ -52,14 +52,15 @@ if ($jsonrpc->getMethod() == 'sync_homebridge') {
 	$eqLogics = $sync_new[1]['eqLogics'];
 	$cmds = $sync_new[0];
 	$i = 0;
-	while($i <= count($eqLogics)){
-		if(isset($eqLogics[$i]["sendToHomebridge"])){
-			if($eqLogics[$i]["sendToHomebridge"] == 0){
-				array_splice($eqLogics, $i, 1);	
-			}
-		}
-	$i++;	
-	}
+	foreach($eqLogics as $eqLogic){
+                if(isset($eqLogic["sendToHomebridge"])){
+                        if($eqLogic["sendToHomebridge"] == 0){
+                                unset($eqLogics[$i]);
+                        }
+                }
+        $i++;   
+        }
+        $eqLogics = array_values($eqLogics);
 	
 	$sync_array = array(
 		'eqLogics' => $eqLogics,

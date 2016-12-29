@@ -69,7 +69,7 @@ if ($jsonrpc->getMethod() == 'sync_homebridge') {
 		'config' => array('datetime' => getmicrotime()),
 	);
 	
-	log::add('mobile', 'debug', 'Demande de Sync');
+	log::add('mobile', 'debug', 'Demande de Sync Homebridge');
 	$jsonrpc->makeSuccess($sync_array);
 }
 

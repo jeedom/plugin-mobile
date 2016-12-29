@@ -49,7 +49,7 @@ if ($jsonrpc->getMethod() == 'sync_homebridge') {
 	log::add('mobile', 'debug', 'Demande de Sync Homebridge');
 	$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($PluginToSend),mobile::discovery_eqLogic($PluginToSend));
 	log::add('mobile', 'debug', 'Sync cmd et eqlogics > '.json_encode($sync_new));
-	$eqLogics = $sync_new[1];
+	$eqLogics = $sync_new[1]['eqLogics'];
 	$cmds = $sync_new[0];
 	$i = 0;
 	while($i <= count($eqLogics)){
@@ -62,7 +62,7 @@ if ($jsonrpc->getMethod() == 'sync_homebridge') {
 	}
 	
 	$sync_array = array(
-		'eqLogics' => $eqLogics['eqLogics'],
+		'eqLogics' => $eqLogics,
 		'cmds' => $cmds['cmds'],
 		'objects' => mobile::discovery_object(),
 		'scenarios' => mobile::discovery_scenario(),

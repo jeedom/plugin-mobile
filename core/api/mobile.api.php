@@ -53,8 +53,8 @@ if ($jsonrpc->getMethod() == 'sync_homebridge') {
 	$cmds = $sync_new[0];
 	$i = 0;
 	while($i <= count($eqLogics)){
-		if(isset($eqLogics[$i]["configuration"]["sendToHomebridge"])){
-			if($eqLogics[$i]["configuration"]["sendToHomebridge"] == 0){
+		if(isset($eqLogics[$i]["sendToHomebridge"])){
+			if($eqLogics[$i]["sendToHomebridge"] == 0){
 				unset($eqLogics, $i);	
 			}
 		}

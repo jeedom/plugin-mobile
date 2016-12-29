@@ -261,8 +261,6 @@ class mobile extends eqLogic {
 						$eqLogic_array = utils::o2a($eqLogic);
 						if(isset($eqLogic_array["configuration"]["sendToHomebridge"])){
 							$eqLogic_array["sendToHomebridge"] = $eqLogic_array["configuration"]["sendToHomebridge"];
-						}else{
-							$eqLogic_array["sendToHomebridge"] = '0';
 						}
 						unset($eqLogic_array['eqReal_id'],$eqLogic_array['configuration'], $eqLogic_array['specificCapatibilities'],$eqLogic_array['timeout'],$eqLogic_array['category'],$eqLogic_array['display']);
 						$return[] = $eqLogic_array;

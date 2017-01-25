@@ -27,8 +27,8 @@ function clickplugin(id_plugin,name_plugin){
     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin.mobile&plugin_id=' +id_plugin).dialog('open');
 }
 
-function clickobject(id_object,name_object){
-	$('#md_modal').dialog({title: "{{Configuration Mobile de la Pièce "+name_object+"}}"});
+function clickobject(id_object){
+	$('#md_modal').dialog({title: "{{Configuration Mobile de la Pièce}}"});
     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=object.mobile&object_id=' +id_object).dialog('open');
 }
 

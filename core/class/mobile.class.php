@@ -232,7 +232,7 @@ class mobile extends eqLogic {
 	
 	/**************************************************************************************/
 	/*                                                                                    */
-	/*            Permet de supprimer le cache Homebridge   					          */
+	/*            Permet de supprimer le cache Homebridge            		      */
 	/*                                                                                    */
 	/**************************************************************************************/
 	
@@ -243,6 +243,25 @@ class mobile extends eqLogic {
 		$cmd = 'sudo rm -Rf '.dirname(__FILE__) . '/../../resources/homebridge/persist';
 		exec($cmd);
 		self::deamon_start();
+	}
+	
+	/**************************************************************************************/
+	/*                                                                                    */
+	/*            Permet de supprimer tout Homebridge                		      */
+	/*                                                                                    */
+	/**************************************************************************************/
+	
+	public static function eraseHomebridge() {
+		self::deamon_stop();
+		$cmd = 'sudo rm -Rf '.dirname(__FILE__) . '/../../resources/homebridge/accessories';
+		exec($cmd);
+		$cmd = 'sudo rm -Rf '.dirname(__FILE__) . '/../../resources/homebridge/persist';
+		exec($cmd);
+		$cmd = 'sudo rm -Rf /usr/lib/node_modules/homebridge';
+		exec($cmd);
+		$cmd = 'sudo rm -Rf /usr/lib/node_modules/homebridge-jeedom';
+		exec($cmd);
+		self::dependancy_install();
 	}
 		
 	/**************************************************************************************/

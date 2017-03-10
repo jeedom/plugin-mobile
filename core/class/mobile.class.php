@@ -514,22 +514,30 @@ class mobile extends eqLogic {
 	/**************************************************************************************/
 
 	public function getQrCode() {
-		$key = $this->getLogicalId();
-		$request_qrcode = array(
-          	'eqLogic_id' => $this->getId(),
-			'url_internal' => network::getNetworkAccess('internal'),
-			'url_external' => network::getNetworkAccess('external'),
-			'Iq' => $key
-          	);
-      	if ($this->getConfiguration('affect_user') != '') {
-		$username = user::byId($this->getConfiguration('affect_user'));
-		if (is_object($username)) {
-			$request_qrcode['username'] = $username->getLogin();
-			$request_qrcode['apikey'] = $username->getHash();
+		if(network::getNetworkAccess('internal') == null || network::getNetworkAccess('internal') == 'http://:80'){
+			$return = 'internalError';
+		}else if(network::getNetworkAccess('external') == null || network::getNetworkAccess('external') == 'http://:80'){
+			$return = 'externalError';
+		}else if($this->getConfiguration('affect_user') != ''){
+			$return = 'UserError';
+		}else{
+			$key = $this->getLogicalId();
+			$request_qrcode = array(
+			'eqLogic_id' => $this->getId(),
+				'url_internal' => network::getNetworkAccess('internal'),
+				'url_external' => network::getNetworkAccess('external'),
+				'Iq' => $key
+			);
+			if ($this->getConfiguration('affect_user') != '') {
+				$username = user::byId($this->getConfiguration('affect_user'));
+				if (is_object($username)) {
+					$request_qrcode['username'] = $username->getLogin();
+					$request_qrcode['apikey'] = $username->getHash();
+				}
+			}
+			$retour = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl='.json_encode($request_qrcode);
 		}
-	}
-      	$retour = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl='.json_encode($request_qrcode);
-	return $retour;
+		return $retour;
 	}
 	
 	/**************************************************************************************/

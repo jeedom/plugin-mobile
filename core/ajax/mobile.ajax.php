@@ -36,6 +36,11 @@ try {
 		ajax::success();
 	}
 	
+	if (init('action') == 'eraseHomebridge'){
+		mobile::eraseHomebridge();
+		ajax::success();
+	}
+	
 	if (init('action') == 'regenerateHomebridgeConf') {
 		mobile::generate_file();
 		ajax::success();

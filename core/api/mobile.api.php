@@ -34,10 +34,12 @@ if ($jsonrpc->getMethod() == 'sync') {
 	$eqLogics = $sync_new[1];
 	$cmds = $sync_new[0];
 	
+	$objects = mobile::delete_object_eqlogic_null(mobile::discovery_object(),$eqLogics['eqLogics']);
+	
 	$sync_array = array(
 		'eqLogics' => $eqLogics['eqLogics'],
 		'cmds' => $cmds['cmds'],
-		'objects' => mobile::discovery_object(),
+		'objects' => $objects,
 		'scenarios' => mobile::discovery_scenario(),
 		'messages' => mobile::discovery_message(),
 		'config' => array('datetime' => getmicrotime()),
@@ -62,11 +64,12 @@ if ($jsonrpc->getMethod() == 'sync_homebridge') {
         }
         $eqLogics = array_values($eqLogics);
 	
+	$objects = mobile::delete_object_eqlogic_null(mobile::discovery_object(),$eqLogics);
+	
 	$sync_array = array(
 		'eqLogics' => $eqLogics,
 		'cmds' => $cmds['cmds'],
-		'objects' => mobile::discovery_object(),
-		'scenarios' => mobile::discovery_scenario(),
+		'objects' => $objects,
 		'config' => array('datetime' => getmicrotime()),
 	);
 	

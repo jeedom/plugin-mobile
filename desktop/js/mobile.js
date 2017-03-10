@@ -71,7 +71,15 @@ $('.nav-tabs a').on('shown.bs.tab', function (e) {
             $('#div_alert').showAlert({message: data.result, level: 'danger'});
             return;
         }
-        $('.qrCodeImg').empty().append('<img src='+data.result+' />');
+	if (data.result == 'internalError') {
+		$('.qrCodeImg').empty().append('{{Erreur Pas d\'adresse interne (voir configuration de votre Jeedom !)}}');
+	}else if(data.result == 'externalError'){
+		$('.qrCodeImg').empty().append('{{Erreur Pas d\'adresse externe (voir configuration de votre Jeedom !)}}');
+	}else if(data.result == 'UserError'){
+		$('.qrCodeImg').empty().append('{{Erreur Pas d\'utilisateur selectionné}}');
+	}else{
+		$('.qrCodeImg').empty().append('<img src='+data.result+' />');
+	}
     }
 });
 }

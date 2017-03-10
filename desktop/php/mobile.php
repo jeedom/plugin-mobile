@@ -252,7 +252,7 @@ foreach (user::all() as $user) {
    <div class="col-lg-6">
     <form class="form-horizontal">
         <fieldset>
-            <legend><i class="icon techno-listening3"></i>  {{Mobile}}</legend>
+            <legend><i class="fa fa-qrcode"></i>  {{QRCode}}</legend>
             <center>
                <div class="qrCodeImg"></div>
            </center>

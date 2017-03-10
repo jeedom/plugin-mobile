@@ -507,6 +507,20 @@ class mobile extends eqLogic {
 		return $return;
 	}
 
+
+	public static function delete_object_eqlogic_null($objectsATraiter,$eqlogicsATraiter){
+		$retour = array();
+		foreach ($objectsATraiter as &$objectATraiter){
+			$id_object = $objectATraiter['id'];
+			foreach ($eqlogicsATraiter as &$eqlogicATraiter){
+				if ($id_object == $eqlogicATraiter['object_id']){
+					array_push($retour,$objectATraiter);
+					break;
+				}
+			}
+		}
+		return $retour;
+	}
 	/**************************************************************************************/
 	/*                                                                                    */
 	/*                         Permet de creer le Json du QRCode                          */
@@ -514,21 +528,25 @@ class mobile extends eqLogic {
 	/**************************************************************************************/
 
 	public function getQrCode() {
-		if(network::getNetworkAccess('internal') == null || network::getNetworkAccess('internal') == 'http://:80'){
-			$return = 'internalError';
-		}else if(network::getNetworkAccess('external') == null || network::getNetworkAccess('external') == 'http://:80'){
-			$return = 'externalError';
-		}else if($this->getConfiguration('affect_user') != ''){
-			$return = 'UserError';
+		$interne = network::getNetworkAccess('internal');
+		$externe = network::getNetworkAccess('external');
+		$user = $this->getConfiguration('affect_user');
+		
+		if($interne == null || $interne == 'http://:80' || $interne == 'https://:80'){
+			$retour = 'internalError';
+		}else if($externe == null || $externe == 'http://:80' || $externe == 'https://:80'){
+			$retour = 'externalError';
+		}else if($user == ''){
+			$retour = 'UserError';
 		}else{
 			$key = $this->getLogicalId();
 			$request_qrcode = array(
 			'eqLogic_id' => $this->getId(),
-				'url_internal' => network::getNetworkAccess('internal'),
-				'url_external' => network::getNetworkAccess('external'),
+				'url_internal' => $interne,
+				'url_external' => $externe,
 				'Iq' => $key
 			);
-			if ($this->getConfiguration('affect_user') != '') {
+			if ($user != '') {
 				$username = user::byId($this->getConfiguration('affect_user'));
 				if (is_object($username)) {
 					$request_qrcode['username'] = $username->getLogin();

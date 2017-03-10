@@ -72,11 +72,11 @@ $('.nav-tabs a').on('shown.bs.tab', function (e) {
             return;
         }
 	if (data.result == 'internalError') {
-		$('.qrCodeImg').empty().append('<a>{{Erreur Pas d\adresse interne (voir configuration de votre Jeedom !)}}</a>');
+		$('.qrCodeImg').empty().append('<a>{{Erreur Pas d\'adresse interne (voir configuration de votre Jeedom !)}}</a>');
 	}else if(data.result == 'externalError'){
-		$('.qrCodeImg').empty().append('<a>{{Erreur Pas d\adresse externe (voir configuration de votre Jeedom !)}}</a>');
+		$('.qrCodeImg').empty().append('<a>{{Erreur Pas d\'adresse externe (voir configuration de votre Jeedom !)}}</a>');
 	}else if(data.result == 'UserError'){
-		$('.qrCodeImg').empty().append('<a>{{Erreur Pas d\utilisateur selectionné}}</a>');
+		$('.qrCodeImg').empty().append('<a>{{Erreur Pas d\'utilisateur selectionné}}</a>');
 	}else{
 		$('.qrCodeImg').empty().append('<img src='+data.result+' />');
 	}

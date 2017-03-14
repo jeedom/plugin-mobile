@@ -307,17 +307,55 @@ class mobile extends eqLogic {
 					foreach ($eqLogic->getCmd() as $cmd) {
                     	if($cmd->getDisplay('generic_type') != null && !in_array($cmd->getDisplay('generic_type'),['GENERIC_ERROR','DONT']) && ($cmd->getIsVisible() == 1 || in_array($cmd->getDisplay('generic_type'), $genericisvisible) || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
                       		$cmd_array = $cmd->exportApi();
-                      		
-							$maxValue = $cmd_array['configuration']['maxValue'];
-							$minValue = $cmd_array['configuration']['minValue'];
-							$actionCodeAccess = $cmd_array['configuration']['actionCodeAccess'];
-							$actionConfirm = $cmd_array['configuration']['actionConfirm'];
-							$generic_type = $cmd_array['display']['generic_type'];
-							$icon = $cmd_array['display']['icon'];
-							$invertBinary = $cmd_array['display']['invertBinary'];
-							$title_disable = $cmd_array['display']['title_disable'];
-							$title_placeholder = $cmd_array['display']['title_placeholder'];
-							$message_placeholder = $cmd_array['display']['message_placeholder'];
+                      					
+							//Variables
+							$maxValue = null;
+							$minValue = null;
+							$actionCodeAccess = null;
+							$actionConfirm = null;
+							$generic_type = null;
+							$icon = null;
+							$invertBinary = null;
+							$title_disable = null;
+							$title_placeholder = null;
+							$message_placeholder = null;
+								
+							if(isset($cmd_array['configuration'])){
+								$configuration = $cmd_array['configuration'];
+								if(isset($configuration['maxValue'])){
+									$maxValue = $configuration['maxValue'];
+								}
+								if(isset($configuration['minValue'])){
+									$minValue = $configuration['minValue'];
+								}
+								if(isset($configuration['actionCodeAccess'])){
+									$actionCodeAccess = $configuration['actionCodeAccess'];
+								}
+								if(isset($configuration['actionConfirm'])){
+									$actionConfirm = $configuration['actionConfirm'];
+								}
+							}
+							if(isset($cmd_array['display'])){
+								$display = $cmd_array['display'];
+								if(isset($display['generic_type'])){
+									$generic_type = $display['generic_type'];
+								}
+								if(isset($display['icon'])){
+									$icon = $display['icon'];
+								}
+								if(isset($display['invertBinary'])){
+									$invertBinary = $display['invertBinary'];
+								}
+								if(isset($display['title_disable'])){
+									$title_disable = $display['title_disable'];
+								}
+								if(isset($display['title_placeholder'])){
+									$title_placeholder = $display['title_placeholder'];
+								}
+								if(isset($display['message_placeholder'])){
+									$message_placeholder = $display['message_placeholder'];
+								}
+							}
 							unset($cmd_array['isHistorized'],$cmd_array['configuration'], $cmd_array['template'], $cmd_array['display'], $cmd_array['html']);
 							$cmd_array['configuration']['maxValue'] = $maxValue;
 							if ($minValue != null) {

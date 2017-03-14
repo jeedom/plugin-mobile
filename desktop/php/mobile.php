@@ -263,7 +263,10 @@ foreach (user::all() as $user) {
 	    <form class="form-horizontal">
         <fieldset>
             <legend><i class="fa fa-qrcode"></i>  {{Notifications Infos :}}</legend>
-            <input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="{{Iq}}" disabled/>
+		<label class="col-sm-3 control-label">{{Id Mobile :}}</label>
+                    <div class="col-sm-3">
+            		<input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="{{Iq}}" disabled/>
+		</div>
 		</fieldset>
 	    </form>
        </div>

@@ -259,6 +259,7 @@ foreach (user::all() as $user) {
 	</fieldset>
 	</form>
 	</div>
+	    <div class="col-lg-6">
 	    <form class="form-horizontal">
         <fieldset>
             <legend><i class="fa fa-qrcode"></i>  {{Notifications Infos :}}</legend>

@@ -256,9 +256,16 @@ foreach (user::all() as $user) {
             <center>
                <div class="qrCodeImg"></div>
            </center>
+	</fieldset>
+	</form>
+	</div>
+	    <form class="form-horizontal">
+        <fieldset>
+            <legend><i class="fa fa-qrcode"></i>  {{Notifications Infos :}}</legend>
+            <input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="{{Iq}}" disabled/>
+		</fieldset>
+	    </form>
        </div>
-   </fieldset>
-</form>
 </div>
 <div class="form-actions">
     <a class="btn btn-danger eqLogicAction" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>

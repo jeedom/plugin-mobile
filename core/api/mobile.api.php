@@ -87,6 +87,8 @@ if ($jsonrpc->getMethod() == 'Iq') {
 	$mobile->setConfiguration('type_mobile',$platform);
 	$mobile->setConfiguration('affect_user',$userId);
 	$mobile->setIsEnable(1);
+	$key = config::genKey(32);
+	$mobile->setLogicalId($key);
 	$mobile->save();
 	$jsonrpc->makeSuccess($mobile->getLogicalId());	
 }

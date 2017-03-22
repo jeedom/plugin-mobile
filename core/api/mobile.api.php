@@ -79,7 +79,7 @@ if ($jsonrpc->getMethod() == 'sync_homebridge') {
 
 // HOMEBRIDGE API
 // Eqlogic byId
-if ($jsonrpc->getMethod() == 'cmds::byEqlogicID') {
+if ($jsonrpc->getMethod() == 'cmdsbyEqlogicID') {
 	log::add('mobile', 'debug', 'Interogation du module id:'.$params['id'].' Pour les cmds');
 	$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($PluginToSend),mobile::discovery_eqLogic($PluginToSend));
 	$cmds = $sync_new[0];

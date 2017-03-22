@@ -77,6 +77,24 @@ if ($jsonrpc->getMethod() == 'sync_homebridge') {
 	$jsonrpc->makeSuccess($sync_array);
 }
 
+// HOMEBRIDGE API
+// Eqlogic byId
+if ($jsonrpc->getMethod() == 'cmds::byEqlogicID') {
+	log::add('mobile', 'debug', 'Interogation du module id:'.$params['id'].' Pour les cmds');
+	$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($PluginToSend),mobile::discovery_eqLogic($PluginToSend));
+	$cmds = $sync_new[0];
+	$i = 0;
+	foreach($cmds as $cmd){
+                if(isset($cmd["eqLogicId"])){
+                        if($cmd["eqLogicId"] != $params['id']){
+                                unset($cmds[$i]);
+                        }
+                }
+        $i++;   
+        )
+	$jsonrpc->makeSuccess($cmds);
+}
+
 if ($jsonrpc->getMethod() == 'Iq') {
 	$platform = $params['platform'];
 	$user = user::byHash($params['apikey']);

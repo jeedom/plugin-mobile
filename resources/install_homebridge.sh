@@ -53,7 +53,7 @@ sudo rm -Rf /usr/lib/node_modules/homebridge-jeedom/.git
 echo 60 > /tmp/homebridge_in_progress
 sudo npm install -g --unsafe-perm homebridge
 echo 70 > /tmp/homebridge_in_progress
-sudo npm install -g https://github.com/jeedom/homebridge-jeedom.git#master
+sudo npm install -g https://github.com/jeedom/homebridge-jeedom.git#beta
 echo 80 > /tmp/homebridge_in_progress
 echo "Installation Homebridge OK"
 echo 100 > /tmp/homebridge_in_progress

@@ -26,6 +26,7 @@ if (!is_object($jsonrpc)) {
 
 $params = $jsonrpc->getParams();
 $PluginToSend = mobile::PluginToSend();
+//$filename = dirname(__FILE__) . '/../../../../tmp/syncHomebridge.txt';
 
 if ($jsonrpc->getMethod() == 'sync') {
 	log::add('mobile', 'debug', 'Demande de Sync');
@@ -74,6 +75,12 @@ if ($jsonrpc->getMethod() == 'sync_homebridge') {
 	);
 	
 	log::add('mobile', 'debug', 'Demande de Sync Homebridge');
+	//if (file_exists($filename)) {
+    //	unlink($filename);
+	//}
+	//$fp = fopen($filename, 'w');
+	//fwrite($fp, json_encode($sync_array));
+	//fclose($fp);
 	$jsonrpc->makeSuccess($sync_array);
 }
 
@@ -84,15 +91,24 @@ if ($jsonrpc->getMethod() == 'cmdsbyEqlogicID') {
 	$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($PluginToSend),mobile::discovery_eqLogic($PluginToSend));
 	$cmds = $sync_new[0];
 	$i = 0;
-	foreach($cmds as $cmd){
-                if(isset($cmd["eqLogicId"])){
-                        if($cmd["eqLogicId"] != $params['id']){
-                                unset($cmds[$i]);
-                        }
+	$commandes = $cmds['cmds'];
+	$cmdAPI = array();
+	foreach($commandes as $cmd){
+        if(isset($cmd["eqLogic_id"])){
+                if($cmd["eqLogic_id"] != $params['id']){
+                        unset($commandes[$i]);
+                }else{
+	                array_push($cmdAPI, $commandes[$i]);
                 }
+        }
         $i++;   
-        )
-	$jsonrpc->makeSuccess($cmds);
+    }
+        log::add('mobile', 'debug', 'Commande > '.json_encode($cmdAPI));
+        //$retourApi = eqLogic::byId($params['id']);
+        //$cmdAPI = $retourApi->getCmd();
+        
+        //log::add('mobile', 'debug', 'Commande Normal > '.json_encode($cmdAPI));
+	$jsonrpc->makeSuccess($cmdAPI);
 }
 
 if ($jsonrpc->getMethod() == 'Iq') {

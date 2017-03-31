@@ -124,7 +124,7 @@ if ($jsonrpc->getMethod() == 'Iq') {
 	$key = config::genKey(32);
 	$mobile->setLogicalId($key);
 	$mobile->save();
-	$jsonrpc->makeSuccess($mobile->getLogicalId());	
+	$jsonrpc->makeSuccess($key);	
 }
 
 if ($jsonrpc->getMethod() == 'version') {

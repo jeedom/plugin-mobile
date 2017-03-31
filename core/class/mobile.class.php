@@ -608,6 +608,18 @@ class mobile extends eqLogic {
 		$this->save();
 	
 	}
+	
+	public function postUpdate() {
+        	foreach (eqLogic::byType('mobile') as $mobile){
+			if(isset($mobile->getLogicalId())){
+				if($mobile->getLogicalId() == null || $mobile->getLogicalId() == ""){
+					$mobile->remove();
+				}
+			}else{
+				$mobile->remove();
+			}
+		}
+    	}
 
 	/*     * *********************Méthodes d'instance************************* */
 

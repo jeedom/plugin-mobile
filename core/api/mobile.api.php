@@ -120,11 +120,23 @@ if ($jsonrpc->getMethod() == 'Iq') {
 	$mobile->setName($platform.'-'.config::genKey(3));
 	$mobile->setConfiguration('type_mobile',$platform);
 	$mobile->setConfiguration('affect_user',$userId);
+	$mobile->setConfiguration('validate',no);
 	$mobile->setIsEnable(1);
 	$key = config::genKey(32);
 	$mobile->setLogicalId($key);
 	$mobile->save();
-	$jsonrpc->makeSuccess($mobile->getLogicalId());	
+	$jsonrpc->makeSuccess($key);	
+}
+
+if($jsonrpc->getMethod() == 'IqValidation'){
+	$mobile = eqLogic::byLogicalId($params['Iq']);
+	if(is_object($mobile){
+		$mobile->setConfiguration('validate',yes);
+		$mobile->save();
+		$jsonrpc->makeSuccess('validate');
+	}else{
+		$jsonrpc->makeSuccess('not_iq');
+	}
 }
 
 if ($jsonrpc->getMethod() == 'version') {

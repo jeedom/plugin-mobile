@@ -257,10 +257,12 @@ class mobile extends eqLogic {
 		exec($cmd);
 		$cmd = 'sudo rm -Rf '.dirname(__FILE__) . '/../../resources/homebridge/persist';
 		exec($cmd);
-		$cmd = 'sudo rm -Rf /usr/lib/node_modules/homebridge';
+		$cmd = 'npm uninstall homebridge-jeedom --save';
 		exec($cmd);
-		$cmd = 'sudo rm -Rf /usr/lib/node_modules/homebridge-jeedom';
+		$cmd = 'npm uninstall homebridge --save';
 		exec($cmd);
+		$macadress = implode(':',str_split(str_pad(base_convert(mt_rand(0,0xffffff),10,16).base_convert(mt_rand(0,0xffffff),10,16),12),2));
+		config::save('mac_homebridge',$macadress,'mobile')
 		self::dependancy_install();
 	}
 		
@@ -608,6 +610,18 @@ class mobile extends eqLogic {
 		$this->save();
 	
 	}
+	
+	public function postUpdate() {
+        	foreach (eqLogic::byType('mobile') as $mobile){
+			if(isset($mobile->getLogicalId())){
+				if($mobile->getLogicalId() == null || $mobile->getLogicalId() == ""){
+					$mobile->remove();
+				}
+			}else{
+				$mobile->remove();
+			}
+		}
+    	}
 
 	/*     * *********************Méthodes d'instance************************* */
 

@@ -252,7 +252,7 @@ class mobile extends eqLogic {
 	/**************************************************************************************/
 	
 	public static function eraseHomebridge() {
-		self::deamon_stop();
+		mobile::deamon_stop();
 		$cmd = 'sudo rm -Rf '.dirname(__FILE__) . '/../../resources/homebridge/accessories';
 		exec($cmd);
 		$cmd = 'sudo rm -Rf '.dirname(__FILE__) . '/../../resources/homebridge/persist';
@@ -262,8 +262,8 @@ class mobile extends eqLogic {
 		$cmd = 'npm uninstall homebridge --save';
 		exec($cmd);
 		$macadress = implode(':',str_split(str_pad(base_convert(mt_rand(0,0xffffff),10,16).base_convert(mt_rand(0,0xffffff),10,16),12),2));
-		config::save('mac_homebridge',$macadress,'mobile')
-		self::dependancy_install();
+		config::save('mac_homebridge',$macadress,'mobile');
+		mobile::dependancy_install();
 	}
 		
 	/**************************************************************************************/

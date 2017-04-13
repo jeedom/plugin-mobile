@@ -130,7 +130,7 @@ if ($jsonrpc->getMethod() == 'Iq') {
 
 if($jsonrpc->getMethod() == 'IqValidation'){
 	$mobile = eqLogic::byLogicalId($params['Iq']);
-	if(is_object($mobile){
+	if(is_object($mobile)){
 		$mobile->setConfiguration('validate',yes);
 		$mobile->save();
 		$jsonrpc->makeSuccess('validate');

@@ -261,6 +261,8 @@ class mobile extends eqLogic {
 		exec($cmd);
 		$cmd = 'npm uninstall homebridge --save';
 		exec($cmd);
+		$macadress = implode(':',str_split(str_pad(base_convert(mt_rand(0,0xffffff),10,16).base_convert(mt_rand(0,0xffffff),10,16),12),2));
+		config::save('mac_homebridge',$macadress,'mobile')
 		self::dependancy_install();
 	}
 		

@@ -252,18 +252,28 @@ class mobile extends eqLogic {
 	/**************************************************************************************/
 	
 	public static function eraseHomebridge() {
+		log::add('mobile_homebridge', 'info', 'Procedure de réparration';
 		mobile::deamon_stop();
+		log::add('mobile_homebridge', 'info', 'suppression des accessoires et du persist';
 		$cmd = 'sudo rm -Rf '.dirname(__FILE__) . '/../../resources/homebridge/accessories';
 		exec($cmd);
 		$cmd = 'sudo rm -Rf '.dirname(__FILE__) . '/../../resources/homebridge/persist';
 		exec($cmd);
+		log::add('mobile_homebridge', 'info', 'suppression homebridge-jeedom';
 		$cmd = 'npm uninstall homebridge-jeedom --save';
 		exec($cmd);
+		log::add('mobile_homebridge', 'info', 'suppression homebridge';
 		$cmd = 'npm uninstall homebridge --save';
 		exec($cmd);
-		$macadress = implode(':',str_split(str_pad(base_convert(mt_rand(0,0xffffff),10,16).base_convert(mt_rand(0,0xffffff),10,16),12),2));
+		log::add('mobile_homebridge', 'info', 'création d\'une nouvelle MAC adress';
+		$macadress = strtoupper(implode(':',str_split(str_pad(base_convert(mt_rand(0,0xffffff),10,16).base_convert(mt_rand(0,0xffffff),10,16),12),2)));
 		config::save('mac_homebridge',$macadress,'mobile');
+		mobile::deamon_stop();
+		log::add('mobile_homebridge', 'info', 'réinstallation des dependances';
 		mobile::dependancy_install();
+		mobile::deamon_stop();
+		log::add('mobile_homebridge', 'info', 'Géneration du fichier de configuration';
+		mobile::generate_file();
 	}
 		
 	/**************************************************************************************/

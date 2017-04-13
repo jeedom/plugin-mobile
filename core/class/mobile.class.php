@@ -257,9 +257,9 @@ class mobile extends eqLogic {
 		exec($cmd);
 		$cmd = 'sudo rm -Rf '.dirname(__FILE__) . '/../../resources/homebridge/persist';
 		exec($cmd);
-		$cmd = 'sudo rm -Rf /usr/lib/node_modules/homebridge';
+		$cmd = 'npm uninstall homebridge-jeedom --save';
 		exec($cmd);
-		$cmd = 'sudo rm -Rf /usr/lib/node_modules/homebridge-jeedom';
+		$cmd = 'npm uninstall homebridge --save';
 		exec($cmd);
 		self::dependancy_install();
 	}

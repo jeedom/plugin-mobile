@@ -444,12 +444,12 @@ class mobile extends eqLogic {
 			if(in_array($cmd['generic_type'], $tableData)){
 				$keys = array_keys(array_column($cmds,'eqLogic_id'), $cmd['eqLogic_id']);
 				$trueKeys = array_keys(array_column($cmds,'generic_type'), $cmd['generic_type']);
-				if(count($keys) > 1 && count($trueKeys) > 1){
+				//if(count($keys) > 1 && count($trueKeys) > 1){
 					$result =  array_intersect($keys, $trueKeys);
 					if(count($result) > 1){
 						$array_final = array_merge_recursive($array_final, $result);
 					}
-				}
+				//}
 				
 			}
 		}

@@ -47,6 +47,7 @@ else
   echo "Version actuelle : ${new}"
 fi
 echo 40 > /tmp/homebridge_in_progress
+sudo npm install -g node-gyp
 sudo npm install -g request
 echo 50 > /tmp/homebridge_in_progress
 sudo rm -Rf /usr/lib/node_modules/homebridge-jeedom/.git

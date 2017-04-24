@@ -157,7 +157,7 @@ foreach ($allObject as $object) {
 	if ($object->getDisplay('sendToApp', 1) == 0) {
 		$opacity = 'opacity:0.3;';
 	}
-	echo '<div class="objectDisplayCard cursor" data-object_id="' . $object->getId() . '" onclick="clickobject(\''. $object->getId(). '\',\''. $object->getName() .'\')" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;'.$opacity.'">';
+	echo '<div class="objectDisplayCard cursor" data-object_id="' . $object->getId() . '" onclick="clickobject(\''. $object->getId(). '\')" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;'.$opacity.'">';
 	echo "<center>";
 	echo str_replace('></i>', ' style="font-size : 6em;color:#767676;"></i>', $object->getDisplay('icon', '<i class="fa fa-lemon-o"></i>'));
 	echo "</center>";
@@ -191,6 +191,17 @@ foreach ($allScenario as $scenario) {
 </div>
 </div>
 <div class="col-lg-10 col-md-9 col-sm-8 eqLogic" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
+    <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
+    <a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
+    <a class="btn btn-info pull-right" id="info_app"><i class="fa fa-question-circle"></i> {{Infos envoyées à l'app}}</a>
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Mobile}}</a></li>
+    <!--<li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Notifications}}</a></li>
+    <li role="presentation"><a href="#commandtab" aria-controls="cmd" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
+-->  
+</ul>
+  <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
+    <div role="tabpanel" class="tab-pane active" id="eqlogictabin">
     <div class="row">
         <div class="col-lg-6">
             <form class="form-horizontal">
@@ -252,20 +263,38 @@ foreach (user::all() as $user) {
    <div class="col-lg-6">
     <form class="form-horizontal">
         <fieldset>
-            <legend><i class="icon techno-listening3"></i>  {{Mobile}}</legend>
+            <legend><i class="fa fa-qrcode"></i>  {{QRCode}}</legend>
             <center>
                <div class="qrCodeImg"></div>
            </center>
-       </div>
-   </fieldset>
-</form>
-</div>
-<div class="form-actions">
-    <a class="btn btn-danger eqLogicAction" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
-    <a class="btn btn-success eqLogicAction" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
-    <a class="btn btn-info" id="info_app"><i class="fa fa-question-circle"></i> {{Infos envoyées à l'app}}</a>
-</div>
-</div>
+	</fieldset>
+	</form>
+	</div>
+	</div>
+	</div>
+    <div role="tabpanel" class="tab-pane" id="notificationtab">
+	    <div class="row">
+	            <div class="col-lg-6">
+				<form class="form-horizontal">
+        			<fieldset>
+            		<legend><i class="fa fa-qrcode"></i>  {{Notifications Infos :}}</legend>
+					<label class="col-sm-3 control-label">{{Id Mobile :}}</label>
+			                    <div class="col-sm-3">
+			            		<input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="{{Iq}}" disabled/>
+					</fieldset>
+	            </form>
+	        </div>
+	    </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="commandtab">
+	    <div class="row">
+	        <div class="col-lg-6">
+	            <form class="form-horizontal">
+	            </form>
+	        </div>
+	    </div>
+    </div>
+    </div>
 </div>
 <?php include_file('desktop', 'mobile', 'js', 'mobile');?>
 <?php include_file('core', 'plugin.template', 'js');?>

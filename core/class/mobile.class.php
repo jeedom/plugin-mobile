@@ -28,7 +28,7 @@ class mobile extends eqLogic {
 
 	public static function Pluginsuported() {
 		
-		$Pluginsuported = ['openzwave','rfxcom','edisio','mpower', 'mySensors', 'Zibasedom', 'virtual', 'camera','weather','philipsHue','enocean','wifipower','alarm','mode','apcupsd', 'btsniffer','dsc','rflink','mysensors','relaynet','remora','unipi','eibd','thermostat','netatmoThermostat','espeasy','jeelink','teleinfo','tahoma','protexiom','lifx','wattlet'];
+		$Pluginsuported = ['openzwave','rfxcom','edisio','mpower', 'mySensors', 'Zibasedom', 'virtual', 'camera','weather','philipsHue','enocean','wifipower','alarm','mode','apcupsd', 'btsniffer','dsc','rflink','mysensors','relaynet','remora','unipi','eibd','thermostat','netatmoThermostat','espeasy','jeelink','teleinfo','tahoma','protexiom','lifx','wattlet','rfplayer','openenocean'];
 		
 		return $Pluginsuported;
 		
@@ -232,7 +232,7 @@ class mobile extends eqLogic {
 	
 	/**************************************************************************************/
 	/*                                                                                    */
-	/*            Permet de supprimer le cache Homebridge   					          */
+	/*            Permet de supprimer le cache Homebridge            		      */
 	/*                                                                                    */
 	/**************************************************************************************/
 	
@@ -243,6 +243,37 @@ class mobile extends eqLogic {
 		$cmd = 'sudo rm -Rf '.dirname(__FILE__) . '/../../resources/homebridge/persist';
 		exec($cmd);
 		self::deamon_start();
+	}
+	
+	/**************************************************************************************/
+	/*                                                                                    */
+	/*            Permet de supprimer tout Homebridge                		      */
+	/*                                                                                    */
+	/**************************************************************************************/
+	
+	public static function eraseHomebridge() {
+		log::add('mobile_homebridge', 'info', 'Procedure de réparration');
+		mobile::deamon_stop();
+		log::add('mobile_homebridge', 'info', 'suppression des accessoires et du persist');
+		$cmd = 'sudo rm -Rf '.dirname(__FILE__) . '/../../resources/homebridge/accessories';
+		exec($cmd);
+		$cmd = 'sudo rm -Rf '.dirname(__FILE__) . '/../../resources/homebridge/persist';
+		exec($cmd);
+		log::add('mobile_homebridge', 'info', 'suppression homebridge-jeedom');
+		$cmd = 'npm uninstall homebridge-jeedom --save';
+		exec($cmd);
+		log::add('mobile_homebridge', 'info', 'suppression homebridge');
+		$cmd = 'npm uninstall homebridge --save';
+		exec($cmd);
+		log::add('mobile_homebridge', 'info', 'création d\'une nouvelle MAC adress');
+		$macadress = strtoupper(implode(':',str_split(str_pad(base_convert(mt_rand(0,0xffffff),10,16).base_convert(mt_rand(0,0xffffff),10,16),12),2)));
+		config::save('mac_homebridge',$macadress,'mobile');
+		mobile::deamon_stop();
+		log::add('mobile_homebridge', 'info', 'réinstallation des dependances');
+		mobile::dependancy_install();
+		mobile::deamon_stop();
+		log::add('mobile_homebridge', 'info', 'Géneration du fichier de configuration');
+		mobile::generate_file();
 	}
 		
 	/**************************************************************************************/
@@ -288,17 +319,55 @@ class mobile extends eqLogic {
 					foreach ($eqLogic->getCmd() as $cmd) {
                     	if($cmd->getDisplay('generic_type') != null && !in_array($cmd->getDisplay('generic_type'),['GENERIC_ERROR','DONT']) && ($cmd->getIsVisible() == 1 || in_array($cmd->getDisplay('generic_type'), $genericisvisible) || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
                       		$cmd_array = $cmd->exportApi();
-                      		
-							$maxValue = $cmd_array['configuration']['maxValue'];
-							$minValue = $cmd_array['configuration']['minValue'];
-							$actionCodeAccess = $cmd_array['configuration']['actionCodeAccess'];
-							$actionConfirm = $cmd_array['configuration']['actionConfirm'];
-							$generic_type = $cmd_array['display']['generic_type'];
-							$icon = $cmd_array['display']['icon'];
-							$invertBinary = $cmd_array['display']['invertBinary'];
-							$title_disable = $cmd_array['display']['title_disable'];
-							$title_placeholder = $cmd_array['display']['title_placeholder'];
-							$message_placeholder = $cmd_array['display']['message_placeholder'];
+                      					
+							//Variables
+							$maxValue = null;
+							$minValue = null;
+							$actionCodeAccess = null;
+							$actionConfirm = null;
+							$generic_type = null;
+							$icon = null;
+							$invertBinary = null;
+							$title_disable = null;
+							$title_placeholder = null;
+							$message_placeholder = null;
+								
+							if(isset($cmd_array['configuration'])){
+								$configuration = $cmd_array['configuration'];
+								if(isset($configuration['maxValue'])){
+									$maxValue = $configuration['maxValue'];
+								}
+								if(isset($configuration['minValue'])){
+									$minValue = $configuration['minValue'];
+								}
+								if(isset($configuration['actionCodeAccess'])){
+									$actionCodeAccess = $configuration['actionCodeAccess'];
+								}
+								if(isset($configuration['actionConfirm'])){
+									$actionConfirm = $configuration['actionConfirm'];
+								}
+							}
+							if(isset($cmd_array['display'])){
+								$display = $cmd_array['display'];
+								if(isset($display['generic_type'])){
+									$generic_type = $display['generic_type'];
+								}
+								if(isset($display['icon'])){
+									$icon = $display['icon'];
+								}
+								if(isset($display['invertBinary'])){
+									$invertBinary = $display['invertBinary'];
+								}
+								if(isset($display['title_disable'])){
+									$title_disable = $display['title_disable'];
+								}
+								if(isset($display['title_placeholder'])){
+									$title_placeholder = $display['title_placeholder'];
+								}
+								if(isset($display['message_placeholder'])){
+									$message_placeholder = $display['message_placeholder'];
+								}
+							}
 							unset($cmd_array['isHistorized'],$cmd_array['configuration'], $cmd_array['template'], $cmd_array['display'], $cmd_array['html']);
 							$cmd_array['configuration']['maxValue'] = $maxValue;
 							if ($minValue != null) {
@@ -375,12 +444,12 @@ class mobile extends eqLogic {
 			if(in_array($cmd['generic_type'], $tableData)){
 				$keys = array_keys(array_column($cmds,'eqLogic_id'), $cmd['eqLogic_id']);
 				$trueKeys = array_keys(array_column($cmds,'generic_type'), $cmd['generic_type']);
-				if(count($keys) > 1 && count($trueKeys) > 1){
+				//if(count($keys) > 1 && count($trueKeys) > 1){
 					$result =  array_intersect($keys, $trueKeys);
 					if(count($result) > 1){
 						$array_final = array_merge_recursive($array_final, $result);
 					}
-				}
+				//}
 				
 			}
 		}
@@ -488,6 +557,20 @@ class mobile extends eqLogic {
 		return $return;
 	}
 
+
+	public static function delete_object_eqlogic_null($objectsATraiter,$eqlogicsATraiter){
+		$retour = array();
+		foreach ($objectsATraiter as &$objectATraiter){
+			$id_object = $objectATraiter['id'];
+			foreach ($eqlogicsATraiter as &$eqlogicATraiter){
+				if ($id_object == $eqlogicATraiter['object_id']){
+					array_push($retour,$objectATraiter);
+					break;
+				}
+			}
+		}
+		return $retour;
+	}
 	/**************************************************************************************/
 	/*                                                                                    */
 	/*                         Permet de creer le Json du QRCode                          */
@@ -495,22 +578,34 @@ class mobile extends eqLogic {
 	/**************************************************************************************/
 
 	public function getQrCode() {
-		$key = $this->getLogicalId();
-		$request_qrcode = array(
-          	'eqLogic_id' => $this->getId(),
-			'url_internal' => network::getNetworkAccess('internal'),
-			'url_external' => network::getNetworkAccess('external'),
-			'Iq' => $key
-          	);
-      	if ($this->getConfiguration('affect_user') != '') {
-		$username = user::byId($this->getConfiguration('affect_user'));
-		if (is_object($username)) {
-			$request_qrcode['username'] = $username->getLogin();
-			$request_qrcode['apikey'] = $username->getHash();
+		$interne = network::getNetworkAccess('internal');
+		$externe = network::getNetworkAccess('external');
+		$user = $this->getConfiguration('affect_user');
+		
+		if($interne == null || $interne == 'http://:80' || $interne == 'https://:80'){
+			$retour = 'internalError';
+		}else if($externe == null || $externe == 'http://:80' || $externe == 'https://:80'){
+			$retour = 'externalError';
+		}else if($user == ''){
+			$retour = 'UserError';
+		}else{
+			$key = $this->getLogicalId();
+			$request_qrcode = array(
+			'eqLogic_id' => $this->getId(),
+				'url_internal' => $interne,
+				'url_external' => $externe,
+				'Iq' => $key
+			);
+			if ($user != '') {
+				$username = user::byId($this->getConfiguration('affect_user'));
+				if (is_object($username)) {
+					$request_qrcode['username'] = $username->getLogin();
+					$request_qrcode['apikey'] = $username->getHash();
+				}
+			}
+			$retour = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl='.json_encode($request_qrcode);
 		}
-	}
-      	$retour = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl='.json_encode($request_qrcode);
-	return $retour;
+		return $retour;
 	}
 	
 	/**************************************************************************************/

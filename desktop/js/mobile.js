@@ -27,8 +27,8 @@ function clickplugin(id_plugin,name_plugin){
     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin.mobile&plugin_id=' +id_plugin).dialog('open');
 }
 
-function clickobject(id_object,name_object){
-	$('#md_modal').dialog({title: "{{Configuration Mobile de la Pièce "+name_object+"}}"});
+function clickobject(id_object){
+	$('#md_modal').dialog({title: "{{Configuration Mobile de la Pièce}}"});
     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=object.mobile&object_id=' +id_object).dialog('open');
 }
 
@@ -71,7 +71,15 @@ $('.nav-tabs a').on('shown.bs.tab', function (e) {
             $('#div_alert').showAlert({message: data.result, level: 'danger'});
             return;
         }
-        $('.qrCodeImg').empty().append('<img src='+data.result+' />');
+	if (data.result == 'internalError') {
+		$('.qrCodeImg').empty().append('{{Erreur Pas d\'adresse interne (voir configuration de votre Jeedom !)}}');
+	}else if(data.result == 'externalError'){
+		$('.qrCodeImg').empty().append('{{Erreur Pas d\'adresse externe (voir configuration de votre Jeedom !)}}');
+	}else if(data.result == 'UserError'){
+		$('.qrCodeImg').empty().append('{{Erreur Pas d\'utilisateur selectionné}}');
+	}else{
+		$('.qrCodeImg').empty().append('<img src='+data.result+' />');
+	}
     }
 });
 }

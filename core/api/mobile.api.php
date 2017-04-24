@@ -26,6 +26,7 @@ if (!is_object($jsonrpc)) {
 
 $params = $jsonrpc->getParams();
 $PluginToSend = mobile::PluginToSend();
+//$filename = dirname(__FILE__) . '/../../../../tmp/syncHomebridge.txt';
 
 if ($jsonrpc->getMethod() == 'sync') {
 	log::add('mobile', 'debug', 'Demande de Sync');
@@ -34,10 +35,12 @@ if ($jsonrpc->getMethod() == 'sync') {
 	$eqLogics = $sync_new[1];
 	$cmds = $sync_new[0];
 	
+	$objects = mobile::delete_object_eqlogic_null(mobile::discovery_object(),$eqLogics['eqLogics']);
+	
 	$sync_array = array(
 		'eqLogics' => $eqLogics['eqLogics'],
 		'cmds' => $cmds['cmds'],
-		'objects' => mobile::discovery_object(),
+		'objects' => $objects,
 		'scenarios' => mobile::discovery_scenario(),
 		'messages' => mobile::discovery_message(),
 		'config' => array('datetime' => getmicrotime()),
@@ -62,16 +65,50 @@ if ($jsonrpc->getMethod() == 'sync_homebridge') {
         }
         $eqLogics = array_values($eqLogics);
 	
+	$objects = mobile::delete_object_eqlogic_null(mobile::discovery_object(),$eqLogics);
+	
 	$sync_array = array(
 		'eqLogics' => $eqLogics,
 		'cmds' => $cmds['cmds'],
-		'objects' => mobile::discovery_object(),
-		'scenarios' => mobile::discovery_scenario(),
+		'objects' => $objects,
 		'config' => array('datetime' => getmicrotime()),
 	);
 	
 	log::add('mobile', 'debug', 'Demande de Sync Homebridge');
+	//if (file_exists($filename)) {
+    //	unlink($filename);
+	//}
+	//$fp = fopen($filename, 'w');
+	//fwrite($fp, json_encode($sync_array));
+	//fclose($fp);
 	$jsonrpc->makeSuccess($sync_array);
+}
+
+// HOMEBRIDGE API
+// Eqlogic byId
+if ($jsonrpc->getMethod() == 'cmdsbyEqlogicID') {
+	log::add('mobile', 'debug', 'Interogation du module id:'.$params['id'].' Pour les cmds');
+	$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($PluginToSend),mobile::discovery_eqLogic($PluginToSend));
+	$cmds = $sync_new[0];
+	$i = 0;
+	$commandes = $cmds['cmds'];
+	$cmdAPI = array();
+	foreach($commandes as $cmd){
+        if(isset($cmd["eqLogic_id"])){
+                if($cmd["eqLogic_id"] != $params['id']){
+                        unset($commandes[$i]);
+                }else{
+	                array_push($cmdAPI, $commandes[$i]);
+                }
+        }
+        $i++;   
+    }
+        log::add('mobile', 'debug', 'Commande > '.json_encode($cmdAPI));
+        //$retourApi = eqLogic::byId($params['id']);
+        //$cmdAPI = $retourApi->getCmd();
+        
+        //log::add('mobile', 'debug', 'Commande Normal > '.json_encode($cmdAPI));
+	$jsonrpc->makeSuccess($cmdAPI);
 }
 
 if ($jsonrpc->getMethod() == 'Iq') {
@@ -83,9 +120,23 @@ if ($jsonrpc->getMethod() == 'Iq') {
 	$mobile->setName($platform.'-'.config::genKey(3));
 	$mobile->setConfiguration('type_mobile',$platform);
 	$mobile->setConfiguration('affect_user',$userId);
+	$mobile->setConfiguration('validate',no);
 	$mobile->setIsEnable(1);
+	$key = config::genKey(32);
+	$mobile->setLogicalId($key);
 	$mobile->save();
-	$jsonrpc->makeSuccess($mobile->getLogicalId());	
+	$jsonrpc->makeSuccess($key);	
+}
+
+if($jsonrpc->getMethod() == 'IqValidation'){
+	$mobile = eqLogic::byLogicalId($params['Iq']);
+	if(is_object($mobile)){
+		$mobile->setConfiguration('validate',yes);
+		$mobile->save();
+		$jsonrpc->makeSuccess('validate');
+	}else{
+		$jsonrpc->makeSuccess('not_iq');
+	}
 }
 
 if ($jsonrpc->getMethod() == 'version') {

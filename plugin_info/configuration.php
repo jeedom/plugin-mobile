@@ -66,6 +66,12 @@ sendVarToJs('hasIos', mobile::check_ios());
 			</div>
 		</div>
 		<div class="form-group">
+			<label class="col-lg-4 control-label">{{Réparation de Homebridge}}</label>
+			<div class="col-lg-3">
+				<a class="btn btn-warning" id="bt_eraseHome"><i class="fa fa-erase"></i> {{Réparer}}</a>
+			</div>
+		</div>
+		<div class="form-group">
 			<label class="col-lg-4 control-label">{{Regénérer le fichier de configuration}}</label>
 			<div class="col-lg-3">
 				<a class="btn btn-warning" id="bt_generateConf"><i class="fa fa-erase"></i> {{Générer}}</a>
@@ -117,7 +123,6 @@ sendVarToJs('hasIos', mobile::check_ios());
 			}
 		});
 	});
-
 	$('#bt_generateConf').on('click', function() {
 		$.ajax({
 			type : 'POST',
@@ -141,4 +146,31 @@ sendVarToJs('hasIos', mobile::check_ios());
 			}
 		});
 	}); 
+	$('#bt_eraseHome').on('click', function() {
+		bootbox.confirm('{{Etes-vous sûr de vouloir supprimer et reinstaller Homebridge ? Vous devrez réinstaller les équipements sur votre appareil iOS (Merci, de supprimer la passerelle Jeedom sur l\'app Home).}}', function(result) {
+			if (result) {
+				$.ajax({
+					type : 'POST',
+					url : 'plugins/mobile/core/ajax/mobile.ajax.php',
+					data : {
+						action : 'eraseHomebridge',
+					},
+					dataType : 'json',
+					global : false,
+					error : function(request, status, error) {
+						$('#div_alert').showAlert({
+							message : error.message,
+							level : 'danger'
+						});
+					},
+					success : function() {
+						$('#div_alert').showAlert({
+							message : "{{Cache Homebridge vidé}}",
+							level : 'success'
+						});
+					}
+				});
+			}
+		});
+	});
 </script>

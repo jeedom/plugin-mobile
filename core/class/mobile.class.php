@@ -150,7 +150,7 @@ class mobile extends eqLogic {
 		$plateform['name'] = "Jeedom";
 		$plateform['url'] = network::getNetworkAccess('internal');
 		$plateform['apikey'] = $apikey;
-		$plateform['pollerperiod'] = 5;
+		$plateform['pollerperiod'] = 25;
 		$response['platforms'] = array();
 		$response['platforms'][] = $plateform;
 		exec('sudo chown -R www-data:www-data ' . dirname(__FILE__) . '/../../resources');

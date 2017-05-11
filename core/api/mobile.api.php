@@ -54,6 +54,7 @@ if ($jsonrpc->getMethod() == 'sync_homebridge') {
 	log::add('mobile', 'debug', 'Sync cmd et eqlogics > '.json_encode($sync_new));
 	$eqLogics = $sync_new[1]['eqLogics'];
 	$cmds = $sync_new[0];
+	/*
 	$i = 0;
 	foreach($eqLogics as $eqLogic){
                 if(isset($eqLogic["sendToHomebridge"])){
@@ -63,6 +64,7 @@ if ($jsonrpc->getMethod() == 'sync_homebridge') {
                 }
         $i++;   
         }
+	*/
         $eqLogics = array_values($eqLogics);
 	
 	$objects = mobile::delete_object_eqlogic_null(mobile::discovery_object(),$eqLogics);

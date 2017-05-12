@@ -190,6 +190,17 @@ class mobile extends eqLogic {
 				return false;
 			}
 		}
+		
+		// check dbus started, if not, start
+		$cmd = 'if [ $(ps -ef | grep -v grep | grep "dbus-daemon" | wc -l) == 0 ]; then sudo systemctl start dbus;echo "Starting dbus because not started"; fi';
+		log::add('mobile_homebridge', 'info', 'Vérification dbus : ' . $cmd);
+		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
+		
+		// check avahi-daemon started, if not, start
+		$cmd = 'if [ $(ps -ef | grep -v grep | grep "avahi-daemon" | wc -l) == 0 ]; then sudo systemctl start avahi-daemon;echo "Starting avahi-daemon because not started"; fi';
+		log::add('mobile_homebridge', 'info', 'Vérification avahi-daemon : ' . $cmd);
+		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
+				
 		$cmd = 'homebridge -D -U '.dirname(__FILE__) . '/../../resources/homebridge';
 		log::add('mobile_homebridge', 'info', 'Lancement démon homebridge : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
@@ -208,6 +219,10 @@ class mobile extends eqLogic {
 		}
 		message::removeAll('homebridge', 'unableStartDeamon');
 		log::add('mobile_homebridge', 'info', 'Démon homebridge lancé');
+		// Check if IPv6 is enable, and display a warning if it is
+		$cmd = 'if [ $(netstat -na | grep 51826 | grep tcp6 | wc -l) ]; then echo "WARNING : IPv6 est activé sur votre système, il peut poser problème avec Homebridge"; fi';
+		log::add('mobile_homebridge', 'info', 'Vérification IPv6 : ' . $cmd);
+		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 	}
 	public static function deamon_stop() {
 		$deamon_info = self::deamon_info();
@@ -245,7 +260,6 @@ class mobile extends eqLogic {
 		self::deamon_start();
 	}
 	*/
-	
 	/**************************************************************************************/
 	/*                                                                                    */
 	/*            Permet de supprimer tout Homebridge                		      */

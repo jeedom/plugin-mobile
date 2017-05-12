@@ -56,6 +56,14 @@ sudo npm install -g --unsafe-perm https://github.com/jeedom/homebridge.git#maste
 echo 70 > /tmp/homebridge_in_progress
 sudo npm install -g https://github.com/jeedom/homebridge-jeedom.git#beta
 echo 80 > /tmp/homebridge_in_progress
+sudo systemctl is-enabled dbus >/dev/null
+if [ $? -ne 0 ]; then
+	sudo systemctl enable dbus
+fi
+sudo systemctl is-enabled avahi-daemon >/dev/null
+if [ $? -ne 0 ]; then
+	sudo systemctl enable avahi-daemon
+fi
 echo "Installation Homebridge OK"
 echo 100 > /tmp/homebridge_in_progress
 rm /tmp/homebridge_in_progress

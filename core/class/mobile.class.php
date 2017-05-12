@@ -235,7 +235,7 @@ class mobile extends eqLogic {
 	/*            Permet de supprimer le cache Homebridge            		      */
 	/*                                                                                    */
 	/**************************************************************************************/
-	
+	/*
 	public static function eraseHomebridgeCache() {
 		self::deamon_stop();
 		$cmd = 'sudo rm -Rf '.dirname(__FILE__) . '/../../resources/homebridge/accessories';
@@ -244,6 +244,7 @@ class mobile extends eqLogic {
 		exec($cmd);
 		self::deamon_start();
 	}
+	*/
 	
 	/**************************************************************************************/
 	/*                                                                                    */

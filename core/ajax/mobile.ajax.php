@@ -30,12 +30,12 @@ try {
 		mobile::updatemobile();
 		ajax::success();
 	}
-	
+	/*
 	if (init('action') == 'eraseHomebridgeCache') {
 		mobile::eraseHomebridgeCache();
 		ajax::success();
 	}
-	
+	*/
 	if (init('action') == 'eraseHomebridge'){
 		mobile::eraseHomebridge();
 		ajax::success();

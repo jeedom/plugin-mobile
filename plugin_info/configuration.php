@@ -59,12 +59,14 @@ sendVarToJs('hasIos', mobile::check_ios());
 				<input class="configKey form-control" data-l1key="pin_homebridge" placeholder="031-45-154" />
 			</div>
 		</div>
+		<!--
 		<div class="form-group">
 			<label class="col-lg-4 control-label">{{Suppression du cache}}</label>
 			<div class="col-lg-3">
 				<a class="btn btn-warning" id="bt_eraseCache"><i class="fa fa-erase"></i> {{Supprimer}}</a>
 			</div>
 		</div>
+		-->
 		<div class="form-group">
 			<label class="col-lg-4 control-label">{{Réparation de Homebridge}}</label>
 			<div class="col-lg-3">
@@ -95,7 +97,7 @@ sendVarToJs('hasIos', mobile::check_ios());
 		}
 
 	}, 50);
-
+	/*
 	$('#bt_eraseCache').on('click', function() {
 		bootbox.confirm('{{Etes-vous sûr de vouloir supprimer le cache ? Vous devrez réinstaller les équipements sur votre appareil iOS.}}', function(result) {
 			if (result) {
@@ -123,6 +125,7 @@ sendVarToJs('hasIos', mobile::check_ios());
 			}
 		});
 	});
+	*/
 	$('#bt_generateConf').on('click', function() {
 		$.ajax({
 			type : 'POST',

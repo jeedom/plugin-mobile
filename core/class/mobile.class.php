@@ -161,7 +161,7 @@ class mobile extends eqLogic {
 		$fp = fopen(dirname(__FILE__) . '/../../resources/homebridge/config.json', 'w');
 		fwrite($fp, json_encode($response));
 		fclose($fp);
-		self::deamon_start();
+		//self::deamon_start();
 	}
 	
 	public static function deamon_info() {
@@ -182,6 +182,7 @@ class mobile extends eqLogic {
 	}
 	public static function deamon_start($_debug = false) {
 		self::deamon_stop();
+		self::generate_file();
 		$deamon_info = self::deamon_info();
 		if ($deamon_info['launchable'] != 'ok') {
 			if(self::check_ios() == 0){

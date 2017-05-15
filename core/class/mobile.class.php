@@ -114,20 +114,24 @@ class mobile extends eqLogic {
 	
 	public static function dependancy_install() {
 		if (file_exists('/tmp/homebridge_in_progress')) {
-			return;
+		    return;
 		}
 		if(self::check_ios() == 0){
-			config::save('deamonAutoMode',0,'mobile');
-			return;
+		    config::save('deamonAutoMode',0,'mobile');
+		    return;
 		}
-		
+	      	self::deamon_stop();
+    
 		log::remove('mobile_homebridge_update');
 		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../resources/install_homebridge.sh';
 		$cmd .= ' >> ' . log::getPathToLog('mobile_homebridge_update') . ' 2>&1 &';
 		exec($cmd);
 		self::generate_file();
-		
-	}
+    	}
+    
+    public static function generate_file(){
+        if(self::deamon_info()=="ok") self::deamon_stop();
+        $user = user::byId(config::byKey('user_homebridge','mobile',1,true));
 	
 	public static function generate_file(){
 		self::deamon_stop();

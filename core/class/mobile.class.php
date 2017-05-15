@@ -127,14 +127,9 @@ class mobile extends eqLogic {
 		$cmd .= ' >> ' . log::getPathToLog('mobile_homebridge_update') . ' 2>&1 &';
 		exec($cmd);
 		self::generate_file();
-    	}
-    
-    public static function generate_file(){
-        if(self::deamon_info()=="ok") self::deamon_stop();
-        $user = user::byId(config::byKey('user_homebridge','mobile',1,true));
-	
+	}
 	public static function generate_file(){
-		self::deamon_stop();
+		if(self::deamon_info()=="ok") self::deamon_stop();
 		$user = user::byId(config::byKey('user_homebridge','mobile',1,true));
 		if(is_object($user)){
 			$apikey = $user->getHash();

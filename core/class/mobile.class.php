@@ -571,6 +571,15 @@ class mobile extends eqLogic {
 		}
 		return $return;
 	}
+	
+	public static function discovery_plan() {
+		$all = utils::o2a(plan::all());
+		$return = array();
+		foreach ($all as &$plan){
+				$return[]=$plan;	
+		}
+		return $return;
+	}
 
 
 	public static function delete_object_eqlogic_null($objectsATraiter,$eqlogicsATraiter){

@@ -573,7 +573,7 @@ class mobile extends eqLogic {
 	}
 	
 	public static function discovery_plan() {
-		$all = utils::o2a(plan::all());
+		$all = utils::o2a(planHeader::all());
 		$return = array();
 		foreach ($all as &$plan){
 				$return[]=$plan;	

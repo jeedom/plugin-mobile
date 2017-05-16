@@ -43,6 +43,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 		'objects' => $objects,
 		'scenarios' => mobile::discovery_scenario(),
 		'messages' => mobile::discovery_message(),
+		'plans' => mobile::discovery_plan(),
 		'config' => array('datetime' => getmicrotime()),
 	);
 	$jsonrpc->makeSuccess($sync_array);

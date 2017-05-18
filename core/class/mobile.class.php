@@ -150,6 +150,7 @@ class mobile extends eqLogic {
 		$plateform['url'] = network::getNetworkAccess('internal');
 		$plateform['apikey'] = $apikey;
 		$plateform['pollerperiod'] = 25;
+		$plateform['debugLevel'] = log::getLogLevel('mobile');
 		$response['platforms'] = array();
 		$response['platforms'][] = $plateform;
 		exec('sudo chown -R www-data:www-data ' . dirname(__FILE__) . '/../../resources');

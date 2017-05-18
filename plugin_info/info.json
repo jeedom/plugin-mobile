@@ -5,7 +5,7 @@
 	"icon" : "fa fa-mobile",
 	"licence" : "AGPL",
 	"author" : "Jeedom",
-	"require" : "3.0",
+	"require" : "2.3",
 	"installation" : "Aucune",
 	"hasDependency" : 1,
 	"hasOwnDeamon" : 1,

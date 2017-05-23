@@ -35,17 +35,86 @@ if ($jsonrpc->getMethod() == 'sync') {
 	$eqLogics = $sync_new[1];
 	$cmds = $sync_new[0];
 	
+	log::add('mobile', 'debug', 'IQ TYPE > '.$params['Iq']);
+	
 	$objects = mobile::delete_object_eqlogic_null(mobile::discovery_object(),$eqLogics['eqLogics']);
 	
-	$sync_array = array(
-		'eqLogics' => $eqLogics['eqLogics'],
-		'cmds' => $cmds['cmds'],
-		'objects' => $objects,
-		'scenarios' => mobile::discovery_scenario(),
-		'messages' => mobile::discovery_message(),
-		'plans' => mobile::discovery_plan(),
-		'config' => array('datetime' => getmicrotime()),
-	);
+	if($params['Iq'] != ''){
+		log::add('mobile', 'debug', 'IQ disponible');
+		if(isset($params['notificationProvider']) || $params['notificationProvider'] != ''){
+			log::add('mobile', 'debug', 'notificationProvider Disponible');
+			$mobileEqLogic = eqLogic::byLogicalId($params['Iq'],'mobile');
+			if(is_object($mobileEqLogic)){
+				$nameEqlogic = $mobileEqLogic->getName();
+				log::add('mobile', 'debug', 'EqLogic dispo');
+				$arn = $mobileEqLogic->getConfiguration('notificationArn', null);
+				$arnMobile = substr($params['notificationProvider'], 1, -1);
+				if($arn == null){
+					log::add('mobile', 'debug', 'arn null dans la configuration > '.$arn);
+					$mobileEqLogic->setConfiguration('notificationArn',$arnMobile);
+					$mobileEqLogic->save();
+				}else{
+					log::add('mobile', 'debug', 'arn NON null dans la configuration > '.$arn);
+					if($arn != $arnMobile){
+						$mobileEqLogic->setConfiguration('notificationArn',$arnMobile);
+						$mobileEqLogic->save();
+					}
+				}
+			}else{
+				log::add('mobile', 'debug', 'EqLogic Non dispo');
+				$platform = $params['platform'];
+				$nameEqlogic = $platform.'-'.config::genKey(3);
+				$user = user::byHash($params['apikey']);
+				$userId = $user->getId();
+				$mobile = new eqLogic;
+				$mobile->setEqType_name('mobile');
+				$mobile->setName($nameEqlogic);
+				$mobile->setConfiguration('type_mobile',$platform);
+				$mobile->setConfiguration('affect_user',$userId);
+				$mobile->setConfiguration('validate',no);
+				$mobile->setConfiguration('notificationArn',$params['notificationProvider']);
+				$mobile->setIsEnable(1);
+				$mobile->setLogicalId($params['Iq']);
+				$mobile->save();
+				
+			}
+		}
+		$sync_array = array(
+			'eqLogics' => $eqLogics['eqLogics'],
+			'cmds' => $cmds['cmds'],
+			'objects' => $objects,
+			'scenarios' => mobile::discovery_scenario(),
+			'messages' => mobile::discovery_message(),
+			'plans' => mobile::discovery_plan(),
+			'config' => array('datetime' => getmicrotime(),'Iq' => $params['Iq'],'NameMobile' => $mobileEqLogic)
+		);
+	}else{
+		$platform = $params['platform'];
+		$nameEqlogic = $platform.'-'.config::genKey(3);
+		$user = user::byHash($params['apikey']);
+		$userId = $user->getId();
+		$mobile = new eqLogic;
+		$mobile->setEqType_name('mobile');
+		$mobile->setName($nameEqlogic);
+		$mobile->setConfiguration('type_mobile',$platform);
+		$mobile->setConfiguration('affect_user',$userId);
+		$mobile->setConfiguration('validate',no);
+		$mobile->setIsEnable(1);
+		$key = config::genKey(32);
+		$mobile->setLogicalId($key);
+		$mobile->save();
+		$sync_array = array(
+			'eqLogics' => $eqLogics['eqLogics'],
+			'cmds' => $cmds['cmds'],
+			'objects' => $objects,
+			'scenarios' => mobile::discovery_scenario(),
+			'messages' => mobile::discovery_message(),
+			'plans' => mobile::discovery_plan(),
+			'config' => array('datetime' => getmicrotime(),'Iq' => $key,'NameMobile' => $mobileEqLogic)
+		);
+	}
+	
+	
 	$jsonrpc->makeSuccess($sync_array);
 }
 

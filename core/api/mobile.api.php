@@ -72,7 +72,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 				$mobile->setConfiguration('type_mobile',$platform);
 				$mobile->setConfiguration('affect_user',$userId);
 				$mobile->setConfiguration('validate',no);
-				$mobile->setConfiguration('notificationArn',$params['notificationProvider']);
+				$mobile->setConfiguration('notificationArn',substr($params['notificationProvider'],1,-1));
 				$mobile->setIsEnable(1);
 				$mobile->setLogicalId($params['Iq']);
 				$mobile->save();

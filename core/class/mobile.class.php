@@ -635,6 +635,47 @@ class mobile extends eqLogic {
 	
 	/**************************************************************************************/
 	/*                                                                                    */
+	/*                                 Pour les notifications                             */
+	/*                                                                                    */
+	/**************************************************************************************/
+	
+	public static function jsonPublish($os,$titre,$message,$badge){
+		if($os == 'ios'){
+			if(isset($badge)){
+				$publish = '{"default": "Erreur de texte de notification","APNS": "{\"aps\":{\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"badge\":'.$badge.',\"sound\":\"silence.caf\"}}"}';
+			}else{
+				$publish = '{"default": "test", "APNS": "{\"aps\":{\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"sound\":\"silence.caf\"}}"}';
+			}
+		}else if($os == 'android'){
+			$publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"data\": {\"notificationId\":\"10\",\"title\":\"'.$titre.'\",\"text\":\"'.$message.'\",\"vibrate\":\"true\",\"lights\":\"true\" } }"}';
+		}else if($os == 'microsoft'){
+			
+		}
+		return $publish;
+	}
+	
+	public static function notification($arn,$os,$titre,$message,$badge){
+		log::add('mobile', 'debug', 'notification en cours !');
+		$publish = mobile::jsonPublish($os,$titre,$message,$badge);
+		log::add('mobile', 'debug', 'JSON envoyé : '.$publish);
+		$post = [
+			'id' => '1',
+			'type' => $os,
+			'arn' => $arn,
+			'publish' => $publish 
+		];
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL,mobile::LienAWS());
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS,$post);            
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $server_output = curl_exec ($ch);
+        curl_close ($ch);
+        log::add('mobile', 'debug', 'notification resultat > '.$server_output);
+	}
+	
+	/**************************************************************************************/
+	/*                                                                                    */
 	/*                         Permet de creer l'ID Unique du téléphone                   */
 	/*                                                                                    */
 	/**************************************************************************************/

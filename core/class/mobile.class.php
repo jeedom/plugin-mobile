@@ -684,8 +684,28 @@ class mobile extends eqLogic {
 		$key = config::genKey(32);
 		$this->setLogicalId($key);
 		$this->save();
-	
 	}
+	
+	public function postSave() {
+		$this->crea_cmd();
+	}
+    
+    function crea_cmd() {
+    	$cmd = $this->getCmd(null, 'notif');
+        if (!is_object($cmd)) {
+			$cmd = new mobileCmd();
+			$cmd->setLogicalId('notif');
+			$cmd->setName(__('Notif', __FILE__));
+			$cmd->setIsVisible(1);
+		}
+		$cmd->setOrder(0);
+		$cmd->setType('action');
+		$cmd->setSubType('message');
+		$cmd->setEqLogic_id($this->getId());
+		$cmd->save();
+
+    }
+	
 
 	/*     * *********************Méthodes d'instance************************* */
 
@@ -707,7 +727,22 @@ class mobileCmd extends cmd {
 											 */
 
 	public function execute($_options = array()) {
-		return false;
+		$eqLogic = $this->getEqLogic();
+		$arn = $eqLogic->getConfiguration('notificationArn', null);
+		$os = $eqLogic->getConfiguration('type_mobile', null);
+        if ($this->getType() != 'action') {
+			return;
+		}
+		log::add('mobile', 'debug', 'Notif > '.json_encode($_options).' / '.$eqLogic->getId().' / '.$this->getLogicalId(), 'config');
+		if($this->getLogicalId() == 'notif') {
+			log::add('mobile', 'debug', 'Commande de notification ', 'config');
+			if($arn != null && $os != null){
+				mobile::notification($arn,$os,$_options['title'],$_options['message']);
+				log::add('mobile', 'debug', 'Action : Envoi d\'une configuration ', 'config');
+			}else{
+				log::add('mobile', 'debug', 'ARN non configuré ', 'config');	
+			}
+		};
 	}
 
 	/*     * **********************Getteur Setteur*************************** */

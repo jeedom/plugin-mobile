@@ -651,7 +651,7 @@ class mobile extends eqLogic {
 				$publish = '{"default": "test", "APNS": "{\"aps\":{\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"sound\":\"silence.caf\"}}"}';
 			}
 		}else if($os == 'android'){
-			$publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"data\": {\"notificationId\":\"10\",\"title\":\"'.$titre.'\",\"text\":\"'.$message.'\",\"vibrate\":\"true\",\"lights\":\"true\" } }"}';
+			$publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"data\": {\"notificationId\":\"'.rand(3, 5).'\",\"title\":\"'.$titre.'\",\"text\":\"'.$message.'\",\"vibrate\":\"true\",\"lights\":\"true\" } }"}';
 		}else if($os == 'microsoft'){
 			
 		}
@@ -660,7 +660,11 @@ class mobile extends eqLogic {
 	
 	public static function notification($arn,$os,$titre,$message,$badge){
 		log::add('mobile', 'debug', 'notification en cours !');
-		$publish = mobile::jsonPublish($os,$titre,$message,$badge);
+		if(isset($badge)){
+			$publish = mobile::jsonPublish($os,$titre,$message,$badge);
+		}else{
+			$publish = mobile::jsonPublish($os,$titre,$message);
+		}
 		log::add('mobile', 'debug', 'JSON envoyé : '.$publish);
 		$post = [
 			'id' => '1',

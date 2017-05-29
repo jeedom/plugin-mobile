@@ -50,8 +50,9 @@ try {
 		$eqLogic = mobile::byId(init('id'));
 		if (!is_object($eqLogic)) {
 			throw new Exception(__('Equipement non trouvé : ', __FILE__) . init('id'));
+		}else{
+			ajax::success($eqLogic->getQrCode());
 		}
-		ajax::success($eqLogic->getQrCode());
 	}
 
 	throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));

@@ -81,6 +81,12 @@ sendVarToJs('hasIos', mobile::check_ios());
 			</div>
 		</div>
 		-->
+		<div class="form-group">
+			<label class="col-lg-4 control-label">{{Configuration avancée}}</label>
+			<div class="col-lg-3">
+				<a class="btn btn-danger" id="bt_platformFile"><i class="fa fa-file-o"></i> {{Plateforme Homebridge supplémentaire}}</a>
+			</div>
+		</div>		
 	</fieldset>
 </form>
 <script>
@@ -99,6 +105,14 @@ sendVarToJs('hasIos', mobile::check_ios());
 		}
 
 	}, 50);
+	$('#bt_platformFile').on('click', function () {
+		bootbox.confirm('{{Configuration avancée, à vos propres risques !!! Aucun support ne sera donné !!!}}', function(result) {
+			if (result) {
+				$('#md_modal2').dialog({title: "{{Configuration Plateforme Homebridge supplémentaire}}"});
+				$('#md_modal2').load('index.php?v=d&plugin=mobile&modal=platformHB.mobile').dialog('open');
+			}
+		});
+	});
 	/*
 	$('#bt_eraseCache').on('click', function() {
 		bootbox.confirm('{{Etes-vous sûr de vouloir supprimer le cache ? Vous devrez réinstaller les équipements sur votre appareil iOS.}}', function(result) {

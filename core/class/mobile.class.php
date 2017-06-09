@@ -735,6 +735,7 @@ class mobile extends eqLogic {
 			$cmd->setLogicalId('notif');
 			$cmd->setName(__('Notif', __FILE__));
 			$cmd->setIsVisible(1);
+			$cmd->setDisplay('generic_type', 'GENERIC_ACTION')
 		}
 		$cmd->setOrder(0);
 		$cmd->setType('action');

@@ -132,6 +132,17 @@ class mobile extends eqLogic {
 		exec($cmd);
 		self::generate_file();
 	}
+	public static function getJSON(){
+		exec('sudo chown -R www-data:www-data ' . dirname(__FILE__) . '/../../data');
+		exec('sudo chmod 775 ' . dirname(__FILE__) . '/../../data/*');
+		return file_get_contents(dirname(__FILE__) . '/../../data/otherPlatform.json');
+	}
+	public static function saveJSON($file){
+		exec('sudo chown -R www-data:www-data ' . dirname(__FILE__) . '/../../data');
+		exec('sudo chmod 775 ' . dirname(__FILE__) . '/../../data/*');
+		$ret = file_put_contents(dirname(__FILE__) . '/../../data/otherPlatform.json',$file);
+		return (($ret===false)?false:true);
+	}
 	public static function generate_file(){
 		if(self::deamon_info()=="ok") self::deamon_stop();
 		$user = user::byId(config::byKey('user_homebridge','mobile',1,true));
@@ -153,10 +164,24 @@ class mobile extends eqLogic {
 		$plateform['name'] = "Jeedom";
 		$plateform['url'] = network::getNetworkAccess('internal');
 		$plateform['apikey'] = $apikey;
-		$plateform['pollerperiod'] = 25;
+		$plateform['pollerperiod'] = 0.5;
 		$plateform['debugLevel'] = log::getLogLevel('mobile');
 		$response['platforms'] = array();
 		$response['platforms'][] = $plateform;
+
+		// get file and add it if it's valid
+		exec('sudo chown -R www-data:www-data ' . dirname(__FILE__) . '/../../data');
+		exec('sudo chmod 775 ' . dirname(__FILE__) . '/../../data/*');
+		$jsonFile = file_get_contents(dirname(__FILE__) . '/../../data/otherPlatform.json');
+		$jsonPlatforms = explode('|',$jsonFile);
+		if(!$jsonPlatforms)
+			$jsonPlatforms = array($jsonFile);
+		foreach ($jsonPlatforms as $jsonPlatform) {
+			$jsonArr = json_decode($jsonPlatform);
+			if($jsonArr !== null)
+				$response['platforms'][] = $jsonArr;
+		}
+		
 		exec('sudo chown -R www-data:www-data ' . dirname(__FILE__) . '/../../resources');
 		$fp = fopen(dirname(__FILE__) . '/../../resources/homebridge/config.json', 'w');
 		fwrite($fp, json_encode($response));
@@ -692,6 +717,11 @@ class mobile extends eqLogic {
 		$key = config::genKey(32);
 		$this->setLogicalId($key);
 		$this->save();
+	}
+
+	public function postUpdate() {
+		mobile::dependancy_install();
+		mobile::deamon_start();
 	}
 	
 	public function postSave() {

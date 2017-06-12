@@ -28,6 +28,27 @@ sendVarToJs('hasIos', mobile::check_ios());
 		<legend>
 			<i class="fa fa-list-alt"></i> {{Homebridge}}
 		</legend>
+		<?php
+			$interne = network::getNetworkAccess('internal');
+			if($interne == null || $interne == 'http://:80' || $interne == 'https://:80'){
+		?>
+			<div class="form-group">
+				<div class="col-lg-7">
+				<span class="badge" style="background-color : #c9302c;">{{Attention votre adresse interne (configuration) n'est pas valide.}}</span>
+				</div>
+			</div>
+		<?php
+			}else{
+		?>
+			<div class="form-group">
+				<label class="col-lg-4 control-label">{{Adresse Ip Homebridge :}}</label>
+				<span class="badge" style="background-color : #ec971f;"><?php echo $interne; ?>
+</span>
+			</div>
+		<?php
+			}
+		?>
+		
 		<div class="form-group">
 			<label class="col-lg-4 control-label">{{Utilisateur}}</label>
 			<div class="col-lg-3">
@@ -91,7 +112,6 @@ sendVarToJs('hasIos', mobile::check_ios());
 </form>
 <script>
 	setTimeout(function() {
-
 		if (hasIos == 0) {
 			$('#div_plugin_dependancy').closest('.panel').hide();
 			$('#div_plugin_deamon').closest('.panel').parent().removeClass('col-md-6');

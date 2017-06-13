@@ -50,12 +50,17 @@ echo 40 > /tmp/homebridge_in_progress
 sudo npm install -g node-gyp
 sudo npm install -g request
 echo 50 > /tmp/homebridge_in_progress
-sudo rm -Rf /usr/lib/node_modules/homebridge-jeedom/.git
+nodePath=`npm root -g`
+sudo rm -Rf ${nodePath}/homebridge-jeedom/.git
 echo 60 > /tmp/homebridge_in_progress
 sudo npm install -g --unsafe-perm https://github.com/jeedom/homebridge.git#master
 echo 70 > /tmp/homebridge_in_progress
 sudo npm install -g https://github.com/jeedom/homebridge-jeedom.git#beta
+sudo npm install -g https://github.com/jeedom/homebridge-camera-ffmpeg.git#master
 echo 80 > /tmp/homebridge_in_progress
+# copy the avconv ffmpeg wrapper
+sudo cp -n ${nodePath}/homebridge-jeedom/ffmpeg-wrapper /usr/bin/ffmpeg
+sudo chmod +x /usr/bin/ffmpeg
 sudo systemctl is-enabled dbus >/dev/null
 if [ $? -ne 0 ]; then
 	sudo systemctl enable dbus

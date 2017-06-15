@@ -127,7 +127,7 @@ class mobile extends eqLogic {
 	      	self::deamon_stop();
     
 		log::remove('mobile_homebridge_update');
-		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../resources/install_homebridge.sh';
+		$cmd = 'export AVAHI_COMPAT_NOWARN=1; homebridge -D -U '.dirname(__FILE__) . '/../../resources/homebridge';
 		$cmd .= ' >> ' . log::getPathToLog('mobile_homebridge_update') . ' 2>&1 &';
 		exec($cmd);
 		self::generate_file();

@@ -718,11 +718,6 @@ class mobile extends eqLogic {
 		$this->setLogicalId($key);
 		$this->save();
 	}
-
-	public function postUpdate() {
-		mobile::dependancy_install();
-		mobile::deamon_start();
-	}
 	
 	public function postSave() {
 		$this->crea_cmd();

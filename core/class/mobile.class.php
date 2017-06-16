@@ -127,7 +127,7 @@ class mobile extends eqLogic {
 	      	self::deamon_stop();
     
 		log::remove('mobile_homebridge_update');
-		$cmd = 'export AVAHI_COMPAT_NOWARN=1; homebridge -D -U '.dirname(__FILE__) . '/../../resources/homebridge';
+		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../resources/install_homebridge.sh';
 		$cmd .= ' >> ' . log::getPathToLog('mobile_homebridge_update') . ' 2>&1 &';
 		exec($cmd);
 		self::generate_file();
@@ -231,7 +231,7 @@ class mobile extends eqLogic {
 		log::add('mobile_homebridge', 'info', 'Vérification avahi-daemon : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 				
-		$cmd = 'homebridge -D -U '.dirname(__FILE__) . '/../../resources/homebridge';
+		$cmd = 'export AVAHI_COMPAT_NOWARN=1; homebridge -D -U '.dirname(__FILE__) . '/../../resources/homebridge';
 		log::add('mobile_homebridge', 'info', 'Lancement démon homebridge : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 		$i = 0;

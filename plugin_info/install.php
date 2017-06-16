@@ -28,8 +28,9 @@ function mobile_update(){
 		}
 	}
 	if($ios == 1){
-		mobile::dependancy_install();
-		mobile::deamon_start();
+		$pluginmobile = plugin::byId('mobile');
+		$pluginmobile->dependancy_install();
+		$pluginmobile->deamon_start();
 	}
 }
 ?>

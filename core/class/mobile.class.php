@@ -45,7 +45,7 @@ class mobile extends eqLogic {
 	}
 	
 	public static function LienAWS() {
-		return 'http://jeedom-notif.pn9ifqg2pp.eu-west-1.elasticbeanstalk.com';
+		return 'http://easyacces.jeedom.com/notification';
 	}
 	
 	public static function PluginToSend() {

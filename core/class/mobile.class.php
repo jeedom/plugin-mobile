@@ -131,6 +131,7 @@ class mobile extends eqLogic {
 		$cmd .= ' >> ' . log::getPathToLog('mobile_homebridge_update') . ' 2>&1 &';
 		exec($cmd);
 		self::generate_file();
+		self::deamon_start();
 	}
 	public static function getJSON(){
 		exec('sudo chown -R www-data:www-data ' . dirname(__FILE__) . '/../../data');

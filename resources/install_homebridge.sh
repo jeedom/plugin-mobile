@@ -69,6 +69,7 @@ sudo systemctl is-enabled avahi-daemon >/dev/null
 if [ $? -ne 0 ]; then
 	sudo systemctl enable avahi-daemon
 fi
+sudo sed -i '/#enable-dbus=yes/c\enable-dbus=yes' /etc/avahi/avahi-daemon.conf
 echo "Installation Homebridge OK"
 echo 100 > /tmp/homebridge_in_progress
 rm /tmp/homebridge_in_progress

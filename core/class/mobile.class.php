@@ -207,6 +207,7 @@ class mobile extends eqLogic {
 		return $return;
 	}
 	public static function deamon_start($_debug = false) {
+		log::add('mobile_homebridge', 'info', 'Mode debug : ' . $_debug);
 		self::deamon_stop();
 		self::generate_file();
 		$deamon_info = self::deamon_info();
@@ -223,16 +224,18 @@ class mobile extends eqLogic {
 		}
 		
 		// check dbus started, if not, start
-		$cmd = 'if [ $(ps -ef | grep -v grep | grep "dbus-daemon" | wc -l) -eq 0 ]; then sudo systemctl start dbus;echo "Starting dbus because not started"; fi';
-		log::add('mobile_homebridge', 'info', 'Vérification dbus : ' . $cmd);
+		$cmd = 'if [ $(ps -ef | grep -v grep | grep "dbus-daemon" | wc -l) -eq 0 ]; then sudo systemctl start dbus;echo "Démarrage dbus"; fi';
+		log::add('mobile_homebridge', 'info', 'Démarrage dbus : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 		
+		sleep(1);
+		
 		// check avahi-daemon started, if not, start
-		$cmd = 'if [ $(ps -ef | grep -v grep | grep "avahi-daemon" | wc -l) -eq 0 ]; then sudo systemctl start avahi-daemon;echo "Starting avahi-daemon because not started"; fi';
-		log::add('mobile_homebridge', 'info', 'Vérification avahi-daemon : ' . $cmd);
+		$cmd = 'if [ $(ps -ef | grep -v grep | grep "avahi-daemon" | wc -l) -eq 0 ]; then sudo systemctl start avahi-daemon;echo "Démarrage avahi-daemon"; fi';
+		log::add('mobile_homebridge', 'info', 'Démarrage avahi-daemon : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 				
-		$cmd = 'export AVAHI_COMPAT_NOWARN=1; homebridge -D -U '.dirname(__FILE__) . '/../../resources/homebridge';
+		$cmd = 'export AVAHI_COMPAT_NOWARN=1;'. (($_debug) ? 'DEBUG=* ':'') .'homebridge '. (($_debug) ? '-D ':'') .'-U '.dirname(__FILE__) . '/../../resources/homebridge';
 		log::add('mobile_homebridge', 'info', 'Lancement démon homebridge : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 		$i = 0;
@@ -262,6 +265,19 @@ class mobile extends eqLogic {
         }
         $pid = exec("ps -eo pid,command | grep 'homebridge' | grep -v grep | awk '{print $1}'");
         exec('kill ' . $pid);
+		
+		// check avahi-daemon started, if yes, stop
+		$cmd = 'sudo systemctl stop avahi-daemon;echo "Arret avahi-daemon";';
+		log::add('mobile_homebridge', 'info', 'Arret avahi-daemon : ' . $cmd);
+		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
+
+		sleep(1);		
+		
+		// check dbus started, if yes, stop
+		$cmd = 'sudo systemctl stop dbus;echo "Arret dbus";';
+		log::add('mobile_homebridge', 'info', 'Arret dbus : ' . $cmd);
+		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');		
+		
         $check = self::deamon_info();
         $retry = 0;
         while ($deamon_info['state'] == 'ok') {

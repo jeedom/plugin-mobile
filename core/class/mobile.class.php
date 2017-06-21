@@ -43,9 +43,13 @@ class mobile extends eqLogic {
 		$PluginMulti = ['LIGHT_STATE','ENERGY_STATE','FLAP_STATE','HEATING_STATE','SIREN_STATE','LOCK_STATE'];
 		return $PluginMulti;
 	}
-	
+	/*
 	public static function LienAWS() {
-		return 'http://easyacces.jeedom.com/notification';
+		return 'http://easyacces.jeedom.com/notif';
+	}
+	*/
+	public static function LienAWS() {
+		return 'http://195.154.56.168:8000/notif';	
 	}
 	
 	public static function PluginToSend() {

@@ -43,13 +43,9 @@ class mobile extends eqLogic {
 		$PluginMulti = ['LIGHT_STATE','ENERGY_STATE','FLAP_STATE','HEATING_STATE','SIREN_STATE','LOCK_STATE'];
 		return $PluginMulti;
 	}
-	/*
+	
 	public static function LienAWS() {
-		return 'http://easyacces.jeedom.com/notif';
-	}
-	*/
-	public static function LienAWS() {
-		return 'http://195.154.56.168:8000/notif';	
+		return 'http://195.154.56.168:8000/notif';
 	}
 	
 	public static function PluginToSend() {
@@ -228,15 +224,15 @@ class mobile extends eqLogic {
 		}
 		
 		// check dbus started, if not, start
-		$cmd = 'if [ $(ps -ef | grep -v grep | grep "dbus-daemon" | wc -l) -eq 0 ]; then sudo systemctl start dbus;echo "Démarrage dbus"; fi';
-		log::add('mobile_homebridge', 'info', 'Démarrage dbus : ' . $cmd);
+		$cmd = 'if [ $(ps -ef | grep -v grep | grep "dbus-daemon" | wc -l) -eq 0 ]; then sudo systemctl restart dbus;echo "Redémarrage dbus"; fi';
+		log::add('mobile_homebridge', 'info', 'Redémarrage dbus : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 		
 		sleep(1);
 		
 		// check avahi-daemon started, if not, start
-		$cmd = 'if [ $(ps -ef | grep -v grep | grep "avahi-daemon" | wc -l) -eq 0 ]; then sudo systemctl start avahi-daemon;echo "Démarrage avahi-daemon"; fi';
-		log::add('mobile_homebridge', 'info', 'Démarrage avahi-daemon : ' . $cmd);
+		$cmd = 'if [ $(ps -ef | grep -v grep | grep "avahi-daemon" | wc -l) -eq 0 ]; then sudo systemctl restart avahi-daemon;echo "Redémarrage avahi-daemon"; fi';
+		log::add('mobile_homebridge', 'info', 'Redémarrage avahi-daemon : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 				
 		$cmd = 'export AVAHI_COMPAT_NOWARN=1;'. (($_debug) ? 'DEBUG=* ':'') .'homebridge '. (($_debug) ? '-D ':'') .'-U '.dirname(__FILE__) . '/../../resources/homebridge';
@@ -261,6 +257,11 @@ class mobile extends eqLogic {
 		$cmd = 'if [ $(netstat -na | grep 51826 | grep "tcp6" | wc -l) -gt 0 ]; then echo "WARNING : IPv6 est activé sur votre système, il peut poser problème avec Homebridge"; fi';
 		log::add('mobile_homebridge', 'info', 'Vérification IPv6 : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
+		
+		// Check if multiple IP's -> warning because could cause problems with mdns https://github.com/nfarina/homebridge/issues/1351
+		$cmd = 'if [ $(ifconfig | grep "inet adr" | wc -l) -gt 2 ]; then echo "WARNING : Vous avez plusieurs IP de configurées, cela peut poser problème avec Homebridge et mDNS"; fi';
+		log::add('mobile_homebridge', 'info', 'Vérification IP Multiples : ' . $cmd);
+		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 	}
 	public static function deamon_stop() {
 		$deamon_info = self::deamon_info();
@@ -269,18 +270,6 @@ class mobile extends eqLogic {
         }
         $pid = exec("ps -eo pid,command | grep 'homebridge' | grep -v grep | awk '{print $1}'");
         exec('kill ' . $pid);
-		
-		// check avahi-daemon started, if yes, stop
-		$cmd = 'sudo systemctl stop avahi-daemon;echo "Arret avahi-daemon";';
-		log::add('mobile_homebridge', 'info', 'Arret avahi-daemon : ' . $cmd);
-		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
-
-		sleep(1);		
-		
-		// check dbus started, if yes, stop
-		$cmd = 'sudo systemctl stop dbus;echo "Arret dbus";';
-		log::add('mobile_homebridge', 'info', 'Arret dbus : ' . $cmd);
-		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');		
 		
         $check = self::deamon_info();
         $retry = 0;

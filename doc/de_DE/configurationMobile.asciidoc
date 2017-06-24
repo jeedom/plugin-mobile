@@ -14,13 +14,13 @@ image:../images/App_Store_FR.png[link="https://itunes.apple.com/fr/app/jeedom/id
 
 Bei dem 1 Start der mobilen Anwendung, wird eine Tutorial angeboten, das Ihnen bei der Konfiguration begleiten wird.
 
-Après avoir téléchargée et installée votre application mobile Jeedom, lancez l’application sur votre smartphone.
+Nachdem Sie Ihre Mobile Jeedom Anwendung heruntergeladen und installiert haben, führen Sie die Anwendung auf Ihrem Smartphone aus.
 
-Vous arrivez alors dans un didacticiel de configuration que nous vous conseillons de suivre. Certaines étapes ont étés faites précédemment.
+Sie kommen dann in ein Konfigurations-Tutorial, es wird empfohlen diesem zu folgen. Einige Schritte wurden bereits ausgeführt.
 
 Sie haben dann die Wahl zwischen einer manuellen oder automatische Konfiguration mit QR-Code.
-Si vous optez pour la configuration par QRcode, il suffit de flasher le QRcode présent sur le plugin App Mobile dans l’équipement smartphone créé précédemment. Dans ce cas, l’application va récupérer automatiquement toute la configuration de votre Jeedom  et se connecter automatiquement. Lorsqu’il sera connecté chez vous en Wifi, l’application utilisera automatiquement l’adresse Jeedom ethernet interne à votre réseau. Lorsque vous serez connecté en 4G ou 3G, il utilisera votre adresse externe pour se connecter à votre Jeedom (par exemple via le service DNS Jeedom si vous l'utilisez).
-Si vous optez pour la configuration manuelle, dans ce cas il vous faudra entrer à la main les adresses IP interne et externe de votre Jeedom. Cette option est réservée à un public averti.
+Wenn Sie sich für die Konfiguration mit QRcode entscheiden, genügt es, den QRcode, der vorher mit dem Plugin "App Mobile" geschaffen wurde, mit dem Smartphone Gerät einzuscannen. In diesem Fall wird die Anwendung die ganze Konfiguration Ihres Jeedom automatisch bekommen und sich automatisch verbinden. Wenn Sie mit Ihrem WLAN verbunden sind, wird die Anwendung in Ihrem Netzwerk die interne Jeedom Ethernet Adresse automatisch benutzen. Wenn Sie mit 4G oder 3G verbunden sind, wird es Ihre externe Adresse verwenden, um sich mit Ihrem Jeedom zu verbinden (z.B. über Jeedom DNS Service, wenn Sie es verwenden).
+Wenn Sie sich für die manuelle Konfiguration entscheiden, muss man in diesem Fall die interne und externe Jeedom IP Adresse von Hand eingeben. Diese Option ist für erfahrene Nutzer reserviert. 
 
 Die Anwendung wird synchronisiert und Sie kommen auf seine Homepage (mit einem vorangegangen mini Präsentationsführer).
 

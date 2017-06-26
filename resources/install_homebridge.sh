@@ -61,10 +61,6 @@ echo 80 > /tmp/homebridge_in_progress
 # copy the avconv ffmpeg wrapper
 sudo cp -n ${nodePath}/homebridge-jeedom/ffmpeg-wrapper /usr/bin/ffmpeg
 sudo chmod +x /usr/bin/ffmpeg
-sudo systemctl is-enabled dbus >/dev/null
-if [ $? -ne 0 ]; then
-	sudo systemctl enable dbus
-fi
 sudo systemctl is-enabled avahi-daemon >/dev/null
 if [ $? -ne 0 ]; then
 	sudo systemctl enable avahi-daemon

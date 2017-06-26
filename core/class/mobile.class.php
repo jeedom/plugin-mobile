@@ -222,19 +222,19 @@ class mobile extends eqLogic {
 				return false;
 			}
 		}
-		
+
 		// check dbus started, if not, start
-		$cmd = 'if [ $(ps -ef | grep -v grep | grep "dbus-daemon" | wc -l) -eq 0 ]; then sudo systemctl restart dbus;echo "Redémarrage dbus"; fi';
-		log::add('mobile_homebridge', 'info', 'Redémarrage dbus : ' . $cmd);
+		$cmd = 'if [ $(ps -ef | grep -v grep | grep "dbus-daemon" | wc -l) -eq 0 ]; then sudo systemctl start dbus;echo "Démarrage dbus"; fi';
+		log::add('mobile_homebridge', 'info', 'Démarrage dbus : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
-		
+
 		sleep(1);
-		
+
 		// check avahi-daemon started, if not, start
-		$cmd = 'if [ $(ps -ef | grep -v grep | grep "avahi-daemon" | wc -l) -eq 0 ]; then sudo systemctl restart avahi-daemon;echo "Redémarrage avahi-daemon"; fi';
-		log::add('mobile_homebridge', 'info', 'Redémarrage avahi-daemon : ' . $cmd);
+		$cmd = 'if [ $(ps -ef | grep -v grep | grep "avahi-daemon" | wc -l) -eq 0 ]; then sudo systemctl start avahi-daemon;echo "Démarrage avahi-daemon"; fi';
+		log::add('mobile_homebridge', 'info', 'Démarrage avahi-daemon : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
-				
+		
 		$cmd = 'export AVAHI_COMPAT_NOWARN=1;'. (($_debug) ? 'DEBUG=* ':'') .'homebridge '. (($_debug) ? '-D ':'') .'-U '.dirname(__FILE__) . '/../../resources/homebridge';
 		log::add('mobile_homebridge', 'info', 'Lancement démon homebridge : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
@@ -323,6 +323,7 @@ class mobile extends eqLogic {
 		log::add('mobile_homebridge', 'info', 'création d\'une nouvelle MAC adress');
 		$macadress = strtoupper(implode(':',str_split(str_pad(base_convert(mt_rand(0,0xffffff),10,16).base_convert(mt_rand(0,0xffffff),10,16),12),2)));
 		config::save('mac_homebridge',$macadress,'mobile');
+		config::save('name_homebridge','Jeedom_Repaired_'.base_convert(mt_rand(0,255),10,16),'mobile');
 		mobile::deamon_stop();
 		log::add('mobile_homebridge', 'info', 'réinstallation des dependances');
 		mobile::dependancy_install();

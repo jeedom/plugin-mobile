@@ -223,13 +223,6 @@ class mobile extends eqLogic {
 			}
 		}
 
-		// check dbus started, if not, start
-		$cmd = 'if [ $(ps -ef | grep -v grep | grep "dbus-daemon" | wc -l) -eq 0 ]; then sudo systemctl start dbus;echo "Démarrage dbus"; fi';
-		log::add('mobile_homebridge', 'info', 'Démarrage dbus : ' . $cmd);
-		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
-
-		sleep(1);
-
 		// check avahi-daemon started, if not, start
 		$cmd = 'if [ $(ps -ef | grep -v grep | grep "avahi-daemon" | wc -l) -eq 0 ]; then sudo systemctl start avahi-daemon;echo "Démarrage avahi-daemon"; fi';
 		log::add('mobile_homebridge', 'info', 'Démarrage avahi-daemon : ' . $cmd);

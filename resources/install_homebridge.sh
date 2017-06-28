@@ -2,10 +2,12 @@
 
 touch /tmp/homebridge_in_progress
 echo 0 > /tmp/homebridge_in_progress
+echo "--0%"
 echo "Lancement de l'installation/mise à jour des dépendances homebridge"
 
 sudo apt-get install -y avahi-daemon avahi-discover libnss-mdns libavahi-compat-libdnssd-dev
 echo 10 > /tmp/homebridge_in_progress
+echo "--10%"
 actual=`nodejs -v`;
 actual=`nodejs -v`;
 echo "Version actuelle : ${actual}"
@@ -20,6 +22,7 @@ else
   sudo apt-get -y --purge autoremove nodejs npm
   arch=`arch`;
   echo 30 > /tmp/homebridge_in_progress
+  echo "--30%"
   if [[ $arch == "armv6l" ]]
   then
     echo "Raspberry 1 détecté, utilisation du paquet pour armv6"
@@ -47,25 +50,36 @@ else
   echo "Version actuelle : ${new}"
 fi
 echo 40 > /tmp/homebridge_in_progress
+echo "--40%"
 sudo npm install -g node-gyp
 sudo npm install -g request
 echo 50 > /tmp/homebridge_in_progress
+echo "--50%"
 nodePath=`npm root -g`
 sudo rm -Rf ${nodePath}/homebridge-jeedom/.git
 echo 60 > /tmp/homebridge_in_progress
+echo "--60%"
 sudo npm install -g --unsafe-perm https://github.com/jeedom/homebridge.git#master
 echo 70 > /tmp/homebridge_in_progress
+echo "--70%"
 sudo npm install -g https://github.com/jeedom/homebridge-jeedom.git#beta
 sudo npm install -g https://github.com/jeedom/homebridge-camera-ffmpeg.git#master
 echo 80 > /tmp/homebridge_in_progress
+echo "--80%"
 # copy the avconv ffmpeg wrapper
 sudo cp -n ${nodePath}/homebridge-jeedom/ffmpeg-wrapper /usr/bin/ffmpeg
 sudo chmod +x /usr/bin/ffmpeg
+echo 90 > /tmp/homebridge_in_progress
+echo "--90%"
 sudo systemctl is-enabled avahi-daemon >/dev/null
 if [ $? -ne 0 ]; then
+	echo "avahi-daemon non activé au démarrage, activation..."
 	sudo systemctl enable avahi-daemon
 fi
 sudo sed -i '/#enable-dbus=yes/c\enable-dbus=yes' /etc/avahi/avahi-daemon.conf
+echo "Redémarrage avahi-daemon..."
+sudo systemctl restart avahi-daemon
 echo "Installation Homebridge OK"
 echo 100 > /tmp/homebridge_in_progress
+echo "--100%"
 rm /tmp/homebridge_in_progress

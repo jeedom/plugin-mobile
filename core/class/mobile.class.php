@@ -124,10 +124,10 @@ class mobile extends eqLogic {
 		    config::save('deamonAutoMode',0,'mobile');
 		    return;
 		}
-	      	self::deamon_stop();
+	    self::deamon_stop();
     
 		log::remove('mobile_homebridge_update');
-		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../resources/install_homebridge.sh';
+		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../resources/install_homebridge.sh '.network::getNetworkAccess('internal','ip');
 		$cmd .= ' >> ' . log::getPathToLog('mobile_homebridge_update') . ' 2>&1 &';
 		exec($cmd);
 		self::generate_file();

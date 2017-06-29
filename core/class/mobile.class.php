@@ -672,9 +672,9 @@ class mobile extends eqLogic {
 	/*                                                                                    */
 	/**************************************************************************************/
 	
-	public static function jsonPublish($os,$titre,$message,$badge){
+	public static function jsonPublish($os,$titre,$message,$badge = 'null'){
 		if($os == 'ios'){
-			if(isset($badge)){
+			if($badge == 'null'){
 				$publish = '{"default": "Erreur de texte de notification","APNS": "{\"aps\":{\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"badge\":'.$badge.',\"sound\":\"silence.caf\"}}"}';
 			}else{
 				$publish = '{"default": "test", "APNS": "{\"aps\":{\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"sound\":\"silence.caf\"}}"}';
@@ -687,9 +687,9 @@ class mobile extends eqLogic {
 		return $publish;
 	}
 	
-	public static function notification($arn,$os,$titre,$message,$badge){
+	public static function notification($arn,$os,$titre,$message,$badge = 'null'){
 		log::add('mobile', 'debug', 'notification en cours !');
-		if(isset($badge)){
+		if($badge == 'null'){
 			$publish = mobile::jsonPublish($os,$titre,$message,$badge);
 		}else{
 			$publish = mobile::jsonPublish($os,$titre,$message);

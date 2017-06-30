@@ -5,7 +5,7 @@ echo 0 > /tmp/homebridge_in_progress
 echo "--0%"
 echo "Lancement de l'installation/mise à jour des dépendances homebridge"
 
-sudo apt-get install -y avahi-daemon avahi-discover libnss-mdns libavahi-compat-libdnssd-dev
+sudo apt-get install -y avahi-daemon avahi-discover avahi-utils libnss-mdns libavahi-compat-libdnssd-dev
 echo 10 > /tmp/homebridge_in_progress
 echo "--10%"
 actual=`nodejs -v`;

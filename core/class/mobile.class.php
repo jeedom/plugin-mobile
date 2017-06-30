@@ -116,7 +116,7 @@ class mobile extends eqLogic {
 		return $return;
 	}
 	
-	public static function dependancy_install() {
+	public static function dependancy_install($doStart=true) {
 		if (file_exists('/tmp/homebridge_in_progress')) {
 		    return;
 		}
@@ -131,7 +131,7 @@ class mobile extends eqLogic {
 		$cmd .= ' >> ' . log::getPathToLog('mobile_homebridge_update') . ' 2>&1 &';
 		exec($cmd);
 		self::generate_file();
-		self::deamon_start();
+		if($doStart) self::deamon_start();
 	}
 	public static function getJSON(){
 		exec('sudo chown -R www-data:www-data ' . dirname(__FILE__) . '/../../data');
@@ -211,6 +211,7 @@ class mobile extends eqLogic {
 		return $return;
 	}
 	public static function deamon_start($_debug = false) {
+		if(log::getLogLevel('mobile')==100) $_debug=true;
 		log::add('mobile_homebridge', 'info', 'Mode debug : ' . $_debug);
 		self::deamon_stop();
 		self::generate_file();
@@ -323,8 +324,7 @@ class mobile extends eqLogic {
 		config::save('name_homebridge','Jeedom_Repaired_'.base_convert(mt_rand(0,255),10,16),'mobile');
 		mobile::deamon_stop();
 		log::add('mobile_homebridge', 'info', 'réinstallation des dependances');
-		mobile::dependancy_install();
-		mobile::deamon_stop();
+		mobile::dependancy_install(false);
 		log::add('mobile_homebridge', 'info', 'Géneration du fichier de configuration');
 		mobile::generate_file();
 	}

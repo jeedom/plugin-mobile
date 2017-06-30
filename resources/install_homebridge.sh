@@ -80,7 +80,7 @@ sudo sed -i "/.*enable-dbus.*/c\enable-dbus=yes  #change by homebridge" /etc/ava
 sudo sed -i "/.*use-ipv6.*/c\use-ipv6=no  #change by homebridge" /etc/avahi/avahi-daemon.conf
 if [ -n $1 ]; then
 	UsedEth=$(ifconfig | awk '/'$1'/ {print $1}' RS="\n\n")
-	sudo sed -i "/.*allow-interfaces.*/c\allow-interfaces=$UsedEth  #change by homebridge" /etc/avahi/avahi-daemon.conf
+	sudo sed -i "/.*allow-interfaces.*/c\#allow-interfaces=$UsedEth  #change by homebridge" /etc/avahi/avahi-daemon.conf
 fi
 echo "Redémarrage avahi-daemon..."
 sudo systemctl restart avahi-daemon

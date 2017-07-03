@@ -136,6 +136,9 @@ class mobile extends eqLogic {
 	public static function getJSON(){
 		exec('sudo chown -R www-data:www-data ' . dirname(__FILE__) . '/../../data');
 		exec('sudo chmod -R 775 ' . dirname(__FILE__) . '/../../data');
+		exec('touch ' . dirname(__FILE__) . '/../../data/otherPlatform.json');
+		exec('sudo chown -R www-data:www-data ' . dirname(__FILE__) . '/../../data');
+		exec('sudo chmod -R 775 ' . dirname(__FILE__) . '/../../data');
 		return file_get_contents(dirname(__FILE__) . '/../../data/otherPlatform.json');
 	}
 	public static function saveJSON($file){
@@ -176,7 +179,10 @@ class mobile extends eqLogic {
 
 		// get file and add it if it's valid
 		exec('sudo chown -R www-data:www-data ' . dirname(__FILE__) . '/../../data');
-		exec('sudo chmod 775 ' . dirname(__FILE__) . '/../../data/*');
+		exec('sudo chmod -R 775 ' . dirname(__FILE__) . '/../../data');
+		exec('touch ' . dirname(__FILE__) . '/../../data/otherPlatform.json');
+		exec('sudo chown -R www-data:www-data ' . dirname(__FILE__) . '/../../data');
+		exec('sudo chmod -R 775 ' . dirname(__FILE__) . '/../../data');
 		$jsonFile = file_get_contents(dirname(__FILE__) . '/../../data/otherPlatform.json');
 		$jsonPlatforms = explode('|',$jsonFile);
 		if(!$jsonPlatforms)

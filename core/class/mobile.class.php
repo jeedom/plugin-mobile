@@ -135,12 +135,12 @@ class mobile extends eqLogic {
 	}
 	public static function getJSON(){
 		exec('sudo chown -R www-data:www-data ' . dirname(__FILE__) . '/../../data');
-		exec('sudo chmod 775 ' . dirname(__FILE__) . '/../../data/*');
+		exec('sudo chmod -R 775 ' . dirname(__FILE__) . '/../../data');
 		return file_get_contents(dirname(__FILE__) . '/../../data/otherPlatform.json');
 	}
 	public static function saveJSON($file){
 		exec('sudo chown -R www-data:www-data ' . dirname(__FILE__) . '/../../data');
-		exec('sudo chmod 775 ' . dirname(__FILE__) . '/../../data/*');
+		exec('sudo chmod -R 775 ' . dirname(__FILE__) . '/../../data');
 		$ret = file_put_contents(dirname(__FILE__) . '/../../data/otherPlatform.json',$file);
 		return (($ret===false)?false:true);
 	}
@@ -203,7 +203,7 @@ class mobile extends eqLogic {
 			$return['launchable'] = 'ok';
 			return $return;
 		}
-		$result = exec("ps -eo pid,command | grep 'homebridge' | grep -v grep | awk '{print $1}'");
+		$result = exec("ps -eo pid,command | grep ' homebridge' | grep -v grep | awk '{print $1}'");
 		if ($result <> 0) {
             $return['state'] = 'ok';
         }
@@ -266,8 +266,8 @@ class mobile extends eqLogic {
 		if ($deamon_info['state'] <> 'ok') {
             return true;
         }
-        $pid = exec("ps -eo pid,command | grep 'homebridge' | grep -v grep | awk '{print $1}'");
-        exec('kill ' . $pid);
+        $pid = exec("ps -eo pid,command | grep ' homebridge' | grep -v grep | awk '{print $1}'");
+        exec('sudo kill ' . $pid);
 		
         $check = self::deamon_info();
         $retry = 0;
@@ -319,7 +319,7 @@ class mobile extends eqLogic {
 		$cmd = 'npm uninstall homebridge --save';
 		exec($cmd);
 		log::add('mobile_homebridge', 'info', 'création d\'une nouvelle MAC adress');
-		$macadress = strtoupper(implode(':',str_split(str_pad(base_convert(mt_rand(0,0xffffff),10,16).base_convert(mt_rand(0,0xffffff),10,16),12),2)));
+		$macadress = strtoupper(implode(':', str_split(substr(md5(mt_rand()), 0, 12), 2)));
 		config::save('mac_homebridge',$macadress,'mobile');
 		config::save('name_homebridge','Jeedom_Repaired_'.base_convert(mt_rand(0,255),10,16),'mobile');
 		mobile::deamon_stop();

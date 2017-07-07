@@ -42,8 +42,7 @@ sendVarToJs('hasIos', mobile::check_ios());
 		?>
 			<div class="form-group">
 				<label class="col-lg-4 control-label">{{Adresse Ip Homebridge :}}</label>
-				<span class="badge" style="background-color : #ec971f;"><?php echo $interne; ?>
-</span>
+				<span class="badge" style="background-color : #ec971f;"><?php echo $interne; ?></span>
 			</div>
 		<?php
 			}
@@ -80,28 +79,12 @@ sendVarToJs('hasIos', mobile::check_ios());
 				<input class="configKey form-control" data-l1key="pin_homebridge" placeholder="031-45-154" />
 			</div>
 		</div>
-		<!--
-		<div class="form-group">
-			<label class="col-lg-4 control-label">{{Suppression du cache}}</label>
-			<div class="col-lg-3">
-				<a class="btn btn-warning" id="bt_eraseCache"><i class="fa fa-erase"></i> {{Supprimer}}</a>
-			</div>
-		</div>
-		-->
 		<div class="form-group">
 			<label class="col-lg-4 control-label">{{Réparation de Homebridge}}</label>
 			<div class="col-lg-3">
-				<a class="btn btn-warning" id="bt_eraseHome"><i class="fa fa-erase"></i> {{Réparer}}</a>
+				<a class="btn btn-warning" id="bt_repairHome"><i class="fa fa-erase"></i> {{Réparer}}</a>&nbsp;&nbsp;<a class="btn btn-danger" id="bt_repairHome_reinstall"><i class="fa fa-erase"></i> {{Réparer & Réinstaller}}</a>
 			</div>
 		</div>
-		<!--
-		<div class="form-group">
-			<label class="col-lg-4 control-label">{{Regénérer le fichier de configuration}}</label>
-			<div class="col-lg-3">
-				<a class="btn btn-warning" id="bt_generateConf"><i class="fa fa-erase"></i> {{Générer}}</a>
-			</div>
-		</div>
-		-->
 		<div class="form-group">
 			<label class="col-lg-4 control-label">{{Configuration avancée}}</label>
 			<div class="col-lg-3">
@@ -133,15 +116,14 @@ sendVarToJs('hasIos', mobile::check_ios());
 			}
 		});
 	});
-	/*
-	$('#bt_eraseCache').on('click', function() {
-		bootbox.confirm('{{Etes-vous sûr de vouloir supprimer le cache ? Vous devrez réinstaller les équipements sur votre appareil iOS.}}', function(result) {
+	$('#bt_repairHome').on('click', function() {
+		bootbox.confirm('{{Etes-vous sûr de vouloir réparer Homebridge ? Vous devrez réinstaller les équipements sur votre appareil iOS (Merci, de supprimer la passerelle Jeedom sur l\'app Home).}}', function(result) {
 			if (result) {
 				$.ajax({
 					type : 'POST',
 					url : 'plugins/mobile/core/ajax/mobile.ajax.php',
 					data : {
-						action : 'eraseHomebridgeCache',
+						action : 'repairHomebridge',
 					},
 					dataType : 'json',
 					global : false,
@@ -153,7 +135,7 @@ sendVarToJs('hasIos', mobile::check_ios());
 					},
 					success : function() {
 						$('#div_alert').showAlert({
-							message : "{{Cache Homebridge vidé}}",
+							message : "{{Réparation Homebridge effectuée, merci de patienter jusqu'au démarrage du démon}}",
 							level : 'success'
 						});
 					}
@@ -161,38 +143,14 @@ sendVarToJs('hasIos', mobile::check_ios());
 			}
 		});
 	});
-	$('#bt_generateConf').on('click', function() {
-		$.ajax({
-			type : 'POST',
-			url : 'plugins/mobile/core/ajax/mobile.ajax.php',
-			data : {
-				action : 'regenerateHomebridgeConf',
-			},
-			dataType : 'json',
-			global : false,
-			error : function(request, status, error) {
-				$('#div_alert').showAlert({
-					message : error.message,
-					level : 'danger'
-				});
-			},
-			success : function() {
-				$('#div_alert').showAlert({
-					message : "{{Fichier regénéré}}",
-					level : 'success'
-				});
-			}
-		});
-	}); 
-	*/
-	$('#bt_eraseHome').on('click', function() {
+	$('#bt_repairHome_reinstall').on('click', function() {
 		bootbox.confirm('{{Etes-vous sûr de vouloir supprimer et reinstaller Homebridge ? Vous devrez réinstaller les équipements sur votre appareil iOS (Merci, de supprimer la passerelle Jeedom sur l\'app Home).}}', function(result) {
 			if (result) {
 				$.ajax({
 					type : 'POST',
 					url : 'plugins/mobile/core/ajax/mobile.ajax.php',
 					data : {
-						action : 'eraseHomebridge',
+						action : 'repairHomebridge_reinstall',
 					},
 					dataType : 'json',
 					global : false,
@@ -204,7 +162,7 @@ sendVarToJs('hasIos', mobile::check_ios());
 					},
 					success : function() {
 						$('#div_alert').showAlert({
-							message : "{{Cache Homebridge vidé}}",
+							message : "{{Réinstallation Homebridge effectuée, merci de patienter jusqu'au démarrage du démon}}",
 							level : 'success'
 						});
 					}

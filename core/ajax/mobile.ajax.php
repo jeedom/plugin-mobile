@@ -30,14 +30,12 @@ try {
 		mobile::updatemobile();
 		ajax::success();
 	}
-	/*
-	if (init('action') == 'eraseHomebridgeCache') {
-		mobile::eraseHomebridgeCache();
+	if (init('action') == 'repairHomebridge'){
+		mobile::repairHomebridge(false);
 		ajax::success();
 	}
-	*/
-	if (init('action') == 'eraseHomebridge'){
-		mobile::eraseHomebridge();
+	if (init('action') == 'repairHomebridge_reinstall'){
+		mobile::repairHomebridge(true);
 		ajax::success();
 	}
 	
@@ -53,8 +51,6 @@ try {
 		$ret = mobile::saveJSON(init('file'));
 		ajax::success($ret);
 	}
-	
-	
 	if (init('action') == 'getQrCode') {
 		$eqLogic = mobile::byId(init('id'));
 		if (!is_object($eqLogic)) {

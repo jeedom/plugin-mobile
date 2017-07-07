@@ -27,11 +27,8 @@ class mobile extends eqLogic {
 	/*     * ***********************Methode static*************************** */
 
 	public static function Pluginsuported() {
-		
 		$Pluginsuported = ['openzwave','rfxcom','edisio','mpower', 'mySensors', 'Zibasedom', 'virtual', 'camera','weather','philipsHue','enocean','wifipower','alarm','mode','apcupsd', 'btsniffer','dsc','rflink','mysensors','relaynet','remora','unipi','eibd','thermostat','netatmoThermostat','espeasy','jeelink','teleinfo','tahoma','protexiom','lifx','wattlet','rfplayer','openenocean'];
-		
 		return $Pluginsuported;
-		
 	}
 	
 	public static function PluginWidget() {
@@ -46,6 +43,11 @@ class mobile extends eqLogic {
 	
 	public static function LienAWS() {
 		return 'http://195.154.56.168:8000/notif';
+	}
+	
+	public static function DisallowedPIN() {
+		$DisallowedPIN = ['000-00-000','111-11-111','222-22-222','333-33-333','444-44-444','555-55-555','666-66-666','777-77-777','888-88-888','999-99-999','123-45-678','876-54-321'];
+		return $DisallowedPIN;
 	}
 	
 	public static function PluginToSend() {
@@ -130,6 +132,7 @@ class mobile extends eqLogic {
 		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../resources/install_homebridge.sh '.network::getNetworkAccess('internal','ip');
 		$cmd .= ' >> ' . log::getPathToLog('mobile_homebridge_update') . ' 2>&1 &';
 		exec($cmd);
+		if(!$doStart) exec('sudo systemctl restart avahi-daemon');
 		self::generate_file();
 		if($doStart) self::deamon_start();
 	}
@@ -155,6 +158,10 @@ class mobile extends eqLogic {
 		}else{
 			$apikey = config::byKey('api');
 		}
+		if(in_array(config::byKey('pin_homebridge','mobile','031-45-154',true),self::DisallowedPIN())) {
+			log::add('mobile', 'error', 'La MAC Homebridge n\'est pas autorisée par Apple'.config::byKey('pin_homebridge','mobile','031-45-154',true));	
+		}
+		
 		$response = array();
 		$response['bridge'] = array();
 		$response['bridge']['name'] = config::byKey('name_homebridge','mobile','Jeedom',true);
@@ -218,7 +225,7 @@ class mobile extends eqLogic {
 	}
 	public static function deamon_start($_debug = false) {
 		if(log::getLogLevel('mobile')==100) $_debug=true;
-		log::add('mobile_homebridge', 'info', 'Mode debug : ' . $_debug);
+		log::add('mobile', 'info', 'Mode debug : ' . $_debug);
 		self::deamon_stop();
 		self::generate_file();
 		$deamon_info = self::deamon_info();
@@ -236,11 +243,11 @@ class mobile extends eqLogic {
 
 		// check avahi-daemon started, if not, start
 		$cmd = 'if [ $(ps -ef | grep -v grep | grep "avahi-daemon" | wc -l) -eq 0 ]; then sudo systemctl start avahi-daemon;echo "Démarrage avahi-daemon"; fi';
-		log::add('mobile_homebridge', 'info', 'Démarrage avahi-daemon : ' . $cmd);
+		log::add('mobile', 'info', 'Démarrage avahi-daemon : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 		
 		$cmd = 'export AVAHI_COMPAT_NOWARN=1;'. (($_debug) ? 'DEBUG=* ':'') .'homebridge '. (($_debug) ? '-D ':'') .'-U '.dirname(__FILE__) . '/../../resources/homebridge';
-		log::add('mobile_homebridge', 'info', 'Lancement démon homebridge : ' . $cmd);
+		log::add('mobile', 'info', 'Lancement démon homebridge : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 		$i = 0;
 		while ($i < 30) {
@@ -252,19 +259,19 @@ class mobile extends eqLogic {
 			$i++;
 		}
 		if ($i >= 30) {
-			log::add('mobile_homebridge', 'error', 'Impossible de lancer le démon homebridge, relancer le démon en debug et vérifiez la log', 'unableStartDeamon');
+			log::add('mobile', 'error', 'Impossible de lancer le démon homebridge, relancer le démon en debug et vérifiez la log', 'unableStartDeamon');
 			return false;
 		}
 		message::removeAll('homebridge', 'unableStartDeamon');
-		log::add('mobile_homebridge', 'info', 'Démon homebridge lancé');
+		log::add('mobile', 'info', 'Démon homebridge lancé');
 		// Check if IPv6 is enable, and display a warning if it is
 		$cmd = 'if [ $(netstat -na | grep 51826 | grep "tcp6" | wc -l) -gt 0 ]; then echo "WARNING : IPv6 est activé sur votre système, il peut poser problème avec Homebridge"; fi';
-		log::add('mobile_homebridge', 'info', 'Vérification IPv6 : ' . $cmd);
+		log::add('mobile', 'info', 'Vérification IPv6 : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 		
 		// Check if multiple IP's -> warning because could cause problems with mdns https://github.com/nfarina/homebridge/issues/1351
-		$cmd = 'if [ $(ifconfig | grep "inet adr" | wc -l) -gt 2 ]; then echo "WARNING : Vous avez plusieurs IP de configurées, cela peut poser problème avec Homebridge et mDNS"; fi';
-		log::add('mobile_homebridge', 'info', 'Vérification IP Multiples : ' . $cmd);
+		$cmd = 'if [ $(sudo /sbin/ifconfig | grep "inet adr" | wc -l) -gt 2 ]; then echo "WARNING : Vous avez plusieurs IP de configurées, cela peut poser problème avec Homebridge et mDNS"; fi';
+		log::add('mobile', 'info', 'Vérification IP Multiples : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 	}
 	public static function deamon_stop() {
@@ -310,29 +317,38 @@ class mobile extends eqLogic {
 	/*                                                                                    */
 	/**************************************************************************************/
 	
-	public static function eraseHomebridge() {
-		log::add('mobile_homebridge', 'info', 'Procedure de réparration');
+	public static function repairHomebridge($reinstall=true) {
+		log::add('mobile', 'info', 'Procedure de réparration');
 		mobile::deamon_stop();
-		log::add('mobile_homebridge', 'info', 'suppression des accessoires et du persist');
+		log::add('mobile', 'info', 'suppression des accessoires et du persist');
 		$cmd = 'sudo rm -Rf '.dirname(__FILE__) . '/../../resources/homebridge/accessories';
 		exec($cmd);
 		$cmd = 'sudo rm -Rf '.dirname(__FILE__) . '/../../resources/homebridge/persist';
 		exec($cmd);
-		log::add('mobile_homebridge', 'info', 'suppression homebridge-jeedom');
-		$cmd = 'npm uninstall homebridge-jeedom --save';
-		exec($cmd);
-		log::add('mobile_homebridge', 'info', 'suppression homebridge');
-		$cmd = 'npm uninstall homebridge --save';
-		exec($cmd);
-		log::add('mobile_homebridge', 'info', 'création d\'une nouvelle MAC adress');
+		if($reinstall) {
+			log::add('mobile', 'info', 'suppression homebridge-jeedom');
+			$cmd = 'npm uninstall homebridge-jeedom --save';
+			exec($cmd);
+			log::add('mobile', 'info', 'suppression homebridge');
+			$cmd = 'npm uninstall homebridge --save';
+			exec($cmd);
+		}
+		log::add('mobile', 'info', 'création d\'une nouvelle MAC adress');
 		$macadress = strtoupper(implode(':', str_split(substr(md5(mt_rand()), 0, 12), 2)));
 		config::save('mac_homebridge',$macadress,'mobile');
 		config::save('name_homebridge','Jeedom_Repaired_'.base_convert(mt_rand(0,255),10,16),'mobile');
 		mobile::deamon_stop();
-		log::add('mobile_homebridge', 'info', 'réinstallation des dependances');
-		mobile::dependancy_install(false);
-		log::add('mobile_homebridge', 'info', 'Géneration du fichier de configuration');
-		mobile::generate_file();
+		if($reinstall) {
+			log::add('mobile', 'info', 'réinstallation des dependances');
+			mobile::dependancy_install(false);
+		}
+		else {
+			log::add('mobile', 'info', 'Géneration du fichier de configuration');
+			mobile::generate_file();
+		}
+		exec('sudo systemctl restart avahi-daemon');
+		sleep(1);
+		mobile::deamon_start();
 	}
 		
 	/**************************************************************************************/

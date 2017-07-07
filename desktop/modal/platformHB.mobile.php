@@ -65,9 +65,9 @@ if (!isConnect('admin')) {
 <div class="alert alert-info">
 1. {{Le contenu doit être un objet JSON de type platform}}<br />
 2. {{Si de multiples plateformes, les séparer par |}}<br />
-3. {{le plugin homebridge doit être installé avec <i>npm</i> (homebridge-camera-ffmpeg est déjà installé et utilise <i>avconv</i>)}}<br />
+3. {{le plugin homebridge correspondant doit être installé avec <i>npm</i> (homebridge-camera-ffmpeg est déjà installé et utilise <i>avconv</i> ou <i>ffmpeg</i> s'il est présent)}}<br />
 4. Nécessite plugin Camera pour avoir <i>avconv</i> (ou installe manuelle)<br />
-5. <i>avconv</i> des sources officielles de raspbian Jessie n'est malheureusement pas compilé avec support omx<br />
+5. <i>avconv</i> des sources officielles de raspbian Jessie n'est malheureusement pas compilé avec support omx (mais ffmpeg de Debian Stretch bien :))<br />
 <br />
 <a href="https://github.com/KhaosT/homebridge-camera-ffmpeg/wiki/Tested-Configuration" target="_blank">{{Exemples camera}}</a> - <a href="https://www.ispyconnect.com/sources.aspx" target="_blank">{{Trouvez votre camera}}</a><br />
 <br />

@@ -52,7 +52,6 @@ sendVarToJs('hasIos', mobile::check_ios());
 			<label class="col-lg-4 control-label">{{Utilisateur}}</label>
 			<div class="col-lg-3">
 				<select class="configKey form-control configuration form-control" data-l1key="user_homebridge">
-					<option value="">{{Aucun}}</option>
 					<?php
 					foreach(user::all() as $user) {
 						echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
@@ -64,10 +63,10 @@ sendVarToJs('hasIos', mobile::check_ios());
 		<div class="form-group">
 			<label class="col-lg-4 control-label">{{Nom Homebridge}}</label>
 			<div class="col-lg-3">
-				<input class="configKey form-control" data-l1key="name_homebridge" placeholder="Jeedom" />
+				<input class="configKey form-control" data-l1key="name_homebridge" placeholder="<?php echo config::byKey('name') ?>" />
 			</div>
 		</div>
-		<div class="form-group">
+		<div class="form-group hide">
 			<label class="col-lg-4 control-label">{{MAC Homebridge}}</label>
 			<div class="col-lg-3">
 				<input class="configKey form-control" data-l1key="mac_homebridge" placeholder="CC:22:3D:E3:CE:30" />
@@ -82,7 +81,7 @@ sendVarToJs('hasIos', mobile::check_ios());
 		<div class="form-group">
 			<label class="col-lg-4 control-label">{{Réparation de Homebridge}}</label>
 			<div class="col-lg-3">
-				<a class="btn btn-warning" id="bt_repairHome"><i class="fa fa-erase"></i> {{Réparer}}</a>&nbsp;&nbsp;<a class="btn btn-danger" id="bt_repairHome_reinstall"><i class="fa fa-erase"></i> {{Réparer & Réinstaller}}</a>
+				<a class="btn btn-warning" id="bt_repairHome"><i class="fa fa-erase"></i> {{Réparer}}</a>&nbsp;&nbsp;&nbsp;<a class="btn btn-danger" id="bt_repairHome_reinstall"><i class="fa fa-erase"></i> {{Réparer & Réinstaller}}</a>
 			</div>
 		</div>
 		<div class="form-group">

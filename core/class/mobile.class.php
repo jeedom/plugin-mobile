@@ -98,7 +98,8 @@ class mobile extends eqLogic {
 	public static function dependancy_info() {
 		$return = array();
 		$return['log'] = 'homebridge_update';
-		$return['progress_file'] = '/tmp/homebridge_in_progress';
+		//$return['progress_file'] = '/tmp/homebridge_in_progress';
+		$return['progress_file'] = jeedom::getTmpFolder('mobile') . '/dependance';
 		$state = '';
 		$no_ios = 1;
 		foreach (eqLogic::byType('mobile') as $mobile){
@@ -119,7 +120,7 @@ class mobile extends eqLogic {
 	}
 	
 	public static function dependancy_install($doStart=true) {
-		if (file_exists('/tmp/homebridge_in_progress')) {
+		if (file_exists(jeedom::getTmpFolder('mobile') . '/dependance')) {
 		    return;
 		}
 		if(self::check_ios() == 0){
@@ -244,7 +245,7 @@ class mobile extends eqLogic {
 		}
 
 		// check avahi-daemon started, if not, start
-		$cmd = 'if [ $(ps -ef | grep -v grep | grep "avahi-daemon" | wc -l) -eq 0 ]; then sudo systemctl start avahi-daemon;echo "Démarrage avahi-daemon"; fi';
+		$cmd = 'if [ $(ps -ef | grep -v grep | grep "avahi-daemon" | wc -l) -eq 0 ]; then sudo systemctl start avahi-daemon;echo "Démarrage avahi-daemon";sleep 1; fi';
 		log::add('mobile', 'info', 'Démarrage avahi-daemon : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 		
@@ -266,13 +267,9 @@ class mobile extends eqLogic {
 		}
 		message::removeAll('homebridge', 'unableStartDeamon');
 		log::add('mobile', 'info', 'Démon homebridge lancé');
-		// Check if IPv6 is enable, and display a warning if it is
-		$cmd = 'if [ $(netstat -na | grep 51826 | grep "tcp6" | wc -l) -gt 0 ]; then echo "WARNING : IPv6 est activé sur votre système, il peut poser problème avec Homebridge"; fi';
-		log::add('mobile', 'info', 'Vérification IPv6 : ' . $cmd);
-		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 		
 		// Check if multiple IP's -> warning because could cause problems with mdns https://github.com/nfarina/homebridge/issues/1351
-		$cmd = 'if [ $(sudo /sbin/ifconfig | grep "inet adr" | wc -l) -gt 2 ]; then echo "WARNING : Vous avez plusieurs IP de configurées, cela peut poser problème avec Homebridge et mDNS"; fi';
+		$cmd = 'if [ $(sudo ip addr | grep "inet " | grep -v " tun" | grep -v " lo" | wc -l) -gt 1 ]; then echo "WARNING : Vous avez plusieurs IP de configurées, cela peut poser problème avec Homebridge et mDNS"; fi';
 		log::add('mobile', 'info', 'Vérification IP Multiples : ' . $cmd);
 		exec($cmd . ' >> ' . log::getPathToLog('mobile_homebridge') . ' 2>&1 &');
 	}

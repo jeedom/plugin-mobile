@@ -74,8 +74,8 @@ sendVarToJs('hasIos', mobile::check_ios());
 		</div>
 		<div class="form-group">
 			<label class="col-lg-4 control-label">{{PIN Homebridge (format : XXX-XX-XXX)}}</label>
-			<div class="col-lg-3">
-				<input class="configKey form-control" data-l1key="pin_homebridge" placeholder="031-45-154" />
+			<div class="col-lg-3" style="background-color:#fff !important;padding:15px">
+				<input id="input_pin_homebridge" class="configKey form-control" style="margin: auto; border:5px solid #000;height:90px;width:220px;text-align:center;font-size:25px;color:#000;border-radius:0px;font-family:Helvetica; letter-spacing: 3px;" data-l1key="pin_homebridge" placeholder="031-45-154" />
 			</div>
 		</div>
 		<div class="form-group">
@@ -107,6 +107,30 @@ sendVarToJs('hasIos', mobile::check_ios());
 		}
 
 	}, 50);
+	$('input#input_pin_homebridge').on('keyup', function() {
+		if(!this.value.match(/^\d\d\d-\d\d-\d\d\d$/)) {
+			$('#div_alert').showAlert({
+				message : this.value+" : {{Format incorrect (XXX-XX-XXX)}}",
+				level : 'danger'
+			});	
+		}
+		else {
+			var forbiddenPIN = ["000-00-000","111-11-111","222-22-222","333-33-333","444-44-444","555-55-555","666-66-666","777-77-777","888-88-888","999-99-999","123-45-678","876-54-321"];
+			if(forbiddenPIN.indexOf(this.value) != -1) {
+				$('#div_alert').showAlert({
+					message : this.value+" : {{Code PIN interdit par Apple}}",
+					level : 'danger'
+				});	
+			}
+			else {
+				$('#div_alert').showAlert({
+					message : this.value+" : {{Format correct}}",
+					level : 'success'
+				});	
+			}
+		}
+	});
+	console.log('test');
 	$('#bt_platformFile').on('click', function () {
 		bootbox.confirm('{{Configuration avancée, à vos propres risques !!! Aucun support ne sera donné !!!}}', function(result) {
 			if (result) {

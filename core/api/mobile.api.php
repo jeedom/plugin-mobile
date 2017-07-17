@@ -30,7 +30,7 @@ $PluginToSend = mobile::PluginToSend();
 
 if ($jsonrpc->getMethod() == 'sync') {
 	log::add('mobile', 'debug', 'Demande de Sync');
-	$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($PluginToSend),mobile::discovery_eqLogic($PluginToSend));
+	$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($PluginToSend),mobile::discovery_eqLogic($PluginToSend,$params['apikey']));
 	log::add('mobile', 'debug', 'Sync cmd et eqlogics > '.json_encode($sync_new));
 	$eqLogics = $sync_new[1];
 	$cmds = $sync_new[0];

@@ -359,23 +359,46 @@ class mobile extends eqLogic {
 	/*                                                                                    */
 	/**************************************************************************************/
 
-	public static function discovery_eqLogic($plugin = array()){
+	public static function discovery_eqLogic($plugin = array(),$hash = null){
 		$return = array();
-		foreach ($plugin as $plugin_type) {
-			$eqLogics = eqLogic::byType($plugin_type, true);
-			if (is_array($eqLogics)) {
-				foreach ($eqLogics as $eqLogic) {
-					if($eqLogic->getObject_id() !== null && object::byId($eqLogic->getObject_id())->getDisplay('sendToApp', 1) == 1 && $eqLogic->getIsEnable() == 1 && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
-						$eqLogic_array = utils::o2a($eqLogic);
-						if(isset($eqLogic_array["configuration"]["sendToHomebridge"])){
-							$eqLogic_array["sendToHomebridge"] = $eqLogic_array["configuration"]["sendToHomebridge"];
+		if($hash !== null){
+			$user = user::byHash($hash);
+			$rights = $user->getProfils();
+			foreach ($plugin as $plugin_type) {
+				$eqLogics = eqLogic::byType($plugin_type, true);
+				if (is_array($eqLogics)) {
+					foreach ($eqLogics as $eqLogic){
+						if($eqLogic->hasRight($rights) == true){
+							if($eqLogic->getObject_id() !== null && object::byId($eqLogic->getObject_id())->getDisplay('sendToApp', 1) == 1 && $eqLogic->getIsEnable() == 1 && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
+								$eqLogic_array = utils::o2a($eqLogic);
+								if(isset($eqLogic_array["configuration"]["sendToHomebridge"])){
+									$eqLogic_array["sendToHomebridge"] = $eqLogic_array["configuration"]["sendToHomebridge"];
+								}
+								unset($eqLogic_array['eqReal_id'],$eqLogic_array['configuration'], $eqLogic_array['specificCapatibilities'],$eqLogic_array['timeout'],$eqLogic_array['category'],$eqLogic_array['display']);
+								$return[] = $eqLogic_array;
+							}
 						}
-						unset($eqLogic_array['eqReal_id'],$eqLogic_array['configuration'], $eqLogic_array['specificCapatibilities'],$eqLogic_array['timeout'],$eqLogic_array['category'],$eqLogic_array['display']);
-						$return[] = $eqLogic_array;
-					}
-                }
+	                }
+				}
+			}
+		}else{
+			foreach ($plugin as $plugin_type) {
+				$eqLogics = eqLogic::byType($plugin_type, true);
+				if (is_array($eqLogics)) {
+					foreach ($eqLogics as $eqLogic) {
+						if($eqLogic->getObject_id() !== null && object::byId($eqLogic->getObject_id())->getDisplay('sendToApp', 1) == 1 && $eqLogic->getIsEnable() == 1 && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
+							$eqLogic_array = utils::o2a($eqLogic);
+							if(isset($eqLogic_array["configuration"]["sendToHomebridge"])){
+								$eqLogic_array["sendToHomebridge"] = $eqLogic_array["configuration"]["sendToHomebridge"];
+							}
+							unset($eqLogic_array['eqReal_id'],$eqLogic_array['configuration'], $eqLogic_array['specificCapatibilities'],$eqLogic_array['timeout'],$eqLogic_array['category'],$eqLogic_array['display']);
+							$return[] = $eqLogic_array;
+						}
+	                }
+				}
 			}
 		}
+		
 		return $return;
 	}
 	

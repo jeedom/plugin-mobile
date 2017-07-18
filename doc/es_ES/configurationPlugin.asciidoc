@@ -10,7 +10,7 @@ image::../images/mobile1.png[]
 
 Pour configurer le plugin, vous devez ajouter les téléphones qui pourront accéder à Jeedom.
 
-Pour Ajouter un téléphone : *Plugins* --> *Communication* --> *App Mobile* --> *Ajouter*
+Pour Ajouter un téléphone : *Plugins* -> *Communication* -> *App Mobile* -> *Ajouter*
 
 image::../images/mobile2.png[]
 

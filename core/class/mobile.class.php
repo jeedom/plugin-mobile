@@ -42,7 +42,7 @@ class mobile extends eqLogic {
 	}
 	
 	public static function LienAWS() {
-		return 'http://195.154.56.168:8000/notif';
+		return 'http://195.154.56.168:8000/notif/';
 	}
 	
 	public static function DisallowedPIN() {

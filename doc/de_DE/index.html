@@ -431,8 +431,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_les_jokers">4.3. LES JOKERS</a></li>
 </ul>
 </li>
-<li><a href="#_homebridge_konfiguration">5. Homebridge Konfiguration</a></li>
-<li><a href="#_faq">6. FAQ</a></li>
+<li><a href="#_homebridge">Homebridge</a>
+<ul class="sectlevel2">
+<li><a href="#_sélection_des_accessoires">1.1. Sélection des accessoires</a></li>
+<li><a href="#_types_génériques_compatibles_avec_homebridge">1.2. Types génériques compatibles avec Homebridge</a></li>
+<li><a href="#_configuration_du_plugin_mobile">1.3. Configuration du plugin mobile</a></li>
+<li><a href="#_ajout_de_jeedom_dans_homekit">1.4. Ajout de jeedom dans homekit</a></li>
+</ul>
+</li>
+<li><a href="#_troubleshooting">Troubleshooting</a>
+<ul class="sectlevel1">
+<li><a href="#_aide_mobile">1. Aide Mobile</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -465,7 +476,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Um das Plugin zu konfigurieren, müssen Sie Telefone hinzufügen, die auf Jeedom zugreifen sollen.</p>
 </div>
 <div class="paragraph">
-<p>Eine Telefon hinzufügen : <strong>Plugins</strong> -&#8594; <strong>Kommunikation</strong> -&#8594; <strong>Mobil App</strong> -&#8594; <strong>Hinzufügen</strong></p>
+<p>Pour Ajouter un téléphone : <strong>Plugins</strong> &#8594; <strong>Communication</strong> &#8594; <strong>App Mobile</strong> &#8594; <strong>Ajouter</strong></p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1089,39 +1100,124 @@ Wenn Sie sich für die manuelle Konfiguration entscheiden, muss man in diesem Fa
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+</div>
+<h1 id="_homebridge" class="sect0">Homebridge</h1>
 <div class="paragraph">
-<p>Wenn Sie Mobile iOS-Geräte haben, können Sie Homebridge aktivieren, um Ihr Jeedom über Homekit zu kontrollieren.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_homebridge_konfiguration">5. Homebridge Konfiguration</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Wenn Sie mindestens ein Gerät unter iOS angegeben haben, werden Sie in der Plugin Konfiguration einen Abschnitt Homebridge sehen. (<strong>Plugins</strong> -&#8594; <strong>Plugin Verwaltung</strong> -&#8594; <strong>Mobile App</strong>)</p>
+<p>Unresolved directive in index.asciidoc - include::presentationHomebridge.asciidoc[]</p>
 </div>
 <div class="paragraph">
-<p><strong>Installation der Abhängigkeit</strong></p>
+<p>Unresolved directive in index.asciidoc - include::demonHomebridge.asciidoc[]</p>
+</div>
+<div class="sect2">
+<h3 id="_sélection_des_accessoires">1.1. Sélection des accessoires</h3>
+<div class="paragraph">
+<p>Vous devez sélectionner les équipements que vous souhaitez utiliser avec Homebridge.</p>
+</div>
+<div class="paragraph">
+<p><strong>Configuration via les plugins</strong></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/mobile4.png" alt="mobile4">
+<img src="../images/config-plugin.png" alt="config plugin">
 </div>
 </div>
 <div class="paragraph">
-<p>Um die notwendigen Abhängigkeiten zu installieren, ist es notwendig auf die Schaltfläche <strong>Ankurbeln</strong> zu klicken.</p>
-</div>
-<div class="paragraph">
-<p><strong>Konfiguration</strong></p>
+<p><strong>Configuration via les pièces / objets</strong></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/mobile5.png" alt="mobile5">
+<img src="../images/config-piece.png" alt="config piece">
 </div>
 </div>
 <div class="paragraph">
-<p>In der Konfiguration von Homebridge haben Sie :</p>
+<p>Cliquez sur les plugins ou les pièces/objets où se trouvent les équipements que vous souhaitez ajouter.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/config-plugin-1.png" alt="config plugin 1">
+</div>
+</div>
+<div class="paragraph">
+<p>Pour sélectionner les équipements que vous voulez utiliser sur Homebridge, cochez la case "Envoyer à Homebridge".</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Pour ajouter ou supprimer un accessoire dans Homebrige, sélectionnez l&#8217;accessoire en question dans Plugins ou Objet/pièces et cochez ou décochez "Envoyer à Homebridge". Cliquez sur sauvegarder. Une fois sauvegardé (et le démon relancé), votre accessoire sera intégré ou supprimé de Homebridge.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>En cliquant sur l&#8217;équipement, vous verrez les types génériques utilisés pour la communication entre votre jeedom et Homebridge.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/typegen-1.png" alt="typegen 1">
+</div>
+</div>
+<div class="paragraph">
+<p>La majorité des types génériques est déjà renseignée. Dans certains cas, vous devrez les configurer manuellement (pour le plugin Virtuel par exemple).</p>
+</div>
+<div class="paragraph">
+<p>Voici les types génériques disponibles :</p>
+</div>
+<div class="paragraph">
+<p>Pour les informations :</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/typeginfo.png" alt="typeginfo">
+</div>
+</div>
+<div class="paragraph">
+<p>Pour les actions :</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ypegeaction.png" alt="ypegeaction">
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Chaque équipement doit disposer d&#8217;au moins un type générique de type "Etat". S&#8217;il n&#8217;y a pas d&#8217;Etat, l&#8217;équipement ne sera pas disponible sur Homebridge.
+Il faut une certaine cohérence dans le choix des types génériques. Dans le cas d&#8217;une lumière par exemple, vous devez avoir l&#8217;info "Lumière état" et les actions "Lumières bouton OFF" et "Lumière bouton ON". Si cette cohérence n&#8217;est pas respectée, l&#8217;équipement peut ne pas apparaître dans Homebridge.
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ypegelumi.png" alt="ypegelumi">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_types_génériques_compatibles_avec_homebridge">1.2. Types génériques compatibles avec Homebridge</h3>
+<div class="paragraph">
+<p>Unresolved directive in configurationHomebridge.asciidoc - include::configurationHomebridgeTypeGenerique.asciidoc[]</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_du_plugin_mobile">1.3. Configuration du plugin mobile</h3>
+<div class="paragraph">
+<p>Une fois tous les objets configurés avec leurs bons types génériques, retournez dans <strong>&#8594; Equipement &#8594; Configuration.</strong></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/config-pluginhb.png" alt="config pluginhb">
+</div>
 </div>
 <div class="ulist">
 <ul>
@@ -1129,88 +1225,178 @@ Wenn Sie sich für die manuelle Konfiguration entscheiden, muss man in diesem Fa
 <p><strong>Utilisateur</strong> : Permet à Homebridge d&#8217;utiliser l&#8217;ApiKey d&#8217;un utilisateur de votre Jeedom.</p>
 </li>
 <li>
-<p><strong>Nom Homebridge</strong> : Permet de renommer votre pont Homebridge. <strong>ATTENTION : le changement de nom Homebridge vous obligera à reconfigurer vos applications Homekit</strong></p>
-</li>
-<li>
-<p><strong>Mac Homebridge</strong> : Permet d&#8217;avoir plusieurs ponts Homebridge. <strong>ATTENTION : le changement de la Mac Homebridge vous obligera à reconfigurer vos applications Homekit</strong></p>
-</li>
-<li>
-<p><strong>Suppression du cache</strong> : Permet de vider complètement les informations connues par Homebridge. Au prochain démarrage, Homebridge rescanera l&#8217;ensemble des éléments de Jeedom afin de les générer. <strong>ATTENTION : la suppression du cache vous obligera à reconfigurer vos applications Homekit</strong></p>
-</li>
-<li>
-<p><strong>Regénérer le fichier de configuration</strong> : Permet de recréer le fichier de configuration lorsque vous modifiez le code PIN Homebridge.</p>
-</li>
-<li>
-<p><strong>PIN Homebridge</strong> : Permet de personnaliser le code PIN Homebridge. Après sauvegarde, il sera nécessaire de regénérer le fichier de configuration.</p>
+<p><strong>Nom Homebridge</strong> : Permet de renommer votre pont Homebridge.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p><strong>Verwendung</strong></p>
-</div>
-<div class="paragraph">
-<p>Pour intéragir avec Homebridge, vous disposez de 2 possibilités :</p>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Le changement de nom Homebridge vous obligera à reconfigurer vos applications Homekit.
+</td>
+</tr>
+</table>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>iOS 10</strong> : Si vous disposez d&#8217;un iDevice sous iOS 10 (actuellement en beta) vous pouvez simplement rajouter Jeedom via l&#8217;application <strong>Domicile</strong>.
-Einige Bildschirme:</p>
+<p><strong>PIN Homebridge</strong> : Permet de personnaliser le code PIN Homebridge.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>Bild:&#8230;&#8203; / images/mobile6.jpg]</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/mobile9.jpg" alt="mobile9">
-</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Les PIN suivants ne sont pas accéptés par Apple : 000-00-000, 111-11-111, 222-22-222 &#8594; 999-99-999, 123-45-678, 876-54-321. Son changement vous obligera à reconfigurer vos applications Homekit
+</td>
+</tr>
+</table>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Applications compatibles Homekit</strong> : Vous trouverez sur l&#8217;App Store quelques applications compatibles Homekit. La plus complète à l&#8217;heure actuelle est celle d&#8217;Elgato : EVE.
-Einige Bildschirme:</p>
+<p><strong>Réparer</strong> :  Permet une réparation de Homebridge en modifiant les identifiants.</p>
 </li>
 </ul>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/mobile7.jpg" alt="mobile7">
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/mobile8.jpg" alt="mobile8">
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Einige Bemerkungen</strong></p>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Il faut retirer le bridge de votre application "Maison" avant et l&#8217;y remettre ensuite.
+</td>
+</tr>
+</table>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Homebridge ne peut actuellement pas créer automatiquement dans les applications (Domicile ou Elgato Eve) les pièces définies sur Jeedom.</p>
-</li>
-<li>
-<p>Dans tous les cas, il est possible d&#8217;utiliser Siri pour intéragir avec vos équipements mais attention à la façon dont sont nommés vos équipements, Siri est plutôt strict.</p>
-</li>
-<li>
-<p>Si vous disposez d&#8217;une AppleTV (ou d&#8217;un iPad sous iOS 10) il est possible d&#8217;accéder à vos périphériques depuis n&#8217;importe où de façon transparente.</p>
-</li>
-<li>
-<p>Si vous disposez d&#8217;une AppleTV sous tvOS 10, vous pouvez commander vos équipements à l&#8217;aide de la touche Siri de la télécommande. Les scénarios définis sur l&#8217;interface Domicile sont également stockés sur celle-ci.</p>
+<p><strong>Réparer &amp; réinstaller</strong> : Supprime et réinstalle complètement Homebridge.</p>
 </li>
 </ul>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+A n&#8217;effectuer que sur conseil d&#8217;un membre du forum et il faut retirer le bridge de votre application "Maison" avant et l&#8217;y remettre ensuite.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Plateforme Homebridge supplémentaire</strong> : Permet de rajouter manuellement un équipement.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Réservé à un public averti. Il n&#8217;y aura aucun support pour cette partie. (permet par exemple d&#8217;ajouter des cameras à Homebridge)
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Une fois les cases <strong>Utilisateur, nom Homebridge et PIN Homebridge</strong> correctement renseignées, finaliser la configuration en cliquant sur <strong>sauvegarder</strong>.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_ajout_de_jeedom_dans_homekit">1.4. Ajout de jeedom dans homekit</h3>
+<div class="paragraph">
+<p>Il existe plusieurs applications sur l&#8217;appstore compatible homekit. Nous allons utiliser l&#8217;application "domicile".</p>
+</div>
+<div class="paragraph">
+<p>Pour inclure jeedom, ouvrir l&#8217;application "Maison" et cliquez sur ajouter un accessoire.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/home-1.jpg" alt="home 1">
+</div>
+</div>
+<div class="paragraph">
+<p>Scannez le code PIN</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/home-2.jpg" alt="home 2">
+</div>
+</div>
+<div class="paragraph">
+<p>Sélectionnez votre jeedom</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/home-3.jpg" alt="home 3">
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+L&#8217;exemple a été réalisée avec la version beta d&#8217;IOS 11. Sur IOS 10 la procécure est quasi identique. Il suffit de sélectionner votre jeedom et de scanner le PIN.
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/home-4.jpg" alt="home 4">
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Comme expliqué plus haut dans la doc, Homebridge n&#8217;est pas reconnu officiellement par Apple. Un message vous indique que l&#8217;accessoire n&#8217;est pas cetifié.  Cliquez sur "poursuivre l&#8217;ajout".
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/home-5.jpg" alt="home 5">
+</div>
+</div>
+<div class="paragraph">
+<p>Il suffit maintenant de placer correctement les accessoires dans les bonnes pièces. Vous avez la possibilité de le créer en cliquant sur pièce et créer pièce.</p>
+</div>
+<div class="paragraph">
+<p>Vous pouvez retrouver <a href="https://support.apple.com/fr-fr/HT204893">ici</a> la documentation complète de l&#8217;application "Maison" d&#8217;Apple.</p>
+</div>
+</div>
+<h1 id="_troubleshooting" class="sect0">Troubleshooting</h1>
 <div class="sect1">
-<h2 id="_faq">6. FAQ</h2>
+<h2 id="_aide_mobile">1. Aide Mobile</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>&#8594; Je suis sur Android version de l&#8217;app (1.0.1 ou 1.0.0) je n&#8217;arrive pas à accéder à mes pièces ni même à la configuration de l&#8217;app.</p>
+<p><strong>&#8594; Je suis sur Android version de l&#8217;app (1.0.1 ou 1.0.0) je n&#8217;arrive pas à accéder à mes pièces ni même à la configuration de l&#8217;app.</strong></p>
 </div>
 <div class="admonitionblock caution">
 <table>
@@ -1225,7 +1411,7 @@ Vous avez eu un popup vous avertissant d&#8217;un souci sur les paramètres d&#8
 </table>
 </div>
 <div class="paragraph">
-<p>&#8594; J&#8217;ai un message dans une des lignes de mes modules me disant qu&#8217;il manque un Type Générique !</p>
+<p><strong>&#8594; J&#8217;ai un message dans une des lignes de mes modules me disant qu&#8217;il manque un Type Générique !</strong></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1240,7 +1426,7 @@ En lisant ce message, il vous dit quel type générique manque pour créer un te
 </table>
 </div>
 <div class="paragraph">
-<p>&#8594; J&#8217;ai un souci sur un des plugins dit complètement intégré (météo, thermostat, alarme, caméra) !</p>
+<p><strong>&#8594; J&#8217;ai un souci sur un des plugins dit complètement intégré (météo, thermostat, alarme, caméra) !</strong></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1255,7 +1441,7 @@ N&#8217;hésitez pas à accéder à votre module et de bien cliquer sur sauvegar
 </table>
 </div>
 <div class="paragraph">
-<p>&#8594; Impossible de mettre une info sur l&#8217;accueil de l&#8217;app !</p>
+<p><strong>&#8594; Impossible de mettre une info sur l&#8217;accueil de l&#8217;app !</strong></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1270,7 +1456,7 @@ Cela est normal, ça sera disponible sur la version 1.1.
 </table>
 </div>
 <div class="paragraph">
-<p>&#8594; J&#8217;ai l&#8217;application qui prend enormement de memoire dans mon telephone !</p>
+<p><strong>&#8594; J&#8217;ai l&#8217;application qui prend enormement de memoire dans mon telephone !</strong></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1285,19 +1471,10 @@ Il y avait un bug sur les versions 1.0.0 et 1.0.1 sur la partie Camera. Le souci
 </table>
 </div>
 <div class="paragraph">
-<p>&#8594; J&#8217;ai mon Homebridge qui n&#8217;execute pas les commandes !</p>
+<p>Unresolved directive in index.asciidoc - include::TroubleshootingHomebridge.asciidoc[]</p>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-il faut bien mettre a jour le plugin App Mobile, puis dans la configuration des dépendances, il suffit de renseigner un utilisateur avec des droits d&#8217;executions sur les commandes.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Unresolved directive in index.asciidoc - include::changelog.asciidoc[]</p>
 </div>
 <div class="paragraph">
 <p>Um mehr über den Fortschritt der Mobilen App zu lesen, Klicken Sie hier &gt; <a href="https://github.com/jeedom/issues/projects/2?fullscreen=true" class="bare">https://github.com/jeedom/issues/projects/2?fullscreen=true</a></p>

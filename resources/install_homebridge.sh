@@ -62,7 +62,7 @@ echo "--60%"
 sudo npm install -g --unsafe-perm https://github.com/jeedom/homebridge.git#master
 echo 70 > ${PROGRESS_FILE}
 echo "--70%"
-sudo npm install -g https://github.com/jeedom/homebridge-jeedom.git#beta
+sudo npm install -g https://github.com/jeedom/homebridge-jeedom.git#master
 sudo npm install -g https://github.com/jeedom/homebridge-camera-ffmpeg.git#master
 echo 80 > ${PROGRESS_FILE}
 echo "--80%"

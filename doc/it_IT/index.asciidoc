@@ -1,0 +1,15 @@
+= Plugin Mobile
+
+Plugin permettant d'utiliser l'application Mobile Jeedom.
+
+include::configurationPlugin.asciidoc[]
+
+include::configurationMobile.asciidoc[]
+
+include::configurationTypeGenerique.asciidoc[]
+
+include::configurationHomebridge.asciidoc[]
+
+include::TroubleshootingMobile.asciidoc[]
+
+En savoir plus sur l'avancement de l'application Mobile cliquez-ici > https://github.com/jeedom/issues/projects/2?fullscreen=true

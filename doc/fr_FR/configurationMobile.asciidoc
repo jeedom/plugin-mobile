@@ -1,0 +1,62 @@
+== Configuration de l'application Mobile
+
+Vous trouverez les applications sur les stores mobiles : 
+
+*Android Google Play*
+
+image:../images/Google_Play_FR.png[link="https://play.google.com/store/apps/details?id=fr.jeedom.jeedom"]
+
+*Apple App Store*
+
+image:../images/App_Store_FR.png[link="https://itunes.apple.com/fr/app/jeedom/id1010855094?mt=8"]
+
+=== Premier lancement de l'app
+
+Au 1er lancement de l'application Mobile, un tutorial vous sera proposé afin de vous accompagner dans la configuration de celle-ci.
+
+Après avoir téléchargée et installée votre application mobile Jeedom, lancez l’application sur votre smartphone.
+
+Vous arrivez alors dans un didacticiel de configuration que nous vous conseillons de suivre. Certaines étapes ont étés faites précédemment.
+
+Vous aurez ensuite le choix entre une configuration manuelle ou automatique par QRcode.
+Si vous optez pour la configuration par QRcode, il suffit de flasher le QRcode présent sur le plugin App Mobile dans l’équipement smartphone créé précédemment. Dans ce cas, l’application va récupérer automatiquement toute la configuration de votre Jeedom  et se connecter automatiquement. Lorsqu’il sera connecté chez vous en Wifi, l’application utilisera automatiquement l’adresse Jeedom ethernet interne à votre réseau. Lorsque vous serez connecté en 4G ou 3G, il utilisera votre adresse externe pour se connecter à votre Jeedom (par exemple via le service DNS Jeedom si vous l'utilisez).
+Si vous optez pour la configuration manuelle, dans ce cas il vous faudra entrer à la main les adresses IP interne et externe de votre Jeedom. Cette option est réservée à un public averti.
+
+L’application va se synchroniser et vous arrivez sur sa page d’accueil (précédée par un mini guide de présentation).
+
+L’application mobile Jeedom est maintenant prête à fonctionner.
+
+=== Les Favoris
+
+Sur l'application vous pouvez avoir des Favoris (raccourcis de commandes, plugins, scénarios).
+
+Voici donc la marche à suivre pour en créer :
+
+Cliquez sur un des + sur l'écran d'accueil de l'application :
+
+image:../images/mobile_dashboard_1.PNG[align="center",width="200px"]
+
+Vous arriverez sur la page de sélection du type de raccourci :
+
+image:../images/mobile_dashboard_2.PNG[align="center",width="200px"]
+
+Par exemple, nous allons prendre Action, il nous propose donc des Pièces/Objets :
+
+image:../images/mobile_dashboard_3.PNG[align="center",width="200px"]
+
+Il vous suffit alors de sélectionner l'action que vous souhaitez en raccourci :
+
+image:../images/mobile_dashboard_4.PNG[align="center",width="200px"]
+
+Il est ensuite possible de personnaliser la couleur de celle-ci (pour le moment trois couleurs sont proposées) :
+
+image:../images/mobile_dashboard_5.PNG[align="center",width="200px"]
+
+Ainsi que les deux textes associés :
+
+image:../images/mobile_dashboard_6.PNG[align="center",width="200px"]
+image:../images/mobile_dashboard_7.PNG[align="center",width="200px"]
+
+Voilà, vous avez maitenant un raccourci de votre commande (dans la version 1.1 il est prévu que les commandes On/Off apparaissent sur la même touche).
+
+image:../images/mobile_dashboard_8.PNG[align="center",width="200px"]

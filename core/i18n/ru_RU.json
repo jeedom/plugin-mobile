@@ -1,0 +1,40 @@
+{
+    "plugins\/mobile\/plugin_info\/info.xml": {
+        "Plugin pour l'application Mobile": "Plugin pour l'application Mobile",
+        "Aucune": "Нет"
+    },
+    "plugins\/mobile\/desktop\/php\/mobile.php": {
+        "Ajouter un mobile": "Ajouter un mobile",
+        "Rechercher": "Искать",
+        "Mes Téléphones Mobiles": "Mes Téléphones Mobiles",
+        "Général": "Главная",
+        "Nom de l'équipement mobile": "Nom de l'équipement mobile",
+        "Nom de l'équipement template": "Название шаблона оборудования",
+        "Objet parent": "Родительский объект",
+        "Aucun": "Нет",
+        "Activer": "Активировать",
+        "Visible": "Видимый",
+        "Type de Mobile": "Type de Mobile",
+        "Utilisateurs": "Пользователи",
+        "Mobile": "Мобильный",
+        "Homebridge": "Homebridge",
+        "Informations": "Информация",
+        "Homebridge est un logiciel tiers permettant d'interconnecter Homekit avec différents systèmes domotiques.": "Homebridge est un logiciel tiers permettant d'interconnecter Homekit avec différents systèmes domotiques.",
+        "Dépendances": "Dépendances",
+        "Nom": "Имя",
+        "Statut": "Статус",
+        "Installation": "Установка",
+        "Dernière installation": "Dernière installation",
+        "Démon": "Демон",
+        "Configuration": "Конфигурация",
+        "(Re)Démarrer": "(Re)Démarrer",
+        "Arrêter": "Стоп",
+        "Gestion automatique": "Gestion automatique",
+        "Dernier lancement": "Последний запуск",
+        "Commande": "Команда",
+        "Option": "Опция",
+        "Action": "Действие",
+        "Supprimer": "Удалить",
+        "Sauvegarder": "Сохранить"
+    }
+}

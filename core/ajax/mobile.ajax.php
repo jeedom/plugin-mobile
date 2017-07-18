@@ -30,9 +30,12 @@ try {
 		mobile::updatemobile();
 		ajax::success();
 	}
-	
-	if (init('action') == 'eraseHomebridgeCache') {
-		mobile::eraseHomebridgeCache();
+	if (init('action') == 'repairHomebridge'){
+		mobile::repairHomebridge(false);
+		ajax::success();
+	}
+	if (init('action') == 'repairHomebridge_reinstall'){
+		mobile::repairHomebridge(true);
 		ajax::success();
 	}
 	
@@ -45,13 +48,21 @@ try {
 		mobile::generate_file();
 		ajax::success();
 	}
-
+	if (init('action') == 'getJSON') {
+		$file = mobile::getJSON();
+		ajax::success($file);
+	}
+	if (init('action') == 'saveJSON') {
+		$ret = mobile::saveJSON(init('file'));
+		ajax::success($ret);
+	}
 	if (init('action') == 'getQrCode') {
 		$eqLogic = mobile::byId(init('id'));
 		if (!is_object($eqLogic)) {
 			throw new Exception(__('Equipement non trouvé : ', __FILE__) . init('id'));
+		}else{
+			ajax::success($eqLogic->getQrCode());
 		}
-		ajax::success($eqLogic->getQrCode());
 	}
 
 	throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));

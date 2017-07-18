@@ -12,4 +12,4 @@ include::configurationHomebridge.asciidoc[]
 
 include::TroubleshootingMobile.asciidoc[]
 
-En savoir plus sur l'avancement de l'application Mobile cliquez-ici > https://github.com/jeedom/issues/projects/2?fullscreen=true
+Um mehr über den Fortschritt der Mobilen App zu lesen, Klicken Sie hier > https://github.com/jeedom/issues/projects/2?fullscreen=true

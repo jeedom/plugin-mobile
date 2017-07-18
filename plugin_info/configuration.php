@@ -23,16 +23,41 @@ if(!isConnect()) {
 
 sendVarToJs('hasIos', mobile::check_ios());
 ?>
+<style>
+@font-face {
+  font-family: Scancardium;
+  src: url(/plugins/mobile/plugin_info/Scancardium.ttf);
+}
+</style>
 <form class="form-horizontal">
 	<fieldset>
 		<legend>
 			<i class="fa fa-list-alt"></i> {{Homebridge}}
 		</legend>
+		<?php
+			$interne = network::getNetworkAccess('internal');
+			if($interne == null || $interne == 'http://:80' || $interne == 'https://:80'){
+		?>
+			<div class="form-group">
+				<div class="col-lg-7">
+				<span class="badge" style="background-color : #c9302c;">{{Attention votre adresse interne (configuration) n'est pas valide.}}</span>
+				</div>
+			</div>
+		<?php
+			}else{
+		?>
+			<div class="form-group">
+				<label class="col-lg-4 control-label">{{Adresse Ip Homebridge :}}</label>
+				<span class="badge" style="background-color : #ec971f;"><?php echo $interne; ?></span>
+			</div>
+		<?php
+			}
+		?>
+		
 		<div class="form-group">
 			<label class="col-lg-4 control-label">{{Utilisateur}}</label>
 			<div class="col-lg-3">
 				<select class="configKey form-control configuration form-control" data-l1key="user_homebridge">
-					<option value="">{{Aucun}}</option>
 					<?php
 					foreach(user::all() as $user) {
 						echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
@@ -44,10 +69,10 @@ sendVarToJs('hasIos', mobile::check_ios());
 		<div class="form-group">
 			<label class="col-lg-4 control-label">{{Nom Homebridge}}</label>
 			<div class="col-lg-3">
-				<input class="configKey form-control" data-l1key="name_homebridge" placeholder="Jeedom" />
+				<input class="configKey form-control" data-l1key="name_homebridge" placeholder="<?php echo config::byKey('name') ?>" />
 			</div>
 		</div>
-		<div class="form-group">
+		<div class="form-group hide">
 			<label class="col-lg-4 control-label">{{MAC Homebridge}}</label>
 			<div class="col-lg-3">
 				<input class="configKey form-control" data-l1key="mac_homebridge" placeholder="CC:22:3D:E3:CE:30" />
@@ -55,17 +80,18 @@ sendVarToJs('hasIos', mobile::check_ios());
 		</div>
 		<div class="form-group">
 			<label class="col-lg-4 control-label">{{PIN Homebridge (format : XXX-XX-XXX)}}</label>
-			<div class="col-lg-3">
-				<input class="configKey form-control" data-l1key="pin_homebridge" placeholder="031-45-154" />
+			<div class="col-lg-3" style="background-color:#fff !important;padding:15px">
+				<input id="input_pin_homebridge" class="configKey form-control" style="margin: auto; border:5px solid #000;height:70px;width:220px;text-align:center;font-size:25px;background-color:#fff !important;color:#000;border-radius:0px;font-family:Scancardium; letter-spacing: 1px;" data-l1key="pin_homebridge" placeholder="031-45-154" />
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-lg-4 control-label">{{Suppression du cache}}</label>
+			<label class="col-lg-4 control-label">{{Réparation de Homebridge}}</label>
 			<div class="col-lg-3">
-				<a class="btn btn-warning" id="bt_eraseCache"><i class="fa fa-erase"></i> {{Supprimer}}</a>
+				<a class="btn btn-warning" id="bt_repairHome"><i class="fa fa-erase"></i> {{Réparer}}</a>&nbsp;&nbsp;&nbsp;<a class="btn btn-danger" id="bt_repairHome_reinstall"><i class="fa fa-erase"></i> {{Réparer & Réinstaller}}</a>
 			</div>
 		</div>
 		<div class="form-group">
+<<<<<<< HEAD
 			<label class="col-lg-4 control-label">{{Réparation de Homebridge}}</label>
 			<div class="col-lg-3">
 				<a class="btn btn-warning" id="bt_eraseHome"><i class="fa fa-erase"></i> {{Réparer}}</a>
@@ -73,15 +99,17 @@ sendVarToJs('hasIos', mobile::check_ios());
 		</div>
 		<div class="form-group">
 			<label class="col-lg-4 control-label">{{Regénérer le fichier de configuration}}</label>
+=======
+			<label class="col-lg-4 control-label">{{Configuration avancée}}</label>
+>>>>>>> beta
 			<div class="col-lg-3">
-				<a class="btn btn-warning" id="bt_generateConf"><i class="fa fa-erase"></i> {{Générer}}</a>
+				<a class="btn btn-danger" id="bt_platformFile"><i class="fa fa-file-o"></i> {{Plateforme Homebridge supplémentaire}}</a>
 			</div>
-		</div>
+		</div>		
 	</fieldset>
 </form>
 <script>
 	setTimeout(function() {
-
 		if (hasIos == 0) {
 			$('#div_plugin_dependancy').closest('.panel').hide();
 			$('#div_plugin_deamon').closest('.panel').parent().removeClass('col-md-6');
@@ -95,15 +123,46 @@ sendVarToJs('hasIos', mobile::check_ios());
 		}
 
 	}, 50);
-
-	$('#bt_eraseCache').on('click', function() {
-		bootbox.confirm('{{Etes-vous sûr de vouloir supprimer le cache ? Vous devrez réinstaller les équipements sur votre appareil iOS.}}', function(result) {
+	$('input#input_pin_homebridge').on('keyup', function() {
+		if(!this.value.match(/^\d\d\d-\d\d-\d\d\d$/)) {
+			$('#div_alert').showAlert({
+				message : this.value+" : {{Format incorrect (XXX-XX-XXX)}}",
+				level : 'danger'
+			});	
+		}
+		else {
+			var forbiddenPIN = ["000-00-000","111-11-111","222-22-222","333-33-333","444-44-444","555-55-555","666-66-666","777-77-777","888-88-888","999-99-999","123-45-678","876-54-321"];
+			if(forbiddenPIN.indexOf(this.value) != -1) {
+				$('#div_alert').showAlert({
+					message : this.value+" : {{Code PIN interdit par Apple}}",
+					level : 'danger'
+				});	
+			}
+			else {
+				$('#div_alert').showAlert({
+					message : this.value+" : {{Format correct}}",
+					level : 'success'
+				});	
+			}
+		}
+	});
+	console.log('test');
+	$('#bt_platformFile').on('click', function () {
+		bootbox.confirm('{{Configuration avancée, à vos propres risques !!! Aucun support ne sera donné !!!}}', function(result) {
+			if (result) {
+				$('#md_modal2').dialog({title: "{{Configuration Plateforme Homebridge supplémentaire}}"});
+				$('#md_modal2').load('index.php?v=d&plugin=mobile&modal=platformHB.mobile').dialog('open');
+			}
+		});
+	});
+	$('#bt_repairHome').on('click', function() {
+		bootbox.confirm('{{Etes-vous sûr de vouloir réparer Homebridge ? Vous devrez réinstaller les équipements sur votre appareil iOS (Merci, de supprimer la passerelle Jeedom sur l\'app Home).}}', function(result) {
 			if (result) {
 				$.ajax({
 					type : 'POST',
 					url : 'plugins/mobile/core/ajax/mobile.ajax.php',
 					data : {
-						action : 'eraseHomebridgeCache',
+						action : 'repairHomebridge',
 					},
 					dataType : 'json',
 					global : false,
@@ -115,7 +174,7 @@ sendVarToJs('hasIos', mobile::check_ios());
 					},
 					success : function() {
 						$('#div_alert').showAlert({
-							message : "{{Cache Homebridge vidé}}",
+							message : "{{Réparation Homebridge effectuée, merci de patienter jusqu'au démarrage du démon}}",
 							level : 'success'
 						});
 					}
@@ -123,6 +182,7 @@ sendVarToJs('hasIos', mobile::check_ios());
 			}
 		});
 	});
+<<<<<<< HEAD
 	$('#bt_generateConf').on('click', function() {
 		$.ajax({
 			type : 'POST',
@@ -172,5 +232,33 @@ sendVarToJs('hasIos', mobile::check_ios());
 				});
 			}
 		});
+=======
+	$('#bt_repairHome_reinstall').on('click', function() {
+		bootbox.confirm('{{Etes-vous sûr de vouloir supprimer et reinstaller Homebridge ? Vous devrez réinstaller les équipements sur votre appareil iOS (Merci, de supprimer la passerelle Jeedom sur l\'app Home).}}', function(result) {
+			if (result) {
+				$.ajax({
+					type : 'POST',
+					url : 'plugins/mobile/core/ajax/mobile.ajax.php',
+					data : {
+						action : 'repairHomebridge_reinstall',
+					},
+					dataType : 'json',
+					global : false,
+					error : function(request, status, error) {
+						$('#div_alert').showAlert({
+							message : error.message,
+							level : 'danger'
+						});
+					},
+					success : function() {
+						$('#div_alert').showAlert({
+							message : "{{Réinstallation Homebridge effectuée, merci de patienter jusqu'au démarrage du démon}}",
+							level : 'success'
+						});
+					}
+				});
+			}
+		});
+>>>>>>> beta
 	});
 </script>

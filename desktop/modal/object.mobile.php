@@ -129,9 +129,9 @@ sendVarToJS('object', $_GET['object_id']);
             echo '<optgroup label="{{' . $info['family'] . '}}">';
         }
         if($info['key'] == $cmd->getDisplay('generic_type')){
-	        echo '<option value="' . $info['key'] . '" selected>' . $info['name'] . '</option>';
+	        echo '<option value="' . $info['key'] . '" selected>' . $info['type'] . ' / ' . $info['name'] . '</option>';
         }else{
-        	echo '<option value="' . $info['key'] . '">' . $info['name'] . '</option>';
+        	echo '<option value="' . $info['key'] . '">' . $info['type'] . ' / ' . $info['name'] . '</option>';
         }
     }
     echo '</optgroup>';

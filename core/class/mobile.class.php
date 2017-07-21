@@ -160,10 +160,11 @@ class mobile extends eqLogic {
 			$apikey = config::byKey('api');
 		}
 		if(in_array(config::byKey('pin_homebridge','mobile','031-45-154',true),self::DisallowedPIN())) {
-			log::add('mobile', 'error', 'La MAC Homebridge n\'est pas autorisée par Apple'.config::byKey('pin_homebridge','mobile','031-45-154',true));	
+			log::add('mobile', 'error', 'Le PIN Homebridge n\'est pas autorisée par Apple'.config::byKey('pin_homebridge','mobile','031-45-154',true));	
 		}
 		
 		$HomebridgeUserName = config::byKey('mac_homebridge','mobile',self::generateRandomMac(),true);
+		config::save('mac_homebridge',$HomebridgeUserName,'mobile');
 		
 		$response = array();
 		$response['bridge'] = array();

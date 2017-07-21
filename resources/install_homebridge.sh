@@ -76,7 +76,7 @@ echo "--90%"
 #	echo "avahi-daemon non activé au démarrage, activation..."
 #	sudo systemctl enable avahi-daemon
 	echo "Désactivation de avahi-daemon au démarrage...(il démarrera avec le daemon (on contourne le bug de la Smart du 1 jan 1970))"
-	sudo systemctl disable avahi-daemon
+	sudo systemctl disable avahi-daemon > /dev/null 2>&1
 #fi
 sudo sed -i "/.*enable-dbus.*/c\enable-dbus=yes  #changed by homebridge" /etc/avahi/avahi-daemon.conf
 sudo sed -i "/.*use-ipv6.*/c\use-ipv6=no  #changed by homebridge" /etc/avahi/avahi-daemon.conf

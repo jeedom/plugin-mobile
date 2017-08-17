@@ -639,7 +639,10 @@ class mobile extends eqLogic {
 		$all = utils::o2a(planHeader::all());
 		$return = array();
 		foreach ($all as &$plan){
-				$return[]=$plan;	
+          		if ($plan['image'] !== undefined){
+					unset($plan['image']);
+				}
+          		$return[]=$plan;
 		}
 		return $return;
 	}

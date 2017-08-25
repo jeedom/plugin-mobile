@@ -67,8 +67,13 @@ sudo npm install -g https://github.com/jeedom/homebridge-camera-ffmpeg.git#maste
 echo 80 > ${PROGRESS_FILE}
 echo "--80%"
 # copy the avconv ffmpeg wrapper
-sudo cp -n ${nodePath}/homebridge-jeedom/ffmpeg-wrapper /usr/bin/ffmpeg
-sudo chmod +x /usr/bin/ffmpeg
+if [[ `file -bi /usr/bin/ffmpeg` == *"application/x-executable"* ]]; then 
+  echo "FFMPEG existe"; 
+else 
+  echo "FFMPEG n'existe pas, on copie le wrapper pour avconv"; 
+  sudo cp -f ${nodePath}/homebridge-jeedom/ffmpeg-wrapper /usr/bin/ffmpeg
+  sudo chmod +x /usr/bin/ffmpeg
+fi
 echo 90 > ${PROGRESS_FILE}
 echo "--90%"
 #sudo systemctl is-enabled avahi-daemon >/dev/null

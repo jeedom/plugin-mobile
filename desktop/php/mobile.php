@@ -85,7 +85,7 @@ foreach ($eqLogics as $eqLogic) {
     	<?php
     	foreach ($plugins as $plugin){
 			$opacity = '';
-    		if($plugin->getId() != 'mobile'){
+    		if($plugin->getId() != 'mobile' || $plugin->getId() != 'homebridge'){
 				if(in_array($plugin->getId(), $plugin_compatible)){
 					if(in_array($plugin->getId(), $plugin_widget)){
 						$text = '<center><span class="label label-success" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Il est disponible dans la liste des plugins de l\'application, il a aussi une intégration appronfondie sur le dashboard">{{Plugin Spécial}}</span></center>';

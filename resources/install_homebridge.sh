@@ -4,7 +4,6 @@ touch ${PROGRESS_FILE}
 echo 0 > ${PROGRESS_FILE}
 echo "--0%"
 echo "Lancement de l'installation/mise à jour des dépendances homebridge"
-
 sudo apt-get install -y avahi-daemon avahi-discover avahi-utils libnss-mdns libavahi-compat-libdnssd-dev
 echo 10 > ${PROGRESS_FILE}
 echo "--10%"
@@ -67,7 +66,7 @@ sudo npm install -g https://github.com/jeedom/homebridge-camera-ffmpeg.git#maste
 echo 80 > ${PROGRESS_FILE}
 echo "--80%"
 # copy the avconv ffmpeg wrapper
-if [[ `file -bi /usr/bin/ffmpeg` == *"application/x-executable"* ]]; then 
+if [[ `file -bi /usr/bin/ffmpeg` == *"application"* ]]; then 
   echo "FFMPEG existe"; 
 else 
   echo "FFMPEG n'existe pas, on copie le wrapper pour avconv"; 
@@ -78,16 +77,16 @@ echo 90 > ${PROGRESS_FILE}
 echo "--90%"
 #sudo systemctl is-enabled avahi-daemon >/dev/null
 #if [ $? -ne 0 ]; then
-#	echo "avahi-daemon non activé au démarrage, activation..."
-#	sudo systemctl enable avahi-daemon
-	echo "Désactivation de avahi-daemon au démarrage...(il démarrera avec le daemon (on contourne le bug de la Smart du 1 jan 1970))"
-	sudo systemctl disable avahi-daemon > /dev/null 2>&1
+#   echo "avahi-daemon non activé au démarrage, activation..."
+#   sudo systemctl enable avahi-daemon
+    echo "Désactivation de avahi-daemon au démarrage...(il démarrera avec le daemon (on contourne le bug de la Smart du 1 jan 1970))"
+    sudo systemctl disable avahi-daemon > /dev/null 2>&1
 #fi
 sudo sed -i "/.*enable-dbus.*/c\enable-dbus=yes  #changed by homebridge" /etc/avahi/avahi-daemon.conf
 sudo sed -i "/.*use-ipv6.*/c\use-ipv6=no  #changed by homebridge" /etc/avahi/avahi-daemon.conf
 if [ -n $1 ]; then
-	UsedEth=$(ifconfig | awk '/'$1'/ {print $1}' RS="\n\n")
-	sudo sed -i "/.*allow-interfaces.*/c\#allow-interfaces=$UsedEth  #changed by homebridge" /etc/avahi/avahi-daemon.conf
+    UsedEth=$(ifconfig | awk '/'$1'/ {print $1}' RS="\n\n")
+    sudo sed -i "/.*allow-interfaces.*/c\#allow-interfaces=$UsedEth  #changed by homebridge" /etc/avahi/avahi-daemon.conf
 fi
 echo "Installation Homebridge OK"
 echo 100 > ${PROGRESS_FILE}

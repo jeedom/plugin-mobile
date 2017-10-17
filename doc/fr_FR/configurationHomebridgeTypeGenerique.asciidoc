@@ -1,0 +1,142 @@
+==== Lumières
+Support des couleurs basique et buggé, doit être réécrit et documenté
+
+==== Prises
+[options="header",cols=",^m,"]
+|===
+| Type générique | Obligatoire | Valeurs possibles 
+| Info/Prise Etat | OUI | 0 = Eteint 
+
+1 = Allumé
+| Action/Prise Bouton On | OUI | Référence vers l'Etat
+| Action/Prise Bouton Off | OUI | Référence vers l'Etat
+| Action/Prise Slider | NON Utilisé | N/A
+|===
+
+==== Volets
+[options="header",cols=",^m,"]
+|===
+| Type générique | Obligatoire | Valeurs possibles 
+| Info/Volet Etat | OUI | 0 = Fermé 
+
+>95 = Ouvert
+| Action/Volet Bouton Monter | NON Utilisé | N/A
+| Action/Volet Bouton Descendre | NON Utilisé | N/A
+| Action/Volet Bouton Stop | NON Utilisé | N/A
+| Action/Volet Bouton Slider | OUI | Référence vers l'Etat
+|===
+
+==== Volets BSO
+Pas encore supportés
+
+==== Chauffage fil pilote
+N'existe pas en HomeKit
+
+==== Serrures
+[options="header",cols=",^m,"]
+|===
+| Type générique | Obligatoire | Valeurs possibles 
+| Info/Serrure Etat | OUI | pas 1 = Non Sécurisée 
+
+1 = Sécurisée
+| Action/Serrure Bouton Ouvrir | OUI | Référence vers l'Etat
+| Action/Serrure Bouton Fermer | OUI | Référence vers l'Etat
+|===
+
+==== Sirènes
+N'existe pas en HomeKit
+
+==== Thermostats
+Support basique, aucune configuration
+
+==== Cameras
+Support par "Plateforme Homebridge supplémentaire"
+
+==== Modes
+N'existe pas en HomeKit
+
+==== Alarmes
+Support en lecture d'état, changement d'état à venir
+
+==== Météo
+Pas encore supporté (certains éléments existent en HomeKit mais pas tous)
+
+==== Portails ou Garages
+[options="header",cols=",^m,"]
+|===
+| Type générique | Obligatoire | Valeurs possibles 
+| Info/Portail état ouvrant
+
+Info/Garage état ouvrant
+
+(même traitement)| OUI | 0 = Fermé 
+
+252 = Fermeture en cours
+
+253 = Stoppé
+
+254 = Ouverture en cours
+
+255 = Ouvert
+| Action/Portail ou garage bouton toggle | OUI | Référence vers l'Etat
+| Action/Portail ou garage bouton d'ouverture | NON Utilisé | N/A
+| Action/Portail ou garage bouton de fermeture | NON Utilisé | N/A
+|===
+
+==== Generic
+[options="header",cols=",^m,"]
+|===
+| Type générique | Obligatoire | Valeurs possibles 
+| Info/Puissance Electrique | NON | Watts
+| Info/Consommation Electrique
+
+(cachée)| NON | KWh
+| Info/Température | NON | -50->100 °C 
+| Info/Luminosité | NON | 0.0001-> 100000 lux
+| Info/Présence | NON | 0 = Pas de mouvement
+
+1 = Mouvement
+| Info/Batterie
+
+(caché)| NON | %
+| Info/Batterie en charge
+
+(caché, à venir)| NON | 0 = NON
+
+pas 0 = OUI
+| Info/Détection de fumée | NON | pas 1 = Pas de fumée détectée
+
+1 = fumée détectée
+| Info/Inondation | NON | pas 1 = Pas de fuite détectée
+
+1 = fuite détectée
+| Info/Humidité | NON | %
+| Info/Porte
+
+Info/Fenêtre
+
+(même traitement)| NON | pas 1 = Contact
+
+1 = Pas de contact
+| Info/Sabotage 
+
+(à venir)| NON | 0 = Pas de sabotage
+
+pas 0 = Sabotage
+| Info/Choc 
+
+(N'existe pas en HomeKit)| NON | N/A
+| Info/Générique 
+
+(N'existe pas en HomeKit)| NON | N/A
+| Action/Générique 
+
+(N'existe pas en HomeKit)| NON | N/A
+
+|===
+
+
+[IMPORTANT]
+Les références vers l'état dans les actions est primordiale !! sinon pas de lien entre l'état et ses actions possible.
+
+image::../images/reference-etat.png[]

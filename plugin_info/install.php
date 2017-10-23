@@ -16,30 +16,9 @@
  */
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 function mobile_update(){
-    $ios = 0;
-        foreach (eqLogic::byType('mobile') as $mobile){
-        if($mobile->getLogicalId() == null || $mobile->getLogicalId() == ""){
-            $mobile->remove();
-        }else{
-            if($mobile->getConfiguration('type_mobile') == "ios"){
-                $HBExists = true;
-				try {
-					$pluginHB = plugin::byId('homebridge');
-					if(!$pluginHB->isActive()){
-						$HBExists = false;
-					}
-				} catch (Exception $e) {
-					$HBExists = false;
-				}
-                if(!$HBExists){
-			$ios=1;
-		}
-            }
-        }
-    }
-    if($ios == 1){
-        $pluginmobile = plugin::byId('mobile');
-        $pluginmobile->dependancy_install();
-    }
+	foreach (eqLogic::byType('mobile') as $mobile){
+	if($mobile->getLogicalId() == null || $mobile->getLogicalId() == ""){
+		$mobile->remove();
+	}
 }
 ?>

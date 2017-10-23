@@ -7,8 +7,6 @@
 	"author" : "Jeedom",
 	"require" : "3.0",
 	"installation" : "Aucune",
-	"hasDependency" : 1,
-	"hasOwnDeamon" : 1,
 	"category" : "communication",
 	"version" : "0.4"
 }

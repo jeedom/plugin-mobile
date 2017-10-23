@@ -30,27 +30,6 @@ try {
 		mobile::updatemobile();
 		ajax::success();
 	}
-	if (init('action') == 'repairHomebridge'){
-		mobile::repairHomebridge(false);
-		ajax::success();
-	}
-	if (init('action') == 'repairHomebridge_reinstall'){
-		mobile::repairHomebridge(true);
-		ajax::success();
-	}
-	
-	if (init('action') == 'regenerateHomebridgeConf') {
-		mobile::generate_file();
-		ajax::success();
-	}
-	if (init('action') == 'getJSON') {
-		$file = mobile::getJSON();
-		ajax::success($file);
-	}
-	if (init('action') == 'saveJSON') {
-		$ret = mobile::saveJSON(init('file'));
-		ajax::success($ret);
-	}
 	if (init('action') == 'getQrCode') {
 		$eqLogic = mobile::byId(init('id'));
 		if (!is_object($eqLogic)) {

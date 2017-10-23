@@ -8,20 +8,10 @@ include::configurationMobile.asciidoc[]
 
 include::configurationTypeGenerique.asciidoc[]
 
-= Homebridge
-
-include::presentationHomebridge.asciidoc[]
-
-include::demonHomebridge.asciidoc[]
-
-include::configurationHomebridge.asciidoc[]
-
 = Fehlersuche
 
 include::TroubleshootingMobile.asciidoc[]
 
-include::TroubleshootingHomebridge.asciidoc[]
-
 include::changelog.asciidoc[]
 
-Um mehr über den Fortschritt der Mobilen App zu lesen, Klicken Sie hier > https://github.com/jeedom/issues/projects/2?fullscreen=true
+En savoir plus sur l'avancement de l'application Mobile cliquez-ici > https://github.com/jeedom/issues-app/projects/1?fullscreen=true

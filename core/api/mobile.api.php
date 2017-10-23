@@ -118,45 +118,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 	$jsonrpc->makeSuccess($sync_array);
 }
 
-if ($jsonrpc->getMethod() == 'sync_homebridge') {
-	log::add('mobile', 'debug', 'Demande de Sync Homebridge');
-	$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($PluginToSend),mobile::discovery_eqLogic($PluginToSend));
-	log::add('mobile', 'debug', 'Sync cmd et eqlogics > '.json_encode($sync_new));
-	$eqLogics = $sync_new[1]['eqLogics'];
-	$cmds = $sync_new[0];
-	/*
-	$i = 0;
-	foreach($eqLogics as $eqLogic){
-                if(isset($eqLogic["sendToHomebridge"])){
-                        if($eqLogic["sendToHomebridge"] == 0){
-                                unset($eqLogics[$i]);
-                        }
-                }
-        $i++;   
-        }
-	*/
-        $eqLogics = array_values($eqLogics);
-	
-	$objects = mobile::delete_object_eqlogic_null(mobile::discovery_object(),$eqLogics);
-	
-	$sync_array = array(
-		'eqLogics' => $eqLogics,
-		'cmds' => $cmds['cmds'],
-		'objects' => $objects,
-		'config' => array('datetime' => getmicrotime()),
-	);
-	
-	log::add('mobile', 'debug', 'Demande de Sync Homebridge');
-	//if (file_exists($filename)) {
-    //	unlink($filename);
-	//}
-	//$fp = fopen($filename, 'w');
-	//fwrite($fp, json_encode($sync_array));
-	//fclose($fp);
-	$jsonrpc->makeSuccess($sync_array);
-}
 
-// HOMEBRIDGE API
 // Eqlogic byId
 if ($jsonrpc->getMethod() == 'cmdsbyEqlogicID') {
 	log::add('mobile', 'debug', 'Interogation du module id:'.$params['id'].' Pour les cmds');

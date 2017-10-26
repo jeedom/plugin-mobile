@@ -27,11 +27,12 @@ if (!is_object($jsonrpc)) {
 $params = $jsonrpc->getParams();
 $PluginToSend = mobile::PluginToSend();
 //$filename = dirname(__FILE__) . '/../../../../tmp/syncHomebridge.txt';
+log::add('mobile', 'debug', 'Appel API Mobile > '.$jsonrpc->getMethod());
 
 if ($jsonrpc->getMethod() == 'sync') {
 	log::add('mobile', 'debug', 'Demande de Sync');
 	$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($PluginToSend),mobile::discovery_eqLogic($PluginToSend));
-	log::add('mobile', 'debug', 'Sync cmd et eqlogics > '.json_encode($sync_new));
+	//log::add('mobile', 'debug', 'Sync cmd et eqlogics > '.json_encode($sync_new));
 	$eqLogics = $sync_new[1];
 	$cmds = $sync_new[0];
 	
@@ -39,7 +40,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 	
 	$objects = mobile::delete_object_eqlogic_null(mobile::discovery_object(),$eqLogics['eqLogics']);
 	
-	if($params['Iq'] != ''){
+	if($params['Iq'] != '' || $params['Iq'] != null || $params['Iq'] != 'undefined' || $params['Iq'] != 'null'){
 		log::add('mobile', 'debug', 'IQ disponible');
 		if(isset($params['notificationProvider']) || $params['notificationProvider'] != ''){
 			log::add('mobile', 'debug', 'notificationProvider Disponible');
@@ -74,7 +75,9 @@ if ($jsonrpc->getMethod() == 'sync') {
 				$mobile->setConfiguration('validate',no);
 				$mobile->setConfiguration('notificationArn',substr($params['notificationProvider'],1,-1));
 				$mobile->setIsEnable(1);
-				$mobile->setLogicalId($params['Iq']);
+				$key = config::genKey(32);
+				$mobile->setLogicalId($key);
+				$params['Iq'] = $key;
 				$mobile->save();
 				
 			}
@@ -163,7 +166,7 @@ if ($jsonrpc->getMethod() == 'Iq') {
 }
 
 if($jsonrpc->getMethod() == 'IqValidation'){
-	$mobile = eqLogic::byLogicalId($params['Iq']);
+	$mobile = eqLogic::byLogicalId($params['Iq'],'mobile');
 	if(is_object($mobile)){
 		$mobile->setConfiguration('validate',yes);
 		$mobile->save();
@@ -172,12 +175,10 @@ if($jsonrpc->getMethod() == 'IqValidation'){
 		$jsonrpc->makeSuccess('not_iq');
 	}
 }
-
 if ($jsonrpc->getMethod() == 'version') {
 	$mobile_update = update::byLogicalId('mobile');
 	$jsonrpc->makeSuccess($mobile_update->getLocalVersion());	
 }
-
 if ($jsonrpc->getMethod() == 'event') {
 	$eqLogic = eqLogic::byId($params['eqLogic_id']);
 	if (!is_object($eqLogic)) {
@@ -189,6 +190,21 @@ if ($jsonrpc->getMethod() == 'event') {
 	}
 	$cmd->event($params['value']);
 	$jsonrpc->makeSuccess();
+}
+// ASK
+if($jsonrpc->getMethod() == 'askText'){
+	log::add('mobile', 'debug', 'arriver reponse ask Textuel depuis le mobile > '.$params['Iq']);
+	$mobile = eqLogic::byLogicalId($params['Iq'],'mobile');
+	log::add('mobile', 'debug', 'mobile >'.json_encode($mobile));
+	if(is_object($mobile)){
+		log::add('mobile', 'debug', 'cest bien un object');
+		$cmd = $mobile->getCmd(null, 'ask_Text');
+		log::add('mobile', 'debug', 'IQ > '.$params['Iq'].' demande cmd > '.$cmd->getId());
+		if ($cmd->askResponse($params['text'])) {
+			log::add('mobile', 'debug', 'ask bien trouvé réponse validée');
+			$jsonrpc->makeSuccess();
+		}
+	}
 }
 
 throw new Exception(__('Aucune demande', __FILE__));

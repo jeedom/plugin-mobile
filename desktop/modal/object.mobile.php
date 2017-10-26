@@ -54,13 +54,6 @@ sendVarToJS('object', $_GET['object_id']);
 		$checkHomebridge = '';
 		echo '<div class="panel-group" id="accordionConfiguration">';
 		foreach ($eqLogics as $eqLogic){
-			if(mobile::check_ios() == 1){
-				$check = 'checked';
-				if ($eqLogic->getConfiguration('sendToHomebridge', 1) == 0) {
-					$check = 'unchecked';
-				}
-				$checkHomebridge = '<small><label style="cursor:default;margin-left:5px">{{  Envoyer à Homebridge  }}<input style="display:inline-block" type="checkbox" class="eqLogicAttr configuration" data-l1key="configuration" data-l2key="sendToHomebridge"' . $check .'/></label></small>';;
-			}
 		echo '<div class="panel panel-default">';
 		echo ' <div class="panel-heading">
                 <h3 class="panel-title">

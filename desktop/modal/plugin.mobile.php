@@ -25,7 +25,7 @@ $plugin = plugin::byId($_GET['plugin_id']);
 sendVarToJS('pluginId', $_GET['plugin_id']);
 ?>
 
-<div class="row row-overflow">
+<div class="row">
 	<center>
 		<?php
 					if (file_exists(dirname(__FILE__) . '/../../../../' . $plugin->getPathImgIcon())) {

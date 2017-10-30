@@ -496,10 +496,10 @@ class mobile extends eqLogic {
         if (!is_object($cmd)) {
 			$cmd = new mobileCmd();
 			$cmd->setLogicalId('notif');
-			$cmd->setName(__('Notification', __FILE__));
-			$cmd->setIsVisible(1);
-			$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
 		}
+	    	$cmd->setName(__('Notification', __FILE__));
+		$cmd->setIsVisible(1);
+		$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
 		$cmd->setOrder(0);
 		$cmd->setType('action');
 		$cmd->setSubType('message');
@@ -510,10 +510,10 @@ class mobile extends eqLogic {
         if (!is_object($cmd)) {
 			$cmd = new mobileCmd();
 			$cmd->setLogicalId('ask_Text');
-			$cmd->setName(__('Notification Ask Textuel', __FILE__));
-			$cmd->setIsVisible(1);
-			$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
 		}
+	    	$cmd->setName(__('Notification Ask Textuel', __FILE__));
+		$cmd->setIsVisible(1);
+		$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
 		$cmd->setOrder(1);
 		$cmd->setType('action');
 		$cmd->setSubType('message');
@@ -524,11 +524,11 @@ class mobile extends eqLogic {
         if (!is_object($cmd)) {
 			$cmd = new mobileCmd();
 			$cmd->setLogicalId('ask_YN');
-			$cmd->setName(__('Notification Ask Oui/Non', __FILE__));
-			$cmd->setIsVisible(1);
-			$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
 		}
-		$cmd->setOrder(1);
+	    	$cmd->setName(__('Notification Ask Oui/Non', __FILE__));
+		$cmd->setIsVisible(1);
+		$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
+		$cmd->setOrder(2);
 		$cmd->setType('action');
 		$cmd->setSubType('message');
 		$cmd->setEqLogic_id($this->getId());

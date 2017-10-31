@@ -567,6 +567,9 @@ class mobileCmd extends cmd {
 		log::add('mobile', 'debug', 'Notif > '.json_encode($_options).' / '.$eqLogic->getId().' / '.$this->getLogicalId(), 'config');
 		if($this->getLogicalId() == 'notif') {
 			log::add('mobile', 'debug', 'Commande de notification ', 'config');
+			if($_options['title'] == '' || $_options['title'] == $_options['message']){
+				$_options['title'] = 'Jeedom';
+			}
 			if($arn != null && $os != null){
 				mobile::notification($arn,$os,$_options['title'],$_options['message'],null,'notif');
 				log::add('mobile', 'debug', 'Action : Envoi d\'une configuration ', 'config');

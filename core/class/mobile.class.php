@@ -439,9 +439,9 @@ class mobile extends eqLogic {
 				$addAsk = '\"category\":\"INVITE_CATEGORY\",';
 			}
 			if($badge == 'null'){
-				$publish = '{"default": "Erreur de texte de notification","APNS": "{\"aps\":{'.$addAsk.'\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"badge\":'.$badge.',\"sound\":\"silence.caf\"},\"date\":\"'.date("Y-m-d H:i:s").'\"}"}';
+				$publish = '{"default": "Erreur de texte de notification","APNS": "{\"aps\":{\"content-available\":\"1\",'.$addAsk.'\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"badge\":'.$badge.',\"sound\":\"silence.caf\"},\"date\":\"'.date("Y-m-d H:i:s").'\"}"}';
 			}else{
-				$publish = '{"default": "test", "APNS": "{\"aps\":{'.$addAsk.'\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"sound\":\"silence.caf\"},\"date\":\"'.date("Y-m-d H:i:s").'\"}"}';
+				$publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",'.$addAsk.'\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"sound\":\"silence.caf\"},\"date\":\"'.date("Y-m-d H:i:s").'\"}"}';
 			}
 		}else if($os == 'android'){
 			$publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"data\": {\"notificationId\":\"'.rand(3, 5).'\",\"title\":\"'.$titre.'\",\"text\":\"'.$message.'\",\"vibrate\":\"true\",\"lights\":\"true\" } }"}';
@@ -480,18 +480,7 @@ class mobile extends eqLogic {
 	/*                         Permet de creer l'ID Unique du téléphone                   */
 	/*                                                                                    */
 	/**************************************************************************************/
-	
-	public function postInsert() {
-		$key = config::genKey(32);
-		$this->setLogicalId($key);
-		$this->save();
-	}
-	
-	public function postSave() {
-		$this->crea_cmd();
-	}
-    
-    function crea_cmd() {
+    public function crea_cmd() {
     	$cmd = $this->getCmd(null, 'notif');
         if (!is_object($cmd)) {
 			$cmd = new mobileCmd();
@@ -535,6 +524,15 @@ class mobile extends eqLogic {
 		$cmd->save();
 
     }
+	public function postInsert() {
+		$key = config::genKey(32);
+		$this->setLogicalId($key);
+		$this->save();
+	}
+	
+	public function postSave() {
+		$this->crea_cmd();
+	}
 	
 
 	/*     * *********************Méthodes d'instance************************* */

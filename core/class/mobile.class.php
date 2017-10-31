@@ -533,6 +533,9 @@ class mobile extends eqLogic {
 	public function postSave() {
 		$this->crea_cmd();
 	}
+	public function postUpdate(){
+		$this->crea_cmd();
+	}
 	
 
 	/*     * *********************Méthodes d'instance************************* */

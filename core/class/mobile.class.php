@@ -480,50 +480,6 @@ class mobile extends eqLogic {
 	/*                         Permet de creer l'ID Unique du téléphone                   */
 	/*                                                                                    */
 	/**************************************************************************************/
-    public function crea_cmd() {
-    	$cmd = $this->getCmd(null, 'notif');
-        if (!is_object($cmd)) {
-			$cmd = new mobileCmd();
-			$cmd->setLogicalId('notif');
-		}
-	    	$cmd->setName(__('Notification', __FILE__));
-		$cmd->setIsVisible(1);
-		$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
-		$cmd->setOrder(0);
-		$cmd->setType('action');
-		$cmd->setSubType('message');
-		$cmd->setEqLogic_id($this->getId());
-		$cmd->save();
-		
-		$cmd = $this->getCmd(null, 'ask_Text');
-        if (!is_object($cmd)) {
-			$cmd = new mobileCmd();
-			$cmd->setLogicalId('ask_Text');
-		}
-	    	$cmd->setName(__('Notification Ask Textuel', __FILE__));
-		$cmd->setIsVisible(1);
-		$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
-		$cmd->setOrder(1);
-		$cmd->setType('action');
-		$cmd->setSubType('message');
-		$cmd->setEqLogic_id($this->getId());
-		$cmd->save();
-		
-		$cmd = $this->getCmd(null, 'ask_YN');
-        if (!is_object($cmd)) {
-			$cmd = new mobileCmd();
-			$cmd->setLogicalId('ask_YN');
-		}
-	    	$cmd->setName(__('Notification Ask Oui/Non', __FILE__));
-		$cmd->setIsVisible(1);
-		$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
-		$cmd->setOrder(2);
-		$cmd->setType('action');
-		$cmd->setSubType('message');
-		$cmd->setEqLogic_id($this->getId());
-		$cmd->save();
-
-    }
 	public function postInsert() {
 		$key = config::genKey(32);
 		$this->setLogicalId($key);
@@ -531,10 +487,47 @@ class mobile extends eqLogic {
 	}
 	
 	public function postSave() {
-		$this->crea_cmd();
-	}
-	public function postUpdate(){
-		$this->crea_cmd();
+		$cmd_Notif = $this->getCmd(null, 'notif');
+        	if (!is_object($cmd_Notif)) {
+			$cmd_Notif = new mobileCmd();
+			$cmd_Notif->setLogicalId('notif');
+			$cmd_Notif->setName(__('Notification', __FILE__));
+			$cmd_Notif->setOrder(0);
+			$cmd_Notif->setEqLogic_id($this->getId());
+			$cmd_Notif->setDisplay('generic_type', 'GENERIC_ACTION');
+			$cmd_Notif->setType('action');
+			$cmd_Notif->setSubType('message');
+		}
+		$cmd_Notif->setIsVisible(1);
+		$cmd_Notif->save();
+		
+		$cmd_AskText = $this->getCmd(null, 'ask_Text');
+        	if (!is_object($cmd_AskText)) {
+			$cmd_AskText = new mobileCmd();
+			$cmd_AskText->setLogicalId('ask_Text');
+			$cmd_AskText->setName(__('Notification Ask Textuel', __FILE__));
+			$cmd_AskText->setDisplay('generic_type', 'GENERIC_ACTION');
+			$cmd_AskText->setOrder(1);
+			$cmd_AskText->setType('action');
+			$cmd_AskText->setSubType('message');
+			$cmd_AskText->setEqLogic_id($this->getId());
+		}
+		$cmd_AskText->setIsVisible(1);
+		$cmd_AskText->save();
+		
+		$cmd_AskYN = $this->getCmd(null, 'ask_YN');
+        	if (!is_object($cmd_AskYN)) {
+			$cmd_AskYN = new mobileCmd();
+			$cmd_AskYN->setLogicalId('ask_YN');
+			$cmd_AskYN->setName(__('Notification Ask Oui/Non', __FILE__));
+			$cmd_AskYN->setDisplay('generic_type', 'GENERIC_ACTION');
+			$cmd_AskYN->setOrder(2);
+			$cmd_AskYN->setType('action');
+			$cmd_AskYN->setSubType('message');
+			$cmd_AskYN->setEqLogic_id($this->getId());
+		}
+		$cmd_AskYN->setIsVisible(1);
+		$cmd_AskYN->save();
 	}
 	
 

@@ -430,7 +430,7 @@ class mobile extends eqLogic {
 	/*                                                                                    */
 	/**************************************************************************************/
 	
-	public static function jsonPublish($os,$titre,$message,$badge = 'null',$type){
+	public static function jsonPublish($os,$titre,$message,$badge = 'null',$type,$idNotif){
 		if($os == 'ios'){
 				$addAsk = '';
 			if($type == 'ask_Text'){
@@ -439,28 +439,28 @@ class mobile extends eqLogic {
 				$addAsk = '\"category\":\"INVITE_CATEGORY\",';
 			}
 			if($badge == 'null'){
-				$publish = '{"default": "Erreur de texte de notification","APNS": "{\"aps\":{\"content-available\":\"1\",'.$addAsk.'\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"badge\":'.$badge.',\"sound\":\"silence.caf\"},\"date\":\"'.date("Y-m-d H:i:s").'\"}"}';
+				$publish = '{"default": "Erreur de texte de notification","APNS": "{\"aps\":{\"content-available\":\"1\",'.$addAsk.'\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"badge\":'.$badge.',\"sound\":\"silence.caf\"},\"date\":\"'.date("Y-m-d H:i:s").'\",\"idNotif\":\"'.$idNotif.'\"}"}';
 			}else{
-				$publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",'.$addAsk.'\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"sound\":\"silence.caf\"},\"date\":\"'.date("Y-m-d H:i:s").'\"}"}';
+				$publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",'.$addAsk.'\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"sound\":\"silence.caf\"},\"date\":\"'.date("Y-m-d H:i:s").'\",\"idNotif\":\"'.$idNotif.'\"}"}';
 			}
 		}else if($os == 'android'){
-			$publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"data\": {\"notificationId\":\"'.rand(3, 5).'\",\"title\":\"'.$titre.'\",\"text\":\"'.$message.'\",\"vibrate\":\"true\",\"lights\":\"true\" } }"}';
+			$publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"data\": {\"notificationId\":\"'.rand(3, 5).'\",\"title\":\"'.$titre.'\",\"text\":\"'.$message.'\",\"vibrate\":\"true\",\"lights\":\"true\",\"idNotif\":\"'.$idNotif.'\"}}"}';
 		}else if($os == 'microsoft'){
 			
 		}
 		return $publish;
 	}
 	
-	public static function notification($arn,$os,$titre,$message,$badge = 'null',$type){
+	public static function notification($arn,$os,$titre,$message,$badge = 'null',$type,$idNotif){
 		log::add('mobile', 'debug', 'notification en cours !');
 		if($badge == 'null'){
-			$publish = mobile::jsonPublish($os,$titre,$message,$badge,$type);
+			$publish = mobile::jsonPublish($os,$titre,$message,$badge,$type,$idNotif);
 		}else{
-			$publish = mobile::jsonPublish($os,$titre,$message,$badge,$type);
+			$publish = mobile::jsonPublish($os,$titre,$message,$badge,$type,$idNotif);
 		}
 		log::add('mobile', 'debug', 'JSON envoyé : '.$publish);
 		$post = [
-			'id' => '1',
+			'id' => $idNotif,
 			'type' => $os,
 			'arn' => $arn,
 			'publish' => $publish 
@@ -554,17 +554,20 @@ class mobileCmd extends cmd {
 		$eqLogic = $this->getEqLogic();
 		$arn = $eqLogic->getConfiguration('notificationArn', null);
 		$os = $eqLogic->getConfiguration('type_mobile', null);
+		$idNotif = $eqLogic->getConfiguration('idNotif', 0);
         if ($this->getType() != 'action') {
 			return;
 		}
 		log::add('mobile', 'debug', 'Notif > '.json_encode($_options).' / '.$eqLogic->getId().' / '.$this->getLogicalId(), 'config');
 		if($this->getLogicalId() == 'notif') {
 			log::add('mobile', 'debug', 'Commande de notification ', 'config');
-			if($_options['title'] == '' || $_options['title'] == $_options['message']){
+			if($_options['title'] == '' || $_options['title'] == $_options['message'] || $_options['title'] == ' '){
 				$_options['title'] = 'Jeedom';
 			}
 			if($arn != null && $os != null){
-				mobile::notification($arn,$os,$_options['title'],$_options['message'],null,'notif');
+				$idNotif = $idNotif++;
+				$eqLogic->setConfiguration('idNotif', $idNotif);
+				mobile::notification($arn,$os,$_options['title'],$_options['message'],null,'notif',$idNotif);
 				log::add('mobile', 'debug', 'Action : Envoi d\'une configuration ', 'config');
 			}else{
 				log::add('mobile', 'debug', 'ARN non configuré ', 'config');	
@@ -572,7 +575,9 @@ class mobileCmd extends cmd {
 		}else if($this->getLogicalId() == 'ask_Text'){
 			log::add('mobile', 'debug', 'Commande de notification ask Textuel', 'config');
 			if($arn != null && $os != null){
-				mobile::notification($arn,$os,$_options['title'],$_options['message'],null,'ask_Text');
+				$idNotif = $idNotif++;
+				$eqLogic->setConfiguration('idNotif', $idNotif);
+				mobile::notification($arn,$os,$_options['title'],$_options['message'],null,'ask_Text',$idNotif);
 				log::add('mobile', 'debug', 'Action : Envoi d\'une configuration ', 'config');
 			}else{
 				log::add('mobile', 'debug', 'ARN non configuré ', 'config');	
@@ -580,7 +585,9 @@ class mobileCmd extends cmd {
 		}else if($this->getLogicalId() == 'ask_YN'){
 			log::add('mobile', 'debug', 'Commande de notification ask YN', 'config');
 			if($arn != null && $os != null){
-				mobile::notification($arn,$os,$_options['title'],$_options['message'],null,'ask_YN');
+				$idNotif = $idNotif++;
+				$eqLogic->setConfiguration('idNotif', $idNotif);
+				mobile::notification($arn,$os,$_options['title'],$_options['message'],null,'ask_YN',$idNotif);
 				log::add('mobile', 'debug', 'Action : Envoi d\'une configuration ', 'config');
 			}else{
 				log::add('mobile', 'debug', 'ARN non configuré ', 'config');	

@@ -558,15 +558,16 @@ class mobileCmd extends cmd {
         if ($this->getType() != 'action') {
 			return;
 		}
-		log::add('mobile', 'debug', 'Notif > '.json_encode($_options).' / '.$eqLogic->getId().' / '.$this->getLogicalId(), 'config');
+		log::add('mobile', 'debug', 'Notif > '.json_encode($_options).' / '.$eqLogic->getId().' / '.$this->getLogicalId().' / idNotif ='.$idNotif, 'config');
 		if($this->getLogicalId() == 'notif') {
 			log::add('mobile', 'debug', 'Commande de notification ', 'config');
 			if($_options['title'] == '' || $_options['title'] == $_options['message'] || $_options['title'] == ' '){
 				$_options['title'] = 'Jeedom';
 			}
 			if($arn != null && $os != null){
-				$idNotif = $idNotif++;
+				$idNotif = $idNotif+1;
 				$eqLogic->setConfiguration('idNotif', $idNotif);
+				$eqLogic->save();
 				mobile::notification($arn,$os,$_options['title'],$_options['message'],null,'notif',$idNotif);
 				log::add('mobile', 'debug', 'Action : Envoi d\'une configuration ', 'config');
 			}else{
@@ -575,8 +576,9 @@ class mobileCmd extends cmd {
 		}else if($this->getLogicalId() == 'ask_Text'){
 			log::add('mobile', 'debug', 'Commande de notification ask Textuel', 'config');
 			if($arn != null && $os != null){
-				$idNotif = $idNotif++;
+				$idNotif = $idNotif+1;
 				$eqLogic->setConfiguration('idNotif', $idNotif);
+				$eqLogic->save();
 				mobile::notification($arn,$os,$_options['title'],$_options['message'],null,'ask_Text',$idNotif);
 				log::add('mobile', 'debug', 'Action : Envoi d\'une configuration ', 'config');
 			}else{
@@ -585,8 +587,9 @@ class mobileCmd extends cmd {
 		}else if($this->getLogicalId() == 'ask_YN'){
 			log::add('mobile', 'debug', 'Commande de notification ask YN', 'config');
 			if($arn != null && $os != null){
-				$idNotif = $idNotif++;
+				$idNotif = $idNotif+1;
 				$eqLogic->setConfiguration('idNotif', $idNotif);
+				$eqLogic->save();
 				mobile::notification($arn,$os,$_options['title'],$_options['message'],null,'ask_YN',$idNotif);
 				log::add('mobile', 'debug', 'Action : Envoi d\'une configuration ', 'config');
 			}else{

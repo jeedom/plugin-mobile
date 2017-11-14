@@ -434,9 +434,9 @@ class mobile extends eqLogic {
 		if($os == 'ios'){
 				$addAsk = '';
 			if($type == 'ask_Text'){
-				$addAsk = '\"category\":\"TEXT_CATEGORY\",\"answer\":\"'.$answer'\",';
+				$addAsk = '\"category\":\"TEXT_CATEGORY\",\"answer\":\"'.$answer.'\",';
 			}else if($type == 'ask_YN'){
-				$addAsk = '\"category\":\"INVITE_CATEGORY\",\"answer\":\"'.$answer'\",';
+				$addAsk = '\"category\":\"INVITE_CATEGORY\",\"answer\":\"'.$answer.'\",';
 			}
 			if($badge == 'null'){
 				$publish = '{"default": "Erreur de texte de notification","APNS": "{\"aps\":{\"content-available\":\"1\",'.$addAsk.'\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"badge\":'.$badge.',\"sound\":\"silence.caf\"},\"date\":\"'.date("Y-m-d H:i:s").'\",\"idNotif\":\"'.$idNotif.'\"}"}';

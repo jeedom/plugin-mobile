@@ -434,7 +434,7 @@ class mobile extends eqLogic {
 		if($os == 'ios'){
 				$addAsk = '';
 			if($type == 'ask_Text'){
-				$addAsk = '\"category\":\"TEXT_CATEGORY\",\"answer\":\"'.$answer.'\",';
+				$addAsk = '\"category\":\"TEXT_CATEGORY\",\"answer\":\"'.$answer.'\",\"timeout\":\"'.$timeout.'\",';
 			}
 			if($badge == 'null'){
 				$publish = '{"default": "Erreur de texte de notification","APNS": "{\"aps\":{\"content-available\":\"1\",'.$addAsk.'\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"badge\":'.$badge.',\"sound\":\"silence.caf\"},\"date\":\"'.date("Y-m-d H:i:s").'\",\"idNotif\":\"'.$idNotif.'\"}"}';
@@ -449,12 +449,12 @@ class mobile extends eqLogic {
 		return $publish;
 	}
 	
-	public static function notification($arn,$os,$titre,$message,$badge = 'null',$type,$idNotif,$answer){
+	public static function notification($arn,$os,$titre,$message,$badge = 'null',$type,$idNotif,$answer,$timeout){
 		log::add('mobile', 'debug', 'notification en cours !');
 		if($badge == 'null'){
-			$publish = mobile::jsonPublish($os,$titre,$message,$badge,$type,$idNotif,$answer);
+			$publish = mobile::jsonPublish($os,$titre,$message,$badge,$type,$idNotif,$answer,$timeout);
 		}else{
-			$publish = mobile::jsonPublish($os,$titre,$message,$badge,$type,$idNotif,$answer);
+			$publish = mobile::jsonPublish($os,$titre,$message,$badge,$type,$idNotif,$answer,$timeout);
 		}
 		log::add('mobile', 'debug', 'JSON envoyé : '.$publish);
 		$post = [
@@ -536,6 +536,7 @@ class mobileCmd extends cmd {
 		$os = $eqLogic->getConfiguration('type_mobile', null);
 		$idNotif = $eqLogic->getConfiguration('idNotif', 0);
 		$askType = 'notif';
+		$timeout = 'nok';
         if ($this->getType() != 'action') {
 			return;
 		}
@@ -551,12 +552,15 @@ class mobileCmd extends cmd {
 				$askType = "ask_Text";
 				$answer = join(';',$_options['answer']);
 			}
+			if($_options['timeout']){
+				$timeout = $_options['timeout'];
+			}
 			log::add('mobile', 'debug', 'Commande de notification '.$askType, 'config');
 			if($arn != null && $os != null){
 				$idNotif = $idNotif+1;
 				$eqLogic->setConfiguration('idNotif', $idNotif);
 				$eqLogic->save();
-				mobile::notification($arn,$os,$_options['title'],$_options['message'],null,$askType,$idNotif,$answer);
+				mobile::notification($arn,$os,$_options['title'],$_options['message'],null,$askType,$idNotif,$answer,$timeout);
 				log::add('mobile', 'debug', 'Action : Envoi d\'une configuration ', 'config');
 			}else{
 				log::add('mobile', 'debug', 'ARN non configuré ', 'config');	

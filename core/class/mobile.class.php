@@ -435,8 +435,6 @@ class mobile extends eqLogic {
 				$addAsk = '';
 			if($type == 'ask_Text'){
 				$addAsk = '\"category\":\"TEXT_CATEGORY\",\"answer\":\"'.$answer.'\",';
-			}else if($type == 'ask_YN'){
-				$addAsk = '\"category\":\"INVITE_CATEGORY\",\"answer\":\"'.$answer.'\",';
 			}
 			if($badge == 'null'){
 				$publish = '{"default": "Erreur de texte de notification","APNS": "{\"aps\":{\"content-available\":\"1\",'.$addAsk.'\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"badge\":'.$badge.',\"sound\":\"silence.caf\"},\"date\":\"'.date("Y-m-d H:i:s").'\",\"idNotif\":\"'.$idNotif.'\"}"}';
@@ -533,7 +531,6 @@ class mobileCmd extends cmd {
 											 */
 
 	public function execute($_options = array()) {
-		$tableNotif = ["oui;non","non;oui","yes;no","no;yes","si;no","no;si"];
 		$eqLogic = $this->getEqLogic();
 		$arn = $eqLogic->getConfiguration('notificationArn', null);
 		$os = $eqLogic->getConfiguration('type_mobile', null);
@@ -551,11 +548,7 @@ class mobileCmd extends cmd {
 			}
 			$answer = null;
 			if($_options['answer']){
-				if(in_array(strtolower(join(';',$_options['answer'])),$tableNotif)){
-					$askType = "ask_YN";
-				}else{
-					$askType = "ask_Text";
-				}
+				$askType = "ask_Text";
 				$answer = join(';',$_options['answer']);
 			}
 			log::add('mobile', 'debug', 'Commande de notification '.$askType, 'config');

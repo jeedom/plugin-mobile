@@ -430,16 +430,21 @@ class mobile extends eqLogic {
 	/*                                                                                    */
 	/**************************************************************************************/
 	
+	
 	public static function jsonPublish($os,$titre,$message,$badge = 'null',$type,$idNotif,$answer,$timeout){
+		$dateNotif = date("Y-m-d H:i:s");
+		if($timeout != 'nok'){
+			$timeout = date('Y-m-d H:i:s', strtotime("$dateNotif + $timeout SECONDS"));
+		}
 		if($os == 'ios'){
 				$addAsk = '';
 			if($type == 'ask_Text'){
 				$addAsk = '\"category\":\"TEXT_CATEGORY\",\"answer\":\"'.$answer.'\",\"timeout\":\"'.$timeout.'\",';
 			}
 			if($badge == 'null'){
-				$publish = '{"default": "Erreur de texte de notification","APNS": "{\"aps\":{\"content-available\":\"1\",'.$addAsk.'\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"badge\":'.$badge.',\"sound\":\"silence.caf\"},\"date\":\"'.date("Y-m-d H:i:s").'\",\"idNotif\":\"'.$idNotif.'\"}"}';
+				$publish = '{"default": "Erreur de texte de notification","APNS": "{\"aps\":{\"content-available\":\"1\",'.$addAsk.'\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"badge\":'.$badge.',\"sound\":\"silence.caf\"},\"date\":\"'.$dateNotif.'\",\"idNotif\":\"'.$idNotif.'\"}"}';
 			}else{
-				$publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",'.$addAsk.'\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"sound\":\"silence.caf\"},\"date\":\"'.date("Y-m-d H:i:s").'\",\"idNotif\":\"'.$idNotif.'\"}"}';
+				$publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",'.$addAsk.'\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"sound\":\"silence.caf\"},\"date\":\"'.$dateNotif.'\",\"idNotif\":\"'.$idNotif.'\"}"}';
 			}
 		}else if($os == 'android'){
 			$publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"data\": {\"notificationId\":\"'.rand(3, 5).'\",\"title\":\"'.$titre.'\",\"text\":\"'.$message.'\",\"vibrate\":\"true\",\"lights\":\"true\",\"idNotif\":\"'.$idNotif.'\"}}"}';

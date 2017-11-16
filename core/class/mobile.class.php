@@ -430,7 +430,7 @@ class mobile extends eqLogic {
 	/*                                                                                    */
 	/**************************************************************************************/
 	
-	public static function jsonPublish($os,$titre,$message,$badge = 'null',$type,$idNotif,$answer){
+	public static function jsonPublish($os,$titre,$message,$badge = 'null',$type,$idNotif,$answer,$timeout){
 		if($os == 'ios'){
 				$addAsk = '';
 			if($type == 'ask_Text'){

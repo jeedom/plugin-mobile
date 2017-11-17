@@ -20,5 +20,6 @@ function mobile_update(){
 	if($mobile->getLogicalId() == null || $mobile->getLogicalId() == ""){
 		$mobile->remove();
 	}
+	message::add('mobile','{{Attention le plugin Mobile ne disposera plus de homebridge à la prochaine mise à jour}}');
 }
 ?>

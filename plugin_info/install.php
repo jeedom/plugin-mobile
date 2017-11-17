@@ -21,5 +21,4 @@ function mobile_update(){
 		$mobile->remove();
 	}
 }
-message::add('mobile','{{Attention le plugin Mobile ne disposera plus de homebridge à la prochaine mise à jour}}');
 ?>

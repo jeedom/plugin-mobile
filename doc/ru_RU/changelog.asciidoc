@@ -1,0 +1,5 @@
+= Changelog
+
+== Mobile
+
+=== 1.2.2

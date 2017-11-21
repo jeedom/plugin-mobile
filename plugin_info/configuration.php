@@ -25,7 +25,10 @@ if(!isConnect()) {
 <form class="form-horizontal">
 	<fieldset>
 		<legend>
-			<i class="fa fa-list-alt"></i> {{Pas de Configuration}}
-		</legend>	
+			<i class="fa fa-list-alt"></i> {{Les Notifications de l'app}}
+		</legend>
+		<div class="form-group">
+			<label class="checkbox-inline">{{Réponse Ask sensible à la casse : }}<input type="checkbox" class="configKey orm-control" data-l1key="askCasse"/></label>
+		</div>
 	</fieldset>
 </form>

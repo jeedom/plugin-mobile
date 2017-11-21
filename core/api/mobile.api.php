@@ -197,29 +197,14 @@ if($jsonrpc->getMethod() == 'askText'){
 	$mobile = eqLogic::byLogicalId($params['Iq'],'mobile');
 	log::add('mobile', 'debug', 'mobile >'.json_encode($mobile));
 	if(is_object($mobile)){
+		$askCasse = config::byKey('askCasse','mobile', false);
+		$textCasse = $params['text'];
+		if($askCasse == false){
+			$textCasse = strtolower($params['text']);
+		}
 		$cmd = $mobile->getCmd(null, 'ask_Text');
 		log::add('mobile', 'debug', 'IQ > '.$params['Iq'].' demande cmd > '.$cmd->getId());
-		if ($cmd->askResponse($params['text'])) {
-			log::add('mobile', 'debug', 'ask bien trouvé réponse validée');
-			$jsonrpc->makeSuccess();
-		}
-	}
-}
-
-// ASK
-if($jsonrpc->getMethod() == 'askYN'){
-	log::add('mobile', 'debug', 'arriver reponse ask YN depuis le mobile > '.$params['Iq']);
-	$mobile = eqLogic::byLogicalId($params['Iq'],'mobile');
-	log::add('mobile', 'debug', 'mobile >'.json_encode($mobile));
-	if(is_object($mobile)){
-		$cmd = $mobile->getCmd(null, 'ask_Text');
-		log::add('mobile', 'debug', 'IQ > '.$params['Iq'].' demande cmd > '.$cmd->getId());
-		if($params['identifier'] == 'ACCEPT_IDENTIFIER'){
-			$text = 'oui';
-		}else{
-			$text = 'non';
-		}
-		if ($cmd->askResponse($text)) {
+		if ($cmd->askResponse($textCasse)) {
 			log::add('mobile', 'debug', 'ask bien trouvé réponse validée');
 			$jsonrpc->makeSuccess();
 		}

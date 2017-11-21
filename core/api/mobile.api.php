@@ -202,7 +202,8 @@ if($jsonrpc->getMethod() == 'askText'){
 		if($askCasse == false){
 			$textCasse = strtolower($params['text']);
 		}
-		$cmd = $mobile->getCmd(null, 'ask_Text');
+		log::add('mobile', 'debug', 'Mobile bien trouvé casse -> '.$askCasse.' text : '.$textCasse);
+		$cmd = $mobile->getCmd(null, 'notif');
 		log::add('mobile', 'debug', 'IQ > '.$params['Iq'].' demande cmd > '.$cmd->getId());
 		if ($cmd->askResponse($textCasse)) {
 			log::add('mobile', 'debug', 'ask bien trouvé réponse validée');

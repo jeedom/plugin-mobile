@@ -10,7 +10,7 @@ $plugin_compatible = mobile::Pluginsuported();
 $plugin_widget = mobile::PluginWidget();
 ?>
 
-<div class="row row-overflow">
+<div class="row row-overflow">			
     <div class="col-lg-2 col-md-3 col-sm-4">
         <div class="bs-sidebar">
             <ul id="ul_eqLogic" class="nav nav-list bs-sidenav">
@@ -58,6 +58,7 @@ foreach ($eqLogics as $eqLogic) {
     <legend><i class="icon techno-listening3"></i>  {{Mes Téléphones Mobiles}}
     </legend>
     <div class="eqLogicThumbnailContainer">
+    <span class="badge" style="background-color : #c9302c;">{{Attention le plugin Mobile ne disposera plus de homebridge à la prochaine mise à jour}}</span>
 	 <?php
 				foreach ($eqLogics as $eqLogic) {
 					$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
@@ -196,8 +197,8 @@ foreach ($allScenario as $scenario) {
     <a class="btn btn-info pull-right" id="info_app"><i class="fa fa-question-circle"></i> {{Infos envoyées à l'app}}</a>
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Mobile}}</a></li>
-    <!--<li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Notifications}}</a></li>
-    <li role="presentation"><a href="#commandtab" aria-controls="cmd" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
+    <li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Notifications}}</a></li>
+    <!--<li role="presentation"><a href="#commandtab" aria-controls="cmd" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
 -->  
 </ul>
   <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
@@ -279,8 +280,13 @@ foreach (user::all() as $user) {
         			<fieldset>
             		<legend><i class="fa fa-qrcode"></i>  {{Notifications Infos :}}</legend>
 					<label class="col-sm-3 control-label">{{Id Mobile :}}</label>
-			                    <div class="col-sm-3">
-			            		<input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="{{Iq}}" disabled/>
+                    <div class="col-sm-7">
+            			<input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="{{Iq}}" disabled/>
+                    </div>
+                    <label class="col-sm-3 control-label">{{ARN Mobile :}}</label>
+                    <div class="col-sm-7">
+            			<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notificationArn" placeholder="{{ARN}}" disabled/>
+                    </div>
 					</fieldset>
 	            </form>
 	        </div>

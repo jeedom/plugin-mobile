@@ -436,18 +436,18 @@ class mobile extends eqLogic {
 		if($timeout != 'nok'){
 			$timeout = date('Y-m-d H:i:s', strtotime("$dateNotif + $timeout SECONDS"));
 		}
-		if($os == 'ios'){
-				$addAsk = '';
-			if($type == 'ask_Text'){
+		$addAsk = '';
+		if($type == 'ask_Text'){
 				$addAsk = '\"category\":\"TEXT_CATEGORY\",\"answer\":\"'.$answer.'\",\"timeout\":\"'.$timeout.'\",';
-			}
+		}
+		if($os == 'ios'){
 			if($badge == 'null'){
 				$publish = '{"default": "Erreur de texte de notification","APNS": "{\"aps\":{\"content-available\":\"1\",'.$addAsk.'\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"badge\":'.$badge.',\"sound\":\"silence.caf\",\"date\":\"'.$dateNotif.'\",\"idNotif\":\"'.$idNotif.'\"}}"}';
 			}else{
 				$publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",'.$addAsk.'\"alert\": {\"title\":\"'.$titre.'\",\"body\":\"'.$message.'\"},\"sound\":\"silence.caf\",\"date\":\"'.$dateNotif.'\",\"idNotif\":\"'.$idNotif.'\"}}"}';
 			}
 		}else if($os == 'android'){
-			$publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"data\": {\"notificationId\":\"'.rand(3, 5).'\",\"title\":\"'.$titre.'\",\"text\":\"'.$message.'\",\"vibrate\":\"true\",\"lights\":\"true\",\"idNotif\":\"'.$idNotif.'\"}}"}';
+			$publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"data\": {\"notificationId\":\"'.rand(3, 5).'\",\"title\":\"'.$titre.'\",\"text\":\"'.$message.'\",'.$addAsk.'\"vibrate\":\"true\",\"lights\":\"true\",\"idNotif\":\"'.$idNotif.'\",\"date\":\"'.$dateNotif.'\"}}"}';
 		}else if($os == 'microsoft'){
 			
 		}

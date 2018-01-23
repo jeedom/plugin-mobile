@@ -8,5 +8,7 @@
 	"require" : "3.0",
 	"installation" : "Aucune",
 	"category" : "communication",
-	"version" : "0.4"
+	"version" : "0.4",
+	"changelog" : "https://jeedom.github.io/plugin-mobile/#language#/changelog",
+	"documentation" : "https://jeedom.github.io/plugin-mobile/#language#/"
 }

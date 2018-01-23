@@ -26,11 +26,29 @@ if (!is_object($jsonrpc)) {
 
 $params = $jsonrpc->getParams();
 $PluginToSend = mobile::PluginToSend();
-//$filename = dirname(__FILE__) . '/../../../../tmp/syncHomebridge.txt';
 log::add('mobile', 'debug', 'Appel API Mobile > '.$jsonrpc->getMethod());
 
 if ($jsonrpc->getMethod() == 'sync') {
+
 	log::add('mobile', 'debug', 'Demande de Sync');
+	
+	//RDK//
+	$rdk = null;
+	if(jeedom::version() >= '3.2.0'){
+		$rdk = config::genKey();
+		$registerDevice = $_SESSION['user']->getOptions('registerDevice', array());
+		if (!is_array($registerDevice)) {
+            $registerDevice = array();
+        }
+        $registerDevice[sha512($rdk)] = array();
+        $registerDevice[sha512($rdk)]['datetime'] = date('Y-m-d H:i:s');
+        $registerDevice[sha512($rdk)]['ip'] = getClientIp();
+        $registerDevice[sha512($rdk)]['session_id'] = session_id();
+        $_SESSION['user']->setOptions('registerDevice', $registerDevice);
+        $_SESSION['user']->save();
+	}
+	//RDK//
+	
 	$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($PluginToSend),mobile::discovery_eqLogic($PluginToSend));
 	//log::add('mobile', 'debug', 'Sync cmd et eqlogics > '.json_encode($sync_new));
 	$eqLogics = $sync_new[1];
@@ -82,6 +100,11 @@ if ($jsonrpc->getMethod() == 'sync') {
 				
 			}
 		}
+		if($rdk == null){
+			$config = array('datetime' => getmicrotime(),'Iq' => $params['Iq'],'NameMobile' => $mobileEqLogic);
+		}else{
+			$config = array('datetime' => getmicrotime(),'Iq' => $params['Iq'],'NameMobile' => $mobileEqLogic,'rdk' => $rdk);
+		}
 		$sync_array = array(
 			'eqLogics' => $eqLogics['eqLogics'],
 			'cmds' => $cmds['cmds'],
@@ -89,7 +112,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 			'scenarios' => mobile::discovery_scenario(),
 			'messages' => mobile::discovery_message(),
 			'plans' => mobile::discovery_plan(),
-			'config' => array('datetime' => getmicrotime(),'Iq' => $params['Iq'],'NameMobile' => $mobileEqLogic)
+			'config' => $config
 		);
 	}else{
 		$platform = $params['platform'];
@@ -106,6 +129,11 @@ if ($jsonrpc->getMethod() == 'sync') {
 		$key = config::genKey(32);
 		$mobile->setLogicalId($key);
 		$mobile->save();
+		if($rdk == null){
+			$config = array('datetime' => getmicrotime(),'Iq' => $key,'NameMobile' => $mobileEqLogic);
+		}else{
+			$config = array('datetime' => getmicrotime(),'Iq' => $key,'NameMobile' => $mobileEqLogic,'rdk' => $rdk);
+		}
 		$sync_array = array(
 			'eqLogics' => $eqLogics['eqLogics'],
 			'cmds' => $cmds['cmds'],
@@ -113,7 +141,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 			'scenarios' => mobile::discovery_scenario(),
 			'messages' => mobile::discovery_message(),
 			'plans' => mobile::discovery_plan(),
-			'config' => array('datetime' => getmicrotime(),'Iq' => $key,'NameMobile' => $mobileEqLogic)
+			'config' => $config
 		);
 	}
 	

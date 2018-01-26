@@ -1,0 +1,40 @@
+{
+    "plugins\/mobile\/plugin_info\/info.xml": {
+        "Plugin pour l'application Mobile": "Mobil uygulama için eklenti",
+        "Aucune": "Hiçbir"
+    },
+    "plugins\/mobile\/desktop\/php\/mobile.php": {
+        "Ajouter un mobile": "Mobil ekle",
+        "Rechercher": "Arayın",
+        "Mes Téléphones Mobiles": "Mobil telefonlarım",
+        "Général": "Genel",
+        "Nom de l'équipement mobile": "Mobil cihazın ismi",
+        "Nom de l'équipement template": "Şablon cihazının ismi",
+        "Objet parent": "Üst nesne",
+        "Aucun": "Hiçbir",
+        "Activer": "Etkinleştirmek",
+        "Visible": "Görülebilir",
+        "Type de Mobile": "Mobil çeşidi",
+        "Utilisateurs": "Kulanıcılar",
+        "Mobile": "Mobil",
+        "Homebridge": "Homebridge",
+        "Informations": "Bilgiler",
+        "Homebridge est un logiciel tiers permettant d'interconnecter Homekit avec différents systèmes domotiques.": "Homebride bir başkası tarafından yazılan Homekit\\'i değişik akkıllı ev sistemleriyle bağlamaya yarar.",
+        "Dépendances": "Bağlantılar",
+        "Nom": "İsim",
+        "Statut": "Statü",
+        "Installation": "Kurulum",
+        "Dernière installation": "Son kurulum",
+        "Démon": "Daemon",
+        "Configuration": "Ayar",
+        "(Re)Démarrer": "(Tekrar) başlat",
+        "Arrêter": "Durdur",
+        "Gestion automatique": "Otomatik yönetim",
+        "Dernier lancement": "Son çalıştırma",
+        "Commande": "Komuta",
+        "Option": "Opsiyon",
+        "Action": "Etki",
+        "Supprimer": "Sil",
+        "Sauvegarder": "Kaydet"
+    }
+}

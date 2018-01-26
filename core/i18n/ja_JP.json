@@ -1,0 +1,40 @@
+{
+    "plugins\/mobile\/plugin_info\/info.xml": {
+        "Plugin pour l'application Mobile": "モバイル用プラグイン",
+        "Aucune": "何でもありません"
+    },
+    "plugins\/mobile\/desktop\/php\/mobile.php": {
+        "Ajouter un mobile": "モバイルを追加",
+        "Rechercher": "検索する",
+        "Mes Téléphones Mobiles": "私の携帯電話",
+        "Général": "コモン",
+        "Nom de l'équipement mobile": "モバイル機器の名前",
+        "Nom de l'équipement template": "テンプレート機器の名称",
+        "Objet parent": "親オブジェクト",
+        "Aucun": "何でもありません",
+        "Activer": "アクティブにし",
+        "Visible": "目に見えます",
+        "Type de Mobile": "タイプモバイル",
+        "Utilisateurs": "ユーザー",
+        "Mobile": "モバイル",
+        "Homebridge": "Homebridge",
+        "Informations": "情報",
+        "Homebridge est un logiciel tiers permettant d'interconnecter Homekit avec différents systèmes domotiques.": "Homebridgeは、さまざまなホームオートメーションシステムとHomekitを相互接続するために、サードパーティ製のソフトウェアです。",
+        "Dépendances": "付属建築物",
+        "Nom": "表題",
+        "Statut": "ステータス",
+        "Installation": "インスト",
+        "Dernière installation": "最後のインストール",
+        "Démon": "悪魔",
+        "Configuration": "コンフィギュレーション",
+        "(Re)Démarrer": "（再）スタート",
+        "Arrêter": "ストップ",
+        "Gestion automatique": "自動管理",
+        "Dernier lancement": "最後の打ち上げ",
+        "Commande": "オーダー",
+        "Option": "オプション",
+        "Action": "アクション",
+        "Supprimer": "取り除きます",
+        "Sauvegarder": "セーブ"
+    }
+}

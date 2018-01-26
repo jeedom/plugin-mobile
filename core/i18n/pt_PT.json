@@ -1,0 +1,40 @@
+{
+    "plugins\/mobile\/plugin_info\/info.xml": {
+        "Plugin pour l'application Mobile": "Plugin para o celular",
+        "Aucune": "Nenhum"
+    },
+    "plugins\/mobile\/desktop\/php\/mobile.php": {
+        "Ajouter un mobile": "Adicionar um celular",
+        "Rechercher": "Pesquisar",
+        "Mes Téléphones Mobiles": "Meus telefones móveis",
+        "Général": "Geral",
+        "Nom de l'équipement mobile": "Nome do equipamento móvel",
+        "Nom de l'équipement template": "Nome do equipamento modelo",
+        "Objet parent": "objeto pai",
+        "Aucun": "Nemhum",
+        "Activer": "Ativar",
+        "Visible": "Visível",
+        "Type de Mobile": "tipo móvel",
+        "Utilisateurs": "usuários",
+        "Mobile": "móvel",
+        "Homebridge": "Homebridge",
+        "Informations": "informação",
+        "Homebridge est un logiciel tiers permettant d'interconnecter Homekit avec différents systèmes domotiques.": "Homebridge é software de terceiros para interligar Homekit com vários sistemas de automação residencial.",
+        "Dépendances": "dependências",
+        "Nom": "Nome",
+        "Statut": "estado",
+        "Installation": "Instalação",
+        "Dernière installation": "última Instalação",
+        "Démon": "demônio",
+        "Configuration": "Configuração",
+        "(Re)Démarrer": "(Re) Iniciar",
+        "Arrêter": "parar",
+        "Gestion automatique": "gerenciamento automático",
+        "Dernier lancement": "último lançamento",
+        "Commande": "ordem",
+        "Option": "opção",
+        "Action": "ação",
+        "Supprimer": "remover",
+        "Sauvegarder": "Salvar"
+    }
+}

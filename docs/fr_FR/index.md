@@ -175,42 +175,17 @@ Image                           | type générique               | Partie Dev pl
 
 Image                           | type générique               | Partie Dev plugin            | Description          |
 :-----------------------------: | :--------------------------- | :--------------------------- | :------------------: |
-![ENERGY](../images/ENERGY_1.jpg) | `Prise Bouton On`<br/>`Prise Bouton Off`<br />                                        | `ENERGY_ON`<br/>`ENERGY_OFF`| présence de deux boutons "ON" et "Off" pas de retour d'état. |
+![ENERGY](../images/ENERGY_1.jpg) | `Prise Bouton On`<br/>`Prise Bouton Off`| `ENERGY_ON`<br/>`ENERGY_OFF`| présence de deux boutons "ON" et "Off" pas de retour d'état. |
 ![ENERGY](../images/ENERGY_2.jpg) | `Prise Bouton On`<br/>`Prise Bouton Off`<br/>`Prise Etat` | `ENERGY_ON`<br/>`ENERGY_OFF`<br/>`ENERGY_STATE` | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off |
 ![ENERGY](../images/ENERGY_3.jpg) | `Prise Bouton On`<br/>`Prise Bouton Off`<br/>`Prise Etat`<br/>`Prise Slider` | `ENERGY_ON`<br/>`ENERGY_OFF`<br/>`ENERGY_STATE`<br/>`ENERGY_SLIDER` | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off et le slider permet de contrôler l'intensité |
 
+### Les Volets #
 
+Image                           | type générique               | Partie Dev plugin            | Description          |
+:-----------------------------: | :--------------------------- | :--------------------------- | :------------------: |
+![FLAP](../images/FLAP_1.jpg)   | `Volet Bouton Monter`<br/>`Volet Bouton Descendre`<br/>`Volet Bouton Stop`<br/>`Volet Etat`(optionnel) | `FLAP_UP`<br/>`FLAP_DOWN`<br/>`FLAP_STOP`<br/>`FLAP_STATE`(optionnel) | Présence de trois boutons "Monter", "Descendre", "Stop", retour d'état optionnel. |
+![FLAP](../images/FLAP_2.jpg)   | `Volet Bouton Monter`<br/>`Volet Bouton Descendre`<br/>`Volet Bouton Stop`<br/>`Volet Etat`<br/>`Volet Bouton Slider` | `FLAP_UP`<br/>`FLAP_DOWN`<br/>`FLAP_STOP`<br/>`FLAP_STATE`<br/>`FLAP_SLIDER` | Présence d'un slider, avec un bouton Monter/Descendre en Toggle (avec icône d'état) |
 
-+--------------------+--------------------+--------------------+--------------------+
-| Image              | type générique     | Partie Dev plugin  | Description        |
-|                    | attendu            | tiers              |                    |
-+====================+====================+====================+====================+
-| ![FLAP             | -Volet Bouton      | -FLAP\_UP          | présence de trois  |
-| 1](../images/FLAP_ | Monter             |                    | boutons "Monter",  |
-| 1.jpg)             |                    | -FLAP\_DOWN        | "Descendre" et     |
-|                    | -Volet Bouton      |                    | "Stop", retour     |
-|                    | Descendre          | -FLAP\_STOP        | d’état optionnel.  |
-|                    |                    |                    |                    |
-|                    | -Volet Bouton Stop | -FLAP\_STATE       |                    |
-|                    |                    | (optionnel)        |                    |
-|                    | -Volet             |                    |                    |
-|                    | Etat(optionnel)    |                    |                    |
-+--------------------+--------------------+--------------------+--------------------+
-| ![FLAP             | -Volet Bouton      | -FLAP\_UP          | Présence d’un      |
-| 2](../images/FLAP_ | Monter             |                    | slider, avec un    |
-| 2.jpg)             |                    | -FLAP\_DOWN        | bouton             |
-|                    | -Volet Bouton      |                    | Monter/Descendre   |
-|                    | Descendre          | -FLAP\_STOP        | en switch (avec    |
-|                    |                    |                    | icône d’état)      |
-|                    | -Volet Bouton Stop | -FLAP\_STATE       |                    |
-|                    |                    |                    |                    |
-|                    | -Volet Etat        | -FLAP\_SLIDER      |                    |
-|                    |                    |                    |                    |
-|                    | -Volet Bouton      |                    |                    |
-|                    | Slider             |                    |                    |
-+--------------------+--------------------+--------------------+--------------------+
-
-: Les Volets
 
 +--------------------+--------------------+--------------------+--------------------+
 | Image              | type générique     | Partie Dev plugin  | Description        |

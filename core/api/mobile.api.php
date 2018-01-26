@@ -20,6 +20,7 @@ header('Content-Type: application/json');
 
 require_once dirname(__FILE__) . "/../../../../core/php/core.inc.php";
 global $jsonrpc;
+GLOBAL $_USER_GLOBAL;
 if (!is_object($jsonrpc)) {
 	throw new Exception(__('JSONRPC object not defined', __FILE__), -32699);
 }
@@ -35,8 +36,9 @@ if ($jsonrpc->getMethod() == 'sync') {
 	//RDK//
 	$rdk = null;
 	if(jeedom::version() >= '3.2.0'){
+		log::add('mobile', 'debug', 'Demande du RDK');
 		$rdk = config::genKey();
-		$registerDevice = $_SESSION['user']->getOptions('registerDevice', array());
+		$registerDevice = $_USER_GLOBAL->getOptions('registerDevice', array());
 		if (!is_array($registerDevice)) {
             $registerDevice = array();
         }
@@ -44,8 +46,9 @@ if ($jsonrpc->getMethod() == 'sync') {
         $registerDevice[sha512($rdk)]['datetime'] = date('Y-m-d H:i:s');
         $registerDevice[sha512($rdk)]['ip'] = getClientIp();
         $registerDevice[sha512($rdk)]['session_id'] = session_id();
-        $_SESSION['user']->setOptions('registerDevice', $registerDevice);
-        $_SESSION['user']->save();
+        $_USER_GLOBAL->setOptions('registerDevice', $registerDevice);
+        $_USER_GLOBAL->save();
+        log::add('mobile', 'debug', 'RDK :'.$rdk);
 	}
 	//RDK//
 	

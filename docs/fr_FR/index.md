@@ -161,67 +161,15 @@ bas) :
 Tableaux des templates de l’application 
 ---------------------------------------
 
-Image                           | type générique               | Partie Dev plugin           | Description        |
-------------------------------- | ---------------------------- | --------------------------- | ------------------ |
-![LIGHT](../images/LIGHT_1.jpg) | -Lumière Bouton On<br/>- Lumière Bouton Off | - LIGHT_ON<br/>- LIGHT_OFF| présence de deux boutons "ON" et "Off" pas de retour d'état. |
-
-
-
-
--Ljdkhek-
-| ![LIGHT            | -Lumière Bouton On | -LIGHT\_ON         | présence de deux   |
-| 1](../images/LIGHT |                    |                    | boutons "On" et    |
-| _1.jpg)            | -Lumière Bouton    | -LIGHT\_OFF        | "Off", pas de      |
-|                    | Off                |                    | retour d’état.     |
-+--------------------+--------------------+--------------------+--------------------+
-| ![LIGHT            | -Lumière Bouton On | -LIGHT\_ON         | Retour d’état      |
-| 2](../images/LIGHT |                    |                    | présent, le bouton |
-| _2.jpg)            | -Lumière Bouton    | -LIGHT\_OFF        | de gauche permet   |
-|                    | Off                |                    | de switcher entre  |
-|                    |                    | -LIGHT\_STATE      | on et off          |
-|                    | -Lumière Etat      |                    |                    |
-+--------------------+--------------------+--------------------+--------------------+
-| ![LIGHT            | -Lumière Bouton    | -LIGHT\_TOGGLE     | Retour d’état      |
-| 2](../images/LIGHT | Toggle             |                    | présent, le bouton |
-| _2.jpg)            |                    | -LIGHT\_STATE      | de gauche permet   |
-|                    | -Lumière Etat      |                    | de switcher entre  |
-|                    |                    |                    | on et off via le   |
-|                    |                    |                    | Toggle             |
-+--------------------+--------------------+--------------------+--------------------+
-| ![LIGHT            | -Lumière Bouton On | -LIGHT\_ON         | Retour d’état      |
-| 3](../images/LIGHT |                    |                    | présent, le bouton |
-| _3.jpg)            | -Lumière Bouton    | -LIGHT\_OFF        | de gauche permet   |
-|                    | Off                |                    | de switcher entre  |
-|                    |                    | -LIGHT\_STATE      | on et off et le    |
-|                    | -Lumière Etat      |                    | slider permet de   |
-|                    |                    | -LIGHT\_SLIDER     | contrôler          |
-|                    | -Lumière Slider    |                    | l’intensité        |
-+--------------------+--------------------+--------------------+--------------------+
-| ![LIGHT            | -Lumière Bouton On | -LIGHT\_ON         | Retour d’état      |
-| 4](../images/LIGHT |                    |                    | présent, le bouton |
-| _4.jpg)            | -Lumière Bouton    | -LIGHT\_OFF        | de gauche permet   |
-|                    | Off                |                    | de switcher entre  |
-|                    |                    | -LIGHT\_STATE      | on et off et le    |
-|                    | -Lumière Etat      |                    | slider permet de   |
-|                    |                    | -LIGHT\_SLIDER     | contrôler          |
-|                    | -Lumière Slider    |                    | l’intensité. Dans  |
-|                    |                    | -LIGHT\_COLOR      | le cercle la       |
-|                    | -Lumière Couleur   |                    | couleur de la      |
-|                    | (info)             | -LIGHT\_SET\_COLOR | lampe est présente |
-|                    |                    |                    | et lors d’un clic  |
-|                    | -Lumière Couleur   | -LIGHT\_MODE       | dans celui-ci vous |
-|                    | (action)           |                    | pouvez changer la  |
-|                    |                    |                    | couleur et activer |
-|                    | -Lumière Mode      |                    | un mode.           |
-|                    | (optionnel, il     |                    |                    |
-|                    | sert à avoir des   |                    |                    |
-|                    | modes de lumière,  |                    |                    |
-|                    | par exemple        |                    |                    |
-|                    | arc-en-ciel sur    |                    |                    |
-|                    | les Philips Hue)   |                    |                    |
-+--------------------+--------------------+--------------------+--------------------+
-
 : Les Lumières
+
+Image                           | type générique               | Partie Dev plugin            | Description          |
+:-----------------------------: | :--------------------------- | :--------------------------- | :------------------: |
+![LIGHT](../images/LIGHT_1.jpg) | -Lumière Bouton On<br/>- Lumière Bouton Off | - LIGHT_ON<br/>- LIGHT_OFF| présence de deux boutons "ON" et "Off" pas de retour d'état. |
+![LIGHT](../images/LIGHT_2.jpg) | -Lumière Bouton On<br/>- Lumière Bouton Off<br/>- Lumière Etat | - LIGHT_ON<br/>- LIGHT_OFF<br/>- LIGHT_STATE | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off |
+![LIGHT](../images/LIGHT_2.jpg) | -Lumière Bouton Toggle<br/>- Lumière Etat | - LIGHT_TOGGLE<br/>- LIGHT_STATE | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off |
+![LIGHT](../images/LIGHT_3.jpg) | -Lumière Bouton On<br/>- Lumière Bouton Off<br/>- Lumière Etat<br/>- Lumière Slider | - LIGHT_ON<br/>- LIGHT_OFF<br/>- LIGHT_STATE<br/>- LIGHT_SLIDER | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off et le slider permet de contrôler l'intensité |
+![LIGHT](../images/LIGHT_4.jpg) | -Lumière Bouton On<br/>- Lumière Bouton Off<br/>- Lumière Etat<br/>- Lumière Slider<br/>- Lumière Couleur (info)<br/>- Lumière Couleur (action)<br/>- Lumière Mode (optionnel, il sert à avoir des mode de lumière,par exemple arc-en-ciel sur les philips Hue) | - LIGHT_ON<br/>- LIGHT_OFF<br/>- LIGHT_STATE<br/>- LIGHT_SLIDER<br/>- LIGHT_COLOR<br/>- LIGHT_SET_COLOR<br/>- LIGHT_MODE | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off et le slider permet de contrôler l'intensité. Dans le cercle la couleur de la lampe est présente et lors d'un cloc dans celui-ci vous pouvez changer la couleur et activer un mode |
 
 +--------------------+--------------------+--------------------+--------------------+
 | Image              | type générique     | Partie Dev plugin  | Description        |

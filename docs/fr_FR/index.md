@@ -161,7 +161,7 @@ bas) :
 Tableaux des templates de l’application 
 ---------------------------------------
 
-: Les Lumières
+### Les Lumières #
 
 Image                           | type générique               | Partie Dev plugin            | Description          |
 :-----------------------------: | :--------------------------- | :--------------------------- | :------------------: |
@@ -171,32 +171,15 @@ Image                           | type générique               | Partie Dev pl
 ![LIGHT](../images/LIGHT_3.jpg) | -Lumière Bouton On<br/>- Lumière Bouton Off<br/>- Lumière Etat<br/>- Lumière Slider | - `LIGHT_ON`<br/>- `LIGHT_OFF`<br/>- `LIGHT_STATE`<br/>- `LIGHT_SLIDER` | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off et le slider permet de contrôler l'intensité |
 ![LIGHT](../images/LIGHT_4.jpg) | - Lumière Bouton On<br/>- Lumière Bouton Off<br/>- Lumière Etat<br/>- Lumière Slider<br/>- Lumière Couleur (info)<br/>- Lumière Couleur (action)<br/>- Lumière Mode (optionnel, il sert à avoir des mode de lumière,par exemple arc-en-ciel sur les philips Hue) | - `LIGHT_ON`<br/>- `LIGHT_OFF`<br/>- `LIGHT_STATE`<br/>- `LIGHT_SLIDER`<br/>- `LIGHT_COLOR`<br/>- `LIGHT_SET_COLOR`<br/>- `LIGHT_MODE` | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off et le slider permet de contrôler l'intensité. Dans le cercle la couleur de la lampe est présente et lors d'un cloc dans celui-ci vous pouvez changer la couleur et activer un mode |
 
-+--------------------+--------------------+--------------------+--------------------+
-| Image              | type générique     | Partie Dev plugin  | Description        |
-|                    | attendu            | tiers              |                    |
-+====================+====================+====================+====================+
-| ![ENERGY           | -Prise Bouton On   | -ENERGY\_ON        | présence de deux   |
-| 1](../images/ENERG |                    |                    | boutons "On" et    |
-| Y_1.jpg)           | -Prise Bouton Off  | -ENERGY\_OFF       | "Off", pas de      |
-|                    |                    |                    | retour d’état.     |
-+--------------------+--------------------+--------------------+--------------------+
-| ![ENERGY           | -Prise Bouton On   | -ENERGY\_ON        | Retour d’état      |
-| 2](../images/ENERG |                    |                    | présent, le bouton |
-| Y_2.jpg)           | -Prise Bouton Off  | -ENERGY\_OFF       | de gauche permet   |
-|                    |                    |                    | de switcher entre  |
-|                    | -Prise Etat        | -ENERGY\_STATE     | on et off          |
-+--------------------+--------------------+--------------------+--------------------+
-| ![ENERGY           | -Prise Bouton On   | -ENERGY\_ON        | Retour d’état      |
-| 3](../images/ENERG |                    |                    | présent, le bouton |
-| Y_3.jpg)           | -Prise Bouton Off  | -ENERGY\_OFF       | de gauche permet   |
-|                    |                    |                    | de switcher entre  |
-|                    | -Prise Etat        | -ENERGY\_STATE     | on et off et le    |
-|                    |                    |                    | slider permet de   |
-|                    | -Prise Slider      | -ENERGY\_SLIDER    | contrôler          |
-|                    |                    |                    | l’intensité        |
-+--------------------+--------------------+--------------------+--------------------+
+### Les Prises #
 
-: Les Prises
+Image                           | type générique               | Partie Dev plugin            | Description          |
+:-----------------------------: | :--------------------------- | :--------------------------- | :------------------: |
+![ENERGY](../images/ENERGY_1.jpg) | - Prise Bouton On<br/>- Prise Bouton Off | - `ENERGY_ON`<br/>- `ENERGY_OFF`| présence de deux boutons "ON" et "Off" pas de retour d'état. |
+![ENERGY](../images/ENERGY_2.jpg) | - Prise Bouton On<br/>- Prise Bouton Off<br/>- Prise Etat | - `ENERGY_ON`<br/>- `ENERGY_OFF`<br/>- `ENERGY_STATE` | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off |
+![ENERGY](../images/ENERGY_3.jpg) | -Prise Bouton On<br/>- Prise Bouton Off<br/>- Prise Etat<br/>- Prise Slider | - `ENERGY_ON`<br/>- `ENERGY_OFF`<br/>- `ENERGY_STATE`<br/>- `ENERGY_SLIDER` | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off et le slider permet de contrôler l'intensité |
+
+
 
 +--------------------+--------------------+--------------------+--------------------+
 | Image              | type générique     | Partie Dev plugin  | Description        |

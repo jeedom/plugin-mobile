@@ -186,112 +186,47 @@ Image                           | type générique               | Partie Dev pl
 ![FLAP](../images/FLAP_1.jpg)   | `Volet Bouton Monter`<br/>`Volet Bouton Descendre`<br/>`Volet Bouton Stop`<br/>`Volet Etat`(optionnel) | `FLAP_UP`<br/>`FLAP_DOWN`<br/>`FLAP_STOP`<br/>`FLAP_STATE`(optionnel) | Présence de trois boutons "Monter", "Descendre", "Stop", retour d'état optionnel. |
 ![FLAP](../images/FLAP_2.jpg)   | `Volet Bouton Monter`<br/>`Volet Bouton Descendre`<br/>`Volet Bouton Stop`<br/>`Volet Etat`<br/>`Volet Bouton Slider` | `FLAP_UP`<br/>`FLAP_DOWN`<br/>`FLAP_STOP`<br/>`FLAP_STATE`<br/>`FLAP_SLIDER` | Présence d'un slider, avec un bouton Monter/Descendre en Toggle (avec icône d'état) |
 
+### Inondation #
 
-+--------------------+--------------------+--------------------+--------------------+
-| Image              | type générique     | Partie Dev plugin  | Description        |
-|                    | attendu            | tiers              |                    |
-+--------------------+--------------------+--------------------+--------------------+
-| ![FLOOD](../images | -Inondation        | -FLOOD             | Permet d’avoir son |
-| /FLOOD.jpg)        |                    |                    | capteur            |
-|                    | -Température       | -TEMPERATURE       | d’inondation       |
-|                    | (optionnel)        | (optionnel)        | complet sur une    |
-|                    |                    |                    | seule ligne.       |
-|                    | -Humidité          | -HUMIDITY          |                    |
-|                    | (optionnel)        | (optionnel)        |                    |
-|                    |                    |                    |                    |
-|                    | -Sabotage          | -SABOTAGE          |                    |
-|                    | (optionnel)        | (optionnel)        |                    |
-+--------------------+--------------------+--------------------+--------------------+
+Image                           | type générique               | Partie Dev plugin            | Description          |
+:-----------------------------: | :--------------------------- | :--------------------------- | :------------------: |
+![FLOOD](../images/FLOOD.jpg)   | `Innondation`<br/>`Température`(optionnel)<br/>`Humidité`(optionnel)<br/>`Sabotage`(optionnel)|`FLOOD`<br/>`TEMPERATURE`(optionnel)<br/>`HUMIDITY`(optionnel)<br/>`HUMIDITY`(optionnel) | Permet d'avoir son capteur d'inondation complet sur une seule ligne.
 
-: Inondation
+### Serrure #
 
-+--------------------+--------------------+--------------------+--------------------+
-| Image              | type générique     | Partie Dev plugin  | Description        |
-|                    | attendu            | tiers              |                    |
-+--------------------+--------------------+--------------------+--------------------+
-| ![LOCK](../images/ | -Serrure Etat      | -LOCK\_STATE       | Retour d’état      |
-| LOCK.jpg)          |                    |                    | présent, le bouton |
-|                    | -Serrure Bouton    | -LOCK\_OPEN        | de gauche permet   |
-|                    | Ouvrir             |                    | de switcher entre  |
-|                    |                    | -LOCK\_CLOSE       | on et off          |
-|                    | -Serrure Bouton    |                    |                    |
-|                    | Fermer             |                    |                    |
-+--------------------+--------------------+--------------------+--------------------+
+Image                         | type générique               | Partie Dev plugin            | Description          |
+:---------------------------: | :--------------------------- | :--------------------------- | :------------------: |
+![LOCK](../images/LOCK.jpg)   | `Serrure Etat`<br/>`Serrure Bouton Ouvrir`<br/>`Serrure Bouton Fermer` | `LOCK_STATE`<br/>`LOCK_OPEN`<br/>`LOCK_CLOSE` | Retour d'état présent, le bouton de gauche permet de switcher entre on et off |
 
-: Serrure
+### Sirène #
 
-+--------------------+--------------------+--------------------+--------------------+
-| Image              | type générique     | Partie Dev plugin  | Description        |
-|                    | attendu            | tiers              |                    |
-+--------------------+--------------------+--------------------+--------------------+
-| ![SIREN](../images | -Sirène Etat       | -SIREN\_STATE      | Retour d’état      |
-| /SIREN.jpg)        |                    |                    | présent, le bouton |
-|                    | -Sirène Bouton On  | -SIREN\_ON         | de gauche permet   |
-|                    |                    |                    | de switcher entre  |
-|                    | -Sirène Bouton Off | -SIREN\_OFF        | on et off          |
-+--------------------+--------------------+--------------------+--------------------+
+Image                         | type générique               | Partie Dev plugin            | Description          |
+:---------------------------: | :--------------------------- | :--------------------------- | :------------------: |
+![SIREN](../images/SIREN.jpg)   | `Sirène Etat`<br/>`Sirène Bouton On`<br/>`Sirène Bouton Off` | `SIREN_STATE`<br/>`SIREN_ON`<br/>`SIREN_OFF` | Retour d'état présent, le bouton de gauche permet de switcher entre on et off |
 
-: Sirène
+### Fumée #
 
-+--------------------+--------------------+--------------------+--------------------+
-| Image              | type générique     | Partie Dev plugin  | Description        |
-|                    | attendu            | tiers              |                    |
-+--------------------+--------------------+--------------------+--------------------+
-| ![SMOKE](../images | -Fumée             | -SMOKE             | Permet d’avoir son |
-| /SMOKE.jpg)        |                    |                    | capteur de fumées  |
-|                    | -Température       | -TEMPERATURE       | complet sur une    |
-|                    | (optionnel)        | (optionnel)        | seule ligne.       |
-+--------------------+--------------------+--------------------+--------------------+
+Image                           | type générique               | Partie Dev plugin            | Description          |
+:-----------------------------: | :--------------------------- | :--------------------------- | :------------------: |
+![SMOKE](../images/SMOKE.jpg)   | `Fumée`<br/>`Température`(optionnel)|`SMOKE`<br/>`TEMPERATURE`(optionnel) | Permet d'avoir son capteur de fumée complet sur une seule ligne.
 
-: Fumée
+### Température #
 
-+--------------------+--------------------+--------------------+--------------------+
-| Image              | type générique     | Partie Dev plugin  | Description        |
-|                    | attendu            | tiers              |                    |
-+--------------------+--------------------+--------------------+--------------------+
-| ![TEMPERATURE](../ | -Température       | -TEMPERATURE       | Voir image.        |
-| images/TEMPERATURE |                    |                    |                    |
-| .jpg)              | -Humidité          | -HUMIDITY          |                    |
-|                    | (optionnel)        | (optionnel)        |                    |
-+--------------------+--------------------+--------------------+--------------------+
+Image                                       | type générique               | Partie Dev plugin            | Description          |
+:-----------------------------------------: | :--------------------------- | :--------------------------- | :------------------: |
+![TEMPERATURE](../images/TEMPERATURE.jpg)   | `Température`<br/>`Humidité`(optionnel)|`TEMPERATURE`<br/>`HUMIDITY`(optionnel) | Voir Image.
 
-: Température
+### Présence #
 
-+--------------------+--------------------+--------------------+--------------------+
-| Image              | type générique     | Partie Dev plugin  | Description        |
-|                    | attendu            | tiers              |                    |
-+--------------------+--------------------+--------------------+--------------------+
-| ![PRESENCE](../ima | -Présence          | -PRESENCE          | Voir image.        |
-| ges/PRESENCE.jpg)  |                    |                    |                    |
-|                    | -Température       | -HUMIDITY          |                    |
-|                    | (optionnel)        | (optionnel)        |                    |
-|                    |                    |                    |                    |
-|                    | -Luminosité        | -TEMPERATURE       |                    |
-|                    | (optionnel)        | (optionnel)        |                    |
-|                    |                    |                    |                    |
-|                    | -Humidité          | -UV (optionnel)    |                    |
-|                    | (optionnel)        |                    |                    |
-|                    |                    | -BRIGHTNESS        |                    |
-|                    | -UV (optionnel)    | (optionnel)        |                    |
-|                    |                    |                    |                    |
-|                    | -Sabotage          | -SABOTAGE          |                    |
-|                    | (optionnel)        | (optionnel)        |                    |
-+--------------------+--------------------+--------------------+--------------------+
+Image                                 | type générique               | Partie Dev plugin            | Description          |
+:-----------------------------------: | :--------------------------- | :--------------------------- | :------------------: |
+![PRESENCE](../images/PRESENCE.jpg)   | `Présence`<br/>`Température`(optionnel)<br/>`Luminosité`(optionnel)<br/>`Humidité`(optionnel)<br/>`UV`(optionnel)<br/>`Sabotage`(optionnel)|`PRESENCE`<br/>`TEMPERATURE`(optionnel)<br/>`BRIGHTNESS`(optionnel)<br/>`HUMIDITY`(optionnel)<br/>`UV`(optionnel)<br/>`SABOTAGE`(optionnel) | Voir image.
 
-: Présence
+### Ouvrant #
 
-+--------------------+--------------------+--------------------+--------------------+
-| Image              | type générique     | Partie Dev plugin  | Description        |
-|                    | attendu            | tiers              |                    |
-+--------------------+--------------------+--------------------+--------------------+
-| ![OPENING](../imag | -Porte / Fenêtre   | -OPENING /         | Voir image, (à     |
-| es/OPENING.jpg)    |                    | OPENING\_WINDOW    | savoir que vous    |
-|                    | -Température       |                    | pouvez choisir     |
-|                    | (optionnel)        | -TEMPERATURE       | entre fenêtre et   |
-|                    |                    | (optionnel)        | porte).            |
-+--------------------+--------------------+--------------------+--------------------+
-
-: Ouvrant
+Image                                       | type générique               | Partie Dev plugin            | Description          |
+:-----------------------------------------: | :--------------------------- | :--------------------------- | :------------------: |
+![OPENING](../images/OPENING.jpg)   | `Porte / Fenêtre`<br/>`Température`(optionnel)|`OPENING / OPENING_WINDOW`<br/>`TEMPERATURE`(optionnel) | Voir Image (à savoir que vous pouvez choisir entre fenêtre et porte).
 
 +--------------------+--------------------+--------------------+--------------------+
 | Image              | type générique     | Partie Dev plugin  | Description        |

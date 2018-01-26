@@ -161,8 +161,8 @@ bas) :
 Tableaux des templates de l’application 
 ---------------------------------------
 
-Image                           | type générique     | Partie Dev plugin  | Description        |
-------------------------------- | ------------------ | ------------------ | ------------------ |
+Image                           | type générique               | Partie Dev plugin           | Description        |
+------------------------------- | ---------------------------- | --------------------------- | ------------------ |
 ![LIGHT](../images/LIGHT_1.jpg) | -Lumière Bouton On<br/>- Lumière Bouton Off | - LIGHT_ON<br/>- LIGHT_OFF| présence de deux boutons "ON" et "Off" pas de retour d'état. |
 
 

@@ -15,8 +15,8 @@ Après installation du plugin, il vous suffit de l’activer :
 Pour configurer le plugin, vous devez ajouter les téléphones qui
 pourront accéder à Jeedom.
 
-Pour Ajouter un téléphone : **Plugins** → **Communication** → **App
-Mobile** → **Ajouter**
+Pour Ajouter un téléphone : **Plugins**→**Communication**→**App
+Mobile**→**Ajouter**
 
 ![mobile2](../images/mobile2.png)
 

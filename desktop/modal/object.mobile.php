@@ -81,7 +81,7 @@ sendVarToJS('object', $_GET['object_id']);
 				echo $cmd->getName();
 				$display_icon = 'none';
 				$icon ='';
-				if (in_array($cmd->getDisplay('generic_type'), ['GENERIC_INFO','GENERIC_ACTION'])) {
+				if (in_array($cmd->getGeneric_type(), ['GENERIC_INFO','GENERIC_ACTION'])) {
 					$display_icon = 'block';
 					$icon = $cmd->getDisplay('icon');
 				}
@@ -93,7 +93,7 @@ sendVarToJS('object', $_GET['object_id']);
 				</div>';
 				echo '</td>';
 				echo '<td>';
-				?><select class="cmdAttr form-control" data-l1key="display" data-l2key="generic_type" data-cmd_id="<?php echo $cmd->getId(); ?>">
+				?><select class="cmdAttr form-control" data-l1key="generic_type" data-cmd_id="<?php echo $cmd->getId(); ?>">
              <option value="">{{Aucun}}</option>
              <?php
     $groups = array();
@@ -121,7 +121,7 @@ sendVarToJS('object', $_GET['object_id']);
         if ($key == 0) {
             echo '<optgroup label="{{' . $info['family'] . '}}">';
         }
-        if($info['key'] == $cmd->getDisplay('generic_type')){
+        if($info['key'] == $cmd->getGeneric_type()){
 	        echo '<option value="' . $info['key'] . '" selected>' . $info['type'] . ' / ' . $info['name'] . '</option>';
         }else{
         	echo '<option value="' . $info['key'] . '">' . $info['type'] . ' / ' . $info['name'] . '</option>';
@@ -235,7 +235,7 @@ $('body').undelegate('.cmdAttr[data-l1key=display][data-l2key=icon]', 'click').d
    $(this).empty();
 });
 
-$('.cmdAttr[data-l1key=display][data-l2key=generic_type]').on('change', function () {
+$('.cmdAttr[data-l1key=generic_type]').on('change', function () {
 	var cmdLine = $(this).closest('.cmdLine');
     if ($(this).value() == 'GENERIC_INFO' || $(this).value() == 'GENERIC_ACTION') {
 		cmdLine.find('.iconeGeneric').show();

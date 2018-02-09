@@ -121,7 +121,7 @@ class mobile extends eqLogic {
                   	$i = 0;
                   if($eqLogic->getObject_id() !== null && object::byId($eqLogic->getObject_id())->getDisplay('sendToApp', 1) == 1 && $eqLogic->getIsEnable() == 1 && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
 					foreach ($eqLogic->getCmd() as $cmd) {
-                    	if($cmd->getDisplay('generic_type') != null && !in_array($cmd->getDisplay('generic_type'),['GENERIC_ERROR','DONT']) && ($cmd->getIsVisible() == 1 || in_array($cmd->getDisplay('generic_type'), $genericisvisible) || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
+                    	if($cmd->getGeneric_type() != null && !in_array($cmd->getGeneric_type(),['GENERIC_ERROR','DONT']) && ($cmd->getIsVisible() == 1 || in_array($cmd->getGeneric_type(), $genericisvisible) || in_array($eqLogic->getEqType_name(), self::PluginWidget()))){
                       		$cmd_array = $cmd->exportApi();
                       					
 							//Variables
@@ -135,7 +135,10 @@ class mobile extends eqLogic {
 							$title_disable = null;
 							$title_placeholder = null;
 							$message_placeholder = null;
-								
+							
+							if(isset($cmd_array['generic_type'])){
+								$generic_type = $cmd_array['generic_type'];
+							}	
 							if(isset($cmd_array['configuration'])){
 								$configuration = $cmd_array['configuration'];
 								if(isset($configuration['maxValue'])){
@@ -153,9 +156,7 @@ class mobile extends eqLogic {
 							}
 							if(isset($cmd_array['display'])){
 								$display = $cmd_array['display'];
-								if(isset($display['generic_type'])){
-									$generic_type = $display['generic_type'];
-								}
+								
 								if(isset($display['icon'])){
 									$icon = $display['icon'];
 								}
@@ -227,6 +228,7 @@ class mobile extends eqLogic {
 							if ($cmd_array['unite'] == null || $cmd_array['unite'] == ""){
 								unset($cmd_array['unite']);
 							}
+				
 							$cmds_array[] = $cmd_array;
                       		$i++;
                       	}

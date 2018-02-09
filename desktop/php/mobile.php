@@ -58,7 +58,6 @@ foreach ($eqLogics as $eqLogic) {
     <legend><i class="icon techno-listening3"></i>  {{Mes Téléphones Mobiles}}
     </legend>
     <div class="eqLogicThumbnailContainer">
-    <span class="badge" style="background-color : #c9302c;">{{Attention le plugin Mobile ne disposera plus de homebridge à la prochaine mise à jour}}</span>
 	 <?php
 				foreach ($eqLogics as $eqLogic) {
 					$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');

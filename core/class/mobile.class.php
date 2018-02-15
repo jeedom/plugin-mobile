@@ -51,7 +51,7 @@ class mobile extends eqLogic {
 	}
 
 	public static function PluginToSend() {
-		$PluginToSend = [];
+		$return = [];
 		$plugins = plugin::listPlugin(true);
 		$plugin_compatible = mobile::Pluginsuported();
 		$plugin_widget = mobile::PluginWidget();
@@ -60,23 +60,21 @@ class mobile extends eqLogic {
 			if ($plugId == 'mobile') {
 				continue;
 			} else if (in_array($plugId, $plugin_widget)) {
-				array_push($PluginToSend, $plugId);
+				$return[] = $plugId;
 			} else if (in_array($plugId, $plugin_compatible) && !in_array($plugId, $plugin_widget) && config::byKey('sendToApp', $plugId, 1) == 1) {
-				array_push($PluginToSend, $plugId);
+				$return[] = $plugId;
 			} else if (!in_array($plugId, $plugin_compatible) && config::byKey('sendToApp', $plugId, 0) == 1) {
 				$subClasses = config::byKey('subClass', $plugId, '');
 				if ($subClasses != '') {
 					$subClassesList = explode(';', $subClasses);
 					foreach ($subClassesList as $subClass) {
-						array_push($PluginToSend, $subClass);
+						$return[] = $subClass;
 					}
 				}
-				array_push($PluginToSend, $plugId);
-			} else {
-				continue;
+				$return[] = $plugId;
 			}
 		}
-		return $PluginToSend;
+		return $return;
 
 	}
 
@@ -90,155 +88,60 @@ class mobile extends eqLogic {
 		$return = array();
 		foreach ($plugin as $plugin_type) {
 			$eqLogics = eqLogic::byType($plugin_type, true);
-			if (is_array($eqLogics)) {
-				foreach ($eqLogics as $eqLogic) {
-					if ($eqLogic->getObject_id() !== null && object::byId($eqLogic->getObject_id())->getDisplay('sendToApp', 1) == 1 && $eqLogic->getIsEnable() == 1 && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))) {
-						$eqLogic_array = utils::o2a($eqLogic);
-						if (isset($eqLogic_array["configuration"]["localApiKey"])) {
-							$eqLogic_array["localApiKey"] = $eqLogic_array["configuration"]["localApiKey"];
-						}
-						unset($eqLogic_array['eqReal_id'], $eqLogic_array['configuration'], $eqLogic_array['specificCapatibilities'], $eqLogic_array['timeout'], $eqLogic_array['category'], $eqLogic_array['display']);
-						$return[] = $eqLogic_array;
+			if (!is_array($eqLogics)) {
+				continue;
+			}
+			foreach ($eqLogics as $eqLogic) {
+				if ($eqLogic->getObject_id() !== null && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget())) && $eqLogic->getObject()->getDisplay('sendToApp', 1) == 1) {
+					$eqLogic_array = utils::o2a($eqLogic);
+					if (isset($eqLogic_array["configuration"]["localApiKey"])) {
+						$eqLogic_array["localApiKey"] = $eqLogic_array["configuration"]["localApiKey"];
 					}
+					unset($eqLogic_array['eqReal_id'], $eqLogic_array['configuration'], $eqLogic_array['specificCapatibilities'], $eqLogic_array['timeout'], $eqLogic_array['category'], $eqLogic_array['display']);
+					$return[] = $eqLogic_array;
 				}
 			}
 		}
 		return $return;
 	}
 
-	public static function discovery_cmd($plugin = array()) {
+	public static function discovery_cmd($plugin = array(), $eqLogics = null) {
 		$return = array();
 		$genericisvisible = array();
 		foreach (jeedom::getConfiguration('cmd::generic_type') as $key => $info) {
 			if ($info['family'] !== 'Generic') {
-				array_push($genericisvisible, $key);
+				$genericisvisible[] = $key;
 			}
 		}
-		foreach ($plugin as $plugin_type) {
-			$eqLogics = eqLogic::byType($plugin_type, true);
-			if (is_array($eqLogics)) {
-				foreach ($eqLogics as $eqLogic) {
-					$i = 0;
-					if ($eqLogic->getObject_id() !== null && object::byId($eqLogic->getObject_id())->getDisplay('sendToApp', 1) == 1 && $eqLogic->getIsEnable() == 1 && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget()))) {
-						foreach ($eqLogic->getCmd() as $cmd) {
-							if ($cmd->getGeneric_type() != null && !in_array($cmd->getGeneric_type(), ['GENERIC_ERROR', 'DONT']) && ($cmd->getIsVisible() == 1 || in_array($cmd->getGeneric_type(), $genericisvisible) || in_array($eqLogic->getEqType_name(), self::PluginWidget()))) {
-								$cmd_array = $cmd->exportApi();
-
-								//Variables
-								$maxValue = null;
-								$minValue = null;
-								$actionCodeAccess = null;
-								$actionConfirm = null;
-								$generic_type = null;
-								$icon = null;
-								$invertBinary = null;
-								$title_disable = null;
-								$title_placeholder = null;
-								$message_placeholder = null;
-
-								if (isset($cmd_array['generic_type'])) {
-									$generic_type = $cmd_array['generic_type'];
-								}
-								if (isset($cmd_array['configuration'])) {
-									$configuration = $cmd_array['configuration'];
-									if (isset($configuration['maxValue'])) {
-										$maxValue = $configuration['maxValue'];
-									}
-									if (isset($configuration['minValue'])) {
-										$minValue = $configuration['minValue'];
-									}
-									if (isset($configuration['actionCodeAccess'])) {
-										$actionCodeAccess = $configuration['actionCodeAccess'];
-									}
-									if (isset($configuration['actionConfirm'])) {
-										$actionConfirm = $configuration['actionConfirm'];
-									}
-								}
-								if (isset($cmd_array['display'])) {
-									$display = $cmd_array['display'];
-
-									if (isset($display['icon'])) {
-										$icon = $display['icon'];
-									}
-									if (isset($display['invertBinary'])) {
-										$invertBinary = $display['invertBinary'];
-									}
-									if (isset($display['title_disable'])) {
-										$title_disable = $display['title_disable'];
-									}
-									if (isset($display['title_placeholder'])) {
-										$title_placeholder = $display['title_placeholder'];
-									}
-									if (isset($display['message_placeholder'])) {
-										$message_placeholder = $display['message_placeholder'];
-									}
-								}
-								unset($cmd_array['isHistorized'], $cmd_array['configuration'], $cmd_array['template'], $cmd_array['display'], $cmd_array['html']);
-								$cmd_array['configuration']['maxValue'] = $maxValue;
-								if ($minValue != null) {
-									$cmd_array['configuration']['minValue'] = $minValue;
-								}
-								$cmd_array['display']['generic_type'] = $generic_type;
-								if ($icon != null) {
-									$cmd_array['display']['icon'] = $icon;
-								}
-								if (isset($invertBinary)) {
-									if ($invertBinary != null) {
-										$cmd_array['display']['invertBinary'] = $invertBinary;
-									}
-								}
-								if (isset($title_disable)) {
-									if ($title_disable != null) {
-										$cmd_array['display']['title_disable'] = $title_disable;
-									}
-								}
-								if (isset($title_placeholder)) {
-									if ($title_placeholder != null) {
-										$cmd_array['display']['title_placeholder'] = $title_placeholder;
-									}
-								}
-								if (isset($message_placeholder)) {
-									if ($message_placeholder != null) {
-										$cmd_array['display']['message_placeholder'] = $message_placeholder;
-									}
-								}
-								if (isset($actionCodeAccess)) {
-									if ($actionCodeAccess !== null) {
-										if ($actionCodeAccess !== '') {
-											$cmd_array['configuration']['actionCodeAccess'] = true;
-										}
-									}
-								}
-								if (isset($actionConfirm)) {
-									if ($actionConfirm !== null) {
-										if ($actionConfirm == 1) {
-											$cmd_array['configuration']['actionConfirm'] = true;
-										}
-									}
-								}
-								if ($cmd_array['type'] == 'action') {
-									unset($cmd_array['currentValue']);
-								}
-								if ($cmd_array['value'] == null || $cmd_array['value'] == "") {
-									//unset($cmd_array['value']);
-									$cmd_array['value'] == "0";
-								} else {
-									$cmd_array['value'] = str_replace("#", "", $cmd_array['value']);
-								}
-								if ($cmd_array['unite'] == null || $cmd_array['unite'] == "") {
-									unset($cmd_array['unite']);
-								}
-
-								$cmds_array[] = $cmd_array;
-								$i++;
-							}
-						}
-						if ($i > 0) {
-							$return = $cmds_array;
-						}
-					}
-				}
+		if ($eqLogics == null) {
+			$eqLogics = self::discovery_eqLogic($plugin);
+		}
+		$eqLogics_id = array();
+		foreach ($eqLogics as $eqLogic) {
+			$eqLogics_id[] = $eqLogic['id'];
+		}
+		foreach (cmd::byEqLogicId($eqLogics_id, null, null, null, true) as $cmd) {
+			if (in_array($cmd->getGeneric_type(), ['GENERIC_ERROR', 'DONT']) || ($cmd->getIsVisible() != 1 && !in_array($cmd->getGeneric_type(), $genericisvisible) && !in_array($eqLogic['eqType_name'], self::PluginWidget()))) {
+				continue;
 			}
+			$cmd_array = $cmd->exportApi();
+			unset($cmd_array['isHistorized'], $cmd_array['configuration'], $cmd_array['template'], $cmd_array['display'], $cmd_array['html']);
+			$cmd_array['configuration'] = array();
+			$cmd_array['display'] = array();
+			$cmd_array['display']['generic_type'] = $cmd_array['generic_type'];
+			$cmd_array['configuration']['actionCodeAccess'] = $cmd->getConfiguration('actionCodeAccess');
+			$cmd_array['configuration']['actionConfirm'] = $cmd->getConfiguration('actionConfirm');
+			$cmd_array['display']['icon'] = $cmd->getDisplay('icon');
+			$cmd_array['display']['invertBinary'] = $cmd->getDisplay('invertBinary');
+			$cmd_array['display']['title_disable'] = $cmd->getDisplay('title_disable');
+			$cmd_array['display']['title_placeholder'] = $cmd->getDisplay('title_placeholder');
+			$cmd_array['display']['message_placeholder'] = $cmd->getDisplay('message_placeholder');
+			if ($cmd_array['type'] == 'action') {
+				unset($cmd_array['currentValue']);
+			}
+			$cmd_array['value'] == ($cmd_array['value'] == null || $cmd_array['value'] == "") ? '0' : str_replace('#', '', $cmd_array['value']);
+			$return[] = $cmd_array;
+			$i++;
 		}
 		return $return;
 	}
@@ -246,90 +149,74 @@ class mobile extends eqLogic {
 	public static function discovery_multi($cmds) {
 		$array_final = array();
 		$tableData = mobile::PluginMultiInEqLogic();
-		foreach ($cmds as &$cmd) {
+		foreach ($cmds as $cmd) {
 			if (in_array($cmd['generic_type'], $tableData)) {
 				$keys = array_keys(array_column($cmds, 'eqLogic_id'), $cmd['eqLogic_id']);
 				$trueKeys = array_keys(array_column($cmds, 'generic_type'), $cmd['generic_type']);
-				//if(count($keys) > 1 && count($trueKeys) > 1){
 				$result = array_intersect($keys, $trueKeys);
 				if (count($result) > 1) {
 					$array_final = array_merge_recursive($array_final, $result);
 				}
-				//}
-
 			}
 		}
 		$dif = array();
 		$array_cmd_multi = array();
-		foreach ($array_final as &$array_fi) {
+		foreach ($array_final as $array_fi) {
 			if (!in_array($array_fi, $dif)) {
 				array_push($dif, $array_fi);
 				array_push($array_cmd_multi, $array_fi);
 			}
 		}
-
 		return $array_cmd_multi;
 	}
 
 	public static function change_cmdAndeqLogic($cmds, $eqLogics) {
 		$plage_cmd = mobile::discovery_multi($cmds);
 		$eqLogic_array = array();
-		$nbr_cmd = count($plage_cmd);
-		log::add('mobile', 'debug', 'plage cmd > ' . json_encode($plage_cmd) . ' // nombre > ' . $nbr_cmd);
-		if ($nbr_cmd != 0) {
-			$i = 0;
-			while ($i < $nbr_cmd) {
-				//log::add('mobile', 'info', 'nbr cmd > '.$i.' // id > '.$plage_cmd[$i]);
-				$eqLogic_id = $cmds[$plage_cmd[$i]]['eqLogic_id'];
-				$name_cmd = $cmds[$plage_cmd[$i]]['name'];
-				foreach ($eqLogics as &$eqLogic) {
-					if ($eqLogic['id'] == $eqLogic_id) {
-						$eqLogic_name = $eqLogic['name'] . ' / ' . $name_cmd;
-					}
-				}
-				//log::add('mobile', 'debug', 'nouveau nom > '.$eqLogic_name);
-				$id = $cmds[$plage_cmd[$i]]['id'];
-				$new_eqLogic_id = '999' . $eqLogic_id . '' . $id;
-				$cmds[$plage_cmd[$i]]['eqLogic_id'] = $new_eqLogic_id;
-				$keys = array_keys(array_column($cmds, 'eqLogic_id'), $eqLogic_id);
-				$nbr_keys = count($keys);
-				$j = 0;
-				while ($j < $nbr_keys) {
-					if ($cmds[$keys[$j]]['value'] == $cmds[$plage_cmd[$i]]['id'] && $cmds[$keys[$j]]['type'] == 'action') {
-						//log::add('mobile', 'debug', 'Changement de l\'action > '.$cmds[$keys[$j]]['id']);
-						$cmds[$keys[$j]]['eqLogic_id'] = $new_eqLogic_id;
-					}
-					$j++;
-				}
-				array_push($eqLogic_array, array($eqLogic_id, $new_eqLogic_id, $eqLogic_name));
-				$i++;
-			}
-
-			$column_eqlogic = array_column($eqLogics, 'id');
-			foreach ($eqLogic_array as &$eqlogic_array_one) {
-				$keys = array_keys($column_eqlogic, $eqlogic_array_one[0]);
-				$new_eqLogic = $eqLogics[$keys[0]];
-				$new_eqLogic['id'] = $eqlogic_array_one[1];
-				$new_eqLogic['name'] = $eqlogic_array_one[2];
-				array_push($eqLogics, $new_eqLogic);
-			}
+		log::add('mobile', 'debug', 'plage cmd > ' . json_encode($plage_cmd) . ' // nombre > ' . $nb_cmd);
+		if (count($plage_cmds) == 0) {
+			return array('cmds' => array(), 'eqLogics' => array());
 		}
-		$new_cmds = array('cmds' => $cmds);
-		$new_eqLogic = array('eqLogics' => $eqLogics);
-		$news = array($new_cmds, $new_eqLogic);
-		return $news;
+		foreach ($plage_cmds as $plage_cmd) {
+			$eqLogic_id = $cmds[$plage_cmd]['eqLogic_id'];
+			$name_cmd = $cmds[$plage_cmd]['name'];
+			foreach ($eqLogics as $eqLogic) {
+				if ($eqLogic['id'] == $eqLogic_id) {
+					$eqLogic_name = $eqLogic['name'] . ' / ' . $name_cmd;
+				}
+			}
+			$id = $cmds[$plage_cmd]['id'];
+			$new_eqLogic_id = '999' . $eqLogic_id . '' . $id;
+			$cmds[$plage_cmd]['eqLogic_id'] = $new_eqLogic_id;
+			$keys = array_keys(array_column($cmds, 'eqLogic_id'), $eqLogic_id);
+			foreach ($keys as $key) {
+				if ($cmds[$key]['value'] == $cmds[$plage_cmd]['id'] && $cmds[$key]['type'] == 'action') {
+					$cmds[$key]['eqLogic_id'] = $new_eqLogic_id;
+				}
+			}
+			$eqLogic_array[] = array($eqLogic_id, $new_eqLogic_id, $eqLogic_name);
+			$i++;
+		}
+		$column_eqlogic = array_column($eqLogics, 'id');
+		foreach ($eqLogic_array as $eqlogic_array_one) {
+			$keys = array_keys($column_eqlogic, $eqlogic_array_one[0]);
+			$new_eqLogic = $eqLogics[$keys[0]];
+			$new_eqLogic['id'] = $eqlogic_array_one[1];
+			$new_eqLogic['name'] = $eqlogic_array_one[2];
+			$eqLogics[] = $new_eqLogic;
+		}
+		return array('cmds' => $cmds, 'eqLogics' => $eqLogics);
 	}
 
 	public static function discovery_object() {
 		$all = utils::o2a(object::all());
 		$return = array();
-		foreach ($all as &$object) {
+		foreach ($all as $object) {
 			if (isset($object['display']['sendToApp']) && $object['display']['sendToApp'] == "0") {
 				continue;
-			} else {
-				unset($object['configuration'], $object['display']['tagColor'], $object['display']['tagTextColor']);
-				$return[] = $object;
 			}
+			unset($object['configuration'], $object['display']['tagColor'], $object['display']['tagTextColor']);
+			$return[] = $object;
 		}
 		return $return;
 	}
@@ -337,56 +224,49 @@ class mobile extends eqLogic {
 	public static function discovery_scenario() {
 		$all = utils::o2a(scenario::all());
 		$return = array();
-		foreach ($all as &$scenario) {
+		foreach ($all as $scenario) {
 			if (isset($scenario['display']['sendToApp']) && $scenario['display']['sendToApp'] == "0") {
 				continue;
-			} else {
-				if ($scenario['display']['name'] != '') {
-					$scenario['name'] = $scenario['display']['name'];
-				}
-				unset($scenario['mode'], $scenario['schedule'], $scenario['scenarioElement'], $scenario['trigger'], $scenario['timeout'], $scenario['description'], $scenario['configuration'], $scenario['type'], $scenario['display']['name']);
-				if ($scenario['display'] == [] || $scenario['display']['icon'] == '') {
-					unset($scenario['display']);
-				}
-				$return[] = $scenario;
 			}
+			if ($scenario['display']['name'] != '') {
+				$scenario['name'] = $scenario['display']['name'];
+			}
+			unset($scenario['mode'], $scenario['schedule'], $scenario['scenarioElement'], $scenario['trigger'], $scenario['timeout'], $scenario['description'], $scenario['configuration'], $scenario['type'], $scenario['display']['name']);
+			if ($scenario['display']['icon'] == '') {
+				unset($scenario['display']);
+			}
+			$return[] = $scenario;
 		}
 		return $return;
 	}
 
 	public static function discovery_message() {
-		$all = utils::o2a(message::all());
-		$return = array();
-		foreach ($all as &$message) {
-			$return[] = $message;
-		}
-		return $return;
+		return utils::o2a(message::all());
 	}
 
 	public static function discovery_plan() {
-		$all = utils::o2a(planHeader::all());
-		$return = array();
-		foreach ($all as &$plan) {
-			if ($plan['image'] !== undefined) {
+		$plans = utils::o2a(planHeader::all());
+		foreach ($plans as &$plan) {
+			if (isset($plan['image'])) {
 				unset($plan['image']);
 			}
-			$return[] = $plan;
 		}
-		return $return;
+		return $plans;
 	}
 
-	public static function delete_object_eqlogic_null($objectsATraiter, $eqlogicsATraiter) {
-		$retour = array();
-		foreach ($objectsATraiter as &$objectATraiter) {
-			$id_object = $objectATraiter['id'];
-			foreach ($eqlogicsATraiter as &$eqlogicATraiter) {
-				if ($id_object == $eqlogicATraiter['object_id']) {
-					array_push($retour, $objectATraiter);
-					break;
-				}
-			}
+	public static function delete_object_eqlogic_null($objects, $eqLogics) {
+		$return = array();
+		$object_id = array();
+		foreach ($eqLogics as $eqLogic) {
+			$object_id[$eqLogic['object_id']] = $eqLogic['object_id'];
 		}
-		return $retour;
+		foreach ($objects as $object) {
+			if (!isset($object_id[$object['id']])) {
+				continue;
+			}
+			$return[] = $object;
+		}
+		return $return;
 	}
 	/**************************************************************************************/
 	/*                                                                                    */
@@ -526,13 +406,6 @@ class mobileCmd extends cmd {
 	/*     * ***********************Methode static*************************** */
 
 	/*     * *********************Methode d'instance************************* */
-
-	/*
-											 * Non obligatoire permet de demander de ne pas supprimer les commandes même si elles ne sont pas dans la nouvelle configuration de l'équipement envoyé en JS
-											public function dontRemoveCmd() {
-											return true;
-											}
-											 */
 
 	public function execute($_options = array()) {
 		$eqLogic = $this->getEqLogic();

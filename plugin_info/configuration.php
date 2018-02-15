@@ -16,7 +16,7 @@
  */
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 include_file('core', 'authentification', 'php');
-if(!isConnect()) {
+if (!isConnect()) {
 	include_file('desktop', '404', 'php');
 	die();
 }
@@ -28,7 +28,11 @@ if(!isConnect()) {
 			<i class="fa fa-list-alt"></i> {{Les Notifications de l'app}}
 		</legend>
 		<div class="form-group">
-			<label class="checkbox-inline">{{Réponse Ask sensible à la casse : }}<input type="checkbox" class="configKey orm-control" data-l1key="askCasse"/></label>
+			<label class="col-sm-3 control-label">{{Réponse Ask sensible à la case : }}</label>
+			<div class="col-sm-1">
+				<input type="checkbox" class="configKey orm-control" data-l1key="askCasse"/>
+			</div>
 		</div>
-	</fieldset>
+	</div>
+</fieldset>
 </form>

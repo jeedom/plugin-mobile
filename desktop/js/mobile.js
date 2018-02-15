@@ -93,7 +93,6 @@ $('#bt_regenConfig').on('click',function(){
             action: "regenConfig"
         },
         dataType: 'json',
-        global: false,
         error: function (request, status, error) {
             handleAjaxError(request, status, error);
         },

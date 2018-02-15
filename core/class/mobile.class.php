@@ -125,7 +125,10 @@ class mobile extends eqLogic {
 					if (isset($eqLogic_array["configuration"]["localApiKey"])) {
 						$eqLogic_array["localApiKey"] = $eqLogic_array["configuration"]["localApiKey"];
 					}
-					unset($eqLogic_array['eqReal_id'], $eqLogic_array['configuration'], $eqLogic_array['specificCapatibilities'], $eqLogic_array['timeout'], $eqLogic_array['category'], $eqLogic_array['display']);
+					unset($eqLogic_array['eqReal_id'], $eqLogic_array['comment'], $eqLogic_array['configuration'], $eqLogic_array['specificCapatibilities'], $eqLogic_array['timeout'], $eqLogic_array['category'], $eqLogic_array['display']);
+					unset($eqLogic_array['status']['timeout']);
+					unset($eqLogic_array['status']['warning']);
+					unset($eqLogic_array['status']['danger']);
 					$return[] = $eqLogic_array;
 				}
 			}
@@ -246,7 +249,7 @@ class mobile extends eqLogic {
 			if (isset($object['display']['sendToApp']) && $object['display']['sendToApp'] == "0") {
 				continue;
 			}
-			unset($object['configuration'], $object['display']['tagColor'], $object['display']['tagTextColor']);
+			unset($object['configuration'], $object['display']['tagColor'], $object['display']['tagTextColor'], $object['display']['desktop::summaryTextColor'], $object['display']['dashboard::size']);
 			$return[] = $object;
 		}
 		return $return;
@@ -255,12 +258,15 @@ class mobile extends eqLogic {
 	public static function discovery_scenario() {
 		$all = utils::o2a(scenario::all());
 		$return = array();
-		foreach ($all as $scenario) {
+		foreach ($all as &$scenario) {
 			if (isset($scenario['display']['sendToApp']) && $scenario['display']['sendToApp'] == "0") {
 				continue;
 			}
 			if ($scenario['display']['name'] != '') {
 				$scenario['name'] = $scenario['display']['name'];
+			}
+			if (isset($scenario['display'])) {
+				unset($scenario['display']);
 			}
 			unset($scenario['mode'], $scenario['schedule'], $scenario['scenarioElement'], $scenario['trigger'], $scenario['timeout'], $scenario['description'], $scenario['configuration'], $scenario['type'], $scenario['display']['name']);
 			$return[] = $scenario;
@@ -277,6 +283,9 @@ class mobile extends eqLogic {
 		foreach ($plans as &$plan) {
 			if (isset($plan['image'])) {
 				unset($plan['image']);
+			}
+			if (isset($plan['configuration'])) {
+				unset($plan['configuration']);
 			}
 		}
 		return $plans;

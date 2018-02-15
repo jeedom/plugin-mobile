@@ -9,7 +9,6 @@ $plugins = plugin::listPlugin(true);
 $plugin_compatible = mobile::Pluginsuported();
 $plugin_widget = mobile::PluginWidget();
 ?>
-
 <div class="row row-overflow">
   <div class="col-lg-2 col-md-3 col-sm-4">
     <div class="bs-sidebar">
@@ -55,8 +54,7 @@ foreach ($eqLogics as $eqLogic) {
       <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Santé}}</center></span>
     </div>
   </div>
-  <legend><i class="icon techno-listening3"></i>  {{Mes Téléphones Mobiles}}
-  </legend>
+  <legend><i class="icon techno-listening3"></i> {{Mes Téléphones Mobiles}}</legend>
   <div class="eqLogicThumbnailContainer">
     <?php
 foreach ($eqLogics as $eqLogic) {
@@ -79,8 +77,7 @@ foreach ($eqLogics as $eqLogic) {
 </div>
 </div>
 <div role="tabpanel" class="tab-pane" id="plugintab">
-  <legend><i class="fa fa-check-circle-o"></i>  {{Le(s) Plugin(s) Compatible(s)}}
-  </legend>
+  <legend><i class="fa fa-check-circle-o"></i>  {{Le(s) Plugin(s) Compatible(s)}}</legend>
   <div class="eqLogicThumbnailContainer">
    <?php
 foreach ($plugins as $plugin) {
@@ -114,8 +111,7 @@ foreach ($plugins as $plugin) {
 }
 ?>
 </div>
-<legend><i class="fa fa-times-circle-o"></i>  {{Le(s) Plugin(s) Non Testé(s)}}
-</legend>
+<legend><i class="fa fa-times-circle-o"></i>  {{Le(s) Plugin(s) Non Testé(s)}}</legend>
 <div class="eqLogicThumbnailContainer">
  <?php
 foreach ($plugins as $plugin) {

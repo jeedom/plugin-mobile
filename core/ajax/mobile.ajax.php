@@ -34,7 +34,7 @@ try {
 		$eqLogic = mobile::byId(init('id'));
 		if (!is_object($eqLogic)) {
 			throw new Exception(__('Equipement non trouvé : ', __FILE__) . init('id'));
-		}else{
+		} else {
 			ajax::success($eqLogic->getQrCode());
 		}
 	}

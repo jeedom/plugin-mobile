@@ -209,7 +209,7 @@ class mobile extends eqLogic {
 		$eqLogic_array = array();
 		$plage_cmds = mobile::discovery_multi($cmds);
 		if (count($plage_cmds) == 0) {
-			return array('cmds' => $cmds, 'eqLogics' => $cmds);
+			return array('cmds' => $cmds, 'eqLogics' => $eqLogics);
 		}
 		foreach ($plage_cmds as $plage_cmd) {
 			$eqLogic_id = $cmds[$plage_cmd]['eqLogic_id'];

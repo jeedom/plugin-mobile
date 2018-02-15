@@ -152,7 +152,10 @@ class mobile extends eqLogic {
 			$eqLogics_id[] = $eqLogic['id'];
 		}
 		foreach (cmd::byEqLogicId($eqLogics_id, null, null, null, true) as $cmd) {
-			if (in_array($cmd->getGeneric_type(), ['GENERIC_ERROR', 'DONT']) || ($cmd->getIsVisible() != 1 && !in_array($cmd->getGeneric_type(), $genericisvisible) && !in_array($eqLogic['eqType_name'], self::PluginWidget()))) {
+			if (in_array($cmd->getGeneric_type(), ['GENERIC_ERROR', 'DONT'])) {
+				continue;
+			}
+			if ($cmd->getIsVisible() != 1 && !in_array($cmd->getGeneric_type(), $genericisvisible) && !in_array($eqLogic['eqType_name'], self::PluginWidget())) {
 				continue;
 			}
 			$cmd_array = $cmd->exportApi();

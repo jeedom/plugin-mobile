@@ -84,6 +84,31 @@ class mobile extends eqLogic {
 	/*                                                                                    */
 	/**************************************************************************************/
 
+	public static function makeTemplateJson() {
+		$pluginToSend = mobile::PluginToSend();
+		$discover_eqLogic = mobile::discovery_eqLogic($pluginToSend);
+		$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($pluginToSend, $discover_eqLogic), $discover_eqLogic);
+		$data = array(
+			'eqLogics' => $sync_new['eqLogics'],
+			'cmds' => $sync_new['cmds'],
+			'objects' => mobile::delete_object_eqlogic_null(mobile::discovery_object(), $sync_new['eqLogics']),
+			'scenarios' => mobile::discovery_scenario(),
+			'plans' => mobile::discovery_plan(),
+		);
+		$path = dirname(__FILE__) . '/../../data/mobile.json';
+		if (!file_exists(dirname(__FILE__) . '/../../data')) {
+			mkdir(dirname(__FILE__) . '/../../data');
+		}
+		file_put_contents(dirname(__FILE__) . '/../../data/mobile.json', json_encode($data));
+	}
+
+	public static function getTemplateJson() {
+		if (!file_exists(dirname(__FILE__) . '/../../data/mobile.json')) {
+			self::makeTemplateJson();
+		}
+		return json_decode(cmd::cmdToValue(file_get_contents(dirname(__FILE__) . '/../../data/mobile.json')), true);
+	}
+
 	public static function discovery_eqLogic($plugin = array(), $hash = null) {
 		$return = array();
 		foreach ($plugin as $plugin_type) {
@@ -105,7 +130,7 @@ class mobile extends eqLogic {
 		return $return;
 	}
 
-	public static function discovery_cmd($plugin = array(), $eqLogics = null) {
+	public static function discovery_cmd($plugin = array(), $eqLogics = null, $_withValue = false) {
 		$return = array();
 		$genericisvisible = array();
 		foreach (jeedom::getConfiguration('cmd::generic_type') as $key => $info) {
@@ -139,9 +164,12 @@ class mobile extends eqLogic {
 			if ($cmd_array['type'] == 'action') {
 				unset($cmd_array['currentValue']);
 			}
-			$cmd_array['value'] == ($cmd_array['value'] == null || $cmd_array['value'] == "") ? '0' : str_replace('#', '', $cmd_array['value']);
+			if ($_withValue) {
+				$cmd_array['value'] == ($cmd_array['value'] == null || $cmd_array['value'] == "") ? '0' : '#' . $cmd_array['id'];
+			} else {
+				$cmd_array['value'] == ($cmd_array['value'] == null || $cmd_array['value'] == "") ? '0' : str_replace('#', '', $cmd_array['value']);
+			}
 			$return[] = $cmd_array;
-			$i++;
 		}
 		return $return;
 	}
@@ -157,6 +185,7 @@ class mobile extends eqLogic {
 				if (count($result) > 1) {
 					$array_final = array_merge_recursive($array_final, $result);
 				}
+
 			}
 		}
 		$dif = array();
@@ -171,11 +200,11 @@ class mobile extends eqLogic {
 	}
 
 	public static function change_cmdAndeqLogic($cmds, $eqLogics) {
-		$plage_cmd = mobile::discovery_multi($cmds);
+		$return = array('cmds' => $cmds, 'eqLogics' => $cmds);
 		$eqLogic_array = array();
-		log::add('mobile', 'debug', 'plage cmd > ' . json_encode($plage_cmd) . ' // nombre > ' . $nb_cmd);
+		$plage_cmds = mobile::discovery_multi($cmds);
 		if (count($plage_cmds) == 0) {
-			return array('cmds' => array(), 'eqLogics' => array());
+			$return;
 		}
 		foreach ($plage_cmds as $plage_cmd) {
 			$eqLogic_id = $cmds[$plage_cmd]['eqLogic_id'];
@@ -232,9 +261,6 @@ class mobile extends eqLogic {
 				$scenario['name'] = $scenario['display']['name'];
 			}
 			unset($scenario['mode'], $scenario['schedule'], $scenario['scenarioElement'], $scenario['trigger'], $scenario['timeout'], $scenario['description'], $scenario['configuration'], $scenario['type'], $scenario['display']['name']);
-			if ($scenario['display']['icon'] == '') {
-				unset($scenario['display']);
-			}
 			$return[] = $scenario;
 		}
 		return $return;

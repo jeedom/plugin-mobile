@@ -30,6 +30,7 @@ try {
 		mobile::updatemobile();
 		ajax::success();
 	}
+
 	if (init('action') == 'getQrCode') {
 		$eqLogic = mobile::byId(init('id'));
 		if (!is_object($eqLogic)) {
@@ -37,6 +38,11 @@ try {
 		} else {
 			ajax::success($eqLogic->getQrCode());
 		}
+	}
+
+	if (init('action') == 'regenConfig') {
+		mobile::makeTemplateJson();
+		ajax::success();
 	}
 
 	throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));

@@ -203,11 +203,10 @@ class mobile extends eqLogic {
 	}
 
 	public static function change_cmdAndeqLogic($cmds, $eqLogics) {
-		$return = array('cmds' => $cmds, 'eqLogics' => $cmds);
 		$eqLogic_array = array();
 		$plage_cmds = mobile::discovery_multi($cmds);
 		if (count($plage_cmds) == 0) {
-			$return;
+			return array('cmds' => $cmds, 'eqLogics' => $cmds);
 		}
 		foreach ($plage_cmds as $plage_cmd) {
 			$eqLogic_id = $cmds[$plage_cmd]['eqLogic_id'];

@@ -99,6 +99,9 @@ class mobile extends eqLogic {
 		if (!file_exists(dirname(__FILE__) . '/../../data')) {
 			mkdir(dirname(__FILE__) . '/../../data');
 		}
+		if (file_exists(dirname(__FILE__) . '/../../data/mobile.json')) {
+			unlink(dirname(__FILE__) . '/../../data/mobile.json');
+		}
 		file_put_contents(dirname(__FILE__) . '/../../data/mobile.json', json_encode($data));
 	}
 

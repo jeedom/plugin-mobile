@@ -126,9 +126,17 @@ class mobile extends eqLogic {
 						$eqLogic_array["localApiKey"] = $eqLogic_array["configuration"]["localApiKey"];
 					}
 					unset($eqLogic_array['eqReal_id'], $eqLogic_array['comment'], $eqLogic_array['configuration'], $eqLogic_array['specificCapatibilities'], $eqLogic_array['timeout'], $eqLogic_array['category'], $eqLogic_array['display']);
-					unset($eqLogic_array['status']['timeout']);
-					unset($eqLogic_array['status']['warning']);
-					unset($eqLogic_array['status']['danger']);
+					if (isset($eqLogic_array["status"])) {
+						if (isset($eqLogic_array["status"]['timeout'])) {
+							unset($eqLogic_array['status']['timeout']);
+						}
+						if (isset($eqLogic_array["status"]['warning'])) {
+							unset($eqLogic_array['status']['warning']);
+						}
+						if (isset($eqLogic_array["status"]['danger'])) {
+							unset($eqLogic_array['status']['danger']);
+						}
+					}
 					$return[] = $eqLogic_array;
 				}
 			}

@@ -21,9 +21,6 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
 class mobile extends eqLogic {
 	/*     * *************************Attributs****************************** */
-
-	//private static $_PLUGIN_COMPATIBILITY = array('openzwave', 'rfxcom', 'edisio', 'ipx800', 'mySensors', 'Zibasedom', 'virtual', 'camera','apcupsd', 'btsniffer', 'dsc', 'h801', 'rflink', 'mysensors', 'relaynet', 'remora', 'unipi', 'playbulb', 'doorbird','netatmoThermostat');
-
 	/*     * ***********************Methode static*************************** */
 
 	public static function Pluginsuported() {
@@ -43,11 +40,6 @@ class mobile extends eqLogic {
 
 	public static function LienAWS() {
 		return 'http://195.154.56.168:8000/notif/';
-	}
-
-	public static function DisallowedPIN() {
-		$DisallowedPIN = ['000-00-000', '111-11-111', '222-22-222', '333-33-333', '444-44-444', '555-55-555', '666-66-666', '777-77-777', '888-88-888', '999-99-999', '123-45-678', '876-54-321'];
-		return $DisallowedPIN;
 	}
 
 	public static function PluginToSend() {

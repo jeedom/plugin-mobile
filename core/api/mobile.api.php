@@ -37,11 +37,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 		if (!is_array($registerDevice)) {
 			$registerDevice = array();
 		}
-		if (!isset($params['rdk']) || !isset($registerDevice[sha512($params['rdk'])])) {
-			$rdk = config::genKey();
-		} else {
-			$rdk = $params['rdk'];
-		}
+		$rdk = (!isset($params['rdk']) || !isset($registerDevice[sha512($params['rdk'])])) ? config::genKey() : $params['rdk'];
 		$registerDevice[sha512($rdk)] = array();
 		$registerDevice[sha512($rdk)]['datetime'] = date('Y-m-d H:i:s');
 		$registerDevice[sha512($rdk)]['ip'] = getClientIp();
@@ -50,7 +46,6 @@ if ($jsonrpc->getMethod() == 'sync') {
 		$_USER_GLOBAL->save();
 		log::add('mobile', 'debug', 'RDK :' . $rdk);
 	}
-
 	if (isset($params['Iq'])) {
 		$mobileEqLogic = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	}
@@ -104,7 +99,6 @@ if ($jsonrpc->getMethod() == 'sync') {
 	$jsonrpc->makeSuccess($return);
 }
 
-// Eqlogic byId
 if ($jsonrpc->getMethod() == 'cmdsbyEqlogicID') {
 	log::add('mobile', 'debug', 'Interogation du module id:' . $params['id'] . ' Pour les cmds');
 	$PluginToSend = mobile::PluginToSend();
@@ -146,17 +140,19 @@ if ($jsonrpc->getMethod() == 'Iq') {
 if ($jsonrpc->getMethod() == 'IqValidation') {
 	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	if (is_object($mobile)) {
-		$mobile->setConfiguration('validate', yes);
+		$mobile->setConfiguration('validate', true);
 		$mobile->save();
 		$jsonrpc->makeSuccess('validate');
 	} else {
 		$jsonrpc->makeSuccess('not_iq');
 	}
 }
+
 if ($jsonrpc->getMethod() == 'version') {
 	$mobile_update = update::byLogicalId('mobile');
 	$jsonrpc->makeSuccess($mobile_update->getLocalVersion());
 }
+
 if ($jsonrpc->getMethod() == 'event') {
 	$eqLogic = eqLogic::byId($params['eqLogic_id']);
 	if (!is_object($eqLogic)) {
@@ -169,7 +165,7 @@ if ($jsonrpc->getMethod() == 'event') {
 	$cmd->event($params['value']);
 	$jsonrpc->makeSuccess();
 }
-// ASK
+
 if ($jsonrpc->getMethod() == 'askText') {
 	log::add('mobile', 'debug', 'arriver reponse ask Textuel depuis le mobile > ' . $params['Iq']);
 	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');

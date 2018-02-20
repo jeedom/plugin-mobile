@@ -21,32 +21,22 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
 class mobile extends eqLogic {
 	/*     * *************************Attributs****************************** */
+
+	public static $_pluginSuported = array('openzwave', 'rfxcom', 'edisio', 'mpower', 'mySensors', 'Zibasedom', 'virtual', 'camera', 'weather', 'philipsHue', 'enocean', 'wifipower', 'alarm', 'mode', 'apcupsd', 'btsniffer', 'dsc', 'rflink', 'mysensors', 'relaynet', 'remora', 'unipi', 'eibd', 'thermostat', 'netatmoThermostat', 'espeasy', 'jeelink', 'teleinfo', 'tahoma', 'protexiom', 'lifx', 'wattlet', 'rfplayer', 'openenocean');
+
+	public static $_pluginWidget = array('alarm', 'camera', 'thermostat', 'netatmoThermostat', 'weather', 'mode');
+
+	public static $_pluginMulti = array('LIGHT_STATE', 'ENERGY_STATE', 'FLAP_STATE', 'HEATING_STATE', 'SIREN_STATE', 'LOCK_STATE');
+
+	public static $_urlAws = 'http://195.154.56.168:8000/notif/';
+
 	/*     * ***********************Methode static*************************** */
 
-	public static function Pluginsuported() {
-		$Pluginsuported = ['openzwave', 'rfxcom', 'edisio', 'mpower', 'mySensors', 'Zibasedom', 'virtual', 'camera', 'weather', 'philipsHue', 'enocean', 'wifipower', 'alarm', 'mode', 'apcupsd', 'btsniffer', 'dsc', 'rflink', 'mysensors', 'relaynet', 'remora', 'unipi', 'eibd', 'thermostat', 'netatmoThermostat', 'espeasy', 'jeelink', 'teleinfo', 'tahoma', 'protexiom', 'lifx', 'wattlet', 'rfplayer', 'openenocean'];
-		return $Pluginsuported;
-	}
-
-	public static function PluginWidget() {
-		$PluginWidget = ['alarm', 'camera', 'thermostat', 'netatmoThermostat', 'weather', 'mode'];
-		return $PluginWidget;
-	}
-
-	public static function PluginMultiInEqLogic() {
-		$PluginMulti = ['LIGHT_STATE', 'ENERGY_STATE', 'FLAP_STATE', 'HEATING_STATE', 'SIREN_STATE', 'LOCK_STATE'];
-		return $PluginMulti;
-	}
-
-	public static function LienAWS() {
-		return 'http://195.154.56.168:8000/notif/';
-	}
-
-	public static function PluginToSend() {
+	public static function pluginToSend() {
 		$return = [];
 		$plugins = plugin::listPlugin(true);
-		$plugin_compatible = mobile::Pluginsuported();
-		$plugin_widget = mobile::PluginWidget();
+		$plugin_compatible = self::$_pluginSuported;
+		$plugin_widget = self::$_pluginWidget;
 		foreach ($plugins as $plugin) {
 			$plugId = $plugin->getId();
 			if ($plugId == 'mobile') {
@@ -67,17 +57,10 @@ class mobile extends eqLogic {
 			}
 		}
 		return $return;
-
 	}
 
-	/**************************************************************************************/
-	/*                                                                                    */
-	/*            Permet de decouvrir tout les modules de la Jeedom compatible            */
-	/*                                                                                    */
-	/**************************************************************************************/
-
 	public static function makeTemplateJson() {
-		$pluginToSend = mobile::PluginToSend();
+		$pluginToSend = mobile::pluginToSend();
 		$discover_eqLogic = mobile::discovery_eqLogic($pluginToSend);
 		$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($pluginToSend, $discover_eqLogic), $discover_eqLogic);
 		$data = array(
@@ -112,7 +95,7 @@ class mobile extends eqLogic {
 				continue;
 			}
 			foreach ($eqLogics as $eqLogic) {
-				if ($eqLogic->getObject_id() !== null && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::PluginWidget())) && $eqLogic->getObject()->getDisplay('sendToApp', 1) == 1) {
+				if ($eqLogic->getObject_id() !== null && ($eqLogic->getIsVisible() == 1 || in_array($eqLogic->getEqType_name(), self::$_pluginWidget)) && $eqLogic->getObject()->getDisplay('sendToApp', 1) == 1) {
 					$eqLogic_array = utils::o2a($eqLogic);
 					if (isset($eqLogic_array["configuration"]["localApiKey"])) {
 						$eqLogic_array["localApiKey"] = $eqLogic_array["configuration"]["localApiKey"];
@@ -155,37 +138,37 @@ class mobile extends eqLogic {
 			if (in_array($cmd->getGeneric_type(), ['GENERIC_ERROR', 'DONT'])) {
 				continue;
 			}
-			if ($cmd->getIsVisible() != 1 && !in_array($cmd->getGeneric_type(), $genericisvisible) && !in_array($eqLogic['eqType_name'], self::PluginWidget())) {
+			if ($cmd->getIsVisible() != 1 && !in_array($cmd->getGeneric_type(), $genericisvisible) && !in_array($eqLogic['eqType_name'], self::$_pluginWidget)) {
 				continue;
 			}
-			$cmd_array = $cmd->exportApi();
-			unset($cmd_array['isHistorized'], $cmd_array['configuration'], $cmd_array['template'], $cmd_array['display'], $cmd_array['html']);
-			$cmd_array['configuration'] = array();
-			$cmd_array['display'] = array();
-			$cmd_array['display']['generic_type'] = $cmd_array['generic_type'];
-			$cmd_array['configuration']['actionCodeAccess'] = $cmd->getConfiguration('actionCodeAccess');
-			$cmd_array['configuration']['actionConfirm'] = $cmd->getConfiguration('actionConfirm');
-			$cmd_array['display']['icon'] = $cmd->getDisplay('icon');
-			$cmd_array['display']['invertBinary'] = $cmd->getDisplay('invertBinary');
-			$cmd_array['display']['title_disable'] = $cmd->getDisplay('title_disable');
-			$cmd_array['display']['title_placeholder'] = $cmd->getDisplay('title_placeholder');
-			$cmd_array['display']['message_placeholder'] = $cmd->getDisplay('message_placeholder');
-			if ($cmd_array['type'] == 'action') {
-				unset($cmd_array['currentValue']);
+			$info = $cmd->exportApi();
+			unset($info['isHistorized'], $info['configuration'], $info['template'], $info['display'], $info['html']);
+			$info['configuration'] = array();
+			$info['display'] = array();
+			$info['display']['generic_type'] = $info['generic_type'];
+			$info['configuration']['actionCodeAccess'] = $cmd->getConfiguration('actionCodeAccess');
+			$info['configuration']['actionConfirm'] = $cmd->getConfiguration('actionConfirm');
+			$info['display']['icon'] = $cmd->getDisplay('icon');
+			$info['display']['invertBinary'] = $cmd->getDisplay('invertBinary');
+			$info['display']['title_disable'] = $cmd->getDisplay('title_disable');
+			$info['display']['title_placeholder'] = $cmd->getDisplay('title_placeholder');
+			$info['display']['message_placeholder'] = $cmd->getDisplay('message_placeholder');
+			if ($info['type'] == 'action') {
+				unset($info['currentValue']);
 			}
 			if ($_withValue) {
-				$cmd_array['value'] == ($cmd_array['value'] == null || $cmd_array['value'] == "") ? '0' : '#' . $cmd_array['id'];
+				$info['value'] == ($info['value'] == null || $info['value'] == "") ? '0' : '#' . $info['id'];
 			} else {
-				$cmd_array['value'] == ($cmd_array['value'] == null || $cmd_array['value'] == "") ? '0' : str_replace('#', '', $cmd_array['value']);
+				$info['value'] == ($info['value'] == null || $info['value'] == "") ? '0' : str_replace('#', '', $info['value']);
 			}
-			$return[] = $cmd_array;
+			$return[] = $info;
 		}
 		return $return;
 	}
 
 	public static function discovery_multi($cmds) {
 		$array_final = array();
-		$tableData = mobile::PluginMultiInEqLogic();
+		$tableData = self::$_pluginMulti;
 		foreach ($cmds as $cmd) {
 			if (in_array($cmd['generic_type'], $tableData)) {
 				$result = array_intersect(
@@ -308,48 +291,36 @@ class mobile extends eqLogic {
 		}
 		return $return;
 	}
-	/**************************************************************************************/
-	/*                                                                                    */
-	/*                         Permet de creer le Json du QRCode                          */
-	/*                                                                                    */
-	/**************************************************************************************/
 
 	public function getQrCode() {
 		$interne = network::getNetworkAccess('internal');
 		$externe = network::getNetworkAccess('external');
-		$user = $this->getConfiguration('affect_user');
-
 		if ($interne == null || $interne == 'http://:80' || $interne == 'https://:80') {
-			$retour = 'internalError';
-		} else if ($externe == null || $externe == 'http://:80' || $externe == 'https://:80') {
-			$retour = 'externalError';
-		} else if ($user == '') {
-			$retour = 'UserError';
-		} else {
-			$key = $this->getLogicalId();
-			$request_qrcode = array(
-				'eqLogic_id' => $this->getId(),
-				'url_internal' => $interne,
-				'url_external' => $externe,
-				'Iq' => $key,
-			);
-			if ($user != '') {
-				$username = user::byId($this->getConfiguration('affect_user'));
-				if (is_object($username)) {
-					$request_qrcode['username'] = $username->getLogin();
-					$request_qrcode['apikey'] = $username->getHash();
-				}
-			}
-			$retour = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' . json_encode($request_qrcode);
+			return 'internalError';
 		}
+		if ($externe == null || $externe == 'http://:80' || $externe == 'https://:80') {
+			return 'externalError';
+		}
+		if ($this->getConfiguration('affect_user') == '') {
+			return 'UserError';
+		}
+		$key = $this->getLogicalId();
+		$request_qrcode = array(
+			'eqLogic_id' => $this->getId(),
+			'url_internal' => $interne,
+			'url_external' => $externe,
+			'Iq' => $key,
+		);
+		if ($this->getConfiguration('affect_user') != '') {
+			$username = user::byId($this->getConfiguration('affect_user'));
+			if (is_object($username)) {
+				$request_qrcode['username'] = $username->getLogin();
+				$request_qrcode['apikey'] = $username->getHash();
+			}
+		}
+		$retour = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' . json_encode($request_qrcode);
 		return $retour;
 	}
-
-	/**************************************************************************************/
-	/*                                                                                    */
-	/*                                 Pour les notifications                             */
-	/*                                                                                    */
-	/**************************************************************************************/
 
 	public static function jsonPublish($os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout) {
 		$dateNotif = date("Y-m-d H:i:s");
@@ -376,11 +347,7 @@ class mobile extends eqLogic {
 
 	public static function notification($arn, $os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout) {
 		log::add('mobile', 'debug', 'notification en cours !');
-		if ($badge == 'null') {
-			$publish = mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout);
-		} else {
-			$publish = mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout);
-		}
+		$publish = ($badge == 'null') ? mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout) : mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout);
 		log::add('mobile', 'debug', 'JSON envoyé : ' . $publish);
 		$post = [
 			'id' => $idNotif,
@@ -389,7 +356,7 @@ class mobile extends eqLogic {
 			'publish' => $publish,
 		];
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, mobile::LienAWS());
+		curl_setopt($ch, CURLOPT_URL, self::$_urlAws());
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -398,11 +365,6 @@ class mobile extends eqLogic {
 		log::add('mobile', 'debug', 'notification resultat > ' . $server_output);
 	}
 
-	/**************************************************************************************/
-	/*                                                                                    */
-	/*                         Permet de creer l'ID Unique du téléphone                   */
-	/*                                                                                    */
-	/**************************************************************************************/
 	public function postInsert() {
 		$key = config::genKey(32);
 		$this->setLogicalId($key);
@@ -410,28 +372,27 @@ class mobile extends eqLogic {
 	}
 
 	public function postSave() {
-		$cmd_Notif = $this->getCmd(null, 'notif');
-		if (!is_object($cmd_Notif)) {
-			$cmd_Notif = new mobileCmd();
-			$cmd_Notif->setLogicalId('notif');
-			$cmd_Notif->setName(__('Notification', __FILE__));
-			$cmd_Notif->setOrder(0);
-			$cmd_Notif->setEqLogic_id($this->getId());
-			$cmd_Notif->setDisplay('generic_type', 'GENERIC_ACTION');
-			$cmd_Notif->setType('action');
-			$cmd_Notif->setSubType('message');
+		$cmd = $this->getCmd(null, 'notif');
+		if (!is_object($cmd)) {
+			$cmd = new mobileCmd();
+			$cmd->setLogicalId('notif');
+			$cmd->setName(__('Notification', __FILE__));
+			$cmd->setOrder(0);
+			$cmd->setEqLogic_id($this->getId());
+			$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
+			$cmd->setType('action');
+			$cmd->setSubType('message');
 		}
-		$cmd_Notif->setIsVisible(1);
-		$cmd_Notif->save();
+		$cmd->setIsVisible(1);
+		$cmd->save();
 
-		$cmd_AskText = $this->getCmd(null, 'ask_Text');
-		if (is_object($cmd_AskText)) {
-			$cmd_AskText->remove();
+		$cmd = $this->getCmd(null, 'ask_Text');
+		if (is_object($cmd)) {
+			$cmd->remove();
 		}
-
-		$cmd_AskYN = $this->getCmd(null, 'ask_YN');
-		if (is_object($cmd_AskYN)) {
-			$cmd_AskYN->remove();
+		$cmd = $this->getCmd(null, 'ask_YN');
+		if (is_object($cmd)) {
+			$cmd->remove();
 		}
 	}
 
@@ -448,42 +409,30 @@ class mobileCmd extends cmd {
 	/*     * *********************Methode d'instance************************* */
 
 	public function execute($_options = array()) {
-		$eqLogic = $this->getEqLogic();
-		$arn = $eqLogic->getConfiguration('notificationArn', null);
-		$os = $eqLogic->getConfiguration('type_mobile', null);
-		$idNotif = $eqLogic->getConfiguration('idNotif', 0);
-		$askType = 'notif';
-		$timeout = 'nok';
 		if ($this->getType() != 'action') {
 			return;
 		}
+		$eqLogic = $this->getEqLogic();
 		log::add('mobile', 'debug', 'Notif > ' . json_encode($_options) . ' / ' . $eqLogic->getId() . ' / ' . $this->getLogicalId() . ' / idNotif =' . $idNotif, 'config');
-
-		/************ NOTIF ***********/
 		if ($this->getLogicalId() == 'notif') {
 			if ($_options['title'] == '' || $_options['title'] == $_options['message'] || $_options['title'] == ' ') {
 				$_options['title'] = 'Jeedom';
 			}
-			$answer = null;
-			if ($_options['answer']) {
-				$askType = "ask_Text";
-				$answer = join(';', $_options['answer']);
-			}
-			if ($_options['timeout']) {
-				$timeout = $_options['timeout'];
-			}
+			$answer = ($_options['answer']) ? join(';', $_options['answer']) : null;
+			$askType = ($_options['answer']) ? 'ask_Text' : 'notif';
+			$timeout = ($_options['timeout']) ? $_options['timeout'] : 'nok';
 			log::add('mobile', 'debug', 'Commande de notification ' . $askType, 'config');
-			if ($arn != null && $os != null) {
+			if ($eqLogic->getConfiguration('notificationArn', null) != null && $eqLogic->getConfiguration('type_mobile', null) != null) {
+				$idNotif = $eqLogic->getConfiguration('idNotif', 0);
 				$idNotif = $idNotif + 1;
 				$eqLogic->setConfiguration('idNotif', $idNotif);
 				$eqLogic->save();
-				mobile::notification($arn, $os, $_options['title'], $_options['message'], null, $askType, $idNotif, $answer, $timeout);
+				mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], null, $askType, $idNotif, $answer, $timeout);
 				log::add('mobile', 'debug', 'Action : Envoi d\'une configuration ', 'config');
 			} else {
 				log::add('mobile', 'debug', 'ARN non configuré ', 'config');
 			}
 		}
-		/************ FIN NOTIF ************/
 	}
 
 	/*     * **********************Getteur Setteur*************************** */

@@ -6,8 +6,8 @@ if (!isConnect('admin')) {
 sendVarToJS('eqType', 'mobile');
 $eqLogics = eqLogic::byType('mobile');
 $plugins = plugin::listPlugin(true);
-$plugin_compatible = mobile::Pluginsuported();
-$plugin_widget = mobile::PluginWidget();
+$plugin_compatible = mobile::$_pluginSuported;
+$plugin_widget = mobile::$_pluginWidget;
 ?>
 <div class="row row-overflow">
   <div class="col-lg-2 col-md-3 col-sm-4">
@@ -25,12 +25,11 @@ foreach ($eqLogics as $eqLogic) {
  </div>
 
  <div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
-    <a class="btn btn-default pull-right" id="bt_regenConfig"><i class="fa fa-cogs"></i> {{Regenerer configuration}}</a>
-   <ul class="nav nav-tabs" role="tablist">
+  <a class="btn btn-default pull-right" id="bt_regenConfig"><i class="fa fa-cogs"></i> {{Regenerer configuration}}</a>
+  <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipements}}</a></li>
     <li role="presentation"><a href="#plugintab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Plugins}}</a></li>
     <li role="presentation"><a href="#objecttab" aria-controls="profile" role="tab" data-toggle="tab"><i class="icon maison-house112"></i> {{Objets / Pièces}}</a></li>
-    <!--<li role="presentation"><a href="#scenariotab" aria-controls="profile" role="tab" data-toggle="tab"><i class="icon jeedom-clap_cinema"></i> {{Scénarios}}</a></li>-->
   </ul>
   <div class="tab-content">
    <div role="tabpanel" class="tab-pane active" id="eqlogictab">

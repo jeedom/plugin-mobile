@@ -19,8 +19,8 @@ if (!isConnect('admin')) {
 	throw new Exception('{{401 - AccèÈs non autorisÈ}}');
 }
 
-$plugin_compatible = mobile::Pluginsuported();
-$plugin_widget = mobile::PluginWidget();
+$plugin_compatible = mobile::$_pluginSuported;
+$plugin_widget = mobile::$_pluginWidget;
 $plugin = plugin::byId($_GET['plugin_id']);
 sendVarToJS('pluginId', $_GET['plugin_id']);
 ?>

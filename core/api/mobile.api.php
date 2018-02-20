@@ -96,6 +96,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 	if ($rdk != null) {
 		$return['config']['rdk'] = $rdk;
 	}
+	log::add('mobile', 'debug', 'Return > ' . json_encode($return));
 	$jsonrpc->makeSuccess($return);
 }
 

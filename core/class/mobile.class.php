@@ -171,9 +171,6 @@ class mobile extends eqLogic {
 					unset($info['configuration'][$key]);
 				}
 			}
-			if (count($info['configuration']) == 0) {
-				unset($info['configuration']);
-			}
 			if ($info['type'] == 'action') {
 				unset($info['currentValue']);
 			}

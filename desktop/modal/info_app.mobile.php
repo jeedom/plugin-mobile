@@ -17,21 +17,22 @@
 if (!isConnect('admin')) {
 	throw new Exception('401 Unauthorized');
 }
+mobile::makeTemplateJson();
 $data = mobile::getTemplateJson();
 $data['messages'] = mobile::discovery_message();
 $data['config'] = array('datetime' => getmicrotime());
 ?>
-<h3>JSON valide :</h3>
+<legend>{{JSON valide}} (<?php echo sizeFormat(strlen(json_encode($data))) ?>)</legend>
 <pre id='pre_eventlog' style='overflow: auto; with:90%;'></pre>
-<h3>{{Objets / Pièces :}}</h3>
-<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['objects']); ?></pre>
-<h3>{{Modules :}}</h3>
-<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['eqLogics']); ?></pre>
-<h3>{{Commandes :}}</h3>
-<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['cmds']); ?></pre>
-<h3>{{Scénarios :}}</h3>
-<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['scenarios']); ?></pre>
-<h3>{{Messages :}}</h3>
-<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['messages']); ?></pre>
-<h3>{{Configurations :}}</h3>
-<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['config']); ?></pre>
+<legend>{{Objets / Pièces}}</legend>
+<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['objects'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE); ?></pre>
+<legend>{{Modules}}</legend>
+<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['eqLogics'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE); ?></pre>
+<legend>{{Commandes}}</legend>
+<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['cmds'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE); ?></pre>
+<legend>{{Scénarios :}}</legend>
+<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['scenarios'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE); ?></pre>
+<legend>{{Messages}}</legend>
+<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['messages'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE); ?></pre>
+<legend>{{Configurations :}}</legend>
+<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['config'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE); ?></pre>

@@ -142,7 +142,12 @@ class mobile extends eqLogic {
 				continue;
 			}
 			$info = $cmd->exportApi();
-			unset($info['isHistorized'], $info['configuration'], $info['template'], $info['display'], $info['html']);
+			unset($info['isHistorized']);
+			unset($info['configuration']);
+			unset($info['template']);
+			unset($info['display']);
+			unset($info['html']);
+			unset($info['alert']);
 			$info['configuration'] = array();
 			$info['display'] = array();
 			$info['display']['generic_type'] = $info['generic_type'];
@@ -153,6 +158,22 @@ class mobile extends eqLogic {
 			$info['display']['title_disable'] = $cmd->getDisplay('title_disable');
 			$info['display']['title_placeholder'] = $cmd->getDisplay('title_placeholder');
 			$info['display']['message_placeholder'] = $cmd->getDisplay('message_placeholder');
+			foreach ($info['display'] as $key => $value) {
+				if (trim($value) == '') {
+					unset($info['display'][$key]);
+				}
+			}
+			if (count($info['display']) == 0) {
+				unset($info['display']);
+			}
+			foreach ($info['configuration'] as $key => $value) {
+				if (trim($value) == '') {
+					unset($info['configuration'][$key]);
+				}
+			}
+			if (count($info['configuration']) == 0) {
+				unset($info['configuration']);
+			}
 			if ($info['type'] == 'action') {
 				unset($info['currentValue']);
 			}

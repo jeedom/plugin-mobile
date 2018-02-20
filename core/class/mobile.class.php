@@ -78,6 +78,11 @@ class mobile extends eqLogic {
 			unlink(dirname(__FILE__) . '/../../data/mobile.json');
 		}
 		file_put_contents(dirname(__FILE__) . '/../../data/mobile.json', json_encode($data));
+		$event_cmd = array();
+		foreach ($data['cmds'] as $cmd) {
+			$event_cmd[] = $cmd['id'];
+		}
+		cache::set('mobile::event', $event_cmd);
 	}
 
 	public static function getTemplateJson() {

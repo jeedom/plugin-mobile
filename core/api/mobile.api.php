@@ -33,10 +33,14 @@ if ($jsonrpc->getMethod() == 'sync') {
 	$rdk = null;
 	if (jeedom::version() >= '3.2.0') {
 		log::add('mobile', 'debug', 'Demande du RDK');
-		$rdk = config::genKey();
 		$registerDevice = $_USER_GLOBAL->getOptions('registerDevice', array());
 		if (!is_array($registerDevice)) {
 			$registerDevice = array();
+		}
+		if (!isset($params['rdk']) || !isset($registerDevice[sha512($params['rdk'])])) {
+			$rdk = config::genKey();
+		} else {
+			$rdk = $params['rdk'];
 		}
 		$registerDevice[sha512($rdk)] = array();
 		$registerDevice[sha512($rdk)]['datetime'] = date('Y-m-d H:i:s');
@@ -88,14 +92,12 @@ if ($jsonrpc->getMethod() == 'sync') {
 			}
 		}
 	}
-	if ($rdk == null) {
-		$config = array('datetime' => getmicrotime(), 'Iq' => $params['Iq'], 'NameMobile' => $mobileEqLogic);
-	} else {
-		$config = array('datetime' => getmicrotime(), 'Iq' => $params['Iq'], 'NameMobile' => $mobileEqLogic, 'rdk' => $rdk);
-	}
 	$return = mobile::getTemplateJson();
 	$return['messages'] = mobile::discovery_message();
-	$return['config'] = $config;
+	$return['config'] = array('datetime' => getmicrotime(), 'Iq' => $params['Iq'], 'NameMobile' => $mobileEqLogic);
+	if ($rdk != null) {
+		$config['config']['rdk'] = $rdk;
+	}
 	$jsonrpc->makeSuccess($return);
 }
 

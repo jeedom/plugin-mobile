@@ -96,7 +96,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 	$return['messages'] = mobile::discovery_message();
 	$return['config'] = array('datetime' => getmicrotime(), 'Iq' => $params['Iq'], 'NameMobile' => $mobileEqLogic);
 	if ($rdk != null) {
-		$config['config']['rdk'] = $rdk;
+		$return['config']['rdk'] = $rdk;
 	}
 	$jsonrpc->makeSuccess($return);
 }

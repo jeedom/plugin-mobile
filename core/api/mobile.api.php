@@ -92,6 +92,9 @@ if ($jsonrpc->getMethod() == 'sync') {
 			}
 		}
 	}
+	if (isset($params['gen_json']) && $params['gen_json'] == 1) {
+		mobile::makeTemplateJson();
+	}
 	$return = mobile::getTemplateJson();
 	$return['messages'] = mobile::discovery_message();
 	$return['config'] = array('datetime' => getmicrotime(), 'Iq' => $params['Iq'], 'NameMobile' => $mobileEqLogic);

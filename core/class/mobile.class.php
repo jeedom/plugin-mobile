@@ -30,6 +30,8 @@ class mobile extends eqLogic {
 
 	public static $_urlAws = 'http://195.154.56.168:8000/notif/';
 
+	public static $_listenEvents = array('cmd::update', 'scenario::update');
+
 	/*     * ***********************Methode static*************************** */
 
 	public static function pluginToSend() {

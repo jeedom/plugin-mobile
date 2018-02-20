@@ -14,53 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
-
 if (!isConnect('admin')) {
 	throw new Exception('401 Unauthorized');
 }
-
-$PluginToSend = mobile::PluginToSend();
-
-/*$sync_array = array(
-	'eqLogics' => mobile::discovery_eqLogic($PluginToSend),
-	'cmds' => mobile::discovery_cmd($PluginToSend),
-	'objects' => mobile::discovery_object(),
-	'scenarios' => mobile::discovery_scenario(),
-	'messages' => mobile::discovery_message(),
-	'config' => array('datetime' => getmicrotime())
-);*/
-
-$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($PluginToSend),mobile::discovery_eqLogic($PluginToSend));
-	$eqLogics = $sync_new[1];
-	$cmds = $sync_new[0];
-	
-	$sync_array = array(
-		'eqLogics' => $eqLogics['eqLogics'],
-		'cmds' => $cmds['cmds'],
-		'objects' => mobile::discovery_object(),
-		'scenarios' => mobile::discovery_scenario(),
-		'messages' => mobile::discovery_message(),
-		'config' => array('datetime' => getmicrotime()),
-	);
+$data = mobile::getTemplateJson();
+$data['messages'] = mobile::discovery_message();
+$data['config'] = array('datetime' => getmicrotime());
 ?>
-<h3>JSON valide :<h3>
-<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php
-	$ob = json_decode(json_encode($sync_array));
-	if($ob === null) {
-		echo '{{Json mal encodé}}';
-	}else{
-		echo '{{Json bien encodé}}';
-	}
-?></pre>
+<h3>JSON valide :</h3>
+<pre id='pre_eventlog' style='overflow: auto; with:90%;'></pre>
 <h3>{{Objets / Pièces :}}</h3>
-<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($sync_array['objects']); ?></pre>
+<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['objects']); ?></pre>
 <h3>{{Modules :}}</h3>
-<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($sync_array['eqLogics']); ?></pre>
+<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['eqLogics']); ?></pre>
 <h3>{{Commandes :}}</h3>
-<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($sync_array['cmds']); ?></pre>
+<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['cmds']); ?></pre>
 <h3>{{Scénarios :}}</h3>
-<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($sync_array['scenarios']); ?></pre>
+<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['scenarios']); ?></pre>
 <h3>{{Messages :}}</h3>
-<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($sync_array['messages']); ?></pre>
+<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['messages']); ?></pre>
 <h3>{{Configurations :}}</h3>
-<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($sync_array['config']); ?></pre>
+<pre id='pre_eventlog' style='overflow: auto; with:90%;'><?php echo json_encode($data['config']); ?></pre>

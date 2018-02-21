@@ -30,7 +30,6 @@ $params = $jsonrpc->getParams();
 log::add('mobile', 'debug', 'Appel API Mobile > ' . $jsonrpc->getMethod());
 
 if ($jsonrpc->getMethod() == 'sync') {
-	$rdk = null;
 	if (jeedom::version() >= '3.2.0') {
 		log::add('mobile', 'debug', 'Demande du RDK');
 		$registerDevice = $_USER_GLOBAL->getOptions('registerDevice', array());
@@ -93,7 +92,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 	$return = mobile::getTemplateJson();
 	$return['messages'] = mobile::discovery_message();
 	$return['config'] = array('datetime' => getmicrotime(), 'Iq' => $params['Iq'], 'NameMobile' => $mobileEqLogic);
-	if ($rdk != null) {
+	if (isset($rdk)) {
 		$return['config']['rdk'] = $rdk;
 	}
 	log::add('mobile', 'debug', 'Return > ' . json_encode($return));

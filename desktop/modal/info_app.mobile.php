@@ -41,23 +41,19 @@ $replace = array('<i' => '\<\i');
 		</pre>
 	</div>
 	<div role="tabpanel" class="tab-pane" id="device">
-		<pre style='overflow: auto; with:90%;'>
-			<?php echo str_replace(array_keys($replace), $replace, json_encode($data['eqLogics'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
+		<pre style='overflow: auto; with:90%;'><?php echo str_replace(array_keys($replace), $replace, json_encode($data['eqLogics'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
 		</pre>
 	</div>
 	<div role="tabpanel" class="tab-pane" id="cmd">
-		<pre style='overflow: auto; with:90%;'>
-			<?php echo str_replace(array_keys($replace), $replace, json_encode($data['cmds'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
+		<pre style='overflow: auto; with:90%;'><?php echo str_replace(array_keys($replace), $replace, json_encode($data['cmds'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
 		</pre>
 	</div>
 	<div role="tabpanel" class="tab-pane" id="scenario">
-		<pre style='overflow: auto; with:90%;'>
-			<?php echo str_replace(array_keys($replace), $replace, json_encode($data['scenarios'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
+		<pre style='overflow: auto; with:90%;'><?php echo str_replace(array_keys($replace), $replace, json_encode($data['scenarios'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
 		</pre>
 	</div>
 	<div role="tabpanel" class="tab-pane" id="message">
-		<pre style='overflow: auto; with:90%;'>
-			<?php echo str_replace(array_keys($replace), $replace, json_encode($data['messages'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
+		<pre style='overflow: auto; with:90%;'><?php echo str_replace(array_keys($replace), $replace, json_encode($data['messages'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
 		</pre>
 	</div>
 	<div role="tabpanel" class="tab-pane" id="settings">

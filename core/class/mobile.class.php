@@ -381,7 +381,7 @@ class mobile extends eqLogic {
 			'publish' => $publish,
 		];
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, self::$_urlAws());
+		curl_setopt($ch, CURLOPT_URL, self::$_urlAws);
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

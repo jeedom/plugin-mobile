@@ -21,17 +21,47 @@ mobile::makeTemplateJson();
 $data = mobile::getTemplateJson();
 $data['messages'] = mobile::discovery_message();
 $data['config'] = array('datetime' => getmicrotime());
+$replace = array('<i' => '\<\i');
 ?>
 <legend>{{JSON valide}} (<?php echo sizeFormat(strlen(json_encode($data))) ?>)</legend>
-<legend>{{Objets / Pièces}}</legend>
-<pre style='overflow: auto; with:90%;'><?php echo json_encode($data['objects'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE); ?></pre>
-<legend>{{Modules}}</legend>
-<pre style='overflow: auto; with:90%;'><?php echo json_encode($data['eqLogics'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE); ?></pre>
-<legend>{{Commandes}}</legend>
-<pre style='overflow: auto; with:90%;'><?php echo json_encode($data['cmds'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE); ?></pre>
-<legend>{{Scénarios :}}</legend>
-<pre style='overflow: auto; with:90%;'><?php echo json_encode($data['scenarios'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE); ?></pre>
-<legend>{{Messages}}</legend>
-<pre style='overflow: auto; with:90%;'><?php echo json_encode($data['messages'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE); ?></pre>
-<legend>{{Configurations :}}</legend>
-<pre style='overflow: auto; with:90%;'><?php echo json_encode($data['config'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE); ?></pre>
+
+
+
+<ul class="nav nav-tabs" role="tablist" id="ul_tabMobileConfig">
+	<li role="presentation" class="active"><a href="#object" aria-controls="object" role="tab" data-toggle="tab">{{Objets / Pièces}}</a></li>
+	<li role="presentation"><a href="#device" aria-controls="device" role="tab" data-toggle="tab">{{Modules}}</a></li>
+	<li role="presentation"><a href="#cmd" aria-controls="cmd" role="tab" data-toggle="tab">{{Commandes}}</a></li>
+	<li role="presentation"><a href="#scenario" aria-controls="scenario" role="tab" data-toggle="tab">{{Scénarios}}</a></li>
+	<li role="presentation"><a href="#message" aria-controls="message" role="tab" data-toggle="tab">{{Messages}}</a></li>
+	<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">{{Configurations}}</a></li>
+</ul>
+<div class="tab-content" >
+	<div role="tabpanel" class="tab-pane active" id="object">
+		<pre style='overflow: auto; with:90%;'><?php echo str_replace(array_keys($replace), $replace, json_encode($data['objects'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
+		</pre>
+	</div>
+	<div role="tabpanel" class="tab-pane" id="device">
+		<pre style='overflow: auto; with:90%;'>
+			<?php echo str_replace(array_keys($replace), $replace, json_encode($data['eqLogics'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
+		</pre>
+	</div>
+	<div role="tabpanel" class="tab-pane" id="cmd">
+		<pre style='overflow: auto; with:90%;'>
+			<?php echo str_replace(array_keys($replace), $replace, json_encode($data['cmds'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
+		</pre>
+	</div>
+	<div role="tabpanel" class="tab-pane" id="scenario">
+		<pre style='overflow: auto; with:90%;'>
+			<?php echo str_replace(array_keys($replace), $replace, json_encode($data['scenarios'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
+		</pre>
+	</div>
+	<div role="tabpanel" class="tab-pane" id="message">
+		<pre style='overflow: auto; with:90%;'>
+			<?php echo str_replace(array_keys($replace), $replace, json_encode($data['messages'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
+		</pre>
+	</div>
+	<div role="tabpanel" class="tab-pane" id="settings">
+		<pre style='overflow: auto; with:90%;'><?php echo str_replace(array_keys($replace), $replace, json_encode($data['config'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
+	</pre>
+</div>
+</div>

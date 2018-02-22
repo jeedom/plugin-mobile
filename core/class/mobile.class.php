@@ -155,16 +155,18 @@ class mobile extends eqLogic {
 			unset($info['display']);
 			unset($info['html']);
 			unset($info['alert']);
-			$info['configuration'] = array();
-			$info['display'] = array();
-			$info['display']['generic_type'] = $info['generic_type'];
 			$info['configuration']['actionCodeAccess'] = $cmd->getConfiguration('actionCodeAccess');
 			$info['configuration']['actionConfirm'] = $cmd->getConfiguration('actionConfirm');
-			$info['display']['icon'] = $cmd->getDisplay('icon');
+			$info['configuration']['maxValue'] = $cmd->getConfiguration('maxValue');
+			$info['configuration']['minValue'] = $cmd->getConfiguration('minValue');
+
+			$info['configuration'] = array();
+			$info['display'] = array();
 			$info['display']['invertBinary'] = $cmd->getDisplay('invertBinary');
 			$info['display']['title_disable'] = $cmd->getDisplay('title_disable');
 			$info['display']['title_placeholder'] = $cmd->getDisplay('title_placeholder');
 			$info['display']['message_placeholder'] = $cmd->getDisplay('message_placeholder');
+
 			foreach ($info['display'] as $key => $value) {
 				if (trim($value) == '') {
 					unset($info['display'][$key]);

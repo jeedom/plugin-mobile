@@ -194,9 +194,6 @@ class mobile extends eqLogic {
 			if ($info['value'] == null) {
 				unset($info['value']);
 			}
-			if ($info['order'] == -1) {
-				unset($info['order']);
-			}
 			if ($info['unite'] == '') {
 				unset($info['unite']);
 			}

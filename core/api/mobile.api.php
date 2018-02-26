@@ -45,20 +45,19 @@ if ($jsonrpc->getMethod() == 'sync') {
 		$_USER_GLOBAL->save();
 		log::add('mobile', 'debug', 'RDK :' . $rdk);
 	}
-	$mobileEqLogic = null;
+	$mobile = null;
 	if (isset($params['Iq'])) {
-		$mobileEqLogic = eqLogic::byLogicalId($params['Iq'], 'mobile');
+		$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	}
-	if (!is_object($mobileEqLogic)) {
-		$nameEqlogic = $params['platform'] . '-' . config::genKey(3);
+	if (!is_object($mobile)) {
 		$user = user::byHash($params['apikey']);
 		$userId = $user->getId();
 		$mobile = new mobile();
 		$mobile->setEqType_name('mobile');
-		$mobile->setName($nameEqlogic);
+		$mobile->setName($params['platform'] . '-' . config::genKey(3));
 		$mobile->setConfiguration('type_mobile', $params['platform']);
 		$mobile->setConfiguration('affect_user', $userId);
-		$mobile->setConfiguration('validate', no);
+		$mobile->setConfiguration('validate', 'no');
 		if (isset($params['notificationProvider'])) {
 			$mobile->setConfiguration('notificationArn', substr($params['notificationProvider'], 1, -1));
 		}
@@ -70,20 +69,18 @@ if ($jsonrpc->getMethod() == 'sync') {
 	}
 	if (isset($params['notificationProvider']) || $params['notificationProvider'] != '') {
 		log::add('mobile', 'debug', 'notificationProvider Disponible');
-		$mobileEqLogic = eqLogic::byLogicalId($params['Iq'], 'mobile');
-		$nameEqlogic = $mobileEqLogic->getName();
 		log::add('mobile', 'debug', 'EqLogic dispo');
-		$arn = $mobileEqLogic->getConfiguration('notificationArn', null);
+		$arn = $mobile->getConfiguration('notificationArn', null);
 		$arnMobile = substr($params['notificationProvider'], 1, -1);
 		if ($arn == null) {
 			log::add('mobile', 'debug', 'arn null dans la configuration > ' . $arn);
-			$mobileEqLogic->setConfiguration('notificationArn', $arnMobile);
-			$mobileEqLogic->save();
+			$mobile->setConfiguration('notificationArn', $arnMobile);
+			$mobile->save();
 		} else {
 			log::add('mobile', 'debug', 'arn NON null dans la configuration > ' . $arn);
 			if ($arn != $arnMobile) {
-				$mobileEqLogic->setConfiguration('notificationArn', $arnMobile);
-				$mobileEqLogic->save();
+				$mobile->setConfiguration('notificationArn', $arnMobile);
+				$mobile->save();
 			}
 		}
 	}
@@ -92,7 +89,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 	}
 	$return = mobile::getTemplateJson();
 	$return['messages'] = mobile::discovery_message();
-	$return['config'] = array('datetime' => getmicrotime(), 'Iq' => $params['Iq'], 'NameMobile' => $mobileEqLogic);
+	$return['config'] = array('datetime' => getmicrotime(), 'Iq' => $params['Iq'], 'NameMobile' => $mobile->getName());
 	if (isset($rdk)) {
 		$return['config']['rdk'] = $rdk;
 	}

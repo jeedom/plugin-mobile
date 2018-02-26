@@ -45,6 +45,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 		$_USER_GLOBAL->save();
 		log::add('mobile', 'debug', 'RDK :' . $rdk);
 	}
+	$mobileEqLogic = null;
 	if (isset($params['Iq'])) {
 		$mobileEqLogic = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	}

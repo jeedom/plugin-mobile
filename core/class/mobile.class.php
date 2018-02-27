@@ -189,7 +189,7 @@ class mobile extends eqLogic {
 			if ($info['type'] == 'action') {
 				unset($info['currentValue']);
 			} else if (!$_withValue) {
-				$info['currentValue'] == '#' . $info['id'] . '#';
+				$info['currentValue'] = '#' . $info['id'] . '#';
 			}
 			if ($info['value'] == null) {
 				unset($info['value']);

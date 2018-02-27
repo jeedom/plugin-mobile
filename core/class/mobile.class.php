@@ -227,27 +227,38 @@ class mobile extends eqLogic {
 		return $array_cmd_multi;
 	}
 
-	public static function change_cmdAndeqLogic($cmds, $eqLogics) {
-		$plage_cmds = mobile::discovery_multi($cmds);
+	public static function change_cmdAndeqLogic($_cmds, $_eqLogics) {
+		$findEqLogic = array();
+		foreach ($_cmds as $cmd) {
+			$findEqLogic[$cmd['eqLogic_id']] = $cmd['eqLogic_id'];
+		}
+		$eqLogics = array();
+		foreach ($_eqLogics as $eqLogic) {
+			if (!isset($findEqLogic[$eqLogic['id']])) {
+				continue;
+			}
+			$eqLogics[] = $eqLogic;
+		}
+		$plage_cmds = mobile::discovery_multi($_cmds);
 		if (count($plage_cmds) == 0) {
-			return array('cmds' => $cmds, 'eqLogics' => $eqLogics);
+			return array('cmds' => $_cmds, 'eqLogics' => $eqLogics);
 		}
 		$eqLogic_array = array();
 		foreach ($plage_cmds as $plage_cmd) {
-			$eqLogic_id = $cmds[$plage_cmd]['eqLogic_id'];
-			$name_cmd = $cmds[$plage_cmd]['name'];
+			$eqLogic_id = $_cmds[$plage_cmd]['eqLogic_id'];
+			$name_cmd = $_cmds[$plage_cmd]['name'];
 			foreach ($eqLogics as $eqLogic) {
 				if ($eqLogic['id'] == $eqLogic_id) {
 					$eqLogic_name = $eqLogic['name'] . ' / ' . $name_cmd;
 				}
 			}
-			$id = $cmds[$plage_cmd]['id'];
+			$id = $_cmds[$plage_cmd]['id'];
 			$new_eqLogic_id = '999' . $eqLogic_id . '' . $id;
-			$cmds[$plage_cmd]['eqLogic_id'] = $new_eqLogic_id;
-			$keys = array_keys(array_column($cmds, 'eqLogic_id'), $eqLogic_id);
+			$_cmds[$plage_cmd]['eqLogic_id'] = $new_eqLogic_id;
+			$keys = array_keys(array_column($_cmds, 'eqLogic_id'), $eqLogic_id);
 			foreach ($keys as $key) {
-				if ($cmds[$key]['value'] == $cmds[$plage_cmd]['id'] && $cmds[$key]['type'] == 'action') {
-					$cmds[$key]['eqLogic_id'] = $new_eqLogic_id;
+				if ($_cmds[$key]['value'] == $_cmds[$plage_cmd]['id'] && $_cmds[$key]['type'] == 'action') {
+					$_cmds[$key]['eqLogic_id'] = $new_eqLogic_id;
 				}
 			}
 			$eqLogic_array[] = array($eqLogic_id, $new_eqLogic_id, $eqLogic_name);
@@ -261,7 +272,7 @@ class mobile extends eqLogic {
 			$new_eqLogic['name'] = $eqlogic_array_one[2];
 			$eqLogics[] = $new_eqLogic;
 		}
-		return array('cmds' => $cmds, 'eqLogics' => $eqLogics);
+		return array('cmds' => $_cmds, 'eqLogics' => $eqLogics);
 	}
 
 	public static function discovery_object() {

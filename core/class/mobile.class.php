@@ -290,6 +290,13 @@ class mobile extends eqLogic {
 			unset($object['display']['dashboard::size']);
 			unset($object['display']['summaryTextColor']);
 			unset($object['father_id']);
+			if (isset($object['display']['icon'])) {
+				if ($object['display']['icon'] == '') {
+					unset($object['display']['icon']);
+				} else {
+					$object['display']['icon'] = str_replace(array('<i class="', '"></i>'), '', $object['display']['icon']);
+				}
+			}
 			$return[] = $object;
 		}
 		return $return;

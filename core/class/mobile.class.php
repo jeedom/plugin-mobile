@@ -171,6 +171,9 @@ class mobile extends eqLogic {
 			$info['display']['title_disable'] = $cmd->getDisplay('title_disable');
 			$info['display']['title_placeholder'] = $cmd->getDisplay('title_placeholder');
 			$info['display']['message_placeholder'] = $cmd->getDisplay('message_placeholder');
+			if (!in_array($cmd->getGeneric_type(), ['GENERIC_INFO', 'GENERIC_ACTION']) && isset($info['display']['icon'])) {
+				unset($info['display']['icon']);
+			}
 			foreach ($info['display'] as $key => $value) {
 				if (trim($value) == '') {
 					unset($info['display'][$key]);

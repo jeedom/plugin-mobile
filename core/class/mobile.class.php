@@ -161,11 +161,11 @@ class mobile extends eqLogic {
 			unset($info['logicalId']);
 			unset($info['eqType']);
 			unset($info['order']);
+			$info['configuration'] = array();
 			$info['configuration']['actionCodeAccess'] = $cmd->getConfiguration('actionCodeAccess');
 			$info['configuration']['actionConfirm'] = $cmd->getConfiguration('actionConfirm');
 			$info['configuration']['maxValue'] = $cmd->getConfiguration('maxValue');
 			$info['configuration']['minValue'] = $cmd->getConfiguration('minValue');
-			$info['configuration'] = array();
 			$info['display'] = array();
 			$info['display']['invertBinary'] = $cmd->getDisplay('invertBinary');
 			$info['display']['title_disable'] = $cmd->getDisplay('title_disable');

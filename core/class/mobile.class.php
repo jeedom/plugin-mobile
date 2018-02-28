@@ -37,17 +37,15 @@ class mobile extends eqLogic {
 	public static function pluginToSend() {
 		$return = [];
 		$plugins = plugin::listPlugin(true);
-		$plugin_compatible = self::$_pluginSuported;
-		$plugin_widget = self::$_pluginWidget;
 		foreach ($plugins as $plugin) {
 			$plugId = $plugin->getId();
 			if ($plugId == 'mobile') {
 				continue;
-			} else if (in_array($plugId, $plugin_widget)) {
+			} else if (in_array($plugId, self::$_pluginWidget)) {
 				$return[] = $plugId;
-			} else if (in_array($plugId, $plugin_compatible) && !in_array($plugId, $plugin_widget) && config::byKey('sendToApp', $plugId, 1) == 1) {
+			} else if (in_array($plugId, self::$_pluginSuported) && !in_array($plugId, self::$_pluginWidget) && config::byKey('sendToApp', $plugId, 1) == 1) {
 				$return[] = $plugId;
-			} else if (!in_array($plugId, $plugin_compatible) && config::byKey('sendToApp', $plugId, 0) == 1) {
+			} else if (!in_array($plugId, self::$_pluginSuported) && config::byKey('sendToApp', $plugId, 0) == 1) {
 				$subClasses = config::byKey('subClass', $plugId, '');
 				if ($subClasses != '') {
 					$subClassesList = explode(';', $subClasses);
@@ -121,6 +119,9 @@ class mobile extends eqLogic {
 				unset($eqLogic_array['logicalId']);
 				unset($eqLogic_array['isVisible']);
 				unset($eqLogic_array['isEnable']);
+				if (!in_array($eqLogic_array['eqType_name'], self::$_pluginWidget)) {
+					unset($eqLogic_array['eqType_name']);
+				}
 				$return[] = $eqLogic_array;
 			}
 		}

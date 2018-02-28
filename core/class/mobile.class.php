@@ -174,6 +174,9 @@ class mobile extends eqLogic {
 			if (!in_array($cmd->getGeneric_type(), ['GENERIC_INFO', 'GENERIC_ACTION']) && isset($info['display']['icon'])) {
 				unset($info['display']['icon']);
 			}
+			if (isset($info['display']['icon'])) {
+				$info['display']['icon'] = str_replace(array('<i class="', '"></i>'), '', $info['display']['icon']);
+			}
 			foreach ($info['display'] as $key => $value) {
 				if (trim($value) == '') {
 					unset($info['display'][$key]);

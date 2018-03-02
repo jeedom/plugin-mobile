@@ -63,12 +63,17 @@ class mobile extends eqLogic {
 		$pluginToSend = mobile::pluginToSend();
 		$discover_eqLogic = mobile::discovery_eqLogic($pluginToSend);
 		$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($pluginToSend, $discover_eqLogic), $discover_eqLogic);
+		$config = array(
+			'url_internal' => network::getNetworkAccess('internal'),
+			'url_external' => network::getNetworkAccess('external')
+		);
 		$data = array(
 			'eqLogics' => $sync_new['eqLogics'],
 			'cmds' => $sync_new['cmds'],
 			'objects' => mobile::delete_object_eqlogic_null(mobile::discovery_object(), $sync_new['eqLogics']),
 			'scenarios' => mobile::discovery_scenario(),
 			'plans' => mobile::discovery_plan(),
+			'config' => $config
 		);
 		$path = dirname(__FILE__) . '/../../data/mobile.json';
 		if (!file_exists(dirname(__FILE__) . '/../../data')) {

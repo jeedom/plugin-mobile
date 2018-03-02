@@ -91,7 +91,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 	$return['messages'] = mobile::discovery_message();
 	$return['config']['datetime'] = getmicrotime();
 	$return['config']['Iq'] = $params['Iq'];
-	$return['config']['NameMobile']$mobile->getName();
+	$return['config']['NameMobile'] = $mobile->getName();
 	if (isset($rdk)) {
 		$return['config']['rdk'] = $rdk;
 	}

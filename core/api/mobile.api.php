@@ -118,34 +118,6 @@ if ($jsonrpc->getMethod() == 'cmdsbyEqlogicID') {
 	$jsonrpc->makeSuccess($cmdAPI);
 }
 
-if ($jsonrpc->getMethod() == 'Iq') {
-	$platform = $params['platform'];
-	$user = user::byHash($params['apikey']);
-	$userId = $user->getId();
-	$mobile = new eqLogic;
-	$mobile->setEqType_name('mobile');
-	$mobile->setName($platform . '-' . config::genKey(3));
-	$mobile->setConfiguration('type_mobile', $platform);
-	$mobile->setConfiguration('affect_user', $userId);
-	$mobile->setConfiguration('validate', no);
-	$mobile->setIsEnable(1);
-	$key = config::genKey(32);
-	$mobile->setLogicalId($key);
-	$mobile->save();
-	$jsonrpc->makeSuccess($key);
-}
-
-if ($jsonrpc->getMethod() == 'IqValidation') {
-	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
-	if (is_object($mobile)) {
-		$mobile->setConfiguration('validate', true);
-		$mobile->save();
-		$jsonrpc->makeSuccess('validate');
-	} else {
-		$jsonrpc->makeSuccess('not_iq');
-	}
-}
-
 if ($jsonrpc->getMethod() == 'version') {
 	$mobile_update = update::byLogicalId('mobile');
 	$jsonrpc->makeSuccess($mobile_update->getLocalVersion());

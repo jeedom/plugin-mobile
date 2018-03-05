@@ -34,14 +34,14 @@ $eqLogics = mobile::byType('mobile');
 	<tbody>
 	 <?php
 foreach ($eqLogics as $eqLogic) {
-	$file = 'plugins/mobile/doc/images/' . $eqLogic->getConfiguration('type_mobile') . '.png';
-    if (file_exists($file)) {
-		$path = 'plugins/mobile/doc/images/' . $eqLogic->getConfiguration('type_mobile') . '.png';
-		$img = '<img src="'.$path.'" height="55" width="55" />';
-    } else {
-		$path = 'plugins/mobile/doc/images/mobile_icon.png';
-		$img = '<img src="'.$path.'" height="55" width="55" />';
-    }
+	$file = 'plugins/mobile/docs/images/' . $eqLogic->getConfiguration('type_mobile') . '.png';
+	if (file_exists($file)) {
+		$path = 'plugins/mobile/docs/images/' . $eqLogic->getConfiguration('type_mobile') . '.png';
+		$img = '<img src="' . $path . '" height="55" width="55" />';
+	} else {
+		$path = 'plugins/mobile/docs/images/mobile_icon.png';
+		$img = '<img src="' . $path . '" height="55" width="55" />';
+	}
 	$userId = $eqLogic->getConfiguration('affect_user');
 	$username = user::byId($userId)->getLogin();
 	echo '<tr><td>' . $img . '</td><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';

@@ -65,7 +65,7 @@ class mobile extends eqLogic {
 		$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($pluginToSend, $discover_eqLogic), $discover_eqLogic);
 		$config = array(
 			'url_internal' => network::getNetworkAccess('internal'),
-			'url_external' => network::getNetworkAccess('external')
+			'url_external' => network::getNetworkAccess('external'),
 		);
 		$data = array(
 			'eqLogics' => $sync_new['eqLogics'],
@@ -73,7 +73,7 @@ class mobile extends eqLogic {
 			'objects' => mobile::delete_object_eqlogic_null(mobile::discovery_object(), $sync_new['eqLogics']),
 			'scenarios' => mobile::discovery_scenario(),
 			'plans' => mobile::discovery_plan(),
-			'config' => $config
+			'config' => $config,
 		);
 		$path = dirname(__FILE__) . '/../../data/mobile.json';
 		if (!file_exists(dirname(__FILE__) . '/../../data')) {
@@ -157,9 +157,7 @@ class mobile extends eqLogic {
 			}
 			$info = $cmd->exportApi();
 			unset($info['isHistorized']);
-			unset($info['configuration']);
 			unset($info['template']);
-			unset($info['display']);
 			unset($info['html']);
 			unset($info['alert']);
 			unset($info['isVisible']);
@@ -173,6 +171,7 @@ class mobile extends eqLogic {
 			$info['configuration']['minValue'] = $cmd->getConfiguration('minValue');
 			$info['display'] = array();
 			$info['display']['invertBinary'] = $cmd->getDisplay('invertBinary');
+			$info['display']['icon'] = $cmd->getDisplay('icon');
 			$info['display']['title_disable'] = $cmd->getDisplay('title_disable');
 			$info['display']['title_placeholder'] = $cmd->getDisplay('title_placeholder');
 			$info['display']['message_placeholder'] = $cmd->getDisplay('message_placeholder');

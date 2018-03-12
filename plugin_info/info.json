@@ -5,7 +5,7 @@
 	"icon" : "fa fa-mobile",
 	"licence" : "AGPL",
 	"author" : "Jeedom",
-	"require" : "3.2.1",
+	"require" : "3.2",
 	"installation" : "Aucune",
 	"category" : "communication",
 	"version" : "0.4",

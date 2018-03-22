@@ -20,5 +20,6 @@ function mobile_update(){
 	if($mobile->getLogicalId() == null || $mobile->getLogicalId() == ""){
 		$mobile->remove();
 	}
+	mobile::makeTemplateJson();
 }
 ?>

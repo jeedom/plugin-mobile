@@ -62,10 +62,8 @@ if ($jsonrpc->getMethod() == 'sync') {
 			$mobile->setConfiguration('notificationArn', substr($params['notificationProvider'], 1, -1));
 		}
 		$mobile->setIsEnable(1);
-		$key = config::genKey(32);
-		$mobile->setLogicalId($key);
-		$params['Iq'] = $key;
 		$mobile->save();
+		$params['Iq'] = $mobile->getLogicalId();
 	}
 	if (isset($params['notificationProvider']) || $params['notificationProvider'] != '') {
 		log::add('mobile', 'debug', 'notificationProvider Disponible');

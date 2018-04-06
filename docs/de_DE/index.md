@@ -1,26 +1,25 @@
-Plugin permettant d’utiliser l’application Mobile Jeedom.
+Plugin um die Mobile Jeedom Version zu verwenden.
 
-L’application mobile Jeedom nécessite l’installation de ce plugin afin
-que la box puisse dialoguer avec l’application Mobile.
+Die Mobile Jeedom Anwendung erfordert die Einrichtung dieses Plugins,
+damit sich die Box mit der Mobil App unterhalten kann.
 
-Configuration du plugin Mobile 
+Konfiguration des Mobil-Plugins
 ==============================
 
-Après installation du plugin, il vous suffit de l’activer :
+Nach der Installation des Plugin, aktivieren Sie es einfach :
 
 ![mobile1](../images/mobile1.png)
 
-**Configuration**
+**Konfiguration**
 
-Pour configurer le plugin, vous devez ajouter les téléphones qui
-pourront accéder à Jeedom.
+Um das Plugin zu konfigurieren, müssen Sie Handys hinzufügen, die auf
+Jeedom zugreifen sollen.
 
-Pour Ajouter un téléphone : **Plugins**→**Communication**→**App
-Mobile**→**Ajouter**
+So fügen Sie ein Handy hinzu : **Plugins**→**Kommunikation**→**Mobil App**→**Hinzufügen**
 
 ![mobile2](../images/mobile2.png)
 
-Voici les paramètres à renseigner :
+Hier sind die einzelnen Parameter erklärt :
 
 -   **Nom de l’équipement mobile** : Nom du téléphone
 

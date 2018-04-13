@@ -12,5 +12,5 @@
 	"changelog" : "https://jeedom.github.io/plugin-mobile/#language#/changelog",
 	"documentation" : "https://jeedom.github.io/plugin-mobile/#language#/",
 	"language" : ["fr_FR","en_US","de_DE","sp_SP","ru_RU","id_ID","it_IT"],
-	"compatibility" : ["miniplus","smart","rpi","Docker","diy","mobile"]
+	"compatibility" : ["miniplus","smart","rpi","docker","diy","mobile"]
 }

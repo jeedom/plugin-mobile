@@ -1,13 +1,13 @@
 Changelog
 =========
 
-Mobile 
+Mobil 
 ------
 
 #### v1.3.0 
 
-* Notification ASK
-* Historique des notifications
-* Slider avec pourcentage
-* grosse modification de la synchronisation
+* ASK Benachrichtigungen
+* Archiv Benachrichtigungen
+* Schieberegler mit Prozentsatz
+* große Veränderung in der Synchronisation
 * suppression du push to refresh

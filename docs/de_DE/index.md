@@ -21,11 +21,11 @@ So fügen Sie ein Handy hinzu : **Plugins**→**Kommunikation**→**Mobil App**�
 
 Hier sind die einzelnen Parameter erklärt :
 
--   **Nom de l’équipement mobile** : Nom du téléphone
+-   **Mobil Gerätename** : Name des Telefons
 
--   **Activer** : Activation de l’accès pour ce mobile
+-   **Aktivieren** : Aktivieren des Zugriffs für dieses Handy
 
--   **Type de Mobile** : Sélection de l’OS du téléphone (iOS, Android)
+-   **Mobil Typ** : Auswahl des Betriebssystems des Telefons (iOS, Android)
 
 -   **Utilisateur** : Utilisateur associé à cet accès
 
@@ -162,7 +162,7 @@ Tableaux des templates de l’application
 
 ### Les Lumières #
 
-Image                           | type générique               | Partie Dev plugin            | Description          |
+Bild                           | generischer Typ               | Partie Dev plugin            | Beschreibung          |
 :-----------------------------: | :--------------------------- | :--------------------------- | :------------------: |
 ![LIGHT](../images/LIGHT_1.jpg) | `Lumière Bouton On`<br/>`Lumière Bouton Off` | `LIGHT_ON`<br/>`LIGHT_OFF`| présence de deux boutons "ON" et "Off" pas de retour d'état. |
 ![LIGHT](../images/LIGHT_2.jpg) | `Lumière Bouton On`<br/>`Lumière Bouton Off`<br/>`Lumière Etat` | `LIGHT_ON`<br/>`LIGHT_OFF`<br/>`LIGHT_STATE` | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off |
@@ -172,7 +172,7 @@ Image                           | type générique               | Partie Dev pl
 
 ### Les Prises #
 
-Image                           | type générique               | Partie Dev plugin            | Description          |
+Bild                           | generischer Typ               | Partie Dev plugin            | Beschreibung          |
 :-----------------------------: | :--------------------------- | :--------------------------- | :------------------: |
 ![ENERGY](../images/ENERGY_1.jpg) | `Prise Bouton On`<br/>`Prise Bouton Off`| `ENERGY_ON`<br/>`ENERGY_OFF`| présence de deux boutons "ON" et "Off" pas de retour d'état. |
 ![ENERGY](../images/ENERGY_2.jpg) | `Prise Bouton On`<br/>`Prise Bouton Off`<br/>`Prise Etat` | `ENERGY_ON`<br/>`ENERGY_OFF`<br/>`ENERGY_STATE` | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off |
@@ -180,56 +180,56 @@ Image                           | type générique               | Partie Dev pl
 
 ### Les Volets #
 
-Image                           | type générique               | Partie Dev plugin            | Description          |
+Bild                           | generischer Typ               | Partie Dev plugin            | Beschreibung          |
 :-----------------------------: | :--------------------------- | :--------------------------- | :------------------: |
 ![FLAP](../images/FLAP_1.jpg)   | `Volet Bouton Monter`<br/>`Volet Bouton Descendre`<br/>`Volet Bouton Stop`<br/>`Volet Etat`(optionnel) | `FLAP_UP`<br/>`FLAP_DOWN`<br/>`FLAP_STOP`<br/>`FLAP_STATE`(optionnel) | Présence de trois boutons "Monter", "Descendre", "Stop", retour d'état optionnel. |
 ![FLAP](../images/FLAP_2.jpg)   | `Volet Bouton Monter`<br/>`Volet Bouton Descendre`<br/>`Volet Bouton Stop`<br/>`Volet Etat`<br/>`Volet Bouton Slider` | `FLAP_UP`<br/>`FLAP_DOWN`<br/>`FLAP_STOP`<br/>`FLAP_STATE`<br/>`FLAP_SLIDER` | Présence d'un slider, avec un bouton Monter/Descendre en Toggle (avec icône d'état) |
 
 ### Inondation #
 
-Image                           | type générique               | Partie Dev plugin            | Description          |
+Bild                           | generischer Typ               | Partie Dev plugin            | Beschreibung          |
 :-----------------------------: | :--------------------------- | :--------------------------- | :------------------: |
 ![FLOOD](../images/FLOOD.jpg)   | `Innondation`<br/>`Température`(optionnel)<br/>`Humidité`(optionnel)<br/>`Sabotage`(optionnel)|`FLOOD`<br/>`TEMPERATURE`(optionnel)<br/>`HUMIDITY`(optionnel)<br/>`HUMIDITY`(optionnel) | Permet d'avoir son capteur d'inondation complet sur une seule ligne.
 
 ### Serrure #
 
-Image                         | type générique               | Partie Dev plugin            | Description          |
+Bild                         | generischer Typ               | Partie Dev plugin            | Beschreibung          |
 :---------------------------: | :--------------------------- | :--------------------------- | :------------------: |
 ![LOCK](../images/LOCK.jpg)   | `Serrure Etat`<br/>`Serrure Bouton Ouvrir`<br/>`Serrure Bouton Fermer` | `LOCK_STATE`<br/>`LOCK_OPEN`<br/>`LOCK_CLOSE` | Retour d'état présent, le bouton de gauche permet de switcher entre on et off |
 
 ### Sirène #
 
-Image                         | type générique               | Partie Dev plugin            | Description          |
+Bild                         | generischer Typ               | Partie Dev plugin            | Beschreibung          |
 :---------------------------: | :--------------------------- | :--------------------------- | :------------------: |
 ![SIREN](../images/SIREN.jpg)   | `Sirène Etat`<br/>`Sirène Bouton On`<br/>`Sirène Bouton Off` | `SIREN_STATE`<br/>`SIREN_ON`<br/>`SIREN_OFF` | Retour d'état présent, le bouton de gauche permet de switcher entre on et off |
 
 ### Fumée #
 
-Image                           | type générique               | Partie Dev plugin            | Description          |
+Bild                           | generischer Typ               | Partie Dev plugin            | Beschreibung          |
 :-----------------------------: | :--------------------------- | :--------------------------- | :------------------: |
 ![SMOKE](../images/SMOKE.jpg)   | `Fumée`<br/>`Température`(optionnel)|`SMOKE`<br/>`TEMPERATURE`(optionnel) | Permet d'avoir son capteur de fumée complet sur une seule ligne.
 
 ### Température #
 
-Image                                       | type générique               | Partie Dev plugin            | Description          |
+Bild                                       | generischer Typ               | Partie Dev plugin            | Beschreibung          |
 :-----------------------------------------: | :--------------------------- | :--------------------------- | :------------------: |
-![TEMPERATURE](../images/TEMPERATURE.jpg)   | `Température`<br/>`Humidité`(optionnel)|`TEMPERATURE`<br/>`HUMIDITY`(optionnel) | Voir Image.
+![TEMPERATURE](../images/TEMPERATURE.jpg)   | `Température`<br/>`Humidité`(optionnel)|`TEMPERATURE`<br/>`HUMIDITY`(optionnel) | Siehe Bild.
 
 ### Présence #
 
-Image                                 | type générique               | Partie Dev plugin            | Description          |
+Bild                                 | generischer Typ               | Partie Dev plugin            | Beschreibung          |
 :-----------------------------------: | :--------------------------- | :--------------------------- | :------------------: |
 ![PRESENCE](../images/PRESENCE.jpg)   | `Présence`<br/>`Température`(optionnel)<br/>`Luminosité`(optionnel)<br/>`Humidité`(optionnel)<br/>`UV`(optionnel)<br/>`Sabotage`(optionnel)|`PRESENCE`<br/>`TEMPERATURE`(optionnel)<br/>`BRIGHTNESS`(optionnel)<br/>`HUMIDITY`(optionnel)<br/>`UV`(optionnel)<br/>`SABOTAGE`(optionnel) | Voir image.
 
 ### Ouvrant #
 
-Image                                       | type générique               | Partie Dev plugin            | Description          |
+Bild                                       | generischer Typ               | Partie Dev plugin            | Beschreibung          |
 :-----------------------------------------: | :--------------------------- | :--------------------------- | :------------------: |
 ![OPENING](../images/OPENING.jpg)   | `Porte / Fenêtre`<br/>`Température`(optionnel)|`OPENING / OPENING_WINDOW`<br/>`TEMPERATURE`(optionnel) | Voir Image (à savoir que vous pouvez choisir entre fenêtre et porte).
 
 ### Fil pilote #
 
-Image                               | type générique               | Partie Dev plugin            | Description          |
+Bild                               | generischer Typ               | Partie Dev plugin            | Beschreibung          |
 :---------------------------------: | :--------------------------- | :--------------------------- | :------------------: |
 ![HEATING](../images/HEATING.jpg)   | `Chauffage fil pilote Bouton ON`<br/>`Chauffage fil pilote bouton OFF`<br/>`Chauffage fil pilote Etat`<br/>`Chauffage fil pilote bouton`(optionnel) | `HEATING_ON`<br/>`HEATING_OFF`<br/>`HEATING_STATE`<br/>`HEATING_OTHER`|Les boutons ON/OFF et Etat permette de créer le bouton tout à gauche du template et les `chauffage fil pilote Bouton`sont là pour rajouter des boutons (5 max)
 
@@ -238,21 +238,21 @@ LES JOKERS
 
 ### Générique Action #
 
-Image                             | type générique               | Partie Dev plugin            | Description          |
+Bild                             | generischer Typ               | Partie Dev plugin            | Beschreibung          |
 :-------------------------------: | :--------------------------- | :--------------------------- | :------------------: |
 ![ACTION](../images/ACTION.jpg)   | `Action Générique`           | `GENERIC_ACTION`             | Le bouton prend la forme du type de l'action. Par défaut c'est un toggle, si c'est un message alors vous avez une enveloppe, si slider vous avez un slider etc...
 
 ### Générique Info #
 
-Image                         | type générique               | Partie Dev plugin            | Description          |
+Bild                         | generischer Typ               | Partie Dev plugin            | Beschreibung          |
 :---------------------------: | :--------------------------- | :--------------------------- | :------------------: |
 ![INFO](../images/INFO.jpg)   | `Information Générique`           | `GENERIC_INFO`             | Le bouton prend la forme du type de l'info.
 
 
-Troubleshooting 
+Fehlersuche
 ===============
 
-Aide Mobile 
+Mobil Hilfe
 -----------
 
 **→ Je suis sur Android version de l’app (1.0.1 ou 1.0.0) je n’arrive

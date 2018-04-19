@@ -27,35 +27,35 @@ Hier sind die einzelnen Parameter erklärt :
 
 -   **Mobil Typ** : Auswahl des Betriebssystems des Telefons (iOS, Android)
 
--   **Utilisateur** : Utilisateur associé à cet accès
+-   **Benutzer** : Benutzer, der diesem Zugriff zugeordnet ist
 
 > **Tip**
 >
-> Le choix de l’utilisateur est important car il détermine les
-> équipements auxquels celui-ci aura accès en fonction de ses droits.
+> Die Wahl des Benutzers ist wichtig, weil es die Geräte bestimmt, zu denen
+> dieser Zugriff, entsprechend seinen Rechten haben wird.
 
 ![mobile3](../images/mobile3.png)
 
-Après avoir sauvegardé, vous obtiendrez un QRCode permettant à
-l’application de se configurer toute seule.
+Nach dem Speichern erhalten Sie einen QR-Code, mit dem sich die App
+ganz allein konfigurieren wird.
 
-Configuration des plugins et commandes que reçoit l’app 
+Konfigurieren von Plugins und Befehlen, die die App erhält
 =======================================================
 
-Après l’initialisation du Plugin Mobile vous avez la possibilité de
-remanier les types génériques des commandes, des plugins et des pièces.
+Nach der Initialisierung des Mobilen Plugins haben Sie die Möglichkeit, die
+generischen Arten von Befehlen, Plugins und Parts zu überschreiben.
 
 ![mobile10](../images/mobile10.png)
 
-En cliquant sur un plugin, vous pouvez l’autoriser ou non à dialoguer
-avec l’application mobile, et configurer chacun des types génériques
-associés à ses commandes.
+Wenn Sie auf ein Plugin klicken, können Sie es erlauben oder nicht, mit der
+mobilen Anwendung zu kommunizieren und jeden mit ihren Befehlen
+verknüpften generischen Typen zu konfigurieren.
 
 ![mobile11](../images/mobile11.png)
 
-En cliquant sur une pièce, vous pouvez l’autoriser ou non à être
-présente dans l’application mobile, et configurer chacun des types
-génériques associés à ses commandes.
+Klicken Sie auf ein Teil, und Sie können es erlauben oder nicht, in der
+Mobilen Anwendung anwesend zu sein und jeden der allgemeinen Typen
+anzeigen, die mit seinen Befehlen verbunden sind.
 
 ![mobile12](../images/mobile12.png)
 

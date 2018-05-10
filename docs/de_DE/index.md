@@ -59,10 +59,10 @@ anzeigen, die mit seinen Befehlen verbunden sind.
 
 ![mobile12](../images/mobile12.png)
 
-Configuration de l’application Mobile 
+Konfiguration der Mobil Anwendung
 =====================================
 
-Vous trouverez les applications sur les stores mobiles :
+Die Anwendungen finden Sie auf verschiedenen AppStore :
 
 **Android Google Play**
 
@@ -72,17 +72,17 @@ Vous trouverez les applications sur les stores mobiles :
 
 ![App Store FR](../images/App_Store_FR.png)
 
-Premier lancement de l’app 
+Erster Start der App
 --------------------------
 
-Au 1er lancement de l’application Mobile, un tutorial vous sera proposé
-afin de vous accompagner dans la configuration de celle-ci.
+Bei dem 1. Start der mobilen Anwendung, wird eine Tutorial 
+angeboten, das Ihnen bei der Konfiguration begleiten wird.
 
-Après avoir téléchargée et installée votre application mobile Jeedom,
-lancez l’application sur votre smartphone.
+Nachdem Sie Ihre Mobile Jeedom Anwendung heruntergeladen und installiert haben,
+führen Sie die Anwendung auf Ihrem Smartphone aus.
 
-Vous arrivez alors dans un didacticiel de configuration que nous vous
-conseillons de suivre. Certaines étapes ont étés faites précédemment.
+Sie kommen dann in ein Konfigurations-Tutorial, es wird empfohlen
+diesem zu folgen. Einige Schritte wurden bereits ausgeführt.
 
 Vous aurez ensuite le choix entre une configuration manuelle ou
 automatique par QRcode. Si vous optez pour la configuration par QRcode,
@@ -98,20 +98,20 @@ pour la configuration manuelle, dans ce cas il vous faudra entrer à la
 main les adresses IP interne et externe de votre Jeedom. Cette option
 est réservée à un public averti.
 
-L’application va se synchroniser et vous arrivez sur sa page d’accueil
-(précédée par un mini guide de présentation).
+Die Anwendung wird synchronisiert und Sie kommen auf seine
+Homepage (mit einem vorangegangen mini Präsentationsführer).
 
-L’application mobile Jeedom est maintenant prête à fonctionner.
+Die mobile Jeedom Anwendung ist jetzt betriebsbereit.
 
-Les Favoris 
+Die Favoriten
 -----------
 
-Sur l’application vous pouvez avoir des Favoris (raccourcis de
-commandes, plugins, scénarios).
+Auf der Anwendung haben Sie die Favoriten (Verknüpfungen zu
+Befehlen, Plugins, Szenarien).
 
-Voici donc la marche à suivre pour en créer :
+Hier also ist der zu folgende Ablauf, zum erstellen :
 
-Cliquez sur un des + sur l’écran d’accueil de l’application :
+Klicken Sie auf ein +, auf dem Startbildschirm der Anwendung :
 
 ![mobile dashboard 1](../images/mobile_dashboard_1.PNG)
 

@@ -33,6 +33,7 @@ $replace = array('<i' => '\<\i');
 	<li role="presentation"><a href="#cmd" aria-controls="cmd" role="tab" data-toggle="tab">{{Commandes}}</a></li>
 	<li role="presentation"><a href="#scenario" aria-controls="scenario" role="tab" data-toggle="tab">{{Scénarios}}</a></li>
 	<li role="presentation"><a href="#message" aria-controls="message" role="tab" data-toggle="tab">{{Messages}}</a></li>
+	<li role="presentation"><a href="#plan" aria-controls="plan" role="tab" data-toggle="tab">{{Designs}}</a></li>
 	<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">{{Configurations}}</a></li>
 </ul>
 <div class="tab-content" >
@@ -54,6 +55,10 @@ $replace = array('<i' => '\<\i');
 	</div>
 	<div role="tabpanel" class="tab-pane" id="message">
 		<pre style='overflow: auto; with:90%;'><?php echo str_replace(array_keys($replace), $replace, json_encode($data['messages'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
+		</pre>
+	</div>
+	<div role="tabpanel" class="tab-pane" id="plan">
+		<pre style='overflow: auto; with:90%;'><?php echo str_replace(array_keys($replace), $replace, json_encode($data['plans'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
 		</pre>
 	</div>
 	<div role="tabpanel" class="tab-pane" id="settings">

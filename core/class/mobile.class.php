@@ -342,7 +342,9 @@ class mobile extends eqLogic {
 				unset($plan['image']);
 			}
 			if (isset($plan['configuration'])) {
-				unset($plan['configuration']);
+				if(!isset($plan['configuration']['simee'])){
+					unset($plan['configuration']);
+				}
 			}
 		}
 		return $plans;

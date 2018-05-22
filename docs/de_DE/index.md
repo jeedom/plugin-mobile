@@ -300,3 +300,9 @@ telephone !**
 > Camera. Le souci ne ce reproduira plus avec la 1.0.2, pour supprimer
 > le cache sans surprimer l’app, il suffit d’aller dans la configuration
 > de votre App Mobile et de cliquer sur "supprimer le cache".
+
+**→ J'ai un souci de premiere synchronisation sur l'app ou de sql sur le plugin mobile !**
+
+> **Tip**
+>
+> il faut bien mettre des types génériques et autoriser le plugin a envoyer les generiques voir la doc un peux plus haut.

@@ -148,67 +148,69 @@ class mobile extends eqLogic {
 		foreach ($eqLogics as $eqLogic) {
 			$eqLogics_id[] = $eqLogic['id'];
 		}
-		foreach (cmd::byEqLogicId($eqLogics_id, null, null, null, true) as $cmd) {
-			if (in_array($cmd->getGeneric_type(), ['GENERIC_ERROR', 'DONT'])) {
-				continue;
-			}
-			if ($cmd->getIsVisible() != 1 && !in_array($cmd->getGeneric_type(), $genericisvisible) && !in_array($eqLogic['eqType_name'], self::$_pluginWidget)) {
-				continue;
-			}
-			$info = $cmd->exportApi();
-			unset($info['isHistorized']);
-			unset($info['template']);
-			unset($info['html']);
-			unset($info['alert']);
-			unset($info['isVisible']);
-			unset($info['logicalId']);
-			unset($info['eqType']);
-			unset($info['order']);
-			$info['configuration'] = array();
-			$info['configuration']['actionCodeAccess'] = $cmd->getConfiguration('actionCodeAccess');
-			$info['configuration']['actionConfirm'] = $cmd->getConfiguration('actionConfirm');
-			$info['configuration']['maxValue'] = $cmd->getConfiguration('maxValue');
-			$info['configuration']['minValue'] = $cmd->getConfiguration('minValue');
-			$info['display'] = array();
-			$info['display']['invertBinary'] = $cmd->getDisplay('invertBinary');
-			$info['display']['icon'] = $cmd->getDisplay('icon');
-			$info['display']['title_disable'] = $cmd->getDisplay('title_disable');
-			$info['display']['title_placeholder'] = $cmd->getDisplay('title_placeholder');
-			$info['display']['message_placeholder'] = $cmd->getDisplay('message_placeholder');
-			if (!in_array($cmd->getGeneric_type(), ['GENERIC_INFO', 'GENERIC_ACTION', 'HEATING_ON', 'HEATING_OTHER', 'MODE_SET_STATE']) && isset($info['display']['icon'])) {
-				unset($info['display']['icon']);
-			}
-			if (isset($info['display']['icon'])) {
-				$info['display']['icon'] = str_replace(array('<i class="', '"></i>'), '', $info['display']['icon']);
-			}
-			foreach ($info['display'] as $key => $value) {
-				if (trim($value) == '') {
-					unset($info['display'][$key]);
+		if (count($eqLogics_id) > 0) {
+			foreach (cmd::byEqLogicId($eqLogics_id, null, null, null, true) as $cmd) {
+				if (in_array($cmd->getGeneric_type(), ['GENERIC_ERROR', 'DONT'])) {
+					continue;
 				}
-			}
-			if (count($info['display']) == 0) {
-				unset($info['display']);
-			}
-			foreach ($info['configuration'] as $key => $value) {
-				if (trim($value) == '') {
-					unset($info['configuration'][$key]);
+				if ($cmd->getIsVisible() != 1 && !in_array($cmd->getGeneric_type(), $genericisvisible) && !in_array($eqLogic['eqType_name'], self::$_pluginWidget)) {
+					continue;
 				}
+				$info = $cmd->exportApi();
+				unset($info['isHistorized']);
+				unset($info['template']);
+				unset($info['html']);
+				unset($info['alert']);
+				unset($info['isVisible']);
+				unset($info['logicalId']);
+				unset($info['eqType']);
+				unset($info['order']);
+				$info['configuration'] = array();
+				$info['configuration']['actionCodeAccess'] = $cmd->getConfiguration('actionCodeAccess');
+				$info['configuration']['actionConfirm'] = $cmd->getConfiguration('actionConfirm');
+				$info['configuration']['maxValue'] = $cmd->getConfiguration('maxValue');
+				$info['configuration']['minValue'] = $cmd->getConfiguration('minValue');
+				$info['display'] = array();
+				$info['display']['invertBinary'] = $cmd->getDisplay('invertBinary');
+				$info['display']['icon'] = $cmd->getDisplay('icon');
+				$info['display']['title_disable'] = $cmd->getDisplay('title_disable');
+				$info['display']['title_placeholder'] = $cmd->getDisplay('title_placeholder');
+				$info['display']['message_placeholder'] = $cmd->getDisplay('message_placeholder');
+				if (!in_array($cmd->getGeneric_type(), ['GENERIC_INFO', 'GENERIC_ACTION', 'HEATING_ON', 'HEATING_OTHER', 'MODE_SET_STATE']) && isset($info['display']['icon'])) {
+					unset($info['display']['icon']);
+				}
+				if (isset($info['display']['icon'])) {
+					$info['display']['icon'] = str_replace(array('<i class="', '"></i>'), '', $info['display']['icon']);
+				}
+				foreach ($info['display'] as $key => $value) {
+					if (trim($value) == '') {
+						unset($info['display'][$key]);
+					}
+				}
+				if (count($info['display']) == 0) {
+					unset($info['display']);
+				}
+				foreach ($info['configuration'] as $key => $value) {
+					if (trim($value) == '') {
+						unset($info['configuration'][$key]);
+					}
+				}
+				if (count($info['configuration']) == 0) {
+					unset($info['configuration']);
+				}
+				if ($info['type'] == 'action') {
+					unset($info['currentValue']);
+				} else if (!$_withValue) {
+					$info['currentValue'] = '#' . $info['id'] . '#';
+				}
+				if ($info['value'] == null) {
+					unset($info['value']);
+				}
+				if ($info['unite'] == '') {
+					unset($info['unite']);
+				}
+				$return[] = $info;
 			}
-			if (count($info['configuration']) == 0) {
-				unset($info['configuration']);
-			}
-			if ($info['type'] == 'action') {
-				unset($info['currentValue']);
-			} else if (!$_withValue) {
-				$info['currentValue'] = '#' . $info['id'] . '#';
-			}
-			if ($info['value'] == null) {
-				unset($info['value']);
-			}
-			if ($info['unite'] == '') {
-				unset($info['unite']);
-			}
-			$return[] = $info;
 		}
 		return $return;
 	}
@@ -342,7 +344,7 @@ class mobile extends eqLogic {
 				unset($plan['image']);
 			}
 			if (isset($plan['configuration'])) {
-				if(!isset($plan['configuration']['simee'])){
+				if (!isset($plan['configuration']['simee'])) {
 					unset($plan['configuration']);
 				}
 			}

@@ -483,6 +483,10 @@ class mobileCmd extends cmd {
 	/*     * ***********************Methode static*************************** */
 
 	/*     * *********************Methode d'instance************************* */
+	
+	public function dontRemoveCmd() {
+		return true;
+	}
 
 	public function execute($_options = array()) {
 		if ($this->getType() != 'action') {

@@ -448,27 +448,27 @@ class mobile extends eqLogic {
 	}
 
 	public function postSave() {
-		$cmd = $this->getCmd(null, 'notif');
-		if (!is_object($cmd)) {
-			$cmd = new mobileCmd();
-			$cmd->setLogicalId('notif');
-			$cmd->setName(__('Notification', __FILE__));
-			$cmd->setOrder(0);
-			$cmd->setEqLogic_id($this->getId());
-			$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
-			$cmd->setType('action');
-			$cmd->setSubType('message');
+		$cmdNotif = $this->getCmd(null, 'notif');
+		if (!is_object($cmdNotif)) {
+			$cmdNotif = new mobileCmd();
 		}
-		$cmd->setIsVisible(1);
-		$cmd->save();
+		$cmdNotif->setLogicalId('notif');
+		$cmdNotif->setName(__('Notification', __FILE__));
+		$cmdNotif->setOrder(0);
+		$cmdNotif->setEqLogic_id($this->getId());
+		$cmdNotif->setDisplay('generic_type', 'GENERIC_ACTION');
+		$cmdNotif->setType('action');
+		$cmdNotif->setSubType('message');
+		$cmdNotif->setIsVisible(1);
+		$cmdNotif->save();
 
-		$cmd = $this->getCmd(null, 'ask_Text');
-		if (is_object($cmd)) {
-			$cmd->remove();
+		$cmdaskText = $this->getCmd(null, 'ask_Text');
+		if (is_object($cmdaskText)) {
+			$cmdaskText->remove();
 		}
-		$cmd = $this->getCmd(null, 'ask_YN');
-		if (is_object($cmd)) {
-			$cmd->remove();
+		$cmdaskYN = $this->getCmd(null, 'ask_YN');
+		if (is_object($cmdaskYN)) {
+			$cmdaskYN->remove();
 		}
 	}
 
@@ -483,6 +483,10 @@ class mobileCmd extends cmd {
 	/*     * ***********************Methode static*************************** */
 
 	/*     * *********************Methode d'instance************************* */
+	
+	public function dontRemoveCmd() {
+		return true;
+	}
 
 	public function execute($_options = array()) {
 		if ($this->getType() != 'action') {

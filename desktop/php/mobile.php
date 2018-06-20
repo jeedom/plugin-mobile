@@ -284,7 +284,14 @@ foreach (user::all() as $user) {
        <div class="form-group">
          <label class="col-sm-2 control-label">{{ARN Mobile :}}</label>
          <div class="col-sm-7">
-           <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notificationArn" placeholder="{{ARN}}" disabled/>
+           <input type="text" id="arnComplet" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notificationArn" placeholder="{{ARN}}" disabled/>
+         </div>
+       </div>
+       <div class="form-group">
+         <label class="col-sm-2 control-label">{{ARN pour Monitoring :}}</label>
+         <div class="col-sm-7">
+           <input type="text" id="to-copy-monitoring" class="eqLogicAttr form-control" placeholder="{{ARN pour Monitoring}}" disabled/>
+           <button class="btn btn-info eqLogicAction pull-right" id="copy-monitoring" type="button">{{Copier pour Monitoring}}</button>
          </div>
        </div>
      </fieldset>

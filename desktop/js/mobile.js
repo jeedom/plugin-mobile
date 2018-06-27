@@ -105,3 +105,17 @@ $('#bt_regenConfig').on('click',function(){
         }
     });
 });
+
+// Copie pour monitoring
+var toCopy  = document.getElementById( 'to-copy-monitoring' ),
+	arnComplet = document.getElementById( 'arnComplet' ),
+    btnCopy = document.getElementById( 'copy-monitoring' );
+
+btnCopy.addEventListener( 'click', function(){
+	var fichier = arnComplet.value;
+	var fichierCouper = fichier.substr(44);
+    toCopy.value = fichierCouper;
+	toCopy.select();
+	document.execCommand( 'copy' );
+	return false;
+} );

@@ -158,13 +158,13 @@ if ($jsonrpc->getMethod() == 'askText') {
 
 if ($jsonrpc->getMethod() == 'saveMobile'){
 	log::add('mobile', 'debug', 'Demande de sauvegarde '. $params['type'] .' > ' . $params['Iq']);
-	mobile::makeDashboardJson($params['JSON'], $params['Iq'], $params['type']);
+	mobile::makeSaveJson($params['JSON'], $params['Iq'], $params['type']);
 	$jsonrpc->makeSuccess();
 }
 
 if ($jsonrpc->getMethod() == 'getMobile'){
 	log::add('mobile', 'debug', 'Demande de recuperation '. $params['type'] .' > ' . $params['Iq']);
-	$jsonrpc->makeSuccess(mobile::getDashboardJson($params['Iq'], $params['type']));
+	$jsonrpc->makeSuccess(mobile::getSaveJson($params['Iq'], $params['type']));
 }
 
 throw new Exception(__('Aucune demande', __FILE__));

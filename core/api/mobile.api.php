@@ -156,5 +156,16 @@ if ($jsonrpc->getMethod() == 'askText') {
 	}
 }
 
+if ($jsonrpc->getMethod() == 'saveDashboard'){
+	log::add('mobile', 'debug', 'Demande de sauvegarde du dashboard > ' . $params['Iq']);
+	mobile::makeDashboardJson($params['dashboardJSON'], $params['Iq']);
+	$jsonrpc->makeSuccess();
+}
+
+if ($jsonrpc->getMethod() == 'getDashboard'){
+	log::add('mobile', 'debug', 'Demande de recuperation du dashboard > ' . $params['Iq']);
+	$jsonrpc->makeSuccess(mobile::getDashboardJson($params['Iq']));
+}
+
 throw new Exception(__('Aucune demande', __FILE__));
 ?>

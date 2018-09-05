@@ -102,8 +102,8 @@ class mobile extends eqLogic {
 		if (!file_exists(dirname(__FILE__) . '/../../data')) {
 			mkdir(dirname(__FILE__) . '/../../data');
 		}
-		if (!file_exists(dirname(__FILE__) . '/../../data.'.$mobileID)) {
-			mkdir(dirname(__FILE__) . '/../../data'.$mobileID);
+		if (!file_exists(dirname(__FILE__) . '/../../data/'.$mobileID)) {
+			mkdir(dirname(__FILE__) . '/../../data/'.$mobileID);
 		}
 		if (file_exists(dirname(__FILE__) . '/../../data/'.$mobileID.'/'.$type.'.json')) {
 			unlink(dirname(__FILE__) . '/../../data/'.$mobileID.'/'.$type.'.json');

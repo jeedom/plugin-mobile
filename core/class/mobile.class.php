@@ -96,6 +96,24 @@ class mobile extends eqLogic {
 		}
 		return json_decode(cmd::cmdToValue(file_get_contents(dirname(__FILE__) . '/../../data/mobile.json')), true);
 	}
+	
+	public static function makeDashboardJson($data = '',$mobileID) {
+		$path = dirname(__FILE__) . '/../../data/mobileDashboard'.$mobileID.'.json';
+		if (!file_exists(dirname(__FILE__) . '/../../data')) {
+			mkdir(dirname(__FILE__) . '/../../data');
+		}
+		if (file_exists(dirname(__FILE__) . '/../../data/mobileDashboard'.$mobileID.'.json')) {
+			unlink(dirname(__FILE__) . '/../../data/mobileDashboard'.$mobileID.'.json');
+		}
+		file_put_contents(dirname(__FILE__) . '/../../data/mobileDashboard'.$mobileID.'.json', json_encode($data));
+	}
+	
+	public static function getDashboardJson($mobileID) {
+		if (!file_exists(dirname(__FILE__) . '/../../data/mobileDashboard'.$mobileID.'.json')) {
+			self::makeDashboardJson();
+		}
+		return json_decode(file_get_contents(dirname(__FILE__) . '/../../data/mobileDashboard'.$mobileID.'.json'), true);
+	}
 
 	public static function discovery_eqLogic($plugin = array(), $hash = null) {
 		$return = array();

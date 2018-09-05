@@ -93,7 +93,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 	if (isset($rdk)) {
 		$return['config']['rdk'] = $rdk;
 	}
-	log::add('mobile', 'debug', 'Return > ' . json_encode($return));
+	//log::add('mobile', 'debug', 'Return > ' . json_encode($return));
 	$jsonrpc->makeSuccess($return);
 }
 
@@ -114,7 +114,7 @@ if ($jsonrpc->getMethod() == 'cmdsbyEqlogicID') {
 		}
 		$i++;
 	}
-	//log::add('mobile', 'debug', 'Commande > ' . json_encode($cmdAPI));
+	log::add('mobile', 'debug', 'Commande > ' . json_encode($cmdAPI));
 	$jsonrpc->makeSuccess($cmdAPI);
 }
 

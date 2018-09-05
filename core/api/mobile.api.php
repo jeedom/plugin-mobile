@@ -114,7 +114,7 @@ if ($jsonrpc->getMethod() == 'cmdsbyEqlogicID') {
 		}
 		$i++;
 	}
-	log::add('mobile', 'debug', 'Commande > ' . json_encode($cmdAPI));
+	//log::add('mobile', 'debug', 'Commande > ' . json_encode($cmdAPI));
 	$jsonrpc->makeSuccess($cmdAPI);
 }
 

@@ -133,7 +133,7 @@ class mobile extends eqLogic {
 				if ($eqLogic->getObject_id() == null) {
 					continue;
 				}
-				if (($eqLogic->getIsVisible() != 1 && !in_array($eqLogic->getEqType_name(), self::$_pluginWidget)) || $eqLogic->getObject()->getDisplay('sendToApp', 1) != 1) {
+				if (($eqLogic->getIsVisible() != 1 && (!in_array($eqLogic->getEqType_name(), self::$_pluginWidget)) || $eqLogic->getObject()->getDisplay('sendToApp', 1) != 1)) {
 					continue;
 				}
 				$eqLogic_array = utils::o2a($eqLogic);

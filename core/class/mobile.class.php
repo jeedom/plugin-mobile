@@ -139,8 +139,13 @@ class mobile extends eqLogic {
 					}
 				}
 				$eqLogic_array = utils::o2a($eqLogic);
-				if (isset($eqLogic_array["configuration"]["localApiKey"])) {
-					$eqLogic_array["localApiKey"] = $eqLogic_array["configuration"]["localApiKey"];
+				if (isset($eqLogic_array["logicalId"])) {
+					$eqLogic_array["localApiKey"] = $eqLogic_array["logicalId"];
+				}
+				if ($eqLogic->getEqType_name() == 'mobile'){
+					if (isset($eqLogic_array["configuration"]["localApiKey"])) {
+						$eqLogic_array["localApiKey"] = $eqLogic_array["configuration"]["localApiKey"];
+					}
 				}
 				unset($eqLogic_array['eqReal_id'], $eqLogic_array['comment'], $eqLogic_array['configuration'], $eqLogic_array['specificCapatibilities'], $eqLogic_array['timeout'], $eqLogic_array['category'], $eqLogic_array['display']);
 				unset($eqLogic_array['status']);

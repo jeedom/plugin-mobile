@@ -39,9 +39,10 @@ class mobile extends eqLogic {
 		$plugins = plugin::listPlugin(true);
 		foreach ($plugins as $plugin) {
 			$plugId = $plugin->getId();
-			if ($plugId == 'mobile') {
-				continue;
-			} else if (in_array($plugId, self::$_pluginWidget)) {
+			//if ($plugId == 'mobile') {
+			//	continue;
+			//} else if (in_array($plugId, self::$_pluginWidget)) {
+			if (in_array($plugId, self::$_pluginWidget)) {
 				$return[] = $plugId;
 			} else if (in_array($plugId, self::$_pluginSuported) && !in_array($plugId, self::$_pluginWidget) && config::byKey('sendToApp', $plugId, 1) == 1) {
 				$return[] = $plugId;

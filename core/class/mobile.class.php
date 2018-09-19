@@ -116,7 +116,7 @@ class mobile extends eqLogic {
 		if (!file_exists(dirname(__FILE__) . '/../../data/'.$mobileID.'/'.$type.'.json')) {
 			self::makeSaveJson();
 		}
-		return file_get_contents(dirname(__FILE__) . '/../../data/'.$mobileID.'/'.$type.'.json');
+		return json_decode(file_get_contents(dirname(__FILE__) . '/../../data/'.$mobileID.'/'.$type.'.json'), true);
 	}
 
 	public static function discovery_eqLogic($plugin = array(), $hash = null) {

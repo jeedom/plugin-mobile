@@ -443,7 +443,7 @@ class mobile extends eqLogic {
 				$publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",' . $addAsk . '\"alert\": {\"title\":\"' . $titre . '\",\"body\":\"' . $message . '\"},\"sound\":\"silence.caf\",\"date\":\"' . $dateNotif . '\",\"idNotif\":\"' . $idNotif . '\"}}"}';
 			}
 		} else if ($os == 'android') {
-			$publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"data\": {\"notificationId\":\"' . rand(3, 5) . '\",\"title\":\"' . $titre . '\",\"text\":\"' . $message . '\",' . $addAsk . '\"vibrate\":\"true\",\"largeIcon\":\"/appicon.png\",\"smallIcon\":\"notificon\",\"lights\":\"true\",\"sound\":\"default\",\"idNotif\":\"' . $idNotif . '\",\"date\":\"' . $dateNotif . '\"}}"}';
+			$publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"data\": {\"notificationId\":\"' . rand(3, 5) . '\",\"channelId\":\"JEEDOM_CHANNEL\",\"title\":\"' . $titre . '\",\"text\":\"' . $message . '\",' . $addAsk . '\"vibrate\":\"true\",\"largeIcon\":\"/appicon.png\",\"smallIcon\":\"notificon\",\"lights\":\"true\",\"sound\":\"default\",\"idNotif\":\"' . $idNotif . '\",\"date\":\"' . $dateNotif . '\"}}"}';
 		} else if ($os == 'microsoft') {
 
 		}

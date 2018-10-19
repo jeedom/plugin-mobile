@@ -22,9 +22,9 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 class mobile extends eqLogic {
 	/*     * *************************Attributs****************************** */
 
-	public static $_pluginSuported = array('openzwave', 'rfxcom', 'edisio', 'mpower', 'mySensors', 'Zibasedom', 'virtual', 'camera', 'weather', 'philipsHue', 'enocean', 'wifipower', 'alarm', 'mode', 'apcupsd', 'btsniffer', 'dsc', 'rflink', 'mysensors', 'relaynet', 'remora', 'unipi', 'eibd', 'thermostat', 'netatmoThermostat', 'espeasy', 'jeelink', 'teleinfo', 'tahoma', 'protexiom', 'lifx', 'wattlet', 'rfplayer', 'openenocean','netatmoWeather','Volets');
+	public static $_pluginSuported = array('mobile', 'openzwave', 'rfxcom', 'edisio', 'mpower', 'mySensors', 'Zibasedom', 'virtual', 'camera', 'weather', 'philipsHue', 'enocean', 'wifipower', 'alarm', 'mode', 'apcupsd', 'btsniffer', 'dsc', 'rflink', 'mysensors', 'relaynet', 'remora', 'unipi', 'eibd', 'thermostat', 'netatmoThermostat', 'espeasy', 'jeelink', 'teleinfo', 'tahoma', 'protexiom', 'lifx', 'wattlet', 'rfplayer', 'openenocean','netatmoWeather','Volets');
 
-	public static $_pluginWidget = array('alarm', 'camera', 'thermostat', 'netatmoThermostat', 'weather', 'mode');
+	public static $_pluginWidget = array('alarm', 'camera', 'thermostat', 'netatmoThermostat', 'weather', 'mode','mobile');
 
 	public static $_pluginMulti = array('LIGHT_STATE', 'ENERGY_STATE', 'FLAP_STATE', 'HEATING_STATE', 'SIREN_STATE', 'LOCK_STATE');
 
@@ -39,9 +39,10 @@ class mobile extends eqLogic {
 		$plugins = plugin::listPlugin(true);
 		foreach ($plugins as $plugin) {
 			$plugId = $plugin->getId();
-			if ($plugId == 'mobile') {
-				continue;
-			} else if (in_array($plugId, self::$_pluginWidget)) {
+			//if ($plugId == 'mobile') {
+			//	continue;
+			//} else if (in_array($plugId, self::$_pluginWidget)) {
+			if (in_array($plugId, self::$_pluginWidget)) {
 				$return[] = $plugId;
 			} else if (in_array($plugId, self::$_pluginSuported) && !in_array($plugId, self::$_pluginWidget) && config::byKey('sendToApp', $plugId, 1) == 1) {
 				$return[] = $plugId;
@@ -96,6 +97,27 @@ class mobile extends eqLogic {
 		}
 		return json_decode(cmd::cmdToValue(file_get_contents(dirname(__FILE__) . '/../../data/mobile.json')), true);
 	}
+	
+	public static function makeSaveJson($data = '',$mobileID, $type = 'dashboard') {
+		$path = dirname(__FILE__) . '/../../data/'.$mobileID.'/'.$type.'.json';
+		if (!file_exists(dirname(__FILE__) . '/../../data')) {
+			mkdir(dirname(__FILE__) . '/../../data');
+		}
+		if (!file_exists(dirname(__FILE__) . '/../../data/'.$mobileID)) {
+			mkdir(dirname(__FILE__) . '/../../data/'.$mobileID);
+		}
+		if (file_exists(dirname(__FILE__) . '/../../data/'.$mobileID.'/'.$type.'.json')) {
+			unlink(dirname(__FILE__) . '/../../data/'.$mobileID.'/'.$type.'.json');
+		}
+		file_put_contents(dirname(__FILE__) . '/../../data/'.$mobileID.'/'.$type.'.json', json_encode($data));
+	}
+	
+	public static function getSaveJson($mobileID,$type = 'dashboard') {
+		if (!file_exists(dirname(__FILE__) . '/../../data/'.$mobileID.'/'.$type.'.json')) {
+			self::makeSaveJson();
+		}
+		return json_decode(file_get_contents(dirname(__FILE__) . '/../../data/'.$mobileID.'/'.$type.'.json'), true);
+	}
 
 	public static function discovery_eqLogic($plugin = array(), $hash = null) {
 		$return = array();
@@ -105,16 +127,23 @@ class mobile extends eqLogic {
 				continue;
 			}
 			foreach ($eqLogics as $eqLogic) {
-				if ($eqLogic->getIsEnable() != 1) {
-					continue;
-				}
-				if ($eqLogic->getObject_id() == null) {
-					continue;
-				}
-				if (($eqLogic->getIsVisible() != 1 && !in_array($eqLogic->getEqType_name(), self::$_pluginWidget)) || $eqLogic->getObject()->getDisplay('sendToApp', 1) != 1) {
-					continue;
+				if ($eqLogic->getEqType_name() != 'mobile'){
+					if ($eqLogic->getIsEnable() != 1) {
+						continue;
+					}
+					if ($eqLogic->getObject_id() == null) {
+						continue;
+					}
+					if (($eqLogic->getIsVisible() != 1 && (!in_array($eqLogic->getEqType_name(), self::$_pluginWidget)) || $eqLogic->getObject()->getDisplay('sendToApp', 1) != 1)) {
+						continue;
+					}
 				}
 				$eqLogic_array = utils::o2a($eqLogic);
+				if ($eqLogic->getEqType_name() == 'mobile'){
+					if (isset($eqLogic_array["logicalId"])) {
+						$eqLogic_array["localApiKey"] = $eqLogic_array["logicalId"];
+					}
+				}
 				if (isset($eqLogic_array["configuration"]["localApiKey"])) {
 					$eqLogic_array["localApiKey"] = $eqLogic_array["configuration"]["localApiKey"];
 				}
@@ -399,6 +428,7 @@ class mobile extends eqLogic {
 
 	public static function jsonPublish($os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout) {
 		$dateNotif = date("Y-m-d H:i:s");
+		$badge = '+1';
 		$message = preg_replace("# {2,}#"," ",preg_replace("#(\r\n|\n\r|\n|\r)#","\\\\\\n",$message));
 		if ($timeout != 'nok') {
 			$timeout = date('Y-m-d H:i:s', strtotime("$dateNotif + $timeout SECONDS"));
@@ -409,12 +439,12 @@ class mobile extends eqLogic {
 		}
 		if ($os == 'ios') {
 			if ($badge == 'null') {
-				$publish = '{"default": "Erreur de texte de notification","APNS": "{\"aps\":{\"content-available\":\"1\",' . $addAsk . '\"alert\": {\"title\":\"' . $titre . '\",\"body\":\"' . $message . '\"},\"badge\":' . $badge . ',\"sound\":\"silence.caf\",\"date\":\"' . $dateNotif . '\",\"idNotif\":\"' . $idNotif . '\"}}"}';
-			} else {
 				$publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",' . $addAsk . '\"alert\": {\"title\":\"' . $titre . '\",\"body\":\"' . $message . '\"},\"sound\":\"silence.caf\",\"date\":\"' . $dateNotif . '\",\"idNotif\":\"' . $idNotif . '\"}}"}';
+			} else {
+				$publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",' . $addAsk . '\"alert\": {\"title\":\"' . $titre . '\",\"body\":\"' . $message . '\"},\"badge\":\"+1\",\"sound\":\"silence.caf\",\"date\":\"' . $dateNotif . '\",\"idNotif\":\"' . $idNotif . '\"}}"}';
 			}
 		} else if ($os == 'android') {
-			$publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"data\": {\"notificationId\":\"' . rand(3, 5) . '\",\"title\":\"' . $titre . '\",\"text\":\"' . $message . '\",' . $addAsk . '\"vibrate\":\"true\",\"largeIcon\":\"/appicon.png\",\"smallIcon\":\"notificon\",\"lights\":\"true\",\"sound\":\"default\",\"idNotif\":\"' . $idNotif . '\",\"date\":\"' . $dateNotif . '\"}}"}';
+			$publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"notification\":{\"notificationId\":\"' . rand(3, 5) . '\",\"title\":\"' . $titre . '\",\"text\":\"' . $message . '\",' . $addAsk . '\"vibrate\":\"true\",\"largeIcon\":\"/appicon.png\",\"smallIcon\":\"notificon\",\"lights\":\"true\",\"sound\":\"default\",\"idNotif\":\"' . $idNotif . '\",\"date\":\"' . $dateNotif . '\"}, \"data\": {\"notificationId\":\"' . rand(3, 5) . '\",\"title\":\"' . $titre . '\",\"text\":\"' . $message . '\",' . $addAsk . '\"vibrate\":\"true\",\"largeIcon\":\"/appicon.png\",\"smallIcon\":\"notificon\",\"lights\":\"true\",\"sound\":\"default\",\"idNotif\":\"' . $idNotif . '\",\"date\":\"' . $dateNotif . '\"}}"}';
 		} else if ($os == 'microsoft') {
 
 		}

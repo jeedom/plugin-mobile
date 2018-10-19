@@ -93,7 +93,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 	if (isset($rdk)) {
 		$return['config']['rdk'] = $rdk;
 	}
-	log::add('mobile', 'debug', 'Return > ' . json_encode($return));
+	//log::add('mobile', 'debug', 'Return > ' . json_encode($return));
 	$jsonrpc->makeSuccess($return);
 }
 
@@ -154,6 +154,17 @@ if ($jsonrpc->getMethod() == 'askText') {
 			$jsonrpc->makeSuccess();
 		}
 	}
+}
+
+if ($jsonrpc->getMethod() == 'saveMobile'){
+	log::add('mobile', 'debug', 'Demande de sauvegarde '. $params['type'] .' > ' . $params['Iq']);
+	mobile::makeSaveJson($params['Json'], $params['Iq'], $params['type']);
+	$jsonrpc->makeSuccess();
+}
+
+if ($jsonrpc->getMethod() == 'getMobile'){
+	log::add('mobile', 'debug', 'Demande de recuperation '. $params['type'] .' > ' . $params['Iq']);
+	$jsonrpc->makeSuccess(mobile::getSaveJson($params['Iq'], $params['type']));
 }
 
 throw new Exception(__('Aucune demande', __FILE__));

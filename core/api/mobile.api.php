@@ -167,5 +167,10 @@ if ($jsonrpc->getMethod() == 'getMobile'){
 	$jsonrpc->makeSuccess(mobile::getSaveJson($params['Iq'], $params['type']));
 }
 
+if ($jsonrpc->getMethod() == 'geoloc'){
+	log::add('mobile', 'debug', 'Geoloc '. $params['id'] .' > ' . $params['name'] .' > ' .$params['value']);
+	$jsonrpc->makeSuccess();
+}
+
 throw new Exception(__('Aucune demande', __FILE__));
 ?>

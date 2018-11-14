@@ -470,6 +470,33 @@ class mobile extends eqLogic {
 		curl_close($ch);
 		log::add('mobile', 'debug', 'notification resultat > ' . $server_output);
 	}
+	
+	public function SaveGeoloc($iQ, $geoloc){
+		$eqLogicMobile = eqLogic::byLogicalId($iQ);
+		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile['id'],'geoId_'.$geoloc['id']);
+		(!isset($cmdgeoloc)){
+			$cmdgeoloc = new mobileCmd();
+			$cmdgeoloc->setLogicalId('geoId_'.$geoloc['id']);
+			$cmdgeoloc->setName(__($geoloc['name'], __FILE__));
+			$cmdgeoloc->setEqLogic_id($eqLogicMobile['id']);
+			$cmdgeoloc->setType('info');
+			$cmdgeoloc->setSubType('binary');
+			$cmdgeoloc->setIsVisible(1);
+			$cmdgeoloc->setConfiguration('latitude', $geoloc['latitude']);
+			$cmdgeoloc->setConfiguration('longitude', $geoloc['longitude']);
+			$cmdgeoloc->setConfiguration('subtitle', $geoloc['subtitle']);
+			$cmdgeoloc->setConfiguration('radius', $geoloc['radius']);
+			$cmdgeoloc->setCurrentValue(0);
+			$cmdgeoloc->save();
+		}else{
+			$cmdgeoloc->setName(__($geoloc['name'], __FILE__));
+			$cmdgeoloc->setConfiguration('latitude', $geoloc['latitude']);
+			$cmdgeoloc->setConfiguration('longitude', $geoloc['longitude']);
+			$cmdgeoloc->setConfiguration('subtitle', $geoloc['subtitle']);
+			$cmdgeoloc->setConfiguration('radius', $geoloc['radius']);
+			$cmdgeoloc->save();
+		}
+	}
 
 	public function postInsert() {
 		$key = config::genKey(32);

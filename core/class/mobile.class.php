@@ -497,6 +497,22 @@ class mobile extends eqLogic {
 			$cmdgeoloc->save();
 		}
 	}
+	
+	public function DelGeoloc($geoloc){
+		$eqLogicMobile = eqLogic::byLogicalId($geoloc['iQ']);
+		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile['id'],'geoId_'.$geoloc['id']);
+		(isset($cmdgeoloc)){
+			$cmdgeoloc->remove();
+		}
+	}
+	
+	public function EventGeoloc($geoloc){
+		$eqLogicMobile = eqLogic::byLogicalId($geoloc['iQ']);
+		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile['id'],'geoId_'.$geoloc['id']);
+		(isset($cmdgeoloc)){
+			$cmdgeoloc->event($geoloc['value']);
+		}
+	}
 
 	public function postInsert() {
 		$key = config::genKey(32);

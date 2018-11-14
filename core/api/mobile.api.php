@@ -174,6 +174,7 @@ if ($jsonrpc->getMethod() == 'geoloc'){
 
 if ($jsonrpc->getMethod() == 'saveinJeedom'){
 	log::add('mobile', 'debug', 'Geoloc ADD'. $params['id'] .' > ' . $params['name']);
+	mobile::SaveGeoloc($params);
 	$jsonrpc->makeSuccess();
 }
 

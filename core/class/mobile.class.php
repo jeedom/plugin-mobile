@@ -474,7 +474,7 @@ class mobile extends eqLogic {
 	public function SaveGeoloc($geoloc){
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['iQ']);
 		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile['id'],'geoId_'.$geoloc['id']);
-		(!isset($cmdgeoloc)){
+		if(!isset($cmdgeoloc)){
 			$cmdgeoloc = new mobileCmd();
 			$cmdgeoloc->setLogicalId('geoId_'.$geoloc['id']);
 			$cmdgeoloc->setName(__($geoloc['name'], __FILE__));
@@ -501,7 +501,7 @@ class mobile extends eqLogic {
 	public function DelGeoloc($geoloc){
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['iQ']);
 		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile['id'],'geoId_'.$geoloc['id']);
-		(isset($cmdgeoloc)){
+		if(isset($cmdgeoloc)){
 			$cmdgeoloc->remove();
 		}
 	}
@@ -509,7 +509,7 @@ class mobile extends eqLogic {
 	public function EventGeoloc($geoloc){
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['iQ']);
 		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile['id'],'geoId_'.$geoloc['id']);
-		(isset($cmdgeoloc)){
+		if(isset($cmdgeoloc)){
 			$cmdgeoloc->event($geoloc['value']);
 		}
 	}

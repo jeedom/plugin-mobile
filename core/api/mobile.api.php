@@ -172,5 +172,16 @@ if ($jsonrpc->getMethod() == 'geoloc'){
 	$jsonrpc->makeSuccess();
 }
 
+if ($jsonrpc->getMethod() == 'saveinJeedom'){
+	log::add('mobile', 'debug', 'Geoloc ADD'. $params['id'] .' > ' . $params['name']);
+	$jsonrpc->makeSuccess();
+}
+
+if ($jsonrpc->getMethod() == 'delinJeedom'){
+	log::add('mobile', 'debug', 'Geolo DEL '. $params['id'] .' > ' . $params['name']);
+	$jsonrpc->makeSuccess();
+}
+
+
 throw new Exception(__('Aucune demande', __FILE__));
 ?>

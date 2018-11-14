@@ -169,6 +169,7 @@ if ($jsonrpc->getMethod() == 'getMobile'){
 
 if ($jsonrpc->getMethod() == 'geoloc'){
 	log::add('mobile', 'debug', 'Geoloc '. $params['id'] .' > ' . $params['name'] .' > ' .$params['value']);
+	mobile::EventGeoloc($params);
 	$jsonrpc->makeSuccess();
 }
 
@@ -179,7 +180,8 @@ if ($jsonrpc->getMethod() == 'saveinJeedom'){
 }
 
 if ($jsonrpc->getMethod() == 'delinJeedom'){
-	log::add('mobile', 'debug', 'Geolo DEL '. $params['id'] .' > ' . $params['name']);
+	log::add('mobile', 'debug', 'Geoloc DEL '. $params['id'] .' > ' . $params['name']);
+	mobile::DelGeoloc($params);
 	$jsonrpc->makeSuccess();
 }
 

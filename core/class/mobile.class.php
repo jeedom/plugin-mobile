@@ -471,8 +471,8 @@ class mobile extends eqLogic {
 		log::add('mobile', 'debug', 'notification resultat > ' . $server_output);
 	}
 	
-	public function SaveGeoloc($iQ, $geoloc){
-		$eqLogicMobile = eqLogic::byLogicalId($iQ);
+	public function SaveGeoloc($geoloc){
+		$eqLogicMobile = eqLogic::byLogicalId($geoloc['iQ']);
 		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile['id'],'geoId_'.$geoloc['id']);
 		(!isset($cmdgeoloc)){
 			$cmdgeoloc = new mobileCmd();

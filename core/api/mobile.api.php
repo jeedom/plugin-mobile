@@ -173,13 +173,13 @@ if ($jsonrpc->getMethod() == 'geoloc'){
 	$jsonrpc->makeSuccess();
 }
 
-if ($jsonrpc->getMethod() == 'saveinJeedom'){
-	log::add('mobile', 'debug', 'Geoloc ADD'. $params['id'] .' > ' . $params['name']);
+if ($jsonrpc->getMethod() == 'geolocSave'){
+	log::add('mobile', 'debug', 'Geoloc ADD '. $params['id'] .' > ' . $params['name']);
 	mobile::SaveGeoloc($params);
 	$jsonrpc->makeSuccess();
 }
 
-if ($jsonrpc->getMethod() == 'delinJeedom'){
+if ($jsonrpc->getMethod() == 'geolocDel'){
 	log::add('mobile', 'debug', 'Geoloc DEL '. $params['id'] .' > ' . $params['name']);
 	mobile::DelGeoloc($params);
 	$jsonrpc->makeSuccess();

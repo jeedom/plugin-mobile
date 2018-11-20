@@ -44,6 +44,28 @@ try {
 		mobile::makeTemplateJson();
 		ajax::success();
 	}
+	
+	if (init('action') == 'getSaveDashboard'){
+		$iq = init('iq');
+		$jsonDashboard = mobile::getSaveJson($iq, 'dashboard');
+		if ($jsonDashboard == ""){
+			$reponse = false; 
+		}else{
+			$reponse = true;
+		}
+		ajax::success($reponse);
+	    }
+  
+	  if (init('action') == 'getSaveFavDash'){
+		$iq = init('iq');
+		$jsonFavDash = mobile::getSaveJson($iq, 'favdash');
+		if ($jsonFavDash == ""){
+			$reponse = false; 
+		}else{
+			$reponse = true;
+		}
+		ajax::success($reponse);
+	    }
 
 	throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
 

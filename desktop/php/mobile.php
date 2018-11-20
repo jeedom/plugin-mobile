@@ -325,14 +325,14 @@ foreach (user::all() as $user) {
 	   <script>
 		$.get("google.com").done(function () {
   			$('#SaveDash').addClass('badge-success');
-			$('#SaveDash').setText('OK');
+			$('#SaveDash').text('OK');
 			$('#SaveFav').addClass('badge-success');
-			$('#SaveFav').setText('OK');
+			$('#SaveFav').text('OK');
 		}).fail(function () {
    			$('#SaveDash').addClass('badge-danger');
-			$('#SaveDash').setText('NOK');
+			$('#SaveDash').text('NOK');
 			$('#SaveFav').addClass('badge-danger');
-			$('#SaveFav').setText('NOK');
+			$('#SaveFav').text('NOK');
 		});
 	   </script>
  </div>

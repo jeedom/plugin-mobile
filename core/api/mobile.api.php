@@ -167,5 +167,24 @@ if ($jsonrpc->getMethod() == 'getMobile'){
 	$jsonrpc->makeSuccess(mobile::getSaveJson($params['Iq'], $params['type']));
 }
 
+if ($jsonrpc->getMethod() == 'geoloc'){
+	log::add('mobile', 'debug', 'Geoloc '. $params['id'] .' > ' . $params['name'] .' > ' .$params['value']);
+	mobile::EventGeoloc($params);
+	$jsonrpc->makeSuccess();
+}
+
+if ($jsonrpc->getMethod() == 'geolocSave'){
+	log::add('mobile', 'debug', 'Geoloc ADD '. $params['id'] .' > ' . $params['name']);
+	mobile::SaveGeoloc($params);
+	$jsonrpc->makeSuccess();
+}
+
+if ($jsonrpc->getMethod() == 'geolocDel'){
+	log::add('mobile', 'debug', 'Geoloc DEL '. $params['id'] .' > ' . $params['name']);
+	mobile::DelGeoloc($params);
+	$jsonrpc->makeSuccess();
+}
+
+
 throw new Exception(__('Aucune demande', __FILE__));
 ?>

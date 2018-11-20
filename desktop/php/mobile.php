@@ -323,7 +323,7 @@ foreach (user::all() as $user) {
      </fieldset>
    </form>
 	   <script>
-		$.get("google.com").done(function () {
+		$.get("https://jeedom.com").done(function () {
   			$('#SaveDash').addClass('badge-success');
 			$('#SaveDash').text('OK');
 			$('#SaveFav').addClass('badge-success');

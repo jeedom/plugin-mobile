@@ -194,8 +194,7 @@ foreach ($allScenario as $scenario) {
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Mobile}}</a></li>
     <li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Notifications}}</a></li>
-    <!--<li role="presentation"><a href="#commandtab" aria-controls="cmd" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
-    -->
+    <li role="presentation"><a href="#sauvegardetab" aria-controls="sauvegarde" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Sauvegarde Mobile}}</a></li>
   </ul>
   <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
     <div role="tabpanel" class="tab-pane active" id="eqlogictabin">
@@ -297,7 +296,7 @@ foreach (user::all() as $user) {
      </fieldset>
    </form>
  </div>
-<div role="tabpanel" class="tab-pane" id="dashboardtab">
+<div role="tabpanel" class="tab-pane" id="sauvegardetab">
   <form class="form-horizontal">
    <fieldset>
     <legend><i class="fa fa-qrcode"></i>  {{Sauvegarde et Dashboard}}</legend>
@@ -312,13 +311,11 @@ foreach (user::all() as $user) {
 	<div class="form-group">
 		<label class="col-sm-2 control-label">{{Sauvegarde Dashboard :}}</label>
 		<div class="col-sm-7">
-           		
          	</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">{{Sauvegarde Favoris :}}</label>
 		<div class="col-sm-7">
-           		
          	</div>
 	</div>
      </fieldset>

@@ -305,21 +305,36 @@ foreach (user::all() as $user) {
         <div class="form-group">
           <label class="col-sm-2 control-label">{{Id Mobile :}}</label>
           <div class="col-sm-7">
-           <input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="{{Iq}}" disabled/>
+           <input id="Iq" type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="{{Iq}}" disabled/>
          </div>
        </div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">{{Sauvegarde Dashboard :}}</label>
 		<div class="col-sm-7">
+			<span class="SaveDash badge">{{Vérification en Cours}}</span>
          	</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">{{Sauvegarde Favoris :}}</label>
 		<div class="col-sm-7">
+			<span class="SaveFav badge">{{Vérification en Cours}}</span>
          	</div>
 	</div>
      </fieldset>
    </form>
+	   <script>
+		$.get("google.com").done(function () {
+  			$.('#SaveDash').addClass('badge-success');
+			$.('#SaveDash').text = 'OK';
+			$.('#SaveFav').addClass('badge-success');
+			$.('#SaveFav').text = 'OK';
+		}).fail(function () {
+   			$.('#SaveDash').addClass('badge-danger');
+			$.('#SaveDash').text = 'NOK';
+			$.('#SaveFav').addClass('badge-danger');
+			$.('#SaveFav').text = 'NOK';
+		});
+	   </script>
  </div>
  <div role="tabpanel" class="tab-pane" id="commandtab">
    <div class="row">

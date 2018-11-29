@@ -182,6 +182,9 @@ class mobile extends eqLogic {
 				if (in_array($cmd->getGeneric_type(), ['GENERIC_ERROR', 'DONT'])) {
 					continue;
 				}
+				if(!isset($eqLogic['eqType_name'])){
+					$eqLogic['eqType_name'] = '';
+				}
 				if ($cmd->getIsVisible() != 1 && !in_array($cmd->getGeneric_type(), $genericisvisible) && !in_array($eqLogic['eqType_name'], self::$_pluginWidget)) {
 					continue;
 				}

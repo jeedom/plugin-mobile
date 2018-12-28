@@ -479,8 +479,8 @@ class mobile extends eqLogic {
 		log::add('mobile', 'debug', '|--debut de la fonction SaveGeoLoc--');
 		log::add('mobile', 'debug', '|-----------------------------------');
 		log::add('mobile', 'debug', '|');
-		$eqLogicMobile = eqLogic::byLogicalId($geoloc['iQ'], 'mobile');
-		log::add('mobile', 'debug', '| iQ = ' . $geoloc['iQ']);
+		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
+		log::add('mobile', 'debug', '| Iq = ' . $geoloc['Iq']);
 		if (isset($eqLogicMobile)) {
 			log::add('mobile', 'debug', '| Mobile bien trouvé dans cette Jeedom');
 			log::add('mobile', 'debug', '| Objet > ' . $eqLogicMobile->getId());
@@ -503,7 +503,7 @@ class mobile extends eqLogic {
 	}
 
 	public function DelGeoloc($geoloc) {
-		$eqLogicMobile = eqLogic::byLogicalId($geoloc['iQ'], 'mobile');
+		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
 		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
 		if (isset($cmdgeoloc)) {
 			$cmdgeoloc->remove();
@@ -511,7 +511,7 @@ class mobile extends eqLogic {
 	}
 
 	public function EventGeoloc($geoloc) {
-		$eqLogicMobile = eqLogic::byLogicalId($geoloc['iQ'], 'mobile');
+		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
 		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
 		if (isset($cmdgeoloc)) {
 			$cmdgeoloc->event($geoloc['value']);

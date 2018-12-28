@@ -28,6 +28,7 @@ if (!is_object($jsonrpc)) {
 $params = $jsonrpc->getParams();
 
 log::add('mobile', 'debug', 'Appel API Mobile > ' . $jsonrpc->getMethod());
+log::add('mobile', 'debug', 'paramettres passés > ' . json_encode($params));
 
 if ($jsonrpc->getMethod() == 'sync') {
 	if (jeedom::version() >= '3.2.0') {

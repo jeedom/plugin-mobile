@@ -303,12 +303,6 @@ foreach (user::all() as $user) {
     <legend><i class="fa fa-qrcode"></i>  {{Sauvegarde et Dashboard}}</legend>
     <form class="form-horizontal">
       <fieldset>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">{{Id Mobile :}}</label>
-          <div class="col-sm-7">
-           <input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="{{Iq}}" disabled/>
-         </div>
-       </div>
        <div class="form-group">
         <label class="col-sm-2 control-label">{{Sauvegarde Dashboard :}}</label>
         <div class="col-sm-7">

@@ -502,21 +502,27 @@ class mobile extends eqLogic {
 		$cmdgeoloc->save();
 	}
 
-	public function DelGeoloc($geoloc) {
+	public function delGeoloc($geoloc) {
+      	log::add('mobile', 'debug', 'Geoloc lancement DEL du mobile > '.$geoloc['Iq'].' pour '.$geoloc['id']);
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
 		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
-		if (isset($cmdgeoloc)) {
+		if(isset($cmdgeoloc)) {
 			$cmdgeoloc->remove();
 		}
 	}
 
 	public function EventGeoloc($geoloc) {
+		log::add('mobile', 'debug', 'Geoloc Event du mobile > '.$geoloc['Iq'].' pour '.$geoloc['id']);
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
 		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
 		if (isset($cmdgeoloc)) {
-			if(geoloc['value'] != $cmdgeoloc->execCmd()){
+          	log::add('mobile', 'debug', 'commande trouvé');
+			if(geoloc['value'] !== $cmdgeoloc->execCmd()){
+              	log::add('mobile', 'debug', 'Valeur non pareil.');
 				$cmdgeoloc->event($geoloc['value']);
-			}
+			}else{
+            	log::add('mobile', 'debug', 'Valeur pareil. >'.geoloc['value'].' / '.$cmdgeoloc->execCmd());
+            }
 		}
 	}
 
@@ -598,3 +604,4 @@ class mobileCmd extends cmd {
 }
 
 ?>
+

@@ -514,7 +514,9 @@ class mobile extends eqLogic {
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
 		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
 		if (isset($cmdgeoloc)) {
-			$cmdgeoloc->event($geoloc['value']);
+			if(geoloc['value'] != $cmdgeoloc->execCmd()){
+				$cmdgeoloc->event($geoloc['value']);
+			}
 		}
 	}
 

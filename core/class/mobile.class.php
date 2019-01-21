@@ -494,7 +494,7 @@ class mobile extends eqLogic {
 			$cmdgeoloc->setSubType('binary');
 			$cmdgeoloc->setIsVisible(1);
 		}
-		$cmdgeoloc->setName(__($geoloc['name'], __FILE__));
+		$cmdgeoloc->setName(__($geoloc['id'].'-'.$geoloc['name'], __FILE__));
 		$cmdgeoloc->setConfiguration('latitude', $geoloc['latitude']);
 		$cmdgeoloc->setConfiguration('longitude', $geoloc['longitude']);
 		$cmdgeoloc->setConfiguration('subtitle', $geoloc['subtitle']);

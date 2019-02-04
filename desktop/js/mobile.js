@@ -82,6 +82,58 @@ $('.nav-tabs a').on('shown.bs.tab', function (e) {
           }
       }
   });
+  $.ajax({
+        type: "POST", 
+        url: "plugins/mobile/core/ajax/mobile.ajax.php", 
+        data: {
+            action: "getSaveDashboard",
+            iq: _eqLogic.logicalId,
+        },
+        dataType: 'json',
+        global: false,
+        error: function (request, status, error) {
+            handleAjaxError(request, status, error);
+        },
+        success: function (data) {
+            if (data.state != 'ok') {
+                $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                return;
+            }
+          	if (data.result == true) {
+              $('#SaveDash').addClass('badge-success');
+			  $('#SaveDash').text('OK');
+          	}else if(data.result == false){
+              $('#SaveDash').addClass('badge-danger');
+			  $('#SaveDash').text('NOK');
+          	}
+      }
+  });
+  $.ajax({
+        type: "POST", 
+        url: "plugins/mobile/core/ajax/mobile.ajax.php", 
+        data: {
+            action: "getSaveFavDash",
+            iq: _eqLogic.logicalId,
+        },
+        dataType: 'json',
+        global: false,
+        error: function (request, status, error) {
+            handleAjaxError(request, status, error);
+        },
+        success: function (data) {
+            if (data.state != 'ok') {
+                $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                return;
+            }
+          	if (data.result == true) {
+              $('#SaveFav').addClass('badge-success');
+			  $('#SaveFav').text('OK');
+          	}else if(data.result == false){
+              $('#SaveFav').addClass('badge-danger');
+			  $('#SaveFav').text('NOK');
+          	}
+      }
+  });
 }
 
 

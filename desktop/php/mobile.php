@@ -192,81 +192,81 @@ foreach ($allScenario as $scenario) {
   <a class="btn btn-info pull-right" id="info_app"><i class="fa fa-question-circle"></i> {{Infos envoyées à l'app}}</a>
   <a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}</a>
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Mobile}}</a></li>
-    <li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Notifications}}</a></li>
-    <!--<li role="presentation"><a href="#commandtab" aria-controls="cmd" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
-    -->
-  </ul>
-  <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
-    <div role="tabpanel" class="tab-pane active" id="eqlogictabin">
-      <div class="row">
-        <div class="col-lg-6">
-          <form class="form-horizontal">
-            <fieldset>
-              <legend><i class="fa fa-arrow-circle-left eqLogicAction cursor" data-action="returnToThumbnailDisplay"></i> {{Général}}</legend>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">{{Nom de l'équipement mobile}}</label>
-                <div class="col-sm-4">
-                  <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
-                  <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement template}}"/>
-                </div>
+   <li role="presentation"><a class="eqLogicAction cursor" aria-controls="home" role="tab" data-action="returnToThumbnailDisplay"><i class="fa fa-arrow-circle-left"></i></a></li>
+   <li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Mobile}}</a></li>
+   <li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Notifications}}</a></li>
+   <li role="presentation"><a href="#sauvegardetab" aria-controls="sauvegarde" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Sauvegarde Mobile}}</a></li>
+ </ul>
+ <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
+  <div role="tabpanel" class="tab-pane active" id="eqlogictabin">
+    <div class="row">
+      <div class="col-lg-6">
+        <form class="form-horizontal">
+          <fieldset>
+            <legend><i class="fa fa-arrow-circle-left eqLogicAction cursor" data-action="returnToThumbnailDisplay"></i> {{Général}}</legend>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{Nom de l'équipement mobile}}</label>
+              <div class="col-sm-4">
+                <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
+                <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement template}}"/>
               </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label" >{{Objet parent}}</label>
-                <div class="col-sm-4">
-                  <select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
-                    <option value="">{{Aucun}}</option>
-                    <?php
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label" >{{Objet parent}}</label>
+              <div class="col-sm-4">
+                <select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
+                  <option value="">{{Aucun}}</option>
+                  <?php
 foreach (object::all() as $object) {
 	echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
 }
 ?>
-                 </select>
-               </div>
-             </div>
-             <div class="form-group">
-               <label class="col-sm-3 control-label"></label>
-               <div class="col-sm-8">
-                 <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
-                 <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
-               </div>
-             </div>
-             <div class="form-group">
-              <label class="col-sm-3 control-label">{{Type de Mobile}}</label>
-              <div class="col-sm-4">
-                <select class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="type_mobile">
-                 <option value="ios">{{iPhone}}</option>
-                 <option value="android">{{Android}}</option>
-                 <option value="windows">{{Windows (non officiel)}}</option>
                </select>
              </div>
            </div>
            <div class="form-group">
-            <label class="col-sm-3 control-label">{{Utilisateurs}}</label>
+             <label class="col-sm-3 control-label"></label>
+             <div class="col-sm-8">
+               <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
+               <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
+             </div>
+           </div>
+           <div class="form-group">
+            <label class="col-sm-3 control-label">{{Type de Mobile}}</label>
             <div class="col-sm-4">
-              <select class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="affect_user">
-                <option value="">{{Aucun}}</option>
-                <?php
+              <select class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="type_mobile">
+               <option value="ios">{{iPhone}}</option>
+               <option value="android">{{Android}}</option>
+               <option value="windows">{{Windows (non officiel)}}</option>
+             </select>
+           </div>
+         </div>
+         <div class="form-group">
+          <label class="col-sm-3 control-label">{{Utilisateurs}}</label>
+          <div class="col-sm-4">
+            <select class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="affect_user">
+              <option value="">{{Aucun}}</option>
+              <?php
 foreach (user::all() as $user) {
 	echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
 }
 ?>
-             </select>
-           </div>
+           </select>
          </div>
-       </fieldset>
-     </form>
-   </div>
-   <div class="col-lg-6">
-    <form class="form-horizontal">
-      <fieldset>
-        <legend><i class="fa fa-qrcode"></i>  {{QRCode}}</legend>
-        <center>
-         <div class="qrCodeImg"></div>
-       </center>
+       </div>
      </fieldset>
    </form>
  </div>
+ <div class="col-lg-6">
+  <form class="form-horizontal">
+    <fieldset>
+      <legend><i class="fa fa-qrcode"></i>  {{QRCode}}</legend>
+      <center>
+       <div class="qrCodeImg"></div>
+     </center>
+   </fieldset>
+ </form>
+</div>
 </div>
 </div>
 <div role="tabpanel" class="tab-pane" id="notificationtab">
@@ -297,40 +297,34 @@ foreach (user::all() as $user) {
      </fieldset>
    </form>
  </div>
-<div role="tabpanel" class="tab-pane" id="dashboardtab">
+ <div role="tabpanel" class="tab-pane" id="sauvegardetab">
   <form class="form-horizontal">
    <fieldset>
     <legend><i class="fa fa-qrcode"></i>  {{Sauvegarde et Dashboard}}</legend>
     <form class="form-horizontal">
       <fieldset>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">{{Id Mobile :}}</label>
-          <div class="col-sm-7">
-           <input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="{{Iq}}" disabled/>
-         </div>
+       <div class="form-group">
+        <label class="col-sm-2 control-label">{{Sauvegarde Dashboard :}}</label>
+        <div class="col-sm-7">
+         <span id="SaveDash" class="badge">{{Vérification en Cours}}</span>
        </div>
-	<div class="form-group">
-		<label class="col-sm-2 control-label">{{Sauvegarde Dashboard :}}</label>
-		<div class="col-sm-7">
-           		
-         	</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-2 control-label">{{Sauvegarde Favoris :}}</label>
-		<div class="col-sm-7">
-           		
-         	</div>
-	</div>
-     </fieldset>
-   </form>
- </div>
- <div role="tabpanel" class="tab-pane" id="commandtab">
-   <div class="row">
-     <div class="col-lg-6">
-
+     </div>
+     <div class="form-group">
+      <label class="col-sm-2 control-label">{{Sauvegarde Favoris :}}</label>
+      <div class="col-sm-7">
+       <span id="SaveFav" class="badge">{{Vérification en Cours}}</span>
      </div>
    </div>
+ </fieldset>
+</form>
+</div>
+<div role="tabpanel" class="tab-pane" id="commandtab">
+ <div class="row">
+   <div class="col-lg-6">
+
+   </div>
  </div>
+</div>
 </div>
 </div>
 <?php include_file('desktop', 'mobile', 'js', 'mobile');?>

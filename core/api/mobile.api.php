@@ -28,6 +28,7 @@ if (!is_object($jsonrpc)) {
 $params = $jsonrpc->getParams();
 
 log::add('mobile', 'debug', 'Appel API Mobile > ' . $jsonrpc->getMethod());
+log::add('mobile', 'debug', 'paramettres passés > ' . json_encode($params));
 
 if ($jsonrpc->getMethod() == 'sync') {
 	if (jeedom::version() >= '3.2.0') {
@@ -174,17 +175,22 @@ if ($jsonrpc->getMethod() == 'geoloc'){
 }
 
 if ($jsonrpc->getMethod() == 'geolocSave'){
-	log::add('mobile', 'debug', 'Geoloc ADD '. $params['id'] .' > ' . $params['name']);
-	mobile::SaveGeoloc($params);
-	$jsonrpc->makeSuccess();
+	log::add('mobile', 'debug', 'Geoloc SAVE '. $params['id'] .' > ' . $params['name']);
+  	if($params['id'] != '' || $params['id'] != null){
+		mobile::SaveGeoloc($params);
+		$jsonrpc->makeSuccess();
+    }else{
+     	throw new Exception(__('pas d\'id : ', __FILE__) . $params['name']); 
+    }
 }
 
 if ($jsonrpc->getMethod() == 'geolocDel'){
 	log::add('mobile', 'debug', 'Geoloc DEL '. $params['id'] .' > ' . $params['name']);
-	mobile::DelGeoloc($params);
+	mobile::delGeoloc($params);
 	$jsonrpc->makeSuccess();
 }
 
 
 throw new Exception(__('Aucune demande', __FILE__));
 ?>
+

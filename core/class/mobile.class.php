@@ -431,7 +431,7 @@ class mobile extends eqLogic {
 
 	public static function jsonPublish($os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout) {
 		$dateNotif = date("Y-m-d H:i:s");
-		$badge = '+1';
+		//$badge = '+1';
 		$message = preg_replace("# {2,}#", " ", preg_replace("#(\r\n|\n\r|\n|\r)#", "\\\\\\n", $message));
 		if ($timeout != 'nok') {
 			$timeout = date('Y-m-d H:i:s', strtotime("$dateNotif + $timeout SECONDS"));

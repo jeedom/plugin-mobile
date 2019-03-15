@@ -34,6 +34,11 @@ class mobile extends eqLogic {
 
 	/*     * ***********************Methode static*************************** */
 
+	public static function whoIsIq($iq){
+		$search = eqLogic::byLogicalId($iq, 'mobile');
+		return = $search->getName();
+	}
+	
 	public static function pluginToSend() {
 		$return = [];
 		$plugins = plugin::listPlugin(true);

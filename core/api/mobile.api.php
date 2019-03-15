@@ -164,8 +164,8 @@ if ($jsonrpc->getMethod() == 'saveMobile'){
 }
 
 if ($jsonrpc->getMethod() == 'getMobile'){
-	log::add('mobile', 'debug', 'Demande de recuperation '. $params['type'] .' > ' . $params['Iq']);
-	$jsonrpc->makeSuccess(mobile::getSaveJson($params['Iq'], $params['type']));
+	log::add('mobile', 'debug', 'Demande de recuperation '. $params['type'] .' > ' . $params['Iq'] .' recuperation save du > ' . $params['IqRestore']);
+	$jsonrpc->makeSuccess(mobile::getSaveJson($params['IqRestore'], $params['type']));
 }
 
 if ($jsonrpc->getMethod() == 'geoloc'){

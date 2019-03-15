@@ -29,6 +29,9 @@ $params = $jsonrpc->getParams();
 
 log::add('mobile', 'debug', 'Appel API Mobile > ' . $jsonrpc->getMethod());
 log::add('mobile', 'debug', 'paramettres passés > ' . json_encode($params));
+if($params['Iq']){
+	log::add('mobile', 'debug', 'Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));	
+}
 
 if ($jsonrpc->getMethod() == 'sync') {
 	if (jeedom::version() >= '3.2.0') {
@@ -158,13 +161,13 @@ if ($jsonrpc->getMethod() == 'askText') {
 }
 
 if ($jsonrpc->getMethod() == 'saveMobile'){
-	log::add('mobile', 'debug', 'Demande de sauvegarde '. $params['type'] .' > ' . $params['Iq']);
+	log::add('mobile', 'debug', 'Demande de sauvegarde '. $params['type'] .' > ' . $params['Iq'] .' > '. mobile::whoIsIq($params['Iq']));
 	mobile::makeSaveJson($params['Json'], $params['Iq'], $params['type']);
 	$jsonrpc->makeSuccess();
 }
 
 if ($jsonrpc->getMethod() == 'getMobile'){
-	log::add('mobile', 'debug', 'Demande de recuperation '. $params['type'] .' > ' . $params['Iq'] .' recuperation save du > ' . $params['IqRestore']);
+	log::add('mobile', 'debug', 'Demande de recuperation '. $params['type'] .' > ' . $params['Iq'] .'('.mobile::whoIsIq($params['Iq']).') recuperation save du > ' . $params['IqRestore'] . ' ('. mobile::whoIsIq($params['IqRestore']) .')');
 	$jsonrpc->makeSuccess(mobile::getSaveJson($params['IqRestore'], $params['type']));
 }
 

@@ -174,7 +174,7 @@ foreach ($allScenario as $scenario) {
 	if ($scenario->getDisplay('sendToApp', 1) == 0) {
 		$opacity = 'opacity:0.3;';
 	}
-	echo '<div class="scenarioDisplayCard cursor" data-scenario_id="' . $scenario->getId() . '" data-type="' . $scenario->getType() . '" onclick="clickscenario(\'' . $scenario->getId() . '\',\'' . $scenario->getName() . '\')" style="background-color : #ffffff; height : 140px;margin-bottom : 35px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
+	echo '<div class="scenarioDisplayCard cursor" data-scenario_id="' . $scenario->getId() . '" onclick="clickscenario(\'' . $scenario->getId() . '\',\'' . $scenario->getName() . '\')" style="background-color : #ffffff; height : 140px;margin-bottom : 35px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
 	echo "<center>";
 	echo '<img src="core/img/scenario.png" height="90" width="85" />';
 	echo "</center>";

@@ -42,7 +42,7 @@ sendVarToJS('scenario', $_GET['scenario_id']);
 		echo '</div>';
 ?>
 <div class="form-actions pull-right">
-		<a class="btn btn-success" id="bt_saveScenario"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
+		<a class="btn btn-success" id="bt_saveScenario"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
 	</div>
 </div>
 

@@ -84,7 +84,7 @@ if ($generique_ok == true) {
 	echo '<div class="col-lg-12 col-md-12 col-sm-12 eqLogicPluginDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">';
 	echo '<legend><i class="fa fa-building"></i>  {{Type Générique du Plugin}}
     <div class="form-actions pull-right">
-		<a class="btn btn-success eqLogicAction"  style="padding:0px 3px 0px 3px;" onclick="SavePlugin()"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
+		<a class="btn btn-success eqLogicAction"  style="padding:0px 3px 0px 3px;" onclick="SavePlugin()"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
 	</div></legend>';
 	?>
     <div class="EnregistrementDisplay"></div>
@@ -199,7 +199,7 @@ echo '</td>';
 	echo '</div>';
 	?>
 			<div class="form-actions pull-right">
-		<a class="btn btn-success eqLogicAction" onclick="SavePlugin()" ><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
+		<a class="btn btn-success eqLogicAction" onclick="SavePlugin()" ><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
 	</div>
 
 		<?php

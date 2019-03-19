@@ -27,13 +27,13 @@ foreach ($eqLogics as $eqLogic) {
  <div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
   <a class="btn btn-default pull-right" id="bt_regenConfig"><i class="fa fa-cogs"></i> {{Regenerer configuration}}</a>
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipements}}</a></li>
-    <li role="presentation"><a href="#plugintab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Plugins}}</a></li>
+    <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Equipements}}</a></li>
+    <li role="presentation"><a href="#plugintab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Plugins}}</a></li>
     <li role="presentation"><a href="#objecttab" aria-controls="profile" role="tab" data-toggle="tab"><i class="icon maison-house112"></i> {{Objets / Pièces}}</a></li>
   </ul>
   <div class="tab-content">
    <div role="tabpanel" class="tab-pane active" id="eqlogictab">
-     <legend><i class="fa fa-cog"></i>  {{Gestion}}</legend>
+     <legend><i class="fas fa-cog"></i>  {{Gestion}}</legend>
      <div class="eqLogicThumbnailContainer">
       <div class="cursor eqLogicAction logoPrimary" data-action="add" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
        <center>
@@ -49,7 +49,7 @@ foreach ($eqLogics as $eqLogic) {
     </div>
     <div class="cursor" id="bt_healthmobile" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
       <center>
-        <i class="fa fa-medkit"></i>
+        <i class="fas fa-medkit"></i>
       </center>
       <span ><center>{{Santé}}</center></span>
     </div>
@@ -187,15 +187,15 @@ foreach ($allScenario as $scenario) {
 </div>
 </div>
 <div class="col-lg-10 col-md-9 col-sm-8 eqLogic" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
-  <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
-  <a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
+  <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}</a>
+  <a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
   <a class="btn btn-info pull-right" id="info_app"><i class="fa fa-question-circle"></i> {{Infos envoyées à l'app}}</a>
   <a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}</a>
   <ul class="nav nav-tabs" role="tablist">
-   <li role="presentation"><a class="eqLogicAction cursor" aria-controls="home" role="tab" data-action="returnToThumbnailDisplay"><i class="fa fa-arrow-circle-left"></i></a></li>
-   <li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Mobile}}</a></li>
-   <li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Notifications}}</a></li>
-   <li role="presentation"><a href="#sauvegardetab" aria-controls="sauvegarde" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Sauvegarde Mobile}}</a></li>
+   <li role="presentation"><a class="eqLogicAction cursor" aria-controls="home" role="tab" data-action="returnToThumbnailDisplay"><i class="fas fa-arrow-circle-left"></i></a></li>
+   <li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Mobile}}</a></li>
+   <li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Notifications}}</a></li>
+   <li role="presentation"><a href="#sauvegardetab" aria-controls="sauvegarde" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Sauvegarde Mobile}}</a></li>
  </ul>
  <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
   <div role="tabpanel" class="tab-pane active" id="eqlogictabin">

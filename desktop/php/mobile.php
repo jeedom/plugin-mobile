@@ -13,7 +13,7 @@ $plugin_widget = mobile::$_pluginWidget;
   <div class="col-lg-2 col-md-3 col-sm-4">
     <div class="bs-sidebar">
       <ul id="ul_eqLogic" class="nav nav-list bs-sidenav">
-        <a class="btn btn-default eqLogicAction" style="width : 100%;margin-top : 5px;margin-bottom: 5px;" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter un mobile}}</a>
+        <a class="btn btn-default eqLogicAction" style="width : 100%;margin-top : 5px;margin-bottom: 5px;" data-action="add"><i class="fas fa-plus-circle"></i> {{Ajouter un mobile}}</a>
         <li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/></li>
         <?php
 foreach ($eqLogics as $eqLogic) {
@@ -37,13 +37,13 @@ foreach ($eqLogics as $eqLogic) {
      <div class="eqLogicThumbnailContainer">
       <div class="cursor eqLogicAction logoPrimary" data-action="add" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
        <center>
-        <i class="fa fa-plus-circle"></i>
+        <i class="fas fa-plus-circle"></i>
       </center>
       <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>Ajouter</center></span>
     </div>
     <div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
       <center>
-        <i class="fa fa-wrench"></i>
+        <i class="fas fa-wrench"></i>
       </center>
       <span ><center>{{Configuration}}</center></span>
     </div>

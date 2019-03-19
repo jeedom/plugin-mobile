@@ -35,30 +35,30 @@ foreach ($eqLogics as $eqLogic) {
    <div role="tabpanel" class="tab-pane active" id="eqlogictab">
      <legend><i class="fa fa-cog"></i>  {{Gestion}}</legend>
      <div class="eqLogicThumbnailContainer">
-      <div class="cursor eqLogicAction" data-action="add" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
+      <div class="cursor eqLogicAction logoPrimary" data-action="add" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
        <center>
-        <i class="fa fa-plus-circle" style="font-size : 5em;color:#94ca02;"></i>
+        <i class="fa fa-plus-circle"></i>
       </center>
       <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>Ajouter</center></span>
     </div>
-    <div class="cursor eqLogicAction" data-action="gotoPluginConf" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
+    <div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
       <center>
-        <i class="fa fa-wrench" style="font-size : 5em;color:#767676;"></i>
+        <i class="fa fa-wrench"></i>
       </center>
-      <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Configuration}}</center></span>
+      <span ><center>{{Configuration}}</center></span>
     </div>
     <div class="cursor" id="bt_healthmobile" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
       <center>
-        <i class="fa fa-medkit" style="font-size : 5em;color:#767676;"></i>
+        <i class="fa fa-medkit"></i>
       </center>
-      <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Santé}}</center></span>
+      <span ><center>{{Santé}}</center></span>
     </div>
   </div>
   <legend><i class="icon techno-listening3"></i> {{Mes Téléphones Mobiles}}</legend>
   <div class="eqLogicThumbnailContainer">
     <?php
 foreach ($eqLogics as $eqLogic) {
-	$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
+	$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 	echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
 	echo "<center>";
 	$file = 'plugins/mobile/docs/images/' . $eqLogic->getConfiguration('type_mobile') . '.png';
@@ -70,7 +70,7 @@ foreach ($eqLogics as $eqLogic) {
 		echo '<img src="' . $path . '" height="105" width="105" />';
 	}
 	echo "</center>";
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
+	echo '<span><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
 	echo '</div>';
 }
 ?>
@@ -102,7 +102,7 @@ foreach ($plugins as $plugin) {
 			} else {
 				echo '<i class="' . $plugin->getIcon() . '" style="font-size : 6em;margin-top:20px;"></i>';
 				echo "</center>";
-				echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $plugin->getName() . '</center></span>';
+				echo '<span><center>' . $plugin->getName() . '</center></span>';
 			}
 			echo $text;
 			echo '</div>';
@@ -132,7 +132,7 @@ foreach ($plugins as $plugin) {
 			} else {
 				echo '<i class="' . $plugin->getIcon() . '" style="font-size : 6em;margin-top:20px;"></i>';
 				echo "</center>";
-				echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $plugin->getName() . '</center></span>';
+				echo '<span><center>' . $plugin->getName() . '</center></span>';
 			}
 			echo $text;
 			echo '</div>';
@@ -157,7 +157,7 @@ foreach ($allObject as $object) {
 	echo "<center>";
 	echo str_replace('></i>', ' style="font-size : 6em;color:#767676;"></i>', $object->getDisplay('icon', '<i class="fa fa-lemon-o"></i>'));
 	echo "</center>";
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $object->getName() . '</center></span>';
+	echo '<span><center>' . $object->getName() . '</center></span>';
 	echo '</div>';
 }
 ?>
@@ -178,7 +178,7 @@ foreach ($allScenario as $scenario) {
 	echo "<center>";
 	echo '<img src="core/img/scenario.png" height="90" width="85" />';
 	echo "</center>";
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $scenario->getHumanName(true, true, true, true) . '</center></span>';
+	echo '<span><center>' . $scenario->getHumanName(true, true, true, true) . '</center></span>';
 	echo '</div>';
 }
 ?>

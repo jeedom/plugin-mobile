@@ -34,7 +34,7 @@ if (file_exists(dirname(__FILE__) . '/../../../../' . $plugin->getPathImgIcon())
 } else {
 	echo '<i class="' . $plugin->getIcon() . '" style="font-size : 6em;margin-top:20px;"></i>';
 	echo "</center>";
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $plugin->getName() . '</center></span>';
+	echo '<span><center>' . $plugin->getName() . '</center></span>';
 }
 ?>
 	</center>

@@ -27,7 +27,7 @@ sendVarToJS('object', $_GET['object_id']);
 	<?php
 echo "<div><center>";
 echo str_replace('></i>', ' style="font-size : 6em;color:#767676;"></i>', $object->getDisplay('icon', '<i class="fa fa-lemon-o"></i>'));
-echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $object->getName() . '</center></span>';
+echo '<span><center>' . $object->getName() . '</center></span>';
 echo "</center></div><br/>";
 echo '<div class="alert alert-info div_object_configuration" role="alert">';
 echo '{{Vous pouvez activer ou désactiver l\'envoi de cette pièce vers l\'application}}';

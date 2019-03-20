@@ -25,7 +25,7 @@ foreach ($eqLogics as $eqLogic) {
  </div>
 
  <div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
-  <a class="btn btn-default pull-right" id="bt_regenConfig"><i class="fa fa-cogs"></i> {{Regenerer configuration}}</a>
+  <a class="btn btn-default pull-right" id="bt_regenConfig"><i class="fas fa-cogs"></i> {{Regenerer configuration}}</a>
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Equipements}}</a></li>
     <li role="presentation"><a href="#plugintab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Plugins}}</a></li>
@@ -77,7 +77,7 @@ foreach ($eqLogics as $eqLogic) {
 </div>
 </div>
 <div role="tabpanel" class="tab-pane" id="plugintab">
-  <legend><i class="fa fa-check-circle-o"></i>  {{Le(s) Plugin(s) Compatible(s)}}</legend>
+  <legend><i class="fas fa-check-circle-o"></i>  {{Le(s) Plugin(s) Compatible(s)}}</legend>
   <div class="eqLogicThumbnailContainer">
    <?php
 foreach ($plugins as $plugin) {
@@ -111,7 +111,7 @@ foreach ($plugins as $plugin) {
 }
 ?>
 </div>
-<legend><i class="fa fa-times-circle-o"></i>  {{Le(s) Plugin(s) Non Testé(s)}}</legend>
+<legend><i class="fas fa-times-circle-o"></i>  {{Le(s) Plugin(s) Non Testé(s)}}</legend>
 <div class="eqLogicThumbnailContainer">
  <?php
 foreach ($plugins as $plugin) {
@@ -190,7 +190,7 @@ foreach ($allScenario as $scenario) {
   <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}</a>
   <a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
   <a class="btn btn-info pull-right" id="info_app"><i class="fa fa-question-circle"></i> {{Infos envoyées à l'app}}</a>
-  <a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}</a>
+  <a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fas fa-cogs"></i> {{Configuration avancée}}</a>
   <ul class="nav nav-tabs" role="tablist">
    <li role="presentation"><a class="eqLogicAction cursor" aria-controls="home" role="tab" data-action="returnToThumbnailDisplay"><i class="fas fa-arrow-circle-left"></i></a></li>
    <li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Mobile}}</a></li>

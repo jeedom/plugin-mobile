@@ -35,19 +35,19 @@ foreach ($eqLogics as $eqLogic) {
    <div role="tabpanel" class="tab-pane active" id="eqlogictab">
      <legend><i class="fas fa-cog"></i>  {{Gestion}}</legend>
      <div class="eqLogicThumbnailContainer">
-      <div class="cursor eqLogicAction logoPrimary" data-action="add" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
+      <div class="cursor eqLogicAction logoPrimary" data-action="add"  >
        <center>
         <i class="fas fa-plus-circle"></i>
       </center>
       <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>Ajouter</center></span>
     </div>
-    <div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
+    <div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf" >
       <center>
         <i class="fas fa-wrench"></i>
       </center>
       <span ><center>{{Configuration}}</center></span>
     </div>
-    <div class="cursor" id="bt_healthmobile" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
+    <div class="cursor" id="bt_healthmobile"  >
       <center>
         <i class="fas fa-medkit"></i>
       </center>

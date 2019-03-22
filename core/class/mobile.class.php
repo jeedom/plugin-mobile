@@ -326,7 +326,7 @@ class mobile extends eqLogic {
 	}
 
 	public static function discovery_object() {
-		$all = utils::o2a(object::all());
+		$all = utils::o2a(jeeObject::all());
 		$return = array();
 		foreach ($all as $object) {
 			if (isset($object['display']['sendToApp']) && $object['display']['sendToApp'] == "0") {

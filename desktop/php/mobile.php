@@ -147,7 +147,7 @@ foreach ($plugins as $plugin) {
   </legend>
   <div class="eqLogicThumbnailContainer">
     <?php
-$allObject = object::buildTree(null, false);
+$allObject = jeeObject::buildTree(null, false);
 foreach ($allObject as $object) {
 	$opacity = '';
 	if ($object->getDisplay('sendToApp', 1) == 0) {
@@ -217,7 +217,7 @@ foreach ($allScenario as $scenario) {
                 <select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
                   <option value="">{{Aucun}}</option>
                   <?php
-foreach (object::all() as $object) {
+foreach (jeeObject::all() as $object) {
 	echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
 }
 ?>

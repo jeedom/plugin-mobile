@@ -19,7 +19,7 @@ if (!isConnect('admin')) {
 	throw new Exception('{{401 - AccèÈs non autorisÈ}}');
 }
 
-$object = object::byId($_GET['object_id']);
+$object = jeeObject::byId($_GET['object_id']);
 sendVarToJS('object', $_GET['object_id']);
 ?>
 

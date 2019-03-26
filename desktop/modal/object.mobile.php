@@ -19,7 +19,7 @@ if (!isConnect('admin')) {
 	throw new Exception('{{401 - AccèÈs non autorisÈ}}');
 }
 
-$object = object::byId($_GET['object_id']);
+$object = jeeObject::byId($_GET['object_id']);
 sendVarToJS('object', $_GET['object_id']);
 ?>
 
@@ -27,7 +27,7 @@ sendVarToJS('object', $_GET['object_id']);
 	<?php
 echo "<div><center>";
 echo str_replace('></i>', ' style="font-size : 6em;color:#767676;"></i>', $object->getDisplay('icon', '<i class="fa fa-lemon-o"></i>'));
-echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $object->getName() . '</center></span>';
+echo '<span><center>' . $object->getName() . '</center></span>';
 echo "</center></div><br/>";
 echo '<div class="alert alert-info div_object_configuration" role="alert">';
 echo '{{Vous pouvez activer ou désactiver l\'envoi de cette pièce vers l\'application}}';
@@ -42,7 +42,7 @@ echo '</div>';
 echo '<div class="col-lg-12 col-md-12 col-sm-12 eqLogicPluginDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">';
 echo '<legend><i class="fa fa-building"></i>  {{Type Générique de l\'objet}}
     <div class="form-actions pull-right">
-		<a class="btn btn-success eqLogicAction"  style="padding:0px 3px 0px 3px;" onclick="SaveObject()"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
+		<a class="btn btn-success eqLogicAction"  style="padding:0px 3px 0px 3px;" onclick="SaveObject()"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
 	</div></legend>';
 ?>
 
@@ -145,7 +145,7 @@ echo '</td>';
 echo '</div>';
 ?>
 			<div class="form-actions pull-right">
-		<a class="btn btn-success eqLogicAction" onclick="SaveObject()" ><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
+		<a class="btn btn-success eqLogicAction" onclick="SaveObject()" ><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
 	</div>
 
 		<?php

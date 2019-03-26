@@ -13,7 +13,7 @@ $plugin_widget = mobile::$_pluginWidget;
   <div class="col-lg-2 col-md-3 col-sm-4">
     <div class="bs-sidebar">
       <ul id="ul_eqLogic" class="nav nav-list bs-sidenav">
-        <a class="btn btn-default eqLogicAction" style="width : 100%;margin-top : 5px;margin-bottom: 5px;" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter un mobile}}</a>
+        <a class="btn btn-default eqLogicAction" style="width : 100%;margin-top : 5px;margin-bottom: 5px;" data-action="add"><i class="fas fa-plus-circle"></i> {{Ajouter un mobile}}</a>
         <li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/></li>
         <?php
 foreach ($eqLogics as $eqLogic) {
@@ -25,40 +25,40 @@ foreach ($eqLogics as $eqLogic) {
  </div>
 
  <div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
-  <a class="btn btn-default pull-right" id="bt_regenConfig"><i class="fa fa-cogs"></i> {{Regenerer configuration}}</a>
+  <a class="btn btn-default pull-right" id="bt_regenConfig"><i class="fas fa-cogs"></i> {{Regenerer configuration}}</a>
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipements}}</a></li>
-    <li role="presentation"><a href="#plugintab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Plugins}}</a></li>
+    <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Equipements}}</a></li>
+    <li role="presentation"><a href="#plugintab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Plugins}}</a></li>
     <li role="presentation"><a href="#objecttab" aria-controls="profile" role="tab" data-toggle="tab"><i class="icon maison-house112"></i> {{Objets / Pièces}}</a></li>
   </ul>
   <div class="tab-content">
    <div role="tabpanel" class="tab-pane active" id="eqlogictab">
-     <legend><i class="fa fa-cog"></i>  {{Gestion}}</legend>
+     <legend><i class="fas fa-cog"></i>  {{Gestion}}</legend>
      <div class="eqLogicThumbnailContainer">
-      <div class="cursor eqLogicAction" data-action="add" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
+      <div class="cursor eqLogicAction logoPrimary" data-action="add"  >
        <center>
-        <i class="fa fa-plus-circle" style="font-size : 5em;color:#94ca02;"></i>
+        <i class="fas fa-plus-circle"></i>
       </center>
       <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>Ajouter</center></span>
     </div>
-    <div class="cursor eqLogicAction" data-action="gotoPluginConf" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
+    <div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf" >
       <center>
-        <i class="fa fa-wrench" style="font-size : 5em;color:#767676;"></i>
+        <i class="fas fa-wrench"></i>
       </center>
-      <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Configuration}}</center></span>
+      <span ><center>{{Configuration}}</center></span>
     </div>
-    <div class="cursor" id="bt_healthmobile" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
+    <div class="cursor" id="bt_healthmobile"  >
       <center>
-        <i class="fa fa-medkit" style="font-size : 5em;color:#767676;"></i>
+        <i class="fas fa-medkit"></i>
       </center>
-      <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Santé}}</center></span>
+      <span ><center>{{Santé}}</center></span>
     </div>
   </div>
   <legend><i class="icon techno-listening3"></i> {{Mes Téléphones Mobiles}}</legend>
   <div class="eqLogicThumbnailContainer">
     <?php
 foreach ($eqLogics as $eqLogic) {
-	$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
+	$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 	echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
 	echo "<center>";
 	$file = 'plugins/mobile/docs/images/' . $eqLogic->getConfiguration('type_mobile') . '.png';
@@ -70,14 +70,14 @@ foreach ($eqLogics as $eqLogic) {
 		echo '<img src="' . $path . '" height="105" width="105" />';
 	}
 	echo "</center>";
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
+	echo '<span><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
 	echo '</div>';
 }
 ?>
 </div>
 </div>
 <div role="tabpanel" class="tab-pane" id="plugintab">
-  <legend><i class="fa fa-check-circle-o"></i>  {{Le(s) Plugin(s) Compatible(s)}}</legend>
+  <legend><i class="fas fa-check-circle-o"></i>  {{Le(s) Plugin(s) Compatible(s)}}</legend>
   <div class="eqLogicThumbnailContainer">
    <?php
 foreach ($plugins as $plugin) {
@@ -102,7 +102,7 @@ foreach ($plugins as $plugin) {
 			} else {
 				echo '<i class="' . $plugin->getIcon() . '" style="font-size : 6em;margin-top:20px;"></i>';
 				echo "</center>";
-				echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $plugin->getName() . '</center></span>';
+				echo '<span><center>' . $plugin->getName() . '</center></span>';
 			}
 			echo $text;
 			echo '</div>';
@@ -111,7 +111,7 @@ foreach ($plugins as $plugin) {
 }
 ?>
 </div>
-<legend><i class="fa fa-times-circle-o"></i>  {{Le(s) Plugin(s) Non Testé(s)}}</legend>
+<legend><i class="fas fa-times-circle-o"></i>  {{Le(s) Plugin(s) Non Testé(s)}}</legend>
 <div class="eqLogicThumbnailContainer">
  <?php
 foreach ($plugins as $plugin) {
@@ -132,7 +132,7 @@ foreach ($plugins as $plugin) {
 			} else {
 				echo '<i class="' . $plugin->getIcon() . '" style="font-size : 6em;margin-top:20px;"></i>';
 				echo "</center>";
-				echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $plugin->getName() . '</center></span>';
+				echo '<span><center>' . $plugin->getName() . '</center></span>';
 			}
 			echo $text;
 			echo '</div>';
@@ -147,7 +147,7 @@ foreach ($plugins as $plugin) {
   </legend>
   <div class="eqLogicThumbnailContainer">
     <?php
-$allObject = object::buildTree(null, false);
+$allObject = jeeObject::buildTree(null, false);
 foreach ($allObject as $object) {
 	$opacity = '';
 	if ($object->getDisplay('sendToApp', 1) == 0) {
@@ -157,7 +157,7 @@ foreach ($allObject as $object) {
 	echo "<center>";
 	echo str_replace('></i>', ' style="font-size : 6em;color:#767676;"></i>', $object->getDisplay('icon', '<i class="fa fa-lemon-o"></i>'));
 	echo "</center>";
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $object->getName() . '</center></span>';
+	echo '<span><center>' . $object->getName() . '</center></span>';
 	echo '</div>';
 }
 ?>
@@ -174,11 +174,11 @@ foreach ($allScenario as $scenario) {
 	if ($scenario->getDisplay('sendToApp', 1) == 0) {
 		$opacity = 'opacity:0.3;';
 	}
-	echo '<div class="scenarioDisplayCard cursor" data-scenario_id="' . $scenario->getId() . '" data-type="' . $scenario->getType() . '" onclick="clickscenario(\'' . $scenario->getId() . '\',\'' . $scenario->getName() . '\')" style="background-color : #ffffff; height : 140px;margin-bottom : 35px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
+	echo '<div class="scenarioDisplayCard cursor" data-scenario_id="' . $scenario->getId() . '" onclick="clickscenario(\'' . $scenario->getId() . '\',\'' . $scenario->getName() . '\')" style="background-color : #ffffff; height : 140px;margin-bottom : 35px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
 	echo "<center>";
 	echo '<img src="core/img/scenario.png" height="90" width="85" />';
 	echo "</center>";
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $scenario->getHumanName(true, true, true, true) . '</center></span>';
+	echo '<span><center>' . $scenario->getHumanName(true, true, true, true) . '</center></span>';
 	echo '</div>';
 }
 ?>
@@ -187,15 +187,15 @@ foreach ($allScenario as $scenario) {
 </div>
 </div>
 <div class="col-lg-10 col-md-9 col-sm-8 eqLogic" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
-  <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
-  <a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
+  <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}</a>
+  <a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
   <a class="btn btn-info pull-right" id="info_app"><i class="fa fa-question-circle"></i> {{Infos envoyées à l'app}}</a>
-  <a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}</a>
+  <a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fas fa-cogs"></i> {{Configuration avancée}}</a>
   <ul class="nav nav-tabs" role="tablist">
-   <li role="presentation"><a class="eqLogicAction cursor" aria-controls="home" role="tab" data-action="returnToThumbnailDisplay"><i class="fa fa-arrow-circle-left"></i></a></li>
-   <li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Mobile}}</a></li>
-   <li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Notifications}}</a></li>
-   <li role="presentation"><a href="#sauvegardetab" aria-controls="sauvegarde" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Sauvegarde Mobile}}</a></li>
+   <li role="presentation"><a class="eqLogicAction cursor" aria-controls="home" role="tab" data-action="returnToThumbnailDisplay"><i class="fas fa-arrow-circle-left"></i></a></li>
+   <li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Mobile}}</a></li>
+   <li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Notifications}}</a></li>
+   <li role="presentation"><a href="#sauvegardetab" aria-controls="sauvegarde" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Sauvegarde Mobile}}</a></li>
  </ul>
  <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
   <div role="tabpanel" class="tab-pane active" id="eqlogictabin">
@@ -217,7 +217,7 @@ foreach ($allScenario as $scenario) {
                 <select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
                   <option value="">{{Aucun}}</option>
                   <?php
-foreach (object::all() as $object) {
+foreach (jeeObject::all() as $object) {
 	echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
 }
 ?>

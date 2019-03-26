@@ -34,7 +34,7 @@ if (file_exists(dirname(__FILE__) . '/../../../../' . $plugin->getPathImgIcon())
 } else {
 	echo '<i class="' . $plugin->getIcon() . '" style="font-size : 6em;margin-top:20px;"></i>';
 	echo "</center>";
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $plugin->getName() . '</center></span>';
+	echo '<span><center>' . $plugin->getName() . '</center></span>';
 }
 ?>
 	</center>
@@ -84,7 +84,7 @@ if ($generique_ok == true) {
 	echo '<div class="col-lg-12 col-md-12 col-sm-12 eqLogicPluginDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">';
 	echo '<legend><i class="fa fa-building"></i>  {{Type Générique du Plugin}}
     <div class="form-actions pull-right">
-		<a class="btn btn-success eqLogicAction"  style="padding:0px 3px 0px 3px;" onclick="SavePlugin()"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
+		<a class="btn btn-success eqLogicAction"  style="padding:0px 3px 0px 3px;" onclick="SavePlugin()"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
 	</div></legend>';
 	?>
     <div class="EnregistrementDisplay"></div>
@@ -199,7 +199,7 @@ echo '</td>';
 	echo '</div>';
 	?>
 			<div class="form-actions pull-right">
-		<a class="btn btn-success eqLogicAction" onclick="SavePlugin()" ><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
+		<a class="btn btn-success eqLogicAction" onclick="SavePlugin()" ><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
 	</div>
 
 		<?php

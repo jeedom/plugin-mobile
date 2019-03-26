@@ -27,7 +27,7 @@ sendVarToJS('scenario', $_GET['scenario_id']);
 	<?php
 	echo "<div><center>";
 	echo '<img src="core/img/scenario.png" height="90" width="85" />';
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $scenario->getHumanName(true, true, true, true) . '</center></span>';
+	echo '<span><center>' . $scenario->getHumanName(true, true, true, true) . '</center></span>';
 	echo "</center></div><br/>";
 	echo '<div class="EnregistrementDisplay"></div>';
 	echo '<div class="alert alert-info div_scenario_configuration" role="alert">';
@@ -42,7 +42,7 @@ sendVarToJS('scenario', $_GET['scenario_id']);
 		echo '</div>';
 ?>
 <div class="form-actions pull-right">
-		<a class="btn btn-success" id="bt_saveScenario"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
+		<a class="btn btn-success" id="bt_saveScenario"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
 	</div>
 </div>
 

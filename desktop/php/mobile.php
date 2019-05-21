@@ -47,7 +47,7 @@ foreach ($eqLogics as $eqLogic) {
       </center>
       <span ><center>{{Configuration}}</center></span>
     </div>
-    <div class="cursor" id="bt_healthmobile"  >
+    <div class="cursor logoSecondary" id="bt_healthmobile"  >
       <center>
         <i class="fas fa-medkit"></i>
       </center>

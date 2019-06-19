@@ -150,13 +150,9 @@ $tableau_cmd = array();
 			?><select class="cmdAttr form-control" data-l1key="generic_type" data-cmd_id="<?php echo $cmd->getId(); ?>">
              <option value="">{{Aucun}}</option>
              <?php
-$groups = array();
+			$groups = array();
 			foreach (jeedom::getConfiguration('cmd::generic_type') as $key => $info) {
-				if ($cmd->getType() == 'info' && $info['type'] == 'Action') {
-					continue;
-				} elseif ($cmd->getType() == 'action' && $info['type'] == 'Info') {
-					continue;
-				} elseif (isset($info['ignore']) && $info['ignore'] == true) {
+				if (strtolower($cmd->getType()) != strtolower($info['type'])) {
 					continue;
 				}
 				$info['key'] = $key;
@@ -175,11 +171,11 @@ $groups = array();
 					if ($key == 0) {
 						echo '<optgroup label="{{' . $info['family'] . '}}">';
 					}
-					if ($info['key'] == $cmd->getGeneric_type()) {
-						echo '<option value="' . $info['key'] . '" selected>' . $info['type'] . ' / ' . $info['name'] . '</option>';
-					} else {
-						echo '<option value="' . $info['key'] . '">' . $info['type'] . ' / ' . $info['name'] . '</option>';
+					$name = $info['name'];
+					if (isset($info['noapp']) && $info['noapp']) {
+						$name .= ' (Non géré par Application Mobile)';
 					}
+					echo '<option value="' . $info['key'] . '">' . $name . '</option>';
 				}
 				echo '</optgroup>';
 			}

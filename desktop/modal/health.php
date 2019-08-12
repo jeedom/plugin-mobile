@@ -43,11 +43,19 @@ foreach ($eqLogics as $eqLogic) {
 		$img = '<img src="' . $path . '" height="55" width="55" />';
 	}
 	$userId = $eqLogic->getConfiguration('affect_user');
-	$username = user::byId($userId)->getLogin();
-	echo '<tr><td>' . $img . '</td><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';
-	echo '<td><span class="label label-info" style="font-size : 1em;">' . $eqLogic->getId() . '</span></td>';
-	echo '<td><span class="label label-info" style="font-size : 1em;">' . $username . '</span></td>';
-	echo '<td><span class="label label-info" style="font-size : 1em;">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';
+	$userType = user::byId($userId);
+	if(is_object($userType)){
+		$username = $userType->getLogin();
+		echo '<tr><td>' . $img . '</td><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';
+		echo '<td><span class="label label-info" style="font-size : 1em;">' . $eqLogic->getId() . '</span></td>';
+		echo '<td><span class="label label-info" style="font-size : 1em;">' . $username . '</span></td>';
+		echo '<td><span class="label label-info" style="font-size : 1em;">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';
+	}else{
+		echo '<tr><td>' . $img . '</td><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';
+		echo '<td><span class="label label-info" style="font-size : 1em;">' . $eqLogic->getId() . '</span></td>';
+		echo '<td><span class="label label-info" style="font-size : 1em;">{{Utilisateur non trouvé}}</span></td>';
+		echo '<td><span class="label label-info" style="font-size : 1em;">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';
+	}
 }
 ?>
 	</tbody>

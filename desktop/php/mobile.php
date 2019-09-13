@@ -10,21 +10,6 @@ $plugin_compatible = mobile::$_pluginSuported;
 $plugin_widget = mobile::$_pluginWidget;
 ?>
 <div class="row row-overflow">
-  <div class="col-lg-2 col-md-3 col-sm-4">
-    <div class="bs-sidebar">
-      <ul id="ul_eqLogic" class="nav nav-list bs-sidenav">
-        <a class="btn btn-default eqLogicAction" style="width : 100%;margin-top : 5px;margin-bottom: 5px;" data-action="add"><i class="fas fa-plus-circle"></i> {{Ajouter un mobile}}</a>
-        <li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/></li>
-        <?php
-foreach ($eqLogics as $eqLogic) {
-	echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
-}
-?>
-     </ul>
-   </div>
- </div>
-
- <div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
   <a class="btn btn-default pull-right" id="bt_regenConfig"><i class="fas fa-cogs"></i> {{Regenerer configuration}}</a>
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Equipements}}</a></li>
@@ -35,42 +20,40 @@ foreach ($eqLogics as $eqLogic) {
    <div role="tabpanel" class="tab-pane active" id="eqlogictab">
      <legend><i class="fas fa-cog"></i>  {{Gestion}}</legend>
      <div class="eqLogicThumbnailContainer">
-      <div class="cursor eqLogicAction logoPrimary" data-action="add"  >
-       <center>
+      <div class="cursor eqLogicAction logoPrimary" data-action="add">
         <i class="fas fa-plus-circle"></i>
-      </center>
-      <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>Ajouter</center></span>
+        <br>
+        <span>{{Ajouter}}</span>
     </div>
-    <div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf" >
-      <center>
-        <i class="fas fa-wrench"></i>
-      </center>
-      <span ><center>{{Configuration}}</center></span>
-    </div>
-    <div class="cursor logoSecondary" id="bt_healthmobile"  >
-      <center>
-        <i class="fas fa-medkit"></i>
-      </center>
-      <span ><center>{{Santé}}</center></span>
-    </div>
+    <div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
+      <i class="fas fa-wrench"></i>
+    <br>
+    <span>{{Configuration}}</span>
+  </div>
+  <div class="cursor eqLogicAction logoSecondary" data-action="bt_healthmobile">
+      <i class="fas fa-medkit"></i>
+    <br>
+    <span>{{Santé}}</span>
+  </div>
   </div>
   <legend><i class="icon techno-listening3"></i> {{Mes Téléphones Mobiles}}</legend>
+  <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
   <div class="eqLogicThumbnailContainer">
-    <?php
+  
+  <?php
 foreach ($eqLogics as $eqLogic) {
 	$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-	echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
-	echo "<center>";
-	$file = 'plugins/mobile/docs/images/' . $eqLogic->getConfiguration('type_mobile') . '.png';
+	echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
+  	$file = 'plugins/mobile/docs/images/' . $eqLogic->getConfiguration('type_mobile') . '.png';
 	if (file_exists($file)) {
 		$path = 'plugins/mobile/docs/images/' . $eqLogic->getConfiguration('type_mobile') . '.png';
-		echo '<img src="' . $path . '" height="105" width="105" />';
+		echo '<img src="' . $path . '" />';
 	} else {
 		$path = 'plugins/mobile/docs/images/mobile_icon.png';
-		echo '<img src="' . $path . '" height="105" width="105" />';
+		echo '<img src="' . $path . '" />';
 	}
-	echo "</center>";
-	echo '<span><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
+	echo '<br>';
+	echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
 	echo '</div>';
 }
 ?>
@@ -88,7 +71,7 @@ foreach ($plugins as $plugin) {
 				$text = '<center><span class="label label-success" style="font-size : 0.9em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Il est disponible dans la liste des plugins de l\'application, il a aussi une intégration appronfondie sur le dashboard">{{Plugin Spécial}}</span></center>';
 			} else {
 				if (config::byKey('sendToApp', $plugin->getId(), 1) == 1) {
-					$text = '<center><span class="label label-info" style="font-size : 0.9em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Il est visible dans les pièces de l\'application mobile, pour certains d\'entre eux il peut être nécessaire de configurer les types génériques (virtuels, scripts etc..). Il peut être désactivé pour ne pas être transmis">{{Via Type générique}}</span></center>';
+					$text = '<center><span class="label label-info" style="font-size : 0.9em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Il est visible dans les pièces de l\'application mobile, pour certains d\'entre eux il peut être nécessaire de configurer les types génériques (virtuels, scripts etc..). Il peut être désactivé pour ne pas être transmis">{{Type générique}}</span></center>';
 				} else {
 					$text = '<center><span class="label label-danger" style="font-size : 0.9em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="N\'est pas transmis à l\'application, vous pouvez le transmettre à l\'application en l\'activant et configurant les types génériques">{{Non transmis}}</span></center>';
 					$opacity = 'opacity:0.3;';

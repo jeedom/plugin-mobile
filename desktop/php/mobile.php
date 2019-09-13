@@ -10,11 +10,10 @@ $plugin_compatible = mobile::$_pluginSuported;
 $plugin_widget = mobile::$_pluginWidget;
 ?>
 <div class="row row-overflow">
+<div class="col-xs-12 eqLogicThumbnailDisplay">
   <a class="btn btn-default pull-right" id="bt_regenConfig"><i class="fas fa-cogs"></i> {{Regenerer configuration}}</a>
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Equipements}}</a></li>
-    <li role="presentation"><a href="#plugintab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Plugins}}</a></li>
-    <li role="presentation"><a href="#objecttab" aria-controls="profile" role="tab" data-toggle="tab"><i class="icon maison-house112"></i> {{Objets / Pièces}}</a></li>
   </ul>
   <div class="tab-content">
    <div role="tabpanel" class="tab-pane active" id="eqlogictab">
@@ -25,12 +24,27 @@ $plugin_widget = mobile::$_pluginWidget;
         <br>
         <span>{{Ajouter}}</span>
     </div>
+   <div class="cursor eqLogicAction logoSecondary" data-action="bt_pluguinmobile" id="bt_pluguinmobile">
+      <i class="fas jeedomapp-plugin"></i>
+    <br>
+    <span>{{Plugins Compatibles}}</span>
+  </div>
+  <div class="cursor eqLogicAction logoSecondary" data-action="bt_piecemobile" id="bt_piecemobile">
+      <i class="fas icon jeedomapp-piece-jeedom"></i>
+    <br>
+    <span>{{Objets / Pièces}}</span>
+  </div>
+  <div class="cursor eqLogicAction logoSecondary" data-action="bt_piecemobile" id="bt_scenariomobile">
+      <i class="fas icon jeedomapp-scenario-jeedom"></i>
+    <br>
+    <span>{{Scénarios}}</span>
+  </div>
     <div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
       <i class="fas fa-wrench"></i>
     <br>
     <span>{{Configuration}}</span>
   </div>
-  <div class="cursor eqLogicAction logoSecondary" data-action="bt_healthmobile">
+  <div class="cursor eqLogicAction logoSecondary" data-action="bt_healthmobile" id="bt_healthmobile">
       <i class="fas fa-medkit"></i>
     <br>
     <span>{{Santé}}</span>
@@ -39,7 +53,7 @@ $plugin_widget = mobile::$_pluginWidget;
   <legend><i class="icon techno-listening3"></i> {{Mes Téléphones Mobiles}}</legend>
   <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
   <div class="eqLogicThumbnailContainer">
-  
+
   <?php
 foreach ($eqLogics as $eqLogic) {
 	$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
@@ -59,117 +73,11 @@ foreach ($eqLogics as $eqLogic) {
 ?>
 </div>
 </div>
-<div role="tabpanel" class="tab-pane" id="plugintab">
-  <legend><i class="fas fa-check-circle-o"></i>  {{Le(s) Plugin(s) Compatible(s)}}</legend>
-  <div class="eqLogicThumbnailContainer">
-   <?php
-foreach ($plugins as $plugin) {
-	$opacity = '';
-	if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
-		if (in_array($plugin->getId(), $plugin_compatible)) {
-			if (in_array($plugin->getId(), $plugin_widget)) {
-				$text = '<center><span class="label label-success" style="font-size : 0.9em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Il est disponible dans la liste des plugins de l\'application, il a aussi une intégration appronfondie sur le dashboard">{{Plugin Spécial}}</span></center>';
-			} else {
-				if (config::byKey('sendToApp', $plugin->getId(), 1) == 1) {
-					$text = '<center><span class="label label-info" style="font-size : 0.9em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Il est visible dans les pièces de l\'application mobile, pour certains d\'entre eux il peut être nécessaire de configurer les types génériques (virtuels, scripts etc..). Il peut être désactivé pour ne pas être transmis">{{Type générique}}</span></center>';
-				} else {
-					$text = '<center><span class="label label-danger" style="font-size : 0.9em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="N\'est pas transmis à l\'application, vous pouvez le transmettre à l\'application en l\'activant et configurant les types génériques">{{Non transmis}}</span></center>';
-					$opacity = 'opacity:0.3;';
-				}
-			}
-			echo '<div class="cursor eqLogicAction" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '">';
-			echo '<center>';
-			if (file_exists(dirname(__FILE__) . '/../../../../' . $plugin->getPathImgIcon())) {
-				echo '<img class="img-responsive" style="width : 120px;" src="' . $plugin->getPathImgIcon() . '" />';
-				echo "</center>";
-			} else {
-				echo '<i class="' . $plugin->getIcon() . '" style="font-size : 6em;margin-top:20px;"></i>';
-				echo "</center>";
-				echo '<span><center>' . $plugin->getName() . '</center></span>';
-			}
-			echo $text;
-			echo '</div>';
-		}
-	}
-}
-?>
-</div>
-<legend><i class="fas fa-times-circle-o"></i>  {{Le(s) Plugin(s) Non Testé(s)}}</legend>
-<div class="eqLogicThumbnailContainer">
- <?php
-foreach ($plugins as $plugin) {
-	$opacity = '';
-	if ($plugin->getId() != 'mobile') {
-		if (!in_array($plugin->getId(), $plugin_compatible)) {
-			if (config::byKey('sendToApp', $plugin->getId(), 0) == 1) {
-				$text = '<center><span class="label label-warning" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Vous avez activé la transmission de ce plugin en se basant sur les types génériques">{{Transmis à l\'app}}</span></center>';
-			} else {
-				$opacity = 'opacity:0.3;';
-				$text = '<center><span class="label label-danger" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="N\'est pas transmis à l\'application, vous pouvez le transmettre à l\'application en l\'activant et configurant les types génériques">{{Non transmis}}</span></center>';
-			}
-			echo '<div class="cursor eqLogicAction" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '">';
-			echo '<center>';
-			if (file_exists(dirname(__FILE__) . '/../../../../' . $plugin->getPathImgIcon())) {
-				echo '<img class="img-responsive" style="width : 120px;" src="' . $plugin->getPathImgIcon() . '" />';
-				echo "</center>";
-			} else {
-				echo '<i class="' . $plugin->getIcon() . '" style="font-size : 6em;margin-top:20px;"></i>';
-				echo "</center>";
-				echo '<span><center>' . $plugin->getName() . '</center></span>';
-			}
-			echo $text;
-			echo '</div>';
-		}
-	}
-}
-?>
-</div>
-</div>
-<div role="tabpanel" class="tab-pane" id="objecttab">
-  <legend><i class="icon maison-modern13"></i>  {{Les Pièces}}
-  </legend>
-  <div class="eqLogicThumbnailContainer">
-    <?php
-$allObject = jeeObject::buildTree(null, false);
-foreach ($allObject as $object) {
-	$opacity = '';
-	if ($object->getDisplay('sendToApp', 1) == 0) {
-		$opacity = 'opacity:0.3;';
-	}
-	echo '<div class="objectDisplayCard cursor" data-object_id="' . $object->getId() . '" onclick="clickobject(\'' . $object->getId() . '\')" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '">';
-	echo "<center>";
-	echo str_replace('></i>', ' style="font-size : 6em;color:#767676;"></i>', $object->getDisplay('icon', '<i class="fa fa-lemon-o"></i>'));
-	echo "</center>";
-	echo '<span><center>' . $object->getName() . '</center></span>';
-	echo '</div>';
-}
-?>
-</div>
-</div>
-<div role="tabpanel" class="tab-pane" id="scenariotab">
-  <legend><i class="icon jeedom-clap_cinema"></i>  {{Les Scénarios}}
-  </legend>
-  <div class="eqLogicThumbnailContainer">
-    <?php
-$allScenario = scenario::all();
-foreach ($allScenario as $scenario) {
-	$opacity = '';
-	if ($scenario->getDisplay('sendToApp', 1) == 0) {
-		$opacity = 'opacity:0.3;';
-	}
-	echo '<div class="scenarioDisplayCard cursor" data-scenario_id="' . $scenario->getId() . '" onclick="clickscenario(\'' . $scenario->getId() . '\',\'' . $scenario->getName() . '\')" style="background-color : #ffffff; height : 140px;margin-bottom : 35px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
-	echo "<center>";
-	echo '<img src="core/img/scenario.png" height="90" width="85" />';
-	echo "</center>";
-	echo '<span><center>' . $scenario->getHumanName(true, true, true, true) . '</center></span>';
-	echo '</div>';
-}
-?>
 </div>
 </div>
 </div>
-</div>
-<div class="col-lg-10 col-md-9 col-sm-8 eqLogic" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
+  </div>
+<div class="col-xs-12 eqLogic" style="display: none;">
   <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}</a>
   <a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
   <a class="btn btn-info pull-right" id="info_app"><i class="fa fa-question-circle"></i> {{Infos envoyées à l'app}}</a>

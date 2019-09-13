@@ -90,7 +90,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 		mobile::makeTemplateJson();
 	}
 	$return = mobile::getTemplateJson();
-	$return['messages'] = '{}';
+	$return['messages'] = mobile::discovery_message();
 	$return['config']['datetime'] = getmicrotime();
 	$return['config']['Iq'] = $params['Iq'];
 	$return['config']['NameMobile'] = $mobile->getName();

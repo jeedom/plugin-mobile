@@ -23,70 +23,121 @@ $eqLogics = eqLogic::byType('mobile');
 $plugins = plugin::listPlugin(true);
 $plugin_compatible = mobile::$_pluginSuported;
 $plugin_widget = mobile::$_pluginWidget;
+
 ?>
-  <legend><i class="fas fa-check-circle-o"></i>  {{Le(s) Plugin(s) Compatible(s)}}</legend>
-  <div class="eqLogicThumbnailContainer">
+
+<legend>{{Plugins Spécials Compatibles}}</legend>
+  <span class="label label-success">{{Ils sont disponibles dans la liste des plugins de l'application, ils ont aussi une intégrations appronfondies sur le dashboard de l'app}}</span>
+  <div class="pluginListContainer">
    <?php
 foreach ($plugins as $plugin) {
 	$opacity = '';
 	if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
 		if (in_array($plugin->getId(), $plugin_compatible)) {
 			if (in_array($plugin->getId(), $plugin_widget)) {
-				$text = '<center><span class="label label-success" style="font-size : 0.9em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Il est disponible dans la liste des plugins de l\'application, il a aussi une intégration appronfondie sur le dashboard">{{Plugin Spécial}}</span></center>';
-			} else {
-				if (config::byKey('sendToApp', $plugin->getId(), 1) == 1) {
-					$text = '<center><span class="label label-info" style="font-size : 0.9em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Il est visible dans les pièces de l\'application mobile, pour certains d\'entre eux il peut être nécessaire de configurer les types génériques (virtuels, scripts etc..). Il peut être désactivé pour ne pas être transmis">{{Type générique}}</span></center>';
-				} else {
-					$text = '<center><span class="label label-danger" style="font-size : 0.9em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="N\'est pas transmis à l\'application, vous pouvez le transmettre à l\'application en l\'activant et configurant les types génériques">{{Non transmis}}</span></center>';
-					$opacity = 'opacity:0.3;';
-				}
-			}
-			echo '<div class="cursor eqLogicAction" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '">';
-			echo '<center>';
-			if (file_exists(dirname(__FILE__) . '/../../../../' . $plugin->getPathImgIcon())) {
-				echo '<img class="img-responsive" style="width : 120px;" src="' . $plugin->getPathImgIcon() . '" />';
-				echo "</center>";
-			} else {
-				echo '<i class="' . $plugin->getIcon() . '" style="font-size : 6em;margin-top:20px;"></i>';
-				echo "</center>";
-				echo '<span><center>' . $plugin->getName() . '</center></span>';
-			}
-			echo $text;
-			echo '</div>';
+              echo '<div class="cursor pluginDisplayCard" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="'.$opacity.'">';
+              echo '<center>';
+              echo '<img class="img-responsive" src="' . $plugin->getPathImgIcon() . '" />';
+              echo '</center>';
+              echo '<span class="name">' . $plugin->getName() . '</span>';
+              echo '</div>';
+            }
 		}
 	}
 }
 ?>
 </div>
-<legend><i class="fas fa-times-circle-o"></i>  {{Le(s) Plugin(s) Non Testé(s)}}</legend>
-<div class="eqLogicThumbnailContainer">
- <?php
+
+<legend>{{Plugins Validés Type générique}}</legend>
+  <span class="label label-warning">{{Ils sont visibles dans les pièces de l'application mobile, pour certains d'entre eux il peut être nécessaire de configurer les types génériques (virtuels, scripts etc..). Il peut être désactivé pour ne pas être transmis}}</span>
+  <div class="pluginListContainer">
+   <?php
 foreach ($plugins as $plugin) {
 	$opacity = '';
-	if ($plugin->getId() != 'mobile') {
-		if (!in_array($plugin->getId(), $plugin_compatible)) {
-			if (config::byKey('sendToApp', $plugin->getId(), 0) == 1) {
-				$text = '<center><span class="label label-warning" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="Vous avez activé la transmission de ce plugin en se basant sur les types génériques">{{Transmis à l\'app}}</span></center>';
-			} else {
-				$opacity = 'opacity:0.3;';
-				$text = '<center><span class="label label-danger" style="font-size : 1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;" title="N\'est pas transmis à l\'application, vous pouvez le transmettre à l\'application en l\'activant et configurant les types génériques">{{Non transmis}}</span></center>';
-			}
-			echo '<div class="cursor eqLogicAction" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '">';
-			echo '<center>';
-			if (file_exists(dirname(__FILE__) . '/../../../../' . $plugin->getPathImgIcon())) {
-				echo '<img class="img-responsive" style="width : 120px;" src="' . $plugin->getPathImgIcon() . '" />';
-				echo "</center>";
-			} else {
-				echo '<i class="' . $plugin->getIcon() . '" style="font-size : 6em;margin-top:20px;"></i>';
-				echo "</center>";
-				echo '<span><center>' . $plugin->getName() . '</center></span>';
-			}
-			echo $text;
-			echo '</div>';
+	if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
+		if (in_array($plugin->getId(), $plugin_compatible)) {
+			if (config::byKey('sendToApp', $plugin->getId(), 1) == 1 && !in_array($plugin->getId(), $plugin_widget)) {
+              echo '<div class="cursor pluginDisplayCard" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="'.$opacity.'">';
+              echo '<center>';
+              echo '<img class="img-responsive" src="' . $plugin->getPathImgIcon() . '" />';
+              echo '</center>';
+              echo '<span class="name">' . $plugin->getName() . '</span>';
+              echo '</div>';
+            }
 		}
 	}
 }
 ?>
 </div>
+
+<legend>{{Plugins compatibles non transmis}}</legend>
+  <span class="label label-danger">{{N\'est pas transmis à l'application}}</span>
+  <div class="pluginListContainer">
+   <?php
+foreach ($plugins as $plugin) {
+	$opacity = '';
+	if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
+		if (in_array($plugin->getId(), $plugin_compatible)) {
+			if (config::byKey('sendToApp', $plugin->getId(), 1) != 1 && !in_array($plugin->getId(), $plugin_widget)) {
+            	$opacity = jeedom::getConfiguration('eqLogic:style:noactive');
+              echo '<div class="cursor pluginDisplayCard" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="'.$opacity.'">';
+              echo '<center>';
+              echo '<img class="img-responsive" src="' . $plugin->getPathImgIcon() . '" />';
+              echo '</center>';
+              echo '<span class="name">' . $plugin->getName() . '</span>';
+              echo '</div>';
+            }
+		}
+	}
+}
+?>
+</div>
+
+<legend>{{Plugins non testés transmis à l'application}}</legend>
+  <span class="label label-warning">{{Vous avez activé la transmission de ces plugins en se basant sur les types génériques}}</span>
+  <div class="pluginListContainer">
+   <?php
+foreach ($plugins as $plugin) {
+	$opacity = '';
+	if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
+		if (!in_array($plugin->getId(), $plugin_compatible)) {
+			if (config::byKey('sendToApp', $plugin->getId(), 0) == 1) {
+              echo '<div class="cursor pluginDisplayCard" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="'.$opacity.'">';
+              echo '<center>';
+              echo '<img class="img-responsive" src="' . $plugin->getPathImgIcon() . '" />';
+              echo '</center>';
+              echo '<span class="name">' . $plugin->getName() . '</span>';
+              echo '</div>';
+            }
+		}
+	}
+}
+?>
+</div>
+
+<legend>{{Plugins non testés et non transmis}}</legend>
+  <span class="label label-danger">{{N\'est pas transmis à l'application}}</span>
+  <div class="pluginListContainer">
+   <?php
+foreach ($plugins as $plugin) {
+	$opacity = '';
+	if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
+		if (!in_array($plugin->getId(), $plugin_compatible)) {
+			if (config::byKey('sendToApp', $plugin->getId(), 0) != 1) {
+              $opacity = jeedom::getConfiguration('eqLogic:style:noactive');
+              echo '<div class="cursor pluginDisplayCard" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="'.$opacity.'">';
+              echo '<center>';
+              echo '<img class="img-responsive" src="' . $plugin->getPathImgIcon() . '" />';
+              echo '</center>';
+              echo '<span class="name">' . $plugin->getName() . '</span>';
+              echo '</div>';
+            }
+		}
+	}
+}
+?>
+</div>
+
   <?php include_file('desktop', 'mobile', 'js', 'mobile');?>
   <?php include_file('core', 'plugin.template', 'js');?>
+  <?php include_file("desktop", "plugin", "js");?>

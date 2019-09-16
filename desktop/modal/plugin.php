@@ -26,10 +26,12 @@ $plugin_widget = mobile::$_pluginWidget;
 
 ?>
 
-<legend>{{Plugins Spécials Compatibles}}</legend>
-  <span class="label label-success">{{Ils sont disponibles dans la liste des plugins de l'application, ils ont aussi une intégrations appronfondies sur le dashboard de l'app}}</span>
+<legend class="pluspecial">{{Plugins Spécials Compatibles}}
+<sup><i class="fas fa-question-circle tooltipstered" tooltip="{{Ils sont disponibles dans la liste des plugins de l'application, ils ont aussi une intégrations appronfondies sur le dashboard de l'app}}"></i></sup>
+  </legend>
   <div class="pluginListContainer">
    <?php
+  $num = 0;
 foreach ($plugins as $plugin) {
 	$opacity = '';
 	if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
@@ -41,17 +43,21 @@ foreach ($plugins as $plugin) {
               echo '</center>';
               echo '<span class="name">' . $plugin->getName() . '</span>';
               echo '</div>';
+              $num++;
             }
 		}
 	}
 }
+if($num == 0){ echo '<style>.pluspecial { Display:None; }</style>';}
 ?>
 </div>
 
-<legend>{{Plugins Validés Type générique}}</legend>
-  <span class="label label-warning">{{Ils sont visibles dans les pièces de l'application mobile, pour certains d'entre eux il peut être nécessaire de configurer les types génériques (virtuels, scripts etc..). Il peut être désactivé pour ne pas être transmis}}</span>
+<legend class="pluvaltg">{{Plugins Validés Type générique}}
+<sup><i class="fas fa-question-circle tooltipstered" tooltip="{{Ils sont visibles dans les pièces de l'application mobile, pour certains d'entre eux il peut être nécessaire de configurer les types génériques (virtuels, scripts etc..). Il peut être désactivé pour ne pas être transmis}}"></i></sup>
+</legend>
   <div class="pluginListContainer">
    <?php
+  $num = 0;
 foreach ($plugins as $plugin) {
 	$opacity = '';
 	if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
@@ -63,17 +69,21 @@ foreach ($plugins as $plugin) {
               echo '</center>';
               echo '<span class="name">' . $plugin->getName() . '</span>';
               echo '</div>';
+              $num++;
             }
 		}
 	}
 }
+if($num == 0){ echo '<style>.pluvaltg { Display:None; }</style>';}
 ?>
 </div>
 
-<legend>{{Plugins compatibles non transmis}}</legend>
-  <span class="label label-danger">{{N\'est pas transmis à l'application}}</span>
+<legend class="plucomnontran">{{Plugins compatibles non transmis}}
+<sup><i class="fas fa-question-circle tooltipstered" tooltip="{{N\'est pas transmis à l'application}}"></i></sup>
+</legend>
   <div class="pluginListContainer">
    <?php
+  $num = 0;
 foreach ($plugins as $plugin) {
 	$opacity = '';
 	if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
@@ -86,17 +96,21 @@ foreach ($plugins as $plugin) {
               echo '</center>';
               echo '<span class="name">' . $plugin->getName() . '</span>';
               echo '</div>';
+              $num++;
             }
 		}
 	}
 }
+if($num == 0){ echo '<style>.plucomnontran { Display:None; }</style>';}
 ?>
 </div>
 
-<legend>{{Plugins non testés transmis à l'application}}</legend>
-  <span class="label label-warning">{{Vous avez activé la transmission de ces plugins en se basant sur les types génériques}}</span>
+<legend class="plunontestran">{{Plugins non testés transmis à l'application}}
+<sup><i class="fas fa-question-circle tooltipstered" tooltip="{{Vous avez activé la transmission de ces plugins en se basant sur les types génériques}}"></i></sup>
+</legend>
   <div class="pluginListContainer">
    <?php
+   $num = 0;
 foreach ($plugins as $plugin) {
 	$opacity = '';
 	if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
@@ -108,17 +122,21 @@ foreach ($plugins as $plugin) {
               echo '</center>';
               echo '<span class="name">' . $plugin->getName() . '</span>';
               echo '</div>';
+              $num++;
             }
 		}
 	}
 }
+if($num == 0){ echo '<style>.plunontestran { Display:None; }</style>';}
 ?>
 </div>
 
-<legend>{{Plugins non testés et non transmis}}</legend>
-  <span class="label label-danger">{{N\'est pas transmis à l'application}}</span>
+<legend class="plugnontestetnontrans">{{Plugins non testés et non transmis}}
+<sup><i class="fas fa-question-circle tooltipstered" tooltip="{{N\'est pas transmis à l'application}}"></i></sup>
+</legend>
   <div class="pluginListContainer">
    <?php
+   $num = 0;
 foreach ($plugins as $plugin) {
 	$opacity = '';
 	if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
@@ -131,13 +149,16 @@ foreach ($plugins as $plugin) {
               echo '</center>';
               echo '<span class="name">' . $plugin->getName() . '</span>';
               echo '</div>';
+              $num++;
             }
 		}
 	}
 }
+if($num == 0){ echo '<style>.plugnontestetnontrans { Display:None; }</style>';}
 ?>
 </div>
 
   <?php include_file('desktop', 'mobile', 'js', 'mobile');?>
   <?php include_file('core', 'plugin.template', 'js');?>
   <?php include_file("desktop", "plugin", "js");?>
+  <?php include_file("desktop", "utils", "js");?>

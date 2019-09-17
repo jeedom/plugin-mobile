@@ -11,12 +11,6 @@ $plugin_widget = mobile::$_pluginWidget;
 ?>
 <div class="row row-overflow">
 <div class="col-xs-12 eqLogicThumbnailDisplay">
-  <a class="btn btn-default pull-right" id="bt_regenConfig"><i class="fas fa-cogs"></i> {{Regenerer configuration}}</a>
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Equipements}}</a></li>
-  </ul>
-  <div class="tab-content">
-   <div role="tabpanel" class="tab-pane active" id="eqlogictab">
      <legend><i class="fas fa-cog"></i>  {{Gestion}}</legend>
      <div class="eqLogicThumbnailContainer">
       <div class="cursor eqLogicAction logoPrimary" data-action="add">
@@ -49,6 +43,11 @@ $plugin_widget = mobile::$_pluginWidget;
     <br>
     <span>{{Santé}}</span>
   </div>
+  <div class="cursor eqLogicAction logoSecondary" data-action="bt_regenConfig" id="bt_regenConfig">
+      <i class="fas fa-cogs"></i>
+    <br>
+    <span>{{Regenerer configuration}}</span>
+  </div>
   </div>
   <legend><i class="icon techno-listening3"></i> {{Mes Téléphones Mobiles}}</legend>
   <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
@@ -71,8 +70,6 @@ foreach ($eqLogics as $eqLogic) {
 	echo '</div>';
 }
 ?>
-</div>
-</div>
 </div>
 </div>
 </div>

@@ -1,219 +1,185 @@
-<?php
-ini_set('display_errors', 0);
-if (!isConnect('admin')) {
-	throw new Exception('{{401 - Accès non autorisé}}');
-}
-sendVarToJS('eqType', 'mobile');
-$eqLogics = eqLogic::byType('mobile');
-$plugins = plugin::listPlugin(true);
-$plugin_compatible = mobile::$_pluginSuported;
-$plugin_widget = mobile::$_pluginWidget;
-?>
-<div class="row row-overflow">
-<div class="col-xs-12 eqLogicThumbnailDisplay">
-     <legend><i class="fas fa-cog"></i>  {{Gestion}}</legend>
-     <div class="eqLogicThumbnailContainer">
-      <div class="cursor eqLogicAction logoPrimary" data-action="add">
-        <i class="fas fa-plus-circle"></i>
-        <br>
-        <span>{{Ajouter}}</span>
-    </div>
-   <div class="cursor eqLogicAction logoSecondary" data-action="bt_pluguinmobile" id="bt_pluguinmobile">
-      <i class="fas jeedomapp-plugin"></i>
-    <br>
-    <span>{{Plugins Compatibles}}</span>
-  </div>
-  <div class="cursor eqLogicAction logoSecondary" data-action="bt_piecemobile" id="bt_piecemobile">
-      <i class="fas icon jeedomapp-piece-jeedom"></i>
-    <br>
-    <span>{{Objets / Pièces}}</span>
-  </div>
-  <div class="cursor eqLogicAction logoSecondary" data-action="bt_piecemobile" id="bt_scenariomobile">
-      <i class="fas icon jeedomapp-scenario-jeedom"></i>
-    <br>
-    <span>{{Scénarios}}</span>
-  </div>
-    <div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
-      <i class="fas fa-wrench"></i>
-    <br>
-    <span>{{Configuration}}</span>
-  </div>
-  <div class="cursor eqLogicAction logoSecondary" data-action="bt_healthmobile" id="bt_healthmobile">
-      <i class="fas fa-medkit"></i>
-    <br>
-    <span>{{Santé}}</span>
-  </div>
-   <div class="cursor eqLogicAction logoSecondary" data-action="bt_regenConfig" id="bt_regenConfig">
-      <i class="fas fa-cogs"></i>
-    <br>
-    <span>{{Regenerer configuration}}</span>
-  </div>
-  </div>
-  <legend><i class="icon techno-listening3"></i> {{Mes Téléphones Mobiles}}</legend>
-  <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
-  <div class="eqLogicThumbnailContainer">
 
-  <?php
-foreach ($eqLogics as $eqLogic) {
-	$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-	echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
-  	$file = 'plugins/mobile/docs/images/' . $eqLogic->getConfiguration('type_mobile') . '.png';
-	if (file_exists($file)) {
-		$path = 'plugins/mobile/docs/images/' . $eqLogic->getConfiguration('type_mobile') . '.png';
-		echo '<img src="' . $path . '" />';
-	} else {
-		$path = 'plugins/mobile/docs/images/mobile_icon.png';
-		echo '<img src="' . $path . '" />';
-	}
-	echo '<br>';
-	echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
-	echo '</div>';
-}
-?>
-</div>
-</div>
-</div>
-  </div>
-<div class="col-xs-12 eqLogic" style="display: none;">
-  <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}</a>
-  <a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
-  <a class="btn btn-info pull-right" id="info_app"><i class="fa fa-question-circle"></i> {{Infos envoyées à l'app}}</a>
-  <a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fas fa-cogs"></i> {{Configuration avancée}}</a>
-  <ul class="nav nav-tabs" role="tablist">
-   <li role="presentation"><a class="eqLogicAction cursor" aria-controls="home" role="tab" data-action="returnToThumbnailDisplay"><i class="fas fa-arrow-circle-left"></i></a></li>
-   <li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Mobile}}</a></li>
-   <li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Notifications}}</a></li>
-   <li role="presentation"><a href="#sauvegardetab" aria-controls="sauvegarde" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Sauvegarde Mobile}}</a></li>
- </ul>
- <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
-  <div role="tabpanel" class="tab-pane active" id="eqlogictabin">
-    <div class="row">
-      <div class="col-lg-6">
-        <form class="form-horizontal">
-          <fieldset>
-            <legend><i class="fa fa-arrow-circle-left eqLogicAction cursor" data-action="returnToThumbnailDisplay"></i> {{Général}}</legend>
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{Nom de l'équipement mobile}}</label>
-              <div class="col-sm-4">
-                <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
-                <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement template}}"/>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label" >{{Objet parent}}</label>
-              <div class="col-sm-4">
-                <select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
-                  <option value="">{{Aucun}}</option>
-                  <?php
-foreach (jeeObject::all() as $object) {
-	echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
-}
-?>
-               </select>
-             </div>
-           </div>
-           <div class="form-group">
-             <label class="col-sm-3 control-label"></label>
-             <div class="col-sm-8">
-               <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
-               <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
-             </div>
-           </div>
-           <div class="form-group">
-            <label class="col-sm-3 control-label">{{Type de Mobile}}</label>
-            <div class="col-sm-4">
-              <select class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="type_mobile">
-               <option value="ios">{{iPhone}}</option>
-               <option value="android">{{Android}}</option>
-               <option value="windows">{{Windows (non officiel)}}</option>
-             </select>
-           </div>
-         </div>
-         <div class="form-group">
-          <label class="col-sm-3 control-label">{{Utilisateurs}}</label>
-          <div class="col-sm-4">
-            <select class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="affect_user">
-              <option value="">{{Aucun}}</option>
-              <?php
-foreach (user::all() as $user) {
-	echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
-}
-?>
-           </select>
-         </div>
-       </div>
-     </fieldset>
-   </form>
- </div>
- <div class="col-lg-6">
-  <form class="form-horizontal">
-    <fieldset>
-      <legend><i class="fa fa-qrcode"></i>  {{QRCode}}</legend>
-      <center>
-       <div class="qrCodeImg"></div>
-     </center>
-   </fieldset>
- </form>
-</div>
-</div>
-</div>
-<div role="tabpanel" class="tab-pane" id="notificationtab">
-  <form class="form-horizontal">
-   <fieldset>
-    <legend><i class="fa fa-qrcode"></i>  {{Notifications Infos}}</legend>
-    <form class="form-horizontal">
-      <fieldset>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">{{Id Mobile :}}</label>
-          <div class="col-sm-7">
-           <input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="{{Iq}}" disabled/>
-         </div>
-       </div>
-       <div class="form-group">
-         <label class="col-sm-2 control-label">{{ARN Mobile :}}</label>
-         <div class="col-sm-7">
-           <input type="text" id="arnComplet" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notificationArn" placeholder="{{ARN}}" disabled/>
-         </div>
-       </div>
-       <div class="form-group">
-         <label class="col-sm-2 control-label">{{ARN pour Monitoring :}}</label>
-         <div class="col-sm-7">
-           <input type="text" id="to-copy-monitoring" class="eqLogicAttr form-control" placeholder="{{ARN pour Monitoring}}" disabled/>
-           <button class="btn btn-info eqLogicAction pull-right" id="copy-monitoring" type="button">{{Copier pour Monitoring}}</button>
-         </div>
-       </div>
-     </fieldset>
-   </form>
- </div>
- <div role="tabpanel" class="tab-pane" id="sauvegardetab">
-  <form class="form-horizontal">
-   <fieldset>
-    <legend><i class="fa fa-qrcode"></i>  {{Sauvegarde et Dashboard}}</legend>
-    <form class="form-horizontal">
-      <fieldset>
-       <div class="form-group">
-        <label class="col-sm-2 control-label">{{Sauvegarde Dashboard :}}</label>
-        <div class="col-sm-7">
-         <span id="SaveDash" class="badge">{{Vérification en Cours}}</span>
-       </div>
-     </div>
-     <div class="form-group">
-      <label class="col-sm-2 control-label">{{Sauvegarde Favoris :}}</label>
-      <div class="col-sm-7">
-       <span id="SaveFav" class="badge">{{Vérification en Cours}}</span>
-     </div>
-   </div>
- </fieldset>
-</form>
-</div>
-<div role="tabpanel" class="tab-pane" id="commandtab">
- <div class="row">
-   <div class="col-lg-6">
+/* This file is part of Jeedom.
+ *
+ * Jeedom is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jeedom is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
+ */
+ $('#bt_healthmobile').on('click', function () {
+    $('#md_modal').dialog({title: "{{Santé Mobile}}"});
+    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=health').dialog('open');
+})
+ $('#bt_pluguinmobile').on('click', function () {
+    $('#md_modal').dialog({title: "{{Plugins compatibles}}"});
+    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin').dialog('open');
+})
+ $('#bt_piecemobile').on('click', function () {
+    $('#md_modal').dialog({title: "{{Objets / Pièces}}"});
+    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=piece').dialog('open');
+})
+ $('#bt_scenariomobile').on('click', function () {
+    $('#md_modal').dialog({title: "{{Scénarios}}"});
+    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=scenario').dialog('open');
+})
+ $('#info_app').on('click', function(){
+     $('#md_modal').dialog({title: "{{Informations envoyées à l'app}}"});
+     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=info_app.mobile').dialog('open');
+ })
+ function clickplugin(id_plugin,name_plugin){
+     $('#md_modal').dialog({title: "{{Configuration Mobile du Plugin "+name_plugin+"}}"});
+     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin.mobile&plugin_id=' +id_plugin).dialog('open');
+ }
 
-   </div>
- </div>
-</div>
-</div>
-</div>
-<?php include_file('desktop', 'mobile', 'js', 'mobile');?>
-<?php include_file('core', 'plugin.template', 'js');?>
+ function clickobject(id_object){
+   $('#md_modal').dialog({title: "{{Configuration Mobile de la Pièce}}"});
+   $('#md_modal').load('index.php?v=d&plugin=mobile&modal=object.mobile&object_id=' +id_object).dialog('open');
+}
+
+function clickscenario(id_scenario,name_scenario){
+	$('#md_modal').dialog({title: "{{Configuration Mobile du Scnéario "+name_scenario+"}}"});
+    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=scenario.mobile&scenario_id=' +id_scenario).dialog('open');
+}
+
+$('li').click(function(){
+  setTimeout(function(){
+      $('.eqLogicThumbnailContainer').packery();
+  },50);
+});
+var hash = document.location.hash;
+if (hash) {
+    $('.nav-tabs a[href="'+hash+'"]').tab('show');
+}
+$('.nav-tabs a').on('shown.bs.tab', function (e) {
+    window.location.hash = e.target.hash;
+});
+/*
+ * Fonction pour l'ajout de commande, appellé automatiquement par plugin.template
+ */
+
+ function printEqLogic(_eqLogic){
+    $.ajax({
+        type: "POST",
+        url: "plugins/mobile/core/ajax/mobile.ajax.php",
+        data: {
+            action: "getQrCode",
+            id: _eqLogic.id,
+        },
+        dataType: 'json',
+        global: false,
+        error: function (request, status, error) {
+            handleAjaxError(request, status, error);
+        },
+        success: function (data) {
+            if (data.state != 'ok') {
+                $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                return;
+            }
+            if (data.result == 'internalError') {
+              $('.qrCodeImg').empty().append('{{Erreur Pas d\'adresse interne (voir configuration de votre Jeedom !)}}');
+          }else if(data.result == 'externalError'){
+              $('.qrCodeImg').empty().append('{{Erreur Pas d\'adresse externe (voir configuration de votre Jeedom !)}}');
+          }else if(data.result == 'UserError'){
+              $('.qrCodeImg').empty().append('{{Erreur Pas d\'utilisateur selectionné}}');
+          }else{
+              $('.qrCodeImg').empty().append('<img src='+data.result+' />');
+          }
+      }
+  });
+  $.ajax({
+        type: "POST",
+        url: "plugins/mobile/core/ajax/mobile.ajax.php",
+        data: {
+            action: "getSaveDashboard",
+            iq: _eqLogic.logicalId,
+        },
+        dataType: 'json',
+        global: false,
+        error: function (request, status, error) {
+            handleAjaxError(request, status, error);
+        },
+        success: function (data) {
+            if (data.state != 'ok') {
+                $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                return;
+            }
+          	if (data.result == true) {
+              $('#SaveDash').addClass('badge-success');
+			  $('#SaveDash').text('OK');
+          	}else if(data.result == false){
+              $('#SaveDash').addClass('badge-danger');
+			  $('#SaveDash').text('NOK');
+          	}
+      }
+  });
+  $.ajax({
+        type: "POST",
+        url: "plugins/mobile/core/ajax/mobile.ajax.php",
+        data: {
+            action: "getSaveFavDash",
+            iq: _eqLogic.logicalId,
+        },
+        dataType: 'json',
+        global: false,
+        error: function (request, status, error) {
+            handleAjaxError(request, status, error);
+        },
+        success: function (data) {
+            if (data.state != 'ok') {
+                $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                return;
+            }
+          	if (data.result == true) {
+              $('#SaveFav').addClass('badge-success');
+			  $('#SaveFav').text('OK');
+          	}else if(data.result == false){
+              $('#SaveFav').addClass('badge-danger');
+			  $('#SaveFav').text('NOK');
+          	}
+      }
+  });
+}
+
+
+$('#bt_regenConfig').on('click',function(){
+    $.ajax({
+        type: "POST",
+        url: "plugins/mobile/core/ajax/mobile.ajax.php",
+        data: {
+            action: "regenConfig"
+        },
+        dataType: 'json',
+        error: function (request, status, error) {
+            handleAjaxError(request, status, error);
+        },
+        success: function (data) {
+            if (data.state != 'ok') {
+                $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                return;
+            }
+            $('#div_alert').showAlert({message: '{{Configuration mise à jour}}', level: 'success'});
+        }
+    });
+});
+
+// Copie pour monitoring
+var toCopy  = document.getElementById( 'to-copy-monitoring' ),
+	arnComplet = document.getElementById( 'arnComplet' ),
+    btnCopy = document.getElementById( 'copy-monitoring' );
+
+btnCopy.addEventListener( 'click', function(){
+	var fichier = arnComplet.value;
+	var fichierCouper = fichier.substr(44);
+    toCopy.value = fichierCouper;
+	toCopy.select();
+	document.execCommand( 'copy' );
+	return false;
+} );

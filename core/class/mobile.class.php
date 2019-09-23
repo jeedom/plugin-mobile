@@ -344,6 +344,14 @@ class mobile extends eqLogic {
 					unset($object['display']['icon']);
 				} else {
 					$object['display']['icon'] = str_replace(array('<i class="', '"></i>'), '', $object['display']['icon']);
+                  	$tableEx = array();
+                  	$explodes = explode(' ', $object['display']['icon']);
+                  	foreach ($explodes as $explode){
+                    	if(substr($explode, 0, 5) != 'icon_'){
+                          $tableEx[] = $explode;
+                        }
+                    }
+                  	$object['display']['icon'] = implode(' ', $tableEx);
 				}
 			}
 			$return[] = $object;
@@ -609,4 +617,5 @@ class mobileCmd extends cmd {
 }
 
 ?>
+
 

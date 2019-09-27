@@ -49,7 +49,7 @@ sendVarToJS('object', $_GET['object_id']);
 </div>
 
 <div class="col-lg-12 col-md-12 col-sm-12 eqLogicPluginDisplay" >
-<legend><i class="fa fa-building"></i>  {{Type Générique de l\'objet}}
+<legend><i class="fa fa-building"></i>  {{Type Générique de l'objet}}
 	<a class="btn btn-sm btn-success pull-right"  onclick="SaveObject()"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
 </legend>
 

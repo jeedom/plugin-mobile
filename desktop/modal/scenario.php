@@ -31,7 +31,7 @@ if (!isConnect('admin')) {
 			<tr>
 				<th>{{ID}}</th>
 				<th>{{Scénario}}</th>
-				<th data-sorter="checkbox" data-filter="false">{{Visible dans l'app}}</th>
+				<th data-sorter="checkbox" data-filter="false">{{Transmis}}</th>
 				<!--<th data-sorter="false" data-filter="false">{{Actions}}</th>-->
 			</tr>
 		</thead>
@@ -59,7 +59,7 @@ if (!isConnect('admin')) {
 <script>
 	initTableSorter()
 	var tableScSummary = $('#table_scenarioSummary')
-	tableScSummary[0].config.widgetOptions.resizable_widths = ['60px', '', '150px']
+	tableScSummary[0].config.widgetOptions.resizable_widths = ['60px', '', '100px']
 	tableScSummary.trigger('applyWidgets')
 	tableScSummary.trigger('resizableReset')
 	tableScSummary.trigger('sorton', [[[1,0]]])

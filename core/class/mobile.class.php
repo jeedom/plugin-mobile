@@ -388,7 +388,8 @@ class mobile extends eqLogic {
 	}
 
 	public static function discovery_message() {
-		return utils::o2a(message::all());
+		//return utils::o2a(message::all());
+		 return array();
 	}
 
 	public static function discovery_plan() {

@@ -372,6 +372,9 @@ class mobile extends eqLogic {
 			if (isset($scenario['display']['sendToApp']) && $scenario['display']['sendToApp'] == "0") {
 				continue;
 			}
+			if (!isset($scenario['display']['sendToApp'])) {
+				continue;
+			}
 			if ($scenario['display']['name'] != '') {
 				$scenario['name'] = $scenario['display']['name'];
 			}

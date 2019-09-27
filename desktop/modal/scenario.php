@@ -15,125 +15,97 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
+ini_set('display_errors', 0);
 if (!isConnect('admin')) {
-	throw new Exception('401 Unauthorized');
+	throw new Exception('{{401 - Accès non autorisé}}');
 }
-sendVarToJS('eqType', 'mobile');
-$eqLogics = eqLogic::byType('mobile');
-$plugins = plugin::listPlugin(true);
-$plugin_compatible = mobile::$_pluginSuported;
-$plugin_widget = mobile::$_pluginWidget;
-
-$scenarios = array();
-$totalScenario = scenario::all();
-$scenarios[-1] = scenario::all(null);
-$scenarioListGroup = scenario::listGroup();
-if (is_array($scenarioListGroup)) {
-	foreach ($scenarioListGroup as $group) {
-		$scenarios[$group['group']] = scenario::all($group['group']);
-	}
-}
-
 ?>
+<div class="col-lg-12 col-md-12 col-sm-12 eqLogicPluginDisplay" >
+<legend><i class="fas fa-cogs"></i>  {{Scénarios}}
+	<!--<a id="bt_saveScenarios" class="btn btn-sm btn-success pull-right" ><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>-->
+</legend>
 
-  <legend><i class="icon jeedom-clap_cinema"></i>  {{Mes scénarios}}</legend>
-  <span id="span_ongoing" class="label label-warning">{{Attention, seul les scénarios visibles dans le dashboard, sont visible sur l'application mobile}}</span>
-  <br />
-  <br />
-		<?php
-		if (count($totalScenario) == 0) {
-			echo "<br/><br/><br/><center><span style='color:#767676;font-size:1.2em;font-weight: bold;'>Vous n'avez encore aucun scénario. Cliquez sur ajouter pour commencer</span></center>";
+<div>
+	<table id="table_scenarioSummary" class="table table-bordered table-condensed tablesorter" >
+		<thead>
+			<tr>
+				<th>{{ID}}</th>
+				<th>{{Scénario}}</th>
+				<th data-sorter="checkbox" data-filter="false">{{Visible dans l'app}}</th>
+				<!--<th data-sorter="false" data-filter="false">{{Actions}}</th>-->
+			</tr>
+		</thead>
+		<tbody>
+			<?php
+				$scenarios = scenario::all();
+				foreach ($scenarios as $scenario){
+					$check = 'unchecked';
+					$scenario_id = $scenario->getId();
+                  	if($scenario->getDisplay('sendToApp', 0) == 1){
+                      $check = 'checked';
+                    }
+					$tr = '<tr data-id="' .$scenario_id.'"><td>'.$scenario_id.'</td>';
+					$tr .= '<td>'.$scenario->getHumanName().'</td>';
+					$tr .= '<td><label><input type="checkbox" class="configuration sendtoapp" value="'.$scenario_id.'" '.$check.' title="{{Envoyer à l\'application}}"/></label></td>';
+					/*$tr .= '<td><a class="btn btn-xs btn-success bt_saveScenario"><i class="fas fa-save"></i></a>';*/
+					$tr .= '</tr>';
+					echo $tr;
+				 }  
+			?>
+		</tbody>
+	</table>
+</div>
+
+<script>
+	initTableSorter()
+	var tableScSummary = $('#table_scenarioSummary')
+	tableScSummary[0].config.widgetOptions.resizable_widths = ['60px', '', '150px']
+	tableScSummary.trigger('applyWidgets')
+	tableScSummary.trigger('resizableReset')
+	tableScSummary.trigger('sorton', [[[1,0]]])
+
+    /*$('#bt_saveScenarios').off('click').on('click', function () {
+      console.log('save all scenarios')
+	  $('#table_scenarioSummary tbody tr').each(function(){
+        var scID = $(this).attr('data-id')
+        var scState = $(this).find('input.ScenarioAttr').is(':checked')
+        console.log(scID + ' -> ' + scState)
+      })
+    })
+
+    $('.bt_saveScenario').off('click').on('click', function () {
+      var scID = $(this).closest('tr').attr('data-id')
+      var scState = $(this).closest('tr').find('input.ScenarioAttr').is(':checked')
+      console.log(scID + ' -> ' + scState)
+
+    })*/
+              
+    $('.sendtoapp').click( function() {
+      	idScenario = $(this).val();
+        if( $(this).is(':checked') ){
+    		sendApp = 1;
 		} else {
-			$div = '<div class="input-group" style="margin-bottom:5px;">';
-			$div .= '<input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchScenario"/>';
-			$div .= '<div class="input-group-btn">';
-			$div .= '<a id="bt_resetScenarioSearch" class="btn" style="width:30px"><i class="fas fa-times"></i></a>';
-			$div .= '<a class="btn" id="bt_openAll"><i class="fas fa-folder-open"></i></a>';
-			$div .= '<a class="btn roundedRight" id="bt_closeAll"><i class="fas fa-folder"></i></a>';
-			$div .= '</div>';
-			$div .= '</div>';
-			$div .= '<div class="panel-group" id="accordionScenario">';
-			if (count($scenarios[-1]) > 0) {
-				$div .= '<div class="panel panel-default">';
-				$div .= '<div class="panel-heading">';
-				$div .= '<h3 class="panel-title">';
-				$div .= '<a class="accordion-toggle" data-toggle="collapse" data-parent="" aria-expanded="false" href="#config_none">Aucun - ';
-				$c = count($scenarios[-1]);
-				$div .= $c. ($c > 1 ? ' scénarios' : ' scénario').'</a>';
-				$div .= '</h3>';
-				$div .= '</div>';
-				$div .= '<div id="config_none" class="panel-collapse collapse">';
-				$div .= '<div class="panel-body">';
-				$div .= '<div class="scenarioListContainer">';
-				foreach ($scenarios[-1] as $scenario) {
-					$opacity = ($scenario->getIsActive()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
-                  	if($opacity !== jeedom::getConfiguration('eqLogic:style:noactive')){
-                  		$opacity = ($scenario->getIsVisible()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
-                    }
-					$div .= '<div class="scenarioDisplayCard cursor" data-scenario_id="' . $scenario->getId() . '" style="' . $opacity . '" >';
-					if($scenario->getDisplay('icon') != ''){
-						$div .= '<span>'.$scenario->getDisplay('icon').'</span>';
-					}else{
-						$div .= '<span><i class="icon noicon jeedom-clap_cinema"></i></span>';
-					}
-					$div .= "<br>";
-					$div .= '<span class="name">' . $scenario->getHumanName(true, true, true, true) . '</span>';
-					$div .= '</div>';
-				}
-				$div .= '</div>';
-				$div .= '</div>';
-				$div .= '</div>';
-				$div .= '</div>';
-			}
-			echo $div;
-			$i = 0;
-			$div = '';
-			foreach ($scenarioListGroup as $group) {
-				if ($group['group'] == '') {
-					continue;
-				}
-				$div .= '<div class="panel panel-default">';
-				$div .= '<div class="panel-heading">';
-				$div .= '<h3 class="panel-title">';
-				$div .= '<a class="accordion-toggle" data-toggle="collapse" data-parent="" aria-expanded="false" href="#config_' . $i . '">' . $group['group'] . ' - ';
-				$c = count($scenarios[$group['group']]);
-				$div .= $c. ($c > 1 ? ' scénarios' : ' scénario').'</a>';
-				$div .= '</h3>';
-				$div .= '</div>';
-				$div .= '<div id="config_' . $i . '" class="panel-collapse collapse">';
-				$div .= '<div class="panel-body">';
-				$div .= '<div class="scenarioListContainer">';
-				foreach ($scenarios[$group['group']] as $scenario) {
-					$opacity = ($scenario->getIsActive()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
-                  	if($opacity !== jeedom::getConfiguration('eqLogic:style:noactive')){
-                  		$opacity = ($scenario->getIsVisible()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
-                    }
-					$div .= '<div class="scenarioDisplayCard cursor" data-scenario_id="' . $scenario->getId() . '" style="' . $opacity . '" >';
-					if($scenario->getDisplay('icon') != ''){
-						$div .= '<span>'.$scenario->getDisplay('icon').'</span>';
-					}else{
-						$div .= '<span><i class="icon noicon jeedom-clap_cinema"></i></span>';
-					}
-					$div .= '<br/>';
-					$div .= '<span class="name">' . $scenario->getHumanName(true, true, true, true) . '</span>';
-					$div .= '</div>';
-				}
-				$div .= '</div>';
-				$div .= '</div>';
-				$div .= '</div>';
-				$div .= '</div>';
-				$i += 1;
-			}
-			$div .= '</div>';
-			echo $div;
+    		sendApp = 0;
 		}
-		?>
-	</div>
-
-<?php
-include_file('desktop', 'mobile', 'js', 'mobile');
-include_file('core', 'plugin.template', 'js');
-include_file('3rdparty', 'jquery.sew/jquery.caretposition', 'js');
-include_file('3rdparty', 'jquery.sew/jquery.sew.min', 'js');
-include_file('desktop', 'scenario', 'js');
-?>
+        $.ajax({
+            type: "POST",
+            url: "plugins/mobile/core/ajax/mobile.ajax.php",
+            data: {
+                action: "savescenario",
+                id: idScenario,
+                valueSend : sendApp
+            },
+            dataType: 'json',
+            global: false,
+            error: function (request, status, error) {
+                handleAjaxError(request, status, error);
+            },
+            success: function (data) {
+                if (data.state != 'ok') {
+                    $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                    return;
+                }
+            }
+  		});
+    })
+</script>

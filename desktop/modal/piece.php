@@ -23,25 +23,27 @@ $eqLogics = eqLogic::byType('mobile');
 $plugins = plugin::listPlugin(true);
 $plugin_compatible = mobile::$_pluginSuported;
 $plugin_widget = mobile::$_pluginWidget;
-?>  
-<legend><i class="icon maison-modern13"></i>  {{Les Pièces}}
-  </legend>
-  <div class="eqLogicThumbnailContainer">
-    <?php
-$allObject = jeeObject::buildTree(null, false);
-foreach ($allObject as $object) {
-	$opacity = '';
-	if ($object->getDisplay('sendToApp', 1) == 0) {
-		$opacity = 'opacity:0.3;';
+?>
+
+<legend><i class="icon maison-modern13"></i>  {{Les Pièces}}</legend>
+<div class="eqLogicThumbnailContainer">
+<?php
+	$allObject = jeeObject::buildTree(null, false);
+	$_echo = '';
+	foreach ($allObject as $object) {
+		$opacity = '';
+		if ($object->getDisplay('sendToApp', 1) == 0) {
+			$opacity = 'opacity:0.3;';
+		}
+		$_echo .= '<div class="objectDisplayCard cursor" data-object_id="' . $object->getId() . '" onclick="clickobject(\'' . $object->getId() . '\')">';
+		$_echo .= $object->getDisplay('icon', '<i class="fa fa-lemon-o"></i>');
+		$_echo .= '<span><center>' . $object->getName() . '</center></span>';
+		$_echo .= '</div>';
 	}
-	echo '<div class="objectDisplayCard cursor" data-object_id="' . $object->getId() . '" onclick="clickobject(\'' . $object->getId() . '\')" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '">';
-	echo "<center>";
-	echo str_replace('></i>', ' style="font-size : 6em;color:#767676;"></i>', $object->getDisplay('icon', '<i class="fa fa-lemon-o"></i>'));
-	echo "</center>";
-	echo '<span><center>' . $object->getName() . '</center></span>';
-	echo '</div>';
-}
+	echo $_echo;
 ?>
 </div>
-  <?php include_file('desktop', 'mobile', 'js', 'mobile');?>
-  <?php include_file('core', 'plugin.template', 'js');?>
+<?php
+	include_file('desktop', 'mobile', 'js', 'mobile');
+	include_file('core', 'plugin.template', 'js');
+?>

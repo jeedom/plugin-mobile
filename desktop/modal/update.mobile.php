@@ -15,7 +15,7 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 if (!isConnect('admin')) {
-	throw new Exception('{{401 - Accés non autorisé}}');
+	throw new Exception('{{401 - AccÃ¨s non autorisÃ©}}');
 }
 ?>
 <div id='div_updateMobileAlert' style="display: none;"></div>

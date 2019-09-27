@@ -43,7 +43,7 @@ sendVarToJS('object', $_GET['object_id']);
 	  }
 	?>
 
-	<label class="checkbox-inline pull-right"><input type="checkbox" class="objectAttr" data-l1key="display" data-l2key="sendToApp" ' . $check . '/>{{Activer}}</label>
+	<label class="checkbox-inline pull-right"><input type="checkbox" class="objectAttr" data-l1key="display" data-l2key="sendToApp" <?php echo $check; ?>/>{{Activer}}</label>
 	<span class="form-control objectAttr" type="text" data-l1key="id" style="display : none;">' . $_GET['object_id'] . '</span>
 	<span class="form-control objectAttr" type="text" data-l1key="name" style="display : none;">' . $object->getName() . '</span>
 </div>

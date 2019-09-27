@@ -38,7 +38,7 @@ class mobile extends eqLogic {
 		$search = eqLogic::byLogicalId($iq, 'mobile');
 		return $search->getName();
 	}
-	
+
 	public static function pluginToSend() {
 		$return = [];
 		$plugins = plugin::listPlugin(true);
@@ -621,5 +621,3 @@ class mobileCmd extends cmd {
 
 	/*     * **********************Getteur Setteur*************************** */
 }
-
-?>

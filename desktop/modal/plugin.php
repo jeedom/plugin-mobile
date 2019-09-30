@@ -25,8 +25,8 @@ $plugin_compatible = mobile::$_pluginSuported;
 $plugin_widget = mobile::$_pluginWidget;
 ?>
 
-<legend class="pluspecial">{{Plugins Spécials Compatibles}}
-	<sup><i class="fas fa-question-circle" title="{{Ils sont disponibles dans la liste des plugins de l'application, ils ont aussi une intégrations appronfondies sur le dashboard de l'app}}"></i></sup>
+<legend class="pluspecial">{{Plugins Spéciaux Compatibles}}
+	<sup><i class="fas fa-question-circle" title="{{Disponibles dans la liste des plugins et intégrés au Dashboard de l’App Mobile.}}"></i></sup>
 </legend>
 <div class="pluginListContainer">
 	<?php
@@ -54,7 +54,7 @@ $plugin_widget = mobile::$_pluginWidget;
 </div>
 
 <legend class="pluvaltg">{{Plugins Validés Type générique}}
-	<sup><i class="fas fa-question-circle" title="{{Ils sont visibles dans les pièces de l'application mobile, pour certains d'entre eux il peut être nécessaire de configurer les types génériques (virtuels, scripts etc..). Il peut être désactivé pour ne pas être transmis}}"></i></sup>
+	<sup><i class="fas fa-question-circle" title="{{Visibles dans l'app, peuvent nécessiter un type générique, peuvent être désactivés.}}"></i></sup>
 </legend>
 <div class="pluginListContainer">
 	<?php
@@ -82,7 +82,7 @@ $plugin_widget = mobile::$_pluginWidget;
 </div>
 
 <legend class="plucomnontran">{{Plugins compatibles non transmis}}
-	<sup><i class="fas fa-question-circle" title="{{N\'est pas transmis à l'application}}"></i></sup>
+	<sup><i class="fas fa-question-circle" title="{{Ne sont pas transmis à l’App Mobile.}}"></i></sup>
 </legend>
 <div class="pluginListContainer">
 	<?php
@@ -111,7 +111,7 @@ $plugin_widget = mobile::$_pluginWidget;
 </div>
 
 <legend class="plunontestran">{{Plugins non testés transmis à l'application}}
-	<sup><i class="fas fa-question-circle" title="{{Vous avez activé la transmission de ces plugins en se basant sur les types génériques}}"></i></sup>
+	<sup><i class="fas fa-question-circle" title="{{Sont transmis à l’App Mobile en se basant sur les types génériques.}}"></i></sup>
 </legend>
 <div class="pluginListContainer">
 	<?php
@@ -139,7 +139,7 @@ $plugin_widget = mobile::$_pluginWidget;
 </div>
 
 <legend class="plugnontestetnontrans">{{Plugins non testés et non transmis}}
-	<sup><i class="fas fa-question-circle" title="{{N'est pas transmis à l'application}}"></i></sup>
+	<sup><i class="fas fa-question-circle" title="{{Ne sont pas transmis à l’App Mobile}}"></i></sup>
 </legend>
 <div class="pluginListContainer">
 	<?php

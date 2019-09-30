@@ -44,7 +44,7 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 		<?php
 		if (in_array($plugin->getId(), $plugin_widget)) {
 			$div = '<div class="alert alert-success" role="alert">';
-			$div .= '{{Le Plugin est entièrement compatible, il ne nécessite aucune action de votre part}}';
+			$div .= '{{Ce Plugin est entièrement compatible, il ne nécessite aucune action de votre part}}';
 			$div .= '</div>';
 			$div .= '<center>';
 			$path = dirname(__FILE__) . '/../../core/template/images/' . $plugin->getId();
@@ -59,7 +59,7 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 			$generique_ok = false;
 		} else if (in_array($plugin->getId(), $plugin_compatible)) {
 			$div = '<div class="alert alert-info div_plugin_configuration" role="alert">';
-			$div .=  '{{Le Plugin est compatible mais il vous faut peux être vérifier les Types génériques des commandes}}';
+			$div .=  '{{Ce plugin est compatible, pensez à vérifier les Types Génériques des Commandes}}';
 			$check = 'checked';
 			if (config::byKey('sendToApp', $plugin->getId(), 1) == 0) {
 				$check = 'unchecked';

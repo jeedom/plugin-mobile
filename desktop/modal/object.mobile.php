@@ -34,22 +34,21 @@ sendVarToJS('object', $_GET['object_id']);
   		</li>
   	</ul>
 	<br>
-	<?php
-	  echo '<div class="alert alert-info div_object_configuration" role="alert">';
-	  echo '{{Envoyer cette pièce vers l\'application}}';
-	  $check = 'checked';
-	  if ($object->getDisplay('sendToApp', 1) == 0) {
-		  $check = 'unchecked';
-	  }
-	?>
-
-	<label class="checkbox-inline pull-right"><input type="checkbox" class="objectAttr" data-l1key="display" data-l2key="sendToApp" <?php echo $check; ?>/>{{Activer}}</label>
-	<span class="form-control objectAttr" type="text" data-l1key="id" style="display : none;">' . $_GET['object_id'] . '</span>
-	<span class="form-control objectAttr" type="text" data-l1key="name" style="display : none;">' . $object->getName() . '</span>
+      <?php
+        echo '<div class="alert alert-info div_object_configuration" role="alert">';
+        echo '{{Envoyer cette pièce vers l\'application}}';
+        $check = 'checked';
+        if ($object->getDisplay('sendToApp', 1) == 0) {
+            $check = 'unchecked';
+        }
+		echo '<label class="checkbox-inline pull-right"><input type="checkbox" class="objectAttr" data-l1key="display" data-l2key="sendToApp" '.$check.'/>{{Activer}}</label>';
+      ?>
+	<span class="form-control objectAttr hidden" type="text" data-l1key="id"><?php echo $_GET['object_id']; ?></span>
+	<span class="form-control objectAttr hidden" type="text" data-l1key="name"><?php echo $object->getName(); ?></span>
 </div>
 
 <div class="col-lg-12 col-md-12 col-sm-12 eqLogicPluginDisplay" >
-<legend><i class="fa fa-building"></i>  {{Type Générique de l'objet}}
+<legend><i class="fa fa-building"></i>  {{Type Générique de cet objet}}
 	<a class="btn btn-sm btn-success pull-right"  onclick="SaveObject()"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
 </legend>
 
@@ -252,6 +251,7 @@ $('.cmdAttr[data-l1key=generic_type]').on('change', function () {
 		cmdLine.find('.cmdAttr[data-l1key=display][data-l2key=icon]').empty();
 	}
 });
+
 $('#md_modal').on('dialogclose', function () {
    if(changed==1) {
 	   location.reload();

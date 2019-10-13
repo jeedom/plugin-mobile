@@ -90,7 +90,6 @@ $plugin_widget = mobile::$_pluginWidget;
 			<div class="col-lg-6">
 			<form class="form-horizontal">
 				<fieldset>
-				<legend><i class="fa fa-arrow-circle-left eqLogicAction cursor" data-action="returnToThumbnailDisplay"></i> {{Général}}</legend>
 				<div class="form-group">
 					<label class="col-sm-3 control-label">{{Nom de l'équipement mobile}}</label>
 					<div class="col-sm-4">
@@ -160,7 +159,6 @@ $plugin_widget = mobile::$_pluginWidget;
 		<div role="tabpanel" class="tab-pane" id="notificationtab">
 		<form class="form-horizontal">
 			<fieldset>
-			<legend><i class="fa fa-qrcode"></i> {{Notifications Infos}}</legend>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">{{Id Mobile :}}</label>
 					<div class="col-sm-7">
@@ -187,7 +185,6 @@ $plugin_widget = mobile::$_pluginWidget;
 		<div role="tabpanel" class="tab-pane" id="sauvegardetab">
 		<form class="form-horizontal">
 			<fieldset>
-			<legend><i class="fa fa-qrcode"></i>  {{Sauvegarde et Dashboard}}</legend>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">{{Sauvegarde Dashboard :}}</label>
 					<div class="col-sm-7">

@@ -18,6 +18,18 @@
     $('#md_modal').dialog({title: "{{Santé Mobile}}"});
     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=health').dialog('open');
 })
+ $('#bt_pluguinmobile').on('click', function () {
+    $('#md_modal').dialog({title: "{{Plugins compatibles}}"});
+    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin').dialog('open');
+})
+ $('#bt_piecemobile').on('click', function () {
+    $('#md_modal').dialog({title: "{{Objets / Pièces}}"});
+    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=piece').dialog('open');
+})
+ $('#bt_scenariomobile').on('click', function () {
+    $('#md_modal').dialog({title: "{{Scénarios}}"});
+    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=scenario').dialog('open');
+})
  $('#info_app').on('click', function(){
      $('#md_modal').dialog({title: "{{Informations envoyées à l'app}}"});
      $('#md_modal').load('index.php?v=d&plugin=mobile&modal=info_app.mobile').dialog('open');
@@ -45,7 +57,7 @@ $('li').click(function(){
 var hash = document.location.hash;
 if (hash) {
     $('.nav-tabs a[href="'+hash+'"]').tab('show');
-} 
+}
 $('.nav-tabs a').on('shown.bs.tab', function (e) {
     window.location.hash = e.target.hash;
 });
@@ -55,8 +67,8 @@ $('.nav-tabs a').on('shown.bs.tab', function (e) {
 
  function printEqLogic(_eqLogic){
     $.ajax({
-        type: "POST", 
-        url: "plugins/mobile/core/ajax/mobile.ajax.php", 
+        type: "POST",
+        url: "plugins/mobile/core/ajax/mobile.ajax.php",
         data: {
             action: "getQrCode",
             id: _eqLogic.id,
@@ -83,8 +95,8 @@ $('.nav-tabs a').on('shown.bs.tab', function (e) {
       }
   });
   $.ajax({
-        type: "POST", 
-        url: "plugins/mobile/core/ajax/mobile.ajax.php", 
+        type: "POST",
+        url: "plugins/mobile/core/ajax/mobile.ajax.php",
         data: {
             action: "getSaveDashboard",
             iq: _eqLogic.logicalId,
@@ -109,8 +121,8 @@ $('.nav-tabs a').on('shown.bs.tab', function (e) {
       }
   });
   $.ajax({
-        type: "POST", 
-        url: "plugins/mobile/core/ajax/mobile.ajax.php", 
+        type: "POST",
+        url: "plugins/mobile/core/ajax/mobile.ajax.php",
         data: {
             action: "getSaveFavDash",
             iq: _eqLogic.logicalId,
@@ -139,8 +151,8 @@ $('.nav-tabs a').on('shown.bs.tab', function (e) {
 
 $('#bt_regenConfig').on('click',function(){
     $.ajax({
-        type: "POST", 
-        url: "plugins/mobile/core/ajax/mobile.ajax.php", 
+        type: "POST",
+        url: "plugins/mobile/core/ajax/mobile.ajax.php",
         data: {
             action: "regenConfig"
         },

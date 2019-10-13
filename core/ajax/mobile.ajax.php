@@ -17,7 +17,6 @@
  */
 
 header('Content-Type: application/json');
-
 try {
 	require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 	include_file('core', 'authentification', 'php');
@@ -25,7 +24,7 @@ try {
 	if (!isConnect('admin')) {
 		throw new Exception(__('401 - Accès non autorisé', __FILE__));
 	}
-
+  
 	if (init('action') == 'updatemobile') {
 		mobile::updatemobile();
 		ajax::success();
@@ -65,6 +64,18 @@ try {
 			$reponse = true;
 		}
 		ajax::success($reponse);
+	    }
+  
+  		if (init('action') == 'savescenario'){
+          $id = init('id');
+          $sendApp = init('valueSend');
+          $scenario = scenario::byId($id);
+          if(!is_object($scenario)){
+              ajax::error('{{scenario non trouvé}}');  
+          }
+          $scenario->setDisplay("sendToApp",$sendApp);
+          $scenario->save();
+          ajax::success($reponse);
 	    }
 
 	throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));

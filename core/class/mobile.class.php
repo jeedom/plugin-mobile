@@ -38,7 +38,7 @@ class mobile extends eqLogic {
 		$search = eqLogic::byLogicalId($iq, 'mobile');
 		return $search->getName();
 	}
-	
+
 	public static function pluginToSend() {
 		$return = [];
 		$plugins = plugin::listPlugin(true);
@@ -139,7 +139,11 @@ class mobile extends eqLogic {
 					if ($eqLogic->getObject_id() == null) {
 						continue;
 					}
-					if (($eqLogic->getIsVisible() != 1 && (!in_array($eqLogic->getEqType_name(), self::$_pluginWidget)) || $eqLogic->getObject()->getDisplay('sendToApp', 1) != 1)) {
+                  	$objectNow = $eqLogic->getObject();
+                  	if(!is_object($objectNow)){
+                      continue;
+                    }
+					if (($eqLogic->getIsVisible() != 1 && (!in_array($eqLogic->getEqType_name(), self::$_pluginWidget)) || $objectNow->getDisplay('sendToApp', 1) != 1)) {
 						continue;
 					}
 				}
@@ -338,12 +342,22 @@ class mobile extends eqLogic {
 			unset($object['display']['desktop::summaryTextColor']);
 			unset($object['display']['dashboard::size']);
 			unset($object['display']['summaryTextColor']);
+          	unset($object['image']);
+          	unset($object['img']);
 			unset($object['father_id']);
 			if (isset($object['display']['icon'])) {
 				if ($object['display']['icon'] == '') {
 					unset($object['display']['icon']);
 				} else {
 					$object['display']['icon'] = str_replace(array('<i class="', '"></i>'), '', $object['display']['icon']);
+                  	$tableEx = array();
+                  	$explodes = explode(' ', $object['display']['icon']);
+                  	foreach ($explodes as $explode){
+                    	if(substr($explode, 0, 5) != 'icon_'){
+                          $tableEx[] = $explode;
+                        }
+                    }
+                  	$object['display']['icon'] = implode(' ', $tableEx);
 				}
 			}
 			$return[] = $object;
@@ -356,6 +370,9 @@ class mobile extends eqLogic {
 		$return = array();
 		foreach ($all as &$scenario) {
 			if (isset($scenario['display']['sendToApp']) && $scenario['display']['sendToApp'] == "0") {
+				continue;
+			}
+			if (!isset($scenario['display']['sendToApp'])) {
 				continue;
 			}
 			if ($scenario['display']['name'] != '') {
@@ -371,7 +388,8 @@ class mobile extends eqLogic {
 	}
 
 	public static function discovery_message() {
-		return utils::o2a(message::all());
+		//return utils::o2a(message::all());
+		 return array();
 	}
 
 	public static function discovery_plan() {
@@ -607,6 +625,3 @@ class mobileCmd extends cmd {
 
 	/*     * **********************Getteur Setteur*************************** */
 }
-
-?>
-

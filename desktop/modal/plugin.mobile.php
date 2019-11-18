@@ -151,37 +151,41 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 			<select class="cmdAttr form-control" data-l1key="generic_type" data-cmd_id="<?php echo $cmd->getId(); ?>">
 				<option value="">{{Aucun}}</option>
 				<?php
-				$groups = array();
-				foreach (jeedom::getConfiguration('cmd::generic_type') as $key => $info) {
-					if (strtolower($cmd->getType()) != strtolower($info['type'])) {
-						continue;
-					}
-					$info['key'] = $key;
-					if (!isset($groups[$info['family']])) {
-						$groups[$info['family']][0] = $info;
-					} else {
-						array_push($groups[$info['family']], $info);
-					}
+			$groups = array();
+			foreach (jeedom::getConfiguration('cmd::generic_type') as $key => $info) {
+				if (strtolower($cmd->getType()) != strtolower($info['type'])) {
+					continue;
 				}
-				ksort($groups);
-				foreach ($groups as $group) {
-					usort($group, function ($a, $b) {
-						return strcmp($a['name'], $b['name']);
-					});
-					foreach ($group as $key => $info) {
+				$info['key'] = $key;
+				if (!isset($groups[$info['family']])) {
+					$groups[$info['family']][0] = $info;
+				} else {
+					array_push($groups[$info['family']], $info);
+				}
+			}
+			ksort($groups);
+			foreach ($groups as $group) {
+				usort($group, function ($a, $b) {
+					return strcmp($a['name'], $b['name']);
+				});
+				foreach ($group as $key => $info) {
 					if ($key == 0) {
 						echo '<optgroup label="{{' . $info['family'] . '}}">';
 					}
-					if ($info['key'] == $cmd->getGeneric_type()) {
-						echo '<option value="' . $info['key'] . '" selected>' . $info['type'] . ' / ' . $info['name'] . '</option>';
-					} else {
-						echo '<option value="' . $info['key'] . '">' . $info['type'] . ' / ' . $info['name'] . '</option>';
+					$name = $info['name'];
+					if (isset($info['noapp']) && $info['noapp']) {
+						$name .= ' (Non géré par Application Mobile)';
 					}
+					if ($info['key'] == $cmd->getGeneric_type()) {
+ 						echo '<option value="' . $info['key'] . '" selected>' . $name . '</option>';
+					} else {
+ 						echo '<option value="' . $info['key'] . '">' . $name . '</option>';		
+ 					}
 				}
-					echo '</optgroup>';
-				}
-				?>
-		  </select>
+				echo '</optgroup>';
+			}
+			?>
+          </select>
 		  <?php
 			echo '</td>';
 			echo '</tr>';

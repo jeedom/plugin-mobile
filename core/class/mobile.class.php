@@ -540,11 +540,11 @@ class mobile extends eqLogic {
 		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
 		if (isset($cmdgeoloc)) {
           	log::add('mobile', 'debug', 'commande trouvé');
-			if(geoloc['value'] !== $cmdgeoloc->execCmd()){
+			if($geoloc['value'] !== $cmdgeoloc->execCmd()){
               	log::add('mobile', 'debug', 'Valeur non pareil.');
 				$cmdgeoloc->event($geoloc['value']);
 			}else{
-            	log::add('mobile', 'debug', 'Valeur pareil. >'.geoloc['value'].' / '.$cmdgeoloc->execCmd());
+            	log::add('mobile', 'debug', 'Valeur pareil. >'.$geoloc['value'].' / '.$cmdgeoloc->execCmd());
             }
 		}
 	}

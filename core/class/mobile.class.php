@@ -483,7 +483,7 @@ class mobile extends eqLogic {
 		log::add('mobile', 'debug', 'JSON envoyé : ' . $publish);
 		$post = [
 			'arn' => $arn,
-			'publish' => $publish,
+			'text' => $publish,
 		];
 		
 		$url = config::byKey('service_url','dataservice').'/service/notif';

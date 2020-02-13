@@ -482,19 +482,18 @@ class mobile extends eqLogic {
 		$publish = ($badge == 'null') ? mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout) : mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout);
 		log::add('mobile', 'debug', 'JSON envoyé : ' . $publish);
 		$post = [
-			'id' => $idNotif,
-			'type' => $os,
 			'arn' => $arn,
 			'publish' => $publish,
 		];
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, self::$_urlAws);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		$server_output = curl_exec($ch);
-		curl_close($ch);
-		log::add('mobile', 'debug', 'notification resultat > ' . $server_output);
+		
+		$url = config::byKey('service_url','dataservice').'/service/notif';
+		$request_http = new com_http($url);
+		$request_http->setHeader(array(
+		      'Content-Type: application/json',
+		      'Autorization: '.sha512(mb_strtolower(config::byKey('market::username')).':'.config::byKey('market::password'))
+		));
+		$request_http->setPost(json_encode($post));
+		$request_http->exec(10,1);
 	}
 
 	public function SaveGeoloc($geoloc) {

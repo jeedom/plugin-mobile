@@ -36,7 +36,11 @@ class mobile extends eqLogic {
 
 	public static function whoIsIq($iq){
 		$search = eqLogic::byLogicalId($iq, 'mobile');
-		return $search->getName();
+		if(is_object($search)){
+			return $search->getName();
+		}else{
+			return 'mobile non detecte';
+		}
 	}
 
 	public static function pluginToSend() {

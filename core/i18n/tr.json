@@ -1,9 +1,158 @@
 {
-    "plugins\/mobile\/plugin_info\/info.xml": {
-        "Plugin pour l'application Mobile": "Mobil uygulama için eklenti",
-        "Aucune": "Hiçbir"
+    "plugin_info\/configuration.php": {
+        "Notifications de l'app": "Notifications de l'app",
+        "Réponse Ask sensible à la case : ": "Réponse Ask sensible à la case : "
     },
-    "plugins\/mobile\/desktop\/php\/mobile.php": {
+    "desktop\/modal\/scenario.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Scénarios": "Scénarios",
+        "Sauvegarder": "Kaydet",
+        "ID": "ID",
+        "Scénario": "Scénario",
+        "Transmis": "Transmis",
+        "Actions": "Actions",
+        "Envoyer à l\\'application": "Envoyer à l\\'application"
+    },
+    "desktop\/modal\/info_app.mobile.php": {
+        "JSON valide": "JSON valide",
+        "Objets \/ Pièces": "Objets \/ Pièces",
+        "Modules": "Modules",
+        "Commandes": "Commandes",
+        "Scénarios": "Scénarios",
+        "Messages": "Messages",
+        "Designs": "Designs",
+        "Configurations": "Configurations"
+    },
+    "desktop\/modal\/update.mobile.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Pause": "Pause",
+        "Rechercher": "Arayın"
+    },
+    "desktop\/modal\/object.mobile.php": {
+        "401 - AccèÈs non autorisÈ": "401 - AccèÈs non autorisÈ",
+        "Envoyer cette pièce vers l\\'application": "Envoyer cette pièce vers l\\'application",
+        "Activer": "Etkinleştirmek",
+        "Type Générique de cet objet": "Type Générique de cet objet",
+        "Sauvegarder": "Kaydet",
+        "Id Cmd": "Id Cmd",
+        "Nom de la Commande": "Nom de la Commande",
+        "Type Générique": "Type Générique",
+        "Icône": "Icône",
+        "Aucun": "Hiçbir",
+        " . $info['family'] . ": " . $info['family'] . ",
+        "Objets \/ Pièces": "Objets \/ Pièces",
+        "Modifications sauvegardées avec succès": "Modifications sauvegardées avec succès",
+        "Sauvegarde effectuée avec succès": "Sauvegarde effectuée avec succès"
+    },
+    "desktop\/modal\/piece.php": {
+        "Les Pièces": "Les Pièces"
+    },
+    "desktop\/modal\/health.php": {
+        "Plateforme": "Plateforme",
+        "Equipement": "Equipement",
+        "ID": "ID",
+        "User": "User",
+        "Depuis": "Depuis",
+        "Utilisateur non trouvé": "Utilisateur non trouvé"
+    },
+    "desktop\/modal\/plugin.php": {
+        "Plugins Spéciaux Compatibles": "Plugins Spéciaux Compatibles",
+        "Disponibles dans la liste des plugins et intégrés au Dashboard de l’App Mobile.": "Disponibles dans la liste des plugins et intégrés au Dashboard de l’App Mobile.",
+        "Plugins Validés Type générique": "Plugins Validés Type générique",
+        "Visibles dans l'app, peuvent nécessiter un type générique, peuvent être désactivés.": "Visibles dans l'app, peuvent nécessiter un type générique, peuvent être désactivés.",
+        "Plugins compatibles non transmis": "Plugins compatibles non transmis",
+        "Ne sont pas transmis à l’App Mobile.": "Ne sont pas transmis à l’App Mobile.",
+        "Plugins non testés transmis à l'application": "Plugins non testés transmis à l'application",
+        "Sont transmis à l’App Mobile en se basant sur les types génériques.": "Sont transmis à l’App Mobile en se basant sur les types génériques.",
+        "Plugins non testés et non transmis": "Plugins non testés et non transmis",
+        "Ne sont pas transmis à l’App Mobile": "Ne sont pas transmis à l’App Mobile"
+    },
+    "desktop\/modal\/plugin.mobile.php": {
+        "401 - AccèÈs non autorisÈ": "401 - AccèÈs non autorisÈ",
+        "Envoi auprès de l'app mobile": "Envoi auprès de l'app mobile",
+        "Ce Plugin est entièrement compatible, il ne nécessite aucune action de votre part": "Ce Plugin est entièrement compatible, il ne nécessite aucune action de votre part",
+        "Ce plugin est compatible, pensez à vérifier les Types Génériques des Commandes": "Ce plugin est compatible, pensez à vérifier les Types Génériques des Commandes",
+        "Activer": "Etkinleştirmek",
+        "Le Plugin n\\'est pas compatible, vous pouvez l\\'activer si vous le souhaitez": "Le Plugin n\\'est pas compatible, vous pouvez l\\'activer si vous le souhaitez",
+        "Type Générique du Plugin": "Type Générique du Plugin",
+        "Sauvegarder": "Kaydet",
+        "Id Cmd": "Id Cmd",
+        "Nom de la Commande": "Nom de la Commande",
+        "Type Générique": "Type Générique",
+        "Icône": "Icône",
+        "Aucun": "Hiçbir",
+        " . $info['family'] . ": " . $info['family'] . ",
+        "Plugins compatibles": "Plugins compatibles",
+        "Modifications sauvegardées avec succès": "Modifications sauvegardées avec succès",
+        "Sauvegarde effectuée": "Sauvegarde effectuée"
+    },
+    "desktop\/js\/mobile.js": {
+        "Santé Mobile": "Santé Mobile",
+        "Plugins compatibles": "Plugins compatibles",
+        "Objets \/ Pièces": "Objets \/ Pièces",
+        "Scénarios": "Scénarios",
+        "Informations envoyées à l'app": "Informations envoyées à l'app",
+        "Configuration Mobile du Plugin \"+name_plugin+": "Configuration Mobile du Plugin \"+name_plugin+",
+        "Configuration Mobile de la Pièce": "Configuration Mobile de la Pièce",
+        "Configuration Mobile du Scnéario \"+name_scenario+": "Configuration Mobile du Scnéario \"+name_scenario+",
+        "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)",
+        "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)",
+        "Erreur Pas d\\'utilisateur selectionné": "Erreur Pas d\\'utilisateur selectionné",
+        "Configuration mise à jour": "Configuration mise à jour"
+    },
+    "desktop\/php\/mobile.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Gestion": "Gestion",
+        "Ajouter": "Ajouter",
+        "Configuration": "Ayar",
+        "Plugins": "Plugins",
+        "Objets \/ Pièces": "Objets \/ Pièces",
+        "Scénarios": "Scénarios",
+        "Santé": "Santé",
+        "Régénérer la configuration": "Régénérer la configuration",
+        "Mes Téléphones Mobiles": "Mobil telefonlarım",
+        "Rechercher": "Arayın",
+        "Configuration avancée": "Configuration avancée",
+        "Infos envoyées à l'app": "Infos envoyées à l'app",
+        "Sauvegarder": "Kaydet",
+        "Supprimer": "Sil",
+        "Mobile": "Mobil",
+        "Notifications": "Notifications",
+        "Sauvegarde Mobile": "Sauvegarde Mobile",
+        "Nom de l'équipement mobile": "Mobil cihazın ismi",
+        "Nom de l'équipement template": "Şablon cihazının ismi",
+        "Objet parent": "Üst nesne",
+        "Aucun": "Hiçbir",
+        "Activer": "Etkinleştirmek",
+        "Visible": "Görülebilir",
+        "Type de Mobile": "Mobil çeşidi",
+        "iPhone": "iPhone",
+        "Android": "Android",
+        "Windows (non officiel)": "Windows (non officiel)",
+        "Utilisateurs": "Kulanıcılar",
+        "QRCode": "QRCode",
+        "Id Mobile :": "Id Mobile :",
+        "Iq": "Iq",
+        "ARN Mobile :": "ARN Mobile :",
+        "ARN": "ARN",
+        "ARN pour Monitoring :": "ARN pour Monitoring :",
+        "ARN pour Monitoring": "ARN pour Monitoring",
+        "Copier pour Monitoring": "Copier pour Monitoring",
+        "Sauvegarde Dashboard :": "Sauvegarde Dashboard :",
+        "Vérification en Cours": "Vérification en Cours",
+        "Sauvegarde Favoris :": "Sauvegarde Favoris :"
+    },
+    "core\/ajax\/mobile.ajax.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Equipement non trouvé : ": "Equipement non trouvé : ",
+        "Aucune methode correspondante à : ": "Aucune methode correspondante à : ",
+        "scenario non trouvé": "scenario non trouvé"
+    },
+    "core\/class\/mobile.class.php": {
+        "$geoloc['id'].'-'.$geoloc['name']": "$geoloc['id'].'-'.$geoloc['name']",
+        "Notification": "Notification"
+    },
+    "core\/api\/mobile.api.php": {
         "Ajouter un mobile": "Mobil ekle",
         "Rechercher": "Arayın",
         "Mes Téléphones Mobiles": "Mobil telefonlarım",

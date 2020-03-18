@@ -490,7 +490,7 @@ class mobile extends eqLogic {
 			'text' => $publish,
 		];
 		
-		$url = config::byKey('service::cloud::url').'/service/notif';
+		$url = config::byKey('service::cloud::url','core','https://cloud.jeedom.com).'/service/notif';
 		$request_http = new com_http($url);
 		$request_http->setHeader(array(
 		      'Content-Type: application/json',

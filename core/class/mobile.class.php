@@ -28,8 +28,9 @@ class mobile extends eqLogic {
 
 	public static $_pluginMulti = array('LIGHT_STATE', 'ENERGY_STATE', 'FLAP_STATE', 'HEATING_STATE', 'SIREN_STATE', 'LOCK_STATE');
 
-	public static $_urlAws = 'https://api-notif.jeedom.com/notif/';
-
+	//public static $_urlAws = 'https://api-notif.jeedom.com/notif/';
+	public static $_urlAws = config::byKey('service::cloud::url','core','https://cloud.jeedom.com');
+	
 	public static $_listenEvents = array('cmd::update', 'scenario::update');
 
 	/*     * ***********************Methode static*************************** */
@@ -490,7 +491,7 @@ class mobile extends eqLogic {
 			'text' => $publish,
 		];
 		
-		$url = config::byKey('service::cloud::url','core','https://cloud.jeedom.com).'/service/notif';
+		$url = $_urlAws.'/service/notif';
 		$request_http = new com_http($url);
 		$request_http->setHeader(array(
 		      'Content-Type: application/json',

@@ -228,7 +228,7 @@ Picture                                       | Type generic               | Par
 :-----------------------------------------: | :--------------------------- | :--------------------------- | :------------------: |
 ![OPENING](../images/OPENING.jpg)   | `Porte / Fenêtre`<br/>`Temperature`(optionnel)|`OPENING / OPENING_WINDOW`<br/>`TEMPERATURE`(optionnel) | Voir Picture (à savoir que vous pouvez choisir entre fenêtre et porte).
 
-### Fil pilote #
+### Pilot wire #
 
 Picture                               | Type generic               | Partie Dev plugin            | Description          |
 :---------------------------------: | :--------------------------- | :--------------------------- | :------------------: |

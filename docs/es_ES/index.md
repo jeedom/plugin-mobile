@@ -228,7 +228,7 @@ Imagen                                       | Puntao genérico               | 
 :-----------------------------------------: | :--------------------------- | :--------------------------- | :------------------: |
 ![OPENING](../images/OPENING.jpg)   | `Porte / Fenêtre`<br/>`Temperatura`(optionnel)|`OPENING / OPENING_WINDOW`<br/>`TEMPERATURE`(optionnel) | Voir Imagen (à savoir que vous pouvez choisir entre fenêtre et porte).
 
-### Fil pilote #
+### Cable piloto #
 
 Imagen                               | Puntao genérico               | Partie Dev plugin            | Descripción          |
 :---------------------------------: | :--------------------------- | :--------------------------- | :------------------: |

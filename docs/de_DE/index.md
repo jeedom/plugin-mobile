@@ -228,7 +228,7 @@ Bild                                       | Typ Gattung               | Partie 
 :-----------------------------------------: | :--------------------------- | :--------------------------- | :------------------: |
 ![OPENING](../images/OPENING.jpg)   | `Porte / Fenêtre`<br/>`Temperatur`(optionnel)|`OPENING / OPENING_WINDOW`<br/>`TEMPERATURE`(optionnel) | Voir Bild (à savoir que vous pouvez choisir entre fenêtre et porte).
 
-### Fil pilote #
+### Pilotdraht #
 
 Bild                               | Typ Gattung               | Partie Dev plugin            | Beschreibung          |
 :---------------------------------: | :--------------------------- | :--------------------------- | :------------------: |

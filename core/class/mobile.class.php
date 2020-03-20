@@ -30,7 +30,7 @@ class mobile extends eqLogic {
 
 	//public static $_urlAws = 'https://api-notif.jeedom.com/notif/';
 	
-	public static $_listenEvents = array('cmd::update', 'scenario::update');
+	public static $_listenEvents = array('cmd::update', 'scenario::update','jeeObject::summary::update');
 
 	/*     * ***********************Methode static*************************** */
 

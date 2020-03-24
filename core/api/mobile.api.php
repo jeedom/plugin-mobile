@@ -97,7 +97,8 @@ if ($jsonrpc->getMethod() == 'sync') {
 	if (isset($rdk)) {
 		$return['config']['rdk'] = $rdk;
 	}
-	//log::add('mobile', 'debug', 'Return > ' . json_encode($return));
+	$discovery_summaryValue = mobile::discovery_summaryValue($return['objects']);
+	log::add('mobile', 'debug', 'Return $discovery_summaryValue > ' . json_encode($discovery_summaryValue));
 	$jsonrpc->makeSuccess($return);
 }
 

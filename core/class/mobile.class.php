@@ -83,6 +83,7 @@ class mobile extends eqLogic {
 			'objects' => mobile::delete_object_eqlogic_null(mobile::discovery_object(), $sync_new['eqLogics']),
 			'scenarios' => mobile::discovery_scenario(),
 			'plans' => mobile::discovery_plan(),
+			'summary' => mobile::discovery_summary(),
 			'config' => $config,
 		);
 		$path = dirname(__FILE__) . '/../../data/mobile.json';
@@ -415,7 +416,7 @@ class mobile extends eqLogic {
 		$return = array();
 		$def = config::byKey('object:summary');
 		foreach ($def as $key => &$value) {
-			$value['value'] = jeeObject::getGlobalSummary($key);
+			//$value['value'] = jeeObject::getGlobalSummary($key);
 			$value['icon'] = str_replace(array('<i class="', '"></i>'), '', $value['icon']);
 		}
 		return $def;

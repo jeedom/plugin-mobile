@@ -410,6 +410,15 @@ class mobile extends eqLogic {
 		}
 		return $plans;
 	}
+	
+	public static function discovery_summary() {
+		$return = array();
+		$def = config::byKey('object:summary');
+		foreach ($def as $key => &$value) {
+			$value['value'] = jeeObject::getGlobalSummary($key);
+		}
+		return $def;
+	}
 
 	public static function delete_object_eqlogic_null($objects, $eqLogics) {
 		$return = array();

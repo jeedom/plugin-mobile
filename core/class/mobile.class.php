@@ -77,6 +77,7 @@ class mobile extends eqLogic {
 			'url_internal' => network::getNetworkAccess('internal'),
 			'url_external' => network::getNetworkAccess('external'),
 		);
+      	$objectReturn = mobile::delete_object_eqlogic_null(mobile::discovery_object(), $sync_new['eqLogics']);
 		$data = array(
 			'eqLogics' => $sync_new['eqLogics'],
 			'cmds' => $sync_new['cmds'],
@@ -423,20 +424,36 @@ class mobile extends eqLogic {
 	}
 	
 	public static function discovery_summaryValue($jeeObjectEnvoi){
+      	$def = config::byKey('object:summary');
+      	$tableKey = array();
+		foreach ($def as $key => $value) {
+          $tableKey[] = $key;
+        }
 		$table = array();
 		foreach ($jeeObjectEnvoi as $jeeobject){
 			$object = jeeObject::byId($jeeobject['id']);
-			if (!is_object($object)) {
-				throw new Exception(__('Objet introuvable : ', __FILE__) . secureXSS($params['id']), -32601);
+			if (is_object($object)) {
+              	foreach ($tableKey as $key){
+                  if($object->getSummary($key) != null){
+                    $tableObject = array();
+                    $tableObject['object_id'] = $object->getId();
+                    $tableObject['key'] = $key;
+                    $tableObject['value'] = $object->getSummary($key);
+                    $table[] = $tableObject;
+                  }
+                }
 			}
-			if (!isset($params['key'])) {
-				$params['key'] = '';
-			}
-			if (!isset($params['raw'])) {
-				$params['raw'] = false;
-			}
-			$table[$object->getId()] = $object->getSummary($params['key'], $params['raw']);
 		}
+      	foreach ($tableKey as $key){
+          	if(jeeObject::getGlobalSummary($key) != null){
+              $tableObject = array();
+              $tableObject['object_id'] = 'global';
+              $tableObject['key'] = $key;
+              $tableObject['value'] = jeeObject::getGlobalSummary($key);
+              $table[] = $tableObject;
+            }
+        }
+      	
 		return $table;
 	}
 

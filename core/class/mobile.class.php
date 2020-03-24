@@ -421,6 +421,24 @@ class mobile extends eqLogic {
 		}
 		return $def;
 	}
+	
+	public static function discovery_summaryValue($jeeObjectEnvoi){
+		$table = array();
+		foreach ($jeeObjectEnvoi as $object){
+			$object = jeeObject::byId($object->getId());
+			if (!is_object($object)) {
+				throw new Exception(__('Objet introuvable : ', __FILE__) . secureXSS($params['id']), -32601);
+			}
+			if (!isset($params['key'])) {
+				$params['key'] = '';
+			}
+			if (!isset($params['raw'])) {
+				$params['raw'] = false;
+			}
+			$table[$object->getId()] = $object->getSummary($params['key'], $params['raw']);
+		}
+		return $table;
+	}
 
 	public static function delete_object_eqlogic_null($objects, $eqLogics) {
 		$return = array();

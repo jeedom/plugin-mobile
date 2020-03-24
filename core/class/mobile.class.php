@@ -425,7 +425,7 @@ class mobile extends eqLogic {
 	public static function discovery_summaryValue($jeeObjectEnvoi){
 		$table = array();
 		foreach ($jeeObjectEnvoi as $jeeobject){
-			$object = jeeObject::byId($jeeobject->getId());
+			$object = jeeObject::byId($jeeobject['id']);
 			if (!is_object($object)) {
 				throw new Exception(__('Objet introuvable : ', __FILE__) . secureXSS($params['id']), -32601);
 			}

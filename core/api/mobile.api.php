@@ -91,14 +91,14 @@ if ($jsonrpc->getMethod() == 'sync') {
 	}
 	$return = mobile::getTemplateJson();
 	$return['messages'] = mobile::discovery_message();
+  	$return['summaryValue'] = mobile::discovery_summaryValue($return['objects']);
 	$return['config']['datetime'] = getmicrotime();
 	$return['config']['Iq'] = $params['Iq'];
 	$return['config']['NameMobile'] = $mobile->getName();
 	if (isset($rdk)) {
 		$return['config']['rdk'] = $rdk;
 	}
-	$discovery_summaryValue = mobile::discovery_summaryValue($return['objects']);
-	log::add('mobile', 'debug', 'Return $discovery_summaryValue > ' . json_encode($discovery_summaryValue));
+	log::add('mobile', 'debug', 'Return $discovery_summaryValue > ' . json_encode($return['summaryValue']));
 	$jsonrpc->makeSuccess($return);
 }
 
@@ -197,4 +197,3 @@ if ($jsonrpc->getMethod() == 'geolocDel'){
 
 throw new Exception(__('Aucune demande', __FILE__));
 ?>
-

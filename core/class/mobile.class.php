@@ -632,6 +632,9 @@ class mobile extends eqLogic {
 	/*     * *********************Méthodes d'instance************************* */
 
 	/*     * **********************Getteur Setteur*************************** */
+	public static function cronDaily() {
+      		mobile::makeTemplateJson();
+    	}
 }
 
 class mobileCmd extends cmd {

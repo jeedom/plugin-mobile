@@ -416,6 +416,7 @@ class mobile extends eqLogic {
 		$def = config::byKey('object:summary');
 		foreach ($def as $key => &$value) {
 			$value['value'] = jeeObject::getGlobalSummary($key);
+			$value['icon'] = str_replace(array('<i class="', '"></i>'), '', $value['icon']);
 		}
 		return $def;
 	}

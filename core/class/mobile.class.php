@@ -22,21 +22,25 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 class mobile extends eqLogic {
 	/*     * *************************Attributs****************************** */
 
-	public static $_pluginSuported = array('mobile', 'openzwave', 'rfxcom', 'edisio', 'mpower', 'mySensors', 'Zibasedom', 'virtual', 'camera', 'weather', 'philipsHue', 'enocean', 'wifipower', 'alarm', 'mode', 'apcupsd', 'btsniffer', 'dsc', 'rflink', 'mysensors', 'relaynet', 'remora', 'unipi', 'eibd', 'thermostat', 'netatmoThermostat', 'espeasy', 'jeelink', 'teleinfo', 'tahoma', 'protexiom', 'lifx', 'wattlet', 'rfplayer', 'openenocean', 'netatmoWeather', 'Volets');
+	public static $_pluginSuported = array('mobile', 'openzwave', 'rfxcom', 'edisio', 'mpower', 'mySensors', 'Zibasedom', 'virtual', 'camera', 'weather', 'philipsHue', 'enocean', 'wifipower', 'alarm', 'mode', 'apcupsd', 'btsniffer', 'dsc', 'rflink', 'mysensors', 'relaynet', 'remora', 'unipi', 'eibd', 'thermostat', 'netatmoThermostat', 'espeasy', 'jeelink', 'teleinfo', 'tahoma', 'protexiom','boilerThermostat', 'lifx', 'wattlet', 'rfplayer', 'openenocean', 'netatmoWeather', 'Volets', 'vmczehnder');
 
 	public static $_pluginWidget = array('alarm', 'camera', 'thermostat', 'netatmoThermostat', 'weather', 'mode', 'mobile');
 
 	public static $_pluginMulti = array('LIGHT_STATE', 'ENERGY_STATE', 'FLAP_STATE', 'HEATING_STATE', 'SIREN_STATE', 'LOCK_STATE');
 
-	public static $_urlAws = 'https://api-notif.jeedom.com/notif/';
-
-	public static $_listenEvents = array('cmd::update', 'scenario::update');
+	//public static $_urlAws = 'https://api-notif.jeedom.com/notif/';
+	
+	public static $_listenEvents = array('cmd::update', 'scenario::update','jeeObject::summary::update');
 
 	/*     * ***********************Methode static*************************** */
 
 	public static function whoIsIq($iq){
 		$search = eqLogic::byLogicalId($iq, 'mobile');
-		return $search->getName();
+		if(is_object($search)){
+			return $search->getName();
+		}else{
+			return 'mobile non detecte';
+		}
 	}
 
 	public static function pluginToSend() {
@@ -73,12 +77,14 @@ class mobile extends eqLogic {
 			'url_internal' => network::getNetworkAccess('internal'),
 			'url_external' => network::getNetworkAccess('external'),
 		);
+      	$objectReturn = mobile::delete_object_eqlogic_null(mobile::discovery_object(), $sync_new['eqLogics']);
 		$data = array(
 			'eqLogics' => $sync_new['eqLogics'],
 			'cmds' => $sync_new['cmds'],
 			'objects' => mobile::delete_object_eqlogic_null(mobile::discovery_object(), $sync_new['eqLogics']),
 			'scenarios' => mobile::discovery_scenario(),
 			'plans' => mobile::discovery_plan(),
+			'summary' => mobile::discovery_summary(),
 			'config' => $config,
 		);
 		$path = dirname(__FILE__) . '/../../data/mobile.json';
@@ -406,6 +412,50 @@ class mobile extends eqLogic {
 		}
 		return $plans;
 	}
+	
+	public static function discovery_summary() {
+		$return = array();
+		$def = config::byKey('object:summary');
+		foreach ($def as $key => &$value) {
+			//$value['value'] = jeeObject::getGlobalSummary($key);
+			$value['icon'] = str_replace(array('<i class="', '"></i>'), '', $value['icon']);
+		}
+		return $def;
+	}
+	
+	public static function discovery_summaryValue($jeeObjectEnvoi){
+      	$def = config::byKey('object:summary');
+      	$tableKey = array();
+		foreach ($def as $key => $value) {
+          $tableKey[] = $key;
+        }
+		$table = array();
+		foreach ($jeeObjectEnvoi as $jeeobject){
+			$object = jeeObject::byId($jeeobject['id']);
+			if (is_object($object)) {
+              	foreach ($tableKey as $key){
+                  if($object->getSummary($key) != null){
+                    $tableObject = array();
+                    $tableObject['object_id'] = $object->getId();
+                    $tableObject['key'] = $key;
+                    $tableObject['value'] = $object->getSummary($key);
+                    $table[] = $tableObject;
+                  }
+                }
+			}
+		}
+      	foreach ($tableKey as $key){
+          	if(jeeObject::getGlobalSummary($key) != null){
+              $tableObject = array();
+              $tableObject['object_id'] = 'global';
+              $tableObject['key'] = $key;
+              $tableObject['value'] = jeeObject::getGlobalSummary($key);
+              $table[] = $tableObject;
+            }
+        }
+      	
+		return $table;
+	}
 
 	public static function delete_object_eqlogic_null($objects, $eqLogics) {
 		$return = array();
@@ -482,19 +532,18 @@ class mobile extends eqLogic {
 		$publish = ($badge == 'null') ? mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout) : mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout);
 		log::add('mobile', 'debug', 'JSON envoyé : ' . $publish);
 		$post = [
-			'id' => $idNotif,
-			'type' => $os,
 			'arn' => $arn,
-			'publish' => $publish,
+			'text' => $publish,
 		];
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, self::$_urlAws);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		$server_output = curl_exec($ch);
-		curl_close($ch);
-		log::add('mobile', 'debug', 'notification resultat > ' . $server_output);
+		
+		$url = config::byKey('service::cloud::url','core','https://cloud.jeedom.com').'/service/notif';
+		$request_http = new com_http($url);
+		$request_http->setHeader(array(
+		      'Content-Type: application/json',
+		      'Autorization: '.sha512(mb_strtolower(config::byKey('market::username')).':'.config::byKey('market::password'))
+		));
+		$request_http->setPost(json_encode($post));
+		$request_http->exec(10,1);
 	}
 
 	public function SaveGeoloc($geoloc) {
@@ -540,11 +589,11 @@ class mobile extends eqLogic {
 		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
 		if (isset($cmdgeoloc)) {
           	log::add('mobile', 'debug', 'commande trouvé');
-			if(geoloc['value'] !== $cmdgeoloc->execCmd()){
+			if($geoloc['value'] !== $cmdgeoloc->execCmd()){
               	log::add('mobile', 'debug', 'Valeur non pareil.');
 				$cmdgeoloc->event($geoloc['value']);
 			}else{
-            	log::add('mobile', 'debug', 'Valeur pareil. >'.geoloc['value'].' / '.$cmdgeoloc->execCmd());
+            	log::add('mobile', 'debug', 'Valeur pareil. >'.$geoloc['value'].' / '.$cmdgeoloc->execCmd());
             }
 		}
 	}
@@ -583,6 +632,9 @@ class mobile extends eqLogic {
 	/*     * *********************Méthodes d'instance************************* */
 
 	/*     * **********************Getteur Setteur*************************** */
+	public static function cronDaily() {
+      		mobile::makeTemplateJson();
+    	}
 }
 
 class mobileCmd extends cmd {

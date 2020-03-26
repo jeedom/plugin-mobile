@@ -86,6 +86,7 @@ $plugin_widget = mobile::$_pluginWidget;
 
 	<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
 		<div role="tabpanel" class="tab-pane active" id="eqlogictabin">
+		<br/><br/>
 		<div class="row">
 			<div class="col-lg-6">
 			<form class="form-horizontal">
@@ -157,6 +158,7 @@ $plugin_widget = mobile::$_pluginWidget;
 		</div>
 
 		<div role="tabpanel" class="tab-pane" id="notificationtab">
+		<br/><br/>	
 		<form class="form-horizontal">
 			<fieldset>
 				<div class="form-group">
@@ -183,6 +185,7 @@ $plugin_widget = mobile::$_pluginWidget;
 		</div>
 
 		<div role="tabpanel" class="tab-pane" id="sauvegardetab">
+		<br/><br/>
 		<form class="form-horizontal">
 			<fieldset>
 				<div class="form-group">

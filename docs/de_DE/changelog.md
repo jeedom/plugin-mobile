@@ -1,13 +1,15 @@
-Änderungsprotokoll
+Änderungsprotokoll 
 =========
 
-Mobil 
+Handy 
 ------
+#### 19.02.2020
+* http korrigieren.Fehlerzeile 39, wenn das Telefon bei der ersten Verbindung nicht authentifiziert wurde.
 
 #### v1.3.0 
 
-* ASK Benachrichtigungen
-* Archiv Benachrichtigungen
+* ASK-Benachrichtigung
+* Benachrichtigungsverlauf
 * Schieberegler mit Prozentsatz
-* große Veränderung in der Synchronisation
-* suppression du push to refresh
+* große Änderung im Timing
+* Entfernen von Push zum Aktualisieren

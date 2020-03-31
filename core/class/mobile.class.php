@@ -544,7 +544,10 @@ class mobile extends eqLogic {
 		      'Autorization: '.sha512(strtolower(config::byKey('market::username')).':'.config::byKey('market::password'))
 		));
 		$request_http->setPost(json_encode($post));
-		$request_http->exec(10,1);
+		$result = json_decode($request_http->exec(10,1),true);
+		if(!isset($result['state']) || $result['state'] != 'ok'){
+			throw new Exception(__('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));	
+		}
 	}
 
 	public function SaveGeoloc($geoloc) {

@@ -149,6 +149,7 @@
         "scenario non trouvé": ""
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {
+        "Echec de l\\'envoi de la notification :": "",
         "$geoloc['id'].'-'.$geoloc['name']": "",
         "Notification": ""
     },

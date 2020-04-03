@@ -40,7 +40,7 @@
         "Le Plugin n\\'est pas compatible, vous pouvez l\\'activer si vous le souhaitez": "Das Plugin ist nicht kompatibel, Sie können es aktivieren, wenn Sie möchten",
         "Type Générique du Plugin": "Generischer Plugin-Typ",
         "Sauvegarder": "Speichern",
-        "Id Cmd": "Id Cmd",
+        "Id Cmd": "",
         "Nom de la Commande": "Name der Bestellung",
         "Type Générique": "Typ Gattung",
         "Icône": "Symbol",
@@ -66,7 +66,7 @@
         "Activer": "Aktivieren",
         "Type Générique de cet objet": "Generischer Typ dieses Objekts",
         "Sauvegarder": "Speichern",
-        "Id Cmd": "Id Cmd",
+        "Id Cmd": "",
         "Nom de la Commande": "Name der Bestellung",
         "Type Générique": "Typ Gattung",
         "Icône": "Symbol",
@@ -116,9 +116,9 @@
         "Android": "Androide",
         "Windows (non officiel)": "Windows (inoffiziell)",
         "Utilisateurs": "Benutzer",
-        "QRCode": "QRCode",
+        "QRCode": "",
         "Id Mobile :": "Mobile ID:",
-        "Iq": "Iq",
+        "Iq": "",
         "ARN Mobile :": "ARN Mobile:",
         "ARN": "RNA",
         "ARN pour Monitoring :": "RNA zur Überwachung:",
@@ -149,6 +149,7 @@
         "scenario non trouvé": "Szenario nicht gefunden"
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {
+        "Echec de l\\'envoi de la notification :": "",
         "$geoloc['id'].'-'.$geoloc['name']": "$ geoloc ['id'] .'- '. $ geoloc [' name ']",
         "Notification": "Benachrichtigung"
     },

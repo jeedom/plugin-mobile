@@ -228,7 +228,9 @@ class mobile extends eqLogic {
 				}
 				if (isset($info['display']['icon'])) {
 					$info['display']['icon'] = str_replace(array('<i class="', '"></i>'), '', $info['display']['icon']);
-					$info['display']['icon'] = stristr($info['display']['icon'], ' icon_', true);
+					if (strstr($info['display']['icon'], ' icon_')){
+						$info['display']['icon'] = strstr($info['display']['icon'], ' icon_', true);
+                    			}
 				}
 				foreach ($info['display'] as $key => $value) {
 					if (trim($value) == '') {

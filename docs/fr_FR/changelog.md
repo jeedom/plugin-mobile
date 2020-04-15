@@ -1,6 +1,10 @@
 Changelog 
 =========
 
+# 15/04/2020
+
+- Ajouts des Commandes de chaques mobile.
+
 # 31/03/2020
 
 - Correction d'un bug sur l'envoi de notification sur certain Jeedom

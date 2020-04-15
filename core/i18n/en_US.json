@@ -105,6 +105,7 @@
         "Mobile": "Mobile",
         "Notifications": "Notifications",
         "Sauvegarde Mobile": "Mobile Backup",
+        "Commandes": "Commands",
         "Nom de l'équipement mobile": "Name of mobile equipment",
         "Nom de l'équipement template": "Equipment name template",
         "Objet parent": "Parent object",
@@ -126,7 +127,10 @@
         "Copier pour Monitoring": "Copy for Monitoring",
         "Sauvegarde Dashboard :": "Dashboard backup:",
         "Vérification en Cours": "Verification in progress",
-        "Sauvegarde Favoris :": "Save Favorites:"
+        "Sauvegarde Favoris :": "Save Favorites:",
+        "Nom": "Name",
+        "Type": "Type",
+        "Action": "Action"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
         "Santé Mobile": "Mobile Health",
@@ -140,7 +144,9 @@
         "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Error No internal address (see configuration of your Jeedom!)",
         "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Error No external address (see configuration of your Jeedom!)",
         "Erreur Pas d\\'utilisateur selectionné": "Error No user selected",
-        "Configuration mise à jour": "Updated configuration"
+        "Configuration mise à jour": "Updated configuration",
+        "Nom": "Name",
+        "Tester": "Test"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",

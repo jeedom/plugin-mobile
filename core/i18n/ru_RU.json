@@ -105,6 +105,7 @@
         "Mobile": "мобильный",
         "Notifications": "Уведомления",
         "Sauvegarde Mobile": "",
+        "Commandes": "Команды",
         "Nom de l'équipement mobile": "",
         "Nom de l'équipement template": "",
         "Objet parent": "Родительский объект",
@@ -126,7 +127,10 @@
         "Copier pour Monitoring": "",
         "Sauvegarde Dashboard :": "",
         "Vérification en Cours": "",
-        "Sauvegarde Favoris :": ""
+        "Sauvegarde Favoris :": "",
+        "Nom": "Имя",
+        "Type": "Тип",
+        "Action": "Действие"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
         "Santé Mobile": "",
@@ -140,7 +144,9 @@
         "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "",
         "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "",
         "Erreur Pas d\\'utilisateur selectionné": "",
-        "Configuration mise à jour": ""
+        "Configuration mise à jour": "",
+        "Nom": "Имя",
+        "Tester": "Тест"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401 - Несанкционированный доступ",

@@ -105,6 +105,7 @@
         "Mobile": "Handy",
         "Notifications": "Benachrichtigungen",
         "Sauvegarde Mobile": "Mobile Backup",
+        "Commandes": "Befehle",
         "Nom de l'équipement mobile": "Name der mobilen Ausrüstung",
         "Nom de l'équipement template": "Gerätename Vorlage",
         "Objet parent": "Übergeordnetes Objekt",
@@ -126,7 +127,10 @@
         "Copier pour Monitoring": "Kopie zur Überwachung",
         "Sauvegarde Dashboard :": "Dashboard-Sicherung:",
         "Vérification en Cours": "Überprüfung läuft",
-        "Sauvegarde Favoris :": "Favoriten speichern:"
+        "Sauvegarde Favoris :": "Favoriten speichern:",
+        "Nom": "Name",
+        "Type": "Typ",
+        "Action": "Aktion"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
         "Santé Mobile": "Mobile Gesundheit",
@@ -140,7 +144,9 @@
         "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Fehler Keine interne Adresse (siehe Konfiguration Ihres Jeedom!)",
         "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Fehler Keine externe Adresse (siehe Konfiguration Ihres Jeedom!)",
         "Erreur Pas d\\'utilisateur selectionné": "Fehler Kein Benutzer ausgewählt",
-        "Configuration mise à jour": "Aktualisierte Konfiguration"
+        "Configuration mise à jour": "Aktualisierte Konfiguration",
+        "Nom": "Name",
+        "Tester": "Test"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",

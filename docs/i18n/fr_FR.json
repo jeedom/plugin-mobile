@@ -1,6 +1,8 @@
 {
     "changelog.md": {
         "Changelog": "Changelog",
+        "15\/04\/2020": "15\/04\/2020",
+        "Ajouts des Commandes de chaques mobile": "Ajouts des Commandes de chaques mobile",
         "31\/03\/2020": "31\/03\/2020",
         "Correction d'un bug sur l'envoi de notification sur certain Jeedom": "Correction d'un bug sur l'envoi de notification sur certain Jeedom",
         "19\/02\/2020": "19\/02\/2020",

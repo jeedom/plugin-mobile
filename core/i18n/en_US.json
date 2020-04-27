@@ -40,7 +40,7 @@
         "Le Plugin n\\'est pas compatible, vous pouvez l\\'activer si vous le souhaitez": "The Plugin is not compatible, you can activate it if you wish",
         "Type Générique du Plugin": "Generic Plugin Type",
         "Sauvegarder": "Save",
-        "Id Cmd": "",
+        "Id Cmd": "Id Cmd",
         "Nom de la Commande": "Name of the order",
         "Type Générique": "Type generic",
         "Icône": "Icon",
@@ -66,7 +66,7 @@
         "Activer": "Activate",
         "Type Générique de cet objet": "Generic type of this object",
         "Sauvegarder": "Save",
-        "Id Cmd": "",
+        "Id Cmd": "Id Cmd",
         "Nom de la Commande": "Name of the order",
         "Type Générique": "Type generic",
         "Icône": "Icon",
@@ -79,12 +79,12 @@
     "plugins\/mobile\/desktop\/modal\/info_app.mobile.php": {
         "JSON valide": "Valid json",
         "Objets \/ Pièces": "Objects \/ Pieces",
-        "Modules": "",
+        "Modules": "Modules",
         "Commandes": "Commands",
         "Scénarios": "Scenarios",
         "Messages": "Posts",
         "Designs": "Designs",
-        "Configurations": ""
+        "Configurations": "Configurations"
     },
     "plugins\/mobile\/desktop\/php\/mobile.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",
@@ -117,9 +117,9 @@
         "Android": "Android",
         "Windows (non officiel)": "Windows (unofficial)",
         "Utilisateurs": "Users",
-        "QRCode": "",
+        "QRCode": "QRCode",
         "Id Mobile :": "Mobile Id:",
-        "Iq": "",
+        "Iq": "Iq",
         "ARN Mobile :": "ARN Mobile:",
         "ARN": "RNA",
         "ARN pour Monitoring :": "RNA for Monitoring:",
@@ -155,12 +155,12 @@
         "scenario non trouvé": "scenario not found"
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {
-        "Echec de l\\'envoi de la notification :": "",
+        "Echec de l\\'envoi de la notification :": "Failed to send notification:",
         "$geoloc['id'].'-'.$geoloc['name']": "$ geoloc ['id'] .'- '. $ geoloc [' name ']",
-        "Notification": ""
+        "Notification": "Notification"
     },
     "plugins\/mobile\/core\/api\/mobile.api.php": {
-        "JSONRPC object not defined": "",
+        "JSONRPC object not defined": "JSONRPC object not defined",
         "EqLogic inconnu : ": "Unknown EqLogic:",
         "Cmd inconnu : ": "Unknown Cmd:",
         "pas d\\'id : ": "no id:",

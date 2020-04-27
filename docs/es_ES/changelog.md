@@ -1,13 +1,13 @@
 Cambios 
 =========
 
-# 
+# 15/04/2020
 
-- .
+- Adición de órdenes para cada móvil.
 
-# 
+# 31/03/2020
 
-- 
+- Corrección de un error en el envío de notificaciones en ciertos Jeedom
 
 # 19/02/2020
 

@@ -1,13 +1,13 @@
 Changelog 
 =========
 
-# 
+# 04/15/2020
 
-- .
+- Commands added for each mobile.
 
 # 31/03/2020
 
-- 
+- Fix a bug on Notification send on some Jeedom
 
 # 02/19/2020
 

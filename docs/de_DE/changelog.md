@@ -1,13 +1,13 @@
 Änderungsprotokoll 
 =========
 
-# 
+# 15.04.2020
 
-- .
+- Hinzufügen von Bestellungen für jedes Handy.
 
-# 
+# 31.03.2020
 
-- 
+- Korrektur eines Fehlers beim Senden einer Benachrichtigung über bestimmte Jeedom
 
 # 19.02.2020
 

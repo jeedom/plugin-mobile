@@ -10,13 +10,13 @@ After installing the plugin, you just need to activate it :
 
 ![mobile1](../images/mobile1.png)
 
-**Setup**
+**Configuration**
 
 To configure the plugin, you must add the phones that
 will be able to access Jeedom.
 
 To Add a phone : **Plugins** → **Communication** → **App
-Mobile** → **Add**
+Mobile** → **Ajouter**
 
 ![mobile2](../images/mobile2.png)
 
@@ -24,11 +24,11 @@ Here are the parameters to enter :
 
 -   **Name of mobile equipment** : Phone name
 
--   **Activate** : Enabling access for this mobile
+-   **Activer** : Enabling access for this mobile
 
 -   **Mobile Type** : Phone OS selection (iOS, Android)
 
--   **User** : User associated with this access
+-   **Utilisateur** : User associated with this access
 
 > **Tip**
 >
@@ -138,7 +138,7 @@ three colors are available) :
 As well as the two associated texts :
 
 ![mobile dashboard 6](../images/mobile_dashboard_6.PNG) ![mobile
-dashboard 7] (../ images / mobile_dashboard_7.PNG)
+dashboard 7](../ images / mobile_dashboard_7.PNG)
 
 Here, you have now a shortcut of your order (in the
 version 1.1 On / Off commands are expected to appear on the
@@ -165,74 +165,74 @@ Application template tables
 
 Picture                           | Type generic               | Dev plugin part            | Description          |
 :-----------------------------: | :--------------------------- | :--------------------------- | :------------------: |
-![LIGHT](../images/LIGHT_1.jpg) | `Lumière Bouton On`<br/>`Lumière Bouton Off` | `LIGHT_ON`<br/>`LIGHT_OFF`| présence de deux boutons "ON" et "Off" pas de retour d'état. |
-![LIGHT](../images/LIGHT_2.jpg) | `Lumière Bouton On`<br/>`Lumière Bouton Off`<br/>`Lumière Etat` | `LIGHT_ON`<br/>`LIGHT_OFF`<br/>`LIGHT_STATE` | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off |
-![LIGHT](../images/LIGHT_2.jpg) | `Lumière Bouton Toggle`<br/>`Lumière Etat` | `LIGHT_TOGGLE`<br/>`LIGHT_STATE` | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off |
-![LIGHT](../images/LIGHT_3.jpg) | `Lumière Bouton On`<br/>`Lumière Bouton Off`<br/>`Lumière Etat`<br/>`Lumière Slider` | `LIGHT_ON`<br/>`LIGHT_OFF`<br/>`LIGHT_STATE`<br/>`LIGHT_SLIDER` | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off et le slider permet de contrôler l'intensité |
-![LIGHT](../images/LIGHT_4.jpg) | `Lumière Bouton On`<br/>`Lumière Bouton Off`<br/>`Lumière Etat`<br/>`Lumière Slider`<br/>`Lumière Couleur (info)`<br/>`Lumière Couleur (action)`<br/>`Lumière Mode` (optionnel, il sert à avoir des mode de lumière,par exemple arc-en-ciel sur les philips Hue) | `LIGHT_ON`<br/>`LIGHT_OFF`<br/>`LIGHT_STATE`<br/>`LIGHT_SLIDER`<br/>`LIGHT_COLOR`<br/>`LIGHT_SET_COLOR`<br/>`LIGHT_MODE` | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off et le slider permet de contrôler l'intensité. Dans le cercle la couleur de la lampe est présente et lors d'un cloc dans celui-ci vous pouvez changer la couleur et activer un mode |
+![LIGHT](../images/LIGHT_1.jpg) | `Lumière Bouton On`<br/>`Button Off Light` | `LIGHT_ON`<br/>`LIGHT_OFF`| presence of two buttons "ON" and "Off" no status feedback. |
+![LIGHT](../images/LIGHT_2.jpg) | `Lumière Bouton On`<br/>`Button Off Light`<br/>`State Light` | `LIGHT_ON`<br/>`LIGHT_OFF`<br/>`LIGHT_STATE` | Status feedback present, the left button toggles between On and Off |
+![LIGHT](../images/LIGHT_2.jpg) | `Lumière Bouton Toggle`<br/>`State Light` | `LIGHT_TOGGLE`<br/>`LIGHT_STATE` | Status feedback present, the left button toggles between On and Off |
+![LIGHT](../images/LIGHT_3.jpg) | `Lumière Bouton On`<br/>`Button Off Light`<br/>`State Light`<br/>`Light Slider` | `LIGHT_ON`<br/>`LIGHT_OFF`<br/>`LIGHT_STATE`<br/>`LIGHT_SLIDER` | Status feedback present, the left button allows to switch between On and Off and the slider allows to control the intensity |
+![LIGHT](../images/LIGHT_4.jpg) | `Lumière Bouton On`<br/>`Button Off Light`<br/>`State Light`<br/>`Light Slider`<br/>`Light Color (info)`<br/>`Light Color (action)`<br/>`Light Mode` (optional, it is used to have light modes, for example rainbow on Hue philips) | `LIGHT_ON`<br/>`LIGHT_OFF`<br/>`LIGHT_STATE`<br/>`LIGHT_SLIDER`<br/>`LIGHT_COLOR`<br/>`LIGHT_SET_COLOR`<br/>`LIGHT_MODE` | Status feedback present, the left button allows to switch between On and Off and the slider allows to control the intensity. In the circle the color of the lamp is present and when you click it you can change the color and activate a mode |
 
 ### The plugs #
 
 Picture                           | Type generic               | Dev plugin part            | Description          |
 :-----------------------------: | :--------------------------- | :--------------------------- | :------------------: |
-![ENERGY](../images/ENERGY_1.jpg) | `Prise Bouton On`<br/>`Prise Bouton Off`| `ENERGY_ON`<br/>`ENERGY_OFF`| présence de deux boutons "ON" et "Off" pas de retour d'état. |
-![ENERGY](../images/ENERGY_2.jpg) | `Prise Bouton On`<br/>`Prise Bouton Off`<br/>`Prise Etat` | `ENERGY_ON`<br/>`ENERGY_OFF`<br/>`ENERGY_STATE` | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off |
-![ENERGY](../images/ENERGY_3.jpg) | `Prise Bouton On`<br/>`Prise Bouton Off`<br/>`Prise Etat`<br/>`Prise Slider` | `ENERGY_ON`<br/>`ENERGY_OFF`<br/>`ENERGY_STATE`<br/>`ENERGY_SLIDER` | Retour d'état présent, le bouton de gauche permet de switcher entre On et Off et le slider permet de contrôler l'intensité |
+![ENERGY](../images/ENERGY_1.jpg) | `Prise Bouton On`<br/>`Button Off socket`| `ENERGY_ON`<br/>`ENERGY_OFF`| presence of two buttons "ON" and "Off" no status feedback. |
+![ENERGY](../images/ENERGY_2.jpg) | `Prise Bouton On`<br/>`Button Off socket`<br/>`State Taking` | `ENERGY_ON`<br/>`ENERGY_OFF`<br/>`ENERGY_STATE` | Status feedback present, the left button toggles between On and Off |
+![ENERGY](../images/ENERGY_3.jpg) | `Prise Bouton On`<br/>`Button Off socket`<br/>`State Taking`<br/>`Slider socket` | `ENERGY_ON`<br/>`ENERGY_OFF`<br/>`ENERGY_STATE`<br/>`ENERGY_SLIDER` | Status feedback present, the left button allows to switch between On and Off and the slider allows to control the intensity |
 
 ### Shutters #
 
 Picture                           | Type generic               | Dev plugin part            | Description          |
 :-----------------------------: | :--------------------------- | :--------------------------- | :------------------: |
-![FLAP](../images/FLAP_1.jpg)   | `Volet Bouton Monter`<br/>`Volet Bouton Descendre`<br/>`Volet Bouton Stop`<br/>`Volet Etat`(optionnel) | `FLAP_UP`<br/>`FLAP_DOWN`<br/>`FLAP_STOP`<br/>`FLAP_STATE`(optionnel) | Presence de trois boutons "Monter", "Descendre", "Stop", retour d'état optionnel. |
-![FLAP](../images/FLAP_2.jpg)   | `Volet Bouton Monter`<br/>`Volet Bouton Descendre`<br/>`Volet Bouton Stop`<br/>`Volet Etat`<br/>`Volet Bouton Slider` | `FLAP_UP`<br/>`FLAP_DOWN`<br/>`FLAP_STOP`<br/>`FLAP_STATE`<br/>`FLAP_SLIDER` | Presence d'un slider, avec un bouton Monter/Descendre en Toggle (avec icône d'état) |
+![FLAP](../images/FLAP_1.jpg)   | `Volet Bouton Monter`<br/>`Down button pane`<br/>`Stop Button Pane`<br/>`State pane` (optional) | `FLAP_UP`<br/>`FLAP_DOWN`<br/>`FLAP_STOP`<br/>`FLAP_STATE` (optional) | Presence of three buttons "Up", "Down", "Stop", optional status feedback. |
+![FLAP](../images/FLAP_2.jpg)   | `Volet Bouton Monter`<br/>`Down button pane`<br/>`Stop Button Pane`<br/>`State pane`<br/>`Slider Button Pane` | `FLAP_UP`<br/>`FLAP_DOWN`<br/>`FLAP_STOP`<br/>`FLAP_STATE`<br/>`FLAP_SLIDER` | Presence of a slider, with an Up / Down button in Toggle (with status icon) |
 
 ### Flood #
 
 Picture                           | Type generic               | Dev plugin part            | Description          |
 :-----------------------------: | :--------------------------- | :--------------------------- | :------------------: |
-![FLOOD](../images/FLOOD.jpg)   | `Innondation`<br/>`Temperature`(optionnel)<br/>`Humidité`(optionnel)<br/>`Sabotage`(optionnel)|`FLOOD`<br/>`TEMPERATURE`(optionnel)<br/>`HUMIDITY`(optionnel)<br/>`HUMIDITY`(optionnel) | Permet d'avoir son capteur d'inondation complet sur une seule ligne.
+![FLOOD](../images/FLOOD.jpg)   | `Innondation`<br/>`Temperature` (optional)<br/>`Humidity` (optional)<br/>`Sabotage` (optional)|`FLOOD`<br/>`TEMPERATURE` (optional)<br/>`HUMIDITY` (optional)<br/>`HUMIDITY` (optional) | Allows you to have your complete flood sensor on a single line.
 
 ### Lock #
 
 Picture                         | Type generic               | Dev plugin part            | Description          |
 :---------------------------: | :--------------------------- | :--------------------------- | :------------------: |
-![LOCK](../images/LOCK.jpg)   | `Lock Etat`<br/>`Lock Bouton Ouvrir`<br/>`Lock Bouton Fermer` | `LOCK_STATE`<br/>`LOCK_OPEN`<br/>`LOCK_CLOSE` | Retour d'état présent, le bouton de gauche permet de switcher entre on et off |
+![LOCK](../images/LOCK.jpg)   | `Lock Etat`<br/>`Open Button Lock`<br/>`Lock Button Close` | `LOCK_STATE`<br/>`LOCK_OPEN`<br/>`LOCK_CLOSE` | Status feedback present, the left button toggles between on and off |
 
 ### Mermaid #
 
 Picture                         | Type generic               | Dev plugin part            | Description          |
 :---------------------------: | :--------------------------- | :--------------------------- | :------------------: |
-![SIREN](../images/SIREN.jpg)   | `Mermaid Etat`<br/>`Mermaid Bouton On`<br/>`Mermaid Bouton Off` | `SIREN_STATE`<br/>`SIREN_ON`<br/>`SIREN_OFF` | Retour d'état présent, le bouton de gauche permet de switcher entre on et off |
+![SIREN](../images/SIREN.jpg)   | `Mermaid Etat`<br/>`Siren Button On`<br/>`Siren Button Off` | `SIREN_STATE`<br/>`SIREN_ON`<br/>`SIREN_OFF` | Status feedback present, the left button toggles between on and off |
 
 ### Smoke #
 
 Picture                           | Type generic               | Dev plugin part            | Description          |
 :-----------------------------: | :--------------------------- | :--------------------------- | :------------------: |
-![SMOKE](../images/SMOKE.jpg)   | `Smoke`<br/>`Temperature`(optionnel)|`SMOKE`<br/>`TEMPERATURE`(optionnel) | Permet d'avoir son capteur de fumée complet sur une seule ligne.
+![SMOKE](../images/SMOKE.jpg)   | `Smoke`<br/>`Temperature` (optional)|`SMOKE`<br/>`TEMPERATURE` (optional) | Allows you to have your complete smoke sensor on a single line.
 
 ### Temperature #
 
 Picture                                       | Type generic               | Dev plugin part            | Description          |
 :-----------------------------------------: | :--------------------------- | :--------------------------- | :------------------: |
-![TEMPERATURE](../images/TEMPERATURE.jpg)   | `Temperature`<br/>`Humidité`(optionnel)|`TEMPERATURE`<br/>`HUMIDITY`(optionnel) | Voir Picture.
+![TEMPERATURE](../images/TEMPERATURE.jpg)   | `Temperature`<br/>`Humidity` (optional)|`TEMPERATURE`<br/>`HUMIDITY` (optional) | See Picture.
 
 ### Presence #
 
 Picture                                 | Type generic               | Dev plugin part            | Description          |
 :-----------------------------------: | :--------------------------- | :--------------------------- | :------------------: |
-![PRESENCE](../images/PRESENCE.jpg)   | `Presence`<br/>`Temperature`(optionnel)<br/>`Luminosité`(optionnel)<br/>`Humidité`(optionnel)<br/>`UV`(optionnel)<br/>`Sabotage`(optionnel)|`PRESENCE`<br/>`TEMPERATURE`(optionnel)<br/>`BRIGHTNESS`(optionnel)<br/>`HUMIDITY`(optionnel)<br/>`UV`(optionnel)<br/>`SABOTAGE`(optionnel) | Voir image.
+![PRESENCE](../images/PRESENCE.jpg)   | `Presence`<br/>`Temperature` (optional)<br/>`Brightness` (optional)<br/>`Humidity` (optional)<br/>`UV` (optional)<br/>`Sabotage` (optional)|`PRESENCE`<br/>`TEMPERATURE` (optional)<br/>`BRIGHTNESS` (optional)<br/>`HUMIDITY` (optional)<br/>`UV` (optional)<br/>`SABOTAGE` (optional) | See picture.
 
 ### Opening #
 
 Picture                                       | Type generic               | Dev plugin part            | Description          |
 :-----------------------------------------: | :--------------------------- | :--------------------------- | :------------------: |
-![OPENING](../images/OPENING.jpg)   | `Porte / Fenêtre`<br/>`Temperature`(optionnel)|`OPENING / OPENING_WINDOW`<br/>`TEMPERATURE`(optionnel) | Voir Picture (à savoir que vous pouvez choisir entre fenêtre et porte).
+![OPENING](../images/OPENING.jpg)   | `Porte / Fenêtre`<br/>`Temperature` (optional)|`OPENING / OPENING_WINDOW`<br/>`TEMPERATURE` (optional) | See Picture (ie you can choose between window and door).
 
 ### Pilot wire #
 
 Picture                               | Type generic               | Dev plugin part            | Description          |
 :---------------------------------: | :--------------------------- | :--------------------------- | :------------------: |
-![HEATING](../images/HEATING.jpg)   | `Chauffage fil pilote Bouton ON`<br/>`Chauffage fil pilote bouton OFF`<br/>`Chauffage fil pilote Etat`<br/>`Chauffage fil pilote bouton`(optionnel) | `HEATING_ON`<br/>`HEATING_OFF`<br/>`HEATING_STATE`<br/>`HEATING_OTHER`|Les boutons ON/OFF et Etat permette de créer le bouton tout à gauche du template et les `chauffage fil pilote Bouton`sont là pour rajouter des boutons (5 max)
+![HEATING](../images/HEATING.jpg)   | `Chauffage fil pilote Bouton ON`<br/>`Heating pilot wire OFF button`<br/>`Heating pilot wire State`<br/>`Button pilot wire heating` (optional) | `HEATING_ON`<br/>`HEATING_OFF`<br/>`HEATING_STATE`<br/>`HEATING_OTHER`|The ON / OFF and Status buttons allow you to create the button on the far left of the template and the `button pilot wire heating` are there to add buttons (5 max)
 
 THE JOKERS 
 ----------
@@ -259,7 +259,7 @@ Mobile Help
 **→ I'm on Android version of the app (1.0.1 or 1.0.0) i can't
 no access to my rooms or even to the configuration of the app.**
 
-> **Bail**
+> **Caution**
 >
 > You had a popup warning you of a concern about the parameters
 > accessibility, you just need to go to the
@@ -275,7 +275,7 @@ missing a Generic Type !**
 > By reading this message, it tells you which generic type is missing for
 > create a compatible template. Just apply it.
 > Refer to [doc chapter Type
-> Generic] (https://www.jeedom.com/doc/documentation/plugins/mobile/fr_FR/mobile#_configuration_des_plugins_et_commandes_que_reçoit_l_app).
+> Générique](https://www.jeedom.com/doc/documentation/plugins/mobile/fr_FR/mobile#_configuration_des_plugins_et_commandes_que_reçoit_l_app).
 
 **→ I have a problem with one of the so-called fully integrated plugins (weather,
 thermostat, alarm, camera) !**

@@ -151,7 +151,7 @@
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401 - Akses tidak sah",
         "Equipement non trouvé : ": "",
-        "Aucune methode correspondante à : ": "Aucune methode correspondante à : ",
+        "Aucune methode correspondante à : ": "Aucune methode correspondante à :",
         "scenario non trouvé": ""
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {

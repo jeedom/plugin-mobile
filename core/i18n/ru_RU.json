@@ -45,7 +45,7 @@
         "Type Générique": "общий тип",
         "Icône": "Иконка",
         "Aucun": "Нет",
-        " . $info['family'] . ": ", $ info ['family'].",
+        " . $info['family'] . ": ", $ info ['family']",
         "Plugins compatibles": "",
         "Modifications sauvegardées avec succès": "Изменения успешно сохранены",
         "Sauvegarde effectuée": "Резервное копирование завершено"
@@ -71,7 +71,7 @@
         "Type Générique": "общий тип",
         "Icône": "Иконка",
         "Aucun": "Нет",
-        " . $info['family'] . ": ", $ info ['family'].",
+        " . $info['family'] . ": ", $ info ['family']",
         "Objets \/ Pièces": "",
         "Modifications sauvegardées avec succès": "Изменения успешно сохранены",
         "Sauvegarde effectuée avec succès": "Резервное копирование завершено успешно"
@@ -151,7 +151,7 @@
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401 - Несанкционированный доступ",
         "Equipement non trouvé : ": "",
-        "Aucune methode correspondante à : ": "Aucune methode correspondante à : ",
+        "Aucune methode correspondante à : ": "Aucune methode correspondante à :",
         "scenario non trouvé": ""
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {

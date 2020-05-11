@@ -10,25 +10,25 @@ Después de instalar el complemento, solo necesita activarlo :
 
 ![mobile1](../images/mobile1.png)
 
-**Configuration**
+**Configuración**
 
 Para configurar el complemento, debe agregar los teléfonos que podrán acceder a Jeedom.
 
-Para agregar un teléfono : **Plugins** → **Communication** → **App
-Mobile** → **Ajouter**
+Para agregar un teléfono : **Plugins** → **Comunicación** → **App
+Móvil** → **Añadir**
 
 ![mobile2](../images/mobile2.png)
 
 Aquí están los parámetros para ingresar :
 
--   **Nombre del equipo móvil.** : Nombre del teléfono
--   **Activer** : Habilitar el acceso para este móvil
+-   **Nombre del equipo móvil** : Nombre del teléfono
+-   **Activar** : Habilitar el acceso para este móvil
 -   **Tipo de móvil** : Selección del sistema operativo del teléfono (iOS, Android)
--   **Utilisateur** : Usuario asociado con este acceso
+-   **Usuario** : Usuario asociado con este acceso
 
-> **Tip**
+> **Punta**
 >
-> La elección del usuario es importante porque determina el equipo al que tendrá acceso de acuerdo con sus derechos..
+> La elección del usuario es importante porque determina el equipo al que tendrá acceso de acuerdo con sus derechos.
 
 ![mobile3](../images/mobile3.png)
 
@@ -36,7 +36,7 @@ Después de guardar, obtendrá un QRCode que permite que la aplicación se confi
 
 # Configuración de complementos y comandos recibidos por la aplicación
 
-Después de la inicialización del complemento móvil, tiene la posibilidad de modificar los tipos genéricos de pedidos, complementos y piezas..
+Después de la inicialización del complemento móvil, tiene la posibilidad de modificar los tipos genéricos de pedidos, complementos y piezas.
 
 ![mobile10](../images/mobile10.png)
 
@@ -44,13 +44,13 @@ Al hacer clic en un complemento, puede autorizarlo o no a chatear con la aplicac
 
 ![mobile11](../images/mobile11.png)
 
-Al hacer clic en una parte, puede autorizarla o no para que esté presente en la aplicación móvil y configurar cada uno de los tipos genéricos asociados con sus pedidos..
+Al hacer clic en una parte, puede autorizarla o no para que esté presente en la aplicación móvil y configurar cada uno de los tipos genéricos asociados con sus pedidos.
 
 ![mobile12](../images/mobile12.png)
 
 # Configuración de la aplicación móvil
 
-Encontrará las aplicaciones en las persianas móviles. :
+Encontrará las aplicaciones en las persianas móviles :
 
 **Android Google Play**
 
@@ -60,15 +60,15 @@ Encontrará las aplicaciones en las persianas móviles. :
 
 ![App Store FR](../images/App_Store_FR.png)
 
-## Primer lanzamiento de la aplicación.
+## Primer lanzamiento de la aplicación
 
-Cuando inicie la aplicación móvil por primera vez, se le ofrecerá un tutorial para ayudarlo a configurarla..
+Cuando inicie la aplicación móvil por primera vez, se le ofrecerá un tutorial para ayudarlo a configurarla.
 
 Después de descargar e instalar su aplicación móvil Jeedom, inicie la aplicación en su teléfono inteligente.
 
 Luego llega a un tutorial de configuración que le recomendamos que siga. Algunos pasos se han realizado previamente.
 
-Luego podrá elegir entre una configuración manual o automática por QRcode. Si opta por la configuración de QRcode, simplemente muestre el QRcode presente en el complemento de la aplicación móvil en el equipo del teléfono inteligente creado previamente. En este caso, la aplicación recuperará automáticamente toda la configuración de su Jeedom y se conectará automáticamente. Cuando está conectado a su hogar a través de Wifi, la aplicación usará automáticamente la dirección Ethernet de Jeedom interna de su red. Cuando esté conectado en 4G o 3G, usará su dirección externa para conectarse a su Jeedom (por ejemplo, a través del servicio DNS de Jeedom si lo usa). Si elige la configuración manual, en este caso deberá ingresar manualmente las direcciones IP internas y externas de su Jeedom. Esta opción está reservada para un público informado..
+Luego podrá elegir entre una configuración manual o automática por QRcode. Si opta por la configuración de QRcode, simplemente muestre el QRcode presente en el complemento de la aplicación móvil en el equipo del teléfono inteligente creado previamente. En este caso, la aplicación recuperará automáticamente toda la configuración de su Jeedom y se conectará automáticamente. Cuando está conectado a su hogar a través de Wifi, la aplicación usará automáticamente la dirección Ethernet de Jeedom interna de su red. Cuando esté conectado en 4G o 3G, usará su dirección externa para conectarse a su Jeedom (por ejemplo, a través del servicio DNS de Jeedom si lo usa). Si elige la configuración manual, en este caso deberá ingresar manualmente las direcciones IP internas y externas de su Jeedom. Esta opción está reservada para un público informado.
 
 La aplicación se sincronizará y llegará a su página de inicio (precedida por una mini guía de presentación).
 
@@ -78,7 +78,7 @@ La aplicación móvil Jeedom ahora está lista para funcionar.
 
 En la aplicación puede tener Favoritos (accesos directos de comandos, complementos, escenarios).
 
-Aquí está el procedimiento para crearlos. :
+Aquí está el procedimiento para crearlos :
 
 Haga clic en uno de los + en la pantalla de inicio de la aplicación :
 
@@ -127,7 +127,7 @@ Imagen                           | Tipo genérico               | Parte del comp
 ![LIGHT](../images/LIGHT_2.jpg) | `Lumière Bouton On`<br/>`Botón apagado luz`<br/>`State Light` | `LIGHT_ON`<br/>`LIGHT_OFF`<br/>`LIGHT_STATE` | Comentarios de estado presentes, el botón izquierdo alterna entre encendido y apagado |
 ![LIGHT](../images/LIGHT_2.jpg) | `Lumière Bouton Toggle`<br/>`State Light` | `LIGHT_TOGGLE`<br/>`LIGHT_STATE` | Comentarios de estado presentes, el botón izquierdo alterna entre encendido y apagado |
 ![LIGHT](../images/LIGHT_3.jpg) | `Lumière Bouton On`<br/>`Botón apagado luz`<br/>`State Light`<br/>`Light Slider` | `LIGHT_ON`<br/>`LIGHT_OFF`<br/>`LIGHT_STATE`<br/>`LIGHT_SLIDER` | Estado de retroalimentación presente, el botón izquierdo permite cambiar entre Encendido y Apagado y el control deslizante permite controlar la intensidad |
-![LIGHT](../images/LIGHT_4.jpg) | `Lumière Bouton On`<br/>`Botón apagado luz`<br/>`State Light`<br/>`Light Slider`<br/>`Color claro (información)`<br/>`Color claro (acción)`<br/>`Modo de luz` (opcional, se utiliza para tener modos de luz, por ejemplo, arco iris en Hue philips) | `LIGHT_ON`<br/>`LIGHT_OFF`<br/>`LIGHT_STATE`<br/>`LIGHT_SLIDER`<br/>`LIGHT_COLOR`<br/>`LIGHT_SET_COLOR`<br/>`LIGHT_MODE` | Estado de retroalimentación presente, el botón izquierdo permite cambiar entre Encendido y Apagado y el control deslizante permite controlar la intensidad. En el círculo, el color de la lámpara está presente y, al hacer clic en él, puede cambiar el color y activar un modo. |
+![LIGHT](../images/LIGHT_4.jpg) | `Lumière Bouton On`<br/>`Botón apagado luz`<br/>`State Light`<br/>`Light Slider`<br/>`Color claro (información)`<br/>`Color claro (acción)`<br/>`Modo de luz` (opcional, se utiliza para tener modos de luz, por ejemplo, arco iris en Hue philips) | `LIGHT_ON`<br/>`LIGHT_OFF`<br/>`LIGHT_STATE`<br/>`LIGHT_SLIDER`<br/>`LIGHT_COLOR`<br/>`LIGHT_SET_COLOR`<br/>`LIGHT_MODE` | Estado de retroalimentación presente, el botón izquierdo permite cambiar entre Encendido y Apagado y el control deslizante permite controlar la intensidad. En el círculo, el color de la lámpara está presente y, al hacer clic en él, puede cambiar el color y activar un modo |
 
 ### Los enchufes
 

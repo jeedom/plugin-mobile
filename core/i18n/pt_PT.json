@@ -16,13 +16,13 @@
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
         "Plugins Spéciaux Compatibles": "Plugins Especiais Compatíveis",
-        "Disponibles dans la liste des plugins et intégrés au Dashboard de l’App Mobile.": "Disponível na lista de plug-ins e integrado ao Painel do aplicativo móvel.",
+        "Disponibles dans la liste des plugins et intégrés au Dashboard de l’App Mobile.": "Disponível na lista de plug-ins e integrado ao Painel do aplicativo móvel",
         "Plugins Validés Type générique": "Plug-ins validados Tipo genérico",
-        "Visibles dans l'app, peuvent nécessiter un type générique, peuvent être désactivés.": "Visível no aplicativo, pode exigir um tipo genérico, pode estar desativado.",
+        "Visibles dans l'app, peuvent nécessiter un type générique, peuvent être désactivés.": "Visível no aplicativo, pode exigir um tipo genérico, pode estar desativado",
         "Plugins compatibles non transmis": "Plugins compatíveis não transmitidos",
-        "Ne sont pas transmis à l’App Mobile.": "Não são transmitidos para o aplicativo móvel.",
+        "Ne sont pas transmis à l’App Mobile.": "Não são transmitidos para o aplicativo móvel",
         "Plugins non testés transmis à l'application": "Plugins não testados transmitidos ao aplicativo",
-        "Sont transmis à l’App Mobile en se basant sur les types génériques.": "São transmitidos para o aplicativo móvel com base em tipos genéricos.",
+        "Sont transmis à l’App Mobile en se basant sur les types génériques.": "São transmitidos para o aplicativo móvel com base em tipos genéricos",
         "Plugins non testés et non transmis": "Plugins não testados e não transmitidos",
         "Ne sont pas transmis à l’App Mobile": "Não são transmitidos para o aplicativo móvel"
     },
@@ -45,7 +45,7 @@
         "Type Générique": "Tipo genérico",
         "Icône": "ícone",
         "Aucun": "Nemhum",
-        " . $info['family'] . ": ". $ info ['família'].",
+        " . $info['family'] . ": "$ info ['família']",
         "Plugins compatibles": "Plugins compatíveis",
         "Modifications sauvegardées avec succès": "Alterações salvas com sucesso",
         "Sauvegarde effectuée": "Backup feito"
@@ -71,7 +71,7 @@
         "Type Générique": "Tipo genérico",
         "Icône": "ícone",
         "Aucun": "Nemhum",
-        " . $info['family'] . ": ". $ info ['família'].",
+        " . $info['family'] . ": "$ info ['família']",
         "Objets \/ Pièces": "Objetos \/ Peças",
         "Modifications sauvegardées avec succès": "Alterações salvas com sucesso",
         "Sauvegarde effectuée avec succès": "Backup concluído com êxito"
@@ -151,7 +151,7 @@
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401 - Acesso não autorizado",
         "Equipement non trouvé : ": "Equipamento não encontrado:",
-        "Aucune methode correspondante à : ": "Aucune methode correspondante à : ",
+        "Aucune methode correspondante à : ": "Aucune methode correspondante à :",
         "scenario non trouvé": "cenário não encontrado"
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {

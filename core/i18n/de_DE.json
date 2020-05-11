@@ -16,13 +16,13 @@
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
         "Plugins Spéciaux Compatibles": "Kompatible Spezial-Plugins",
-        "Disponibles dans la liste des plugins et intégrés au Dashboard de l’App Mobile.": "Verfügbar in der Liste der Plugins und in das Dashboard der Mobile App integriert.",
+        "Disponibles dans la liste des plugins et intégrés au Dashboard de l’App Mobile.": "Verfügbar in der Liste der Plugins und in das Dashboard der Mobile App integriert",
         "Plugins Validés Type générique": "Validierte Plugins Generischer Typ",
-        "Visibles dans l'app, peuvent nécessiter un type générique, peuvent être désactivés.": "In der App sichtbar, erfordert möglicherweise einen generischen Typ, ist möglicherweise deaktiviert.",
+        "Visibles dans l'app, peuvent nécessiter un type générique, peuvent être désactivés.": "In der App sichtbar, erfordert möglicherweise einen generischen Typ, ist möglicherweise deaktiviert",
         "Plugins compatibles non transmis": "Kompatible Plugins werden nicht übertragen",
-        "Ne sont pas transmis à l’App Mobile.": "Werden nicht an die Mobile App übertragen.",
+        "Ne sont pas transmis à l’App Mobile.": "Werden nicht an die Mobile App übertragen",
         "Plugins non testés transmis à l'application": "Nicht getestete Plugins werden an die Anwendung übertragen",
-        "Sont transmis à l’App Mobile en se basant sur les types génériques.": "Werden basierend auf generischen Typen an die Mobile App übertragen.",
+        "Sont transmis à l’App Mobile en se basant sur les types génériques.": "Werden basierend auf generischen Typen an die Mobile App übertragen",
         "Plugins non testés et non transmis": "Plugins nicht getestet und nicht übertragen",
         "Ne sont pas transmis à l’App Mobile": "Werden nicht an die Mobile App übertragen"
     },
@@ -45,7 +45,7 @@
         "Type Générique": "Typ Gattung",
         "Icône": "Symbol",
         "Aucun": "Ohne",
-        " . $info['family'] . ": ". $ info ['Familie'].",
+        " . $info['family'] . ": "$ info ['Familie']",
         "Plugins compatibles": "Kompatible Plugins",
         "Modifications sauvegardées avec succès": "Änderungen erfolgreich gespeichert",
         "Sauvegarde effectuée": "Sicherung abgeschlossen"
@@ -71,7 +71,7 @@
         "Type Générique": "Typ Gattung",
         "Icône": "Symbol",
         "Aucun": "Ohne",
-        " . $info['family'] . ": ". $ info ['Familie'].",
+        " . $info['family'] . ": "$ info ['Familie']",
         "Objets \/ Pièces": "Objekte \/ Stücke",
         "Modifications sauvegardées avec succès": "Änderungen erfolgreich gespeichert",
         "Sauvegarde effectuée avec succès": "Speichern erfolgreich abgeschlossen"

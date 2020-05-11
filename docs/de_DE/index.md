@@ -10,23 +10,23 @@ Nach der Installation des Plugins müssen Sie es nur noch aktivieren :
 
 ![mobile1](../images/mobile1.png)
 
-**Configuration**
+**Konfiguration**
 
 Um das Plugin zu konfigurieren, müssen Sie die Telefone hinzufügen, die auf Jeedom zugreifen können.
 
-So fügen Sie ein Telefon hinzu : **Plugins** → **Communication** → **App
-Mobile** → **Ajouter**
+So fügen Sie ein Telefon hinzu : **Plugins** → **Kommunikation** → **App
+Handy** → **Hinzufügen**
 
 ![mobile2](../images/mobile2.png)
 
 Hier sind die einzugebenden Parameter :
 
 -   **Name der mobilen Ausrüstung** : Telefonname
--   **Activer** : Aktivieren des Zugriffs für dieses Mobiltelefon
+-   **Aktivieren** : Aktivieren des Zugriffs für dieses Mobiltelefon
 -   **Mobiler Typ** : Auswahl des Telefonbetriebssystems (iOS, Android)
--   **Utilisateur** : Benutzer, der diesem Zugriff zugeordnet ist
+-   **Benutzer** : Benutzer, der diesem Zugriff zugeordnet ist
 
-> **Tip**
+> **Spitze**
 >
 > Die Wahl des Benutzers ist wichtig, da sie die Ausrüstung bestimmt, auf die er gemäß seinen Rechten zugreifen kann.
 
@@ -62,21 +62,21 @@ Sie finden die Anwendungen auf den mobilen Jalousien :
 
 ## Erster Start der App
 
-Wenn Sie die Mobile-Anwendung zum ersten Mal starten, wird Ihnen ein Lernprogramm angeboten, das Sie bei der Konfiguration unterstützt..
+Wenn Sie die Mobile-Anwendung zum ersten Mal starten, wird Ihnen ein Lernprogramm angeboten, das Sie bei der Konfiguration unterstützt.
 
 Starten Sie die Anwendung nach dem Herunterladen und Installieren Ihrer mobilen Jeedom-Anwendung auf Ihrem Smartphone.
 
 Sie gelangen dann zu einem Konfigurations-Tutorial, dem Sie folgen sollten. Einige Schritte wurden zuvor ausgeführt.
 
-Sie haben dann die Wahl zwischen einer manuellen oder automatischen Konfiguration per QRcode. Wenn Sie sich für die Konfiguration per QR-Code entscheiden, flashen Sie einfach den QR-Code, der im Mobile App-Plugin des zuvor erstellten Smartphone-Geräts vorhanden ist. In diesem Fall stellt die Anwendung automatisch die gesamte Konfiguration Ihres Jeedom wieder her und stellt automatisch eine Verbindung her. Wenn die Verbindung über WLAN mit Ihrem Zuhause verbunden ist, verwendet die Anwendung automatisch die in Ihrem Netzwerk interne Jeedom-Ethernet-Adresse. Wenn Sie in 4G oder 3G verbunden sind, wird Ihre externe Adresse verwendet, um eine Verbindung zu Ihrem Jeedom herzustellen (z. B. über den Jeedom-DNS-Dienst, wenn Sie ihn verwenden).. Wenn Sie sich für eine manuelle Konfiguration entscheiden, müssen Sie in diesem Fall die internen und externen IP-Adressen Ihres Jeedom manuell eingeben. Diese Option ist einer informierten Öffentlichkeit vorbehalten.
+Sie haben dann die Wahl zwischen einer manuellen oder automatischen Konfiguration per QRcode. Wenn Sie sich für die Konfiguration per QR-Code entscheiden, flashen Sie einfach den QR-Code, der im Mobile App-Plugin des zuvor erstellten Smartphone-Geräts vorhanden ist. In diesem Fall stellt die Anwendung automatisch die gesamte Konfiguration Ihres Jeedom wieder her und stellt automatisch eine Verbindung her. Wenn die Verbindung über WLAN mit Ihrem Zuhause verbunden ist, verwendet die Anwendung automatisch die in Ihrem Netzwerk interne Jeedom-Ethernet-Adresse. Wenn Sie in 4G oder 3G verbunden sind, wird Ihre externe Adresse verwendet, um eine Verbindung zu Ihrem Jeedom herzustellen (z. B. über den Jeedom-DNS-Dienst, wenn Sie ihn verwenden). Wenn Sie sich für eine manuelle Konfiguration entscheiden, müssen Sie in diesem Fall die internen und externen IP-Adressen Ihres Jeedom manuell eingeben. Diese Option ist einer informierten Öffentlichkeit vorbehalten.
 
-Die Anwendung wird synchronisiert und Sie gelangen auf ihre Homepage (vorangestellt von einem Mini-Präsentationshandbuch)..
+Die Anwendung wird synchronisiert und Sie gelangen auf ihre Homepage (vorangestellt von einem Mini-Präsentationshandbuch).
 
 Die mobile Jeedom-App ist jetzt betriebsbereit.
 
 ## Favoriten
 
-In der Anwendung können Sie Favoriten haben (Befehlsverknüpfungen, Plugins, Szenarien)..
+In der Anwendung können Sie Favoriten haben (Befehlsverknüpfungen, Plugins, Szenarien).
 
 Hier ist das Verfahren zum Erstellen :
 
@@ -113,7 +113,7 @@ Hier haben Sie jetzt eine Verknüpfung Ihrer Bestellung (in Version 1.1 Es wird 
 
 ## Generische Typen im Mobile Plugin
 
-Besser als Worte, hier ist ein Beispiel für die generischen Credits für ein Licht mit all seinen Steuerelementen (siehe auch die Lichttabelle unten). :
+Besser als Worte, hier ist ein Beispiel für die generischen Credits für ein Licht mit all seinen Steuerelementen (siehe auch die Lichttabelle unten) :
 
 ![generic type in plugin](../images/generic_type_in_plugin.jpg)
 
@@ -190,7 +190,7 @@ Bild                                       | Typ Gattung               | Dev Plu
 
 Bild                               | Typ Gattung               | Dev Plugin Teil            | Beschreibung          |
 :---------------------------------: | :--------------------------- | :--------------------------- | :------------------: |
-![HEATING](../images/HEATING.jpg)   | `Chauffage fil pilote Bouton ON`<br/>`Taste zum Ausheizen des Pilotkabels AUS`<br/>`Heizungs-Pilotdrahtzustand`<br/>`Knopf Pilot Drahtheizung` (optional) | `HEATING_ON`<br/>`HEATING_OFF`<br/>`HEATING_STATE`<br/>`HEATING_OTHER`|Mit den Schaltflächen ON / OFF und State können Sie die Schaltfläche ganz links in der Vorlage erstellen. Mit der Taste "Pilot Pilot Wire Heating" können Sie Schaltflächen hinzufügen (max. 5).
+![HEATING](../images/HEATING.jpg)   | `Chauffage fil pilote Bouton ON`<br/>`Taste zum Ausheizen des Pilotkabels AUS`<br/>`Heizungs-Pilotdrahtzustand`<br/>`Knopf Pilot Drahtheizung` (optional) | `HEATING_ON`<br/>`HEATING_OFF`<br/>`HEATING_STATE`<br/>`HEATING_OTHER`|Mit den Schaltflächen ON / OFF und State können Sie die Schaltfläche ganz links in der Vorlage erstellen. Mit der Taste "Pilot Pilot Wire Heating" können Sie Schaltflächen hinzufügen (max. 5)
 
 ## DIE JOKERS
 

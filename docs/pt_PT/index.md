@@ -10,23 +10,23 @@ Depois de instalar o plugin, você só precisa ativá-lo :
 
 ![mobile1](../images/mobile1.png)
 
-**Configuration**
+**Configuração**
 
 Para configurar o plug-in, você deve adicionar os telefones que poderão acessar o Jeedom.
 
-Para adicionar um telefone : **Plugins** → **Communication** → **App
-Mobile** → **Ajouter**
+Para adicionar um telefone : **Plugins** → **Comunicação** → **App
+Móvel** → **Adicionar**
 
 ![mobile2](../images/mobile2.png)
 
 Aqui estão os parâmetros para inserir :
 
 -   **Nome do equipamento móvel** : Nome do telefone
--   **Activer** : Ativando o acesso para este celular
+-   **Ativar** : Ativando o acesso para este celular
 -   **Tipo de celular** : Seleção de SO do telefone (iOS, Android)
--   **Utilisateur** : Usuário associado a este acesso
+-   **Usuário** : Usuário associado a este acesso
 
-> **Tip**
+> **Dica**
 >
 > A escolha do usuário é importante, pois determina o equipamento ao qual ele terá acesso de acordo com seus direitos.
 
@@ -62,13 +62,13 @@ Você encontrará os aplicativos nas persianas móveis :
 
 ## Primeiro lançamento do aplicativo
 
-Ao iniciar o aplicativo Mobile pela primeira vez, você receberá um tutorial para ajudá-lo a configurá-lo..
+Ao iniciar o aplicativo Mobile pela primeira vez, você receberá um tutorial para ajudá-lo a configurá-lo.
 
 Após baixar e instalar o aplicativo móvel Jeedom, inicie o aplicativo no seu smartphone.
 
 Você chega em um tutorial de configuração que recomendamos que você siga. Algumas etapas foram realizadas anteriormente.
 
-Você poderá escolher entre uma configuração manual ou automática pelo QRcode. Se você optar pela configuração do QRcode, basta exibir o QRcode presente no plug-in Mobile App no equipamento para smartphone criado anteriormente. Nesse caso, o aplicativo recuperará automaticamente toda a configuração do seu Jeedom e se conectará automaticamente. Quando estiver conectado à sua casa via Wifi, o aplicativo usará automaticamente o endereço Ethernet Jeedom interno à sua rede. Quando você está conectado em 4G ou 3G, ele usa seu endereço externo para conectar-se ao seu Jeedom (por exemplo, através do serviço DNS Jeedom, se você o usar). Se você escolher a configuração manual, nesse caso, será necessário inserir manualmente os endereços IP internos e externos do seu Jeedom.. Esta opção está reservada a um público informado.
+Você poderá escolher entre uma configuração manual ou automática pelo QRcode. Se você optar pela configuração do QRcode, basta exibir o QRcode presente no plug-in Mobile App no equipamento para smartphone criado anteriormente. Nesse caso, o aplicativo recuperará automaticamente toda a configuração do seu Jeedom e se conectará automaticamente. Quando estiver conectado à sua casa via Wifi, o aplicativo usará automaticamente o endereço Ethernet Jeedom interno à sua rede. Quando você está conectado em 4G ou 3G, ele usa seu endereço externo para conectar-se ao seu Jeedom (por exemplo, através do serviço DNS Jeedom, se você o usar). Se você escolher a configuração manual, nesse caso, será necessário inserir manualmente os endereços IP internos e externos do seu Jeedom. Esta opção está reservada a um público informado.
 
 O aplicativo será sincronizado e você chegará à sua página inicial (precedida por um mini guia de apresentação).
 
@@ -127,7 +127,7 @@ Imagem                           | Tipo genérico               | Parte do plugi
 ![LIGHT](../images/LIGHT_2.jpg) | `Lumière Bouton On`<br/>`Botão apagado`<br/>`Luz do estado` | `LIGHT_ON`<br/>`LIGHT_OFF`<br/>`LIGHT_STATE` | Feedback de status presente, o botão esquerdo alterna entre ligado e desligado |
 ![LIGHT](../images/LIGHT_2.jpg) | `Lumière Bouton Toggle`<br/>`Luz do estado` | `LIGHT_TOGGLE`<br/>`LIGHT_STATE` | Feedback de status presente, o botão esquerdo alterna entre ligado e desligado |
 ![LIGHT](../images/LIGHT_3.jpg) | `Lumière Bouton On`<br/>`Botão apagado`<br/>`Luz do estado`<br/>`Light Slider` | `LIGHT_ON`<br/>`LIGHT_OFF`<br/>`LIGHT_STATE`<br/>`LIGHT_SLIDER` | Feedback de status presente, o botão esquerdo permite alternar entre On e Off e o controle deslizante permite controlar a intensidade |
-![LIGHT](../images/LIGHT_4.jpg) | `Lumière Bouton On`<br/>`Botão apagado`<br/>`Luz do estado`<br/>`Light Slider`<br/>`Cor clara (informação)`<br/>`Cor clara (ação)`<br/>`Light Mode` (opcional, é usado para ter modos de luz, por exemplo, arco-íris na Hue philips) | `LIGHT_ON`<br/>`LIGHT_OFF`<br/>`LIGHT_STATE`<br/>`LIGHT_SLIDER`<br/>`LIGHT_COLOR`<br/>`LIGHT_SET_COLOR`<br/>`LIGHT_MODE` | Feedback de status presente, o botão esquerdo permite alternar entre On e Off e o controle deslizante permite controlar a intensidade. No círculo, a cor da lâmpada está presente e, quando você clica nela, pode alterar a cor e ativar um modo. |
+![LIGHT](../images/LIGHT_4.jpg) | `Lumière Bouton On`<br/>`Botão apagado`<br/>`Luz do estado`<br/>`Light Slider`<br/>`Cor clara (informação)`<br/>`Cor clara (ação)`<br/>`Light Mode` (opcional, é usado para ter modos de luz, por exemplo, arco-íris na Hue philips) | `LIGHT_ON`<br/>`LIGHT_OFF`<br/>`LIGHT_STATE`<br/>`LIGHT_SLIDER`<br/>`LIGHT_COLOR`<br/>`LIGHT_SET_COLOR`<br/>`LIGHT_MODE` | Feedback de status presente, o botão esquerdo permite alternar entre On e Off e o controle deslizante permite controlar a intensidade. No círculo, a cor da lâmpada está presente e, quando você clica nela, pode alterar a cor e ativar um modo |
 
 ### As tomadas
 
@@ -211,7 +211,7 @@ Imagem                         | Tipo genérico               | Parte do plugin 
 
 **Estou na versão Android do aplicativo (1.0.1 ou 1.0.0) Não consigo acessar minhas partes ou mesmo a configuração do aplicativo.**
 
-Você tinha um pop-up alertando sobre uma preocupação com as configurações de acessibilidade; basta acessar as configurações de acessibilidade do seu celular e desmarcar os aplicativos usando esta opção.. (Uma correção será trazida em breve no aplicativo)
+Você tinha um pop-up alertando sobre uma preocupação com as configurações de acessibilidade; basta acessar as configurações de acessibilidade do seu celular e desmarcar os aplicativos usando esta opção. (Uma correção será trazida em breve no aplicativo)
 
 **Eu tenho uma mensagem em uma das linhas dos meus módulos dizendo que
 sem um tipo genérico !**
@@ -221,7 +221,7 @@ Ao ler esta mensagem, ele informa qual tipo genérico está ausente para criar u
 **Estou com um problema com um dos plug-ins chamado totalmente integrado,
 termostato, alarme, câmera) !**
 
-Não hesite em acessar seu módulo e clique em Salvar novamente. Isso incluirá novamente os tipos genéricos associados ao módulo..
+Não hesite em acessar seu módulo e clique em Salvar novamente. Isso incluirá novamente os tipos genéricos associados ao módulo.
 
 **Não foi possível colocar uma informação sobre as boas-vindas do aplicativo !**
 

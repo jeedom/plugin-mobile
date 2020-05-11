@@ -10,21 +10,21 @@ After installing the plugin, you just need to activate it :
 
 ![mobile1](../images/mobile1.png)
 
-**Configuration**
+**Setup**
 
 To configure the plugin, you must add the phones that will be able to access Jeedom.
 
 To Add a phone : **Plugins** → **Communication** → **App
-Mobile** → **Ajouter**
+Mobile** → **Add**
 
 ![mobile2](../images/mobile2.png)
 
 Here are the parameters to enter :
 
 -   **Name of mobile equipment** : Phone name
--   **Activer** : Enabling access for this mobile
+-   **Activate** : Enabling access for this mobile
 -   **Mobile Type** : Phone OS selection (iOS, Android)
--   **Utilisateur** : User associated with this access
+-   **User** : User associated with this access
 
 > **Tip**
 >
@@ -62,7 +62,7 @@ You will find the applications on the mobile blinds :
 
 ## First launch of the app
 
-When you launch the Mobile application for the first time, you will be offered a tutorial to help you configure it..
+When you launch the Mobile application for the first time, you will be offered a tutorial to help you configure it.
 
 After downloading and installing your Jeedom mobile application, launch the application on your smartphone.
 

@@ -16,13 +16,13 @@
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
         "Plugins Spéciaux Compatibles": "Compatible Special Plugins",
-        "Disponibles dans la liste des plugins et intégrés au Dashboard de l’App Mobile.": "Available in the list of plugins and integrated into the Dashboard of the Mobile App.",
+        "Disponibles dans la liste des plugins et intégrés au Dashboard de l’App Mobile.": "Available in the list of plugins and integrated into the Dashboard of the Mobile App",
         "Plugins Validés Type générique": "Validated plugins Generic type",
-        "Visibles dans l'app, peuvent nécessiter un type générique, peuvent être désactivés.": "Visible in the app, may require a generic type, may be disabled.",
+        "Visibles dans l'app, peuvent nécessiter un type générique, peuvent être désactivés.": "Visible in the app, may require a generic type, may be disabled",
         "Plugins compatibles non transmis": "Compatible plugins not transmitted",
-        "Ne sont pas transmis à l’App Mobile.": "Are not transmitted to the Mobile App.",
+        "Ne sont pas transmis à l’App Mobile.": "Are not transmitted to the Mobile App",
         "Plugins non testés transmis à l'application": "Untested plugins transmitted to the application",
-        "Sont transmis à l’App Mobile en se basant sur les types génériques.": "Are transmitted to the Mobile App based on generic types.",
+        "Sont transmis à l’App Mobile en se basant sur les types génériques.": "Are transmitted to the Mobile App based on generic types",
         "Plugins non testés et non transmis": "Plugins not tested and not transmitted",
         "Ne sont pas transmis à l’App Mobile": "Are not transmitted to the Mobile App"
     },
@@ -45,7 +45,7 @@
         "Type Générique": "Type generic",
         "Icône": "Icon",
         "Aucun": "None",
-        " . $info['family'] . ": ". $ info ['family'].",
+        " . $info['family'] . ": "$ info ['family']",
         "Plugins compatibles": "Compatible plugins",
         "Modifications sauvegardées avec succès": "Changes successfully saved",
         "Sauvegarde effectuée": "Backup completed"
@@ -71,7 +71,7 @@
         "Type Générique": "Type generic",
         "Icône": "Icon",
         "Aucun": "None",
-        " . $info['family'] . ": ". $ info ['family'].",
+        " . $info['family'] . ": "$ info ['family']",
         "Objets \/ Pièces": "Objects \/ Pieces",
         "Modifications sauvegardées avec succès": "Changes successfully saved",
         "Sauvegarde effectuée avec succès": "Successfully saved"

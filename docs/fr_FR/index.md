@@ -1,4 +1,4 @@
-# Mobile
+# Plugin Mobile
 
 Plugin permettant d’utiliser l’application Mobile Jeedom.
 

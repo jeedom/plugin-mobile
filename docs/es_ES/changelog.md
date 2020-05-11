@@ -1,5 +1,6 @@
-Cambios 
-=========
+>**IMPORTANT**
+>
+>Como recordatorio si no hay información sobre la actualización, significa que solo se refiere a la actualización de documentación, traducción o texto.
 
 # 15/04/2020
 
@@ -13,7 +14,7 @@ Cambios
 
 -arreglar http.línea de error 39 si el teléfono no está autenticado en la primera conexión.
 
-# v1.3.0 
+# v1.3.0
 
 - Pedir notificación
 - Historial de notificaciones

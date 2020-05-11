@@ -1,5 +1,6 @@
-Changelog 
-=========
+>**IMPORTANT**
+>
+>Como lembrete, se não houver informações sobre a atualização, isso significa que se trata apenas da atualização da documentação, tradução ou texto.
 
 # 15/04/2020
 
@@ -13,7 +14,7 @@ Changelog
 
 -corrigir http.linha de erro 39 se o telefone não estiver autenticado na primeira conexão.
 
-# v1.3.0 
+# v1.3.0
 
 - ASK notificação
 - Histórico de notificações

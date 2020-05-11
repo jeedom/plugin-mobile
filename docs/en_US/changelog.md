@@ -1,5 +1,6 @@
-Changelog 
-=========
+>**IMPORTANT**
+>
+>As a reminder if there is no information on the update, it means that it only concerns the updating of documentation, translation or text.
 
 # 04/15/2020
 
@@ -13,7 +14,7 @@ Changelog
 
 -fix http.error line 39 if phone not authenticated at first connection.
 
-# v1.3.0 
+# v1.3.0
 
 - ASK notification
 - Notification history

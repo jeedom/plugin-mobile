@@ -16,13 +16,13 @@
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
         "Plugins Spéciaux Compatibles": "Kompatible Spezial-Plugins",
-        "Disponibles dans la liste des plugins et intégrés au Dashboard de l’App Mobile.": "Verfügbar in der Liste der Plugins und in das Dashboard der Mobile App integriert.",
+        "Disponibles dans la liste des plugins et intégrés au Dashboard de l’App Mobile.": "Verfügbar in der Liste der Plugins und in das Dashboard der Mobile App integriert",
         "Plugins Validés Type générique": "Validierte Plugins Generischer Typ",
-        "Visibles dans l'app, peuvent nécessiter un type générique, peuvent être désactivés.": "In der App sichtbar, erfordert möglicherweise einen generischen Typ, ist möglicherweise deaktiviert.",
+        "Visibles dans l'app, peuvent nécessiter un type générique, peuvent être désactivés.": "In der App sichtbar, erfordert möglicherweise einen generischen Typ, ist möglicherweise deaktiviert",
         "Plugins compatibles non transmis": "Kompatible Plugins werden nicht übertragen",
-        "Ne sont pas transmis à l’App Mobile.": "Werden nicht an die Mobile App übertragen.",
+        "Ne sont pas transmis à l’App Mobile.": "Werden nicht an die Mobile App übertragen",
         "Plugins non testés transmis à l'application": "Nicht getestete Plugins werden an die Anwendung übertragen",
-        "Sont transmis à l’App Mobile en se basant sur les types génériques.": "Werden basierend auf generischen Typen an die Mobile App übertragen.",
+        "Sont transmis à l’App Mobile en se basant sur les types génériques.": "Werden basierend auf generischen Typen an die Mobile App übertragen",
         "Plugins non testés et non transmis": "Plugins nicht getestet und nicht übertragen",
         "Ne sont pas transmis à l’App Mobile": "Werden nicht an die Mobile App übertragen"
     },
@@ -40,12 +40,12 @@
         "Le Plugin n\\'est pas compatible, vous pouvez l\\'activer si vous le souhaitez": "Das Plugin ist nicht kompatibel, Sie können es aktivieren, wenn Sie möchten",
         "Type Générique du Plugin": "Generischer Plugin-Typ",
         "Sauvegarder": "Speichern",
-        "Id Cmd": "",
+        "Id Cmd": "Id Cmd",
         "Nom de la Commande": "Name der Bestellung",
         "Type Générique": "Typ Gattung",
         "Icône": "Symbol",
         "Aucun": "Ohne",
-        " . $info['family'] . ": ". $ info ['Familie'].",
+        " . $info['family'] . ": "$ info ['Familie']",
         "Plugins compatibles": "Kompatible Plugins",
         "Modifications sauvegardées avec succès": "Änderungen erfolgreich gespeichert",
         "Sauvegarde effectuée": "Sicherung abgeschlossen"
@@ -66,12 +66,12 @@
         "Activer": "Aktivieren",
         "Type Générique de cet objet": "Generischer Typ dieses Objekts",
         "Sauvegarder": "Speichern",
-        "Id Cmd": "",
+        "Id Cmd": "Id Cmd",
         "Nom de la Commande": "Name der Bestellung",
         "Type Générique": "Typ Gattung",
         "Icône": "Symbol",
         "Aucun": "Ohne",
-        " . $info['family'] . ": ". $ info ['Familie'].",
+        " . $info['family'] . ": "$ info ['Familie']",
         "Objets \/ Pièces": "Objekte \/ Stücke",
         "Modifications sauvegardées avec succès": "Änderungen erfolgreich gespeichert",
         "Sauvegarde effectuée avec succès": "Speichern erfolgreich abgeschlossen"
@@ -105,6 +105,7 @@
         "Mobile": "Handy",
         "Notifications": "Benachrichtigungen",
         "Sauvegarde Mobile": "Mobile Backup",
+        "Commandes": "Befehle",
         "Nom de l'équipement mobile": "Name der mobilen Ausrüstung",
         "Nom de l'équipement template": "Gerätename Vorlage",
         "Objet parent": "Übergeordnetes Objekt",
@@ -116,9 +117,9 @@
         "Android": "Androide",
         "Windows (non officiel)": "Windows (inoffiziell)",
         "Utilisateurs": "Benutzer",
-        "QRCode": "",
+        "QRCode": "QRCode",
         "Id Mobile :": "Mobile ID:",
-        "Iq": "",
+        "Iq": "Iq",
         "ARN Mobile :": "ARN Mobile:",
         "ARN": "RNA",
         "ARN pour Monitoring :": "RNA zur Überwachung:",
@@ -126,7 +127,10 @@
         "Copier pour Monitoring": "Kopie zur Überwachung",
         "Sauvegarde Dashboard :": "Dashboard-Sicherung:",
         "Vérification en Cours": "Überprüfung läuft",
-        "Sauvegarde Favoris :": "Favoriten speichern:"
+        "Sauvegarde Favoris :": "Favoriten speichern:",
+        "Nom": "Name",
+        "Type": "Typ",
+        "Action": "Aktion"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
         "Santé Mobile": "Mobile Gesundheit",
@@ -140,7 +144,9 @@
         "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Fehler Keine interne Adresse (siehe Konfiguration Ihres Jeedom!)",
         "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Fehler Keine externe Adresse (siehe Konfiguration Ihres Jeedom!)",
         "Erreur Pas d\\'utilisateur selectionné": "Fehler Kein Benutzer ausgewählt",
-        "Configuration mise à jour": "Aktualisierte Konfiguration"
+        "Configuration mise à jour": "Aktualisierte Konfiguration",
+        "Nom": "Name",
+        "Tester": "Test"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
@@ -149,7 +155,7 @@
         "scenario non trouvé": "Szenario nicht gefunden"
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {
-        "Echec de l\\'envoi de la notification :": "",
+        "Echec de l\\'envoi de la notification :": "Benachrichtigung konnte nicht gesendet werden:",
         "$geoloc['id'].'-'.$geoloc['name']": "$ geoloc ['id'] .'- '. $ geoloc [' name ']",
         "Notification": "Benachrichtigung"
     },

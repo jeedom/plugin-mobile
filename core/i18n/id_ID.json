@@ -105,8 +105,9 @@
         "Mobile": "Mobil",
         "Notifications": "Pemberitahuan",
         "Sauvegarde Mobile": "",
+        "Commandes": "Perintah",
         "Nom de l'équipement mobile": "",
-        "Nom de l'équipement template": "",
+        "Nom de l'équipement template": "Nama peralatan contoh",
         "Objet parent": "Objek induk",
         "Aucun": "Tak ada",
         "Activer": "Mengaktifkan",
@@ -126,7 +127,10 @@
         "Copier pour Monitoring": "",
         "Sauvegarde Dashboard :": "",
         "Vérification en Cours": "",
-        "Sauvegarde Favoris :": ""
+        "Sauvegarde Favoris :": "",
+        "Nom": "Nama",
+        "Type": "Jenis",
+        "Action": "Tindakan"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
         "Santé Mobile": "",
@@ -140,12 +144,14 @@
         "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "",
         "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "",
         "Erreur Pas d\\'utilisateur selectionné": "",
-        "Configuration mise à jour": ""
+        "Configuration mise à jour": "",
+        "Nom": "Nama",
+        "Tester": "Coba"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401 - Akses tidak sah",
         "Equipement non trouvé : ": "",
-        "Aucune methode correspondante à : ": "Aucune methode correspondante à : ",
+        "Aucune methode correspondante à : ": "Aucune methode correspondante à :",
         "scenario non trouvé": ""
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {

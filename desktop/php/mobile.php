@@ -82,6 +82,7 @@ $plugin_widget = mobile::$_pluginWidget;
 		<li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Mobile}}</a></li>
 		<li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Notifications}}</a></li>
 		<li role="presentation"><a href="#sauvegardetab" aria-controls="sauvegarde" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Sauvegarde Mobile}}</a></li>
+        <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
 	</ul>
 
 	<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
@@ -203,6 +204,20 @@ $plugin_widget = mobile::$_pluginWidget;
 			</fieldset>
 		</form>
 		</div>
+                              
+        <div role="tabpanel" class="tab-pane" id="commandtab">
+<br/>
+<table id="table_cmd" class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>{{Nom}}</th><th>{{Type}}</th><th>{{Action}}</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+</div>
+                              
 	</div>
 </div>
 <?php

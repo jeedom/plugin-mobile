@@ -16,13 +16,13 @@
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
         "Plugins Spéciaux Compatibles": "Compatible Special Plugins",
-        "Disponibles dans la liste des plugins et intégrés au Dashboard de l’App Mobile.": "Available in the list of plugins and integrated into the Dashboard of the Mobile App.",
+        "Disponibles dans la liste des plugins et intégrés au Dashboard de l’App Mobile.": "Available in the list of plugins and integrated into the Dashboard of the Mobile App",
         "Plugins Validés Type générique": "Validated plugins Generic type",
-        "Visibles dans l'app, peuvent nécessiter un type générique, peuvent être désactivés.": "Visible in the app, may require a generic type, may be disabled.",
+        "Visibles dans l'app, peuvent nécessiter un type générique, peuvent être désactivés.": "Visible in the app, may require a generic type, may be disabled",
         "Plugins compatibles non transmis": "Compatible plugins not transmitted",
-        "Ne sont pas transmis à l’App Mobile.": "Are not transmitted to the Mobile App.",
+        "Ne sont pas transmis à l’App Mobile.": "Are not transmitted to the Mobile App",
         "Plugins non testés transmis à l'application": "Untested plugins transmitted to the application",
-        "Sont transmis à l’App Mobile en se basant sur les types génériques.": "Are transmitted to the Mobile App based on generic types.",
+        "Sont transmis à l’App Mobile en se basant sur les types génériques.": "Are transmitted to the Mobile App based on generic types",
         "Plugins non testés et non transmis": "Plugins not tested and not transmitted",
         "Ne sont pas transmis à l’App Mobile": "Are not transmitted to the Mobile App"
     },
@@ -40,12 +40,12 @@
         "Le Plugin n\\'est pas compatible, vous pouvez l\\'activer si vous le souhaitez": "The Plugin is not compatible, you can activate it if you wish",
         "Type Générique du Plugin": "Generic Plugin Type",
         "Sauvegarder": "Save",
-        "Id Cmd": "",
+        "Id Cmd": "Id Cmd",
         "Nom de la Commande": "Name of the order",
         "Type Générique": "Type generic",
         "Icône": "Icon",
         "Aucun": "None",
-        " . $info['family'] . ": ". $ info ['family'].",
+        " . $info['family'] . ": "$ info ['family']",
         "Plugins compatibles": "Compatible plugins",
         "Modifications sauvegardées avec succès": "Changes successfully saved",
         "Sauvegarde effectuée": "Backup completed"
@@ -66,12 +66,12 @@
         "Activer": "Activate",
         "Type Générique de cet objet": "Generic type of this object",
         "Sauvegarder": "Save",
-        "Id Cmd": "",
+        "Id Cmd": "Id Cmd",
         "Nom de la Commande": "Name of the order",
         "Type Générique": "Type generic",
         "Icône": "Icon",
         "Aucun": "None",
-        " . $info['family'] . ": ". $ info ['family'].",
+        " . $info['family'] . ": "$ info ['family']",
         "Objets \/ Pièces": "Objects \/ Pieces",
         "Modifications sauvegardées avec succès": "Changes successfully saved",
         "Sauvegarde effectuée avec succès": "Successfully saved"
@@ -79,12 +79,12 @@
     "plugins\/mobile\/desktop\/modal\/info_app.mobile.php": {
         "JSON valide": "Valid json",
         "Objets \/ Pièces": "Objects \/ Pieces",
-        "Modules": "",
+        "Modules": "Modules",
         "Commandes": "Commands",
         "Scénarios": "Scenarios",
         "Messages": "Posts",
         "Designs": "Designs",
-        "Configurations": ""
+        "Configurations": "Configurations"
     },
     "plugins\/mobile\/desktop\/php\/mobile.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",
@@ -105,6 +105,7 @@
         "Mobile": "Mobile",
         "Notifications": "Notifications",
         "Sauvegarde Mobile": "Mobile Backup",
+        "Commandes": "Commands",
         "Nom de l'équipement mobile": "Name of mobile equipment",
         "Nom de l'équipement template": "Equipment name template",
         "Objet parent": "Parent object",
@@ -116,9 +117,9 @@
         "Android": "Android",
         "Windows (non officiel)": "Windows (unofficial)",
         "Utilisateurs": "Users",
-        "QRCode": "",
+        "QRCode": "QRCode",
         "Id Mobile :": "Mobile Id:",
-        "Iq": "",
+        "Iq": "Iq",
         "ARN Mobile :": "ARN Mobile:",
         "ARN": "RNA",
         "ARN pour Monitoring :": "RNA for Monitoring:",
@@ -126,7 +127,10 @@
         "Copier pour Monitoring": "Copy for Monitoring",
         "Sauvegarde Dashboard :": "Dashboard backup:",
         "Vérification en Cours": "Verification in progress",
-        "Sauvegarde Favoris :": "Save Favorites:"
+        "Sauvegarde Favoris :": "Save Favorites:",
+        "Nom": "Name",
+        "Type": "Type",
+        "Action": "Action"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
         "Santé Mobile": "Mobile Health",
@@ -140,7 +144,9 @@
         "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Error No internal address (see configuration of your Jeedom!)",
         "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Error No external address (see configuration of your Jeedom!)",
         "Erreur Pas d\\'utilisateur selectionné": "Error No user selected",
-        "Configuration mise à jour": "Updated configuration"
+        "Configuration mise à jour": "Updated configuration",
+        "Nom": "Name",
+        "Tester": "Test"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",
@@ -149,12 +155,12 @@
         "scenario non trouvé": "scenario not found"
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {
-        "Echec de l\\'envoi de la notification :": "",
+        "Echec de l\\'envoi de la notification :": "Failed to send notification:",
         "$geoloc['id'].'-'.$geoloc['name']": "$ geoloc ['id'] .'- '. $ geoloc [' name ']",
-        "Notification": ""
+        "Notification": "Notification"
     },
     "plugins\/mobile\/core\/api\/mobile.api.php": {
-        "JSONRPC object not defined": "",
+        "JSONRPC object not defined": "JSONRPC object not defined",
         "EqLogic inconnu : ": "Unknown EqLogic:",
         "Cmd inconnu : ": "Unknown Cmd:",
         "pas d\\'id : ": "no id:",

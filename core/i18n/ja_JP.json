@@ -105,8 +105,9 @@
         "Mobile": "モバイル",
         "Notifications": "通知",
         "Sauvegarde Mobile": "",
+        "Commandes": "コマンド",
         "Nom de l'équipement mobile": "",
-        "Nom de l'équipement template": "",
+        "Nom de l'équipement template": "テンプレート機器の名称",
         "Objet parent": "親オブジェクト",
         "Aucun": "何でもありません",
         "Activer": "アクティブ",
@@ -126,7 +127,10 @@
         "Copier pour Monitoring": "",
         "Sauvegarde Dashboard :": "",
         "Vérification en Cours": "",
-        "Sauvegarde Favoris :": ""
+        "Sauvegarde Favoris :": "",
+        "Nom": "表題",
+        "Type": "タイプ",
+        "Action": "アクション"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
         "Santé Mobile": "",
@@ -140,7 +144,9 @@
         "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "",
         "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "",
         "Erreur Pas d\\'utilisateur selectionné": "",
-        "Configuration mise à jour": ""
+        "Configuration mise à jour": "",
+        "Nom": "表題",
+        "Tester": "テスト"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401-不正アクセス",

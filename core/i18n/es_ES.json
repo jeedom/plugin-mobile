@@ -16,13 +16,13 @@
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
         "Plugins Spéciaux Compatibles": "Complementos especiales compatibles",
-        "Disponibles dans la liste des plugins et intégrés au Dashboard de l’App Mobile.": "Disponible en la lista de complementos e integrado en el Panel de la aplicación móvil.",
+        "Disponibles dans la liste des plugins et intégrés au Dashboard de l’App Mobile.": "Disponible en la lista de complementos e integrado en el Panel de la aplicación móvil",
         "Plugins Validés Type générique": "Complementos validados Tipo genérico",
-        "Visibles dans l'app, peuvent nécessiter un type générique, peuvent être désactivés.": "Visible en la aplicación, puede requerir un tipo genérico, puede estar deshabilitado.",
+        "Visibles dans l'app, peuvent nécessiter un type générique, peuvent être désactivés.": "Visible en la aplicación, puede requerir un tipo genérico, puede estar deshabilitado",
         "Plugins compatibles non transmis": "Complementos compatibles no transmitidos",
-        "Ne sont pas transmis à l’App Mobile.": "No se transmiten a la aplicación móvil.",
+        "Ne sont pas transmis à l’App Mobile.": "No se transmiten a la aplicación móvil",
         "Plugins non testés transmis à l'application": "Complementos no probados transmitidos a la aplicación",
-        "Sont transmis à l’App Mobile en se basant sur les types génériques.": "Se transmiten a la aplicación móvil en base a tipos genéricos.",
+        "Sont transmis à l’App Mobile en se basant sur les types génériques.": "Se transmiten a la aplicación móvil en base a tipos genéricos",
         "Plugins non testés et non transmis": "Complementos no probados y no transmitidos",
         "Ne sont pas transmis à l’App Mobile": "No se transmiten a la aplicación móvil"
     },
@@ -40,12 +40,12 @@
         "Le Plugin n\\'est pas compatible, vous pouvez l\\'activer si vous le souhaitez": "El complemento no es compatible, puede activarlo si lo desea",
         "Type Générique du Plugin": "Tipo de complemento genérico",
         "Sauvegarder": "Guardar",
-        "Id Cmd": "",
+        "Id Cmd": "Id Cmd",
         "Nom de la Commande": "Nombre de la orden",
         "Type Générique": "Tipo genérico",
         "Icône": "Icono",
         "Aucun": "Ninguna",
-        " . $info['family'] . ": ". $ info ['familia'].",
+        " . $info['family'] . ": "$ info ['familia']",
         "Plugins compatibles": "Complementos compatibles",
         "Modifications sauvegardées avec succès": "Cambios guardados exitosamente",
         "Sauvegarde effectuée": "Guardado correctamente"
@@ -66,12 +66,12 @@
         "Activer": "Activar",
         "Type Générique de cet objet": "Tipo genérico de este objeto",
         "Sauvegarder": "Guardar",
-        "Id Cmd": "",
+        "Id Cmd": "Id Cmd",
         "Nom de la Commande": "Nombre de la orden",
         "Type Générique": "Tipo genérico",
         "Icône": "Icono",
         "Aucun": "Ninguna",
-        " . $info['family'] . ": ". $ info ['familia'].",
+        " . $info['family'] . ": "$ info ['familia']",
         "Objets \/ Pièces": "Objetos \/ Piezas",
         "Modifications sauvegardées avec succès": "Cambios guardados exitosamente",
         "Sauvegarde effectuée avec succès": "Guardado correctamente"
@@ -105,7 +105,8 @@
         "Mobile": "Móvil",
         "Notifications": "Notificaciones",
         "Sauvegarde Mobile": "Copia de seguridad móvil",
-        "Nom de l'équipement mobile": "Nombre del equipo móvil.",
+        "Commandes": "Comandos",
+        "Nom de l'équipement mobile": "Nombre del equipo móvil",
         "Nom de l'équipement template": "Plantilla de nombre de equipo",
         "Objet parent": "Objeto padre",
         "Aucun": "Ninguna",
@@ -116,17 +117,20 @@
         "Android": "Androide",
         "Windows (non officiel)": "Windows (no oficial)",
         "Utilisateurs": "Usuarios",
-        "QRCode": "",
+        "QRCode": "Código QR",
         "Id Mobile :": "Identificación móvil:",
-        "Iq": "",
+        "Iq": "Iq",
         "ARN Mobile :": "ARN Mobile:",
-        "ARN": "",
+        "ARN": "ARN",
         "ARN pour Monitoring :": "ARN para monitoreo:",
         "ARN pour Monitoring": "ARN para monitoreo",
         "Copier pour Monitoring": "Copia para monitoreo",
         "Sauvegarde Dashboard :": "Copia de seguridad del tablero de instrumentos:",
         "Vérification en Cours": "Verificación en progreso",
-        "Sauvegarde Favoris :": "Guardar favoritos:"
+        "Sauvegarde Favoris :": "Guardar favoritos:",
+        "Nom": "Nombre",
+        "Type": "Tipo",
+        "Action": "Acción"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
         "Santé Mobile": "Salud móvil",
@@ -140,7 +144,9 @@
         "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Error Sin dirección interna (¡vea la configuración de su Jeedom!)",
         "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Error Sin dirección externa (¡vea la configuración de su Jeedom!)",
         "Erreur Pas d\\'utilisateur selectionné": "Error Ningún usuario seleccionado",
-        "Configuration mise à jour": "Configuración actualizada"
+        "Configuration mise à jour": "Configuración actualizada",
+        "Nom": "Nombre",
+        "Tester": "Probar"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado",
@@ -149,7 +155,7 @@
         "scenario non trouvé": "escenario no encontrado"
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {
-        "Echec de l\\'envoi de la notification :": "",
+        "Echec de l\\'envoi de la notification :": "Error al enviar la notificación:",
         "$geoloc['id'].'-'.$geoloc['name']": "$ geoloc ['id'] .'- '. $ geoloc [' nombre ']",
         "Notification": "Notificación"
     },

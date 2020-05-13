@@ -559,25 +559,25 @@ class mobile extends eqLogic {
 		log::add('mobile', 'debug', '|');
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
 		log::add('mobile', 'debug', '| Iq = ' . $geoloc['Iq']);
-		if (isset($eqLogicMobile)) {
+		if (is_object($eqLogicMobile)) {
 			log::add('mobile', 'debug', '| Mobile bien trouvé dans cette Jeedom');
 			log::add('mobile', 'debug', '| Objet > ' . $eqLogicMobile->getId());
+			$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
+			if (!is_object($cmdgeoloc)) {
+				$cmdgeoloc = new mobileCmd();
+				$cmdgeoloc->setLogicalId('geoId_' . $geoloc['id']);
+				$cmdgeoloc->setEqLogic_id($eqLogicMobile->getId());
+				$cmdgeoloc->setType('info');
+				$cmdgeoloc->setSubType('binary');
+				$cmdgeoloc->setIsVisible(1);
+			}
+			$cmdgeoloc->setName(__($geoloc['id'].'-'.$geoloc['name'], __FILE__));
+			$cmdgeoloc->setConfiguration('latitude', $geoloc['latitude']);
+			$cmdgeoloc->setConfiguration('longitude', $geoloc['longitude']);
+			$cmdgeoloc->setConfiguration('subtitle', $geoloc['subtitle']);
+			$cmdgeoloc->setConfiguration('radius', $geoloc['radius']);
+			$cmdgeoloc->save();
 		}
-		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
-		if (!is_object($cmdgeoloc)) {
-			$cmdgeoloc = new mobileCmd();
-			$cmdgeoloc->setLogicalId('geoId_' . $geoloc['id']);
-			$cmdgeoloc->setEqLogic_id($eqLogicMobile->getId());
-			$cmdgeoloc->setType('info');
-			$cmdgeoloc->setSubType('binary');
-			$cmdgeoloc->setIsVisible(1);
-		}
-		$cmdgeoloc->setName(__($geoloc['id'].'-'.$geoloc['name'], __FILE__));
-		$cmdgeoloc->setConfiguration('latitude', $geoloc['latitude']);
-		$cmdgeoloc->setConfiguration('longitude', $geoloc['longitude']);
-		$cmdgeoloc->setConfiguration('subtitle', $geoloc['subtitle']);
-		$cmdgeoloc->setConfiguration('radius', $geoloc['radius']);
-		$cmdgeoloc->save();
 	}
 
 	public function delGeoloc($geoloc) {

@@ -421,7 +421,21 @@ class mobile extends eqLogic {
 		$def = config::byKey('object:summary');
 		foreach ($def as $key => &$value) {
 			//$value['value'] = jeeObject::getGlobalSummary($key);
-			$value['icon'] = str_replace(array('<i class="', '"></i>'), '', $value['icon']);
+			if (isset($value['icon'])) {
+				if ($value['icon'] == '') {
+					unset($value['icon']);
+				} else {
+					$value['icon'] = str_replace(array('<i class="', '"></i>'), '', $value['icon']);
+                  			$tableEx = array();
+                  			$explodes = explode(' ', $value['icon']);
+                  			foreach ($explodes as $explode){
+                    				if(substr($explode, 0, 5) != 'icon_'){
+                          				$tableEx[] = $explode;
+                        			}
+                    			}
+                  			$value['icon'] = implode(' ', $tableEx);
+				}
+			}
 		}
 		return $def;
 	}

@@ -172,7 +172,8 @@ class mobile extends eqLogic {
 					if($eqLogic_array['configuration']['real_eqType']){
 						$eqLogic_array['eqType_name'] = $eqLogic_array['configuration']['real_eqType'];
 					}
-				}else (!in_array($eqLogic_array['eqType_name'], self::$_pluginWidget)){
+				}
+				if(!in_array($eqLogic_array['eqType_name'], self::$_pluginWidget)){
 					unset($eqLogic_array['eqType_name']);
 				}
 				$return[] = $eqLogic_array;

@@ -168,7 +168,11 @@ class mobile extends eqLogic {
 				unset($eqLogic_array['logicalId']);
 				unset($eqLogic_array['isVisible']);
 				unset($eqLogic_array['isEnable']);
-				if (!in_array($eqLogic_array['eqType_name'], self::$_pluginWidget)) {
+				if ($eqLogic_array['eqType_name'] == 'jeelink'){
+					if($eqLogic_array['configuration']['real_eqType']){
+						$eqLogic_array['eqType_name'] = $eqLogic_array['configuration']['real_eqType'];
+					}
+				}else (!in_array($eqLogic_array['eqType_name'], self::$_pluginWidget)){
 					unset($eqLogic_array['eqType_name']);
 				}
 				$return[] = $eqLogic_array;

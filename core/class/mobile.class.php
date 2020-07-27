@@ -162,17 +162,17 @@ class mobile extends eqLogic {
 				if (isset($eqLogic_array["configuration"]["localApiKey"])) {
 					$eqLogic_array["localApiKey"] = $eqLogic_array["configuration"]["localApiKey"];
 				}
+				if ($eqLogic_array['eqType_name'] == 'jeelink'){
+					if(isset($eqLogic_array['configuration']['real_eqType'])){
+						$eqLogic_array['eqType_name'] = $eqLogic_array['configuration']['real_eqType'];
+					}
+				}
 				unset($eqLogic_array['eqReal_id'], $eqLogic_array['comment'], $eqLogic_array['configuration'], $eqLogic_array['specificCapatibilities'], $eqLogic_array['timeout'], $eqLogic_array['category'], $eqLogic_array['display']);
 				unset($eqLogic_array['status']);
 				unset($eqLogic_array['generic_type']);
 				unset($eqLogic_array['logicalId']);
 				unset($eqLogic_array['isVisible']);
 				unset($eqLogic_array['isEnable']);
-				if ($eqLogic_array['eqType_name'] == 'jeelink'){
-					if($eqLogic_array['configuration']['real_eqType']){
-						$eqLogic_array['eqType_name'] = $eqLogic_array['configuration']['real_eqType'];
-					}
-				}
 				if(!in_array($eqLogic_array['eqType_name'], self::$_pluginWidget)){
 					unset($eqLogic_array['eqType_name']);
 				}

@@ -17,8 +17,9 @@
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 function mobile_update(){
 	foreach (eqLogic::byType('mobile') as $mobile){
-	if($mobile->getLogicalId() == null || $mobile->getLogicalId() == ""){
-		$mobile->remove();
+		if($mobile->getLogicalId() == null || $mobile->getLogicalId() == ""){
+			$mobile->remove();
+		}
 	}
 	mobile::makeTemplateJson();
 }

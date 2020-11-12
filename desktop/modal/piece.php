@@ -35,7 +35,7 @@ $plugin_widget = mobile::$_pluginWidget;
 		if ($object->getDisplay('sendToApp', 1) == 0) {
 			$opacity = 'opacity:0.3;';
 		}
-		$_echo .= '<div class="objectDisplayCard cursor" data-object_id="' . $object->getId() . '" onclick="clickobject(\'' . $object->getId() . '\')">';
+		$_echo .= '<div class="objectDisplayCard cursor dClrIcon" data-object_id="' . $object->getId() . '" onclick="clickobject(\'' . $object->getId() . '\')">';
 		$_echo .= $object->getDisplay('icon', '<i class="fa fa-lemon-o"></i>');
 		$_echo .= '<span><center>' . $object->getName() . '</center></span>';
 		$_echo .= '</div>';

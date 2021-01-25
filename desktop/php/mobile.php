@@ -105,9 +105,11 @@ $plugin_widget = mobile::$_pluginWidget;
 						<select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
 							<option value="">{{Aucun}}</option>
 							<?php
-								foreach (jeeObject::all() as $object) {
-									echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
-								}
+							$options = '';
+							foreach ((jeeObject::buildTree(null, false)) as $object) {
+								$options .= '<option value="' . $object->getId() . '">' . str_repeat('&nbsp;&nbsp;', $object->getConfiguration('parentNumber')) . $object->getName() . '</option>';
+							}
+							echo $options;
 							?>
 						</select>
 					</div>
@@ -159,7 +161,7 @@ $plugin_widget = mobile::$_pluginWidget;
 		</div>
 
 		<div role="tabpanel" class="tab-pane" id="notificationtab">
-		<br/><br/>	
+		<br/><br/>
 		<form class="form-horizontal">
 			<fieldset>
 				<div class="form-group">
@@ -204,7 +206,7 @@ $plugin_widget = mobile::$_pluginWidget;
 			</fieldset>
 		</form>
 		</div>
-                              
+
         <div role="tabpanel" class="tab-pane" id="commandtab">
 <br/>
 <table id="table_cmd" class="table table-bordered table-condensed">
@@ -217,7 +219,7 @@ $plugin_widget = mobile::$_pluginWidget;
     </tbody>
 </table>
 </div>
-                              
+
 	</div>
 </div>
 <?php

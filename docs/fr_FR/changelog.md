@@ -4,6 +4,11 @@
 >
 >Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte
 
+# 17/02/2021
+
+- Ajout de l'id de groupe pour les notifications Android.
+- Icones présentes pour les pièces dans la presentation.
+
 # 15/04/2020
 
 - Ajouts des Commandes de chaques mobile.

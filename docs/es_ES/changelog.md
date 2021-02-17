@@ -4,6 +4,11 @@
 >
 >Como recordatorio si no hay información sobre la actualización, significa que solo se refiere a la actualización de documentación, traducción o texto
 
+# 17/02/2021
+
+- Identificación de grupo agregada para notificaciones de Android.
+- Iconos presentes para las partes en la presentación.
+
 # 15/04/2020
 
 - Adición de órdenes para cada móvil.

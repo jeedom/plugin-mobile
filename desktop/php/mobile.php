@@ -176,6 +176,12 @@ $plugin_widget = mobile::$_pluginWidget;
 						<input type="text" id="arnComplet" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notificationArn" placeholder="{{ARN}}" disabled/>
 					</div>
 				</div>
+                <div class="form-group">
+					<label class="col-sm-2 control-label">{{TOKEN Mobile :}}</label>
+					<div class="col-sm-7">
+						<input type="text" id="arnComplet" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notificationRegistrationToken" placeholder="{{TOKEN}}" disabled/>
+					</div>
+				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">{{ARN pour Monitoring :}}</label>
 					<div class="col-sm-7">

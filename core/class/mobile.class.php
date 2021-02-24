@@ -524,7 +524,7 @@ class mobile extends eqLogic {
 		return $retour;
 	}
 
-	public static function jsonPublish($os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout) {
+	public static function jsonPublish($os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout, $token) {
 		$dateNotif = date("Y-m-d H:i:s");
 		$badge = 0;
 		$message = preg_replace("# {2,}#", " ", preg_replace("#(\r\n|\n\r|\n|\r)#", "\\\\\\n", $message));
@@ -535,36 +535,77 @@ class mobile extends eqLogic {
 		if ($type == 'ask_Text') {
 			$addAsk = '\"category\":\"TEXT_CATEGORY\",\"answer\":\"' . $answer . '\",\"timeout\":\"' . $timeout . '\",';
 		}
-		if ($os == 'ios') {
-			if ($badge == 'null') {
-				$publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",' . $addAsk . '\"alert\": {\"title\":\"' . $titre . '\",\"body\":\"' . $message . '\"},\"badge\":\"0\",\"sound\":\"silence.caf\",\"date\":\"' . $dateNotif . '\",\"idNotif\":\"' . $idNotif . '\"}}"}';
-			} else {
-				$publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",' . $addAsk . '\"alert\": {\"title\":\"' . $titre . '\",\"body\":\"' . $message . '\"},\"badge\":\"'. $badge .'\",\"sound\":\"silence.caf\",\"date\":\"' . $dateNotif . '\",\"idNotif\":\"' . $idNotif . '\"}}"}';
-			}
-		} else if ($os == 'android') {
-			$publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"notification\":{\"android_channel_id\":\"JEEDOM_CHANNEL\",\"notificationId\":\"' . rand(3, 5) . '\",\"title\":\"' . $titre . '\",\"text\":\"' . $message . '\",' . $addAsk . '\"vibrate\":\"true\",\"largeIcon\":\"/appicon.png\",\"smallIcon\":\"notificon\",\"lights\":\"true\",\"sound\":\"default\",\"idNotif\":\"' . $idNotif . '\",\"date\":\"' . $dateNotif . '\"}, \"data\": {\"notificationId\":\"' . rand(3, 5) . '\",\"title\":\"' . $titre . '\",\"text\":\"' . $message . '\",' . $addAsk . '\"vibrate\":\"true\",\"largeIcon\":\"/appicon.png\",\"smallIcon\":\"notificon\",\"lights\":\"true\",\"sound\":\"default\",\"idNotif\":\"' . $idNotif . '\",\"date\":\"' . $dateNotif . '\"}}"}';
-		} else if ($os == 'microsoft') {
+      
+      	if($token == null){
+          if ($os == 'ios') {
+              if ($badge == 'null') {
+                  $publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",' . $addAsk . '\"alert\": {\"title\":\"' . $titre . '\",\"body\":\"' . $message . '\"},\"badge\":\"0\",\"sound\":\"silence.caf\",\"date\":\"' . $dateNotif . '\",\"idNotif\":\"' . $idNotif . '\"}}"}';
+              } else {
+                  $publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",' . $addAsk . '\"alert\": {\"title\":\"' . $titre . '\",\"body\":\"' . $message . '\"},\"badge\":\"'. $badge .'\",\"sound\":\"silence.caf\",\"date\":\"' . $dateNotif . '\",\"idNotif\":\"' . $idNotif . '\"}}"}';
+              }
+          } else if ($os == 'android') {
+              $publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"notification\": {\"e\":0,\"title\":\"test\",\"body\":\"NotficationTEST\"},\"data\":{\"ticker\":\"test\",\"android_channel_id\":\"JEEDOM_CHANNEL\",\"notificationId\":\"' . $idNotif . '\",\"title\":\"' . $titre . '\",\"text\":\"' . $message . '\",' . $addAsk . '\"sound\":\"default\",\"idNotif\":\"' . $idNotif . '\",\"date\":\"' . $dateNotif . '\",\"smallIcon\":\"notificon\",\"largeIcon\":\"appicon.png\"}}"}';
+          } else if ($os == 'microsoft') {
 
-		}
+          }
+        }else{
+        	if ($os == 'android') {
+              
+              $android = [
+                'notification' => [
+                	'title' => $titre,
+                	'body' => $message,
+                	'channel_id' => 'default'
+                ]
+              ];
+              
+              $notification = [
+              	'title' => $titre,
+               	'body' => $message
+              ];
+              
+              $data = [
+              	'title' => $titre,
+                'text' => $message,
+                'idNotif' => strval($idNotif),
+                'channelId' => 'default',
+                'date' => $dateNotif
+              ];
+              
+              $publish = [
+              	'token' => $token,
+                'notification' => $notification,
+                'android' => $android,
+                'data' => $data
+              ];
+              
+            }
+        }
 		return $publish;
 	}
 
-	public static function notification($arn, $os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout) {
+	public static function notification($arn, $os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout, $token) {
 		log::add('mobile', 'debug', 'notification en cours !');
-		$publish = ($badge == 'null') ? mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout) : mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout);
-		log::add('mobile', 'debug', 'JSON envoyé : ' . $publish);
-		$post = [
-			'arn' => $arn,
-			'text' => $publish,
-		];
-		
-		$url = config::byKey('service::cloud::url','core','https://cloud.jeedom.com').'/service/notif';
+		$publish = ($badge == 'null') ? mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout, $token) : mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout, $token);
+      	if($token != null){
+          	$url = config::byKey('service::cloud::url','core','https://cloud.jeedom.com').'/service/fcm';
+            $post = ['message' => $publish];
+          	log::add('mobile', 'debug', 'JSON envoyé : ' . json_encode($post));
+        }else{
+          	log::add('mobile', 'debug', 'JSON envoyé : ' . $publish);
+        	$post = [
+				'arn' => $arn,
+				'text' => $publish,
+			];
+            $url = config::byKey('service::cloud::url','core','https://cloud.jeedom.com').'/service/notif';
+        }
+      
 		$request_http = new com_http($url);
-		$request_http->setHeader(array(
-		      'Content-Type: application/json',
-		      'Autorization: '.sha512(strtolower(config::byKey('market::username')).':'.config::byKey('market::password'))
-		));
-		$request_http->setPost(json_encode($post));
+        $request_http->setHeader(array(
+        	'Content-Type: application/json',
+        	'Autorization: '.sha512(strtolower(config::byKey('market::username')).':'.config::byKey('market::password'))
+        ));
+        $request_http->setPost(json_encode($post));
 		$result = json_decode($request_http->exec(10,1),true);
 		if(!isset($result['state']) || $result['state'] != 'ok'){
 			throw new Exception(__('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));	
@@ -687,12 +728,12 @@ class mobileCmd extends cmd {
 			$askType = ($_options['answer']) ? 'ask_Text' : 'notif';
 			$timeout = ($_options['timeout']) ? $_options['timeout'] : 'nok';
 			log::add('mobile', 'debug', 'Commande de notification ' . $askType, 'config');
-			if ($eqLogic->getConfiguration('notificationArn', null) != null && $eqLogic->getConfiguration('type_mobile', null) != null) {
+			if (($eqLogic->getConfiguration('notificationArn', null) != null || $eqLogic->getConfiguration('notificationRegistrationToken', null) != null ) && $eqLogic->getConfiguration('type_mobile', null) != null) {
 				$idNotif = $eqLogic->getConfiguration('idNotif', 0);
 				$idNotif = $idNotif + 1;
 				$eqLogic->setConfiguration('idNotif', $idNotif);
 				$eqLogic->save();
-				mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], null, $askType, $idNotif, $answer, $timeout);
+				mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], null, $askType, $idNotif, $answer, $timeout,$eqLogic->getConfiguration('notificationRegistrationToken', null));
 				log::add('mobile', 'debug', 'Action : Envoi d\'une configuration ', 'config');
 			} else {
 				log::add('mobile', 'debug', 'ARN non configuré ', 'config');

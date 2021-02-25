@@ -4,6 +4,12 @@
 >
 >As a reminder if there is no information on the update, it means that it only concerns the updating of documentation, translation or text
 
+# 02/24/2021
+
+- New Notification engine for Android.
+- Adding images (Cameras, Reports etc ...) for Android.
+- Support for version 1.4.1 from the Android app.
+
 # 02/17/2021
 
 - Added group id for Android notifications.

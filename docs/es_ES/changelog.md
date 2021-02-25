@@ -4,6 +4,12 @@
 >
 >Como recordatorio si no hay información sobre la actualización, significa que solo se refiere a la actualización de documentación, traducción o texto
 
+# 24/02/2021
+
+- Nuevo motor de notificaciones para Android.
+- Agregar imágenes (cámaras, informes, etc.) para Android.
+- Soporte para la versión 1.4.1 de la aplicación de Android.
+
 # 17/02/2021
 
 - Identificación de grupo agregada para notificaciones de Android.

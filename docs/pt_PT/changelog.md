@@ -4,6 +4,12 @@
 >
 >Como lembrete, se não houver informações sobre a atualização, isso significa que se trata apenas da atualização da documentação, tradução ou texto
 
+# 24/02/2021
+
+- Novo mecanismo de notificação para Android.
+- Adicionando imagens (câmeras, relatórios etc ...) para Android.
+- Suporte para versão 1.4.1 do aplicativo Android.
+
 # 17/02/2021
 
 - Adicionado id de grupo para notificações Android.

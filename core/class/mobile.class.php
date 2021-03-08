@@ -527,7 +527,6 @@ class mobile extends eqLogic {
 	public static function jsonPublish($os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout, $token, $photo) {
 		$dateNotif = date("Y-m-d H:i:s");
 		$badge = 0;
-		$message = preg_replace("# {2,}#", " ", preg_replace("#(\r\n|\n\r|\n|\r)#", "\\\\\\n", $message));
 		if ($timeout != 'nok') {
 			$timeout = date('Y-m-d H:i:s', strtotime("$dateNotif + $timeout SECONDS"));
 		}
@@ -537,6 +536,7 @@ class mobile extends eqLogic {
 		}
       
       	if($token == null){
+	  $message = preg_replace("# {2,}#", " ", preg_replace("#(\r\n|\n\r|\n|\r)#", "\\\\\\n", $message));
           if ($os == 'ios') {
               if ($badge == 'null') {
                   $publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",' . $addAsk . '\"alert\": {\"title\":\"' . $titre . '\",\"body\":\"' . $message . '\"},\"badge\":\"0\",\"sound\":\"silence.caf\",\"date\":\"' . $dateNotif . '\",\"idNotif\":\"' . $idNotif . '\"}}"}';

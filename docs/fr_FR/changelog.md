@@ -9,6 +9,7 @@
 - Nouveau moteur de Notification pour Android.
 - Ajout des images (Cameras, Rapports etc...) pour Android.
 - Prise en charge de la version 1.4.1 de l'app Android.
+- Prise en charge des emoticons et des retour a la ligne avec la nouvelle version Android 1.4.1
 
 # 17/02/2021
 

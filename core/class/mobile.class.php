@@ -524,10 +524,9 @@ class mobile extends eqLogic {
 		return $retour;
 	}
 
-	public static function jsonPublish($os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout) {
+	public static function jsonPublish($os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout, $token, $photo) {
 		$dateNotif = date("Y-m-d H:i:s");
 		$badge = 0;
-		$message = preg_replace("# {2,}#", " ", preg_replace("#(\r\n|\n\r|\n|\r)#", "\\\\\\n", $message));
 		if ($timeout != 'nok') {
 			$timeout = date('Y-m-d H:i:s', strtotime("$dateNotif + $timeout SECONDS"));
 		}
@@ -535,36 +534,86 @@ class mobile extends eqLogic {
 		if ($type == 'ask_Text') {
 			$addAsk = '\"category\":\"TEXT_CATEGORY\",\"answer\":\"' . $answer . '\",\"timeout\":\"' . $timeout . '\",';
 		}
-		if ($os == 'ios') {
-			if ($badge == 'null') {
-				$publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",' . $addAsk . '\"alert\": {\"title\":\"' . $titre . '\",\"body\":\"' . $message . '\"},\"badge\":\"0\",\"sound\":\"silence.caf\",\"date\":\"' . $dateNotif . '\",\"idNotif\":\"' . $idNotif . '\"}}"}';
-			} else {
-				$publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",' . $addAsk . '\"alert\": {\"title\":\"' . $titre . '\",\"body\":\"' . $message . '\"},\"badge\":\"'. $badge .'\",\"sound\":\"silence.caf\",\"date\":\"' . $dateNotif . '\",\"idNotif\":\"' . $idNotif . '\"}}"}';
-			}
-		} else if ($os == 'android') {
-			$publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"notification\":{\"notificationId\":\"' . rand(3, 5) . '\",\"title\":\"' . $titre . '\",\"text\":\"' . $message . '\",' . $addAsk . '\"vibrate\":\"true\",\"largeIcon\":\"/appicon.png\",\"smallIcon\":\"notificon\",\"lights\":\"true\",\"sound\":\"default\",\"idNotif\":\"' . $idNotif . '\",\"date\":\"' . $dateNotif . '\"}, \"data\": {\"notificationId\":\"' . rand(3, 5) . '\",\"title\":\"' . $titre . '\",\"text\":\"' . $message . '\",' . $addAsk . '\"vibrate\":\"true\",\"largeIcon\":\"/appicon.png\",\"smallIcon\":\"notificon\",\"lights\":\"true\",\"sound\":\"default\",\"idNotif\":\"' . $idNotif . '\",\"date\":\"' . $dateNotif . '\"}}"}';
-		} else if ($os == 'microsoft') {
+      
+      	if($token == null){
+	  $message = preg_replace("# {2,}#", " ", preg_replace("#(\r\n|\n\r|\n|\r)#", "\\\\\\n", $message));
+          if ($os == 'ios') {
+              if ($badge == 'null') {
+                  $publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",' . $addAsk . '\"alert\": {\"title\":\"' . $titre . '\",\"body\":\"' . $message . '\"},\"badge\":\"0\",\"sound\":\"silence.caf\",\"date\":\"' . $dateNotif . '\",\"idNotif\":\"' . $idNotif . '\"}}"}';
+              } else {
+                  $publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",' . $addAsk . '\"alert\": {\"title\":\"' . $titre . '\",\"body\":\"' . $message . '\"},\"badge\":\"'. $badge .'\",\"sound\":\"silence.caf\",\"date\":\"' . $dateNotif . '\",\"idNotif\":\"' . $idNotif . '\"}}"}';
+              }
+          } else if ($os == 'android') {
+              $publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"notification\": {\"e\":0,\"title\":\"test\",\"body\":\"NotficationTEST\"},\"data\":{\"ticker\":\"test\",\"android_channel_id\":\"JEEDOM_CHANNEL\",\"notificationId\":\"' . $idNotif . '\",\"title\":\"' . $titre . '\",\"text\":\"' . $message . '\",' . $addAsk . '\"sound\":\"default\",\"idNotif\":\"' . $idNotif . '\",\"date\":\"' . $dateNotif . '\",\"smallIcon\":\"notificon\",\"largeIcon\":\"appicon.png\"}}"}';
+          } else if ($os == 'microsoft') {
 
-		}
+          }
+        }else{
+        	if ($os == 'android') {
+              $android = [
+                'notification' => [
+                	'title' => $titre,
+                	'body' => $message,
+                	'channel_id' => 'default',
+                  	'color' => '#0000FF'
+                ]
+              ];
+              
+              $data = [
+              	'title' => $titre,
+                'text' => $message,
+                'idNotif' => strval($idNotif),
+                'channelId' => 'default',
+                'date' => $dateNotif
+              ];
+              
+              if($photo != null){
+                $notification = [
+              		'title' => $titre,
+               		'body' => $message,
+                  	'image' => $photo
+              	];
+              }else{
+              	$notification = [
+              	'title' => $titre,
+               	'body' => $message
+              ];
+              }
+              
+              $publish = [
+              	'token' => $token,
+                'notification' => $notification,
+                'android' => $android,
+                'data' => $data
+              ];
+              
+            }
+        }
 		return $publish;
 	}
 
-	public static function notification($arn, $os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout) {
+	public static function notification($arn, $os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout, $token, $photo) {
 		log::add('mobile', 'debug', 'notification en cours !');
-		$publish = ($badge == 'null') ? mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout) : mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout);
-		log::add('mobile', 'debug', 'JSON envoyé : ' . $publish);
-		$post = [
-			'arn' => $arn,
-			'text' => $publish,
-		];
-		
-		$url = config::byKey('service::cloud::url','core','https://cloud.jeedom.com').'/service/notif';
+		$publish = ($badge == 'null') ? mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout, $token, $photo) : mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout, $token, $photo);
+      	if($token != null){
+          	$url = config::byKey('service::cloud::url','core','https://cloud.jeedom.com').'/service/fcm';
+            $post = ['message' => $publish];
+          	log::add('mobile', 'debug', 'JSON envoyé : ' . json_encode($post));
+        }else{
+          	log::add('mobile', 'debug', 'JSON envoyé : ' . $publish);
+        	$post = [
+				'arn' => $arn,
+				'text' => $publish,
+			];
+            $url = config::byKey('service::cloud::url','core','https://cloud.jeedom.com').'/service/notif';
+        }
+      
 		$request_http = new com_http($url);
-		$request_http->setHeader(array(
-		      'Content-Type: application/json',
-		      'Autorization: '.sha512(strtolower(config::byKey('market::username')).':'.config::byKey('market::password'))
-		));
-		$request_http->setPost(json_encode($post));
+        $request_http->setHeader(array(
+        	'Content-Type: application/json',
+        	'Autorization: '.sha512(strtolower(config::byKey('market::username')).':'.config::byKey('market::password'))
+        ));
+        $request_http->setPost(json_encode($post));
 		$result = json_decode($request_http->exec(10,1),true);
 		if(!isset($result['state']) || $result['state'] != 'ok'){
 			throw new Exception(__('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));	
@@ -683,16 +732,55 @@ class mobileCmd extends cmd {
 			if ($_options['title'] == '' || $_options['title'] == $_options['message'] || $_options['title'] == ' ') {
 				$_options['title'] = 'Jeedom';
 			}
+          
 			$answer = ($_options['answer']) ? join(';', $_options['answer']) : null;
 			$askType = ($_options['answer']) ? 'ask_Text' : 'notif';
 			$timeout = ($_options['timeout']) ? $_options['timeout'] : 'nok';
 			log::add('mobile', 'debug', 'Commande de notification ' . $askType, 'config');
-			if ($eqLogic->getConfiguration('notificationArn', null) != null && $eqLogic->getConfiguration('type_mobile', null) != null) {
+			if (($eqLogic->getConfiguration('notificationArn', null) != null || $eqLogic->getConfiguration('notificationRegistrationToken', null) != null ) && $eqLogic->getConfiguration('type_mobile', null) != null) {
 				$idNotif = $eqLogic->getConfiguration('idNotif', 0);
 				$idNotif = $idNotif + 1;
 				$eqLogic->setConfiguration('idNotif', $idNotif);
 				$eqLogic->save();
-				mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], null, $askType, $idNotif, $answer, $timeout);
+              
+              
+              	if (isset($options['file'])) {
+            log::add('mobile', 'debug', 'FILE');
+			unset($data['file']);
+			$_options['files'] = explode(',', $options['file']);
+		}
+          if (isset($_options['files']) && is_array($_options['files'])) {
+            log::add('mobile', 'debug', 'FILES');
+			foreach ($_options['files'] as $file) {
+              	log::add('mobile', 'debug', 'FILES as FILE');
+             	if (trim($file) == '') {
+					continue;
+				}
+              	log::add('mobile', 'debug', 'Continue');
+              	$ext = pathinfo($file, PATHINFO_EXTENSION);
+              	log::add('mobile', 'debug', $ext.' pour > '.$file);
+				if (in_array($ext, array('gif', 'jpeg', 'jpg', 'png'))) {
+                  	log::add('mobile', 'debug', 'type photo !');
+                  
+                  	$url = network::getNetworkAccess('external');
+                  	$url .= '/plugins/mobile/core/php/image.php?';
+                  	$nameFile = base64_encode($file).'.'.$ext;
+                  	$newfile = dirname(__FILE__) .'/../../data/images/'.$nameFile;
+                  	if (!copy($file, $newfile)) {
+    					log::add('mobile', 'debug', 'la copie a echouée');
+					}
+                  	$keyFile = md5_file($newfile);
+                  	$url .= 'name='.$nameFile.'&key='.$keyFile;
+                  	log::add('mobile', 'debug', 'url > '.$url);
+                  	mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], null, $askType, $idNotif, $answer, $timeout,$eqLogic->getConfiguration('notificationRegistrationToken', null), $url);
+                }else{
+                	mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], null, $askType, $idNotif, $answer, $timeout,$eqLogic->getConfiguration('notificationRegistrationToken', null), null);
+                }
+            }
+          }else{
+            mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], null, $askType, $idNotif, $answer, $timeout,$eqLogic->getConfiguration('notificationRegistrationToken', null), null);
+          }
+				
 				log::add('mobile', 'debug', 'Action : Envoi d\'une configuration ', 'config');
 			} else {
 				log::add('mobile', 'debug', 'ARN non configuré ', 'config');

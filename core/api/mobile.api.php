@@ -65,15 +65,22 @@ if ($jsonrpc->getMethod() == 'sync') {
 		if (isset($params['notificationProvider'])) {
 			$mobile->setConfiguration('notificationArn', substr($params['notificationProvider'], 1, -1));
 		}
+      	if (isset($params['notificationRegistrationToken'])) {
+        	if($params['notificationRegistrationToken'] != 'nok'){
+             $mobile->setConfiguration('notificationRegistrationToken', $params['notificationRegistrationToken']);
+            }
+        }
 		$mobile->setIsEnable(1);
 		$mobile->save();
 		$params['Iq'] = $mobile->getLogicalId();
 	}
-	if (isset($params['notificationProvider']) || $params['notificationProvider'] != '') {
+	if (isset($params['notificationProvider']) || $params['notificationProvider'] != '' || isset($params['notificationRegistrationToken']) || $params['notificationRegistrationToken'] != 'nok') {
 		log::add('mobile', 'debug', 'notificationProvider Disponible');
 		log::add('mobile', 'debug', 'EqLogic dispo');
 		$arn = $mobile->getConfiguration('notificationArn', null);
+      	$token = $mobile->getConfiguration('notificationRegistrationToken', null);
 		$arnMobile = substr($params['notificationProvider'], 1, -1);
+      	$tokenMobile = $params['notificationRegistrationToken'];
 		if ($arn == null) {
 			log::add('mobile', 'debug', 'arn null dans la configuration > ' . $arn);
 			$mobile->setConfiguration('notificationArn', $arnMobile);
@@ -85,6 +92,17 @@ if ($jsonrpc->getMethod() == 'sync') {
 				$mobile->save();
 			}
 		}
+      	if ($token == 'nok'){
+          log::add('mobile', 'debug', 'token null dans la configuration > ' . $token);
+			$mobile->setConfiguration('notificationRegistrationToken', $tokenMobile);
+			$mobile->save();
+        }else{
+          log::add('mobile', 'debug', 'Token dans la configuration > ' . $token);
+			if ($token != $tokenMobile) {
+				$mobile->setConfiguration('notificationRegistrationToken', $tokenMobile);
+				$mobile->save();
+            }
+        }
 	}
 	if (isset($params['gen_json']) && $params['gen_json'] == 1) {
 		mobile::makeTemplateJson();

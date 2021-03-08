@@ -9,6 +9,7 @@
 - Novo mecanismo de notificação para Android.
 - Adicionando imagens (câmeras, relatórios etc ...) para Android.
 - Suporte para versão 1.4.1 do aplicativo Android.
+- Suporte para emoticons e quebras de linha com a nova versão do Android 1.4.1
 
 # 17/02/2021
 

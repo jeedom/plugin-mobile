@@ -9,6 +9,7 @@
 - Nuevo motor de notificaciones para Android.
 - Agregar imágenes (cámaras, informes, etc.) para Android.
 - Soporte para la versión 1.4.1 de la aplicación de Android.
+- Soporte para emoticonos y saltos de línea con la nueva versión de Android 1.4.1
 
 # 17/02/2021
 

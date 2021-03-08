@@ -9,6 +9,7 @@
 - Neue Benachrichtigungs-Engine für Android.
 - Hinzufügen von Bildern (Kameras, Berichte usw.) für Android.
 - Unterstützung für Version 1.4.1 aus der Android App.
+- Unterstützung für Emoticons und Zeilenumbrüche mit der neuen Android 1.4.1-Version
 
 # 17.02.2021
 

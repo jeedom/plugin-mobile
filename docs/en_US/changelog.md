@@ -9,6 +9,7 @@
 - New Notification engine for Android.
 - Adding images (Cameras, Reports etc ...) for Android.
 - Support for version 1.4.1 from the Android app.
+- Support for emoticons and line breaks with the new Android 1.4.1 version
 
 # 02/17/2021
 

@@ -645,6 +645,7 @@ class mobile extends eqLogic {
 			$cmdgeoloc->setConfiguration('subtitle', $geoloc['subtitle']);
 			$cmdgeoloc->setConfiguration('radius', $geoloc['radius']);
 			$cmdgeoloc->save();
+			$cmdgeoloc->event($geoloc['value']);
 		}
 	}
 

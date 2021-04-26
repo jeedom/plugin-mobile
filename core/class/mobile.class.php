@@ -645,6 +645,7 @@ class mobile extends eqLogic {
 			$cmdgeoloc->setConfiguration('subtitle', $geoloc['subtitle']);
 			$cmdgeoloc->setConfiguration('radius', $geoloc['radius']);
 			$cmdgeoloc->save();
+			$cmdgeoloc->event($geoloc['value']);
 		}
 	}
 
@@ -730,7 +731,7 @@ class mobileCmd extends cmd {
 		log::add('mobile', 'debug', 'Notif > ' . json_encode($_options) . ' / ' . $eqLogic->getId() . ' / ' . $this->getLogicalId() . ' / idNotif =' . $idNotif, 'config');
 		if ($this->getLogicalId() == 'notif') {
 			if ($_options['title'] == '' || $_options['title'] == $_options['message'] || $_options['title'] == ' ') {
-				$_options['title'] = 'Jeedom';
+				$_options['title'] = config::byKey('product_name');
 			}
           
 			$answer = ($_options['answer']) ? join(';', $_options['answer']) : null;

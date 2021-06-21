@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog App Mobile": "Changelog Mobile App",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "As a reminder if there is no information on the update, it means that it only concerns the updating of documentation, translation or text",
+        "21\/06\/2021": "06\/21\/2021",
+        "Nouveau timeout pour les notifications et renvoi en cas de souci avec le serveur": "New timeout for notifications and referral in the event of a problem with the server",
         "24\/02\/2021": "02\/24\/2021",
         "Nouveau moteur de Notification pour Android": "New Notification engine for Android",
         "Ajout des images (Cameras, Rapports etc...) pour Android": "Adding images (Cameras, Reports etc ...) for Android",

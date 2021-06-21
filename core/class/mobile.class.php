@@ -614,7 +614,7 @@ class mobile extends eqLogic {
         	'Autorization: '.sha512(strtolower(config::byKey('market::username')).':'.config::byKey('market::password'))
         ));
         $request_http->setPost(json_encode($post));
-		$result = json_decode($request_http->exec(10,1),true);
+		$result = json_decode($request_http->exec(3,5),true);
 		if(!isset($result['state']) || $result['state'] != 'ok'){
 			throw new Exception(__('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));	
 		}

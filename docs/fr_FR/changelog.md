@@ -4,6 +4,10 @@
 >
 >Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte
 
+# 11/10/2021
+
+- Ajout du plugin Zigbee dans les plugins compatible.
+
 # 21/06/2021
 
 - Nouveau timeout pour les notifications et renvoi en cas de souci avec le serveur.

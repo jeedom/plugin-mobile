@@ -90,7 +90,7 @@ $('.nav-tabs a').on('shown.bs.tab', function (e) {
           }else if(data.result == 'UserError'){
               $('.qrCodeImg').empty().append('{{Erreur Pas d\'utilisateur selectionné}}');
           }else{
-              $('.qrCodeImg').empty().append('<img src=../../data/'+data.result+' />');
+              $('.qrCodeImg').empty().append('<img src="data:image/png;base64, '+data.result+'" />');
           }
       }
   });

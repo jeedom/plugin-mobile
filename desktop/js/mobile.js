@@ -90,7 +90,7 @@ $('.nav-tabs a').on('shown.bs.tab', function (e) {
           }else if(data.result == 'UserError'){
               $('.qrCodeImg').empty().append('{{Erreur Pas d\'utilisateur selectionné}}');
           }else{
-              $('.qrCodeImg').empty().append('<img src='+data.result+' />');
+              $('.qrCodeImg').empty().append('<img src=../../data/'+data.result+' />');
           }
       }
   });
@@ -195,7 +195,7 @@ function addCmdToTable(_cmd) {
     if (!isset(_cmd.configuration)) {
         _cmd.configuration = {};
     }
-  
+
     var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
     tr += '<td>';
     tr += '<span class="cmdAttr" data-l1key="id" style="display:none;"></span>';

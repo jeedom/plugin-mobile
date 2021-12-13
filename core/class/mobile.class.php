@@ -495,6 +495,7 @@ class mobile extends eqLogic {
 	}
 
 	public function getQrCode() {
+		include "../../3rdparty/phpqrcode/qrlib.php"
 		$interne = network::getNetworkAccess('internal');
 		$externe = network::getNetworkAccess('external');
 		if ($interne == null || $interne == 'http://:80' || $interne == 'https://:80') {
@@ -520,13 +521,14 @@ class mobile extends eqLogic {
 				$request_qrcode['apikey'] = $username->getHash();
 			}
 		}
-		$url = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' . json_encode($request_qrcode);
+		//$url = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' . json_encode($request_qrcode);
 
-		$img = dirname(__FILE__) . '/../../data/'.$request_qrcode['eqLogic_id'].'.png';
+		//$img = dirname(__FILE__) . '/../../data/'.$request_qrcode['eqLogic_id'].'.png';
 
-		file_put_contents($img, file_get_contents($url));
+		//file_put_contents($img, file_get_contents($url));
 
-		return $request_qrcode['eqLogic_id'].'.png';
+		//return $request_qrcode['eqLogic_id'].'.png';
+		return QRcode::png(json_encode($request_qrcode));
 	}
 
 	public static function jsonPublish($os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout, $token, $photo) {

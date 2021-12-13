@@ -50,12 +50,12 @@ $plugin_widget = mobile::$_pluginWidget;
 			foreach ($eqLogics as $eqLogic) {
 				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 				echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
-				$file = 'plugins/mobile/docs/images/' . $eqLogic->getConfiguration('type_mobile') . '.png';
+				$file = 'plugins/mobile/core/img/' . $eqLogic->getConfiguration('type_mobile') . '.png';
 				if (file_exists($file)) {
-					$path = 'plugins/mobile/docs/images/' . $eqLogic->getConfiguration('type_mobile') . '.png';
+					$path = 'plugins/mobile/core/img/' . $eqLogic->getConfiguration('type_mobile') . '.png';
 					echo '<img src="' . $path . '" />';
 				} else {
-					$path = 'plugins/mobile/docs/images/mobile_icon.png';
+					$path = 'plugins/mobile/core/img/mobile_icon.png';
 					echo '<img src="' . $path . '" />';
 				}
 				echo '<br>';

@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog App Mobile": "Changelog Mobile App",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Como lembrete, se não houver informações sobre a atualização, isso significa que se trata apenas da atualização da documentação, tradução ou texto",
+        "11\/10\/2021": "11\/10\/2021",
+        "Ajout du plugin Zigbee dans les plugins compatible": "Adição do plug-in Zigbee em plug-ins compatíveis",
         "21\/06\/2021": "21\/06\/2021",
         "Nouveau timeout pour les notifications et renvoi en cas de souci avec le serveur": "Novo tempo limite para notificações e encaminhamento em caso de problema com o servidor",
         "24\/02\/2021": "24\/02\/2021",

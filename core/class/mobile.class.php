@@ -29,7 +29,7 @@ class mobile extends eqLogic {
 	public static $_pluginMulti = array('LIGHT_STATE', 'ENERGY_STATE', 'FLAP_STATE', 'HEATING_STATE', 'SIREN_STATE', 'LOCK_STATE');
 
 	//public static $_urlAws = 'https://api-notif.jeedom.com/notif/';
-	
+
 	public static $_listenEvents = array('cmd::update', 'scenario::update','jeeObject::summary::update');
 
 	/*     * ***********************Methode static*************************** */
@@ -420,7 +420,7 @@ class mobile extends eqLogic {
 		}
 		return $plans;
 	}
-	
+
 	public static function discovery_summary() {
 		$return = array();
 		$def = config::byKey('object:summary');
@@ -444,7 +444,7 @@ class mobile extends eqLogic {
 		}
 		return $def;
 	}
-	
+
 	public static function discovery_summaryValue($jeeObjectEnvoi){
       	$def = config::byKey('object:summary');
       	$tableKey = array();
@@ -475,7 +475,7 @@ class mobile extends eqLogic {
               $table[] = $tableObject;
             }
         }
-      	
+
 		return $table;
 	}
 
@@ -495,6 +495,7 @@ class mobile extends eqLogic {
 	}
 
 	public function getQrCode() {
+    require_once dirname(__FILE__) . '/../../3rdparty/phpqrcode/qrlib.php';
 		$interne = network::getNetworkAccess('internal');
 		$externe = network::getNetworkAccess('external');
 		if ($interne == null || $interne == 'http://:80' || $interne == 'https://:80') {
@@ -520,8 +521,11 @@ class mobile extends eqLogic {
 				$request_qrcode['apikey'] = $username->getHash();
 			}
 		}
-		$retour = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' . json_encode($request_qrcode);
-		return $retour;
+		ob_start();
+		QRcode::png(json_encode($request_qrcode));
+		$imageString = base64_encode( ob_get_contents() );
+		ob_end_clean();
+		return $imageString;
 	}
 
 	public static function jsonPublish($os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout, $token, $photo) {
@@ -534,7 +538,7 @@ class mobile extends eqLogic {
 		if ($type == 'ask_Text') {
 			$addAsk = '\"category\":\"TEXT_CATEGORY\",\"answer\":\"' . $answer . '\",\"timeout\":\"' . $timeout . '\",';
 		}
-      
+
       	if($token == null){
 	  $message = preg_replace("# {2,}#", " ", preg_replace("#(\r\n|\n\r|\n|\r)#", "\\\\\\n", $message));
           if ($os == 'ios') {
@@ -558,7 +562,7 @@ class mobile extends eqLogic {
                   	'color' => '#0000FF'
                 ]
               ];
-              
+
               $data = [
               	'title' => $titre,
                 'text' => $message,
@@ -566,7 +570,7 @@ class mobile extends eqLogic {
                 'channelId' => 'default',
                 'date' => $dateNotif
               ];
-              
+
               if($photo != null){
                 $notification = [
               		'title' => $titre,
@@ -579,14 +583,14 @@ class mobile extends eqLogic {
                	'body' => $message
               ];
               }
-              
+
               $publish = [
               	'token' => $token,
                 'notification' => $notification,
                 'android' => $android,
                 'data' => $data
               ];
-              
+
             }
         }
 		return $publish;
@@ -607,7 +611,7 @@ class mobile extends eqLogic {
 			];
             $url = config::byKey('service::cloud::url','core','https://cloud.jeedom.com').'/service/notif';
         }
-      
+
 		$request_http = new com_http($url);
         $request_http->setHeader(array(
         	'Content-Type: application/json',
@@ -616,7 +620,7 @@ class mobile extends eqLogic {
         $request_http->setPost(json_encode($post));
 		$result = json_decode($request_http->exec(3,5),true);
 		if(!isset($result['state']) || $result['state'] != 'ok'){
-			throw new Exception(__('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));	
+			throw new Exception(__('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));
 		}
 	}
 
@@ -733,7 +737,7 @@ class mobileCmd extends cmd {
 			if ($_options['title'] == '' || $_options['title'] == $_options['message'] || $_options['title'] == ' ') {
 				$_options['title'] = config::byKey('product_name');
 			}
-          
+
 			$answer = ($_options['answer']) ? join(';', $_options['answer']) : null;
 			$askType = ($_options['answer']) ? 'ask_Text' : 'notif';
 			$timeout = ($_options['timeout']) ? $_options['timeout'] : 'nok';
@@ -743,8 +747,8 @@ class mobileCmd extends cmd {
 				$idNotif = $idNotif + 1;
 				$eqLogic->setConfiguration('idNotif', $idNotif);
 				$eqLogic->save();
-              
-              
+
+
               	if (isset($options['file'])) {
             log::add('mobile', 'debug', 'FILE');
 			unset($data['file']);
@@ -762,7 +766,7 @@ class mobileCmd extends cmd {
               	log::add('mobile', 'debug', $ext.' pour > '.$file);
 				if (in_array($ext, array('gif', 'jpeg', 'jpg', 'png'))) {
                   	log::add('mobile', 'debug', 'type photo !');
-                  
+
                   	$url = network::getNetworkAccess('external');
                   	$url .= '/plugins/mobile/core/php/image.php?';
                   	$nameFile = base64_encode($file).'.'.$ext;
@@ -781,7 +785,7 @@ class mobileCmd extends cmd {
           }else{
             mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], null, $askType, $idNotif, $answer, $timeout,$eqLogic->getConfiguration('notificationRegistrationToken', null), null);
           }
-				
+
 				log::add('mobile', 'debug', 'Action : Envoi d\'une configuration ', 'config');
 			} else {
 				log::add('mobile', 'debug', 'ARN non configuré ', 'config');

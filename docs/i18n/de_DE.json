@@ -2,6 +2,10 @@
     "changelog.md": {
         "Changelog App Mobile": "Changelog Mobile App",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Zur Erinnerung: Wenn keine Informationen zum Update vorhanden sind, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "13\/12\/2021": "13.12.2021",
+        "Mode offline pour le QrCode (creation du QrCode sans internet": "Offline-Modus für QrCode (Erstellung von QrCode ohne Internet",
+        "Compatibilité 4": "Kompatibilität 4",
+        "2 Jeedom Core": "2 Jeedom-Kern",
         "11\/10\/2021": "11.10.2021",
         "Ajout du plugin Zigbee dans les plugins compatible": "Hinzufügen des Zigbee-Plugins in kompatible Plugins",
         "21\/06\/2021": "21.06.2021",

@@ -33,6 +33,34 @@ if($params['Iq']){
 	log::add('mobile', 'debug', 'Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));	
 }
 
+
+
+if($jsonrpc->getMethod() == 'getJson'){
+  
+	log::add('mobile', 'debug', 'Demande du GetJson');
+
+	$return = array();	
+	$idBox = jeedom::getHardwareKey();
+	$return[$idBox ]['apikeyUser'] = $_USER_GLOBAL->getHash();
+	$return[$idBox ]['configs'] = 'undefined';
+	$return[$idBox ]['externalIp'] = network::getNetworkAccess('external');;
+	$return[$idBox ]['hardware'] = jeedom::getHardwareName();
+	$return[$idBox ]['hwkey'] = jeedom::getHardwareKey();
+	
+	$return[$idBox ]['informations']['hardware'] = jeedom::getHardwareName();
+	$return[$idBox ]['informations']['language'] = config::byKey('language');
+	$return[$idBox ]['informations']['nbMessage'] = message::nbMessage();
+    $return[$idBox ]['informations']['nbUpdate'] = update::nbNeedUpdate();
+	$return[$idBox ]['informations']['uname'] = system::getDistrib() . ' ' . system::getOsVersion();
+	$return[$idBox ]['jeedom_version'] = jeedom::version();
+	$return[$idBox ]['localIp'] = network::getNetworkAccess('internal');
+	$return[$idBox ]['name'] = config::byKey('name');
+	
+	$jsonrpc->makeSuccess($return);
+
+}
+
+
 if ($jsonrpc->getMethod() == 'sync') {
 	if (jeedom::version() >= '3.2.0') {
 		log::add('mobile', 'debug', 'Demande du RDK');

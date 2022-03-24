@@ -34,17 +34,25 @@ if($params['Iq']){
 }
 
 
-
 if($jsonrpc->getMethod() == 'getJson'){
-	log::add('mobile', 'debug', 'Demande du RDK to send with Json');
-	$registerDevice = $_USER_GLOBAL->getOptions('registerDevice', array());
-	if (!is_array($registerDevice)) {
-		$registerDevice = array();
+  
+  	log::add('mobile', 'debug', 'Demande du RDK to send with Json');
+	if (jeedom::version() >= '3.2.0') {
+		log::add('mobile', 'debug', 'Demande du RDK');
+		$registerDevice = $_USER_GLOBAL->getOptions('registerDevice', array());
+		if (!is_array($registerDevice)) {
+			$registerDevice = array();
+		}
+		$rdk = (!isset($params['rdk']) || !isset($registerDevice[sha512($params['rdk'])])) ? config::genKey() : $params['rdk'];
+		$registerDevice[sha512($rdk)] = array();
+		$registerDevice[sha512($rdk)]['datetime'] = date('Y-m-d H:i:s');
+		$registerDevice[sha512($rdk)]['ip'] = getClientIp();
+		$registerDevice[sha512($rdk)]['session_id'] = session_id();
+		$_USER_GLOBAL->setOptions('registerDevice', $registerDevice);
+		$_USER_GLOBAL->save();
+		log::add('mobile', 'debug', 'RDK :' . $rdk);
 	}
-	$rdk = (!isset($params['rdk']) || !isset($registerDevice[sha512($params['rdk'])])) ? config::genKey() : $params['rdk'];
-
 	log::add('mobile', 'debug', 'Demande du GetJson');
-
 	$return = array();	
 	$idBox = jeedom::getHardwareKey();
 	$return[$idBox ]['apikeyUser'] = $_USER_GLOBAL->getHash();
@@ -52,6 +60,7 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$return[$idBox ]['externalIp'] = network::getNetworkAccess('external');;
 	$return[$idBox ]['hardware'] = jeedom::getHardwareName();
 	$return[$idBox ]['hwkey'] = jeedom::getHardwareKey();
+	
 	$return[$idBox ]['informations']['hardware'] = jeedom::getHardwareName();
 	$return[$idBox ]['informations']['language'] = config::byKey('language');
 	$return[$idBox ]['informations']['nbMessage'] = message::nbMessage();
@@ -59,7 +68,7 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$return[$idBox ]['informations']['uname'] = system::getDistrib() . ' ' . system::getOsVersion();
 	$return[$idBox ]['jeedom_version'] = jeedom::version();
 	$return[$idBox ]['localIp'] = network::getNetworkAccess('internal');
-	$return[$idBox ]['rdk'] = $rdk;
+     $return[$idBox ]['rdk'] = $rdk;
 	$return[$idBox ]['name'] = config::byKey('name');
 	
 	$jsonrpc->makeSuccess($return);

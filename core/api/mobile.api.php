@@ -33,6 +33,46 @@ if($params['Iq']){
 	log::add('mobile', 'debug', 'Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));	
 }
 
+if($jsonrpc->getMethod() == 'setConfigs'){
+	log::add('mobile', 'debug', 'App V2 Demande > ' . $jsonrpc->getMethod());
+  	$configs = $params['configs'];
+  	$menu = $configs['menu'];
+  	$notification = $configs['notification'];
+  	log::add('mobile', 'debug', 'configs > ' . json_encode($configs));
+  	log::add('mobile', 'debug', 'menu > ' . json_encode($menu));
+  	log::add('mobile', 'debug', 'notification > ' . json_encode($notification));
+  
+  	$mobile = null;
+	
+  if(isset($params['Iq'])) {
+		$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
+	}
+  if (!is_object($mobile)) {
+		$user = user::byHash($params['apikey']);
+		$userId = $user->getId();
+		$mobile = new mobile();
+		$mobile->setEqType_name('mobile');
+		$mobile->setName($notification['platform'] . '-' . config::genKey(3));
+		$mobile->setConfiguration('type_mobile', $notification['platform']);
+		$mobile->setConfiguration('affect_user', $userId);
+		$mobile->setConfiguration('validate', 'no');
+    	$mobile->setConfiguration('appVersion', '2');
+    	$mobile->setLogicalId($params['Iq']);
+      	if (isset($notification['token'])) {
+          	log::add('mobile', 'debug', 'token a ajouter > ' . $notification['token']);
+        	if($notification['token'] != ''){
+             $mobile->setConfiguration('notificationRegistrationToken', $notification['token']);
+            }
+        }
+    	
+		$mobile->setIsEnable(1);
+		$mobile->save();
+	}
+  $jsonrpc->makeSuccess('ok');
+  
+  
+}
+
 
 if($jsonrpc->getMethod() == 'getJson'){
   

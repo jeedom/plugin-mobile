@@ -553,17 +553,17 @@ class mobile extends eqLogic {
 
           }
         }else{
-        	if ($os == 'android' || $version == 2) {
-              $android = [
-                'notification' => [
-                	'title' => $titre,
-                	'body' => $message,
-                	'channel_id' => 'default',
-                  	'color' => '#0000FF'
-                ]
-              ];
+            if ($os == 'android' && $version == 1) {
+                $android = [
+                	'notification' => [
+                		'title' => $titre,
+                		'body' => $message,
+                		'channel_id' => 'default',
+                  		'color' => '#0000FF'
+               		 ]
+              	];
 
-              $data = [
+              	$data = [
               	'title' => $titre,
                 'text' => $message,
                 'idNotif' => strval($idNotif),
@@ -592,6 +592,44 @@ class mobile extends eqLogic {
               ];
 
             }
+	    if($version == 2){
+	    	$android = [
+                	'notification' => [
+                		'title' => $titre,
+                		'body' => $message,
+                		'channel_id' => 'default',
+                  		'color' => '#0000FF'
+               		 ]
+              	];
+
+              	$data = [
+              	'title' => $titre,
+                'text' => $message,
+                'idNotif' => strval($idNotif),
+                'channelId' => 'default',
+                'date' => $dateNotif
+              ];
+
+              if($photo != null){
+                $notification = [
+              		'title' => $titre,
+               		'body' => $message,
+                  	'image' => $photo
+              	];
+              }else{
+              	$notification = [
+              	'title' => $titre,
+               	'body' => $message
+              ];
+              }
+
+              $publish = [
+              	'token' => $token,
+                'notification' => $notification,
+                'android' => $android,
+                'data' => $data
+              ];
+	    }
         }
       log::add('mobile', 'debug', 'JSON publish >  : ' . json_encode($publish));
 		return $publish;

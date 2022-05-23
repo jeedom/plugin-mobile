@@ -52,7 +52,7 @@ if($jsonrpc->getMethod() == 'setConfigs'){
 		$userId = $user->getId();
 		$mobile = new mobile();
 		$mobile->setEqType_name('mobile');
-		$mobile->setName($notification['platform'] . '-' . config::genKey(3));
+		$mobile->setName($notification['platform'] . '-' . $params['Iq']);
 		$mobile->setConfiguration('type_mobile', $notification['platform']);
 		$mobile->setConfiguration('affect_user', $userId);
 		$mobile->setConfiguration('validate', 'no');

@@ -718,9 +718,11 @@ class mobile extends eqLogic {
 	}
 
 	public function postInsert() {
-		$key = config::genKey(32);
-		$this->setLogicalId($key);
-		$this->save();
+      	if($this->getLogicalId() == ''){
+			$key = config::genKey(32);
+			$this->setLogicalId($key);
+			$this->save();
+        }
 	}
 
 	public function postSave() {

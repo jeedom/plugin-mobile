@@ -847,7 +847,7 @@ class mobileCmd extends cmd {
                     }else if($ext == "jpeg"){
                       	$typeHint = "public.jpeg";
                     }else if($ext == "jpg"){
-                    	$typeHint = "public.jpg";
+                    	$typeHint = "public.jpeg";
                     }else if($ext == "png"){
                     	$typeHint = "public.png";
                     }else{

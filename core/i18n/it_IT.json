@@ -45,7 +45,7 @@
         "Type Générique": "Tipo generico",
         "Icône": "Icona",
         "Aucun": "Nessuno",
-        " . $info['family'] . ": ". $info['family'] .",
+        " . $info['family'] . ": "$info['family']",
         "Plugins compatibles": "Plugins compatibles",
         "Modifications sauvegardées avec succès": "Modifications sauvegardées avec succès",
         "Sauvegarde effectuée": "Backup completato"
@@ -71,7 +71,7 @@
         "Type Générique": "Tipo generico",
         "Icône": "Icona",
         "Aucun": "Nessuno",
-        " . $info['family'] . ": ". $info['family'] .",
+        " . $info['family'] . ": "$info['family']",
         "Objets \/ Pièces": "Objets \/ Pièces",
         "Modifications sauvegardées avec succès": "Modifications sauvegardées avec succès",
         "Sauvegarde effectuée avec succès": "Backup completato con successo"

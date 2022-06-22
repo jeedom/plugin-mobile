@@ -595,69 +595,91 @@ class mobile extends eqLogic {
             }
 	    if($version == 2){
           
-	    	$android = [
-                	'notification' => [
-                		'title' => $titre,
-                		'body' => $message,
-                		'channel_id' => 'default',
-                  		'color' => '#0000FF'
-               		 ]
-              	];
 
-            $dataA = [
-              	'title' => $titre,
-                'text' => $message,
-                'idNotif' => strval($idNotif),
-                'channelId' => 'default',
-                'date' => $dateNotif ,
-                'boxName' => config::byKey('name'),
-                'choiceParams' => 'test'
-                ];
+	   // log::add('mobile','debug','ANSWERS :'.$answer);
+
+            if($addAsk != ''){
+              $askParams = [ 'choices' => $answer,
+                             'idVariable' => $optionsNotif['askVariable'],
+                             'boxName' => config::byKey('name'),
+                             'hwKey' => jeedom::getHardwareKey(),
+                             'timeout' => (strtotime($timeout) - time())*1000,
+                             'isBack' => false
+                             ];
+              $askParams = json_encode($askParams);
+            }else{
+              
+              $askParams = 'noAsk';
+              $optionsNotif['askVariable'] = 'rien';
+            }
           
-          	$data = array_merge($dataA, $optionsNotif);
+            $optionsNotif['askParams'] = $askParams; 
+                   
+            $customData = [
+              'title' => $titre,
+              'body' => $message,
+              'idNotif' => strval($idNotif),
+              'channelId' => 'default',
+              'date' => $dateNotif ,
+              'boxName' => config::byKey('name'),
+              'boxApiKey' => jeedom::getHardwareKey()
+            ];
           
+            $data = array_merge($customData, $optionsNotif);
+          
+          	$android = [
+               'data' => $data,
+               'priority' => 'high',
+              	];
+          
+
              $apns = [
-                  'payload' => [
-                          'aps' => [ 
-                              'mutuable-content' => 1
-                           ]
-                    ] ,
-                   'fcm_options' => [
-                          'image' => $photo
-                    ]
-                ];
+             	'payload' => [
+                	'aps' => [ 
+                    	'mutuable-content' => 1,
+                      	'contentAvailable' => true,
+                      	'sound' => 'default'
+                      ],
+                      'notifee_options' => [
+                         'ios' => [
+                            'foregroundPresentationOptions' => [
+                               'alert' => true,
+                               'badge' => true,
+                               'sound' => true
+                            ]
+                         ]
+                      ]
+                  ]
+               ];
           
 
               if($photo != null){
-                $notification = [
-              		'title' => $titre,
-               		'body' => $message,
-                  	'image' => $photo,
-                    
-              	];
-              }else{
-              	$notification = [
-              	'title' => $titre,
-               	'body' => $message
-                ];
+                 $android['data']['image'] = $photo;
+                 $apns['payload']['notifee_options']['image'] = $photo;
+                 $apns['payload']['notifee_options']['ios']['attachments'] = [
+                   [
+                     'url' => $photo,
+                     'typeHint' => $optionsNotif['typeHint']
+                 	]
+                 ]; 
               }
 
               $publish = [
               	'token' => $token,
-                'notification' => $notification,
                 'android' => $android,
                 'data' => $data,
                 'apns' => $apns
               ];
+          
 	     }
         }
       log::add('mobile', 'debug', 'JSON publish >  : ' . json_encode($publish));
 		return $publish;
 	}
 
-	public static function notification($arn, $os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout, $token, $photo, $version=1, $optionsNotif=[]) {
+	public static function notification($arn, $os, $titre, $message, $badge = 'null', $type, $idNotif, $answer,  $timeout, $token, $photo, $version=1, $optionsNotif=[]) {
 		log::add('mobile', 'debug', 'notification en cours !');
-		$publish = ($badge == 'null') ? mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout, $token, $photo,$version,$optionsNotif) : mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer, $timeout, $token, $photo, $version,$optionsNotif);
+		$publish = ($badge == 'null') ? mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer,  $timeout, $token, $photo,$version,$optionsNotif) : mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer,  $timeout, $token, $photo, $version,$optionsNotif);
       	log::add('mobile', 'debug', 'JSON publish >  : ' . json_encode($publish));
       	if($token != null){
             if($token == 'notifsBGDisabled'){
@@ -807,16 +829,19 @@ class mobileCmd extends cmd {
 		}
       	$optionsNotif = [];
 		$eqLogic = $this->getEqLogic();
-		log::add('mobile', 'debug', 'Notif > ' . json_encode($_options) . ' / ' . $eqLogic->getId() . ' / ' . $this->getLogicalId() . ' / idNotif =' . $idNotif, 'config');
+		
 		if ($this->getLogicalId() == 'notif') {
            
 			if ($_options['title'] == '' || $_options['title'] == $_options['message'] || $_options['title'] == ' ') {
 				$_options['title'] = config::byKey('product_name');
 			}
-
+			
 			$answer = ($_options['answer']) ? join(';', $_options['answer']) : null;
+            $askVariable = $_options['variable'];    
 			$askType = ($_options['answer']) ? 'ask_Text' : 'notif';
 			$timeout = ($_options['timeout']) ? $_options['timeout'] : 'nok';
+            $optionsNotif['askVariable'] = $askVariable;
+          
 			log::add('mobile', 'debug', 'Commande de notification ' . $askType, 'config');
 			if (($eqLogic->getConfiguration('notificationArn', null) != null || $eqLogic->getConfiguration('notificationRegistrationToken', null) != null ) && $eqLogic->getConfiguration('type_mobile', null) != null) {
 				$idNotif = $eqLogic->getConfiguration('idNotif', 0);
@@ -824,7 +849,7 @@ class mobileCmd extends cmd {
 				$eqLogic->setConfiguration('idNotif', $idNotif);
 				$eqLogic->save();
 
-
+log::add('mobile', 'debug', 'Notif > ' . json_encode($_options) . ' / ' . $eqLogic->getId() . ' / ' . $this->getLogicalId() . ' / idNotif =' . $idNotif, 'config');
               	if (isset($options['file'])) {
             log::add('mobile', 'debug', 'FILE');
 			unset($data['file']);
@@ -875,7 +900,7 @@ class mobileCmd extends cmd {
                 }
             }
           }else{
-            mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], null, $askType, $idNotif, $answer, $timeout, $eqLogic->getConfiguration('notificationRegistrationToken', null), null, $eqLogic->getConfiguration('appVersion', 1), $optionsNotif);
+            mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], null, $askType, $idNotif, $answer,  $timeout, $eqLogic->getConfiguration('notificationRegistrationToken', null), null, $eqLogic->getConfiguration('appVersion', 1), $optionsNotif);
           }
 
 				log::add('mobile', 'debug', 'Action : Envoi d\'une configuration ', 'config');

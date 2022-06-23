@@ -58,16 +58,22 @@ if($jsonrpc->getMethod() == 'setConfigs'){
 		$mobile->setConfiguration('validate', 'no');
     	$mobile->setConfiguration('appVersion', '2');
     	$mobile->setLogicalId($params['Iq']);
-      	if (isset($notification['token'])) {
+		$mobile->setIsEnable(1);
+	}
+     if(isset($notification['token'])) {
           	log::add('mobile', 'debug', 'token a ajouter > ' . $notification['token']);
+            if($notification['token'] == 'notifsBGDisabled'){
+             message::removeAll(__CLASS__, 'alertNotifs');
+              $phoneName = $mobile->getName();
+             message::add(__CLASS__, 'Les Notifications sur votre mobile : '.$phoneName.' sont desactivées', 'notifsbg', 'alertNotifs'); 
+              
+            }
         	if($notification['token'] != ''){
              $mobile->setConfiguration('notificationRegistrationToken', $notification['token']);
             }
-        }
-    	
-		$mobile->setIsEnable(1);
-		$mobile->save();
-	}
+       
+      }
+     $mobile->save();
   $jsonrpc->makeSuccess('ok');
   
   
@@ -97,7 +103,7 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$idBox = jeedom::getHardwareKey();
 	$return[$idBox ]['apikeyUser'] = $_USER_GLOBAL->getHash();
 	$return[$idBox ]['configs'] = 'undefined';
-	$return[$idBox ]['externalIp'] = network::getNetworkAccess('external');;
+	$return[$idBox ]['externalIp'] = network::getNetworkAccess('external');
 	$return[$idBox ]['hardware'] = jeedom::getHardwareName();
 	$return[$idBox ]['hwkey'] = jeedom::getHardwareKey();
 	
@@ -243,7 +249,11 @@ if ($jsonrpc->getMethod() == 'event') {
 }
 
 if ($jsonrpc->getMethod() == 'askText') {
-	log::add('mobile', 'debug', 'arriver reponse ask Textuel depuis le mobile > ' . $params['Iq']);
+  log::add('mobile', 'debug', 'TESTAPIASK');
+	log::add('mobile', 'debug', 'Arrivée reponse ask Textuel depuis le mobile > ' . $params['Iq']);
+  	/*$configs = $params['configs'];
+  	$menu = $configs['menu'];
+  	$notification = $configs['notification'];*/
 	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	log::add('mobile', 'debug', 'mobile >' . json_encode($mobile));
 	if (is_object($mobile)) {
@@ -256,7 +266,7 @@ if ($jsonrpc->getMethod() == 'askText') {
 		$cmd = $mobile->getCmd(null, 'notif');
 		log::add('mobile', 'debug', 'IQ > ' . $params['Iq'] . ' demande cmd > ' . $cmd->getId());
 		if ($cmd->askResponse($textCasse)) {
-			log::add('mobile', 'debug', 'ask bien trouvé réponse validée');
+			log::add('mobile', 'debug', 'ask bien trouvé : Réponse validée');
 			$jsonrpc->makeSuccess();
 		}
 	}

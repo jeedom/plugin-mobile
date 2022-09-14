@@ -305,6 +305,17 @@ if ($jsonrpc->getMethod() == 'geolocDel'){
 	$jsonrpc->makeSuccess();
 }
 
+if($jsonrpc->getMethod() == 'mobile::geoloc'){
+      log::add('mobile', 'debug', 'event > '.$params['event']);
+      if($params['event'] == 'geofence'){
+        $geofence = $params['geofence'];
+        log::add('mobile', 'debug', 'event > '.json_encode($geofence));
+        $jsonrpc->makeSuccess();
+      }else{
+      	throw new Exception(__('pas de parametre de geofencing : ', __FILE__)); 
+      }
+}
+
 
 throw new Exception(__('Aucune demande', __FILE__));
 ?>

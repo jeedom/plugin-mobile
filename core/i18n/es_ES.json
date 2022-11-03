@@ -132,6 +132,7 @@
         "Sauvegarde Favoris :": "Guardar favoritos:",
         "Nom": "Nombre",
         "Type": "Tipo",
+        "Info": "Información",
         "Action": "Acción"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {

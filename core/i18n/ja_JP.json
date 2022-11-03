@@ -132,6 +132,7 @@
         "Sauvegarde Favoris :": "Sauvegarde Favoris :",
         "Nom": "表題",
         "Type": "タイプ",
+        "Info": "Info",
         "Action": "アクション"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {

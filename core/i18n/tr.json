@@ -132,6 +132,7 @@
         "Sauvegarde Favoris :": "Sauvegarde Favoris :",
         "Nom": "İsim",
         "Type": "Çeşit",
+        "Info": "Info",
         "Action": "Eylem"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {

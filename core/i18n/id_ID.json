@@ -132,6 +132,7 @@
         "Sauvegarde Favoris :": "Sauvegarde Favoris :",
         "Nom": "Nama",
         "Type": "Jenis",
+        "Info": "Info",
         "Action": "Tindakan"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {

@@ -132,6 +132,7 @@
         "Sauvegarde Favoris :": "Sauvegarde Favoris :",
         "Nom": "Имя",
         "Type": "Тип",
+        "Info": "Info",
         "Action": "Действие"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {

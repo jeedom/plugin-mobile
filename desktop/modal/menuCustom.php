@@ -106,7 +106,7 @@ foreach ($eqLogics as $eqLogic)
                                           <p id="titleArea3" style="color:white;">Lumieres</p>
                                      </div>
                                       <div class="containerArea"  id="containerArea4" style="padding-top:1%;width:20%;height:10%;display:flex;justify-content:space-evenly;align-items:center;flex-direction:column;color:white;">
-                                        <span class="spanIconTest" id="spanIconTest4">		
+                                        <span class="spanIconTest" id="spanIconTest4">
                                            <i id="area4" class="icon jeedomapp-plugin" style="font-size:60px;"></i>
   										</span>
                                           <p id="titleArea4" style="color:white;">Synthese</p>
@@ -450,7 +450,7 @@ function constructTableVisible(eqId){
    $('.validConfigBtn[eqid="'+eqId+'"]').css('display','block');
    $('.menuConfigBtn[eqid="'+eqId+'"]').removeClass('btn-primary').addClass('btn-warning');
    let nbIcones = $('.selectNbicones[eqId="'+eqId+'"]').value();
-                            
+
    jeedom.eqLogic.byId({
      id: eqId,
      error: function(error) {
@@ -462,10 +462,10 @@ function constructTableVisible(eqId){
                 let j = 0;
                 let arrayDefaultsNames = ['Home','Dashboard','Lights','Synthese'];
                 let arrayDefaultsIcons = ['icon jeedomapp-in','icon jeedomapp-dash01','icon jeedom2-bright4','icon jeedomapp-plugin'];
-              for(var i=1; i < nbIcones+1 ;i++){     
+              for(var i=1; i < nbIcones+1 ;i++){
                   $('#area'+i).attr('eqId', eqId);
-                  window['defaultName'+i] = arrayDefaultsNames[j]; 
-                  window['defaultIcon'+i] = arrayDefaultsIcons[j]; 
+                  window['defaultName'+i] = arrayDefaultsNames[j];
+                  window['defaultIcon'+i] = arrayDefaultsIcons[j];
                   $('#renameIcon'+i+'[eqid="'+eqId+'"]').css('display','block');
                   let typeObject = 'dashboard';
                   let urlUser = '';
@@ -509,8 +509,8 @@ function constructTableVisible(eqId){
                   $('.item_dash[id="item_'+typeObject+''+i+'"][eqId="'+eqId+'"] option[value="'+selectNameChosen+'"]').attr('selected','selected');
                   $('#urlUser'+i+'[eqId="'+eqId+'"]').value(urlUser);
                   $('#area'+i+'[eqid="'+eqId+'"]').attr('class',window['defaultIcon'+i]);
-                 
-                
+
+
                  j++;
               }
      }
@@ -519,7 +519,7 @@ function constructTableVisible(eqId){
 
 $('.menuConfigBtn').off().on('click', function () {
     let eqLogicId = $(this).attr('eqId');
-  
+
     document.querySelectorAll('.selectNbicones').forEach((el) => {
       el.classList.add('hiddenEl');
    });
@@ -559,9 +559,8 @@ $('.validConfigBtn').on('click', function () {
     let checkDefault = 'false';
     if($('.menuDefault[eqid="'+eqLogicId+'"]').prop('checked')){
       $("[class=menuDefault]").not(this).prop('checked', false);
-      $(this).prop('checked', true);
-       checkDefault = 'true';
       $('.menuDefault[eqid="'+eqLogicId+'"]').prop('checked', true);
+       checkDefault = 'true';
     }
     let nbIcones = parseInt($('.selectNbicones[eqid="'+eqLogicId+'"]').value());
     switch(nbIcones){
@@ -614,6 +613,8 @@ $('.validConfigBtn').on('click', function () {
                   return;
               }
             $('#div_alert').showAlert({message: 'Configuration Menu Enregistrée', level: 'success'});
+            $('#md_modal').dialog({title: "{{Menu Custom}}"});
+            $('#md_modal').load('index.php?v=d&plugin=mobile&modal=menuCustom').dialog('open');
         }
        });
 
@@ -672,8 +673,8 @@ $('.validConfigBtn').on('click', function () {
 </script>
 
 <style>
-  
-  
+
+
 .hiddenEl{
   display:none;
 }

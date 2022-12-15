@@ -147,7 +147,7 @@ if($jsonrpc->getMethod() == 'getJson'){
   	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
   	log::add('mobile', 'debug', 'mobile object');
 		if(is_object($mobile)){
-		    $log::add('mobile', 'debug', 'mobile bien trouvé > '.$mobile->getName());
+		    log::add('mobile', 'debug', 'mobile bien trouvé > '.$mobile->getName());
 				$menuCustom = mobile::configMenuCustom($mobile->getId());
 		     if($menuCustom !== 'undefined'){
 		          $return[$idBox]['configs'] = array();

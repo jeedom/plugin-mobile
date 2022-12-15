@@ -142,15 +142,18 @@ if($jsonrpc->getMethod() == 'getJson'){
   	$return[$idBox]['rdk'] = $rdk;
 	$return[$idBox]['name'] = config::byKey('name');
   	log::add('mobile', 'debug', 'retour de base > '.json_encode($return));
-  	
+
   	log::add('mobile', 'debug', 'recherche du mobile via sont Iq >'.$params['Iq']);
   	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
   	log::add('mobile', 'debug', 'mobile object');
-	if(is_object($mobile)){
-      	log::add('mobile', 'debug', 'mobile bien trouvé > '.$mobile->getName());
-		$menuCustom = mobile::configMenuCustom($mobile->getId());
-      	$menuCustom == 'undefined' ?  $return[$idBox]['configs'] = 'undefined' :  $return[$idBox]['configs']['menu'] = $menuCustom;
-	 }
+		if(is_object($mobile)){
+		    $log::add('mobile', 'debug', 'mobile bien trouvé > '.$mobile->getName());
+				$menuCustom = mobile::configMenuCustom($mobile->getId());
+		     if($menuCustom !== 'undefined'){
+		          $return[$idBox]['configs'] = array();
+		        	$return[$idBox]['configs']['menu'] = $menuCustom;
+		    	}
+		 }
   	log::add('mobile', 'debug', 'CustomENVOI ' .json_encode($return[$idBox]['configs']));
 	log::add('mobile','debug','INFOS GETJSONINITAL : '.json_encode($return));
 	$jsonrpc->makeSuccess($return);

@@ -95,10 +95,10 @@ $pathImgMenu = 'plugins/mobile/core/img/imgMenuPerso.jpg';
 
 	<ul class="nav nav-tabs" role="tablist">
 		<li role="presentation"><a class="eqLogicAction cursor" aria-controls="home" role="tab" data-action="returnToThumbnailDisplay"><i class="fas fa-arrow-circle-left"></i></a></li>
-		<li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab" onclick='hide_menu()'><i class="fas fa-tachometer-alt"></i> {{Mobile}}</a></li>
-		<li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab" onclick='hide_menu()'><i class="fas fa-list-alt"></i> {{Notifications}}</a></li>
-		<li role="presentation"><a href="#sauvegardetab" aria-controls="sauvegarde" role="tab" data-toggle="tab" onclick='hide_menu()'><i class="fas fa-list-alt"></i> {{Sauvegarde Mobile}}</a></li>
-    <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab" onclick='hide_menu()'><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
+		<li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Mobile}}</a></li>
+		<li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab" ><i class="fas fa-list-alt"></i> {{Notifications}}</a></li>
+		<li role="presentation"><a href="#sauvegardetab" aria-controls="sauvegarde" role="tab" data-toggle="tab" ><i class="fas fa-list-alt"></i> {{Sauvegarde Mobile}}</a></li>
+    <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab" ><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
 	</ul>
 
 	<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">

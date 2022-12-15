@@ -148,10 +148,8 @@ if($jsonrpc->getMethod() == 'getJson'){
   	log::add('mobile', 'debug', 'mobile object');
 	if(is_object($mobile)){
       	log::add('mobile', 'debug', 'mobile bien trouvé > '.$mobile->getName());
-		//$menuCustom = mobile::configMenuCustom($mobile->getId());
-      	$menuCustom = 'undefined';
-		//log::add('mobile','debug', 'MENUCUSTOMMOBILE  '.json_encode($menuCustom));
-      	$menuCustom == 'undefined' ?  $return[$idBox]['configs']['menu'] = 'undefined' :  $return[$idBox ]['configs']['menu'] = $menuCustom;
+		$menuCustom = mobile::configMenuCustom($mobile->getId());
+      	$menuCustom == 'undefined' ?  $return[$idBox]['configs'] = 'undefined' :  $return[$idBox]['configs']['menu'] = $menuCustom;
 	 }
   	log::add('mobile', 'debug', 'CustomENVOI ' .json_encode($return[$idBox]['configs']));
 	log::add('mobile','debug','INFOS GETJSONINITAL : '.json_encode($return));

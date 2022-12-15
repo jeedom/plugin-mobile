@@ -34,6 +34,13 @@
      $('#md_modal').dialog({title: "{{Informations envoyées à l'app}}"});
      $('#md_modal').load('index.php?v=d&plugin=mobile&modal=info_app.mobile').dialog('open');
  })
+ $('#bt_customMenu').on('click', function(){
+    $('#md_modal').dialog({title: "{{Menu Custom}}"});
+    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=menuCustom').dialog('open');
+})
+
+
+
  function clickplugin(id_plugin,name_plugin){
      $('#md_modal').dialog({title: "{{Configuration Mobile du Plugin "+name_plugin+"}}"});
      $('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin.mobile&plugin_id=' +id_plugin).dialog('open');
@@ -61,9 +68,60 @@ if (hash) {
 $('.nav-tabs a').on('shown.bs.tab', function (e) {
     window.location.hash = e.target.hash;
 });
-/*
- * Fonction pour l'ajout de commande, appellé automatiquement par plugin.template
- */
+
+
+$('.renameDivClass').on('input',function(e){
+    let idElement = $(this).attr('id');
+    let eqLogicId =  $(this).attr('eqId');
+    let numElement = idElement.substr(-1, 1);
+    $('#titleArea'+numElement).empty().text($(this).children('input:nth-child(2)').val());
+});
+
+
+$('.btIconClass').on('click', function () {
+  let idSelect = $(this).attr('id');
+  let eqLogicId = $(this).attr('eqid');
+  console.log(eqLogicId);
+  let numElement = idSelect.substr(-1, 1);
+  console.log( $('#spanIconTest'+numElement+'[eqid="'+eqLogicId+'"]'))
+  var _icon = false;
+  jeedomUtils.chooseIcon(function(_icon) {
+    $('#spanIconTest'+numElement+'[eqid="'+eqLogicId+'"]').empty().append(_icon);
+    $('#spanIconTest'+numElement+'[eqid="'+eqLogicId+'"]').children('i:nth-child(1)').css('font-size', '60px');
+    $('#spanIconTest'+numElement+'[eqid="'+eqLogicId+'"]').children('i:nth-child(1)').attr('eqId', eqLogicId);
+    $('#spanIconTest'+numElement+'[eqid="'+eqLogicId+'"]').children('i:nth-child(1)').attr('id', 'area'+numElement);
+  }, {
+    icon: _icon,
+    path: 'plugins/mobile/data/fonts/'
+  })
+});
+
+
+
+function userSelect(idSelect){
+  let eqLogicId = document.getElementById(idSelect).getAttribute('eqid');
+  let numElement = idSelect.substr(-1, 1);
+  let typeObject = document.getElementById(idSelect).value;
+  let selectorsObject = document.querySelectorAll('.item_dash');
+  selectorsObject.forEach(selector => {
+    let idSelector = selector.id;
+    let eqId = selector.getAttribute('eqId');
+    if(idSelector.includes(typeObject) && idSelector.includes(numElement) && eqId == eqLogicId){
+       selector.style.display = 'block';
+       selector.value = 'none';
+       selector.select = 'selected';
+    }
+    if(!idSelector.includes(typeObject) && idSelector.includes(numElement) && eqId == eqLogicId){
+       selector.style.display = 'none';
+    }
+  })
+  if(typeObject == 'url'){
+    $('#urlUser'+numElement+'[eqId="'+eqLogicId+'"]').css('display','block');
+
+  }
+}
+
+
 
  function printEqLogic(_eqLogic){
     $.ajax({

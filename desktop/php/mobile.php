@@ -8,7 +8,29 @@ $eqLogics = eqLogic::byType('mobile');
 $plugins = plugin::listPlugin(true);
 $plugin_compatible = mobile::$_pluginSuported;
 $plugin_widget = mobile::$_pluginWidget;
+$pathImgMenu = 'plugins/mobile/core/img/imgMenuPerso.jpg';
 ?>
+
+<script>
+
+function show_menu(){
+$('#btnMenuDefaut').css('display', 'inline');
+}
+
+function hide_menu(){
+$('#btnMenuDefaut').css('display', 'none');
+}
+
+</script>
+
+<style>
+
+.containerArea:hover {
+	background-color: #93ca02;
+}
+
+</style>
+
 <div class="row row-overflow">
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
 		<legend><i class="fas fa-cog"></i>  {{Gestion}}</legend>
@@ -37,10 +59,15 @@ $plugin_widget = mobile::$_pluginWidget;
 				<i class="fas fa-medkit"></i><br>
 				<span>{{Santé}}</span>
 			</div>
+            <div class="cursor eqLogicAction logoSecondary" data-action="bt_customMenu" id="bt_customMenu">
+				<i class='fas icon jeedomapp-plugin'></i><br>
+				<span>{{Menu Custom}}</span>
+			</div>
 			<div class="cursor eqLogicAction logoSecondary" data-action="bt_regenConfig" id="bt_regenConfig">
 				<i class="fas fa-cogs"></i><br>
 				<span>{{Régénérer la configuration}}</span>
 			</div>
+
 		</div>
 		<legend><i class="icon techno-listening3"></i> {{Mes Téléphones Mobiles}}</legend>
 		<input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
@@ -70,6 +97,7 @@ $plugin_widget = mobile::$_pluginWidget;
 <div id="div_editSmartphone" class="col-xs-12 eqLogic" style="padding-top: 5px;display: none;">
 	<div class="input-group pull-right" style="display:inline-flex">
 		<span class="input-group-btn">
+			<a id="btnMenuDefaut" class="btn btn-sm btn-warning eqLogicAction roundedLeft" data-action="saveDefaultMenu" style="display:none;"><i class="fas fa-check-circle"></i>{{ Menu par default}}</a>
 			<a class="btn btn-sm btn-default eqLogicAction roundedLeft" data-action="configure"><i class="fas fa-cogs"></i> {{Configuration avancée}}
 			</a><a class="btn btn-sm btn-info" id="info_app"><i class="fa fa-question-circle"></i> {{Infos envoyées à l'app}}
 			</a><a class="btn btn-sm btn-success eqLogicAction" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}
@@ -79,10 +107,11 @@ $plugin_widget = mobile::$_pluginWidget;
 
 	<ul class="nav nav-tabs" role="tablist">
 		<li role="presentation"><a class="eqLogicAction cursor" aria-controls="home" role="tab" data-action="returnToThumbnailDisplay"><i class="fas fa-arrow-circle-left"></i></a></li>
-		<li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Mobile}}</a></li>
-		<li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Notifications}}</a></li>
-		<li role="presentation"><a href="#sauvegardetab" aria-controls="sauvegarde" role="tab" data-toggle="tab"><i class="fas fa-list-alt"></i> {{Sauvegarde Mobile}}</a></li>
-        <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
+		<li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab" onclick='hide_menu()'><i class="fas fa-tachometer-alt"></i> {{Mobile}}</a></li>
+		<li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab" onclick='hide_menu()'><i class="fas fa-list-alt"></i> {{Notifications}}</a></li>
+		<li role="presentation"><a href="#sauvegardetab" aria-controls="sauvegarde" role="tab" data-toggle="tab" onclick='hide_menu()'><i class="fas fa-list-alt"></i> {{Sauvegarde Mobile}}</a></li>
+    <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab" onclick='hide_menu()'><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
+    <li role="presentation"><a href="#menumobiletab" aria-controls="menumobile" role="tab" data-toggle="tab" onclick='show_menu()'><i class="fa fa-list-alt"></i> {{Menu Mobile}}</a></li>
 	</ul>
 
 	<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
@@ -213,8 +242,10 @@ $plugin_widget = mobile::$_pluginWidget;
 		</form>
 		</div>
 
+
         <div role="tabpanel" class="tab-pane" id="commandtab">
 <br/>
+
 <table id="table_cmd" class="table table-bordered table-condensed">
     <thead>
         <tr>
@@ -225,9 +256,13 @@ $plugin_widget = mobile::$_pluginWidget;
     </tbody>
 </table>
 </div>
+  <div role="tabpanel" class="tab-pane" id="menumobiletab">
+
 
 	</div>
+		</div>
 </div>
+
 <?php
 	include_file('desktop', 'mobile', 'js', 'mobile');
 	include_file('core', 'plugin.template', 'js');

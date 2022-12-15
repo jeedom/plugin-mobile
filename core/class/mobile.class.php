@@ -569,7 +569,7 @@ class mobile extends eqLogic {
                 'idNotif' => strval($idNotif),
                 'channelId' => 'default',
                 'date' => $dateNotif
-                
+
               ];
 
               if($photo != null){
@@ -594,7 +594,7 @@ class mobile extends eqLogic {
 
             }
 	    if($version == 2){
-          
+
 
 	   // log::add('mobile','debug','ANSWERS :'.$answer);
 
@@ -608,13 +608,13 @@ class mobile extends eqLogic {
                              ];
               $askParams = json_encode($askParams);
             }else{
-              
+
               $askParams = 'noAsk';
               $optionsNotif['askVariable'] = 'rien';
             }
-          
-            $optionsNotif['askParams'] = $askParams; 
-                   
+
+            $optionsNotif['askParams'] = $askParams;
+
             $customData = [
               'title' => $titre,
               'body' => $message,
@@ -624,18 +624,18 @@ class mobile extends eqLogic {
               'boxName' => config::byKey('name'),
               'boxApiKey' => jeedom::getHardwareKey()
             ];
-          
+
             $data = array_merge($customData, $optionsNotif);
-          
+
           	$android = [
                'data' => $data,
                'priority' => 'high',
               	];
-          
+
 
              $apns = [
              	'payload' => [
-                	'aps' => [ 
+                	'aps' => [
                     	'mutuable-content' => 1,
                       	'contentAvailable' => true,
                       	'sound' => 'default'
@@ -651,7 +651,7 @@ class mobile extends eqLogic {
                       ]
                   ]
                ];
-          
+
 
               if($photo != null){
                  $android['data']['image'] = $photo;
@@ -661,7 +661,7 @@ class mobile extends eqLogic {
                      'url' => $photo,
                      'typeHint' => $optionsNotif['typeHint']
                  	]
-                 ]; 
+                 ];
               }
 
               $publish = [
@@ -670,7 +670,7 @@ class mobile extends eqLogic {
                 'data' => $data,
                 'apns' => $apns
               ];
-          
+
 	     }
         }
       log::add('mobile', 'debug', 'JSON publish >  : ' . json_encode($publish));
@@ -685,9 +685,9 @@ class mobile extends eqLogic {
             if($token == 'notifsBGDisabled'){
               log::add('mobile', 'debug', 'NOTIFICATION NON ENVOYEE : SERVICES NOTIF DESACTIVE SUR VOTRE TELEPHONE : ');
               message::removeAll(__CLASS__, 'alertNotifsSend');
-              message::add(__CLASS__, 'Echec envoie de notification : service desactive dans les parametres de votre telephone', 'notifsbgSend', 'alertNotifsSend'); 
+              message::add(__CLASS__, 'Echec envoie de notification : service desactive dans les parametres de votre telephone', 'notifsbgSend', 'alertNotifsSend');
               return;
-              
+
             }
           	$url = config::byKey('service::cloud::url','core','https://cloud.jeedom.com').'/service/fcm';
             $post = ['message' => $publish];
@@ -695,8 +695,8 @@ class mobile extends eqLogic {
         }elseif($token == null && $version == 2){
               log::add('mobile', 'debug', 'NOTIFICATION NON ENVOYEE : PAS DE TOKEN ENREGISTRE SUR VOTRE TELEPHONE :  ' );
               message::removeAll(__CLASS__, 'noValidToken');
-              message::add(__CLASS__, 'NOTIFICATION NON ENVOYEE : PAS DE TOKEN ENREGISTRE SUR VOTRE TELEPHONE :', 'noValidTok', 'noValidToken'); 
-              return;                         
+              message::add(__CLASS__, 'NOTIFICATION NON ENVOYEE : PAS DE TOKEN ENREGISTRE SUR VOTRE TELEPHONE :', 'noValidTok', 'noValidToken');
+              return;
         }else{
           	log::add('mobile', 'debug', 'JSON envoyé : APN' . $publish);
         	$post = [
@@ -779,6 +779,138 @@ class mobile extends eqLogic {
         }
 	}
 
+
+ public static function saveMenuEqLogics($eqId, $arrayMenus, $checkDefault, $nbIcones){
+
+	 $eqLogic = eqLogic::byId(intval($eqId));
+	 if(is_object($eqLogic)){
+			$i = 1;
+			log::add('mobile','debug','ELEMENTSMENUS : '.json_encode($arrayMenus));			
+			 $eqLogic->setConfiguration('nbIcones', $nbIcones);
+			foreach($arrayMenus as $menu){
+              						if($menu[0] == 'none'){
+                                       $eqLogic->setConfiguration('selectNameMenu'.$i, 'none');
+
+                                    }else{
+                                      	$result = explode('_',$menu[0]);
+									    $objectId = intval($result[0]);
+									    $typeObject = $result[1];
+
+                                        $eqLogic->setConfiguration('selectNameMenu'.$i, $menu[0]);
+                                    }
+                                        $nameUser = $menu[1];
+                                        if($nameUser != ''){
+                                          $eqLogic->setConfiguration('renameIcon'.$i, $nameUser);
+
+                                        }else{
+                                          $eqLogic->setConfiguration('renameIcon'.$i, 'none');
+
+                                        }
+									    $iconName = $menu[2];
+				/*	log::add('mobile','debug','SPANICON : '.$iconName);
+					log::add('mobile','debug','RENAMEICON : '.$nameUser);
+					log::add('mobile','debug','SELECTNAME : '.$objectId);*/
+										 $eqLogic->setConfiguration('spanIcon'.$i, $iconName);
+                                      if($menu[3] != ''){
+                                         $eqLogic->setConfiguration('urlUser'.$i, $menu[3]);
+                                        
+                                      }else{
+                                         $eqLogic->setConfiguration('urlUser'.$i, 'none');
+                                        
+                                      }
+								 $i++;
+			 }
+             $eqLogic->save();
+			 if($checkDefault == 'true'){
+				//	$eqLogic->setConfiguration('checkdefaultID', 'yes');
+					config::save('checkdefaultID', $eqId, 'mobile');
+					self::handleDefaultMenu($eqId);
+			 }else{
+				  config::save('checkdefaultID', 'noActivMobile', 'mobile');
+			 }
+	 }
+ }
+
+ public static function handleDefaultMenu($mobileActiveDefault){
+			 $mobileActive = eqLogic::byId(intval($mobileActiveDefault));
+			 if(is_object($mobileActive)){
+					 $eqlogics = eqLogic::byType('mobile');
+                     $nbIcons = $mobileActive->getConfiguration('nbIcones', 4);
+					 foreach($eqlogics as $eqlogic){
+							 for($i=1; $i<5; $i++){
+								 ${ 'selectNameMenu' . $i} = $mobileActive->getConfiguration('selectNameMenu'.$i, 'none');
+								 ${ 'renameIcon' . $i} = $mobileActive->getConfiguration('renameIcon'.$i, '');
+								 ${ 'spanIcon' . $i} = $mobileActive->getConfiguration('spanIcon'.$i, 'none');
+								 ${ 'urlUser' . $i} = $mobileActive->getConfiguration('urlUser'.$i, 'none');
+								 $eqlogic->setConfiguration('selectNameMenu'.$i, ${ 'selectNameMenu' . $i});
+								 $eqlogic->setConfiguration('renameIcon'.$i, ${ 'renameIcon' . $i});
+								 $eqlogic->setConfiguration('spanIcon'.$i, ${ 'spanIcon' . $i});
+								 $eqlogic->setConfiguration('urlUser'.$i, ${ 'urlUser' . $i});
+								 
+							 }
+                           $eqlogic->setConfiguration('nbIcones', $nbIcons);   
+                           $eqlogic->save();
+					 }
+			 }
+ }
+
+	public static function configMenuCustom($eqId){
+	  $eqLogic = eqLogic::byId($eqId);
+		if(is_object($eqLogic)){
+			$nbIcones = $eqLogic->getConfiguration('nbIcones', 4);
+			$arrayElements = array();
+			$j = 0;
+            $count = 1;
+			for($i=1;$i<5; $i++){
+				    $isActive = true;
+                    ${ 'tabIconName' . $i} = $eqLogic->getConfiguration('spanIcon'.$i , 'none');
+                    config::save('icon'.$i.'NoCut', ${ 'tabIconName' . $i} , 'mobile');
+                    if(${ 'tabIconName' . $i} != 'none'){
+                      $arrayIcon = explode(' ', ${ 'tabIconName' . $i});
+                      ${ 'tabIconName' . $i} = substr(strstr($arrayIcon[1], '-'), 1);
+                      ${ 'tabLibName' . $i} = strstr($arrayIcon[1], '-', true);
+                      if(${ 'tabLibName' . $i} == 'mdi'){
+                        ${ 'tabLibName' . $i} = 'MaterialCommunityIcons';                   
+                      }
+                    }else{
+                      ${ 'tabIconName' . $i} = 'home';
+                    }
+                    ${ '$tabRenameInput' . $i} = $eqLogic->getConfiguration('renameIcon'.$i , 'none');
+                    if(${ '$tabRenameInput' . $i} == 'none'){
+                      ${ '$tabRenameInput' . $i} = 'Accueil';
+                    }
+                    $objectId = $eqLogic->getConfiguration('selectNameMenu'.$i);
+                    if($objectId && $objectId != -1 && $objectId != 'none'){
+                      $arrayObjects = explode('_', $objectId);
+                      $objectId = intval($arrayObjects[0]);
+                      $typeObject = $arrayObjects[1];
+                      ${ '$tabUrl' . $i} = "/index.php?v=m&app_mode=1&p={$typeObject}&object_id={$objectId}";
+                    }else if($objectId == 'none' && $eqLogic->getConfiguration('urlUser'.$i) != ''){                                
+                      ${ '$tabUrl' . $i} = $eqLogic->getConfiguration('urlUser'.$i);
+                    }else{
+                      ${ '$tabUrl' . $i} = "/index.php?v=m&app_mode=1";
+                    }
+				   if($count > intval($nbIcones)){
+						 $isActive = false;
+					 }
+                    $jsonTemplate = array('active' => $isActive,
+                                          'icon' => ['name' =>${ 'tabIconName' . $i},
+                                                     'type' => ${ 'tabLibName' . $i}],
+                                          'name' => ${ '$tabRenameInput' . $i} ,
+                                          'options' => ['uri' => ${ '$tabUrl' . $i} ],
+                                          'type' =>  strpos(${ '$tabUrl' . $i}, 'www') !== false ? 'urlwww' : 'WebviewApp' );
+                    $arrayElements['tab'.$j] =  $jsonTemplate;
+                    $j++;
+                    $count++;             
+			}
+		  log::add('mobile','debug','JSONTEMPLATEARRAY :'.json_encode($arrayElements));
+          return $arrayElements;
+		}else{
+         return 'undefined'; 
+        }
+	}
+
+
 	public function postSave() {
 		$cmdNotif = $this->getCmd(null, 'notif');
 		if (!is_object($cmdNotif)) {
@@ -829,19 +961,19 @@ class mobileCmd extends cmd {
 		}
       	$optionsNotif = [];
 		$eqLogic = $this->getEqLogic();
-		
+
 		if ($this->getLogicalId() == 'notif') {
-           
+
 			if ($_options['title'] == '' || $_options['title'] == $_options['message'] || $_options['title'] == ' ') {
 				$_options['title'] = config::byKey('product_name');
 			}
-			
+
 			$answer = ($_options['answer']) ? join(';', $_options['answer']) : null;
-            $askVariable = $_options['variable'];    
+            $askVariable = $_options['variable'];
 			$askType = ($_options['answer']) ? 'ask_Text' : 'notif';
 			$timeout = ($_options['timeout']) ? $_options['timeout'] : 'nok';
             $optionsNotif['askVariable'] = $askVariable;
-          
+
 			log::add('mobile', 'debug', 'Commande de notification ' . $askType, 'config');
 			if (($eqLogic->getConfiguration('notificationArn', null) != null || $eqLogic->getConfiguration('notificationRegistrationToken', null) != null ) && $eqLogic->getConfiguration('type_mobile', null) != null) {
 				$idNotif = $eqLogic->getConfiguration('idNotif', 0);

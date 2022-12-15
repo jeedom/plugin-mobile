@@ -32,7 +32,8 @@
         "Choisir Icone": "Wählen Sie Symbol",
         " Icone 2": "Symbol 2",
         " Icone 3": "Symbol 3",
-        " Icone 4": "Symbol 4"
+        " Icone 4": "Symbol 4",
+        "Menu Custom": "Benutzerdefiniertes Menü"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
         "Plugins Spéciaux Compatibles": "Kompatible Spezial-Plugins",
@@ -105,34 +106,6 @@
         "Messages": "Nachricht",
         "Designs": "Design",
         "Configurations": "Konfigurationen"
-    },
-    "plugins\/mobile\/desktop\/modal\/testmodal.php": {
-        "Accès non autorisé": "Unautorisierter Zugriff",
-        "Icônes": "Symbole",
-        "Images": "Bilder",
-        "Images de fond": "Hintergrundbilder",
-        "Couleur des icônes": "Symbolfarbe",
-        "Aucune couleur": "Keine Farbe",
-        "Icônes bleues": "Blaue Symbole",
-        "Icônes jaunes": "Gelbe Symbole",
-        "Icônes oranges": "Orangefarbene Symbole",
-        "Icônes rouges": "Rote Symbole",
-        "Icônes vertes": "Grüne Symbole",
-        "Rechercher": "Forschen",
-        "Clic droit sur un dossier pour ouvrir le menu contextuel": "Klicken Sie mit der rechten Maustaste auf einen Ordner, um das Kontextmenü zu öffnen",
-        "Ajouter": "Hinzufügen",
-        "Nouveau": "Neu",
-        "Renommer": "Umbenennen",
-        "Supprimer": "Löschen",
-        "Etes-vous sûr de vouloir supprimer le dossier": "Möchten Sie den Ordner wirklich löschen?",
-        "Attention : le contenu du dossier sera définitivement supprimé lors de l'opération.": "Achtung: Der Inhalt des Ordners wird während des Vorgangs dauerhaft gelöscht",
-        "Êtes-vous sûr de vouloir supprimer cette image": "Möchten Sie dieses Bild wirklich löschen?"
-    },
-    "plugins\/mobile\/desktop\/modal\/menuConfig.php": {
-        "PLOUP": "PLOOP",
-        "ID": "ICH WÜRDE",
-        "User": "Benutzer",
-        "Utilisateur non trouvé": "Benutzer nicht gefunden"
     },
     "plugins\/mobile\/desktop\/php\/mobile.php": {
         "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",

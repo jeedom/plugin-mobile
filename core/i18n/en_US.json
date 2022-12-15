@@ -32,7 +32,8 @@
         "Choisir Icone": "Choose Icon",
         " Icone 2": "Icon 2",
         " Icone 3": "Icon 3",
-        " Icone 4": "Icon 4"
+        " Icone 4": "Icon 4",
+        "Menu Custom": "Custom menu"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
         "Plugins Spéciaux Compatibles": "Compatible Special Plugins",
@@ -105,34 +106,6 @@
         "Messages": "Posts",
         "Designs": "Designs",
         "Configurations": "Configurations"
-    },
-    "plugins\/mobile\/desktop\/modal\/testmodal.php": {
-        "Accès non autorisé": "Unauthorized access",
-        "Icônes": "Icons",
-        "Images": "Pictures",
-        "Images de fond": "Background pictures",
-        "Couleur des icônes": "Icon color",
-        "Aucune couleur": "No color",
-        "Icônes bleues": "Blue icons",
-        "Icônes jaunes": "Yellow icons",
-        "Icônes oranges": "Orange icons",
-        "Icônes rouges": "Red icons",
-        "Icônes vertes": "Green icons",
-        "Rechercher": "To research",
-        "Clic droit sur un dossier pour ouvrir le menu contextuel": "Right click on a folder to open the context menu",
-        "Ajouter": "To add",
-        "Nouveau": "New",
-        "Renommer": "Rename",
-        "Supprimer": "To delete",
-        "Etes-vous sûr de vouloir supprimer le dossier": "Are you sure you want to delete the folder",
-        "Attention : le contenu du dossier sera définitivement supprimé lors de l'opération.": "Warning: the contents of the folder will be permanently deleted during the operation",
-        "Êtes-vous sûr de vouloir supprimer cette image": "Are you sure you want to delete this image"
-    },
-    "plugins\/mobile\/desktop\/modal\/menuConfig.php": {
-        "PLOUP": "PLOUP",
-        "ID": "ID",
-        "User": "User",
-        "Utilisateur non trouvé": "User not found"
     },
     "plugins\/mobile\/desktop\/php\/mobile.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",

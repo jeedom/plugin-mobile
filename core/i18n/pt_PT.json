@@ -32,7 +32,8 @@
         "Choisir Icone": "Escolha o ícone",
         " Icone 2": "Ícone 2",
         " Icone 3": "ícone 3",
-        " Icone 4": "ícone 4"
+        " Icone 4": "ícone 4",
+        "Menu Custom": "Menu customizado"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
         "Plugins Spéciaux Compatibles": "Plugins Especiais Compatíveis",
@@ -105,34 +106,6 @@
         "Messages": "Mensagens",
         "Designs": "Projetos",
         "Configurations": "Configurações"
-    },
-    "plugins\/mobile\/desktop\/modal\/testmodal.php": {
-        "Accès non autorisé": "Acesso não autorizado",
-        "Icônes": "Ícones",
-        "Images": "Fotos",
-        "Images de fond": "Imagens de fundo",
-        "Couleur des icônes": "Cor do ícone",
-        "Aucune couleur": "Sem cor",
-        "Icônes bleues": "Ícones azuis",
-        "Icônes jaunes": "ícones amarelos",
-        "Icônes oranges": "Ícones laranja",
-        "Icônes rouges": "Ícones vermelhos",
-        "Icônes vertes": "ícones verdes",
-        "Rechercher": "Pesquisar",
-        "Clic droit sur un dossier pour ouvrir le menu contextuel": "Clique com o botão direito em uma pasta para abrir o menu de contexto",
-        "Ajouter": "Adicionar",
-        "Nouveau": "Novo",
-        "Renommer": "Renomear",
-        "Supprimer": "Deletar",
-        "Etes-vous sûr de vouloir supprimer le dossier": "Tem certeza de que deseja excluir a pasta",
-        "Attention : le contenu du dossier sera définitivement supprimé lors de l'opération.": "Aviso: o conteúdo da pasta será excluído permanentemente durante a operação",
-        "Êtes-vous sûr de vouloir supprimer cette image": "Tem certeza de que deseja apagar esta imagem"
-    },
-    "plugins\/mobile\/desktop\/modal\/menuConfig.php": {
-        "PLOUP": "PLOUP",
-        "ID": "EU IRIA",
-        "User": "Do utilizador",
-        "Utilisateur non trouvé": "Usuário não encontrado"
     },
     "plugins\/mobile\/desktop\/php\/mobile.php": {
         "401 - Accès non autorisé": "401 - Acesso não autorizado",

@@ -32,7 +32,8 @@
         "Choisir Icone": "Elegir icono",
         " Icone 2": "Icono 2",
         " Icone 3": "Icono 3",
-        " Icone 4": "icono 4"
+        " Icone 4": "icono 4",
+        "Menu Custom": "Menú personalizado"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
         "Plugins Spéciaux Compatibles": "Complementos especiales compatibles",
@@ -105,34 +106,6 @@
         "Messages": "Mensajes",
         "Designs": "Diseños",
         "Configurations": "Configuraciones"
-    },
-    "plugins\/mobile\/desktop\/modal\/testmodal.php": {
-        "Accès non autorisé": "Acceso no autorizado",
-        "Icônes": "Iconos",
-        "Images": "Fotos",
-        "Images de fond": "Imágenes de fondo",
-        "Couleur des icônes": "Color del icono",
-        "Aucune couleur": "Sin color",
-        "Icônes bleues": "Iconos azules",
-        "Icônes jaunes": "Iconos amarillos",
-        "Icônes oranges": "Iconos naranjas",
-        "Icônes rouges": "Iconos rojos",
-        "Icônes vertes": "Iconos verdes",
-        "Rechercher": "Buscar",
-        "Clic droit sur un dossier pour ouvrir le menu contextuel": "Haga clic derecho en una carpeta para abrir el menú contextual",
-        "Ajouter": "Para agregar",
-        "Nouveau": "Nuevo",
-        "Renommer": "Rebautizar",
-        "Supprimer": "Borrar",
-        "Etes-vous sûr de vouloir supprimer le dossier": "¿Está seguro de que desea eliminar la carpeta?",
-        "Attention : le contenu du dossier sera définitivement supprimé lors de l'opération.": "Advertencia: el contenido de la carpeta se eliminará de forma permanente durante la operación",
-        "Êtes-vous sûr de vouloir supprimer cette image": "¿Estás seguro de que quieres eliminar esta imagen?"
-    },
-    "plugins\/mobile\/desktop\/modal\/menuConfig.php": {
-        "PLOUP": "PLOUP",
-        "ID": "IDENTIFICACIÓN",
-        "User": "Usuario",
-        "Utilisateur non trouvé": "Usuario no encontrado"
     },
     "plugins\/mobile\/desktop\/php\/mobile.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado",

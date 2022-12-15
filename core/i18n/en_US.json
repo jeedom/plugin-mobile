@@ -49,7 +49,7 @@
     "plugins\/mobile\/desktop\/modal\/update.mobile.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",
         "Pause": "Pause",
-        "Rechercher": "To research"
+        "Rechercher": "Search"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.mobile.php": {
         "401 - AccèÈs non autorisÈ": "401 - Unauthorized access",
@@ -137,7 +137,7 @@
     "plugins\/mobile\/desktop\/php\/mobile.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",
         "Gestion": "Management",
-        "Ajouter": "To add",
+        "Ajouter": "Add",
         "Configuration": "Setup",
         "Plugins": "Plugins",
         "Objets \/ Pièces": "Objects \/ Pieces",
@@ -146,17 +146,15 @@
         "Menu Custom": "Custom menu",
         "Régénérer la configuration": "Regenerate configuration",
         "Mes Téléphones Mobiles": "My Mobile Phones",
-        "Rechercher": "To research",
-        " Menu par default": "Default menu",
+        "Rechercher": "Search",
         "Configuration avancée": "Advanced configuration",
         "Infos envoyées à l'app": "Info sent to the app",
         "Sauvegarder": "Save",
-        "Supprimer": "To delete",
+        "Supprimer": "Delete",
         "Mobile": "Mobile",
         "Notifications": "Notifications",
         "Sauvegarde Mobile": "Mobile Backup",
         "Commandes": "Commands",
-        "Menu Mobile": "Mobile menu",
         "Nom de l'équipement mobile": "Name of mobile equipment",
         "Nom de l'équipement template": "Equipment name template",
         "Objet parent": "Parent object",
@@ -182,7 +180,7 @@
         "Vérification en Cours": "Verification in progress",
         "Sauvegarde Favoris :": "Save Favorites:",
         "Nom": "Name",
-        "Type": "Kind",
+        "Type": "Type",
         "Info": "Information",
         "Action": "Action"
     },

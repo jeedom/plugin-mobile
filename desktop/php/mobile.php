@@ -11,17 +11,6 @@ $plugin_widget = mobile::$_pluginWidget;
 $pathImgMenu = 'plugins/mobile/core/img/imgMenuPerso.jpg';
 ?>
 
-<script>
-
-function show_menu(){
-$('#btnMenuDefaut').css('display', 'inline');
-}
-
-function hide_menu(){
-$('#btnMenuDefaut').css('display', 'none');
-}
-
-</script>
 
 <style>
 
@@ -97,7 +86,6 @@ $('#btnMenuDefaut').css('display', 'none');
 <div id="div_editSmartphone" class="col-xs-12 eqLogic" style="padding-top: 5px;display: none;">
 	<div class="input-group pull-right" style="display:inline-flex">
 		<span class="input-group-btn">
-			<a id="btnMenuDefaut" class="btn btn-sm btn-warning eqLogicAction roundedLeft" data-action="saveDefaultMenu" style="display:none;"><i class="fas fa-check-circle"></i>{{ Menu par default}}</a>
 			<a class="btn btn-sm btn-default eqLogicAction roundedLeft" data-action="configure"><i class="fas fa-cogs"></i> {{Configuration avancée}}
 			</a><a class="btn btn-sm btn-info" id="info_app"><i class="fa fa-question-circle"></i> {{Infos envoyées à l'app}}
 			</a><a class="btn btn-sm btn-success eqLogicAction" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}
@@ -111,7 +99,6 @@ $('#btnMenuDefaut').css('display', 'none');
 		<li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab" onclick='hide_menu()'><i class="fas fa-list-alt"></i> {{Notifications}}</a></li>
 		<li role="presentation"><a href="#sauvegardetab" aria-controls="sauvegarde" role="tab" data-toggle="tab" onclick='hide_menu()'><i class="fas fa-list-alt"></i> {{Sauvegarde Mobile}}</a></li>
     <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab" onclick='hide_menu()'><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
-    <li role="presentation"><a href="#menumobiletab" aria-controls="menumobile" role="tab" data-toggle="tab" onclick='show_menu()'><i class="fa fa-list-alt"></i> {{Menu Mobile}}</a></li>
 	</ul>
 
 	<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
@@ -256,10 +243,6 @@ $('#btnMenuDefaut').css('display', 'none');
     </tbody>
 </table>
 </div>
-  <div role="tabpanel" class="tab-pane" id="menumobiletab">
-
-
-	</div>
 		</div>
 </div>
 

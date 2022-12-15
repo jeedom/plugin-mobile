@@ -91,8 +91,7 @@ $('.btIconClass').on('click', function () {
     $('#spanIconTest'+numElement+'[eqid="'+eqLogicId+'"]').children('i:nth-child(1)').attr('eqId', eqLogicId);
     $('#spanIconTest'+numElement+'[eqid="'+eqLogicId+'"]').children('i:nth-child(1)').attr('id', 'area'+numElement);
   }, {
-    icon: _icon,
-    path: 'plugins/mobile/data/fonts/'
+    icon: _icon
   })
 });
 

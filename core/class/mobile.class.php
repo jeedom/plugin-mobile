@@ -781,16 +781,14 @@ class mobile extends eqLogic {
 
 
  public static function saveMenuEqLogics($eqId, $arrayMenus, $checkDefault, $nbIcones){
-
 	 $eqLogic = eqLogic::byId(intval($eqId));
 	 if(is_object($eqLogic)){
 			$i = 1;
-			log::add('mobile','debug','ELEMENTSMENUS : '.json_encode($arrayMenus));			
+			//log::add('mobile','debug','ELEMENTSMENUS : '.json_encode($arrayMenus));
 			 $eqLogic->setConfiguration('nbIcones', $nbIcones);
 			foreach($arrayMenus as $menu){
               						if($menu[0] == 'none'){
                                        $eqLogic->setConfiguration('selectNameMenu'.$i, 'none');
-
                                     }else{
                                       	$result = explode('_',$menu[0]);
 									    $objectId = intval($result[0]);
@@ -813,10 +811,10 @@ class mobile extends eqLogic {
 										 $eqLogic->setConfiguration('spanIcon'.$i, $iconName);
                                       if($menu[3] != ''){
                                          $eqLogic->setConfiguration('urlUser'.$i, $menu[3]);
-                                        
+
                                       }else{
                                          $eqLogic->setConfiguration('urlUser'.$i, 'none');
-                                        
+
                                       }
 								 $i++;
 			 }
@@ -846,9 +844,9 @@ class mobile extends eqLogic {
 								 $eqlogic->setConfiguration('renameIcon'.$i, ${ 'renameIcon' . $i});
 								 $eqlogic->setConfiguration('spanIcon'.$i, ${ 'spanIcon' . $i});
 								 $eqlogic->setConfiguration('urlUser'.$i, ${ 'urlUser' . $i});
-								 
+
 							 }
-                           $eqlogic->setConfiguration('nbIcones', $nbIcons);   
+                           $eqlogic->setConfiguration('nbIcones', $nbIcons);
                            $eqlogic->save();
 					 }
 			 }
@@ -870,7 +868,7 @@ class mobile extends eqLogic {
                       ${ 'tabIconName' . $i} = substr(strstr($arrayIcon[1], '-'), 1);
                       ${ 'tabLibName' . $i} = strstr($arrayIcon[1], '-', true);
                       if(${ 'tabLibName' . $i} == 'mdi'){
-                        ${ 'tabLibName' . $i} = 'MaterialCommunityIcons';                   
+                        ${ 'tabLibName' . $i} = 'MaterialCommunityIcons';
                       }
                     }else{
                       ${ 'tabIconName' . $i} = 'home';
@@ -885,7 +883,7 @@ class mobile extends eqLogic {
                       $objectId = intval($arrayObjects[0]);
                       $typeObject = $arrayObjects[1];
                       ${ '$tabUrl' . $i} = "/index.php?v=m&app_mode=1&p={$typeObject}&object_id={$objectId}";
-                    }else if($objectId == 'none' && $eqLogic->getConfiguration('urlUser'.$i) != ''){                                
+                    }else if($objectId == 'none' && $eqLogic->getConfiguration('urlUser'.$i) != ''){
                       ${ '$tabUrl' . $i} = $eqLogic->getConfiguration('urlUser'.$i);
                     }else{
                       ${ '$tabUrl' . $i} = "/index.php?v=m&app_mode=1";
@@ -901,12 +899,12 @@ class mobile extends eqLogic {
                                           'type' =>  strpos(${ '$tabUrl' . $i}, 'www') !== false ? 'urlwww' : 'WebviewApp' );
                     $arrayElements['tab'.$j] =  $jsonTemplate;
                     $j++;
-                    $count++;             
+                    $count++;
 			}
 		  log::add('mobile','debug','JSONTEMPLATEARRAY :'.json_encode($arrayElements));
           return $arrayElements;
 		}else{
-         return 'undefined'; 
+         return 'undefined';
         }
 	}
 

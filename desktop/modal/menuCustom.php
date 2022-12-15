@@ -20,8 +20,7 @@ if (!isConnect('admin'))
     throw new Exception('401 Unauthorized');
 }
 $eqLogics = mobile::byType('mobile');
-include_file('desktop', 'mobile', 'js', 'mobile');
-include_file('core', 'plugin.template', 'js');
+
 ?>
 
 <table class="table table-condensed tablesorter" id="table_menuCustom">
@@ -450,9 +449,9 @@ function constructTableVisible(eqId){
    $('.validConfigBtn[eqid="'+eqId+'"]').css('display','block');
    $('.menuConfigBtn[eqid="'+eqId+'"]').removeClass('btn-primary').addClass('btn-warning');
    let nbIcones = $('.selectNbicones[eqId="'+eqId+'"]').value();
-
    jeedom.eqLogic.byId({
      id: eqId,
+     noCache:true,
      error: function(error) {
        $('#savAlert').showAlert({message: error.message, level: 'danger'});
      },
@@ -467,13 +466,8 @@ function constructTableVisible(eqId){
                   window['defaultName'+i] = arrayDefaultsNames[j];
                   window['defaultIcon'+i] = arrayDefaultsIcons[j];
                   $('#renameIcon'+i+'[eqid="'+eqId+'"]').css('display','block');
-                  let typeObject = 'dashboard';
-                  let urlUser = '';
-                  let selectNameChosen = 'none';
-                  let renameIcon = 'renameIcon'+i
-                  let selectName = 'selectNameMenu'+i
-                  let urlUserVar = 'urlUser'+i
-                  let spanIcon = 'spanIcon'+i
+                  let typeObject = 'dashboard',urlUser = '',selectNameChosen = 'none', renameIcon = 'renameIcon'+i,
+                  selectName = 'selectNameMenu'+i,urlUserVar = 'urlUser'+i,spanIcon = 'spanIcon'+i;
                   if(isset(data.configuration[selectName])){
                         if(data.configuration[selectName] != 'none'){
                             selectNameChosen = data.configuration[selectName]
@@ -519,7 +513,7 @@ function constructTableVisible(eqId){
 
 $('.menuConfigBtn').off().on('click', function () {
     let eqLogicId = $(this).attr('eqId');
-
+  console.log('menuCONFIGBTN')
     document.querySelectorAll('.selectNbicones').forEach((el) => {
       el.classList.add('hiddenEl');
    });
@@ -612,11 +606,13 @@ $('.validConfigBtn').on('click', function () {
                   $('#div_alert').showAlert({message: data.result, level: 'danger'});
                   return;
               }
-            $('#div_alert').showAlert({message: 'Configuration Menu Enregistrée', level: 'success'});
-            $('#md_modal').dialog({title: "{{Menu Custom}}"});
-            $('#md_modal').load('index.php?v=d&plugin=mobile&modal=menuCustom').dialog('open');
+
+              $('#div_alert').showAlert({message: 'Configuration Menu Enregistrée', level: 'success'});
+              $('#md_modal').dialog({title: "{{Menu Custom}}"});
+              $('#md_modal').load('index.php?v=d&plugin=mobile&modal=menuCustom').dialog('open');
         }
        });
+
 
      });
 </script>
@@ -769,3 +765,8 @@ $('.validConfigBtn').on('click', function () {
 }
 
 </style>
+
+<?php
+
+include_file('desktop', 'mobile', 'js', 'mobile');
+include_file('core', 'plugin.template', 'js');

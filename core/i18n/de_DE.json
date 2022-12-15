@@ -9,8 +9,8 @@
     "plugins\/mobile\/desktop\/modal\/health.php": {
         "Plateforme": "Plattform",
         "Equipement": "Gerät",
-        "ID": "ICH WÜRDE",
-        "User": "Benutzer",
+        "ID": "Identifikation",
+        "User": "Verschleiß",
         "Depuis": "Seit",
         "Utilisateur non trouvé": "Benutzer nicht gefunden"
     },
@@ -49,7 +49,7 @@
     "plugins\/mobile\/desktop\/modal\/update.mobile.php": {
         "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
         "Pause": "Pause",
-        "Rechercher": "Forschen"
+        "Rechercher": "Suchen nach"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.mobile.php": {
         "401 - AccèÈs non autorisÈ": "401 - Nicht autorisierter Zugriff",
@@ -74,7 +74,7 @@
         "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
         "Scénarios": "Szenarien",
         "Sauvegarder": "Speichern",
-        "ID": "ICH WÜRDE",
+        "ID": "Identifikation",
         "Scénario": "Szenario",
         "Transmis": "Übertragen",
         "Actions": "Lager",
@@ -146,17 +146,15 @@
         "Menu Custom": "Benutzerdefiniertes Menü",
         "Régénérer la configuration": "Konfiguration neu generieren",
         "Mes Téléphones Mobiles": "Meine Handys",
-        "Rechercher": "Forschen",
-        " Menu par default": "Standardmenü",
+        "Rechercher": "Suchen nach",
         "Configuration avancée": "Erweiterte Konfiguration",
         "Infos envoyées à l'app": "Info an die App gesendet",
         "Sauvegarder": "Speichern",
         "Supprimer": "Löschen",
-        "Mobile": "Handy, Mobiltelefon",
+        "Mobile": "Handy",
         "Notifications": "Benachrichtigungen",
         "Sauvegarde Mobile": "Mobile Backup",
         "Commandes": "Befehle",
-        "Menu Mobile": "Mobiles Menü",
         "Nom de l'équipement mobile": "Name der mobilen Ausrüstung",
         "Nom de l'équipement template": "Gerätename Vorlage",
         "Objet parent": "Übergeordnetes Objekt",
@@ -182,7 +180,7 @@
         "Vérification en Cours": "Überprüfung läuft",
         "Sauvegarde Favoris :": "Favoriten speichern:",
         "Nom": "Name",
-        "Type": "Nett",
+        "Type": "Typ",
         "Info": "Information",
         "Action": "Aktion"
     },

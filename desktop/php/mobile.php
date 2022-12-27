@@ -22,7 +22,46 @@ $pathImgMenu = 'plugins/mobile/core/img/imgMenuPerso.jpg';
 
 <div class="row row-overflow">
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
-		<legend><i class="fas fa-cog"></i>  {{Gestion}}</legend>
+		<legend><i class="fas fa-cog"></i>  {{App V2}}</legend>
+		<div class="eqLogicThumbnailContainer">
+			<div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
+				<i class="fas fa-wrench"></i><br>
+					<span>{{Configuration}}</span>
+			</div>
+            <div class="cursor eqLogicAction logoSecondary" data-action="bt_customMenu" id="bt_customMenu">
+				<i class='fas icon jeedomapp-plugin'></i><br>
+				<span>{{Menu Custom}}</span>
+			</div>
+		</div>
+		<legend><i class="icon techno-listening3"></i> {{Mes Téléphones Mobiles}}</legend>
+		<input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
+
+		<div class="eqLogicThumbnailContainer">
+			<?php
+			foreach ($eqLogics as $eqLogic) {
+				if($eqLogic->getConfiguration('appVersion', '1') == '2'){
+					$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+					echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
+					$file = 'plugins/mobile/core/img/' . $eqLogic->getConfiguration('type_mobile') . '.png';
+					if (file_exists($file)) {
+						$path = 'plugins/mobile/core/img/' . $eqLogic->getConfiguration('type_mobile') . '.png';
+						echo '<img src="' . $path . '" />';
+					} else {
+						$path = 'plugins/mobile/core/img/mobile_icon.png';
+						echo '<img src="' . $path . '" />';
+					}
+					echo '<br>';
+					echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+					echo '</div>';
+				}
+			}
+			?>
+		</div>
+	</div>
+</div>
+<div class="row row-overflow">
+	<div class="col-xs-12 eqLogicThumbnailDisplay">
+		<legend><i class="fas fa-cog"></i>  {{App V1}}</legend>
 		<div class="eqLogicThumbnailContainer">
 			<div class="cursor eqLogicAction logoPrimary" data-action="add">
 				<i class="fas fa-plus-circle"></i><br>
@@ -48,10 +87,6 @@ $pathImgMenu = 'plugins/mobile/core/img/imgMenuPerso.jpg';
 				<i class="fas fa-medkit"></i><br>
 				<span>{{Santé}}</span>
 			</div>
-            <div class="cursor eqLogicAction logoSecondary" data-action="bt_customMenu" id="bt_customMenu">
-				<i class='fas icon jeedomapp-plugin'></i><br>
-				<span>{{Menu Custom}}</span>
-			</div>
 			<div class="cursor eqLogicAction logoSecondary" data-action="bt_regenConfig" id="bt_regenConfig">
 				<i class="fas fa-cogs"></i><br>
 				<span>{{Régénérer la configuration}}</span>
@@ -64,19 +99,21 @@ $pathImgMenu = 'plugins/mobile/core/img/imgMenuPerso.jpg';
 		<div class="eqLogicThumbnailContainer">
 			<?php
 			foreach ($eqLogics as $eqLogic) {
-				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-				echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
-				$file = 'plugins/mobile/core/img/' . $eqLogic->getConfiguration('type_mobile') . '.png';
-				if (file_exists($file)) {
-					$path = 'plugins/mobile/core/img/' . $eqLogic->getConfiguration('type_mobile') . '.png';
-					echo '<img src="' . $path . '" />';
-				} else {
-					$path = 'plugins/mobile/core/img/mobile_icon.png';
-					echo '<img src="' . $path . '" />';
+				if($eqLogic->getConfiguration('appVersion', '1') != '2'){
+					$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+					echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
+					$file = 'plugins/mobile/core/img/' . $eqLogic->getConfiguration('type_mobile') . '.png';
+					if (file_exists($file)) {
+						$path = 'plugins/mobile/core/img/' . $eqLogic->getConfiguration('type_mobile') . '.png';
+						echo '<img src="' . $path . '" />';
+					} else {
+						$path = 'plugins/mobile/core/img/mobile_icon.png';
+						echo '<img src="' . $path . '" />';
+					}
+					echo '<br>';
+					echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+					echo '</div>';
 				}
-				echo '<br>';
-				echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
-				echo '</div>';
 			}
 			?>
 		</div>

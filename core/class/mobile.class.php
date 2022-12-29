@@ -528,7 +528,7 @@ class mobile extends eqLogic {
 		return $imageString;
 	}
 
-	public static function jsonPublish($os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout, $token, $photo, $version, $optionsNotif=[]){
+	public static function jsonPublish($os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout, $token, $photo, $version, $optionsNotif=[], $critical = false){
 		$dateNotif = date("Y-m-d H:i:s");
 		$badge = 0;
 		if ($timeout != 'nok') {
@@ -615,11 +615,16 @@ class mobile extends eqLogic {
 
             $optionsNotif['askParams'] = $askParams;
 
+			$channelId = "default";
+			if($os == 'android' && $critical == true){
+				$channelId = "critical";
+			}
+
             $customData = [
               'title' => $titre,
               'body' => $message,
               'idNotif' => strval($idNotif),
-              'channelId' => 'default',
+              'channelId' => $channelId,
               'date' => $dateNotif ,
               'boxName' => config::byKey('name'),
               'boxApiKey' => jeedom::getHardwareKey()
@@ -642,6 +647,7 @@ class mobile extends eqLogic {
                       ],
                       'notifee_options' => [
                          'ios' => [
+							'critical' => $critical,
                             'foregroundPresentationOptions' => [
                                'alert' => true,
                                'badge' => true,
@@ -677,9 +683,9 @@ class mobile extends eqLogic {
 		return $publish;
 	}
 
-	public static function notification($arn, $os, $titre, $message, $badge = 'null', $type, $idNotif, $answer,  $timeout, $token, $photo, $version=1, $optionsNotif=[]) {
+	public static function notification($arn, $os, $titre, $message, $badge = 'null', $type, $idNotif, $answer,  $timeout, $token, $photo, $version=1, $optionsNotif=[], $critical = false) {
 		log::add('mobile', 'debug', 'notification en cours !');
-		$publish = ($badge == 'null') ? mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer,  $timeout, $token, $photo,$version,$optionsNotif) : mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer,  $timeout, $token, $photo, $version,$optionsNotif);
+		$publish = ($badge == 'null') ? mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer,  $timeout, $token, $photo,$version,$optionsNotif,$critical) : mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer,  $timeout, $token, $photo, $version,$optionsNotif,$critical);
       	log::add('mobile', 'debug', 'JSON publish >  : ' . json_encode($publish));
       	if($token != null){
             if($token == 'notifsBGDisabled'){
@@ -924,6 +930,22 @@ class mobile extends eqLogic {
 		$cmdNotif->setIsVisible(1);
 		$cmdNotif->save();
 
+		if($this->getConfiguration('appVersion', 1) == 2){
+			$cmdNotif = $this->getCmd(null, 'notifCritical');
+			if (!is_object($cmdNotif)) {
+				$cmdNotif = new mobileCmd();
+			}
+			$cmdNotif->setLogicalId('notifCritical');
+			$cmdNotif->setName(__('Notification Critique', __FILE__));
+			$cmdNotif->setOrder(0);
+			$cmdNotif->setEqLogic_id($this->getId());
+			$cmdNotif->setDisplay('generic_type', 'GENERIC_ACTION');
+			$cmdNotif->setType('action');
+			$cmdNotif->setSubType('message');
+			$cmdNotif->setIsVisible(1);
+			$cmdNotif->save();
+		}
+
 		$cmdaskText = $this->getCmd(null, 'ask_Text');
 		if (is_object($cmdaskText)) {
 			$cmdaskText->remove();
@@ -960,10 +982,16 @@ class mobileCmd extends cmd {
       	$optionsNotif = [];
 		$eqLogic = $this->getEqLogic();
 
-		if ($this->getLogicalId() == 'notif') {
+		if ($this->getLogicalId() == 'notif' || $this->getLogicalId() == 'notifCritical') {
 
 			if ($_options['title'] == '' || $_options['title'] == $_options['message'] || $_options['title'] == ' ') {
 				$_options['title'] = config::byKey('product_name');
+			}
+
+			$critical = false;
+
+			if($this->getLogicalId() == 'notifCritical'){
+				$critical = true;
 			}
 
 			$answer = ($_options['answer']) ? join(';', $_options['answer']) : null;
@@ -1024,13 +1052,13 @@ log::add('mobile', 'debug', 'Notif > ' . json_encode($_options) . ' / ' . $eqLog
                   	$keyFile = md5_file($newfile);
                   	$url .= 'key='.$keyFile.'&name='.$nameFile;
                   	log::add('mobile', 'debug', 'url > '.$url);
-                  	mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], null, $askType, $idNotif, $answer, $timeout, $eqLogic->getConfiguration('notificationRegistrationToken', null), $url, $eqLogic->getConfiguration('appVersion', 1), $optionsNotif);
+                  	mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], null, $askType, $idNotif, $answer, $timeout, $eqLogic->getConfiguration('notificationRegistrationToken', null), $url, $eqLogic->getConfiguration('appVersion', 1), $optionsNotif, $critical);
                 }else{
-                	mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], null, $askType, $idNotif, $answer, $timeout, $eqLogic->getConfiguration('notificationRegistrationToken', null), null, $eqLogic->getConfiguration('appVersion', 1), $optionsNotif);
+                	mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], null, $askType, $idNotif, $answer, $timeout, $eqLogic->getConfiguration('notificationRegistrationToken', null), null, $eqLogic->getConfiguration('appVersion', 1), $optionsNotif, $critical);
                 }
             }
           }else{
-            mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], null, $askType, $idNotif, $answer,  $timeout, $eqLogic->getConfiguration('notificationRegistrationToken', null), null, $eqLogic->getConfiguration('appVersion', 1), $optionsNotif);
+            mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], null, $askType, $idNotif, $answer,  $timeout, $eqLogic->getConfiguration('notificationRegistrationToken', null), null, $eqLogic->getConfiguration('appVersion', 1), $optionsNotif, $critical);
           }
 
 				log::add('mobile', 'debug', 'Action : Envoi d\'une configuration ', 'config');

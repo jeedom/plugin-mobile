@@ -15,7 +15,13 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
+
+function jeelink_install() {
+	jeedom::getApiKey('mobile');
+}
+
 function mobile_update(){
+	jeedom::getApiKey('mobile');
 	foreach (eqLogic::byType('mobile') as $mobile){
 		if($mobile->getLogicalId() == null || $mobile->getLogicalId() == ""){
 			$mobile->remove();

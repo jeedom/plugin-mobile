@@ -71,6 +71,18 @@ if (init('action') == 'saveMenuEqLogics') {
 		}
 	}
 
+  	if (init('action') == 'getQrCodeV2') {
+		$user = user::byId(init('chooseUser'));
+		if (!is_object($user)) {
+			throw new Exception(__('User inexistant : ', __FILE__));
+		} else {
+			ajax::success(mobile::getQrCodeV2($user->getId()));
+		}
+	}
+
+
+
+
 	if (init('action') == 'regenConfig') {
 		mobile::makeTemplateJson();
 		ajax::success();
@@ -113,6 +125,6 @@ if (init('action') == 'saveMenuEqLogics') {
 	throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
 
 } catch (Exception $e) {
-	ajax::error(displayExeption($e), $e->getCode());
+	ajax::error(displayException($e), $e->getCode());
 }
 ?>

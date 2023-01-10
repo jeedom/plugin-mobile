@@ -38,6 +38,10 @@
     $('#md_modal').dialog({title: "{{Menu Custom}}"});
     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=menuCustom').dialog('open');
 })
+ $('#bt_qrCodev2').on('click', function(){
+  
+    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=qrcodev2').dialog('open');
+})
 
 
 

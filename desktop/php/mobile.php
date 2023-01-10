@@ -32,6 +32,10 @@ $pathImgMenu = 'plugins/mobile/core/img/imgMenuPerso.jpg';
 				<i class='fas icon jeedomapp-plugin'></i><br>
 				<span>{{Menu Custom}}</span>
 			</div>
+            <div class="cursor eqLogicAction logoSecondary" data-action="bt_qrCodev2" id="bt_qrCodev2">
+				 <i class="fa fa-qrcode"></i><br>  
+				<span>{{QR Code}}</span>
+			</div>
 		</div>
 		<legend><i class="icon techno-listening3"></i> {{Mes Téléphones Mobiles}}</legend>
 		<input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />

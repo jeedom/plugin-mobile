@@ -527,6 +527,35 @@ class mobile extends eqLogic {
 		ob_end_clean();
 		return $imageString;
 	}
+  
+  
+  	public static function getQrCodeV2($userId) {
+    require_once dirname(__FILE__) . '/../../3rdparty/phpqrcode/qrlib.php';
+		$interne = network::getNetworkAccess('internal');
+		$externe = network::getNetworkAccess('external');
+		if ($interne == null || $interne == 'http://:80' || $interne == 'https://:80') {
+			return 'internalError';
+		}
+		if ($externe == null || $externe == 'http://:80' || $externe == 'https://:80') {
+			return 'externalError';
+		}
+		if (!is_object(user::byId($userId))) {
+			return 'UserError';
+		}
+		$request_qrcode = array(
+			'url_internal' => $interne,
+			'url_external' => $externe
+		);
+			if (is_object($user = user::byId($userId))) {
+				$request_qrcode['username'] = $user->getLogin();
+				$request_qrcode['apikey'] = $user->getHash();
+			}
+		ob_start();
+		QRcode::png(json_encode($request_qrcode));
+		$imageString = base64_encode( ob_get_contents() );
+		ob_end_clean();
+		return $imageString;
+	}
 
 	public static function jsonPublish($os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout, $token, $photo, $version, $optionsNotif=[], $critical = false){
 		$dateNotif = date("Y-m-d H:i:s");

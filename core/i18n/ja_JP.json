@@ -47,6 +47,15 @@
         "Plugins non testés et non transmis": "Plugins non testés et non transmis",
         "Ne sont pas transmis à l’App Mobile": "Ne sont pas transmis à l’App Mobile"
     },
+    "plugins\/mobile\/desktop\/modal\/qrcodev2.php": {
+        "AJOUT DE LA BOX SUR VOTRE APPLICATiON MOBILE ": "AJOUT DE LA BOX SUR VOTRE APPLICATiON MOBILE",
+        "Utilisateurs": "Utilisateurs",
+        "Aucun": "Aucun",
+        "QRCode": "QRCode",
+        "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)",
+        "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)",
+        "Erreur Pas d\\'utilisateur selectionné": "Erreur Pas d\\'utilisateur selectionné"
+    },
     "plugins\/mobile\/desktop\/modal\/update.mobile.php": {
         "401 - Accès non autorisé": "401-不正アクセス",
         "Pause": "休止",
@@ -112,6 +121,7 @@
         "App V2": "App V2",
         "Configuration": "コンフィギュレーション",
         "Menu Custom": "Menu Custom",
+        "QR Code": "QR Code",
         "Mes Téléphones Mobiles": "Mes Téléphones Mobiles",
         "Rechercher": "検索",
         "App V1": "App V1",
@@ -178,6 +188,7 @@
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401-不正アクセス",
         "Equipement non trouvé : ": "Equipement non trouvé :",
+        "User inexistant : ": "User inexistant :",
         "Aucune methode correspondante à : ": "以下に対応するメソッドはありません：",
         "scenario non trouvé": "scenario non trouvé"
     },

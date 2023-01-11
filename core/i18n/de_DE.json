@@ -47,6 +47,15 @@
         "Plugins non testés et non transmis": "Plugins nicht getestet und nicht übertragen",
         "Ne sont pas transmis à l’App Mobile": "Werden nicht an die Mobile App übertragen"
     },
+    "plugins\/mobile\/desktop\/modal\/qrcodev2.php": {
+        "AJOUT DE LA BOX SUR VOTRE APPLICATiON MOBILE ": "HINZUFÜGEN DER BOX ZU IHRER MOBILEN APP",
+        "Utilisateurs": "Benutzer",
+        "Aucun": "Keiner",
+        "QRCode": "QR-Code",
+        "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Fehler Keine interne Adresse (siehe Konfiguration Ihres Jeedom!)",
+        "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Fehler Keine externe Adresse (siehe Konfiguration Ihres Jeedom!)",
+        "Erreur Pas d\\'utilisateur selectionné": "Fehler Kein Benutzer ausgewählt"
+    },
     "plugins\/mobile\/desktop\/modal\/update.mobile.php": {
         "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
         "Pause": "Pause",
@@ -65,7 +74,7 @@
         "Nom de la Commande": "Name der Bestellung",
         "Type Générique": "Typ Gattung",
         "Icône": "Symbol",
-        "Aucun": "Ohne",
+        "Aucun": "Keiner",
         " . $info['family'] . ": "$ info ['Familie']",
         "Plugins compatibles": "Kompatible Plugins",
         "Modifications sauvegardées avec succès": "Änderungen erfolgreich gespeichert",
@@ -91,7 +100,7 @@
         "Nom de la Commande": "Name der Bestellung",
         "Type Générique": "Typ Gattung",
         "Icône": "Symbol",
-        "Aucun": "Ohne",
+        "Aucun": "Keiner",
         " . $info['family'] . ": "$ info ['Familie']",
         "Objets \/ Pièces": "Objekte \/ Stücke",
         "Modifications sauvegardées avec succès": "Änderungen erfolgreich gespeichert",
@@ -112,6 +121,7 @@
         "App V2": "Anwendung V2",
         "Configuration": "Konfiguration",
         "Menu Custom": "Benutzerdefiniertes Menü",
+        "QR Code": "QR-Code",
         "Mes Téléphones Mobiles": "Meine Handys",
         "Rechercher": "Suchen nach",
         "App V1": "Anwendung V1",
@@ -132,7 +142,7 @@
         "Nom de l'équipement mobile": "Name der mobilen Ausrüstung",
         "Nom de l'équipement template": "Gerätename Vorlage",
         "Objet parent": "Übergeordnetes Objekt",
-        "Aucun": "Ohne",
+        "Aucun": "Keiner",
         "Activer": "Aktivieren",
         "Visible": "Sichtbar",
         "Type de Mobile": "Mobiler Typ",
@@ -178,6 +188,7 @@
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
         "Equipement non trouvé : ": "Ausrüstung nicht gefunden:",
+        "User inexistant : ": "Nicht vorhandener Benutzer:",
         "Aucune methode correspondante à : ": "Keine Methode entsprechend:",
         "scenario non trouvé": "Szenario nicht gefunden"
     },

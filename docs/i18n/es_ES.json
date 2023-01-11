@@ -2,6 +2,10 @@
     "changelog.md": {
         "Changelog App Mobile": "Changelog Mobile App",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Como recordatorio si no hay información sobre la actualización, significa que solo se refiere a la actualización de documentación, traducción o texto",
+        "10\/01\/2023": "10\/01\/2023",
+        "Nouvelle Interface AppV2": "Nueva interfaz AppV2",
+        "Modale Custom Menu AppV2": "Menú personalizado modal AppV2",
+        "Modale QrCode AppV2": "Aplicación modal QrCode V2",
         "13\/12\/2021": "13\/12\/2021",
         "Mode offline pour le QrCode (creation du QrCode sans internet": "Modo sin conexión para QrCode (creación de QrCode sin Internet",
         "Compatibilité 4": "Compatibilidad 4",

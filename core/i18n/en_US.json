@@ -47,6 +47,15 @@
         "Plugins non testés et non transmis": "Plugins not tested and not transmitted",
         "Ne sont pas transmis à l’App Mobile": "Are not transmitted to the Mobile App"
     },
+    "plugins\/mobile\/desktop\/modal\/qrcodev2.php": {
+        "AJOUT DE LA BOX SUR VOTRE APPLICATiON MOBILE ": "ADDING THE BOX TO YOUR MOBILE APP",
+        "Utilisateurs": "Users",
+        "Aucun": "None",
+        "QRCode": "QRCode",
+        "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Error No internal address (see configuration of your Jeedom!)",
+        "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Error No external address (see configuration of your Jeedom!)",
+        "Erreur Pas d\\'utilisateur selectionné": "Error No user selected"
+    },
     "plugins\/mobile\/desktop\/modal\/update.mobile.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",
         "Pause": "Pause",
@@ -112,6 +121,7 @@
         "App V2": "App V2",
         "Configuration": "Setup",
         "Menu Custom": "Custom menu",
+        "QR Code": "QR Code",
         "Mes Téléphones Mobiles": "My Mobile Phones",
         "Rechercher": "Search",
         "App V1": "App V1",
@@ -178,6 +188,7 @@
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",
         "Equipement non trouvé : ": "Equipment not found:",
+        "User inexistant : ": "Non-existent user:",
         "Aucune methode correspondante à : ": "No method corresponding to:",
         "scenario non trouvé": "scenario not found"
     },

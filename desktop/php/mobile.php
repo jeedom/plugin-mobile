@@ -22,7 +22,7 @@ $pathImgMenu = 'plugins/mobile/core/img/imgMenuPerso.jpg';
 
 <div class="row row-overflow">
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
-		<legend><i class="fas fa-mobile"></i>  {{App V2}}</legend>
+		<legend><i class="fas fa-mobile"></i>  {{App V2 - VERSION ALPHA PRIVEE SEULEMENT}}</legend>
 		<div class="eqLogicThumbnailContainer">
 			<div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
 				<i class="fas fa-wrench"></i><br>

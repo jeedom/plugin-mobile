@@ -826,6 +826,10 @@ class mobile extends eqLogic {
                                 $eqLogic->setConfiguration('selectNameMenu'.$i, 'none');
                           }else if($menu[0] == 'overview'){
 															$eqLogic->setConfiguration('selectNameMenu'.$i, 'overview');
+													}else if($menu[0] == 'health'){
+															$eqLogic->setConfiguration('selectNameMenu'.$i, 'health');
+													}else if($menu[0] == 'timeline'){
+															$eqLogic->setConfiguration('selectNameMenu'.$i, 'timeline');
 													}else{
                               $result = explode('_',$menu[0]);
 													    $objectId = intval($result[0]);
@@ -916,27 +920,31 @@ class mobile extends eqLogic {
                     $objectId = $eqLogic->getConfiguration('selectNameMenu'.$i);
 										log::add('mobile','debug', 'OBJECTID : ' .$objectId);
                     if($objectId && $objectId != -1 && $objectId != 'none'){
-											if($objectId != 'overview'){
-												$arrayObjects = explode('_', $objectId);
-												$objectId = $arrayObjects[0];
-												$typeObject = $arrayObjects[1];
+											if($objectId != 'overview' && $objectId != 'health' && $objectId != 'home' && $objectId != 'timeline'){
+													$arrayObjects = explode('_', $objectId);
+													$objectId = $arrayObjects[0];
+													$typeObject = $arrayObjects[1];
 													log::add('mobile','debug', 'OBJ : ' .	$objectId);
-														log::add('mobile','debug', 'TYPEOBJ : ' .	$typeObject);
-												if($typeObject == 'view'){
-													 ${ '$tabUrl' . $i} = "/index.php?v=m&p={$typeObject}&view_id={$objectId}";
-												}else if($typeObject == 'dashboard'){
-															${ '$tabUrl' . $i} =  "/index.php?v=m&p=dashboard&object_id={$objectId}";
-												}
-												else if($typeObject == 'plan'){
-															${ '$tabUrl' . $i} =  "/index.php?v=m&p=plan&plan_id={$objectId}";
-												}	else if($typeObject == 'panel'){
-
-															${ '$tabUrl' . $i} =  "/index.php?v=m&p={$objectId}";
-															log::add('mobile','debug', 'PANEL : ' .	${ '$tabUrl' . $i});
-														}
-
-											}else{
+													log::add('mobile','debug', 'TYPEOBJ : ' .	$typeObject);
+													if($typeObject == 'view'){
+														 ${ '$tabUrl' . $i} = "/index.php?v=m&p={$typeObject}&view_id={$objectId}";
+													}else if($typeObject == 'dashboard'){
+																${ '$tabUrl' . $i} =  "/index.php?v=m&p=dashboard&object_id={$objectId}";
+													}else if($typeObject == 'plan'){
+																${ '$tabUrl' . $i} =  "/index.php?v=m&p=plan&plan_id={$objectId}";
+													}else if($typeObject == 'panel'){
+																${ '$tabUrl' . $i} =  "/index.php?v=m&p={$objectId}";
+																log::add('mobile','debug', 'PANEL : ' .	${ '$tabUrl' . $i});
+													}
+											}else if($objectId == 'overview'){
 													${ '$tabUrl' . $i} =  '/index.php?v=m&p=overview';
+											}else if($objectId == 'home'){
+													${ '$tabUrl' . $i} =  '/index.php?v=m&p=home';
+											}else if($objectId == 'health'){
+													${ '$tabUrl' . $i} =  '/index.php?v=m&p=health';
+											}
+											else if($objectId == 'timeline'){
+													${ '$tabUrl' . $i} =  '/index.php?v=m&p=timeline';
 											}
                     }else if($objectId == 'none' && $eqLogic->getConfiguration('urlUser'.$i) != ''){
                       ${ '$tabUrl' . $i} = $eqLogic->getConfiguration('urlUser'.$i);

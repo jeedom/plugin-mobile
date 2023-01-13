@@ -125,13 +125,16 @@ foreach ($eqLogics as $eqLogic)
                                                                     <div class="menusSelectors" style="margin-bottom:2%;margin-left:5%;">
                                                                             <label>{{Type}}</label>
                                                                             <select id="typeMenu1" class="form-control selectMenuMobile" onInput="userSelect('typeMenu1')">;
-                                                                            <option value="none">{{Choisir un Type}}</option>
+                                                                            <option value="none" disabled selected>{{Choisir un Type}}</option>
+                                                                            <option value="home">{{Accueil}}</option>
+                                                                            <option value="overview">{{Synthese}}</option>
+                                                                            <option value="dashboard">{{Dashboard}}</option>
                                                                             <option value="view">{{Vue}}</option>
                                                                             <option value="plan">{{Design}}</option>
                                                                             <option value="panel">{{Panel}}</option>
-                                                                            <option value="dashboard">{{Dashboard}}</option>
-                                                                            <option value="url">{{URL}}</option>
-                                                                            <option value="overview">{{Synthese}}</option>
+                                                                            <option value="url">{{URL externe}}</option>
+                                                                            <option value="health">{{Santé}}</option>
+                                                                            <option value="timeline">{{TimeLine}}</option>
                                                                             </select>
                                                                     </div>
                                                                     <div id="divnameMenu1" style="margin-bottom:5%;margin-left:5%;">
@@ -207,13 +210,16 @@ foreach ($eqLogics as $eqLogic)
                                                   <div class="menusSelectors" style="margin-bottom:2%;margin-left:5%;">
                                                                                                     <label>{{Type}}</label>
                                                                                                     <select id="typeMenu2" class="form-control selectMenuMobile" onInput="userSelect('typeMenu2')">;
-                                                                                                    <option value="none" disabled selected>{{Choisir un Type}}</option>
-                                                                                                    <option value="view">{{Vue}}</option>
-                                                                                                    <option value="plan">{{Design}}</option>
-                                                                                                    <option value="panel">{{Panel}}</option>
-                                                                                                    <option value="dashboard">{{Dashboard}}</option>
-                                                                                                    <option value="url">{{URL}}</option>
-                                                                                                    <option value="overview">{{Synthese}}</option>
+                                                                                                      <option value="none" disabled selected>{{Choisir un Type}}</option>
+                                                                                                      <option value="home">{{Accueil}}</option>
+                                                                                                      <option value="overview">{{Synthese}}</option>
+                                                                                                      <option value="dashboard">{{Dashboard}}</option>
+                                                                                                      <option value="view">{{Vue}}</option>
+                                                                                                      <option value="plan">{{Design}}</option>
+                                                                                                      <option value="panel">{{Panel}}</option>
+                                                                                                      <option value="url">{{URL externe}}</option>
+                                                                                                      <option value="health">{{Santé}}</option>
+                                                                                                      <option value="timeline">{{TimeLine}}</option>
                                                                                                     </select>
                                                     </div>
                                                     <div id="divnameMenu2" style="margin-bottom:2%;margin-left:5%;">
@@ -288,13 +294,16 @@ foreach ($eqLogics as $eqLogic)
                                                                     <div class="menusSelectors" style="margin-bottom:2%;margin-left:5%;">
                                                                             <label>{{Type}}</label>
                                                                             <select id="typeMenu3" class="form-control selectMenuMobile" onInput="userSelect('typeMenu3')">;
-                                                                            <option value="none" disabled selected>{{Choisir un Type}}</option>
-                                                                            <option value="view">{{Vue}}</option>
-                                                                            <option value="plan">{{Design}}</option>
-                                                                            <option value="panel">{{Panel}}</option>
-                                                                            <option value="dashboard">{{Dashboard}}</option>
-                                                                            <option value="url">{{URL}}</option>
-                                                                            <option value="overview">{{Synthese}}</option>
+                                                                              <option value="none" disabled selected>{{Choisir un Type}}</option>
+                                                                              <option value="home">{{Accueil}}</option>
+                                                                              <option value="overview">{{Synthese}}</option>
+                                                                              <option value="dashboard">{{Dashboard}}</option>
+                                                                              <option value="view">{{Vue}}</option>
+                                                                              <option value="plan">{{Design}}</option>
+                                                                              <option value="panel">{{Panel}}</option>
+                                                                              <option value="url">{{URL externe}}</option>
+                                                                              <option value="health">{{Santé}}</option>
+                                                                              <option value="timeline">{{TimeLine}}</option>
                                                                             </select>
                                                                     </div>
                                                                     <div id="divnameMenu3" style="margin-bottom:2%;margin-left:5%;">
@@ -369,13 +378,16 @@ foreach ($eqLogics as $eqLogic)
                                                                 <div class="menusSelectors" style="margin-bottom:2%;margin-left:5%;">
                                                                         <label>{{Type}}</label>
                                                                         <select id="typeMenu4" class="form-control selectMenuMobile" onInput="userSelect('typeMenu4')">;
-                                                                        <option value="none" disabled selected>{{Choisir un Type}}</option>
-                                                                        <option value="view">{{Vue}}</option>
-                                                                        <option value="plan">{{Design}}</option>
-                                                                        <option value="panel">{{Panel}}</option>
-                                                                        <option value="dashboard">{{Dashboard}}</option>
-                                                                        <option value="url">{{URL}}</option>
-                                                                        <option value="overview">{{Synthese}}</option>
+                                                                          <option value="none" disabled selected>{{Choisir un Type}}</option>
+                                                                          <option value="home">{{Accueil}}</option>
+                                                                          <option value="overview">{{Synthese}}</option>
+                                                                          <option value="dashboard">{{Dashboard}}</option>
+                                                                          <option value="view">{{Vue}}</option>
+                                                                          <option value="plan">{{Design}}</option>
+                                                                          <option value="panel">{{Panel}}</option>
+                                                                          <option value="url">{{URL externe}}</option>
+                                                                          <option value="health">{{Santé}}</option>
+                                                                          <option value="timeline">{{TimeLine}}</option>
                                                                         </select>
                                                                 </div>
                                                                 <div id="divnameMenu4" style="margin-bottom:2%;margin-left:5%;">
@@ -477,6 +489,12 @@ function constructTableVisible(eqId){
                             selectNameChosen = data.configuration[selectName]
                             if(selectNameChosen == 'overview'){
                               typeObject = 'overview';
+                            }else if(selectNameChosen == 'health'){
+                              typeObject = 'health';
+                            }else if(selectNameChosen == 'home'){
+                              typeObject = 'home';
+                            }else if(selectNameChosen == 'timeline'){
+                              typeObject = 'timeline';
                             }else{
                               let arrayTest = selectNameChosen.split('_');
                               let objectId = arrayTest[0];
@@ -579,6 +597,12 @@ $('.validConfigBtn').on('click', function () {
        window['inputChosen'+i] =  $('#renameIcon'+i+'[eqid="'+eqLogicId+'"]').children('input:nth-child(2)').value();
        if (objectSelected == 'overview'){
          window['selectNameMenu'+i] = 'overview';
+       }else if(objectSelected == 'health'){
+         window['selectNameMenu'+i] = 'health';
+       }else if(objectSelected == 'home'){
+         window['selectNameMenu'+i] = 'home';
+       }else if(objectSelected == 'timeline'){
+           window['selectNameMenu'+i] = 'timeline';
        }else{
          window['selectNameMenu'+i] = $('.item_dash[id="item_'+objectSelected+''+i+'"][eqId="'+eqLogicId+'"]').value();
        }

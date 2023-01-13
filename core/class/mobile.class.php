@@ -527,8 +527,8 @@ class mobile extends eqLogic {
 		ob_end_clean();
 		return $imageString;
 	}
-  
-  
+
+
   	public static function getQrCodeV2($userId) {
     require_once dirname(__FILE__) . '/../../3rdparty/phpqrcode/qrlib.php';
 		$interne = network::getNetworkAccess('internal');
@@ -823,22 +823,23 @@ class mobile extends eqLogic {
 			 $eqLogic->setConfiguration('nbIcones', $nbIcones);
 			foreach($arrayMenus as $menu){
               						if($menu[0] == 'none'){
-                                       $eqLogic->setConfiguration('selectNameMenu'.$i, 'none');
-                                    }else{
-                                      	$result = explode('_',$menu[0]);
-									    $objectId = intval($result[0]);
-									    $typeObject = $result[1];
+                                $eqLogic->setConfiguration('selectNameMenu'.$i, 'none');
+                          }else if($menu[0] == 'overview'){
+															$eqLogic->setConfiguration('selectNameMenu'.$i, 'overview');
+													}else{
+                              $result = explode('_',$menu[0]);
+													    $objectId = intval($result[0]);
+													    $typeObject = $result[1];
+															$eqLogic->setConfiguration('selectNameMenu'.$i, $menu[0]);
+                          }
+                          $nameUser = $menu[1];
+                          if($nameUser != ''){
+                            $eqLogic->setConfiguration('renameIcon'.$i, $nameUser);
 
-                                        $eqLogic->setConfiguration('selectNameMenu'.$i, $menu[0]);
-                                    }
-                                        $nameUser = $menu[1];
-                                        if($nameUser != ''){
-                                          $eqLogic->setConfiguration('renameIcon'.$i, $nameUser);
+                          }else{
+                            $eqLogic->setConfiguration('renameIcon'.$i, 'none');
 
-                                        }else{
-                                          $eqLogic->setConfiguration('renameIcon'.$i, 'none');
-
-                                        }
+                          }
 									    $iconName = $menu[2];
 				/*	log::add('mobile','debug','SPANICON : '.$iconName);
 					log::add('mobile','debug','RENAMEICON : '.$nameUser);
@@ -913,11 +914,30 @@ class mobile extends eqLogic {
                       ${ '$tabRenameInput' . $i} = 'Accueil';
                     }
                     $objectId = $eqLogic->getConfiguration('selectNameMenu'.$i);
+										log::add('mobile','debug', 'OBJECTID : ' .$objectId);
                     if($objectId && $objectId != -1 && $objectId != 'none'){
-                      $arrayObjects = explode('_', $objectId);
-                      $objectId = intval($arrayObjects[0]);
-                      $typeObject = $arrayObjects[1];
-                      ${ '$tabUrl' . $i} = "/index.php?v=m&app_mode=1&p={$typeObject}&object_id={$objectId}";
+											if($objectId != 'overview'){
+												$arrayObjects = explode('_', $objectId);
+												$objectId = $arrayObjects[0];
+												$typeObject = $arrayObjects[1];
+													log::add('mobile','debug', 'OBJ : ' .	$objectId);
+														log::add('mobile','debug', 'TYPEOBJ : ' .	$typeObject);
+												if($typeObject == 'view'){
+													 ${ '$tabUrl' . $i} = "/index.php?v=m&p={$typeObject}&view_id={$objectId}";
+												}else if($typeObject == 'dashboard'){
+															${ '$tabUrl' . $i} =  "/index.php?v=m&p=dashboard&object_id={$objectId}";
+												}
+												else if($typeObject == 'plan'){
+															${ '$tabUrl' . $i} =  "/index.php?v=m&p=plan&plan_id={$objectId}";
+												}	else if($typeObject == 'panel'){
+
+															${ '$tabUrl' . $i} =  "/index.php?v=m&p={$objectId}";
+															log::add('mobile','debug', 'PANEL : ' .	${ '$tabUrl' . $i});
+														}
+
+											}else{
+													${ '$tabUrl' . $i} =  '/index.php?v=m&p=overview';
+											}
                     }else if($objectId == 'none' && $eqLogic->getConfiguration('urlUser'.$i) != ''){
                       ${ '$tabUrl' . $i} = $eqLogic->getConfiguration('urlUser'.$i);
                     }else{

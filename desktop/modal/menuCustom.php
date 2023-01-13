@@ -131,6 +131,7 @@ foreach ($eqLogics as $eqLogic)
                                                                             <option value="panel">{{Panel}}</option>
                                                                             <option value="dashboard">{{Dashboard}}</option>
                                                                             <option value="url">{{URL}}</option>
+                                                                            <option value="overview">{{Synthese}}</option>
                                                                             </select>
                                                                     </div>
                                                                     <div id="divnameMenu1" style="margin-bottom:5%;margin-left:5%;">
@@ -212,6 +213,7 @@ foreach ($eqLogics as $eqLogic)
                                                                                                     <option value="panel">{{Panel}}</option>
                                                                                                     <option value="dashboard">{{Dashboard}}</option>
                                                                                                     <option value="url">{{URL}}</option>
+                                                                                                    <option value="overview">{{Synthese}}</option>
                                                                                                     </select>
                                                     </div>
                                                     <div id="divnameMenu2" style="margin-bottom:2%;margin-left:5%;">
@@ -292,6 +294,7 @@ foreach ($eqLogics as $eqLogic)
                                                                             <option value="panel">{{Panel}}</option>
                                                                             <option value="dashboard">{{Dashboard}}</option>
                                                                             <option value="url">{{URL}}</option>
+                                                                            <option value="overview">{{Synthese}}</option>
                                                                             </select>
                                                                     </div>
                                                                     <div id="divnameMenu3" style="margin-bottom:2%;margin-left:5%;">
@@ -372,6 +375,7 @@ foreach ($eqLogics as $eqLogic)
                                                                         <option value="panel">{{Panel}}</option>
                                                                         <option value="dashboard">{{Dashboard}}</option>
                                                                         <option value="url">{{URL}}</option>
+                                                                        <option value="overview">{{Synthese}}</option>
                                                                         </select>
                                                                 </div>
                                                                 <div id="divnameMenu4" style="margin-bottom:2%;margin-left:5%;">
@@ -471,9 +475,14 @@ function constructTableVisible(eqId){
                   if(isset(data.configuration[selectName])){
                         if(data.configuration[selectName] != 'none'){
                             selectNameChosen = data.configuration[selectName]
-                            let arrayTest = selectNameChosen.split('_');
-                            let objectId = arrayTest[0];
-                            typeObject = arrayTest[1];
+                            if(selectNameChosen == 'overview'){
+                              typeObject = 'overview';
+                            }else{
+                              let arrayTest = selectNameChosen.split('_');
+                              let objectId = arrayTest[0];
+                              typeObject = arrayTest[1];
+                            }
+
                         }
                   }
                   if(isset(data.configuration[renameIcon])){
@@ -568,7 +577,11 @@ $('.validConfigBtn').on('click', function () {
      for (let i = 1; i < parseInt(nbIcones) + 1; i++) {
        let objectSelected = $('.selectMenuMobile[eqId="'+eqLogicId+'"][id="typeMenu'+i+'"]').value();
        window['inputChosen'+i] =  $('#renameIcon'+i+'[eqid="'+eqLogicId+'"]').children('input:nth-child(2)').value();
-       window['selectNameMenu'+i] = $('.item_dash[id="item_'+objectSelected+''+i+'"][eqId="'+eqLogicId+'"]').value();
+       if (objectSelected == 'overview'){
+         window['selectNameMenu'+i] = 'overview';
+       }else{
+         window['selectNameMenu'+i] = $('.item_dash[id="item_'+objectSelected+''+i+'"][eqId="'+eqLogicId+'"]').value();
+       }
        window['iconName'+i] = $('#spanIconTest'+i).children('i:nth-child(1)').attr('class');
        window['urlUser'+i] = $('#urlUser'+i).value();
        if(window['inputChosen'+i]  === undefined ) {

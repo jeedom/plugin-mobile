@@ -128,18 +128,18 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$return[$idBox]['apikeyUser'] = $_USER_GLOBAL->getHash();
 	$return[$idBox]['configs'] = 'undefined';
 	$return[$idBox]['externalIp'] = network::getNetworkAccess('external');
-  	$return[$idBox]['localIp'] = network::getNetworkAccess('internal');
+  $return[$idBox]['localIp'] = network::getNetworkAccess('internal');
 	$return[$idBox]['hardware'] = jeedom::getHardwareName();
 	$return[$idBox]['hwkey'] = jeedom::getHardwareKey();
 	$return[$idBox]['appMobile'] = '0.1';
-  	$return[$idBox]['ping'] = true;
+  $return[$idBox]['ping'] = true;
 	$return[$idBox]['informations']['hardware'] = jeedom::getHardwareName();
 	$return[$idBox]['informations']['language'] = config::byKey('language');
 	$return[$idBox]['informations']['nbMessage'] = message::nbMessage();
-  	$return[$idBox]['informations']['nbUpdate'] = update::nbNeedUpdate();
-	$return[$idBox]['informations']['uname'] = system::getDistrib() . ' ' . system::getOsVersion();
+  $return[$idBox]['informations']['nbUpdate'] = update::nbNeedUpdate();
+	$return[$idBox]['informations']['uname'] = system::getDistrib() . ' ' . method_exists(system::getOsVersion()) ? system::getOsVersion() : 'UnknownVersion';
 	$return[$idBox]['jeedom_version'] = jeedom::version();
-  	$return[$idBox]['rdk'] = $rdk;
+  $return[$idBox]['rdk'] = $rdk;
 	$return[$idBox]['name'] = config::byKey('name');
   	log::add('mobile', 'debug', 'retour de base > '.json_encode($return));
 

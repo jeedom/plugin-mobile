@@ -304,9 +304,17 @@ if ($jsonrpc->getMethod() == 'askText') {
 		}
 		log::add('mobile', 'debug', 'Mobile bien trouvé casse -> ' . $askCasse . ' text : ' . $textCasse);
 		$cmd = $mobile->getCmd(null, 'notif');
-		log::add('mobile', 'debug', 'IQ > ' . $params['Iq'] . ' demande cmd > ' . $cmd->getId());
+		log::add('mobile', 'debug', 'IQ > ' . $params['Iq'] . ' demande cmd > ' . $cmd->getId());		
 		if ($cmd->askResponse($textCasse)) {
 			log::add('mobile', 'debug', 'ask bien trouvé : Réponse validée');
+			$jsonrpc->makeSuccess();
+		}else{
+			$ch = curl_init(); 
+			curl_setopt($ch, CURLOPT_URL, $cmd->generateAskResponseLink($params['text'])); 
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+			$output = curl_exec($ch); 
+			curl_close($ch);
+			log::add('mobile', 'debug', $output);
 			$jsonrpc->makeSuccess();
 		}
 	}
@@ -356,6 +364,14 @@ if($jsonrpc->getMethod() == 'mobile::geoloc'){
       }
 }
 
+if($jsonrpc->getMethod() == "qrcodemethod"){
+	log::add('mobile', 'debug', 'QrCode > '.$params);
+	if($params['appInfos']){
+		log::add('mobile', 'debug', 'valeur du QrCode > '.json_encode($params['appInfos']['qrCode']));
+		mobile::cmdForApi($params['Iq'],"qrcodemethod",json_encode($params['appInfos']['qrCode']),"QrCode");
+		$jsonrpc->makeSuccess();
+	}
+}
 
 throw new Exception(__('Aucune demande', __FILE__));
 ?>

@@ -972,6 +972,28 @@ class mobile extends eqLogic {
 	}
 
 
+	public function cmdForApi($Iq,$action,$info,$name = "",$subtype = "string") {
+		$mobile = eqLogic::byLogicalId($Iq, 'mobile');
+		if(is_object($mobile)){
+			$cmd = $mobile->getCmd(null, '$action');
+			if (!is_object($cmdNotif)) {
+				if($name == ""){
+					$name = $action;
+				}
+				$cmdNotif = new mobileCmd();
+				$cmdNotif->setLogicalId($action);
+				$cmdNotif->setName($name);
+				$cmdNotif->setOrder(0);
+				$cmdNotif->setEqLogic_id($mobile->getId());
+				$cmdNotif->setType('info');
+				$cmdNotif->setSubType($subtype);
+				$cmdNotif->setIsVisible(1);
+				$cmdNotif->save();
+			}
+			$cmd->event($info);
+		}
+	};
+
 	public function postSave() {
 		$cmdNotif = $this->getCmd(null, 'notif');
 		if (!is_object($cmdNotif)) {

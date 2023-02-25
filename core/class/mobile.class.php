@@ -992,7 +992,7 @@ class mobile extends eqLogic {
 			}
 			$cmd->event($info);
 		}
-	};
+	}
 
 	public function postSave() {
 		$cmdNotif = $this->getCmd(null, 'notif');

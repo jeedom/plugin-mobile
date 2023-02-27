@@ -368,7 +368,11 @@ if($jsonrpc->getMethod() == "qrcodemethod"){
 	log::add('mobile', 'debug', 'QrCode > '.$params);
 	if($params['appInfos']){
 		log::add('mobile', 'debug', 'valeur du QrCode > '.json_encode($params['appInfos']['qrCode']));
-		mobile::cmdForApi($params['Iq'],"qrcodemethod",json_encode($params['appInfos']['qrCode']),"QrCode");
+      	if($params['appInfos']['qrCode']['displayValue']){
+          	mobile::cmdForApi($params['Iq'],"barrecodemethod",$params['appInfos']['qrCode']['displayValue'],"CodeBarre");
+        }else{
+        	mobile::cmdForApi($params['Iq'],"qrcodemethod",json_encode($params['appInfos']['qrCode']),"QrCode");
+        }
 		$jsonrpc->makeSuccess();
 	}
 }

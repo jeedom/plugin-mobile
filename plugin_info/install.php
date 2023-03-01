@@ -16,7 +16,7 @@
  */
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
-function jeelink_install() {
+function mobile_install() {
 	jeedom::getApiKey('mobile');
 }
 

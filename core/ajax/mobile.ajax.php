@@ -88,6 +88,12 @@ if (init('action') == 'saveMenuEqLogics') {
 		ajax::success();
 	}
 
+	if (init('action') == 'testPanel') {
+		log::add('mobile','debug','JETESTLEPANELLLLLLLL ');
+		log::add('mobile','debug','NUMEROICONE ' .init('method') );
+		ajax::success();
+	}
+
 	if (init('action') == 'getSaveDashboard'){
 		$iq = init('iq');
 		$jsonDashboard = mobile::getSaveJson($iq, 'dashboard');

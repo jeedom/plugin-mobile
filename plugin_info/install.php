@@ -17,10 +17,14 @@
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 function mobile_install() {
+	config::save('displayMobilePanel',1, 'mobile');
 	jeedom::getApiKey('mobile');
 }
 
+
+
 function mobile_update(){
+	config::save('displayMobilePanel',1, 'mobile');
 	jeedom::getApiKey('mobile');
 	foreach (eqLogic::byType('mobile') as $mobile){
 		if($mobile->getLogicalId() == null || $mobile->getLogicalId() == ""){

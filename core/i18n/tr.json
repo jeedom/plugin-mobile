@@ -79,7 +79,7 @@
         "Type Générique": "Genel tip",
         "Icône": "Icon",
         "Aucun": "Hiçbir",
-        " . $info['family'] . ": ". $info['family'] .",
+        " . $info['family'] . ": "$info['family']",
         "Plugins compatibles": "Plugins compatibles",
         "Modifications sauvegardées avec succès": "Modifications sauvegardées avec succès",
         "Sauvegarde effectuée": "Yedekleme gerçekleştirildi"
@@ -105,7 +105,7 @@
         "Type Générique": "Genel tip",
         "Icône": "Icon",
         "Aucun": "Hiçbir",
-        " . $info['family'] . ": ". $info['family'] .",
+        " . $info['family'] . ": "$info['family']",
         "Objets \/ Pièces": "Objets \/ Pièces",
         "Modifications sauvegardées avec succès": "Modifications sauvegardées avec succès",
         "Sauvegarde effectuée avec succès": "Kayıt başarıyla sonuçlandı"

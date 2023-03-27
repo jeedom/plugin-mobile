@@ -27,7 +27,7 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 
 <div class="row">
 	<ul class="nav nav-tabs" style="padding-left:8px">
-		<li><a class="cursor" id="bt_returnPlugins" style="width:32px;"><i class="fas fa-arrow-circle-left"></i></a></li>
+		<li><a class="cursor" id="bt_returnPlugins" data-toggle="tabPlug" style="width:32px;"><i class="fas fa-arrow-circle-left"></i></a></li>
 		<li class="active">
 		<?php
 			if (file_exists(dirname(__FILE__) . '/../../../../' . $plugin->getPathImgIcon())) {
@@ -70,7 +70,7 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 			$generique_ok = true;
 		} else {
 			$div = '<div class="alert alert-danger div_plugin_configuration" role="alert">';
-			$div .=   '{{Le Plugin n\'est pas compatible, vous pouvez l\'activer si vous le souhaitez}}';
+			$div .=   '{{Le Plugin n est pas compatible, vous pouvez l activer si vous le souhaitez}}';
 			$check = 'unchecked';
 			if (config::byKey('sendToApp', $plugin->getId(), 0) == 1) {
 				$check = 'checked';
@@ -179,7 +179,7 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 					if ($info['key'] == $cmd->getGeneric_type()) {
  						echo '<option value="' . $info['key'] . '" selected>' . $name . '</option>';
 					} else {
- 						echo '<option value="' . $info['key'] . '">' . $name . '</option>';		
+ 						echo '<option value="' . $info['key'] . '">' . $name . '</option>';
  					}
 				}
 				echo '</optgroup>';
@@ -208,7 +208,48 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 
 <script>
 
+/*
+document.querySelectorAll('#bt_returnPlugins').forEach(el => {
+      el.addEventListener('click', function(e){
+				if(typeof jeeDialog !== 'undefined'){
+					jeedomUtils.closeJeeDialogs();
+					jeeDialog.dialog({
+						id: 'plugsCompta',
+						title: "{{Plugins compatibles}}",
+						contentUrl: 'index.php?v=d&plugin=mobile&modal=plugin'
+					})
+				}else{
+					  $('#md_modal').dialog({title: "{{Plugins compatibles}}"})
+						$('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin').dialog('open')
+				}
+
+			});
+})*/
+
+
+/*
+document.getElementById('bt_returnPlugins').addEventListener("click", function() {
+	if(typeof jeeDialog !== 'undefined'){
+		jeedomUtils.closeJeeDialogs();
+		jeeDialog.dialog({
+			id: 'plugsCompta',
+			title: "{{Plugins compatibles}}",
+			contentUrl: 'index.php?v=d&plugin=mobile&modal=plugin'
+		})
+	}else{
+		$('#md_modal').dialog({title: "{{Plugins compatibles}}"})
+			$('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin').dialog('open')
+	}
+
+
+});*/
+
+
+
 $('#bt_returnPlugins').on('click', function () {
+
+
+
 	$('#md_modal').dialog({title: "{{Plugins compatibles}}"})
 	$('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin').dialog('open')
 })

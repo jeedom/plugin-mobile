@@ -819,7 +819,7 @@ class mobile extends eqLogic {
 	 $eqLogic = eqLogic::byId(intval($eqId));
 	 if(is_object($eqLogic)){
 			$i = 1;
-			//log::add('mobile','debug','ELEMENTSMENUS : '.json_encode($arrayMenus));
+			log::add('mobile','debug','ELEMENTSMENUS : '.json_encode($arrayMenus));
 			 $eqLogic->setConfiguration('nbIcones', $nbIcones);
 			foreach($arrayMenus as $menu){
               						if($menu[0] == 'none'){
@@ -830,6 +830,9 @@ class mobile extends eqLogic {
 															$eqLogic->setConfiguration('selectNameMenu'.$i, 'health');
 													}else if($menu[0] == 'timeline'){
 															$eqLogic->setConfiguration('selectNameMenu'.$i, 'timeline');
+													}
+													else if($menu[0] == 'home'){
+															$eqLogic->setConfiguration('selectNameMenu'.$i, 'home');
 													}else{
                               $result = explode('_',$menu[0]);
 													    $objectId = intval($result[0]);
@@ -850,7 +853,7 @@ class mobile extends eqLogic {
 					log::add('mobile','debug','SELECTNAME : '.$objectId);*/
 										 $eqLogic->setConfiguration('spanIcon'.$i, $iconName);
                                       if($menu[3] != ''){
-                                         $eqLogic->setConfiguration('urlUser'.$i, $menu[3]);
+                                         $eqLogic->setConfiguration('urlUser'.$i, trim($menu[3]));
 
                                       }else{
                                          $eqLogic->setConfiguration('urlUser'.$i, 'none');
@@ -894,6 +897,15 @@ class mobile extends eqLogic {
 
 	public static function configMenuCustom($eqId){
 	  $eqLogic = eqLogic::byId($eqId);
+		$pluginsPanel = plugin::listPlugin();
+		foreach ($pluginsPanel as $plugin)
+		{
+				$obArray = utils::o2a($plugin);
+				//$getMobile = $plugin->getMobile();
+			//	log::add('mobile','debug', 'GETMOBILE : '.$getMobile);
+				log::add('mobile','debug', 'PLUGINSPANEL : '.json_encode($obArray));
+			}
+
 		if(is_object($eqLogic)){
 			$nbIcones = $eqLogic->getConfiguration('nbIcones', 4);
 			$arrayElements = array();
@@ -971,28 +983,27 @@ class mobile extends eqLogic {
         }
 	}
 
-
 	public function cmdForApi($Iq,$action,$info,$name = "",$subtype = "string") {
-		$mobile = eqLogic::byLogicalId($Iq, 'mobile');
-		if(is_object($mobile)){
-			$cmd = $mobile->getCmd(null, $action);
-			if (!is_object($cmd)) {
-				if($name == ""){
-					$name = $action;
-				}
-				$cmd = new mobileCmd();
-				$cmd->setLogicalId($action);
-				$cmd->setName($name);
-				$cmd->setOrder(0);
-				$cmd->setEqLogic_id($mobile->getId());
-				$cmd->setType('info');
-				$cmd->setSubType($subtype);
-				$cmd->setIsVisible(1);
-				$cmd->save();
+	$mobile = eqLogic::byLogicalId($Iq, 'mobile');
+	if(is_object($mobile)){
+		$cmd = $mobile->getCmd(null, $action);
+		if (!is_object($cmd)) {
+			if($name == ""){
+				$name = $action;
 			}
-			$cmd->event($info);
+			$cmd = new mobileCmd();
+			$cmd->setLogicalId($action);
+			$cmd->setName($name);
+			$cmd->setOrder(0);
+			$cmd->setEqLogic_id($mobile->getId());
+			$cmd->setType('info');
+			$cmd->setSubType($subtype);
+			$cmd->setIsVisible(1);
+			$cmd->save();
 		}
+		$cmd->event($info);
 	}
+}
 
 	public function postSave() {
 		$cmdNotif = $this->getCmd(null, 'notif');
@@ -1034,6 +1045,22 @@ class mobile extends eqLogic {
 			$cmdaskYN->remove();
 		}
 	}
+
+	public function preRemove() {
+		$eqId = $this->getId();
+	  $idMobileActive = config::byKey('checkdefaultID','mobile');
+		if($idMobileActive == $eqId){
+			config::save('checkdefaultID','noActivMobile','mobile');
+		}
+
+	}
+
+
+/*	public function postRemove() {
+		$eqId = $this->getId();
+    $mobileActive = eqLogic::byId(intval($mobileActiveDefault));
+
+	}*/
 
 	/*     * *********************Méthodes d'instance************************* */
 

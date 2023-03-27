@@ -28,14 +28,27 @@ $pathImgMenu = 'plugins/mobile/core/img/imgMenuPerso.jpg';
 				<i class="fas fa-wrench"></i><br>
 					<span>{{Configuration}}</span>
 			</div>
-            <div class="cursor eqLogicAction logoSecondary" data-action="bt_customMenu" id="bt_customMenu">
-				<i class='fas icon jeedomapp-plugin'></i><br>
-				<span>{{Menu Custom}}</span>
-			</div>
+			   <?php if(jeedom::version() >= '4.4.0'){
+								echo '<div class="cursor eqLogicAction logoSecondary" data-action="bt_customMenu" id="bt_customMenu">';
+								echo ' <i class="fas icon jeedomapp-plugin"></i><br>';
+								echo '<span >{{Menu Custom}}</span>';
+								echo '</div>';
+								}else{
+									echo '<div style="color:orange;" class="cursor eqLogicAction logoSecondary" data-action="bt_customMenu" id="bt_customMenu">';
+									echo ' <i class="fas icon jeedomapp-plugin"></i><br>';
+									echo '<span style="color:orange;">{{Menu Custom}}</span>';
+									echo '</div>';
+								}
+				?>
+
             <div class="cursor eqLogicAction logoSecondary" data-action="bt_qrCodev2" id="bt_qrCodev2">
-				 <i class="fa fa-qrcode"></i><br>  
-				<span>{{QR Code}}</span>
-			</div>
+				         <i class="fa fa-qrcode"></i><br>
+				    	 	 <span>{{QR Code}}</span>
+			      </div>
+						<div style="color:#94CA02;"class="cursor eqLogicAction logoSecondary" data-action="bt_qrCodev2" id="bt_startTuto">
+								 <i class="fas fa-book"></i><br>
+								 <span>{{Documentation APP V2}}</span>
+						</div>
 		</div>
 		<legend><i class="icon techno-listening3"></i> {{Mes Téléphones Mobiles}}</legend>
 		<input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
@@ -63,6 +76,7 @@ $pathImgMenu = 'plugins/mobile/core/img/imgMenuPerso.jpg';
 		</div>
 	</div>
 </div>
+
 <div class="row row-overflow">
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
 		<legend><i class="fas fa-mobile"></i>  {{App V1}}</legend>

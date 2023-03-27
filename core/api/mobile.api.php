@@ -27,6 +27,7 @@ if (!is_object($jsonrpc)) {
 
 
 function createMobile($params){
+	log::add('mobile','debug','----CREATE_NEW_MOBILE----');
 	$configs = $params['configs'];
 	$notification = $configs['notification'];
 	$user = user::byHash($params['apikey']);
@@ -49,6 +50,22 @@ function createMobile($params){
 					$mobile->setConfiguration('urlUser'.$i, ${ 'urlUser' . $i});
 				}
 			}
+	}else{
+			$mobile->setConfiguration('selectNameMenu1', 'home');
+			$mobile->setConfiguration('renameIcon1', 'Accueil');
+			$mobile->setConfiguration('spanIcon1', 'icon jeedomapp-in');
+			$mobile->setConfiguration('urlUser1', 'none');
+			$mobile->setConfiguration('selectNameMenu2', 'overview');
+			$mobile->setConfiguration('renameIcon2', 'Synthese');
+			$mobile->setConfiguration('spanIcon2', 'fab fa-hubspot');
+			$mobile->setConfiguration('urlUser2', 'none');
+			$mobile->setConfiguration('selectNameMenu3', 'health');
+			$mobile->setConfiguration('renameIcon3', 'Santé');
+			$mobile->setConfiguration('spanIcon3', 'fas fa-medkit');
+			$mobile->setConfiguration('urlUser3', 'none');
+			$mobile->setConfiguration('nbIcones', 3);
+
+
 	}
 	$mobile->setConfiguration('type_mobile', $notification['platform']);
 	$mobile->setConfiguration('affect_user', $userId);
@@ -131,7 +148,7 @@ if($jsonrpc->getMethod() == 'getJson'){
   $return[$idBox]['localIp'] = network::getNetworkAccess('internal');
 	$return[$idBox]['hardware'] = jeedom::getHardwareName();
 	$return[$idBox]['hwkey'] = jeedom::getHardwareKey();
-	$return[$idBox]['appMobile'] = '0.1';
+	$return[$idBox]['appMobile'] = '0.2';
   $return[$idBox]['ping'] = true;
 	$return[$idBox]['informations']['hardware'] = jeedom::getHardwareName();
 	$return[$idBox]['informations']['language'] = config::byKey('language');
@@ -304,15 +321,15 @@ if ($jsonrpc->getMethod() == 'askText') {
 		}
 		log::add('mobile', 'debug', 'Mobile bien trouvé casse -> ' . $askCasse . ' text : ' . $textCasse);
 		$cmd = $mobile->getCmd(null, 'notif');
-		log::add('mobile', 'debug', 'IQ > ' . $params['Iq'] . ' demande cmd > ' . $cmd->getId());		
+		log::add('mobile', 'debug', 'IQ > ' . $params['Iq'] . ' demande cmd > ' . $cmd->getId());
 		if ($cmd->askResponse($textCasse)) {
 			log::add('mobile', 'debug', 'ask bien trouvé : Réponse validée');
 			$jsonrpc->makeSuccess();
 		}else{
-			$ch = curl_init(); 
-			curl_setopt($ch, CURLOPT_URL, $cmd->generateAskResponseLink($params['text'])); 
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
-			$output = curl_exec($ch); 
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $cmd->generateAskResponseLink($params['text']));
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$output = curl_exec($ch);
 			curl_close($ch);
 			log::add('mobile', 'debug', $output);
 			$jsonrpc->makeSuccess();
@@ -376,6 +393,9 @@ if($jsonrpc->getMethod() == "qrcodemethod"){
 		$jsonrpc->makeSuccess();
 	}
 }
+
+
+
 
 throw new Exception(__('Aucune demande', __FILE__));
 ?>

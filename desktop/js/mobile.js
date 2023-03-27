@@ -14,91 +14,229 @@
  * You should have received a copy of the GNU General Public License
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
- $('#bt_healthmobile').on('click', function () {
-    $('#md_modal').dialog({title: "{{Santé Mobile}}"});
-    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=health').dialog('open');
-})
- $('#bt_pluguinmobile').on('click', function () {
-    $('#md_modal').dialog({title: "{{Plugins compatibles}}"});
-    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin').dialog('open');
-})
- $('#bt_piecemobile').on('click', function () {
-    $('#md_modal').dialog({title: "{{Objets / Pièces}}"});
-    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=piece').dialog('open');
-})
- $('#bt_scenariomobile').on('click', function () {
-    $('#md_modal').dialog({title: "{{Scénarios}}"});
-    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=scenario').dialog('open');
-})
- $('#info_app').on('click', function(){
-     $('#md_modal').dialog({title: "{{Informations envoyées à l'app}}"});
-     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=info_app.mobile').dialog('open');
- })
- $('#bt_customMenu').on('click', function(){
-    $('#md_modal').dialog({title: "{{Menu Custom}}"});
-    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=menuCustom').dialog('open');
-})
- $('#bt_qrCodev2').on('click', function(){
-  
-    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=qrcodev2').dialog('open');
-})
 
+if(typeof jeeDialog !== 'undefined'){
+  document.querySelector('#bt_healthmobile').addEventListener('click', function(event) {
+    jeeDialog.dialog({
+      id: 'santémobile',
+      title: "{{Santé Mobile}}",
+      contentUrl: 'index.php?v=d&plugin=mobile&modal=health'
+    })
+  })
+
+  document.querySelector('#bt_pluguinmobile').addEventListener('click', function(event) {
+    jeeDialog.dialog({
+      id: 'pluginsCompatibles',
+      title: "{{Plugins compatibles}}",
+      contentUrl: 'index.php?v=d&plugin=mobile&modal=plugin'
+    })
+  })
+
+  document.querySelector('#bt_piecemobile').addEventListener('click', function(event) {
+    jeeDialog.dialog({
+      id: 'objectsModal',
+      title: "{{Objets / Pièces}}",
+      contentUrl: 'index.php?v=d&plugin=mobile&modal=piece'
+    })
+  })
+
+  document.querySelector('#bt_scenariomobile').addEventListener('click', function(event) {
+    jeeDialog.dialog({
+      id: 'scenariosModal',
+      title: "{{Scénarios}}",
+      contentUrl: 'index.php?v=d&plugin=mobile&modal=scenario'
+    })
+  })
+
+  document.querySelector('#info_app').addEventListener('click', function(event) {
+    jeeDialog.dialog({
+      id: 'infosApp',
+      title: "{{Informations envoyées à l'app}}",
+      contentUrl: 'index.php?v=d&plugin=mobile&modal=info_app.mobile'
+    })
+  })
+
+  document.querySelector('#bt_customMenu').addEventListener('click', function(event) {
+    jeeDialog.dialog({
+      id: 'menuCustom',
+      title: "{{Menu Custom}}",
+      fullScreen:1,
+      contentUrl: 'index.php?v=d&plugin=mobile&modal=menuCustom'
+    })
+  })
+
+  document.querySelector('#bt_qrCodev2').addEventListener('click', function(event) {
+    jeeDialog.dialog({
+      id: 'qrcodev2',
+      title: "{{QrCode}}",
+        fullScreen:1,
+      contentUrl: 'index.php?v=d&plugin=mobile&modal=qrcodev2'
+    })
+  })
+
+  document.querySelector('#bt_startTuto').addEventListener('click', function(event) {
+    jeeDialog.dialog({
+      id: 'startTuto',
+      title: "{{Bien demarrer}}",
+
+        fullScreen:1,
+      contentUrl: 'index.php?v=d&plugin=mobile&modal=wizard'
+    })
+  })
+
+
+
+}else{
+  $('#bt_healthmobile').on('click', function () {
+     $('#md_modal').dialog({title: "{{Santé Mobile}}"});
+     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=health').dialog('open');
+ })
+ $('#bt_startTuto').on('click', function () {
+    $('#md_modal').dialog({title: "{{Bien demarrer}}"});
+    $('#md_modal').load('index.php?v=d&plugin=mobile&modal=wizard').dialog('open');
+})
+  $('#bt_pluguinmobile').on('click', function () {
+     $('#md_modal').dialog({title: "{{Plugins compatibles}}"});
+     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin').dialog('open');
+ })
+  $('#bt_piecemobile').on('click', function () {
+     $('#md_modal').dialog({title: "{{Objets / Pièces}}"});
+     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=piece').dialog('open');
+ })
+  $('#bt_scenariomobile').on('click', function () {
+     $('#md_modal').dialog({title: "{{Scénarios}}"});
+     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=scenario').dialog('open');
+ })
+  $('#info_app').on('click', function(){
+      $('#md_modal').dialog({title: "{{Informations envoyées à l'app}}"});
+      $('#md_modal').load('index.php?v=d&plugin=mobile&modal=info_app.mobile').dialog('open');
+  })
+  $('#bt_customMenu').on('click', function(){
+        jeedom.version({
+        success: function(version) {
+          if(version >= '4.4.0'){
+            $('#md_modal').dialog({title: "{{Menu Custom}}"});
+            $('#md_modal').load('index.php?v=d&plugin=mobile&modal=menuCustom').dialog('open');
+          }else{
+            $('#div_alert').showAlert({message: 'Module compatible uniquement avec la version core 4.4.0 et supérieure', level: 'warning'});
+            return;
+          }
+        }
+      })
+
+   })
+
+   $('#bt_qrCodev2').on('click', function(){
+      $('#md_modal').load('index.php?v=d&plugin=mobile&modal=qrcodev2').dialog('open');
+   })
+
+
+}
 
 
  function clickplugin(id_plugin,name_plugin){
+   if(typeof jeeDialog !== 'undefined'){
+       jeeDialog.dialog({
+         id: 'configMobile',
+         title: "{{Configuration Mobile du Plugin "+name_plugin+"}}",
+         contentUrl: 'index.php?v=d&plugin=mobile&modal=plugin.mobile&plugin_id=' +id_plugin
+       })
+   }else{
      $('#md_modal').dialog({title: "{{Configuration Mobile du Plugin "+name_plugin+"}}"});
      $('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin.mobile&plugin_id=' +id_plugin).dialog('open');
+   }
  }
 
  function clickobject(id_object){
-   $('#md_modal').dialog({title: "{{Configuration Mobile de la Pièce}}"});
-   $('#md_modal').load('index.php?v=d&plugin=mobile&modal=object.mobile&object_id=' +id_object).dialog('open');
+   if(typeof jeeDialog !== 'undefined'){
+       jeeDialog.dialog({
+         id: 'configMobilePiece',
+         title: "{{Configuration Mobile de la Pièce}}",
+         contentUrl: 'index.php?v=d&plugin=mobile&modal=object.mobile&object_id=' +id_object
+       })
+   }else{
+     $('#md_modal').dialog({title: "{{Configuration Mobile de la Pièce}}"});
+     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=object.mobile&object_id=' +id_object).dialog('open');
+   }
+
+
 }
 
 function clickscenario(id_scenario,name_scenario){
-	$('#md_modal').dialog({title: "{{Configuration Mobile du Scnéario "+name_scenario+"}}"});
+  if(typeof jeeDialog !== 'undefined'){
+      jeeDialog.dialog({
+        id: 'configMobileScenario',
+        title: "{{Configuration Mobile du Scénario "+name_scenario+"}}",
+        contentUrl: 'index.php?v=d&plugin=mobile&modal=scenario.mobile&scenario_id=' +id_scenario
+      })
+  }else{
+    $('#md_modal').dialog({title: "{{Configuration Mobile du Scénario "+name_scenario+"}}"});
     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=scenario.mobile&scenario_id=' +id_scenario).dialog('open');
+  }
+
 }
 
-$('li').click(function(){
+ document.querySelector('li').click(function(){
   setTimeout(function(){
       $('.eqLogicThumbnailContainer').packery();
   },50);
 });
+
 var hash = document.location.hash;
 if (hash) {
-    $('.nav-tabs a[href="'+hash+'"]').tab('show');
+  $('.nav-tabs a[href="'+hash+'"]').tab('show');
+  /*document.querySelector('.nav-tabs a[href="'+hash+'"]').tab('show');*/
 }
-$('.nav-tabs a').on('shown.bs.tab', function (e) {
+
+/*
+var aTabs = document.querySelectorAll('a[data-toggle="tabPlug"');
+for (let i = 0; i < aTabs.length; i++) {
+  console.log(aTabs[i].id);
+  aTabs[i].addEventListener('click', function(event) {
+      window.location.hash = e.target.hash;
+  });
+}*/
+
+
+
+document.querySelector('.nav-tabs a').addEventListener('shown.bs.tab', function (e) {
     window.location.hash = e.target.hash;
 });
 
 
-$('.renameDivClass').on('input',function(e){
-    let idElement = $(this).attr('id');
-    let eqLogicId =  $(this).attr('eqId');
-    let numElement = idElement.substr(-1, 1);
-    $('#titleArea'+numElement).empty().text($(this).children('input:nth-child(2)').val());
-});
+
+document.querySelectorAll('.renameDivClass').forEach(el => {
+      el.addEventListener('input', function(e){
+          let idElement = this.getAttribute('id');
+          let eqLogicId = this.getAttribute('eqId');
+          let numElement = idElement.substr(-1, 1);
+          let areatitleEl = document.querySelector('#titleArea'+numElement)
+          areatitleEl.innerHTML = ''
+          areatitleEl.innerHTML = this.children[1].value
+      });
+})
 
 
-$('.btIconClass').on('click', function () {
-  let idSelect = $(this).attr('id');
-  let eqLogicId = $(this).attr('eqid');
-  console.log(eqLogicId);
-  let numElement = idSelect.substr(-1, 1);
-  console.log( $('#spanIconTest'+numElement+'[eqid="'+eqLogicId+'"]'))
-  var _icon = false;
-  jeedomUtils.chooseIcon(function(_icon) {
-    $('#spanIconTest'+numElement+'[eqid="'+eqLogicId+'"]').empty().append(_icon);
-    $('#spanIconTest'+numElement+'[eqid="'+eqLogicId+'"]').children('i:nth-child(1)').css('font-size', '60px');
-    $('#spanIconTest'+numElement+'[eqid="'+eqLogicId+'"]').children('i:nth-child(1)').attr('eqId', eqLogicId);
-    $('#spanIconTest'+numElement+'[eqid="'+eqLogicId+'"]').children('i:nth-child(1)').attr('id', 'area'+numElement);
-  }, {
-    icon: _icon
-  })
-});
 
+
+document.querySelectorAll('.btIconClass').forEach(el => {
+      el.addEventListener('click', function(e){
+      let idElement = this.getAttribute('id');
+      let eqLogicId = this.getAttribute('eqId');
+      let numElement = idElement.substr(-1, 1);
+      var _icon = false;
+      jeedomUtils.chooseIcon(function(_icon) {
+            let spanIcon = document.querySelector('#spanIconTest'+numElement+'[eqid="'+eqLogicId+'"]')
+            spanIcon.innerHTML = ''
+            spanIcon.insertAdjacentHTML("beforeend",_icon);
+            $('#spanIconTest'+numElement).children('i:nth-child(1)').css('font-size', '60px');
+            spanIcon.setAttribute('eqId', eqLogicId)
+            $('#spanIconTest'+numElement).children('i:nth-child(1)').attr('id', 'area'+numElement);
+          }, {
+            icon: _icon
+          })
+      });
+})
 
 
 function userSelect(idSelect){
@@ -119,8 +257,7 @@ function userSelect(idSelect){
     }
   })
   if(typeObject == 'url'){
-    $('#urlUser'+numElement+'[eqId="'+eqLogicId+'"]').css('display','block');
-
+    document.querySelector('#urlUser'+numElement+'[eqId="'+eqLogicId+'"]').style.display = 'block';
   }
 }
 
@@ -144,14 +281,16 @@ function userSelect(idSelect){
                 $('#div_alert').showAlert({message: data.result, level: 'danger'});
                 return;
             }
+            let el = document.querySelector('.qrCodeImg')
+            el.innerHTML = '';
             if (data.result == 'internalError') {
-              $('.qrCodeImg').empty().append('{{Erreur Pas d\'adresse interne (voir configuration de votre Jeedom !)}}');
+              el.innerHTML = '{{Erreur Pas d\'adresse interne (voir configuration de votre Jeedom !)}}';
           }else if(data.result == 'externalError'){
-              $('.qrCodeImg').empty().append('{{Erreur Pas d\'adresse externe (voir configuration de votre Jeedom !)}}');
+            el.innerHTML = '{{Erreur Pas d\'adresse externe (voir configuration de votre Jeedom !)}}'
           }else if(data.result == 'UserError'){
-              $('.qrCodeImg').empty().append('{{Erreur Pas d\'utilisateur selectionné}}');
+            el.innerHTML = '{{Erreur Pas d\'utilisateur selectionné}}'
           }else{
-              $('.qrCodeImg').empty().append('<img src="data:image/png;base64, '+data.result+'" />');
+            el.innerHTML = '<img src="data:image/png;base64, '+data.result+'" />'
           }
       }
   });
@@ -172,12 +311,13 @@ function userSelect(idSelect){
                 $('#div_alert').showAlert({message: data.result, level: 'danger'});
                 return;
             }
+            let savedash = document.querySelector('#SaveDash')
           	if (data.result == true) {
-              $('#SaveDash').addClass('badge-success');
-			  $('#SaveDash').text('OK');
+               savedash.classList.add('badge-success');
+			         savedash.innerHTML = 'OK';
           	}else if(data.result == false){
-              $('#SaveDash').addClass('badge-danger');
-			  $('#SaveDash').text('NOK');
+              savedash.classList.add('badge-danger');
+              savedash.innerHTML = 'NOK';
           	}
       }
   });
@@ -198,52 +338,55 @@ function userSelect(idSelect){
                 $('#div_alert').showAlert({message: data.result, level: 'danger'});
                 return;
             }
+            let savefav = document.querySelector('#SaveFav')
           	if (data.result == true) {
-              $('#SaveFav').addClass('badge-success');
-			  $('#SaveFav').text('OK');
+              savefav.classList.add('badge-success');
+              savefav.innerHTML = 'OK';
           	}else if(data.result == false){
-              $('#SaveFav').addClass('badge-danger');
-			  $('#SaveFav').text('NOK');
+              savefav.classList.add('badge-danger');
+              savefav.innerHTML = 'NOK';
           	}
       }
   });
 }
 
+document.getElementById('bt_regenConfig').addEventListener('click', function(){
+  $.ajax({
+      type: "POST",
+      url: "plugins/mobile/core/ajax/mobile.ajax.php",
+      data: {
+          action: "regenConfig"
+      },
+      dataType: 'json',
+      error: function (request, status, error) {
+          handleAjaxError(request, status, error);
+      },
+      success: function (data) {
+          if (data.state != 'ok') {
+              $('#div_alert').showAlert({message: data.result, level: 'danger'});
+              return;
+          }
+          $('#div_alert').showAlert({message: '{{Configuration mise à jour}}', level: 'success'});
+      }
+  });
+  });
 
-$('#bt_regenConfig').on('click',function(){
-    $.ajax({
-        type: "POST",
-        url: "plugins/mobile/core/ajax/mobile.ajax.php",
-        data: {
-            action: "regenConfig"
-        },
-        dataType: 'json',
-        error: function (request, status, error) {
-            handleAjaxError(request, status, error);
-        },
-        success: function (data) {
-            if (data.state != 'ok') {
-                $('#div_alert').showAlert({message: data.result, level: 'danger'});
-                return;
-            }
-            $('#div_alert').showAlert({message: '{{Configuration mise à jour}}', level: 'success'});
-        }
-    });
-});
 
 // Copie pour monitoring
-var toCopy  = document.getElementById( 'to-copy-monitoring' ),
-	arnComplet = document.getElementById( 'arnComplet' ),
-    btnCopy = document.getElementById( 'copy-monitoring' );
+var toCopy = document.getElementById('to-copy-monitoring');
+var arnComplet = document.getElementById('arnComplet');
+var btnCopy = document.getElementById('copy-monitoring');
 
-btnCopy.addEventListener( 'click', function(){
+
+
+btnCopy.addEventListener('click', function(){
 	var fichier = arnComplet.value;
 	var fichierCouper = fichier.substr(44);
-    toCopy.value = fichierCouper;
+  toCopy.value = fichierCouper;
 	toCopy.select();
 	document.execCommand( 'copy' );
 	return false;
-} );
+  });
 
 $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 /*

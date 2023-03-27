@@ -457,14 +457,20 @@ foreach ($eqLogics as $eqLogic)
 <script>
 
 function constructTableVisible(eqId){
-   $('.selectMenuMobile, .item_dash, .btIconClass, .renameDivClass, .urlUser, .panelCustomMenuMobile, .spanIconTest').attr('eqId', eqId);
+   //$('.selectMenuMobile, .item_dash, .btIconClass, .renameDivClass, .urlUser, .panelCustomMenuMobile, .spanIconTest').attr('eqId', eqId);
+   document.querySelectorAll(".selectMenuMobile, .item_dash , .btIconClass , .renameDivClass , .urlUser , .panelCustomMenuMobile , .spanIconTest").forEach(el => {
+      el.setAttribute('eqId', eqId);
+   })
    nbiconSelect(eqId);
-   $('.menuConfigBtn').addClass('btn-primary');
-   $('.containerGlobal').css('display','block');
-   $('.validConfigBtn').hide();
-   $('.validConfigBtn[eqid="'+eqId+'"]').css('display','block');
-   $('.menuConfigBtn[eqid="'+eqId+'"]').removeClass('btn-primary').addClass('btn-warning');
-   let nbIcones = $('.selectNbicones[eqId="'+eqId+'"]').value();
+   document.querySelector('.menuConfigBtn').classList.add('btn-primary');
+   document.querySelector('.containerGlobal').style.display = 'block';
+   document.querySelector('.validConfigBtn').style.display = 'none';
+   document.querySelector('.validConfigBtn[eqid="'+eqId+'"]').style.display = 'block';
+   document.querySelector('.menuConfigBtn[eqid="'+eqId+'"]').classList.remove('btn-primary');
+   document.querySelector('.menuConfigBtn[eqid="'+eqId+'"]').classList.add('btn-warning');
+
+   let nbIcones = document.querySelector('.selectNbicones[eqId="'+eqId+'"]').value;
+   let iconesIterator = parseInt(nbIcones)+1;
    jeedom.eqLogic.byId({
      id: eqId,
      noCache:true,
@@ -477,13 +483,19 @@ function constructTableVisible(eqId){
                 let j = 0;
                 let arrayDefaultsNames = ['Home','Dashboard','Lights','Synthese'];
                 let arrayDefaultsIcons = ['icon jeedomapp-in','icon jeedomapp-dash01','icon jeedom2-bright4','icon jeedomapp-plugin'];
-              for(var i=1; i < nbIcones+1 ;i++){
-                  $('#area'+i).attr('eqId', eqId);
+                //let arrayDefaultsLinks = ['icon jeedomapp-in','icon jeedomapp-dash01','icon jeedom2-bright4','icon jeedomapp-plugin'];
+              for(let i=1; i < iconesIterator;i++){
+                  document.querySelector('#area'+i).setAttribute("eqId", eqId);
                   window['defaultName'+i] = arrayDefaultsNames[j];
                   window['defaultIcon'+i] = arrayDefaultsIcons[j];
                   $('#renameIcon'+i+'[eqid="'+eqId+'"]').css('display','block');
-                  let typeObject = 'dashboard',urlUser = '',selectNameChosen = 'none', renameIcon = 'renameIcon'+i,
-                  selectName = 'selectNameMenu'+i,urlUserVar = 'urlUser'+i,spanIcon = 'spanIcon'+i;
+                  let typeObject = 'dashboard';
+                  let urlUser = '';
+                  let selectNameChosen = 'none';
+                  let renameIcon = 'renameIcon'+i;
+                  let selectName = 'selectNameMenu'+i;
+                  let urlUserVar = 'urlUser'+i;
+                  let spanIcon = 'spanIcon'+i;
                   if(isset(data.configuration[selectName])){
                         if(data.configuration[selectName] != 'none'){
                             selectNameChosen = data.configuration[selectName]
@@ -512,6 +524,8 @@ function constructTableVisible(eqId){
                   if(isset(data.configuration[spanIcon])){
                          if(data.configuration[spanIcon] != 'undefined' && data.configuration[spanIcon] != 'none'){
                          window['defaultIcon'+i] = data.configuration[spanIcon];
+                      /*   console.log('--------------DEFAULTICONISSET----------------')
+                         console.log(window['defaultIcon'+i])*/
                      }
                   }
                    if(isset(data.configuration[urlUserVar])){
@@ -538,19 +552,34 @@ function constructTableVisible(eqId){
     });
 }
 
-$('.menuConfigBtn').off().on('click', function () {
-    let eqLogicId = $(this).attr('eqId');
-  console.log('menuCONFIGBTN')
-    document.querySelectorAll('.selectNbicones').forEach((el) => {
-      el.classList.add('hiddenEl');
-   });
-   document.querySelector('.selectNbicones[eqid="'+eqLogicId+'"]').classList.remove('hiddenEl');
-   document.querySelector('.selectNbicones[eqid="'+eqLogicId+'"]').classList.add('visibleEl');
 
-    if (eqLogicId != undefined) {
-      constructTableVisible(eqLogicId);
-    }
- });
+
+// DISPLAY CONFIG MENU BTNS & VALIDATE BTNS
+var btnsConfigs = document.querySelectorAll('.menuConfigBtn');
+  btnsConfigs.forEach(btn => {
+    btn.addEventListener('click', function(event) {
+
+          let eqLogicId = btn.getAttribute('eqId');
+          document.querySelectorAll('.menuConfigBtn').forEach((el) => {
+            el.classList.remove('btn-warning');
+            el.classList.add('btn-primary');
+         });
+         document.querySelectorAll('.validConfigBtn').forEach((el) => {
+           el.style.display = 'none';
+
+        });
+          document.querySelectorAll('.selectNbicones').forEach((el) => {
+            el.classList.add('hiddenEl');
+         });
+         btn.classList.add('btn-warning');
+         document.querySelector('.validConfigBtn[eqid="'+eqLogicId+'"]').style.display = 'block';
+         document.querySelector('.selectNbicones[eqid="'+eqLogicId+'"]').classList.remove('hiddenEl');
+         document.querySelector('.selectNbicones[eqid="'+eqLogicId+'"]').classList.add('visibleEl');
+         if (eqLogicId != undefined) {
+           constructTableVisible(eqLogicId);
+         }
+    });
+  })
 
 
  function displayElementsByIcons(nbIcon, eqId){
@@ -571,7 +600,6 @@ $('.menuConfigBtn').off().on('click', function () {
 function nbiconSelect(eqId){
   let nbIcone = $('.selectNbicones[eqid="'+eqId+'"]').value();
   displayElementsByIcons(nbIcone,eqId);
-
 }
 
 $('.validConfigBtn').on('click', function () {
@@ -620,7 +648,7 @@ $('.validConfigBtn').on('click', function () {
            if(window['urlUser'+i]  === undefined ) {
      		window['urlUser'+i] = 'none';
      	 }
-       arrayMenusElements[j].push(window['selectNameMenu'+i] , window['inputChosen'+i] , window['iconName'+i], window['urlUser'+i])
+       arrayMenusElements[j].push(window['selectNameMenu'+i] , window['inputChosen'+i] , (window['iconName'+i]).trim(), window['urlUser'+i])
        j++;
       }
      $.ajax({
@@ -645,8 +673,17 @@ $('.validConfigBtn').on('click', function () {
               }
 
               $('#div_alert').showAlert({message: 'Configuration Menu Enregistrée', level: 'success'});
-              $('#md_modal').dialog({title: "{{Menu Custom}}"});
-              $('#md_modal').load('index.php?v=d&plugin=mobile&modal=menuCustom').dialog('open');
+              if(typeof jeeDialog !== 'undefined'){
+                jeeDialog.dialog({
+                  id: 'menuCustom',
+                  title: "{{Menu Custom}}",
+                  contentUrl: 'index.php?v=d&plugin=mobile&modal=menuCustom'
+                })
+              }else{
+                $('#md_modal').dialog({title: "{{Menu Custom}}"});
+                $('#md_modal').load('index.php?v=d&plugin=mobile&modal=menuCustom').dialog('open');
+              }
+
         }
        });
 

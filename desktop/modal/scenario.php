@@ -50,14 +50,14 @@ if (!isConnect('admin')) {
 					/*$tr .= '<td><a class="btn btn-xs btn-success bt_saveScenario"><i class="fas fa-save"></i></a>';*/
 					$tr .= '</tr>';
 					echo $tr;
-				 }  
+				 }
 			?>
 		</tbody>
 	</table>
 </div>
 
 <script>
-	initTableSorter()
+	jeedomUtils.initTableSorter();
 	var tableScSummary = $('#table_scenarioSummary')
 	tableScSummary[0].config.widgetOptions.resizable_widths = ['60px', '', '100px']
 	tableScSummary.trigger('applyWidgets')
@@ -79,7 +79,7 @@ if (!isConnect('admin')) {
       console.log(scID + ' -> ' + scState)
 
     })*/
-              
+
     $('.sendtoapp').click( function() {
       	idScenario = $(this).val();
         if( $(this).is(':checked') ){

@@ -79,7 +79,7 @@
         "Type Générique": "Jenis generik",
         "Icône": "Icon",
         "Aucun": "Tak ada",
-        " . $info['family'] . ": ". $info['family'] .",
+        " . $info['family'] . ": "$info['family']",
         "Plugins compatibles": "Plugins compatibles",
         "Modifications sauvegardées avec succès": "Modifications sauvegardées avec succès",
         "Sauvegarde effectuée": "Backup dibuat"
@@ -105,7 +105,7 @@
         "Type Générique": "Jenis generik",
         "Icône": "Icon",
         "Aucun": "Tak ada",
-        " . $info['family'] . ": ". $info['family'] .",
+        " . $info['family'] . ": "$info['family']",
         "Objets \/ Pièces": "Objets \/ Pièces",
         "Modifications sauvegardées avec succès": "Modifications sauvegardées avec succès",
         "Sauvegarde effectuée avec succès": "Cadangan selesai dengan sukses"

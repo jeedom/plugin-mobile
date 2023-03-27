@@ -35,12 +35,12 @@ $eqLogics = mobile::byType('mobile');
 	 <?php
 foreach ($eqLogics as $eqLogic) {
   	$typeMobile = $eqLogic->getConfiguration('type_mobile');
-	$file = 'plugins/mobile/docs/images/' . $typeMobile . '.png';
+	$file = 'plugins/mobile/core/img/' . $typeMobile . '.png';
 	if (file_exists($file)) {
-		$path = 'plugins/mobile/docs/images/' . $typeMobile . '.png';
+		$path = 'plugins/mobile/core/img/' . $typeMobile . '.png';
 		$img = '<img src="' . $path . '" width="35px" /> '.$typeMobile;
 	} else {
-		$path = 'plugins/mobile/docs/images/mobile_icon.png';
+		$path = 'plugins/mobile/core/img/mobile_icon.png';
 		$img = '<img src="' . $path . '" width="35px" /> '.$typeMobile;
 	}
 	$userId = $eqLogic->getConfiguration('affect_user');

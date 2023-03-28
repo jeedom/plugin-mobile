@@ -915,7 +915,7 @@ class mobile extends eqLogic {
 				$obArray = utils::o2a($plugin);
 				//$getMobile = $plugin->getMobile();
 			//	log::add('mobile','debug', 'GETMOBILE : '.$getMobile);
-				log::add('mobile','debug', 'PLUGINSPANEL : '.json_encode($obArray));
+				//log::add('mobile','debug', 'PLUGINSPANEL : '.json_encode($obArray));
 			}
 
 		if(is_object($eqLogic)){
@@ -943,14 +943,14 @@ class mobile extends eqLogic {
                       ${ '$tabRenameInput' . $i} = 'Accueil';
                     }
                     $objectId = $eqLogic->getConfiguration('selectNameMenu'.$i);
-										log::add('mobile','debug', 'OBJECTID : ' .$objectId);
+									//	log::add('mobile','debug', 'OBJECTID : ' .$objectId);
                     if($objectId && $objectId != -1 && $objectId != 'none'){
 											if($objectId != 'overview' && $objectId != 'health' && $objectId != 'home' && $objectId != 'timeline'){
 													$arrayObjects = explode('_', $objectId);
 													$objectId = $arrayObjects[0];
 													$typeObject = $arrayObjects[1];
-													log::add('mobile','debug', 'OBJ : ' .	$objectId);
-													log::add('mobile','debug', 'TYPEOBJ : ' .	$typeObject);
+												//	log::add('mobile','debug', 'OBJ : ' .	$objectId);
+												//	log::add('mobile','debug', 'TYPEOBJ : ' .	$typeObject);
 													if($typeObject == 'view'){
 														 ${ '$tabUrl' . $i} = "/index.php?v=m&p={$typeObject}&view_id={$objectId}";
 													}else if($typeObject == 'dashboard'){
@@ -989,7 +989,7 @@ class mobile extends eqLogic {
                     $j++;
                     $count++;
 			}
-		  log::add('mobile','debug','JSONTEMPLATEARRAY :'.json_encode($arrayElements));
+		//  log::add('mobile','debug','JSONTEMPLATEARRAY :'.json_encode($arrayElements));
 			if(count($arrayElements) != 4){
 				 return $defaultMenu;
 			}else{

@@ -184,9 +184,11 @@ function clickscenario(id_scenario,name_scenario){
 
 var hash = document.location.hash;
 if (hash) {
-  $('.nav-tabs a[href="'+hash+'"]').tab('show');
-  /*document.querySelector('.nav-tabs a[href="'+hash+'"]').tab('show');*/
+    $('.nav-tabs a[href="'+hash+'"]').tab('show');
 }
+$('.nav-tabs a').on('shown.bs.tab', function (e) {
+    window.location.hash = e.target.hash;
+});
 
 /*
 var aTabs = document.querySelectorAll('a[data-toggle="tabPlug"');

@@ -848,6 +848,13 @@ class mobile extends eqLogic {
 
                           }
 									    $iconName = $menu[2];
+											if($iconName == '' || $iconName == 'none'){
+															log::add('mobile','debug','POULOUYLU : '.$iconName);
+												 $eqLogic->setConfiguration('spanIcon'.$i, 'icon jeedomapp-in');
+											}else{
+															log::add('mobile','debug','TATATA : '.$iconName);
+												 $eqLogic->setConfiguration('spanIcon'.$i, $iconName);
+											}
 				/*	log::add('mobile','debug','SPANICON : '.$iconName);
 					log::add('mobile','debug','RENAMEICON : '.$nameUser);
 					log::add('mobile','debug','SELECTNAME : '.$objectId);*/
@@ -898,6 +905,11 @@ class mobile extends eqLogic {
 	public static function configMenuCustom($eqId){
 	  $eqLogic = eqLogic::byId($eqId);
 		$pluginsPanel = plugin::listPlugin();
+		$defaultMenu = {"menu":
+										{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
+										"tab1":{"active":true,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
+										"tab2":{"active":true,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
+										"tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}}};
 		foreach ($pluginsPanel as $plugin)
 		{
 				$obArray = utils::o2a($plugin);
@@ -920,10 +932,11 @@ class mobile extends eqLogic {
                       ${ 'tabIconName' . $i} = substr(strstr($arrayIcon[1], '-'), 1);
                       ${ 'tabLibName' . $i} = strstr($arrayIcon[1], '-', true);
                       if(${ 'tabLibName' . $i} == 'mdi'){
-                        ${ 'tabLibName' . $i} = 'MaterialCommunityIcons';
+                        ${ 'tabLibName' . $i} = 'Mdi';
                       }
                     }else{
-                      ${ 'tabIconName' . $i} = 'home';
+                      ${ 'tabIconName' . $i} = 'in';
+											${ 'tabLibName' . $i} = 'jeedomapp';
                     }
                     ${ '$tabRenameInput' . $i} = $eqLogic->getConfiguration('renameIcon'.$i , 'none');
                     if(${ '$tabRenameInput' . $i} == 'none'){
@@ -977,9 +990,18 @@ class mobile extends eqLogic {
                     $count++;
 			}
 		  log::add('mobile','debug','JSONTEMPLATEARRAY :'.json_encode($arrayElements));
-          return $arrayElements;
+			if(count($arrayElements) != 4){
+				 return $defaultMenu;
+			}else{
+				 for($i=0;$i < 4; $i++){
+					  if(is_bool($arrayElements[$i]['active']) == false){
+						  return $defaultMenu;
+				  	}
+				 }
+				 return $arrayElements;
+			}
 		}else{
-         return 'undefined';
+         return $defaultMenu;
         }
 	}
 

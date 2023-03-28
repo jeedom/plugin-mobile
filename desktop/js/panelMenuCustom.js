@@ -84,7 +84,7 @@
                  let spanIcon = document.querySelector('#spanIconPanel'+numElement)
                  jeedomUtils.chooseIcon(function(_icon) {
                    spanIcon.innerHTML = ''
-                   let iconName = spanIcon.getAttribute('iconName');
+                   let iconName = spanIcon.getAttribute('iconname');
                    let arraySplits = (iconName.trim()).split(' ');
                    if(iconName !== 'undefined'){
                      for(let j=0;j < parseInt(arraySplits.length);j++){
@@ -92,7 +92,13 @@
                      }
                    }
                    spanIcon.insertAdjacentHTML("beforeend",_icon);
-                    $('#spanIconPanel'+numElement).css('font-size', '60px');
+                     $('#spanIconPanel'+numElement).css('font-size', '60px');
+                    const htmlString = _icon;
+                     const classRegex = /<i\s+class=['"]([^'"]+)['"]/;
+                     const matches = htmlString.match(classRegex);
+                     const iconClass = matches[1];
+                    spanIcon.setAttribute('iconname', iconClass);
+
                  }, {
                    icon: _icon
                  })
@@ -134,7 +140,8 @@ function saveMenu(nbIconesPanel, eqLogicId){
          selectNameMenu[i]  = document.querySelector(`.item_dash[id=item_${objectSelected}${i}]`).value;
       }
      console.log(selectNameMenu[i])
-       iconName[i] = $('#spanIconPanel'+i).children('i:nth-child(1)').attr('class');
+       iconName[i] = $('#spanIconPanel'+i).attr('iconname');
+       console.log(iconName[i])
       if(inputChosen[i]  === undefined ) {
           inputChosen[i] = 'none';
       }

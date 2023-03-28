@@ -55,17 +55,17 @@
         "Nb Icones": "Nb-Symbole",
         "Utilisateur non trouvé": "Benutzer nicht gefunden",
         " Icone 1": "Symbol 1",
-        "Type": "Art",
+        "Type": "Nett",
         "Choisir un Type": "Wählen Sie einen Typ",
-        "Accueil": "Willkommen",
+        "Accueil": "Accueil",
         "Synthese": "Synthese",
         "Dashboard": "Armaturenbrett",
         "Vue": "Gesehen",
         "Design": "Design",
         "Panel": "Tafel",
-        "URL externe": "Externe URL",
-        "Santé": "Gesundheit",
-        "TimeLine": "Zeitleiste",
+        "URL externe": "URL externe",
+        "Santé": "Santé",
+        "TimeLine": "TimeLine",
         "Choisir Icone": "Wählen Sie Symbol",
         " Icone 2": "Symbol 2",
         " Icone 3": "Symbol 3",
@@ -169,6 +169,9 @@
         "Designs": "Design",
         "Configurations": "Konfigurationen"
     },
+    "plugins\/mobile\/desktop\/modal\/fiveModal.php": {
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff"
+    },
     "plugins\/mobile\/desktop\/modal\/fourPage.php": {
         "401 - Accès non autorisé": "401 – Unbefugter Zugriff"
     },
@@ -221,7 +224,7 @@
         "Vérification en Cours": "Überprüfung läuft",
         "Sauvegarde Favoris :": "Favoriten speichern:",
         "Nom": "Name",
-        "Type": "Art",
+        "Type": "Typ",
         "Info": "Information",
         "Action": "Aktion"
     },
@@ -237,6 +240,9 @@
         "URL externe": "Externe URL",
         "Santé": "Gesundheit",
         "TimeLine": "Zeitleiste"
+    },
+    "plugins\/mobile\/desktop\/php\/panelWebApp.php": {
+        "ICONE 1": "IKONE 1"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
         "Santé Mobile": "Mobile Gesundheit",

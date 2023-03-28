@@ -55,17 +55,17 @@
         "Nb Icones": "Iconos Nb",
         "Utilisateur non trouvé": "Usuario no encontrado",
         " Icone 1": "Icono 1",
-        "Type": "Amable",
+        "Type": "Tipo",
         "Choisir un Type": "Elija un tipo",
-        "Accueil": "Bienvenida",
-        "Synthese": "Síntesis",
-        "Dashboard": "Panel",
+        "Accueil": "Accueil",
+        "Synthese": "Synthese",
+        "Dashboard": "Tablero",
         "Vue": "Visto",
         "Design": "Diseño",
         "Panel": "Panel",
-        "URL externe": "URL externa",
-        "Santé": "Salud",
-        "TimeLine": "Línea de tiempo",
+        "URL externe": "URL externe",
+        "Santé": "Santé",
+        "TimeLine": "TimeLine",
         "Choisir Icone": "Elegir icono",
         " Icone 2": "Icono 2",
         " Icone 3": "Icono 3",
@@ -169,6 +169,9 @@
         "Designs": "Diseños",
         "Configurations": "Configuraciones"
     },
+    "plugins\/mobile\/desktop\/modal\/fiveModal.php": {
+        "401 - Accès non autorisé": "401 - Acceso no autorizado"
+    },
     "plugins\/mobile\/desktop\/modal\/fourPage.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado"
     },
@@ -221,7 +224,7 @@
         "Vérification en Cours": "Verificación en progreso",
         "Sauvegarde Favoris :": "Guardar favoritos:",
         "Nom": "Nombre",
-        "Type": "Amable",
+        "Type": "Tipo",
         "Info": "Información",
         "Action": "Acción"
     },
@@ -237,6 +240,9 @@
         "URL externe": "URL externa",
         "Santé": "Salud",
         "TimeLine": "Línea de tiempo"
+    },
+    "plugins\/mobile\/desktop\/php\/panelWebApp.php": {
+        "ICONE 1": "ICONO 1"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
         "Santé Mobile": "Salud móvil",

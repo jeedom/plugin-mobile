@@ -84,7 +84,7 @@
                  let spanIcon = document.querySelector('#spanIconPanel'+numElement)
                  jeedomUtils.chooseIcon(function(_icon) {
                    spanIcon.innerHTML = ''
-                   let iconName = spanIcon.getAttribute('iconname');
+                   let iconName = spanIcon.getAttribute('iconName');
                    let arraySplits = (iconName.trim()).split(' ');
                    if(iconName !== 'undefined'){
                      for(let j=0;j < parseInt(arraySplits.length);j++){
@@ -92,13 +92,12 @@
                      }
                    }
                    spanIcon.insertAdjacentHTML("beforeend",_icon);
-                     $('#spanIconPanel'+numElement).css('font-size', '60px');
-                    const htmlString = _icon;
-                     const classRegex = /<i\s+class=['"]([^'"]+)['"]/;
-                     const matches = htmlString.match(classRegex);
-                     const iconClass = matches[1];
-                    spanIcon.setAttribute('iconname', iconClass);
-
+                    $('#spanIconPanel'+numElement).css('font-size', '60px');
+                   const htmlString = _icon;
+                    const classRegex = /<i\s+class=['"]([^'"]+)['"]/;
+                    const matches = htmlString.match(classRegex);
+                    const iconClass = matches[1];
+                   spanIcon.setAttribute('iconname', iconClass);
                  }, {
                    icon: _icon
                  })
@@ -181,6 +180,7 @@ function saveMenu(nbIconesPanel, eqLogicId){
            jeedom.appMobile.modalClose();
            jeedom.appMobile.notifee('Menu Enregistre', 'Success', 2000);
            jeedom.appMobile.syncBoxs();
+           
      }
     });
  }

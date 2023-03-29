@@ -1,3 +1,5 @@
+
+
 <?php
 /* This file is part of Jeedom.
  *
@@ -39,41 +41,53 @@ sendVarToJs('valeurActuel',$valueActual);
 sendVarToJs('cmdId',$sliderId);
   
 
-  echo '<div class="cmdName">'.$nameCmd.'</div>';
-  echo '<div class="value cmd cmd-widget cursor" data-cmd_id="">'.$valueActual.'</div>';
-  echo '<div id="slider" class="ui-widget-content ui-corner-all">';
-  echo '<div class="flexTest"><input class="testDiv slider_bar" type="range" min="0" max="100" step="1" value="'.$valueActual.'" data-cmd_id=""></div>';
+     echo '<section class="container">';
+        echo '<div class="topNames">';
+              echo '<div class="cmdName">'.$nameCmd.'</div>';
+              echo '<div class="value cmd cmd-widget cursor" data-cmd_id="">'.$valueActual.'</div>';
+        echo '</div>';
+        echo '<div class="flexTest"><input class="testDiv slider_bar" type="range" min="0" max="100" step="1" value="'.$valueActual.'" data-cmd_id=""></div>';
+     echo '</section>'; 
+
+
 
 
 ?>
 <style>
+  
 
-body {
-  font-family: "Roboto", Helvetica, Arial, sans-serif; 
-  background: #ecf0f1;
-  color: #34495e;
-  padding-top: 60px;
-    overflow-y: hidden !important;
- 
+   .container {
+     width: 100%;
+     height: 100%;
+  position:absolute;
+     display:flex;
+     flex-direction: column;
+     justify-content:space-between;
+   }
 
+
+.topNames{
+  width: 100%;
+  display:flex !important;
+
+  justify-content:space-between !important;
+  margin-top: 20px !important;
+  
 }
+
 
 
 .value {
-
-  text-align: center;
+  //text-align: center;
   font-weight: bold;
   color: #94CA02 !important;
-  font-size: 10em;
-  width: 300px; 
+  font-size: 5em;
   height: 100px;
   line-height: 60px;
-  margin: 40px auto;
+  //margin: 40px auto;
   letter-spacing: -.07em;
 
 }
-
-
 
 
 .cmdName{
@@ -81,16 +95,16 @@ body {
  top:10px;
  left:10px;
  font-size: 1em; 
-   color: #94CA02 !important;
+ color: #94CA02 !important;
 }
 
 
 .flexTest{
 display:flex;
 justify-content:center;
-align-items:center;
-align-content:center; 
-  width:100%;
+
+  height:100%;
+
   
 }
 
@@ -98,22 +112,25 @@ align-content:center;
 
 input.slider_bar {
   //-webkit-appearance: none;
+  postion:absolute;
+  top:200px;
   height: 100px;
-  width: 100%;
+  width: 300px;
   margin: 0;
   outline: none;
   border-radius: 30px !important;
   background :#94CA02 !important;
   overflow: hidden;
-  transform-origin:100px 100px;
-  -webkit-box-reflect : below 10px linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.5)) !important;
+  transform: rotate(90deg);
+  -webkit-box-reflect: below 10px !important;
+ 
 
 }
 
 .slider_bar::-webkit-slider-thumb {
   -webkit-appearance:none;
-  width: 20px;
-  height: 40px;
+  width: 30px;
+  height: 80px;
   border-radius: 20px;
   margin-right: 5px !important;
   background: #fff;

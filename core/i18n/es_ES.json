@@ -1,28 +1,4 @@
 {
-    "plugins\/mobile\/mobile\/js\/mobile.js": {
-        "NUMERO ICONE TEST": "NÚMERO DE ICONO DE PRUEBA"
-    },
-    "plugins\/mobile\/mobile\/html\/mobile.html": {
-        "ICONE 1": "ICONO 1",
-        "QRCODE": "CÓDIGO QR",
-        "CUSTOM MENU": "MENÚ PERSONALIZADO",
-        "ICONE 4": "ICONO 4"
-    },
-    "plugins\/mobile\/mobile\/html\/newMenu3.php": {
-        "ICONE 1": "ICONO 1",
-        "Testmenu": "Menú de prueba",
-        "ICONE 3": "ICONO 3"
-    },
-    "plugins\/mobile\/mobile\/html\/test.html": {
-        "nouvellepage": "nueva pagina",
-        "ahoui": "Ah si",
-        "Santé Z-Wave": "Salud de onda Z",
-        "quandmeme": "sin embargo",
-        "Statistiques Z-Wave": "Estadísticas de onda Z",
-        "joli": "bonito, lindo",
-        "retourpanel": "panel posterior",
-        "Precedent": "Anterior"
-    },
     "plugins\/mobile\/plugin_info\/configuration.php": {
         "Notifications de l'app": "Notificaciones de aplicaciones",
         "Réponse Ask sensible à la case : ": "Pregunta respuesta sensible a la caja:"
@@ -37,15 +13,6 @@
         "User": "Desgaste",
         "Depuis": "Desde",
         "Utilisateur non trouvé": "Usuario no encontrado"
-    },
-    "plugins\/mobile\/desktop\/modal\/secPage.php": {
-        "401 - Accès non autorisé": "401 - Acceso no autorizado",
-        "COMPTE MARKET": "CUENTA DE MERCADO",
-        "BOX ID": "BOX-ID",
-        "Il vous faut simplement rentrer votre identifiant Market ainsi que votre mot de passe.": "Todo lo que tiene que hacer es ingresar su Market ID y contraseña",
-        "Plusieurs choix sur cet écran :": "Varias opciones en esta pantalla:",
-        "- Vous entrez l'url de votre Jeedom (interne ou externe), ainsi que les identifiants d'accès à celle-ci et vous confirmez avec le bouton CONNEXION": "- Ingresas la url de tu Jeedom (interna o externa), así como los identificadores de acceso a la misma y confirmas con el botón LOGIN",
-        "- Vous cliquez sur QR Code : un nouvel écran apparait; vous pourrez scanner un QRCode depuis le plugin Mobile de la box que vous souhaitez ajoutée, via l'onglet QRCODE du plugin.": "- Haces clic en Código QR: aparece una nueva pantalla; puede escanear un QRCode desde el complemento móvil del cuadro que desea agregar, a través de la pestaña QRCODE del complemento"
     },
     "plugins\/mobile\/desktop\/modal\/menuCustom.php": {
         "Mobile": "Móvil",
@@ -84,9 +51,6 @@
         "Plugins non testés et non transmis": "Complementos no probados y no transmitidos",
         "Ne sont pas transmis à l’App Mobile": "No se transmiten a la aplicación móvil"
     },
-    "plugins\/mobile\/desktop\/modal\/fivePage.php": {
-        "401 - Accès non autorisé": "401 - Acceso no autorizado"
-    },
     "plugins\/mobile\/desktop\/modal\/qrcodev2.php": {
         "AJOUT DE LA BOX SUR VOTRE APPLICATiON MOBILE ": "AGREGAR LA CAJA A SU APLICACIÓN MÓVIL",
         "Utilisateurs": "Usuarios",
@@ -95,19 +59,6 @@
         "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Error Sin dirección interna (ver configuración de su Jeedom!)",
         "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Error Sin dirección externa (ver configuración de su Jeedom!)",
         "Erreur Pas d\\'utilisateur selectionné": "Error Ningún usuario seleccionado"
-    },
-    "plugins\/mobile\/desktop\/modal\/thirdPage.php": {
-        "401 - Accès non autorisé": "401 - Acceso no autorizado"
-    },
-    "plugins\/mobile\/desktop\/modal\/wizard.php": {
-        "401 - Accès non autorisé": "401 - Acceso no autorizado"
-    },
-    "plugins\/mobile\/desktop\/modal\/sixPage.php": {
-        "401 - Accès non autorisé": "401 - Acceso no autorizado"
-    },
-    "plugins\/mobile\/desktop\/modal\/firstPage.php": {
-        "401 - Accès non autorisé": "401 - Acceso no autorizado",
-        "Pour connecter votre téléphone : il y a 2 méthodes possible": "Para conectar su teléfono: hay 2 métodos posibles"
     },
     "plugins\/mobile\/desktop\/modal\/update.mobile.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado",
@@ -120,7 +71,7 @@
         "Ce Plugin est entièrement compatible, il ne nécessite aucune action de votre part": "Este complemento es totalmente compatible, no requiere ninguna acción por su parte",
         "Ce plugin est compatible, pensez à vérifier les Types Génériques des Commandes": "Este complemento es compatible, recuerde verificar los tipos genéricos de pedidos",
         "Activer": "Activar",
-        "Le Plugin n est pas compatible, vous pouvez l activer si vous le souhaitez": "El Plugin no es compatible, puedes activarlo si lo deseas",
+        "Le Plugin n\\'est pas compatible, vous pouvez l\\'activer si vous le souhaitez": "El complemento no es compatible, puede activarlo si lo desea",
         "Type Générique du Plugin": "Tipo de complemento genérico",
         "Sauvegarder": "Guardar",
         "Id Cmd": "Id Cmd",
@@ -169,19 +120,12 @@
         "Designs": "Diseños",
         "Configurations": "Configuraciones"
     },
-    "plugins\/mobile\/desktop\/modal\/fiveModal.php": {
-        "401 - Accès non autorisé": "401 - Acceso no autorizado"
-    },
-    "plugins\/mobile\/desktop\/modal\/fourPage.php": {
-        "401 - Accès non autorisé": "401 - Acceso no autorizado"
-    },
     "plugins\/mobile\/desktop\/php\/mobile.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado",
         "App V2 - VERSION ALPHA PRIVEE SEULEMENT": "App V2 - VERSIÓN ALFA PRIVADA SOLAMENTE",
         "Configuration": "Configuración",
         "Menu Custom": "Menú personalizado",
         "QR Code": "Código QR",
-        "Documentation APP V2": "Documentación de la aplicación V2",
         "Mes Téléphones Mobiles": "Mis teléfonos móviles",
         "Rechercher": "Buscar",
         "App V1": "Aplicación V1",
@@ -228,22 +172,6 @@
         "Info": "Información",
         "Action": "Acción"
     },
-    "plugins\/mobile\/desktop\/php\/panelMenuCustom.php": {
-        "Type": "Amable",
-        "Choisir un Type": "Elija un tipo",
-        "Accueil": "Bienvenida",
-        "Synthese": "Síntesis",
-        "Dashboard": "Panel",
-        "Vue": "Visto",
-        "Design": "Diseño",
-        "Panel": "Panel",
-        "URL externe": "URL externa",
-        "Santé": "Salud",
-        "TimeLine": "Línea de tiempo"
-    },
-    "plugins\/mobile\/desktop\/php\/panelWebApp.php": {
-        "ICONE 1": "ICONO 1"
-    },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
         "Santé Mobile": "Salud móvil",
         "Plugins compatibles": "Complementos compatibles",
@@ -251,11 +179,9 @@
         "Scénarios": "Escenarios",
         "Informations envoyées à l'app": "Información enviada a la aplicación",
         "Menu Custom": "Menú personalizado",
-        "QrCode": "Código QR",
-        "Bien demarrer": "Empezar bien",
         "Configuration Mobile du Plugin \"+name_plugin+": "Configuración móvil del complemento \"+ name_plugin +",
         "Configuration Mobile de la Pièce": "Configuración de sala móvil",
-        "Configuration Mobile du Scénario \"+name_scenario+": "Configuración Móvil del Escenario \"+name_scenario+",
+        "Configuration Mobile du Scnéario \"+name_scenario+": "Configuración móvil del escenario \"+ name_scenario +",
         "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Error Sin dirección interna (¡vea la configuración de su Jeedom!)",
         "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Error Sin dirección externa (¡vea la configuración de su Jeedom!)",
         "Erreur Pas d\\'utilisateur selectionné": "Error Ningún usuario seleccionado",

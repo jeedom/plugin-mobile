@@ -848,17 +848,14 @@ class mobile extends eqLogic {
 
                           }
 									    $iconName = $menu[2];
-											if($iconName == '' || $iconName == 'none'){
+												if($iconName == '' || $iconName == 'none'){
 															log::add('mobile','debug','POULOUYLU : '.$iconName);
-												 $eqLogic->setConfiguration('spanIcon'.$i, 'icon jeedomapp-in');
+												$eqLogic->setConfiguration('spanIcon'.$i, 'icon jeedomapp-in');
 											}else{
 															log::add('mobile','debug','TATATA : '.$iconName);
 												 $eqLogic->setConfiguration('spanIcon'.$i, $iconName);
 											}
-				/*	log::add('mobile','debug','SPANICON : '.$iconName);
-					log::add('mobile','debug','RENAMEICON : '.$nameUser);
-					log::add('mobile','debug','SELECTNAME : '.$objectId);*/
-										 $eqLogic->setConfiguration('spanIcon'.$i, $iconName);
+										 //$eqLogic->setConfiguration('spanIcon'.$i, $iconName);
                                       if($menu[3] != ''){
                                          $eqLogic->setConfiguration('urlUser'.$i, trim($menu[3]));
 
@@ -905,17 +902,12 @@ class mobile extends eqLogic {
 	public static function configMenuCustom($eqId){
 	  $eqLogic = eqLogic::byId($eqId);
 		$pluginsPanel = plugin::listPlugin();
-		$defaultMenu = {"menu":
-										{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
-										"tab1":{"active":true,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
-										"tab2":{"active":true,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
-										"tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}}};
 		foreach ($pluginsPanel as $plugin)
 		{
 				$obArray = utils::o2a($plugin);
 				//$getMobile = $plugin->getMobile();
 			//	log::add('mobile','debug', 'GETMOBILE : '.$getMobile);
-				//log::add('mobile','debug', 'PLUGINSPANEL : '.json_encode($obArray));
+				log::add('mobile','debug', 'PLUGINSPANEL : '.json_encode($obArray));
 			}
 
 		if(is_object($eqLogic)){
@@ -935,22 +927,23 @@ class mobile extends eqLogic {
                         ${ 'tabLibName' . $i} = 'Mdi';
                       }
                     }else{
-                      ${ 'tabIconName' . $i} = 'in';
-											${ 'tabLibName' . $i} = 'jeedomapp';
+                     // ${ 'tabIconName' . $i} = 'home';
+                        ${ 'tabIconName' . $i} = 'in';
+						${ 'tabLibName' . $i} = 'jeedomapp';
                     }
                     ${ '$tabRenameInput' . $i} = $eqLogic->getConfiguration('renameIcon'.$i , 'none');
                     if(${ '$tabRenameInput' . $i} == 'none'){
                       ${ '$tabRenameInput' . $i} = 'Accueil';
                     }
                     $objectId = $eqLogic->getConfiguration('selectNameMenu'.$i);
-									//	log::add('mobile','debug', 'OBJECTID : ' .$objectId);
+										log::add('mobile','debug', 'OBJECTID : ' .$objectId);
                     if($objectId && $objectId != -1 && $objectId != 'none'){
 											if($objectId != 'overview' && $objectId != 'health' && $objectId != 'home' && $objectId != 'timeline'){
 													$arrayObjects = explode('_', $objectId);
 													$objectId = $arrayObjects[0];
 													$typeObject = $arrayObjects[1];
-												//	log::add('mobile','debug', 'OBJ : ' .	$objectId);
-												//	log::add('mobile','debug', 'TYPEOBJ : ' .	$typeObject);
+													log::add('mobile','debug', 'OBJ : ' .	$objectId);
+													log::add('mobile','debug', 'TYPEOBJ : ' .	$typeObject);
 													if($typeObject == 'view'){
 														 ${ '$tabUrl' . $i} = "/index.php?v=m&p={$typeObject}&view_id={$objectId}";
 													}else if($typeObject == 'dashboard'){
@@ -989,19 +982,10 @@ class mobile extends eqLogic {
                     $j++;
                     $count++;
 			}
-		//  log::add('mobile','debug','JSONTEMPLATEARRAY :'.json_encode($arrayElements));
-			if(count($arrayElements) != 4){
-				 return $defaultMenu;
-			}else{
-				 for($i=0;$i < 4; $i++){
-					  if(is_bool($arrayElements[$i]['active']) == false){
-						  return $defaultMenu;
-				  	}
-				 }
-				 return $arrayElements;
-			}
+		  log::add('mobile','debug','JSONTEMPLATEARRAY :'.json_encode($arrayElements));
+          return $arrayElements;
 		}else{
-         return $defaultMenu;
+         return 'undefined';
         }
 	}
 

@@ -177,10 +177,11 @@ function saveMenu(nbIconesPanel, eqLogicId){
                $('#div_alert').showAlert({message: data.result, level: 'danger'});
                return;
            }
-           jeedom.appMobile.modalClose();
+
            jeedom.appMobile.notifee('Menu Enregistre', 'Success', 2000);
            jeedom.appMobile.syncBoxs();
-           
+           jeedom.appMobile.modalClose();
+
      }
     });
  }

@@ -4,3 +4,4 @@ core/config/common.config.php
 plugins
 .remote-sync.json
 .project
+.DS_Store

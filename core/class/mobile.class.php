@@ -900,6 +900,11 @@ class mobile extends eqLogic {
  }
 
 	public static function configMenuCustom($eqId){
+		$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
+										"tab1":{"active":true,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
+										"tab2":{"active":true,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
+										"tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}}';
+		$defaultMenuArray = json_decode($defaultMenuJson, true);
 	  $eqLogic = eqLogic::byId($eqId);
 		$pluginsPanel = plugin::listPlugin();
 		foreach ($pluginsPanel as $plugin)
@@ -983,9 +988,33 @@ class mobile extends eqLogic {
                     $count++;
 			}
 		  log::add('mobile','debug','JSONTEMPLATEARRAY :'.json_encode($arrayElements));
-          return $arrayElements;
+			if(count($arrayElements) == 4){
+					 $j = 0;
+					for($i=0;$i < 4; $i++){
+
+						 $isBool = is_bool($arrayElements['tab'.$i]['active']);
+
+						 if($isBool){
+							  if($arrayElements['tab'.$i]['active'] == true){
+
+								   $j++;
+                               // log::add('mobile','debug','J >>'.$j);
+							  }
+						 }else{
+							 return $defaultMenuArray;
+						 }
+					}
+					if($j == 0){
+						return $defaultMenuArray;
+					}
+					return $arrayElements;
+			}else{
+				return $defaultMenuArray;
+			}
+
+        //  return $arrayElements;
 		}else{
-         return 'undefined';
+         return $defaultMenuArray;
         }
 	}
 

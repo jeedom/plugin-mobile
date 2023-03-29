@@ -10,7 +10,7 @@
     },
     "plugins\/mobile\/mobile\/html\/newMenu3.php": {
         "ICONE 1": "ICON 1",
-        "Testmenu": "Testmenu",
+        "Testmenu": "Test menu",
         "ICONE 3": "ICON 3"
     },
     "plugins\/mobile\/mobile\/html\/test.html": {
@@ -57,15 +57,15 @@
         " Icone 1": "Icon 1",
         "Type": "Kind",
         "Choisir un Type": "Choose a Type",
-        "Accueil": "Welcome",
+        "Accueil": "Accueil",
         "Synthese": "Synthesis",
         "Dashboard": "Dashboard",
         "Vue": "Seen",
         "Design": "Design",
         "Panel": "Panel",
-        "URL externe": "External URL",
-        "Santé": "Health",
-        "TimeLine": "Timeline",
+        "URL externe": "URL externe",
+        "Santé": "Santé",
+        "TimeLine": "TimeLine",
         "Choisir Icone": "Choose Icon",
         " Icone 2": "Icon 2",
         " Icone 3": "Icon 3",
@@ -169,6 +169,9 @@
         "Designs": "Designs",
         "Configurations": "Configurations"
     },
+    "plugins\/mobile\/desktop\/modal\/fiveModal.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized Access"
+    },
     "plugins\/mobile\/desktop\/modal\/fourPage.php": {
         "401 - Accès non autorisé": "401 - Unauthorized Access"
     },
@@ -221,7 +224,7 @@
         "Vérification en Cours": "Verification in progress",
         "Sauvegarde Favoris :": "Save Favorites:",
         "Nom": "Name",
-        "Type": "Kind",
+        "Type": "Type",
         "Info": "Information",
         "Action": "Action"
     },
@@ -237,6 +240,9 @@
         "URL externe": "External URL",
         "Santé": "Health",
         "TimeLine": "Timeline"
+    },
+    "plugins\/mobile\/desktop\/php\/panelWebApp.php": {
+        "ICONE 1": "ICON 1"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
         "Santé Mobile": "Mobile Health",

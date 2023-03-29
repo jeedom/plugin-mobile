@@ -169,6 +169,9 @@
         "Designs": "デザイン",
         "Configurations": "Configurations"
     },
+    "plugins\/mobile\/desktop\/modal\/fiveModal.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé"
+    },
     "plugins\/mobile\/desktop\/modal\/fourPage.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé"
     },
@@ -237,6 +240,9 @@
         "URL externe": "URL externe",
         "Santé": "Santé",
         "TimeLine": "TimeLine"
+    },
+    "plugins\/mobile\/desktop\/php\/panelWebApp.php": {
+        "ICONE 1": "ICONE 1"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
         "Santé Mobile": "Santé Mobile",

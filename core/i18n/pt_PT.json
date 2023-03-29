@@ -55,17 +55,17 @@
         "Nb Icones": "Ícones Nb",
         "Utilisateur non trouvé": "Usuário não encontrado",
         " Icone 1": "Ícone 1",
-        "Type": "Tipo",
+        "Type": "Gentil",
         "Choisir un Type": "Escolha um tipo",
-        "Accueil": "Bem-vindo",
-        "Synthese": "Síntese",
+        "Accueil": "Accueil",
+        "Synthese": "Synthese",
         "Dashboard": "Painel",
         "Vue": "Visto",
         "Design": "Projeto",
         "Panel": "Painel",
-        "URL externe": "URL externo",
-        "Santé": "Saúde",
-        "TimeLine": "Linha do tempo",
+        "URL externe": "URL externe",
+        "Santé": "Santé",
+        "TimeLine": "TimeLine",
         "Choisir Icone": "Escolha o ícone",
         " Icone 2": "Ícone 2",
         " Icone 3": "ícone 3",
@@ -169,6 +169,9 @@
         "Designs": "Projetos",
         "Configurations": "Configurações"
     },
+    "plugins\/mobile\/desktop\/modal\/fiveModal.php": {
+        "401 - Accès non autorisé": "401 - Acesso não autorizado"
+    },
     "plugins\/mobile\/desktop\/modal\/fourPage.php": {
         "401 - Accès non autorisé": "401 - Acesso não autorizado"
     },
@@ -237,6 +240,9 @@
         "URL externe": "URL externo",
         "Santé": "Saúde",
         "TimeLine": "Linha do tempo"
+    },
+    "plugins\/mobile\/desktop\/php\/panelWebApp.php": {
+        "ICONE 1": "ÍCONE 1"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
         "Santé Mobile": "Saúde móvel",

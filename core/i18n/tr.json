@@ -1,4 +1,28 @@
 {
+    "plugins\/mobile\/mobile\/js\/mobile.js": {
+        "NUMERO ICONE TEST": "NUMERO ICONE TEST"
+    },
+    "plugins\/mobile\/mobile\/html\/mobile.html": {
+        "ICONE 1": "ICONE 1",
+        "QRCODE": "QRCODE",
+        "CUSTOM MENU": "CUSTOM MENU",
+        "ICONE 4": "ICONE 4"
+    },
+    "plugins\/mobile\/mobile\/html\/newMenu3.php": {
+        "ICONE 1": "ICONE 1",
+        "Testmenu": "Testmenu",
+        "ICONE 3": "ICONE 3"
+    },
+    "plugins\/mobile\/mobile\/html\/test.html": {
+        "nouvellepage": "nouvellepage",
+        "ahoui": "ahoui",
+        "Santé Z-Wave": "Santé Z-Wave",
+        "quandmeme": "quandmeme",
+        "Statistiques Z-Wave": "Statistiques Z-Wave",
+        "joli": "joli",
+        "retourpanel": "retourpanel",
+        "Precedent": "Precedent"
+    },
     "plugins\/mobile\/plugin_info\/configuration.php": {
         "Notifications de l'app": "Notifications de l'app",
         "Réponse Ask sensible à la case : ": "Réponse Ask sensible à la case :"
@@ -13,6 +37,15 @@
         "User": "User",
         "Depuis": "Depuis",
         "Utilisateur non trouvé": "Utilisateur non trouvé"
+    },
+    "plugins\/mobile\/desktop\/modal\/secPage.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "COMPTE MARKET": "COMPTE MARKET",
+        "BOX ID": "BOX ID",
+        "Il vous faut simplement rentrer votre identifiant Market ainsi que votre mot de passe.": "Il vous faut simplement rentrer votre identifiant Market ainsi que votre mot de passe",
+        "Plusieurs choix sur cet écran :": "Plusieurs choix sur cet écran :",
+        "- Vous entrez l'url de votre Jeedom (interne ou externe), ainsi que les identifiants d'accès à celle-ci et vous confirmez avec le bouton CONNEXION": "- Vous entrez l'url de votre Jeedom (interne ou externe), ainsi que les identifiants d'accès à celle-ci et vous confirmez avec le bouton CONNEXION",
+        "- Vous cliquez sur QR Code : un nouvel écran apparait; vous pourrez scanner un QRCode depuis le plugin Mobile de la box que vous souhaitez ajoutée, via l'onglet QRCODE du plugin.": "- Vous cliquez sur QR Code : un nouvel écran apparait; vous pourrez scanner un QRCode depuis le plugin Mobile de la box que vous souhaitez ajoutée, via l'onglet QRCODE du plugin"
     },
     "plugins\/mobile\/desktop\/modal\/menuCustom.php": {
         "Mobile": "Mobile",
@@ -51,6 +84,9 @@
         "Plugins non testés et non transmis": "Plugins non testés et non transmis",
         "Ne sont pas transmis à l’App Mobile": "Ne sont pas transmis à l’App Mobile"
     },
+    "plugins\/mobile\/desktop\/modal\/fivePage.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé"
+    },
     "plugins\/mobile\/desktop\/modal\/qrcodev2.php": {
         "AJOUT DE LA BOX SUR VOTRE APPLICATiON MOBILE ": "AJOUT DE LA BOX SUR VOTRE APPLICATiON MOBILE",
         "Utilisateurs": "Utilisateurs",
@@ -59,6 +95,19 @@
         "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)",
         "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)",
         "Erreur Pas d\\'utilisateur selectionné": "Erreur Pas d\\'utilisateur selectionné"
+    },
+    "plugins\/mobile\/desktop\/modal\/thirdPage.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé"
+    },
+    "plugins\/mobile\/desktop\/modal\/wizard.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé"
+    },
+    "plugins\/mobile\/desktop\/modal\/sixPage.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé"
+    },
+    "plugins\/mobile\/desktop\/modal\/firstPage.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Pour connecter votre téléphone : il y a 2 méthodes possible": "Pour connecter votre téléphone : il y a 2 méthodes possible"
     },
     "plugins\/mobile\/desktop\/modal\/update.mobile.php": {
         "401 - Accès non autorisé": "401 - Yetkisiz erişim",
@@ -71,7 +120,7 @@
         "Ce Plugin est entièrement compatible, il ne nécessite aucune action de votre part": "Ce Plugin est entièrement compatible, il ne nécessite aucune action de votre part",
         "Ce plugin est compatible, pensez à vérifier les Types Génériques des Commandes": "Ce plugin est compatible, pensez à vérifier les Types Génériques des Commandes",
         "Activer": "Etkinleştir",
-        "Le Plugin n\\'est pas compatible, vous pouvez l\\'activer si vous le souhaitez": "Le Plugin n\\'est pas compatible, vous pouvez l\\'activer si vous le souhaitez",
+        "Le Plugin n est pas compatible, vous pouvez l activer si vous le souhaitez": "Le Plugin n est pas compatible, vous pouvez l activer si vous le souhaitez",
         "Type Générique du Plugin": "Type Générique du Plugin",
         "Sauvegarder": "Kaydet",
         "Id Cmd": "Id Cmd",
@@ -79,7 +128,7 @@
         "Type Générique": "Genel tip",
         "Icône": "Icon",
         "Aucun": "Hiçbir",
-        " . $info['family'] . ": "$info['family']",
+        " . $info['family'] . ": ". $info['family'] .",
         "Plugins compatibles": "Plugins compatibles",
         "Modifications sauvegardées avec succès": "Modifications sauvegardées avec succès",
         "Sauvegarde effectuée": "Yedekleme gerçekleştirildi"
@@ -105,7 +154,7 @@
         "Type Générique": "Genel tip",
         "Icône": "Icon",
         "Aucun": "Hiçbir",
-        " . $info['family'] . ": "$info['family']",
+        " . $info['family'] . ": ". $info['family'] .",
         "Objets \/ Pièces": "Objets \/ Pièces",
         "Modifications sauvegardées avec succès": "Modifications sauvegardées avec succès",
         "Sauvegarde effectuée avec succès": "Kayıt başarıyla sonuçlandı"
@@ -120,12 +169,19 @@
         "Designs": "Tasarımlar",
         "Configurations": "Configurations"
     },
+    "plugins\/mobile\/desktop\/modal\/fiveModal.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé"
+    },
+    "plugins\/mobile\/desktop\/modal\/fourPage.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé"
+    },
     "plugins\/mobile\/desktop\/php\/mobile.php": {
         "401 - Accès non autorisé": "401 - Yetkisiz erişim",
         "App V2 - VERSION ALPHA PRIVEE SEULEMENT": "App V2 - VERSION ALPHA PRIVEE SEULEMENT",
         "Configuration": "Ayar",
         "Menu Custom": "Menu Custom",
         "QR Code": "QR Code",
+        "Documentation APP V2": "Documentation APP V2",
         "Mes Téléphones Mobiles": "Mes Téléphones Mobiles",
         "Rechercher": "Arayın",
         "App V1": "App V1",
@@ -172,6 +228,22 @@
         "Info": "Info",
         "Action": "Eylem"
     },
+    "plugins\/mobile\/desktop\/php\/panelMenuCustom.php": {
+        "Type": "Type",
+        "Choisir un Type": "Choisir un Type",
+        "Accueil": "Accueil",
+        "Synthese": "Synthese",
+        "Dashboard": "Dashboard",
+        "Vue": "Vue",
+        "Design": "Design",
+        "Panel": "Panel",
+        "URL externe": "URL externe",
+        "Santé": "Santé",
+        "TimeLine": "TimeLine"
+    },
+    "plugins\/mobile\/desktop\/php\/panelWebApp.php": {
+        "ICONE 1": "ICONE 1"
+    },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
         "Santé Mobile": "Santé Mobile",
         "Plugins compatibles": "Plugins compatibles",
@@ -179,9 +251,11 @@
         "Scénarios": "Senaryolar",
         "Informations envoyées à l'app": "Informations envoyées à l'app",
         "Menu Custom": "Menu Custom",
+        "QrCode": "QrCode",
+        "Bien demarrer": "Bien demarrer",
         "Configuration Mobile du Plugin \"+name_plugin+": "Configuration Mobile du Plugin \"+name_plugin+",
         "Configuration Mobile de la Pièce": "Configuration Mobile de la Pièce",
-        "Configuration Mobile du Scnéario \"+name_scenario+": "Configuration Mobile du Scnéario \"+name_scenario+",
+        "Configuration Mobile du Scénario \"+name_scenario+": "Configuration Mobile du Scénario \"+name_scenario+",
         "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)",
         "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)",
         "Erreur Pas d\\'utilisateur selectionné": "Erreur Pas d\\'utilisateur selectionné",

@@ -106,8 +106,8 @@
 
 
 
-function saveMenu(nbIconesPanel, eqLogicId){
-  var nbIconesPanel = parseInt(nbIconesPanel)
+function saveMenu(iconesPanel, eqLogicId){
+  var nbIconesPanel = parseInt(iconesPanel)
    switch(nbIconesPanel){
      case 1: var arrayMenusElements = [[]]; break;
      case 2: var arrayMenusElements = [[],[]]; break;
@@ -208,7 +208,8 @@ function saveMenu(nbIconesPanel, eqLogicId){
 
 
 btnMenu.addEventListener('click', function() {
- saveMenu(nbIconesPanel, eqLogicId)
+let iconesPanel = mainContainer.getAttribute('nbIconesPanel');
+ saveMenu(iconesPanel, eqLogicId)
  this.innerHTML = ''
  this.innerHTML = 'Menu Validé'
  this.style.backgroundColor =  '#3e8e41';

@@ -1,28 +1,4 @@
 {
-    "plugins\/mobile\/mobile\/js\/mobile.js": {
-        "NUMERO ICONE TEST": "TEST ICON NUMBER"
-    },
-    "plugins\/mobile\/mobile\/html\/mobile.html": {
-        "ICONE 1": "ICON 1",
-        "QRCODE": "QRCODE",
-        "CUSTOM MENU": "CUSTOM MENU",
-        "ICONE 4": "ICON 4"
-    },
-    "plugins\/mobile\/mobile\/html\/newMenu3.php": {
-        "ICONE 1": "ICON 1",
-        "Testmenu": "Test menu",
-        "ICONE 3": "ICON 3"
-    },
-    "plugins\/mobile\/mobile\/html\/test.html": {
-        "nouvellepage": "new page",
-        "ahoui": "Oh yes",
-        "Santé Z-Wave": "Z-Wave Health",
-        "quandmeme": "all the same",
-        "Statistiques Z-Wave": "Z-Wave Statistics",
-        "joli": "attractive",
-        "retourpanel": "backpanel",
-        "Precedent": "Previous"
-    },
     "plugins\/mobile\/plugin_info\/configuration.php": {
         "Notifications de l'app": "App notifications",
         "Réponse Ask sensible à la case : ": "Ask answer sensitive to the box:"

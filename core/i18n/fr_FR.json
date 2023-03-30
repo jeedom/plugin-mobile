@@ -1,28 +1,4 @@
 {
-    "plugins\/mobile\/mobile\/js\/mobile.js": {
-        "NUMERO ICONE TEST": "NUMERO ICONE TEST"
-    },
-    "plugins\/mobile\/mobile\/html\/mobile.html": {
-        "ICONE 1": "ICONE 1",
-        "QRCODE": "QRCODE",
-        "CUSTOM MENU": "CUSTOM MENU",
-        "ICONE 4": "ICONE 4"
-    },
-    "plugins\/mobile\/mobile\/html\/newMenu3.php": {
-        "ICONE 1": "ICONE 1",
-        "Testmenu": "Testmenu",
-        "ICONE 3": "ICONE 3"
-    },
-    "plugins\/mobile\/mobile\/html\/test.html": {
-        "nouvellepage": "nouvellepage",
-        "ahoui": "ahoui",
-        "Santé Z-Wave": "Santé Z-Wave",
-        "quandmeme": "quandmeme",
-        "Statistiques Z-Wave": "Statistiques Z-Wave",
-        "joli": "joli",
-        "retourpanel": "retourpanel",
-        "Precedent": "Precedent"
-    },
     "plugins\/mobile\/plugin_info\/configuration.php": {
         "Notifications de l'app": "Notifications de l'app",
         "Réponse Ask sensible à la case : ": "Réponse Ask sensible à la case : "

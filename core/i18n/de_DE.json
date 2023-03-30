@@ -1,28 +1,4 @@
 {
-    "plugins\/mobile\/mobile\/js\/mobile.js": {
-        "NUMERO ICONE TEST": "TESTSYMBOLNUMMER"
-    },
-    "plugins\/mobile\/mobile\/html\/mobile.html": {
-        "ICONE 1": "IKONE 1",
-        "QRCODE": "QR-CODE",
-        "CUSTOM MENU": "BENUTZERDEFINIERTES MENÜ",
-        "ICONE 4": "IKONE 4"
-    },
-    "plugins\/mobile\/mobile\/html\/newMenu3.php": {
-        "ICONE 1": "IKONE 1",
-        "Testmenu": "Testmenü",
-        "ICONE 3": "IKONE 3"
-    },
-    "plugins\/mobile\/mobile\/html\/test.html": {
-        "nouvellepage": "neue Seite",
-        "ahoui": "Oh ja",
-        "Santé Z-Wave": "Z-Wave-Gesundheit",
-        "quandmeme": "alles das selbe",
-        "Statistiques Z-Wave": "Z-Wave-Statistik",
-        "joli": "attraktiv",
-        "retourpanel": "Rückwand",
-        "Precedent": "Vorherige"
-    },
     "plugins\/mobile\/plugin_info\/configuration.php": {
         "Notifications de l'app": "App-Benachrichtigungen",
         "Réponse Ask sensible à la case : ": "Fragen Sie die Antwort, die für die Box empfindlich ist:"

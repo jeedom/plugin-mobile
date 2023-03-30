@@ -1,28 +1,4 @@
 {
-    "plugins\/mobile\/mobile\/js\/mobile.js": {
-        "NUMERO ICONE TEST": "NÚMERO DO ÍCONE DE TESTE"
-    },
-    "plugins\/mobile\/mobile\/html\/mobile.html": {
-        "ICONE 1": "ÍCONE 1",
-        "QRCODE": "CÓDIGO QR",
-        "CUSTOM MENU": "MENU CUSTOMIZADO",
-        "ICONE 4": "ÍCONE 4"
-    },
-    "plugins\/mobile\/mobile\/html\/newMenu3.php": {
-        "ICONE 1": "ÍCONE 1",
-        "Testmenu": "Menu de teste",
-        "ICONE 3": "ÍCONE 3"
-    },
-    "plugins\/mobile\/mobile\/html\/test.html": {
-        "nouvellepage": "nova página",
-        "ahoui": "Oh sim",
-        "Santé Z-Wave": "Saúde da Onda Z",
-        "quandmeme": "tudo o mesmo",
-        "Statistiques Z-Wave": "Estatísticas de onda Z",
-        "joli": "atraente",
-        "retourpanel": "painel traseiro",
-        "Precedent": "Anterior"
-    },
     "plugins\/mobile\/plugin_info\/configuration.php": {
         "Notifications de l'app": "Notificações de aplicativos",
         "Réponse Ask sensible à la case : ": "Peça resposta sensível à caixa:"

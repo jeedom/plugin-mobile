@@ -2,43 +2,43 @@
   <center>
     <div style="#hideCmdName#">#name_display#</div>
     <div class="shuttergauge-chart">
-    
-      <div class="shuttergauge-bckg cursor">   
+
+      <div class="shuttergauge-bckg cursor">
         <div class="shuttergauge-value"></div>
       </div>
-      
 
-      
+
+
     </div>
     <div class="shuttergauge-state state"><strong>#state# #unite#</strong></div>
     <div id="widget_slider#id#" class="slider full-width-slider" style="display:none;"></div>
-           
+
   </center>
-  
+
     <style>
 
 
    </style>
 
   <script>
-    
-        
+
+
     let eventChangeApp = 'click';
     let appMode = false;
-    if(window.ReactNativeWebView != undefined){   
+    if(jeedom.appMobile.detected()){
       appMode = true;
       eventChangeApp = 'touchstart';
       document.querySelector('#widget_slider#id#').style.display = 'none';
-    }else{      
-      document.querySelector('#widget_slider#id#').style.display = 'block';      
+    }else{
+      document.querySelector('#widget_slider#id#').style.display = 'block';
     }
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
     var step#id# = 1
     if ($.issetWidgetOptParam('#step#', 'step')) {
       step#id# = parseFloat('#step#')
@@ -91,11 +91,11 @@
     })
 
     jeedom.cmd.refreshValue([{cmd_id:'#id#', value: '#state#', display_value: '#state#', valueDate: '#valueDate#', collectDate: '#collectDate#', alertLevel: '#alertLevel#', unit: '#unite#'}])
-    
+
     let onlongtouch = false;
     let timer = false;
     let duration = 1000;
-    
+
 
 
     function touchStart(){
@@ -110,20 +110,20 @@
         timer = false;
       }
     }
-     
+
       onlongtouch = function(){
          let _optionsModal = { 'type' : 'WebviewApp', 'uri' : '/index.php?v=d&m=mobile&p=widgetSlider&cmdId=#id#&eqId=#eqLogic_id#' , 'sizeModal' : 50 };
          jeedom.appMobile.postToApp('modal', _optionsModal);
 
        }
 
-    
 
-   if(window.ReactNativeWebView != undefined){   
+
+   if(jeedom.appMobile.detected()){   
          document.querySelector(".shuttergauge-chart").addEventListener("touchstart", touchStart);
          document.querySelector(".shuttergauge-chart").addEventListener("touchend", touchEnd);
    }
-        
+
 
   </script>
   <script src="core/php/getJS.php?file=core/js/appMobile.class.js"></script>

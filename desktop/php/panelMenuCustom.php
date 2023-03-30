@@ -56,31 +56,24 @@ if(isset($_GET["Iq"])){
           <i class="spanIconPanel whiteApp '.$mobile->getConfiguration('spanIcon'.$i , 'icon jeedomapp-in').'" iconName="'.$mobile->getConfiguration('spanIcon'.$i , 'Default').'" id="spanIconPanel'.$i.'" style="font-size:60px;"></i>
           <span class="whiteApp actualsMenuNameUser" id="actualMenuNameUser'.$i.'" style="font-size:10px;">'.$mobile->getConfiguration('renameIcon'.$i , 'Exemple').'</span>
           </div>';
-
-
-      /*  array_push($arrayConfigs['Icones'], );
-        array_push($arrayConfigs['SelectName'], $mobile->getConfiguration('selectNameMenu'.$i , 'none'));
-        array_push($arrayConfigs['RenameIcon'], $mobile->getConfiguration('renameIcon'.$i , 'none'));
-        array_push($arrayConfigs['UrlUser'], $mobile->getConfiguration('urlUser'.$i , 'none'));
-        */
         $j++;
 
       }
+      ?>
+      <script>
+         let jsJ = 1;
+      </script>
+      <?php
       for($j=1;$j<5;$j++){
             if($j > $nbIcones){
               ?>
               <script>
-              console.log('--TOUR---')
-              let elemSelectPanelInitial = document.querySelector('.menuSelectPanel[numElPanel="<?= $j; ?>"]');
-              if(elemSelectPanelInitial){
-                elemSelectPanelInitial.style.display = "none";
+              window['elemSelectPanelInitial'+parseInt(jsJ)] = document.querySelector('.menuSelectPanel[numElPanel="<?= $j; ?>"]');
+              if(window['elemSelectPanelInitial'+parseInt(jsJ)]){
+                window['elemSelectPanelInitial'+parseInt(jsJ)].style.display = "none";
               }
-
+              jsJ += 1;
               </script>
-
-
-
-
               <?php
 
             }
@@ -464,6 +457,7 @@ include_file('core', 'plugin.template', 'js');
 function userIconSelectPanel(){
   let maxIcon = 4;
   let nbIconsSelect = document.querySelector('.nbIconesPanel').value;
+  document.querySelector('.mainContainer').setAttribute('nbiconespanel', nbIconsSelect);
   for(let j=1;j<5;j++){
       let elemSelectPanel = document.querySelector('.menuSelectPanel[numElPanel="'+j+'"]');
       if(j <= nbIconsSelect){

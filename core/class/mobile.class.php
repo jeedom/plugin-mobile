@@ -849,23 +849,21 @@ class mobile extends eqLogic {
                           }
 									    $iconName = $menu[2];
 												if($iconName == '' || $iconName == 'none'){
-															log::add('mobile','debug','POULOUYLU : '.$iconName);
 												$eqLogic->setConfiguration('spanIcon'.$i, 'icon jeedomapp-in');
 											}else{
-															log::add('mobile','debug','TATATA : '.$iconName);
 												 $eqLogic->setConfiguration('spanIcon'.$i, $iconName);
 											}
 										 //$eqLogic->setConfiguration('spanIcon'.$i, $iconName);
-                                      if($menu[3] != ''){
-                                         $eqLogic->setConfiguration('urlUser'.$i, trim($menu[3]));
+                      if($menu[3] != ''){
+                         $eqLogic->setConfiguration('urlUser'.$i, trim($menu[3]));
 
-                                      }else{
-                                         $eqLogic->setConfiguration('urlUser'.$i, 'none');
+                      }else{
+                         $eqLogic->setConfiguration('urlUser'.$i, 'none');
 
-                                      }
+                      }
 								 $i++;
 			 }
-             $eqLogic->save();
+       $eqLogic->save();
 			 if($checkDefault == 'true'){
 				//	$eqLogic->setConfiguration('checkdefaultID', 'yes');
 					config::save('checkdefaultID', $eqId, 'mobile');
@@ -893,8 +891,8 @@ class mobile extends eqLogic {
 								 $eqlogic->setConfiguration('urlUser'.$i, ${ 'urlUser' . $i});
 
 							 }
-                           $eqlogic->setConfiguration('nbIcones', $nbIcons);
-                           $eqlogic->save();
+                $eqlogic->setConfiguration('nbIcones', $nbIcons);
+                $eqlogic->save();
 					 }
 			 }
  }
@@ -907,19 +905,17 @@ class mobile extends eqLogic {
 		$defaultMenuArray = json_decode($defaultMenuJson, true);
 	  $eqLogic = eqLogic::byId($eqId);
 		$pluginsPanel = plugin::listPlugin();
-		foreach ($pluginsPanel as $plugin)
+		/*foreach ($pluginsPanel as $plugin)
 		{
 				$obArray = utils::o2a($plugin);
-				//$getMobile = $plugin->getMobile();
-			//	log::add('mobile','debug', 'GETMOBILE : '.$getMobile);
 				log::add('mobile','debug', 'PLUGINSPANEL : '.json_encode($obArray));
-			}
+			}*/
 
 		if(is_object($eqLogic)){
-			$nbIcones = $eqLogic->getConfiguration('nbIcones', 4);
+			$nbIcones = $eqLogic->getConfiguration('nbIcones', 3);
 			$arrayElements = array();
 			$j = 0;
-            $count = 1;
+      $count = 1;
 			for($i=1;$i<5; $i++){
 				    $isActive = true;
                     ${ 'tabIconName' . $i} = $eqLogic->getConfiguration('spanIcon'.$i , 'none');
@@ -941,14 +937,11 @@ class mobile extends eqLogic {
                       ${ '$tabRenameInput' . $i} = 'Accueil';
                     }
                     $objectId = $eqLogic->getConfiguration('selectNameMenu'.$i);
-										log::add('mobile','debug', 'OBJECTID : ' .$objectId);
                     if($objectId && $objectId != -1 && $objectId != 'none'){
 											if($objectId != 'overview' && $objectId != 'health' && $objectId != 'home' && $objectId != 'timeline'){
 													$arrayObjects = explode('_', $objectId);
 													$objectId = $arrayObjects[0];
 													$typeObject = $arrayObjects[1];
-													log::add('mobile','debug', 'OBJ : ' .	$objectId);
-													log::add('mobile','debug', 'TYPEOBJ : ' .	$typeObject);
 													if($typeObject == 'view'){
 														 ${ '$tabUrl' . $i} = "/index.php?v=m&p={$typeObject}&view_id={$objectId}";
 													}else if($typeObject == 'dashboard'){
@@ -991,14 +984,10 @@ class mobile extends eqLogic {
 			if(count($arrayElements) == 4){
 					 $j = 0;
 					for($i=0;$i < 4; $i++){
-
 						 $isBool = is_bool($arrayElements['tab'.$i]['active']);
-
-						 if($isBool){
+  					 if($isBool){
 							  if($arrayElements['tab'.$i]['active'] == true){
-
 								   $j++;
-                               // log::add('mobile','debug','J >>'.$j);
 							  }
 						 }else{
 							 return $defaultMenuArray;
@@ -1011,7 +1000,6 @@ class mobile extends eqLogic {
 			}else{
 				return $defaultMenuArray;
 			}
-
         //  return $arrayElements;
 		}else{
          return $defaultMenuArray;

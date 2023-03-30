@@ -108,6 +108,7 @@
 
 function saveMenu(iconesPanel, eqLogicId){
   var nbIconesPanel = parseInt(iconesPanel)
+  console.log(nbIconesPanel)
    switch(nbIconesPanel){
      case 1: var arrayMenusElements = [[]]; break;
      case 2: var arrayMenusElements = [[],[]]; break;
@@ -138,9 +139,7 @@ function saveMenu(iconesPanel, eqLogicId){
       }else{
          selectNameMenu[i]  = document.querySelector(`.item_dash[id=item_${objectSelected}${i}]`).value;
       }
-     console.log(selectNameMenu[i])
        iconName[i] = $('#spanIconPanel'+i).attr('iconname');
-       console.log(iconName[i])
       if(inputChosen[i]  === undefined ) {
           inputChosen[i] = 'none';
       }
@@ -157,6 +156,7 @@ function saveMenu(iconesPanel, eqLogicId){
       j++;
 
      }
+     console.log(arrayMenusElements)
   $.ajax({
        type: "POST",
        url: "plugins/mobile/core/ajax/mobile.ajax.php",
@@ -165,7 +165,7 @@ function saveMenu(iconesPanel, eqLogicId){
            eqId: eqLogicId,
            arrayMenu : arrayMenusElements,
            checkDefaultBtn : 'false',
-           nbIcones : parseInt(nbIconesPanel)
+           nbIcones : nbIconesPanel
        },
        dataType: 'json',
        global: false,
@@ -177,7 +177,6 @@ function saveMenu(iconesPanel, eqLogicId){
                $('#div_alert').showAlert({message: data.result, level: 'danger'});
                return;
            }
-
            jeedom.appMobile.notifee('Menu Enregistre', 'Success', 2000);
            jeedom.appMobile.syncBoxs();
            jeedom.appMobile.modalClose();
@@ -209,6 +208,8 @@ function saveMenu(iconesPanel, eqLogicId){
 
 btnMenu.addEventListener('click', function() {
 let iconesPanel = mainContainer.getAttribute('nbIconesPanel');
+console.log('iicoocnci')
+console.log(iconesPanel)
  saveMenu(iconesPanel, eqLogicId)
  this.innerHTML = ''
  this.innerHTML = 'Menu Validé'
@@ -243,5 +244,4 @@ let iconesPanel = mainContainer.getAttribute('nbIconesPanel');
    if(typeObject == 'url'){
      document.querySelector('#urlUser'+numElement).style.display = 'block';
    }
-
  }

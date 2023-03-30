@@ -805,7 +805,7 @@ $('.validConfigBtn').on('click', function () {
 
 .panelCustomMenuMobile.active {
   flex: 4;
-  background-color: #93ca02; !important;
+  background-color: #93ca02 !important;
 }
 
 .btnValidate.active {

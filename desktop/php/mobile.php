@@ -8,17 +8,9 @@ $eqLogics = eqLogic::byType('mobile');
 $plugins = plugin::listPlugin(true);
 $plugin_compatible = mobile::$_pluginSuported;
 $plugin_widget = mobile::$_pluginWidget;
-$pathImgMenu = 'plugins/mobile/core/img/imgMenuPerso.jpg';
+//$pathImgMenu = 'plugins/mobile/core/img/imgMenuPerso.jpg';
 ?>
 
-
-<style>
-
-.containerArea:hover {
-	background-color: #93ca02;
-}
-
-</style>
 
 <div class="row row-overflow">
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
@@ -30,12 +22,12 @@ $pathImgMenu = 'plugins/mobile/core/img/imgMenuPerso.jpg';
 			</div>
 			   <?php if(jeedom::version() >= '4.4.0'){
 								echo '<div class="cursor eqLogicAction logoSecondary" data-action="bt_customMenu" id="bt_customMenu">';
-								echo ' <i class="fas icon jeedomapp-plugin"></i><br>';
+								echo '<i class="fas icon jeedomapp-plugin"></i><br>';
 								echo '<span >{{Menu Custom}}</span>';
 								echo '</div>';
 								}else{
 									echo '<div style="color:orange;" class="cursor eqLogicAction logoSecondary" data-action="bt_customMenu" id="bt_customMenu">';
-									echo ' <i class="fas icon jeedomapp-plugin"></i><br>';
+									echo '<i class="fas icon jeedomapp-plugin"></i><br>';
 									echo '<span style="color:orange;">{{Menu Custom}}</span>';
 									echo '</div>';
 								}
@@ -300,6 +292,10 @@ $pathImgMenu = 'plugins/mobile/core/img/imgMenuPerso.jpg';
 </div>
 		</div>
 </div>
+
+
+
+
 
 <?php
 	include_file('desktop', 'mobile', 'js', 'mobile');

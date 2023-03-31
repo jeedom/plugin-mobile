@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
+ * along with Jeedom. If not, see <http://www..gnu.org/licenses/>.
 */
 
 if (!isConnect('admin'))
@@ -48,11 +48,12 @@ if(isset($_GET["Iq"])){
       for($i=1;$i<5;$i++){
            $selectName = $mobile->getConfiguration('selectNameMenu'.$i , 'home');
            $selectEntire  = $mobile->getConfiguration('selectNameMenu'.$i , 'home');
+           $urlUser = $mobile->getConfiguration('urlUser'.$i , 'none');
            if(strpos($selectName, 'panel') != false || strpos($selectName, 'dashboard') != false){
               $arrayReturn = explode('_', $selectName);
               $selectName = $arrayReturn[1];
            }
-          echo '<div id="numElPanel'.$i.'" selectName="'.$selectName.'" selectNameEntire="'.$selectEntire.'" numElPanel="'.$i.'" class="menuSelectPanel icon'.$i.'" style="display:flex;flex-direction:column;align-items:center;width: 25%;" touchstart="test()">
+          echo '<div id="numElPanel'.$i.'" urlUser="'.$urlUser.'" selectName="'.$selectName.'" selectNameEntire="'.$selectEntire.'" numElPanel="'.$i.'" class="menuSelectPanel icon'.$i.'" style="display:flex;flex-direction:column;align-items:center;width: 25%;" touchstart="test()">
           <i class="spanIconPanel whiteApp '.$mobile->getConfiguration('spanIcon'.$i , 'icon jeedomapp-in').'" iconName="'.$mobile->getConfiguration('spanIcon'.$i , 'Default').'" id="spanIconPanel'.$i.'" style="font-size:60px;"></i>
           <span class="whiteApp actualsMenuNameUser" id="actualMenuNameUser'.$i.'" style="font-size:10px;">'.$mobile->getConfiguration('renameIcon'.$i , 'Exemple').'</span>
           </div>';
@@ -146,7 +147,7 @@ if(isset($_GET["Iq"])){
                                                               }
                                                               ?>
                                                       </select>
-                                                       <input class="form-control urlUser" id="urlUser1" type=text style="display:none;width:80vw;" placeholder="url perso"/>
+                                                       <input class="form-control urlUser" id="urlUser1" value="http://www." onkeydown="preventDefaultInput(event)" type=text style="display:none;width:80vw;" placeholder="url perso"/>
                                                   </div>
                                                   <div class="renameDivClass" id="renameIcon1" style="margin-bottom:2%;width:80vw;">
                                                         <label>Renommer Icone</label>
@@ -223,7 +224,7 @@ if(isset($_GET["Iq"])){
                                                             }
                                                             ?>
                                                     </select>
-                                                     <input class="form-control urlUser" id="urlUser2" type=text style="display:none;width:80vw;" placeholder="url perso"/>
+                                                     <input class="form-control urlUser" id="urlUser2" value="http://www." onkeydown="preventDefaultInput(event)" type=text style="display:none;width:80vw;" placeholder="url perso"/>
                                                 </div>
                                                 <div class="renameDivClass" id="renameIcon2" style="margin-bottom:2%;width:80vw;">
                                                       <label>Renommer Icone</label>
@@ -299,7 +300,7 @@ if(isset($_GET["Iq"])){
                                                             }
                                                             ?>
                                                     </select>
-                                                     <input class="form-control urlUser" id="urlUser3" type=text style="display:none;width:80vw;" placeholder="url perso"/>
+                                                     <input class="form-control urlUser" id="urlUser3" value="http://www." onkeydown="preventDefaultInput(event)" type=text style="display:none;width:80vw;" placeholder="url perso"/>
                                                 </div>
                                                 <div class="renameDivClass" id="renameIcon3" style="margin-bottom:2%;width:80vw;">
                                                       <label>Renommer Icone</label>
@@ -375,7 +376,7 @@ if(isset($_GET["Iq"])){
                                                             }
                                                             ?>
                                                     </select>
-                                                     <input class="form-control urlUser" id="urlUser4" type=text style="display:none;width:80vw;" placeholder="url perso"/>
+                                                     <input class="form-control urlUser" id="urlUser4" value="http://www." onkeydown="preventDefaultInput(event)" type=text style="display:none;width:80vw;" placeholder="url perso"/>
                                                 </div>
                                                 <div class="renameDivClass" id="renameIcon4" style="margin-bottom:2%;width:80vw;">
                                                       <label>Renommer Icone</label>
@@ -453,6 +454,16 @@ include_file('core', 'plugin.template', 'js');
 <script src="core/php/getJS.php?file=core/js/appMobile.class.js"></script>
 
 <script>
+
+function preventDefaultInput(event) {
+  var input = event.target;
+  if (input.value === input.defaultValue) {
+    if (event.keyCode === 8 || event.keyCode === 46) {
+      event.preventDefault();
+    }
+  }
+}
+
 
 function userIconSelectPanel(){
   let maxIcon = 4;

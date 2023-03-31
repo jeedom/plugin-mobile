@@ -40,12 +40,22 @@
        document.getElementById(`typeMenu${numElPanel}`).value = defaultSelect;
        for (let i = 1; i < parseInt(nbIconesPanel) + 1; i++) {
            let typeObject = document.querySelector(`.icon${i}`).getAttribute('selectName');
-           console.log(typeObject)
             let entireSelect = document.querySelector(`.icon${i}`).getAttribute('selectNameEntire');
             if(entireSelect.includes(typeObject)) {
               if(typeObject != 'home' && typeObject != 'overview' && typeObject != 'health' && typeObject != 'timeline'){
-                 document.querySelector(`#item_${typeObject}${i}`).style.display = 'block';
-                 document.querySelector(`#item_${typeObject}${i}`).value = entireSelect;
+                if(typeObject == 'url'){
+                  document.querySelector(`#urlUser${i}`).style.display = 'block';
+                   window['urlUser'+i] = document.querySelector(`#numElPanel${i}`).getAttribute('urlUser');
+                   if(window['urlUser'+i] != 'none'){
+                       document.querySelector(`#urlUser${i}`).value = window['urlUser'+i];
+                   }
+                  //document.querySelector(`#urlUser${i}`).value = 'block';
+                }else{
+                  document.querySelector(`#item_${typeObject}${i}`).style.display = 'block';
+                   document.querySelector(`#item_${typeObject}${i}`).value = entireSelect;
+                }
+                /* document.querySelector(`#item_${typeObject}${i}`).style.display = 'block';
+                 document.querySelector(`#item_${typeObject}${i}`).value = entireSelect;*/
                }
             }
        }

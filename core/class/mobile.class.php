@@ -928,44 +928,43 @@ class mobile extends eqLogic {
                         ${ 'tabLibName' . $i} = 'Mdi';
                       }
                     }else{
-                     // ${ 'tabIconName' . $i} = 'home';
                         ${ 'tabIconName' . $i} = 'in';
-						${ 'tabLibName' . $i} = 'jeedomapp';
+												${ 'tabLibName' . $i} = 'jeedomapp';
                     }
-                    ${ '$tabRenameInput' . $i} = $eqLogic->getConfiguration('renameIcon'.$i , 'none');
-                    if(${ '$tabRenameInput' . $i} == 'none'){
-                      ${ '$tabRenameInput' . $i} = 'Accueil';
+                    ${ 'tabRenameInput' . $i} = $eqLogic->getConfiguration('renameIcon'.$i , 'none');
+                    if(${ 'tabRenameInput' . $i} == 'none'){
+                      ${ 'tabRenameInput' . $i} = 'Accueil';
                     }
                     $objectId = $eqLogic->getConfiguration('selectNameMenu'.$i);
-                    if($objectId && $objectId != -1 && $objectId != 'none'){
+                    if($objectId && $objectId != -1 && $objectId != 'none' && $objectId != 'url'){
 											if($objectId != 'overview' && $objectId != 'health' && $objectId != 'home' && $objectId != 'timeline'){
 													$arrayObjects = explode('_', $objectId);
 													$objectId = $arrayObjects[0];
 													$typeObject = $arrayObjects[1];
 													if($typeObject == 'view'){
-														 ${ '$tabUrl' . $i} = "/index.php?v=m&p={$typeObject}&view_id={$objectId}";
+														 ${ 'tabUrl' . $i} = "/index.php?v=m&p={$typeObject}&view_id={$objectId}";
 													}else if($typeObject == 'dashboard'){
-																${ '$tabUrl' . $i} =  "/index.php?v=m&p=dashboard&object_id={$objectId}";
+																${ 'tabUrl' . $i} =  "/index.php?v=m&p=dashboard&object_id={$objectId}";
 													}else if($typeObject == 'plan'){
-																${ '$tabUrl' . $i} =  "/index.php?v=m&p=plan&plan_id={$objectId}";
+																${ 'tabUrl' . $i} =  "/index.php?v=m&p=plan&plan_id={$objectId}";
 													}else if($typeObject == 'panel'){
-																${ '$tabUrl' . $i} =  "/index.php?v=m&p={$objectId}";
+																${ 'tabUrl' . $i} =  "/index.php?v=m&p={$objectId}";
 																log::add('mobile','debug', 'PANEL : ' .	${ '$tabUrl' . $i});
 													}
 											}else if($objectId == 'overview'){
-													${ '$tabUrl' . $i} =  '/index.php?v=m&p=overview';
+													${ 'tabUrl' . $i} =  '/index.php?v=m&p=overview';
 											}else if($objectId == 'home'){
-													${ '$tabUrl' . $i} =  '/index.php?v=m&p=home';
+													${ 'tabUrl' . $i} =  '/index.php?v=m&p=home';
 											}else if($objectId == 'health'){
-													${ '$tabUrl' . $i} =  '/index.php?v=m&p=health';
+													${ 'tabUrl' . $i} =  '/index.php?v=m&p=health';
 											}
 											else if($objectId == 'timeline'){
-													${ '$tabUrl' . $i} =  '/index.php?v=m&p=timeline';
+													${ 'tabUrl' . $i} =  '/index.php?v=m&p=timeline';
 											}
-                    }else if($objectId == 'none' && $eqLogic->getConfiguration('urlUser'.$i) != ''){
-                      ${ '$tabUrl' . $i} = $eqLogic->getConfiguration('urlUser'.$i);
+                    }else if($objectId == 'url' && $eqLogic->getConfiguration('urlUser'.$i) != 'http://www.'){
+                      ${ 'tabUrl' . $i} = $eqLogic->getConfiguration('urlUser'.$i);
                     }else{
-                      ${ '$tabUrl' . $i} = "/index.php?v=m&app_mode=1";
+                      ${ 'tabUrl' . $i} = "/index.php?v=m&app_mode=1";
                     }
 				   if($count > intval($nbIcones)){
 						 $isActive = false;
@@ -973,9 +972,9 @@ class mobile extends eqLogic {
                     $jsonTemplate = array('active' => $isActive,
                                           'icon' => ['name' =>${ 'tabIconName' . $i},
                                                      'type' => ${ 'tabLibName' . $i}],
-                                          'name' => ${ '$tabRenameInput' . $i} ,
-                                          'options' => ['uri' => ${ '$tabUrl' . $i} ],
-                                          'type' =>  strpos(${ '$tabUrl' . $i}, 'www') !== false ? 'urlwww' : 'WebviewApp' );
+                                          'name' => ${ 'tabRenameInput' . $i} ,
+                                          'options' => ['uri' => ${ 'tabUrl' . $i} ],
+                                          'type' =>  strpos(${ 'tabUrl' . $i}, 'www') !== false ? 'urlwww' : 'WebviewApp' );
                     $arrayElements['tab'.$j] =  $jsonTemplate;
                     $j++;
                     $count++;

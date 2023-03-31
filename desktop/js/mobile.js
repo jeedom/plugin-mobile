@@ -258,6 +258,12 @@ function userSelect(idSelect){
   })
   if(typeObject == 'url'){
     document.querySelector('#urlUser'+numElement+'[eqId="'+eqLogicId+'"]').style.display = 'block';
+  }else{
+    /*let urlsUser = document.querySelectorAll('.urlUser');
+    urlsUser.forEach(el => {
+        el.style.display = 'none';
+      })*/
+      document.querySelector('#urlUser'+numElement+'[eqId="'+eqLogicId+'"]').style.display = 'none';
   }
 }
 
@@ -348,7 +354,7 @@ function userSelect(idSelect){
           	}
       }
   });
-  
+
 }
 
 

@@ -153,6 +153,22 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$return[$idBox]['informations']['hardware'] = jeedom::getHardwareName();
 	$return[$idBox]['informations']['language'] = config::byKey('language');
 	$return[$idBox]['informations']['nbMessage'] = message::nbMessage();
+	$arrayObjectMessages = message::all();
+	$arrayMessages = [];
+	foreach($arrayObjectMessages as $message){
+		$messageArray = utils::o2a($message);
+		array_push($arrayMessages, $messageArray);
+	}
+	$return[$idBox]['informations']['messages'] = $arrayMessages;
+  $arrayPlugins = [];
+	foreach ((plugin::listPlugin()) as $plugin) {
+	      	$update = $plugin->getUpdate();
+					if (is_object($update)) {
+						 $pluginUpdateArray = utils::o2a($update);
+						 	array_push($arrayPlugins, $pluginUpdateArray);
+					}
+ }
+	$return[$idBox]['informations']['plugins'] = $arrayPlugins;
   $return[$idBox]['informations']['nbUpdate'] = update::nbNeedUpdate();
 	$return[$idBox]['informations']['uname'] = system::getDistrib() . ' ' . method_exists(system::getOsVersion()) ? system::getOsVersion() : 'UnknownVersion';
 	$return[$idBox]['jeedom_version'] = jeedom::version();
@@ -177,6 +193,17 @@ if($jsonrpc->getMethod() == 'getJson'){
 
 }
 
+if ($jsonrpc->getMethod() == 'deleteMessage') {
+	log::add('mobile', 'debug', 'DELETEMESSAGE > ' . json_encode($params));
+	 $message = message::byId($params['appInfos']['idmessage']);
+	 if(is_object($message)){
+		 $message->remove();
+		 	log::add('mobile', 'debug', 'SUPRESSION MESSAGE EFFECTUEE');
+				$jsonrpc->makeSuccess("true");
+	 }
+	 $jsonrpc->makeSuccess("false");
+
+}
 
 if ($jsonrpc->getMethod() == 'sync') {
 	if (jeedom::version() >= '3.2.0') {

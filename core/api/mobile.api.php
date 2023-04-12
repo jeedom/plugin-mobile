@@ -148,7 +148,7 @@ if($jsonrpc->getMethod() == 'getJson'){
   $return[$idBox]['localIp'] = network::getNetworkAccess('internal');
 	$return[$idBox]['hardware'] = jeedom::getHardwareName();
 	$return[$idBox]['hwkey'] = jeedom::getHardwareKey();
-	$return[$idBox]['appMobile'] = '0.2';
+	$return[$idBox]['appMobile'] = '0.3';
   $return[$idBox]['ping'] = true;
 	$return[$idBox]['informations']['hardware'] = jeedom::getHardwareName();
 	$return[$idBox]['informations']['language'] = config::byKey('language');

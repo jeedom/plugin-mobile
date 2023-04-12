@@ -25,7 +25,7 @@ $sliderId = $_GET["cmdId"];
 $eqId = $_GET["eqId"];
 $cmdSlider = cmd::byId($sliderId);
 if(is_object($cmdSlider)){
-  
+
   $nameCmd = $cmdSlider->getName();
   $cmdInfo = cmd::byId($cmdSlider->getValue());
   $valueActual = $cmdInfo->execCmd();
@@ -39,7 +39,7 @@ if(is_object($cmdSlider)){
 
 sendVarToJs('valeurActuel',$valueActual);
 sendVarToJs('cmdId',$sliderId);
-  
+
 
      echo '<section class="container">';
         echo '<div class="topNames">';
@@ -47,14 +47,14 @@ sendVarToJs('cmdId',$sliderId);
               echo '<div class="value cmd cmd-widget cursor" data-cmd_id="">'.$valueActual.'</div>';
         echo '</div>';
         echo '<div class="flexTest"><input class="testDiv slider_bar" type="range" min="0" max="100" step="1" value="'.$valueActual.'" data-cmd_id=""></div>';
-     echo '</section>'; 
+     echo '</section>';
 
 
 
 
 ?>
 <style>
-  
+
 
    .container {
      width: 100%;
@@ -72,13 +72,13 @@ sendVarToJs('cmdId',$sliderId);
 
   justify-content:space-between !important;
   margin-top: 20px !important;
-  
+
 }
 
 
 
 .value {
-  //text-align: center;
+
   font-weight: bold;
   color: #94CA02 !important;
   font-size: 5em;
@@ -91,10 +91,10 @@ sendVarToJs('cmdId',$sliderId);
 
 
 .cmdName{
-  
+
  top:10px;
  left:10px;
- font-size: 1em; 
+ font-size: 1em;
  color: #94CA02 !important;
 }
 
@@ -105,13 +105,13 @@ justify-content:center;
 
   height:100%;
 
-  
+
 }
 
 
 
 input.slider_bar {
-  //-webkit-appearance: none;
+
   postion:absolute;
   top:200px;
   height: 100px;
@@ -123,7 +123,7 @@ input.slider_bar {
   overflow: hidden;
   transform: rotate(90deg);
   -webkit-box-reflect: below 10px !important;
- 
+
 
 }
 
@@ -139,9 +139,39 @@ input.slider_bar {
 
 
 </style>
-  
 
-    
-    
-<?php include_file('desktop', 'mobile', 'js', 'mobile'); ?> 
+<script>
+var elem = document.querySelector('input[type="range"]');
+var elemBis = document.querySelector('input');
+var getTest = parseInt(elem.getAttribute('data-cmd_id'));
+var cmdName = document.querySelector('.cmdName');
+
+
+
+$( document ).ready(function() {
+
+   	elem.addEventListener("touchend", function( event ) {
+      jeedom.cmd.execute({id: cmdId , value: {slider: elem.value}});
+    });
+
+
+
+var rangeValue = function(){
+  var newValue = elem.value;
+  var target = document.querySelector('.value');
+  target.innerHTML = newValue;
+
+
+
+}
+
+elem.addEventListener("input", rangeValue);
+
+})
+
+
+
+</script>
+
+
 <?php include_file('desktop', 'widgetSlider', 'js', 'mobile'); ?>

@@ -8,9 +8,9 @@ var cmdName = document.querySelector('.cmdName');
 $( document ).ready(function() {
 
    	elem.addEventListener("touchend", function( event ) {
-      jeedom.cmd.execute({id: cmdId , value: {slider: elem.value}});    
+      jeedom.cmd.execute({id: cmdId , value: {slider: elem.value}});
     });
-  
+
 
 
 var rangeValue = function(){
@@ -18,8 +18,8 @@ var rangeValue = function(){
   var target = document.querySelector('.value');
   target.innerHTML = newValue;
 
- 
-  
+
+
 }
 
 elem.addEventListener("input", rangeValue);

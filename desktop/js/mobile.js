@@ -57,12 +57,22 @@ if(typeof jeeDialog !== 'undefined'){
   })
 
   document.querySelector('#bt_customMenu').addEventListener('click', function(event) {
-    jeeDialog.dialog({
-      id: 'menuCustom',
-      title: "{{Menu Custom}}",
-      fullScreen:1,
-      contentUrl: 'index.php?v=d&plugin=mobile&modal=menuCustom'
-    })
+    jeedom.version({
+    success: function(version) {
+      if(version >= '4.4.0'){
+        jeeDialog.dialog({
+          id: 'menuCustom',
+          title: "{{Menu Custom}}",
+          fullScreen:1,
+          contentUrl: 'index.php?v=d&plugin=mobile&modal=menuCustom'
+        })
+      }else{
+        $('#div_alert').showAlert({message: 'Module compatible uniquement avec la version core 4.4.0 et supérieure', level: 'warning'});
+        return;
+      }
+    }
+  })
+
   })
 
   document.querySelector('#bt_qrCodev2').addEventListener('click', function(event) {

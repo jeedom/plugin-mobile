@@ -160,15 +160,24 @@ if($jsonrpc->getMethod() == 'getJson'){
 		array_push($arrayMessages, $messageArray);
 	}
 	$return[$idBox]['informations']['messages'] = $arrayMessages;
-  $arrayPlugins = [];
+	$arrayPlugins = [];
+	$changeLogs = [];
 	foreach ((plugin::listPlugin()) as $plugin) {
+		//log::add('mobile', 'debug','PLOP :'.json_encode(utils::o2a($plugin)));
 	      	$update = $plugin->getUpdate();
-					if (is_object($update)) {
+					if(is_object($update)){
 						 $pluginUpdateArray = utils::o2a($update);
-						 	array_push($arrayPlugins, $pluginUpdateArray);
+						 $arrayDataPlugins = utils::o2a($plugin);
+						 $changeLogs[$arrayDataPlugins['id']] = $arrayDataPlugins['changelog'];
+						 array_push($arrayPlugins, $pluginUpdateArray);
 					}
- }
+  }
+  $coreData = [];
+  $resultCore = utils::o2a(update::byLogicalId('jeedom'));
+	array_push($coreData, $resultCore);
+	$return[$idBox]['informations']['coreData'] = $coreData;
 	$return[$idBox]['informations']['plugins'] = $arrayPlugins;
+	$return[$idBox]['informations']['changelog'] = $changeLogs;
   $return[$idBox]['informations']['nbUpdate'] = update::nbNeedUpdate();
 	$return[$idBox]['informations']['uname'] = system::getDistrib() . ' ' . method_exists(system::getOsVersion()) ? system::getOsVersion() : 'UnknownVersion';
 	$return[$idBox]['jeedom_version'] = jeedom::version();

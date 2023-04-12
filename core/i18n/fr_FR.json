@@ -252,6 +252,14 @@
         "Notification": "Notification",
         "Notification Critique": "Notification Critique"
     },
+    "plugins\/mobile\/core\/template\/widgets.html": {
+        "Couleur de l'indicateur de valeur": "Couleur de l'indicateur de valeur",
+        "Pas du changement de valeur": "Pas du changement de valeur",
+        "Inverse la position de l'indicateur de valeur": "Inverse la position de l'indicateur de valeur",
+        "Affiche durée ou date de la valeur": "Affiche durée ou date de la valeur",
+        "Date de valeur": "Date de valeur",
+        "Date de collecte": "Date de collecte"
+    },
     "plugins\/mobile\/core\/api\/mobile.api.php": {
         "JSONRPC object not defined": "JSONRPC object not defined",
         "EqLogic inconnu : ": "EqLogic inconnu : ",

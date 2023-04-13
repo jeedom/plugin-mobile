@@ -36,7 +36,7 @@ function createMobile($params){
 	$mobile->setEqType_name('mobile');
 	$mobile->setName($notification['platform'] . '-' . $params['Iq']);
 	$isMobileActivId = config::byKey('checkdefaultID','mobile');
-	if($isMobileActivId != 'noActivMobile'){
+	if($isMobileActivId != 'noActivMobile' && $isMobileActivId != ''){
 			$mobileActive = eqLogic::byId(intval($isMobileActivId));
 			if(is_object($mobileActive)){
 				for($i=1; $i<5; $i++){
@@ -172,6 +172,7 @@ if($jsonrpc->getMethod() == 'getJson'){
 						 array_push($arrayPlugins, $pluginUpdateArray);
 					}
   }
+	sleep(1);
   $coreData = [];
   $resultCore = utils::o2a(update::byLogicalId('jeedom'));
 	array_push($coreData, $resultCore);
@@ -204,7 +205,7 @@ if($jsonrpc->getMethod() == 'getJson'){
 			 $return[$idBox]['configs']['menu'] = $defaultMenuArray;
 		 }
   	log::add('mobile', 'debug', 'CustomENVOI ' .json_encode($return[$idBox]['configs']));
-	log::add('mobile','debug','INFOS GETJSONINITAL : '.json_encode($return));
+	  log::add('mobile','debug','INFOS GETJSONINITAL : '.json_encode($return));
 	$jsonrpc->makeSuccess($return);
 
 }

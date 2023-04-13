@@ -191,10 +191,17 @@ if($jsonrpc->getMethod() == 'getJson'){
 		if(is_object($mobile)){
 		    log::add('mobile', 'debug', 'mobile bien trouvé > '.$mobile->getName());
 				$menuCustom = mobile::configMenuCustom($mobile->getId());
-		     if($menuCustom !== 'undefined'){
-		          $return[$idBox]['configs'] = array();
-		        	$return[$idBox]['configs']['menu'] = $menuCustom;
-		    	}
+		     $return[$idBox]['configs'] = array();
+		     $return[$idBox]['configs']['menu'] = $menuCustom;
+
+		 }else{
+			 $return[$idBox]['configs'] = array();
+			 $defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
+											 "tab1":{"active":true,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
+											 "tab2":{"active":true,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
+											 "tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}}';
+			 $defaultMenuArray = json_decode($defaultMenuJson, true);
+			 $return[$idBox]['configs']['menu'] = $defaultMenuArray;
 		 }
   	log::add('mobile', 'debug', 'CustomENVOI ' .json_encode($return[$idBox]['configs']));
 	log::add('mobile','debug','INFOS GETJSONINITAL : '.json_encode($return));

@@ -904,13 +904,6 @@ class mobile extends eqLogic {
 										"tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}}';
 		$defaultMenuArray = json_decode($defaultMenuJson, true);
 	  $eqLogic = eqLogic::byId($eqId);
-		$pluginsPanel = plugin::listPlugin();
-		/*foreach ($pluginsPanel as $plugin)
-		{
-				$obArray = utils::o2a($plugin);
-				log::add('mobile','debug', 'PLUGINSPANEL : '.json_encode($obArray));
-			}*/
-
 		if(is_object($eqLogic)){
 			$nbIcones = $eqLogic->getConfiguration('nbIcones', 3);
 			$arrayElements = array();

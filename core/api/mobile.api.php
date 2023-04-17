@@ -25,7 +25,6 @@ if (!is_object($jsonrpc)) {
 	throw new Exception(__('JSONRPC object not defined', __FILE__), -32699);
 }
 
-
 function createMobile($params){
 	log::add('mobile','debug','----CREATE_NEW_MOBILE----');
 	$configs = $params['configs'];
@@ -87,12 +86,14 @@ if($params['Iq']){
 
 if($jsonrpc->getMethod() == 'setConfigs'){
 	log::add('mobile', 'debug', 'App V2 Demande > ' . $jsonrpc->getMethod());
+	//log::add('mobile', 'debug', 'APRAMS > ' . json_encode($params));
   	$configs = $params['configs'];
   	$menu = $configs['menu'];
   	$notification = $configs['notification'];
   	log::add('mobile', 'debug', 'configs > ' . json_encode($configs));
   	log::add('mobile', 'debug', 'menu > ' . json_encode($menu));
-  	log::add('mobile', 'debug', 'notification > ' . json_encode($notification));
+		log::add('mobile', 'debug', 'notification > ' . json_encode($notification));
+
 
   	$mobile = null;
 
@@ -105,10 +106,9 @@ if($jsonrpc->getMethod() == 'setConfigs'){
      if(isset($notification['token'])) {
           	log::add('mobile', 'debug', 'token a ajouter > ' . $notification['token']);
             if($notification['token'] == 'notifsBGDisabled'){
-             message::removeAll(__CLASS__, 'alertNotifs');
+              message::removeAll(__CLASS__, 'alertNotifs');
               $phoneName = $mobile->getName();
-             message::add(__CLASS__, 'Les Notifications sur votre mobile : '.$phoneName.' sont desactivées', 'notifsbg', 'alertNotifs');
-
+              message::add(__CLASS__, 'Les Notifications sur votre mobile : '.$phoneName.' sont desactivées', 'notifsbg', 'alertNotifs');
             }
         	if($notification['token'] != ''){
              $mobile->setConfiguration('notificationRegistrationToken', $notification['token']);
@@ -163,12 +163,13 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$arrayPlugins = [];
 	$changeLogs = [];
 	foreach ((plugin::listPlugin()) as $plugin) {
-		//log::add('mobile', 'debug','PLOP :'.json_encode(utils::o2a($plugin)));
 	      	$update = $plugin->getUpdate();
 					if(is_object($update)){
 						 $pluginUpdateArray = utils::o2a($update);
 						 $arrayDataPlugins = utils::o2a($plugin);
-						 $changeLogs[$arrayDataPlugins['id']] = $arrayDataPlugins['changelog'];
+						 	log::add('mobile', 'debug', 'ARRAYPLUGINS > '.json_encode($arrayDataPlugins));
+							$changeLogs[$arrayDataPlugins['id']]['changelog'] = $arrayDataPlugins['changelog'];
+						  $changeLogs[$arrayDataPlugins['id']]['changelog_beta'] = $arrayDataPlugins['changelog_beta'];
 						 array_push($arrayPlugins, $pluginUpdateArray);
 					}
   }
@@ -176,6 +177,7 @@ if($jsonrpc->getMethod() == 'getJson'){
   $coreData = [];
   $resultCore = utils::o2a(update::byLogicalId('jeedom'));
 	array_push($coreData, $resultCore);
+	$return[$idBox]['informations']['coreBranch'] = config::byKey('core::branch');
 	$return[$idBox]['informations']['coreData'] = $coreData;
 	$return[$idBox]['informations']['plugins'] = $arrayPlugins;
 	$return[$idBox]['informations']['changelog'] = $changeLogs;
@@ -210,17 +212,6 @@ if($jsonrpc->getMethod() == 'getJson'){
 
 }
 
-if ($jsonrpc->getMethod() == 'deleteMessage') {
-	log::add('mobile', 'debug', 'DELETEMESSAGE > ' . json_encode($params));
-	 $message = message::byId($params['appInfos']['idmessage']);
-	 if(is_object($message)){
-		 $message->remove();
-		 	log::add('mobile', 'debug', 'SUPRESSION MESSAGE EFFECTUEE');
-				$jsonrpc->makeSuccess("true");
-	 }
-	 $jsonrpc->makeSuccess("false");
-
-}
 
 if ($jsonrpc->getMethod() == 'sync') {
 	if (jeedom::version() >= '3.2.0') {

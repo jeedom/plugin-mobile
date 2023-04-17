@@ -212,6 +212,18 @@ if($jsonrpc->getMethod() == 'getJson'){
 
 }
 
+if ($jsonrpc->getMethod() == 'deleteMessage') {
+ 	log::add('mobile', 'debug', 'DELETEMESSAGE > ' . json_encode($params));
+ 	 $message = message::byId($params['appInfos']['idmessage']);
+ 	 if(is_object($message)){
+ 		 $message->remove();
+ 		 	log::add('mobile', 'debug', 'SUPRESSION MESSAGE EFFECTUEE');
+ 				$jsonrpc->makeSuccess("true");
+ 	 }
+ 	 $jsonrpc->makeSuccess("false");
+
+ }
+
 
 if ($jsonrpc->getMethod() == 'sync') {
 	if (jeedom::version() >= '3.2.0') {

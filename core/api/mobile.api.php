@@ -162,15 +162,19 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$return[$idBox]['informations']['messages'] = $arrayMessages;
 	$arrayPlugins = [];
 	$changeLogs = [];
+	$healthPlugins = [];
+	$deamons_infos = [];
 	foreach ((plugin::listPlugin()) as $plugin) {
 	      	$update = $plugin->getUpdate();
 					if(is_object($update)){
-						 $pluginUpdateArray = utils::o2a($update);
-						 $arrayDataPlugins = utils::o2a($plugin);
-						 	log::add('mobile', 'debug', 'ARRAYPLUGINS > '.json_encode($arrayDataPlugins));
+						  $pluginUpdateArray = utils::o2a($update);
+						  $arrayDataPlugins = utils::o2a($plugin);
+							if($plugin->getHasOwnDeamon() == 1){
+							    $deamons_infos[$plugin->getId()] = $plugin->deamon_info();
+							}
 							$changeLogs[$arrayDataPlugins['id']]['changelog'] = $arrayDataPlugins['changelog'];
 						  $changeLogs[$arrayDataPlugins['id']]['changelog_beta'] = $arrayDataPlugins['changelog_beta'];
-						 array_push($arrayPlugins, $pluginUpdateArray);
+						  array_push($arrayPlugins, $pluginUpdateArray);
 					}
   }
 	sleep(1);
@@ -181,6 +185,7 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$return[$idBox]['informations']['coreData'] = $coreData;
 	$return[$idBox]['informations']['plugins'] = $arrayPlugins;
 	$return[$idBox]['informations']['changelog'] = $changeLogs;
+	$return[$idBox]['informations']['infosDemon'] = $deamons_infos;
   $return[$idBox]['informations']['nbUpdate'] = update::nbNeedUpdate();
 	$return[$idBox]['informations']['uname'] = system::getDistrib() . ' ' . method_exists(system::getOsVersion()) ? system::getOsVersion() : 'UnknownVersion';
 	$return[$idBox]['jeedom_version'] = jeedom::version();
@@ -213,12 +218,10 @@ if($jsonrpc->getMethod() == 'getJson'){
 }
 
 if ($jsonrpc->getMethod() == 'deleteMessage') {
- 	log::add('mobile', 'debug', 'DELETEMESSAGE > ' . json_encode($params));
  	 $message = message::byId($params['appInfos']['idmessage']);
  	 if(is_object($message)){
  		 $message->remove();
- 		 	log::add('mobile', 'debug', 'SUPRESSION MESSAGE EFFECTUEE');
- 				$jsonrpc->makeSuccess("true");
+ 		 $jsonrpc->makeSuccess("true");
  	 }
  	 $jsonrpc->makeSuccess("false");
 

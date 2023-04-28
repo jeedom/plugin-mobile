@@ -1,0 +1,75 @@
+
+
+
+
+<div class="cmd cmd-widget" data-type="info" data-subtype="numeric" data-template="default" data-version="#version#" data-eqLogic_id="#eqLogic_id#" data-cmd_id="#id#" data-cmd_uid="#uid#">
+	<div class="arcgauge">
+		<span class="cmdName">#name_display#</span>
+		<div class="gauge cursor #history#" data-cmd_id="#id#"></div>
+	    <div class="gaugeValue" data-cmd_id="#id#"></div>
+	</div>
+	<span class="state"><strong>#state#</strong> <strong>#unite#</strong></span>
+  	<div class="cmdStats #hide_history#">
+      <span>#minHistoryValue#</span>|<span>#averageHistoryValue#</span>|<span>#maxHistoryValue# <i class="#tendance#"></i></span>
+  	</div>
+
+	<script>
+     jeedom.cmd.addUpdateFunction('#id#',function(_options) {
+      let cmd = $('.cmd[data-cmd_id=#id#]')
+      let minValue = ('#minValue#' == '') ? 0 : parseInt('#minValue#')
+      let maxValue = ('#maxValue#' == '') ? 100 : parseInt('#maxValue#')
+      if (_options.value >= maxValue) {
+        maxValue = _options.value
+        var angle = 0
+      } else if (_options.value <= minValue) {
+        minValue = _options.value
+        var angle = -180
+      } else {
+        var angle = (((_options.value - minValue) * 180) / (maxValue - minValue)) - 180
+      }
+      cmd.find('.gaugeValue').css('transform', 'scale(0.94) rotate('+angle+'deg)')
+      cmd.find('.state strong').first().text(_options.display_value)
+    });
+
+    if (is_numeric('#state#')) {
+      jeedom.cmd.refreshValue([{cmd_id :'#id#',value: '#value#',display_value: '#state#', valueDate: '#valueDate#', collectDate: '#collectDate#', alertLevel: '#alertLevel#', unit: '#unite#'}])
+    } else {
+      $('.cmd[data-cmd_uid=#uid#] .gauge').append('<center><span class="label label-danger">#state#</span></center>')
+    }
+
+    if ($.issetWidgetOptParam('#color#', 'color')) {
+      $('.cmd[data-cmd_id=#id#] .gaugeValue').css('border-color', '#color#')
+    }
+
+    let onlongtouch = false;
+    let timer = false;
+    let duration = 300;
+
+    function touchStart(){
+      if (!timer) {
+        timer = setTimeout(onlongtouch, duration);
+      }
+    }
+
+    function touchEnd(){
+      if (timer) {
+        clearTimeout(timer)
+        timer = false;
+      }
+    }
+
+
+    onlongtouch = function(){
+        let params = { 'cmdId': '#id#', 'eqId' :'#eqLogic_id#', 'name' : '#name_display#'};
+        let _optionsModal = { 'type' : 'arcslider', 'optionText':params, 'method':'qrcodemethod','plugin':'mobile'};
+        jeedom.appMobile.postToApp('modal', _optionsModal);
+     }
+
+
+        if(window.ReactNativeWebView != undefined){
+              document.querySelector(".cmd-widget").addEventListener("touchstart", touchStart);
+              document.querySelector(".cmd-widget").addEventListener("touchend", touchEnd);
+        }
+
+  </script>
+</div>

@@ -27,6 +27,7 @@ if(isset($_GET["Iq"])){
   if(is_object($mobile)){
       $arrayConfigs = array('Icones' => [],'SelectName' => [],'RenameIcon' => [],'UrlUser' => []);
       $nbIcones = $mobile->getConfiguration('nbIcones');
+
       echo  '<div class="firstDiv" style="display:flex;align-items:center;">';
       echo  '<div class="greenApp title" style="margin-top:2%;margin-bottom:2%;font-size:10px;font-family:Raleway;">NOMBRE ICONES</div>';
       echo  '<select class="nbIconesPanel" onInput="userIconSelectPanel()">';
@@ -82,6 +83,7 @@ if(isset($_GET["Iq"])){
         echo  '</div>';
 
 ?>
+
 <div style="display:flex;flex-direction:column;align-items:center;">
   <div class="panelModal" id="panelModal1" style="display:none;margin-top:10vh;">
                                <div class="" style="display:flex;flex-direction:column;z-index:5;">
@@ -487,6 +489,8 @@ function userIconSelectPanel(){
 </script>
 
 <style>
+
+
 
  input{
 

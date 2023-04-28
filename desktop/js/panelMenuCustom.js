@@ -73,6 +73,7 @@
   });
 
 
+
 // CHANGE NAMEICONES BY USER
    inputsPanel.forEach(el => {
          el.addEventListener('input', function(event) {

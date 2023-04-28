@@ -90,6 +90,7 @@ if($jsonrpc->getMethod() == 'setConfigs'){
   	$configs = $params['configs'];
   	$menu = $configs['menu'];
   	$notification = $configs['notification'];
+
   	log::add('mobile', 'debug', 'configs > ' . json_encode($configs));
   	log::add('mobile', 'debug', 'menu > ' . json_encode($menu));
 		log::add('mobile', 'debug', 'notification > ' . json_encode($notification));
@@ -116,6 +117,16 @@ if($jsonrpc->getMethod() == 'setConfigs'){
 
       }
      $mobile->save();
+
+		 $geolocs = $params['geolocs'];
+		 if($geolocs){
+			 if($geolocs != []){
+				 mobile::createCmdGeoLocV2($params['Iq'], $params['geolocs']);
+			 }
+
+		 }
+
+		// mobile::createCmdGeoLocV2($params);
   $jsonrpc->makeSuccess('ok');
 
 
@@ -148,7 +159,7 @@ if($jsonrpc->getMethod() == 'getJson'){
   $return[$idBox]['localIp'] = network::getNetworkAccess('internal');
 	$return[$idBox]['hardware'] = jeedom::getHardwareName();
 	$return[$idBox]['hwkey'] = jeedom::getHardwareKey();
-	$return[$idBox]['appMobile'] = '0.3';
+	$return[$idBox]['appMobile'] = '0.4';
   $return[$idBox]['ping'] = true;
 	$return[$idBox]['informations']['hardware'] = jeedom::getHardwareName();
 	$return[$idBox]['informations']['language'] = config::byKey('language');
@@ -171,6 +182,9 @@ if($jsonrpc->getMethod() == 'getJson'){
 						  $arrayDataPlugins = utils::o2a($plugin);
 							if($plugin->getHasOwnDeamon() == 1){
 							    $deamons_infos[$plugin->getId()] = $plugin->deamon_info();
+							}else{
+								$deamons_infos[$plugin->getId()] = array('launchable_message' => 'nodemon', 'launchable' => 'nodemon', 'state' => 'nodemon', 'log' => 'nodemon', 'auto' => 0);
+								//array('launchable_message' => '', 'launchable' => 'nok', 'state' => 'nok', 'log' => 'nok', 'auto' => 0)
 							}
 							$changeLogs[$arrayDataPlugins['id']]['changelog'] = $arrayDataPlugins['changelog'];
 						  $changeLogs[$arrayDataPlugins['id']]['changelog_beta'] = $arrayDataPlugins['changelog_beta'];
@@ -422,10 +436,24 @@ if ($jsonrpc->getMethod() == 'geolocDel'){
 
 if($jsonrpc->getMethod() == 'mobile::geoloc'){
       log::add('mobile', 'debug', 'event > '.$params['event']);
+
       if($params['event'] == 'geofence'){
         $geofence = $params['geofence'];
         log::add('mobile', 'debug', 'event > '.json_encode($geofence));
-        $jsonrpc->makeSuccess();
+				$eqLogicMobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
+				if($eqLogicMobile){
+					  log::add('mobile', 'debug', 'EQLOGICEXIST > ');
+					  $cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geofence['identifier']);
+					  if(is_object($cmdgeoloc)){
+							  log::add('mobile', 'debug', 'CMDGEOLOC');
+							  if($geoloc['action'] == 'ENTER'){
+									 $cmdgeoloc->event(1);
+								}elseif($geoloc['action'] == 'EXIT'){
+									$cmdgeoloc->event(0);
+								}
+					  }
+				}
+      $jsonrpc->makeSuccess();
       }else{
       	throw new Exception(__('pas de parametre de geofencing : ', __FILE__));
       }

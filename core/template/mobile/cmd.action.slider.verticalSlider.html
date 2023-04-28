@@ -122,19 +122,11 @@
     });
 
 
-      onlongtouch = function(){
-        //let _optionsModal = { 'type' : 'WebviewApp', 'uri' : '/index.php?v=d&m=mobile&p=widgetSlider&cmdId=#id#&eqId=#eqLogic_id#' , 'sizeModal' : 50 };
-      //  let valueTest = jeedom.cmd.execute({id: '#value_id#'});
-      //  let valueTest = jeedom.cmd.execute({id: 44});
-//let cmdSlider = jeedom.cmd.byId({id: 44});
-  //     let realCmd = jeedom.cmd.byId({id: cmdSlider.getValue()});
-    //   let valuePP = cmdTest.getValue();
-      //  let valueActual = jeedom.cmd.execute({id: realCmd});
-
-        let params = { 'cmdId': '#id#', 'eqId' :'#eqLogic_id#', 'etat' : valueEtat, 'name' : '#name_display#'};
-         let _optionsModal = { 'type' : 'gauge', 'optionText':params, 'method':'qrcodemethod','plugin':'mobile'};
+    onlongtouch = function(){
+        let params = { 'cmdId': '#id#', 'eqId' :'#eqLogic_id#', 'name' : '#name_display#'};
+        let _optionsModal = { 'type' : 'verticalslider', 'optionText':params, 'method':'qrcodemethod','plugin':'mobile'};
         jeedom.appMobile.postToApp('modal', _optionsModal);
-       }
+     }
 
 
 

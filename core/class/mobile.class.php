@@ -804,7 +804,9 @@ class mobile extends eqLogic {
 											$cmdgeoloc->setType('info');
 											$cmdgeoloc->setSubType('binary');
 											$cmdgeoloc->setIsVisible(1);
+											$cmdgeoloc->setIsHistorized(1);
 								}
+
 									$cmdgeoloc->setName($geoloc['name']);
 									$cmdgeoloc->setConfiguration('latitude', $geoloc['latitude']);
 									$cmdgeoloc->setConfiguration('longitude', $geoloc['longitude']);

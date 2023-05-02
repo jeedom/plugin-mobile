@@ -446,9 +446,9 @@ if($jsonrpc->getMethod() == 'mobile::geoloc'){
 					  $cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geofence['identifier']);
 					  if(is_object($cmdgeoloc)){
 							  log::add('mobile', 'debug', 'CMDGEOLOC');
-							  if($geoloc['action'] == 'ENTER'){
+							  if($geofence['action'] == 'ENTER'){
 									 $cmdgeoloc->event(1);
-								}elseif($geoloc['action'] == 'EXIT'){
+								}elseif($geofence['action'] == 'EXIT'){
 									$cmdgeoloc->event(0);
 								}
 					  }

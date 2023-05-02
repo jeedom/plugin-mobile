@@ -202,7 +202,8 @@
         "Nom": "Name",
         "Type": "Type",
         "Info": "Information",
-        "Action": "Action"
+        "Action": "Action",
+        "Options": "Options"
     },
     "plugins\/mobile\/desktop\/php\/panelMenuCustom.php": {
         "Type": "Kind",
@@ -237,7 +238,9 @@
         "Erreur Pas d\\'utilisateur selectionné": "Error No user selected",
         "Configuration mise à jour": "Updated configuration",
         "Nom": "Name",
-        "Tester": "Test"
+        "Tester": "Test",
+        "Afficher": "Display",
+        "Historiser": "Historize"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",

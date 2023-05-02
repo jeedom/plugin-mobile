@@ -202,7 +202,8 @@
         "Nom": "Имя",
         "Type": "Тип",
         "Info": "Info",
-        "Action": "Действие"
+        "Action": "Действие",
+        "Options": "Options"
     },
     "plugins\/mobile\/desktop\/php\/panelMenuCustom.php": {
         "Type": "Type",
@@ -237,7 +238,9 @@
         "Erreur Pas d\\'utilisateur selectionné": "Erreur Pas d\\'utilisateur selectionné",
         "Configuration mise à jour": "Configuration mise à jour",
         "Nom": "Имя",
-        "Tester": "Тест"
+        "Tester": "Тест",
+        "Afficher": "Afficher",
+        "Historiser": "Historiser"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401 - Несанкционированный доступ",

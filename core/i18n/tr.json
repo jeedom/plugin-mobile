@@ -202,7 +202,8 @@
         "Nom": "İsim",
         "Type": "Çeşit",
         "Info": "Info",
-        "Action": "Eylem"
+        "Action": "Eylem",
+        "Options": "Options"
     },
     "plugins\/mobile\/desktop\/php\/panelMenuCustom.php": {
         "Type": "Type",
@@ -237,7 +238,9 @@
         "Erreur Pas d\\'utilisateur selectionné": "Erreur Pas d\\'utilisateur selectionné",
         "Configuration mise à jour": "Configuration mise à jour",
         "Nom": "İsim",
-        "Tester": "Test et"
+        "Tester": "Test et",
+        "Afficher": "Afficher",
+        "Historiser": "Historiser"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401 - Yetkisiz erişim",

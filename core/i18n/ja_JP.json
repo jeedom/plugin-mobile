@@ -202,7 +202,8 @@
         "Nom": "表題",
         "Type": "タイプ",
         "Info": "Info",
-        "Action": "アクション"
+        "Action": "アクション",
+        "Options": "Options"
     },
     "plugins\/mobile\/desktop\/php\/panelMenuCustom.php": {
         "Type": "Type",
@@ -237,7 +238,9 @@
         "Erreur Pas d\\'utilisateur selectionné": "Erreur Pas d\\'utilisateur selectionné",
         "Configuration mise à jour": "Configuration mise à jour",
         "Nom": "表題",
-        "Tester": "テスト"
+        "Tester": "テスト",
+        "Afficher": "Afficher",
+        "Historiser": "Historiser"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401-不正アクセス",

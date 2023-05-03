@@ -827,7 +827,7 @@ class mobile extends eqLogic {
 	}
 
 	public function delGeoloc($geoloc) {
-      	log::add('mobile', 'debug', 'Geoloc lancement DEL du mobile  > '.$geoloc['Iq'].' pour '.$geoloc['id']);
+      	log::add('mobile', 'debug', 'Geoloc lancement DEL du mobile > '.$geoloc['Iq'].' pour '.$geoloc['id']);
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
 		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
 		if(isset($cmdgeoloc)) {

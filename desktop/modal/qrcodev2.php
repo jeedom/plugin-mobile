@@ -35,7 +35,11 @@ $eqLogics = mobile::byType('mobile');
                                             <option value="" disabled selected>{{Aucun}}</option>
                                             <?php
                                               foreach (user::all() as $user) {
-                                                echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
+																								$userArray = utils::o2a($user);
+																								if($userArray['enable'] == 1){
+																									echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
+																								}
+
                                               }
                                             ?>
                                           </select>

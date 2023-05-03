@@ -79,7 +79,6 @@ if(typeof jeeDialog !== 'undefined'){
     jeeDialog.dialog({
       id: 'qrcodev2',
       title: "{{QrCode}}",
-        fullScreen:1,
       contentUrl: 'index.php?v=d&plugin=mobile&modal=qrcodev2'
     })
   })

@@ -27,7 +27,7 @@ $eqLogics = mobile::byType('mobile');
                     <div style="display:flex;justify-content:center;margin-top:2%;font-size:18px;">
                        <p style="font-weight:bold;">Vous pouvez choisir un utilisateur : un QRCode sera généré. Vous pourrez ensuite scanner le QRCode depuis la nouvelle application, et ainsi ajouter cette box à votre application</p>
                     </div>
-                    <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:10%;">
+                    <div style="display:flex;flex-direction:column;align-items:center;align-content:center;margin-bottom:10%;">
                           <div id="containerMainQrCode" style="height:100%;width:50%;display:flex;align-items:center;justify-content: center;margin-top:3%;">
                                 <div id="contentExplain" style="display:flex; flex-direction:column; justify-content:center;align-items: center;width:50%;height:50%;">
                                         <label>{{Utilisateurs}}</label>
@@ -41,9 +41,9 @@ $eqLogics = mobile::byType('mobile');
                                           </select>
                                   </div>
                           </div>
-                          <div id="qrCodecontainer" style="display:none;flex-direction: column;justify-content: center;align-items:center;margin-top: 5%;width:50%;">
+                          <div id="qrCodecontainer" style="display:none;flex-direction:column;justify-content: center;align-items:center;align-content:center;margin-top: 5%;width:50%;">
                                               <label>{{QRCode}}</label>
-                                              <div class="qrCodeImgV2" style="width:25%;"></div>
+                                              <div class="qrCodeImgV2" style="width:25%;display:flex;justify-content:center;"></div>
                           </div>
                     </div>
 

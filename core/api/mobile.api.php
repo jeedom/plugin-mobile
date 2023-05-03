@@ -242,6 +242,32 @@ if ($jsonrpc->getMethod() == 'deleteMessage') {
  }
 
 
+ if ($jsonrpc->getMethod() == 'deleteAllMessageByType') {
+	 if(isset($params['appInfos']['messageType'])){
+		 if($params['appInfos']['messageType'] == 'jeedom'){
+					message::removeAll('jeedom');
+					$jsonrpc->makeSuccess("true");
+		 }elseif($params['appInfos']['messageType'] == 'plugins'){
+				$messages = message::all();
+				foreach($messages as $message){
+						if(is_object($message)){
+							if($message->getPlugin() != 'jeedom'){
+									$message->remove();
+							}
+						}else{
+								$jsonrpc->makeSuccess("false");
+						}
+				 }
+				 $jsonrpc->makeSuccess("true");
+		 }
+	 }else{
+		 	$jsonrpc->makeSuccess("false");
+	 }
+ }
+
+
+
+
 if ($jsonrpc->getMethod() == 'sync') {
 	if (jeedom::version() >= '3.2.0') {
 		log::add('mobile', 'debug', 'SYNC');

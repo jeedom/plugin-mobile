@@ -34,7 +34,7 @@ $eqLogics = mobile::byType('mobile');
                                           <select style="width:250px;" class="eqLogicAttr configuration form-control" id="selectUserqrCodeV2" onInput="userSelectqrCodev2()">
                                             <option value="" disabled selected>{{Aucun}}</option>
                                             <?php
-                                              foreach (user::all() as $user) {
+                                              foreach (user::all() as $user){
 																								$userArray = utils::o2a($user);
 																								if($userArray['enable'] == 1){
 																									echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';

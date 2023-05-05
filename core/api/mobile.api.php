@@ -109,7 +109,7 @@ if($jsonrpc->getMethod() == 'setConfigs'){
             if($notification['token'] == 'notifsBGDisabled'){
               message::removeAll(__CLASS__, 'alertNotifs');
               $phoneName = $mobile->getName();
-              message::add(__CLASS__, 'Les Notifications sur votre mobile : '.$phoneName.' sont desactivées', 'notifsbg', 'alertNotifs');
+              message::add('mobile', 'Les Notifications sur votre mobile : '.$phoneName.' sont desactivées', 'notifsbg', 'alertNotifs');
             }
         	if($notification['token'] != ''){
              $mobile->setConfiguration('notificationRegistrationToken', $notification['token']);
@@ -130,6 +130,16 @@ if($jsonrpc->getMethod() == 'setConfigs'){
   $jsonrpc->makeSuccess('ok');
 
 
+}
+
+
+function handleVersionJeedomMenu(){
+		$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
+									 "tab1":{"active":false,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
+									 "tab2":{"active":false,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
+									 "tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}}';
+	 $defaultMenuArray = json_decode($defaultMenuJson, true);
+  	return $defaultMenuArray;
 }
 
 if($jsonrpc->getMethod() == 'getJson'){
@@ -212,18 +222,24 @@ if($jsonrpc->getMethod() == 'getJson'){
   	log::add('mobile', 'debug', 'mobile object');
 		if(is_object($mobile)){
 		    log::add('mobile', 'debug', 'mobile bien trouvé > '.$mobile->getName());
-				$menuCustom = mobile::configMenuCustom($mobile->getId());
-		     $return[$idBox]['configs'] = array();
-		     $return[$idBox]['configs']['menu'] = $menuCustom;
-
+				$return[$idBox]['configs'] = array();
+				if(jeedom::version() < '4.4.0'){
+				     	$return[$idBox]['configs']['menu'] =  handleVersionJeedomMenu();
+				}else{
+					$menuCustom = mobile::configMenuCustom($mobile->getId());
+					$return[$idBox]['configs']['menu'] = $menuCustom;
+				}
 		 }else{
-			 $return[$idBox]['configs'] = array();
-			 $defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
-											 "tab1":{"active":true,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
-											 "tab2":{"active":true,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
-											 "tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}}';
-			 $defaultMenuArray = json_decode($defaultMenuJson, true);
-			 $return[$idBox]['configs']['menu'] = $defaultMenuArray;
+			 if(jeedom::version() < '4.4.0'){
+			   	$return[$idBox]['configs']['menu'] =  handleVersionJeedomMenu();
+			 }else{
+				 $defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
+												 "tab1":{"active":true,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
+												 "tab2":{"active":true,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
+												 "tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}}';
+				 $defaultMenuArray = json_decode($defaultMenuJson, true);
+				 $return[$idBox]['configs']['menu'] = $defaultMenuArray;
+			 }
 		 }
   	log::add('mobile', 'debug', 'CustomENVOI ' .json_encode($return[$idBox]['configs']));
 	  log::add('mobile','debug','INFOS GETJSONINITAL : '.json_encode($return));

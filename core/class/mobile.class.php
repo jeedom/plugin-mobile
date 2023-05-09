@@ -1058,6 +1058,9 @@ class mobile extends eqLogic {
 			$cmd->setType('info');
 			$cmd->setSubType($subtype);
 			$cmd->setIsVisible(1);
+			if($action == 'barrecodemethod'){
+				$cmd->setConfiguration('repeatEventManagement', 'always');
+			}
 			$cmd->save();
 		}
 		$cmd->event($info);

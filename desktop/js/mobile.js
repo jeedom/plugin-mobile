@@ -281,14 +281,18 @@ function userSelect(idSelect){
  function printEqLogic(_eqLogic){
    let appVersion = _eqLogic.configuration.appVersion;
    var monitoringElements = document.querySelectorAll('.monitoringToDisable');
+  var saveTab =  document.querySelector('.saveTab');
    if(appVersion == 2){
      monitoringElements.forEach(el => {
           el.style.display = 'none';
+
      })
+     saveTab.style.display = 'none';
    }else{
      monitoringElements.forEach(el => {
           el.style.display = 'block';
      })
+     saveTab.style.display = 'block';
    }
 
     $.ajax({

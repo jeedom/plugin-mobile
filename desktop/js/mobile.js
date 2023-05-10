@@ -279,6 +279,18 @@ function userSelect(idSelect){
 
 
  function printEqLogic(_eqLogic){
+   let appVersion = _eqLogic.configuration.appVersion;
+   var monitoringElements = document.querySelectorAll('.monitoringToDisable');
+   if(appVersion == 2){
+     monitoringElements.forEach(el => {
+          el.style.display = 'none';
+     })
+   }else{
+     monitoringElements.forEach(el => {
+          el.style.display = 'block';
+     })
+   }
+
     $.ajax({
         type: "POST",
         url: "plugins/mobile/core/ajax/mobile.ajax.php",

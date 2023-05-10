@@ -233,7 +233,7 @@ $plugin_widget = mobile::$_pluginWidget;
 						<input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="{{Iq}}" disabled/>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group monitoringToDisable">
 					<label class="col-sm-2 control-label">{{ARN Mobile :}}</label>
 					<div class="col-sm-7">
 						<input type="text" id="arnComplet" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notificationArn" placeholder="{{ARN}}" disabled/>
@@ -245,7 +245,7 @@ $plugin_widget = mobile::$_pluginWidget;
 						<input type="text" id="arnComplet" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notificationRegistrationToken" placeholder="{{TOKEN}}" disabled/>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group monitoringToDisable">
 					<label class="col-sm-2 control-label">{{ARN pour Monitoring :}}</label>
 					<div class="col-sm-7">
 						<input type="text" id="to-copy-monitoring" class="eqLogicAttr form-control" placeholder="{{ARN pour Monitoring}}" disabled/>

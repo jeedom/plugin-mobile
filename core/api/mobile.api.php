@@ -211,7 +211,7 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$return[$idBox]['informations']['changelog'] = $changeLogs;
 	$return[$idBox]['informations']['infosDemon'] = $deamons_infos;
   $return[$idBox]['informations']['nbUpdate'] = update::nbNeedUpdate();
-	$return[$idBox]['informations']['uname'] = system::getDistrib() . ' ' . method_exists(system::getOsVersion()) ? system::getOsVersion() : 'UnknownVersion';
+	$return[$idBox]['informations']['uname'] = system::getDistrib() . ' ' . method_exists('system','getOsVersion') ? system::getOsVersion() : 'UnknownVersion';
 	$return[$idBox]['jeedom_version'] = jeedom::version();
   $return[$idBox]['rdk'] = $rdk;
 	$return[$idBox]['name'] = config::byKey('name');
@@ -502,10 +502,10 @@ if($jsonrpc->getMethod() == 'mobile::geoloc'){
 }
 
 if($jsonrpc->getMethod() == "qrcodemethod"){
-	log::add('mobile', 'debug', 'QrCode > '.$params);
+	log::add('mobile', 'debug', 'QrCode > '.json_encode($params));
 	if($params['appInfos']){
 		log::add('mobile', 'debug', 'valeur du QrCode > '.json_encode($params['appInfos']['qrCode']));
-      	if($params['appInfos']['qrCode']['displayValue']){
+      	if(isset($params['appInfos']['qrCode']['displayValue'])){
           	mobile::cmdForApi($params['Iq'],"barrecodemethod",$params['appInfos']['qrCode']['displayValue'],"CodeBarre");
         }else{
         	mobile::cmdForApi($params['Iq'],"qrcodemethod",json_encode($params['appInfos']['qrCode']),"QrCode");

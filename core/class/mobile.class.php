@@ -1143,6 +1143,23 @@ class mobileCmd extends cmd {
 		return true;
 	}*/
 
+	public static function fileInMessage($data) {
+		$dataArray = explode('|', $data);
+		$result = array();
+		foreach ($dataArray as $item) {
+			$arg = explode('=', trim($item), 2);
+			if (count($arg) == 2) {
+				$result[trim($arg[0])] = trim($arg[1]);
+			}
+		}
+		$result['message'] = $dataArray[0];
+		if(result['file'] != null){
+			return $result;
+		}else{
+			return null;
+		}
+	}
+
 	public function execute($_options = array()) {
 		if ($this->getType() != 'action') {
 			return;
@@ -1162,6 +1179,14 @@ class mobileCmd extends cmd {
 				$critical = true;
 			}
 
+			$file = mobileCmd::fileInMessage($_options['message']);
+			if (!isset($_options['files']) && $file != null) {
+				$_options['files'] = array();
+				array_push($_options['files'], $file['file']);
+				$_options['message'] = $file['message'];
+				log::add('mobile', 'debug', 'file detected ' . json_encode($file));
+			}
+
 			$answer = ($_options['answer']) ? join(';', $_options['answer']) : null;
             $askVariable = $_options['variable'];
 			$askType = ($_options['answer']) ? 'ask_Text' : 'notif';
@@ -1177,10 +1202,10 @@ class mobileCmd extends cmd {
 
 log::add('mobile', 'debug', 'Notif > ' . json_encode($_options) . ' / ' . $eqLogic->getId() . ' / ' . $this->getLogicalId() . ' / idNotif =' . $idNotif, 'config');
               	if (isset($options['file'])) {
-            log::add('mobile', 'debug', 'FILE');
-			unset($data['file']);
-			$_options['files'] = explode(',', $options['file']);
-		}
+					log::add('mobile', 'debug', 'FILE');
+					unset($data['file']);
+					$_options['files'] = explode(',', $options['file']);
+				}
           if (isset($_options['files']) && is_array($_options['files'])) {
             log::add('mobile', 'debug', 'FILES');
 			foreach ($_options['files'] as $file) {

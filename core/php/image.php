@@ -43,4 +43,4 @@ if($nameMD5 != $keyFile){
 header('Content-Type: image/'.pathinfo($file, PATHINFO_EXTENSION));
   echo file_get_contents($file);
 
-unlink($file);
+//unlink($file);

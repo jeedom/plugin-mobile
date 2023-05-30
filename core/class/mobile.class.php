@@ -1144,18 +1144,23 @@ class mobileCmd extends cmd {
 	}*/
 
 	public static function fileInMessage($data) {
+		log::add('mobile', 'debug', 'test FileInMessage');
 		$dataArray = explode('|', $data);
 		$result = array();
 		foreach ($dataArray as $item) {
+
 			$arg = explode('=', trim($item), 2);
 			if (count($arg) == 2) {
 				$result[trim($arg[0])] = trim($arg[1]);
 			}
 		}
 		$result['message'] = $dataArray[0];
-		if(result['file'] != null){
+		log::add('mobile', 'debug', 'file Parse > ' . json_encode($result));
+		if(array_key_exists('file', $result)){
+			log::add('mobile', 'debug', 'file > ' . $result['file']);
 			return $result;
 		}else{
+			log::add('mobile', 'debug', 'null');
 			return null;
 		}
 	}

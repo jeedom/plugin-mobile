@@ -670,8 +670,8 @@ class mobile extends eqLogic {
              $apns = [
              	'payload' => [
                 	'aps' => [
-                    	'mutuable-content' => 1,
-                      	'contentAvailable' => true,
+                    	//'mutuable-content' => 1,
+                      	//'contentAvailable' => true,
                       	'sound' => 'default'
                       ],
                       'notifee_options' => [

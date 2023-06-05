@@ -671,8 +671,12 @@ class mobile extends eqLogic {
              	'payload' => [
                 	'aps' => [
                     	'mutuable-content' => 1,
-                      	'contentAvailable' => true,
-                      	'sound' => 'default'
+						'content-available' => 1,
+                      	'sound' => 'default',
+						/*'alert' => [
+         					'title' => $titre,
+         					'body' => $message
+						]*/
                       ],
                       'notifee_options' => [
                          'ios' => [
@@ -690,6 +694,7 @@ class mobile extends eqLogic {
 
               if($photo != null){
                  $android['data']['image'] = $photo;
+				 $apns['payload']['aps']['launch-image'] = $photo;
                  $apns['payload']['notifee_options']['image'] = $photo;
                  $apns['payload']['notifee_options']['ios']['attachments'] = [
                    [

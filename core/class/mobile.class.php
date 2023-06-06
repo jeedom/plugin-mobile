@@ -659,6 +659,11 @@ class mobile extends eqLogic {
               'boxApiKey' => jeedom::getHardwareKey()
             ];
 
+			$notification = [
+				'title' => $titre,
+				'body' => $message,
+			];
+
             $data = array_merge($customData, $optionsNotif);
 
           	$android = [
@@ -668,18 +673,17 @@ class mobile extends eqLogic {
 
 
              $apns = [
+				'headers' => [
+					'apns-priority' => '10'
+				],
              	'payload' => [
                 	'aps' => [
-                    	'mutuable-content' => 1,
-						'content-available' => 1,
-                      	'sound' => 'default',
-						/*'alert' => [
-         					'title' => $titre,
-         					'body' => $message
-						]*/
+                    	'mutableContent' => 1,
+						'contentAvailable' => 1
                       ],
                       'notifee_options' => [
                          'ios' => [
+							'sound' => 'default',
 							'critical' => $critical,
                             'foregroundPresentationOptions' => [
                                'alert' => true,
@@ -708,7 +712,8 @@ class mobile extends eqLogic {
               	'token' => $token,
                 'android' => $android,
                 'data' => $data,
-                'apns' => $apns
+                'apns' => $apns,
+				//'notification' => $notification,
               ];
 
 	     }

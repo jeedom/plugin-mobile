@@ -624,9 +624,6 @@ class mobile extends eqLogic {
             }
 	    if($version == 2){
 
-
-	   // log::add('mobile','debug','ANSWERS :'.$answer);
-
             if($addAsk != ''){
               $askParams = [ 'choices' => $answer,
                              'idVariable' => $optionsNotif['askVariable'],
@@ -674,30 +671,32 @@ class mobile extends eqLogic {
 
              $apns = [
 				'headers' => [
-					'apns-priority' => '10'
+					'apns-priority' => '10',
+					'apns-collapse-id' => strval($idNotif),
 				],
              	'payload' => [
                 	'aps' => [
-                    	'mutableContent' => 1,
-						'contentAvailable' => 1
-                      ],
-                      'notifee_options' => [
-                         'ios' => [
-							'sound' => 'default',
-							'critical' => $critical,
-                            'foregroundPresentationOptions' => [
-                               'alert' => true,
-                               'badge' => true,
-                               'sound' => true
-                            ]
-                         ]
-                      ]
+                    	'mutableContent' => false,
+						'content-available' => true,
+					],
+					'notifee_options' => [
+						'ios' => [
+						'sound' => 'default',
+						'critical' => $critical,
+						'foregroundPresentationOptions' => [
+							'alert' => true,
+							'badge' => true,
+							'sound' => true
+							]
+						]
+					]
                   ]
                ];
 
 
               if($photo != null){
                  $android['data']['image'] = $photo;
+				 $notification['image'] = $photo;
 				 $apns['payload']['aps']['launch-image'] = $photo;
                  $apns['payload']['notifee_options']['image'] = $photo;
                  $apns['payload']['notifee_options']['ios']['attachments'] = [
@@ -708,14 +707,20 @@ class mobile extends eqLogic {
                  ];
               }
 
-              $publish = [
-              	'token' => $token,
-                'android' => $android,
-                'data' => $data,
-                'apns' => $apns,
-				//'notification' => $notification,
-              ];
-
+			if($os == 'android'){
+				$publish = [
+					'token' => $token,
+					'android' => $android,
+					'data' => $data,
+				  ];
+			}else{
+				$publish = [
+				  'token' => $token,
+				  'data' => $data,
+				  'apns' => $apns,
+				  'notification' => $notification,
+				];
+			}
 	     }
         }
       log::add('mobile', 'debug', 'JSON publish >  : ' . json_encode($publish));

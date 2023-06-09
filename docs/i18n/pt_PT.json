@@ -2,6 +2,9 @@
     "changelog.md": {
         "Changelog App Mobile": "Changelog Mobile App",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Como lembrete, se não houver informações sobre a atualização, isso significa que se trata apenas da atualização da documentação, tradução ou texto",
+        "09\/06\/2023": "06\/09\/2023",
+        "Fix Notifications": "Consertar Notificações",
+        "Ajout Affichage Equipements par Tableau": "Adição de exibição de equipamentos por tabela",
         "19\/05\/2023": "19\/05\/2023",
         "PR by PhpVarious": "PR por PhpVarious",
         "Fix bugs mineurs": "Corrigir pequenos bugs",

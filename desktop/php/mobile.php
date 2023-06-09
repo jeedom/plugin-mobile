@@ -43,7 +43,13 @@ $plugin_widget = mobile::$_pluginWidget;
 						</div>
 		</div>
 		<legend><i class="icon techno-listening3"></i> {{Mes Téléphones Mobiles}}</legend>
-		<input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
+		<div class="input-group" style="margin:5px;">
+			<input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
+			<div class="input-group-btn">
+				<a id="bt_resetSearch" class="btn roundedRight" style="width:30px"><i class="fas fa-times"></i></a>
+				<a class="btn roundedRight hidden" id="bt_pluginDisplayAsTable" data-coreSupport="1" data-state="0"><i class="fas fa-grip-lines"></i></a>
+			</div>
+		</div>
 
 		<div class="eqLogicThumbnailContainer">
 			<?php
@@ -105,6 +111,10 @@ $plugin_widget = mobile::$_pluginWidget;
 		</div>
 		<legend><i class="icon techno-listening3"></i> {{Mes Téléphones Mobiles}}</legend>
 		<input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
+		<div class="input-group-btn">
+			<a id="bt_resetSearch" class="btn roundedRight" style="width:30px"><i class="fas fa-times"></i></a>
+			<a class="btn roundedRight hidden" id="bt_pluginDisplayAsTable" data-coreSupport="1" data-state="0"><i class="fas fa-grip-lines"></i></a>
+		</div>
 
 		<div class="eqLogicThumbnailContainer">
 			<?php

@@ -669,39 +669,34 @@ class mobile extends eqLogic {
               	];
 
 
-             $apns = [
-				'headers' => [
-					'apns-priority' => '10',
-					'apns-collapse-id' => strval($idNotif),
-				],
-             	'payload' => [
-                	'aps' => [
-                    	'mutable-content' => false,
-						'content-available' => true,
-						'sound' => [
-							'name' => 'default',
-							'critical' => $critical,
-							'volume' => '1.0',
-							],
+				  $apns = [
+					'headers' => [
+						'apns-priority' => '10',
+						'apns-collapse-id' => strval($idNotif),
 					],
-				],
-				'notifee_options' => [
-					'ios' => [
-					'sound' => 'default',
-					'critical' => $critical,
-					'foregroundPresentationOptions' => [
-						'alert' => true,
-						'badge' => true,
-						'sound' => true
+					 'payload' => [
+						'aps' => [
+							'mutableContent' => false,
+							'content-available' => true,
+						],
+						'notifee_options' => [
+							'ios' => [
+							'sound' => 'default',
+							'critical' => $critical,
+							'foregroundPresentationOptions' => [
+								'alert' => true,
+								'badge' => true,
+								'sound' => true
+								]
+							]
 						]
-					]
-				]
-            ];
+					  ]
+				   ];
 
 
               if($photo != null){
                  $android['data']['image'] = $photo;
-				 $notification['image'] = $photo;
+				 //$notification['image'] = $photo;
 				 $apns['payload']['aps']['launch-image'] = $photo;
                  $apns['payload']['notifee_options']['image'] = $photo;
                  $apns['payload']['notifee_options']['ios']['attachments'] = [

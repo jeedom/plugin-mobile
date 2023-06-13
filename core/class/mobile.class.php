@@ -676,22 +676,27 @@ class mobile extends eqLogic {
 				],
              	'payload' => [
                 	'aps' => [
-                    	'mutableContent' => false,
+                    	'mutable-content' => false,
 						'content-available' => true,
+						'sound' => [
+							'name' => 'default',
+							'critical' => $critical,
+							'volume' => '1.0',
+							],
 					],
-					'notifee_options' => [
-						'ios' => [
-						'sound' => 'default',
-						'critical' => $critical,
-						'foregroundPresentationOptions' => [
-							'alert' => true,
-							'badge' => true,
-							'sound' => true
-							]
+				],
+				'notifee_options' => [
+					'ios' => [
+					'sound' => 'default',
+					'critical' => $critical,
+					'foregroundPresentationOptions' => [
+						'alert' => true,
+						'badge' => true,
+						'sound' => true
 						]
 					]
-                  ]
-               ];
+				]
+            ];
 
 
               if($photo != null){
@@ -872,6 +877,25 @@ class mobile extends eqLogic {
 			$this->save();
         }
 	}
+
+public static deleteFileImg(){
+	$directory = dirname(__FILE__) .'/../../data/images'; // Chemin vers le répertoire contenant les fichiers
+	// Récupérer la liste des fichiers dans le répertoire
+	$files = glob($directory . '/*');
+	// Date actuelle
+	$currentDate = time();
+	// Parcourir tous les fichiers
+	foreach ($files as $file) {
+		// Vérifier la date de modification du fichier
+		$modifiedDate = filemtime($file);
+		$differenceInDays = floor(($currentDate - $modifiedDate) / (60 * 60 * 24));
+		// Vérifier si le fichier a plus de 30 jours
+		if ($differenceInDays > 30) {
+			// Supprimer le fichier
+			unlink($file);
+		}
+	}
+}
 
 
  public static function saveMenuEqLogics($eqId, $arrayMenus, $checkDefault, $nbIcones){
@@ -1144,6 +1168,7 @@ class mobile extends eqLogic {
 	/*     * **********************Getteur Setteur*************************** */
 	public static function cronDaily() {
       		mobile::makeTemplateJson();
+			mobile::deleteFileImg();
     	}
 }
 

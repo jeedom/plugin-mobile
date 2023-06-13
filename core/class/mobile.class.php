@@ -878,7 +878,7 @@ class mobile extends eqLogic {
         }
 	}
 
-public static deleteFileImg(){
+public static function deleteFileImg(){
 	$directory = dirname(__FILE__) .'/../../data/images'; // Chemin vers le répertoire contenant les fichiers
 	// Récupérer la liste des fichiers dans le répertoire
 	$files = glob($directory . '/*');

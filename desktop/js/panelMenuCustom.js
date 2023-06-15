@@ -40,6 +40,7 @@
        document.getElementById(`typeMenu${numElPanel}`).value = defaultSelect;
        for (let i = 1; i < parseInt(nbIconesPanel) + 1; i++) {
            let typeObject = document.querySelector(`.icon${i}`).getAttribute('selectName');
+           alert(typeObject)
             let entireSelect = document.querySelector(`.icon${i}`).getAttribute('selectNameEntire');
             if(entireSelect.includes(typeObject)) {
               if(typeObject != 'home' && typeObject != 'overview' && typeObject != 'health' && typeObject != 'timeline'){
@@ -89,6 +90,7 @@
  // CHANGE NAMEICONES BY USER
     btnsChooseIcon.forEach(el => {
           el.addEventListener('click', function(event) {
+
                 let idElement = this.getAttribute('id');
                  let numElement = idElement.substr(-1, 1);
                  var _icon = false;
@@ -118,8 +120,8 @@
 
 
 function saveMenu(iconesPanel, eqLogicId){
+
   var nbIconesPanel = parseInt(iconesPanel)
-  console.log(nbIconesPanel)
    switch(nbIconesPanel){
      case 1: var arrayMenusElements = [[]]; break;
      case 2: var arrayMenusElements = [[],[]]; break;
@@ -132,6 +134,7 @@ function saveMenu(iconesPanel, eqLogicId){
     var iconName = {};
     var urlUser = {};
     var selectNameMenu = {};
+
     for (let i = 1; i < nbIconesPanel + 1; i++) {
 
       let objectSelected = document.getElementById(`typeMenu${i}`).value;
@@ -149,6 +152,9 @@ function saveMenu(iconesPanel, eqLogicId){
          urlUser[i]= document.getElementById(`urlUser${i}`).value;
       }else{
          selectNameMenu[i]  = document.querySelector(`.item_dash[id=item_${objectSelected}${i}]`).value;
+         if (selectNameMenu[i]  === undefined ){
+           selectNameMenu[i] = 'home';
+         }
       }
        iconName[i] = $('#spanIconPanel'+i).attr('iconname');
       if(inputChosen[i]  === undefined ) {
@@ -167,7 +173,7 @@ function saveMenu(iconesPanel, eqLogicId){
       j++;
 
      }
-     console.log(arrayMenusElements)
+
   $.ajax({
        type: "POST",
        url: "plugins/mobile/core/ajax/mobile.ajax.php",
@@ -222,6 +228,7 @@ let iconesPanel = mainContainer.getAttribute('nbIconesPanel');
 console.log('iicoocnci')
 console.log(iconesPanel)
  saveMenu(iconesPanel, eqLogicId)
+ alert('ogoggl')
  this.innerHTML = ''
  this.innerHTML = 'Menu Validé'
  this.style.backgroundColor =  '#3e8e41';

@@ -241,7 +241,7 @@ if($jsonrpc->getMethod() == 'getJson'){
 				 $return[$idBox]['configs']['menu'] = $defaultMenuArray;
 			 }
 		 }
-  	log::add('mobile', 'debug', 'CustomENVOI ' .json_encode($return[$idBox]['configs']));
+  	log::add('mobile', 'debug', 'CustomENVOICONFIGSAPI ' .json_encode($return[$idBox]['configs']));
 	  log::add('mobile','debug','INFOS GETJSONINITAL : '.json_encode($return));
 	$jsonrpc->makeSuccess($return);
 

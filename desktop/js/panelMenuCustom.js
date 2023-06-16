@@ -40,7 +40,6 @@
        document.getElementById(`typeMenu${numElPanel}`).value = defaultSelect;
        for (let i = 1; i < parseInt(nbIconesPanel) + 1; i++) {
            let typeObject = document.querySelector(`.icon${i}`).getAttribute('selectName');
-           alert(typeObject)
             let entireSelect = document.querySelector(`.icon${i}`).getAttribute('selectNameEntire');
             if(entireSelect.includes(typeObject)) {
               if(typeObject != 'home' && typeObject != 'overview' && typeObject != 'health' && typeObject != 'timeline'){
@@ -228,7 +227,6 @@ let iconesPanel = mainContainer.getAttribute('nbIconesPanel');
 console.log('iicoocnci')
 console.log(iconesPanel)
  saveMenu(iconesPanel, eqLogicId)
- alert('ogoggl')
  this.innerHTML = ''
  this.innerHTML = 'Menu Validé'
  this.style.backgroundColor =  '#3e8e41';

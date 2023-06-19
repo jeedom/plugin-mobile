@@ -672,13 +672,12 @@ class mobile extends eqLogic {
 			'headers' => [
 				'apns-priority' => '10',
 				'apns-collapse-id' => strval($idNotif),
-				'apns-push-type' => 'alert',
+				//'apns-push-type' => 'alert',
 				'apns-topic' => '4G374KJ6HT.com.jeedom.jeedomobile',
 			],
 			'payload' => [
 				'aps' => [
-					'mutable-content' => false,
-					'content-available' => true,
+					'contentAvailable' => true,
 					'sound' => [
 						'name' => 'default',
 						'critical' => $critical
@@ -745,7 +744,13 @@ class mobile extends eqLogic {
 
             }
           	$url = config::byKey('service::cloud::url','core','https://cloud.jeedom.com').'/service/fcm';
-            $post = ['message' => $publish];
+			$options = [
+				'contentAvailable' => true,
+				'priority' => 'high',
+				'collapseKey' => strval($publish[data][idNotif])
+			];
+
+            $post = ['message' => $publish, 'options' => $options];
           	log::add('mobile', 'debug', 'JSON envoyé en mode FCM : ' . json_encode($post));
         }elseif($token == null && $version == 2){
               log::add('mobile', 'debug', 'NOTIFICATION NON ENVOYEE : PAS DE TOKEN ENREGISTRE SUR VOTRE TELEPHONE :  ' );

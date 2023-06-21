@@ -216,7 +216,8 @@
         "Panel": "Tafel",
         "URL externe": "Externe URL",
         "Santé": "Gesundheit",
-        "TimeLine": "Zeitleiste"
+        "TimeLine": "Zeitleiste",
+        "Choix TypeWebView": "AuswahltypWebView"
     },
     "plugins\/mobile\/desktop\/php\/panelWebApp.php": {
         "ICONE 1": "IKONE 1"

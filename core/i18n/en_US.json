@@ -216,7 +216,8 @@
         "Panel": "Panel",
         "URL externe": "External URL",
         "Santé": "Health",
-        "TimeLine": "Timeline"
+        "TimeLine": "Timeline",
+        "Choix TypeWebView": "Choice TypeWebView"
     },
     "plugins\/mobile\/desktop\/php\/panelWebApp.php": {
         "ICONE 1": "ICON 1"

@@ -910,6 +910,7 @@ public static function deleteFileImg(){
 			log::add('mobile','debug','ELEMENTSMENUS : '.json_encode($arrayMenus));
 			 $eqLogic->setConfiguration('nbIcones', $nbIcones);
 			foreach($arrayMenus as $menu){
+				                  $eqLogic->setConfiguration('checkboxWebViewMenu'.$i, $menu[4]);
               						if($menu[0] == 'none'){
                                 $eqLogic->setConfiguration('selectNameMenu'.$i, 'none');
                           }else if($menu[0] == 'overview'){
@@ -998,7 +999,14 @@ public static function deleteFileImg(){
 			$j = 0;
       $count = 1;
 			for($i=1;$i<5; $i++){
-				    $isActive = true;
+				            $webviewUrl = '';
+				            $isActive = true;
+										$webview = $eqLogic->getConfiguration('checkboxWebViewMenu'.$i);
+										if($webview == 'WebviewDesktop'){
+											$webviewUrl = 'd';
+										}else if($webview == 'WebviewMobile'){
+											$webviewUrl = 'm';
+										}
                     ${ 'tabIconName' . $i} = $eqLogic->getConfiguration('spanIcon'.$i , 'none');
                     config::save('icon'.$i.'NoCut', ${ 'tabIconName' . $i} , 'mobile');
                     if(${ 'tabIconName' . $i} != 'none'){
@@ -1023,29 +1031,29 @@ public static function deleteFileImg(){
 													$objectId = $arrayObjects[0];
 													$typeObject = $arrayObjects[1];
 													if($typeObject == 'view'){
-														 ${ 'tabUrl' . $i} = "/index.php?v=m&p={$typeObject}&view_id={$objectId}";
+														 ${ 'tabUrl' . $i} = "/index.php?v={$webviewUrl}&p={$typeObject}&view_id={$objectId}";
 													}else if($typeObject == 'dashboard'){
-																${ 'tabUrl' . $i} =  "/index.php?v=m&p=dashboard&object_id={$objectId}";
+																${ 'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=dashboard&object_id={$objectId}";
 													}else if($typeObject == 'plan'){
-																${ 'tabUrl' . $i} =  "/index.php?v=m&p=plan&plan_id={$objectId}";
+																${ 'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=plan&plan_id={$objectId}";
 													}else if($typeObject == 'panel'){
-																${ 'tabUrl' . $i} =  "/index.php?v=m&p={$objectId}";
+																${ 'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p={$objectId}";
 																log::add('mobile','debug', 'PANEL : ' .	${ '$tabUrl' . $i});
 													}
 											}else if($objectId == 'overview'){
-													${ 'tabUrl' . $i} =  '/index.php?v=m&p=overview';
+													${ 'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=overview";
 											}else if($objectId == 'home'){
-													${ 'tabUrl' . $i} =  '/index.php?v=m&p=home';
+													${ 'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=home";
 											}else if($objectId == 'health'){
-													${ 'tabUrl' . $i} =  '/index.php?v=m&p=health';
+													${ 'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=health";
 											}
 											else if($objectId == 'timeline'){
-													${ 'tabUrl' . $i} =  '/index.php?v=m&p=timeline';
+													${ 'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=timeline";
 											}
                     }else if($objectId == 'url' && $eqLogic->getConfiguration('urlUser'.$i) != 'http://www.'){
                       ${ 'tabUrl' . $i} = $eqLogic->getConfiguration('urlUser'.$i);
                     }else{
-                      ${ 'tabUrl' . $i} = "/index.php?v=m&app_mode=1";
+                      ${ 'tabUrl' . $i} = '/index.php?v=m&app_mode=1';
                     }
 				   if($count > intval($nbIcones)){
 						 $isActive = false;

@@ -50,11 +50,12 @@ if(isset($_GET["Iq"])){
            $selectName = $mobile->getConfiguration('selectNameMenu'.$i , 'home');
            $selectEntire  = $mobile->getConfiguration('selectNameMenu'.$i , 'home');
            $urlUser = $mobile->getConfiguration('urlUser'.$i , 'none');
+           $webviewType = $mobile->getConfiguration('checkboxWebViewMenu'.$i, 'WebviewMobile');
            if(strpos($selectName, 'panel') != false || strpos($selectName, 'dashboard') != false){
               $arrayReturn = explode('_', $selectName);
               $selectName = $arrayReturn[1];
            }
-          echo '<div id="numElPanel'.$i.'" urlUser="'.$urlUser.'" selectName="'.$selectName.'" selectNameEntire="'.$selectEntire.'" numElPanel="'.$i.'" class="menuSelectPanel icon'.$i.'" style="display:flex;flex-direction:column;align-items:center;width: 25%;" touchstart="test()">
+          echo '<div id="numElPanel'.$i.'" urlUser="'.$urlUser.'" webviewType="'.$webviewType.'" selectName="'.$selectName.'" selectNameEntire="'.$selectEntire.'" numElPanel="'.$i.'" class="menuSelectPanel icon'.$i.'" style="display:flex;flex-direction:column;align-items:center;width: 25%;" touchstart="test()">
           <i class="spanIconPanel whiteApp '.$mobile->getConfiguration('spanIcon'.$i , 'icon jeedomapp-in').'" iconName="'.$mobile->getConfiguration('spanIcon'.$i , 'Default').'" id="spanIconPanel'.$i.'" style="font-size:60px;"></i>
           <span class="whiteApp actualsMenuNameUser" id="actualMenuNameUser'.$i.'" style="font-size:10px;">'.$mobile->getConfiguration('renameIcon'.$i , 'Exemple').'</span>
           </div>';
@@ -85,9 +86,9 @@ if(isset($_GET["Iq"])){
 ?>
 
 <div style="display:flex;flex-direction:column;align-items:center;">
-  <div class="panelModal" id="panelModal1" style="display:none;margin-top:10vh;">
+  <div class="panelModal" id="panelModal1" style="display:none;margin-top:5vh;">
                                <div class="" style="display:flex;flex-direction:column;z-index:5;">
-                                              <div class="menusSelectors" style="margin-bottom:2%;width:80vw;">
+                                              <div class="menusSelectors" style="margin-bottom:2%;width:80vw;min-height:10vh;">
                                                       <label>{{Type}}</label>
                                                       <select id="typeMenu1" class="form-control selectMenuMobile" onInput="userSelectPanel('typeMenu1')">;
                                                       <option value="none" disabled selected>{{Choisir un Type}}</option>
@@ -159,10 +160,16 @@ if(isset($_GET["Iq"])){
                                                       <button class="btn-chooseIcon-panel" id="bt_chooseIconMenu1" type="button">Choisir Icone</button>
                                                           <span class="spanIcon" id="spanIcon1"></span>
                                                  </div>
+                                                 <label>{{Choix TypeWebView}}</label>
+                                                 <select class="form-control checkboxWebViewMenu1 checkboxWebViewMenu" id="checkboxWebViewMenu1" style="display:flex;width:80vw;">;
+                                                       <option value="WebviewDesktop">WebView Desktop</option>
+                                                       <option value="WebviewMobile">WebView Mobile</option>
+                                                  </select>
+
 
                                   </div>
              </div>
-             <div class="panelModal" id="panelModal2" style="display:none;margin-top:10vh;">
+             <div class="panelModal" id="panelModal2" style="display:none;margin-top:5vh;">
                              <div class="" style="display:flex;flex-direction:column;z-index:5;">
                                             <div class="menusSelectors" style="margin-bottom:2%;width:80vw;">
                                                     <label>{{Type}}</label>
@@ -236,9 +243,14 @@ if(isset($_GET["Iq"])){
                                                             <button class="btn-chooseIcon-panel" id="bt_chooseIconMenu2" type="button">Choisir Icone</button>
                                                         <span class="spanIcon" id="spanIcon2"></span>
                                                </div>
+                                               <label>{{Choix TypeWebView}}</label>
+                                               <select class="form-control checkboxWebViewMenu2 checkboxWebViewMenu" id="checkboxWebViewMenu2" style="display:flex;width:80vw;">;
+                                                     <option value="WebviewDesktop">WebView Desktop</option>
+                                                     <option value="WebviewMobile">WebView Mobile</option>
+                                                </select>
                                 </div>
            </div>
-           <div class="panelModal" id="panelModal3" style="display:none;margin-top:10vh;">
+           <div class="panelModal" id="panelModal3" style="display:none;margin-top:5vh;">
                              <div class="" style="display:flex;flex-direction:column;z-index:5;">
                                             <div class="menusSelectors" style="margin-bottom:2%;width:80vw;">
                                                     <label>{{Type}}</label>
@@ -308,13 +320,18 @@ if(isset($_GET["Iq"])){
                                                       <label>Renommer Icone</label>
                                                     <input class="form-control inputUser inputPanel" id="inputUser3" type=text maxlength="15"/>
                                                 </div>
-                                                <div id="divIconMenu1" style="display:flex;justify-content:center;margin-bottom:5%;">
+                                                <div id="divIconMenu3" style="display:flex;justify-content:center;margin-bottom:5%;">
                                                              <button class="btn-chooseIcon-panel" id="bt_chooseIconMenu3" type="button">Choisir Icone</button>
                                                         <span class="spanIcon" id="spanIcon3"></span>
                                                </div>
+                                               <label>{{Choix TypeWebView}}</label>
+                                               <select class="form-control checkboxWebViewMenu3 checkboxWebViewMenu" id="checkboxWebViewMenu3" style="display:flex;width:80vw;">;
+                                                     <option value="WebviewDesktop">WebView Desktop</option>
+                                                     <option value="WebviewMobile">WebView Mobile</option>
+                                                </select>
                                 </div>
            </div>
-           <div class="panelModal" id="panelModal4" style="display:none;margin-top:10vh;">
+           <div class="panelModal" id="panelModal4" style="display:none;margin-top:5vh;">
                              <div class="" style="display:flex;flex-direction:column;z-index:5;">
                                             <div class="menusSelectors" style="margin-bottom:2%;width:80vw;">
                                                     <label>{{Type}}</label>
@@ -384,10 +401,15 @@ if(isset($_GET["Iq"])){
                                                       <label>Renommer Icone</label>
                                                     <input class="form-control inputUser inputPanel" id="inputUser4" type=text maxlength="15"/>
                                                 </div>
-                                                <div id="divIconMenu1" style="display:flex;justify-content:center;margin-bottom:5%;">
+                                                <div id="divIconMenu4" style="display:flex;justify-content:center;margin-bottom:5%;">
                                                              <button class="btn-chooseIcon-panel" id="bt_chooseIconMenu4" type="button">Choisir Icone</button>
                                                         <span class="spanIcon" id="spanIcon4"></span>
                                                </div>
+                                               <label>{{Choix TypeWebView}}</label>
+                                               <select class="form-control checkboxWebViewMenu4 checkboxWebViewMenu" id="checkboxWebViewMenu4" style="display:flex;width:80vw;">;
+                                                     <option value="WebviewDesktop">WebView Desktop</option>
+                                                     <option value="WebviewMobile">WebView Mobile</option>
+                                                </select>
                                 </div>
            </div>
 </div>
@@ -490,14 +512,53 @@ function userIconSelectPanel(){
 
 <style>
 
+@media screen and (max-width: 600px) {
+   .menusSelectors , .item_dash , .urlUser  , .inputUser{
+     width:80vw !important;
+   }
+   .btn-validate-menuCustom{
+     display:flex !important;
+     width: 80vw !important;
+       background-color: 'red';
 
-
- input{
-
- }
-.menusSelectors , .item_dash , .urlUser  , .inputUser{
-  width:80vw !important;
+   }
 }
+
+@media screen and (min-width: 601px) and (max-width: 1024px) {
+   .menusSelectors , .item_dash , .urlUser  , .inputUser, .nbIconesPanel, .selectMenuMobile, .checkboxWebViewMenu{
+     width:80vw !important;
+     height: 20vh !important;
+   }
+   .item_dash{
+     margin-top:2vh;
+   }
+   .btn-validate-menuCustom{
+     display:flex !important;
+     width: 80vw !important;
+       background-color: 'red';
+
+   }
+
+}
+
+@media screen and (min-width: 1025px) {
+   .menusSelectors , .item_dash , .urlUser  , .inputUser, .nbIconesPanel, .selectMenuMobile, .checkboxWebViewMenu{
+     width:80vw !important;
+      height: 20vh !important;
+   }
+   .item_dash{
+     margin-top:2vh;
+   }
+   .btn-validate-menuCustom{
+     display:flex !important;
+     width: 80vw !important;
+       background-color: 'red';
+
+   }
+}
+
+
+
 
 select, input{
   height:7vh !important;
@@ -522,13 +583,12 @@ select, input{
 .btn-chooseIcon-panel{
   font-size: 12px;
 }
-
-.btn-validate-menuCustom{
+/*-validate-menuCustom{
   position:absolute;
   bottom : 0;
   width: 80vw;
 
-}
+}*/
 
 .btn-validate-menuCustom:active {
   background-color: #93C927;

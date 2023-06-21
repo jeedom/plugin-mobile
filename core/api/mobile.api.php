@@ -158,11 +158,12 @@ if($jsonrpc->getMethod() == 'getJson'){
     $_USER_GLOBAL->setOptions('registerDevice', $registerDevice);
     $_USER_GLOBAL->save();
     log::add('mobile', 'debug', 'RDK :' . $rdk);
-	log::add('mobile', 'debug', 'Demande du GetJson');
+	 log::add('mobile', 'debug', 'Demande du GetJson');
 	$idBox = jeedom::getHardwareKey();
 	$return = array();
   	/* -------- MOBILE FIRST ------- */
   	log::add('mobile', 'debug', 'Creation du retour de base pour l app');
+	$return[$idBox]['userRights'] = $_USER_GLOBAL->getProfils();
 	$return[$idBox]['apikeyUser'] = $_USER_GLOBAL->getHash();
 	$return[$idBox]['configs'] = 'undefined';
 	$return[$idBox]['externalIp'] = network::getNetworkAccess('external');

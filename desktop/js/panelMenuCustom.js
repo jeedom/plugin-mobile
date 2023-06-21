@@ -41,6 +41,8 @@
        for (let i = 1; i < parseInt(nbIconesPanel) + 1; i++) {
            let typeObject = document.querySelector(`.icon${i}`).getAttribute('selectName');
             let entireSelect = document.querySelector(`.icon${i}`).getAttribute('selectNameEntire');
+            let webviewType = document.querySelector(`.icon${i}`).getAttribute('webviewType');
+            document.getElementById(`checkboxWebViewMenu${i}`).value = webviewType;
             if(entireSelect.includes(typeObject)) {
               if(typeObject != 'home' && typeObject != 'overview' && typeObject != 'health' && typeObject != 'timeline'){
                 if(typeObject == 'url'){
@@ -133,11 +135,13 @@ function saveMenu(iconesPanel, eqLogicId){
     var iconName = {};
     var urlUser = {};
     var selectNameMenu = {};
+    var webViewType = {}
 
     for (let i = 1; i < nbIconesPanel + 1; i++) {
 
       let objectSelected = document.getElementById(`typeMenu${i}`).value;
       inputChosen[i] = document.getElementById(`inputUser${i}`).value;
+      webViewType[i] = document.getElementById(`checkboxWebViewMenu${i}`).value;
       if (objectSelected == 'overview'){
           selectNameMenu[i] = 'overview';
       }else if(objectSelected == 'health'){
@@ -168,7 +172,7 @@ function saveMenu(iconesPanel, eqLogicId){
           if(urlUser[i]  === undefined ) {
        urlUser[i] = 'none';
       }
-      arrayMenusElements[j].push(selectNameMenu[i], inputChosen[i]  , iconName[i], urlUser[i])
+      arrayMenusElements[j].push(selectNameMenu[i], inputChosen[i]  , iconName[i], urlUser[i], webViewType[i])
       j++;
 
      }
@@ -224,8 +228,6 @@ function saveMenu(iconesPanel, eqLogicId){
 
 btnMenu.addEventListener('click', function() {
 let iconesPanel = mainContainer.getAttribute('nbIconesPanel');
-console.log('iicoocnci')
-console.log(iconesPanel)
  saveMenu(iconesPanel, eqLogicId)
  this.innerHTML = ''
  this.innerHTML = 'Menu Validé'

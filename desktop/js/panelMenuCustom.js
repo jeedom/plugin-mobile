@@ -148,6 +148,7 @@ function saveMenu(iconesPanel, eqLogicId){
         selectNameMenu[i]  = 'health';
       }else if(objectSelected == 'home'){
         selectNameMenu[i]  = 'home';
+        webViewType[i] = 'WebviewMobile';
       }else if(objectSelected == 'timeline'){
           selectNameMenu[i] = 'timeline';
      }else if(objectSelected == 'url'){

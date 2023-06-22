@@ -1043,7 +1043,7 @@ public static function deleteFileImg(){
 											}else if($objectId == 'overview'){
 													${ 'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=overview";
 											}else if($objectId == 'home'){
-													${ 'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=home";
+													${ 'tabUrl' . $i} =  "/index.php?v=m&p=home";
 											}else if($objectId == 'health'){
 													${ 'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=health";
 											}

@@ -1001,7 +1001,7 @@ public static function deleteFileImg(){
 			for($i=1;$i<5; $i++){
 				            $webviewUrl = '';
 				            $isActive = true;
-										$webview = $eqLogic->getConfiguration('checkboxWebViewMenu'.$i);
+										$webview = $eqLogic->getConfiguration('checkboxWebViewMenu'.$i, 'WebviewMobile');
 										if($webview == 'WebviewDesktop'){
 											$webviewUrl = 'd';
 										}else if($webview == 'WebviewMobile'){

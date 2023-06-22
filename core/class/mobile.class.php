@@ -677,7 +677,8 @@ class mobile extends eqLogic {
 			],
 			'payload' => [
 				'aps' => [
-					'contentAvailable' => true,
+					'content-available' => true,
+                  	'mutable-content' => true,
 					'sound' => [
 						'name' => 'default',
 						'critical' => $critical
@@ -746,6 +747,7 @@ class mobile extends eqLogic {
           	$url = config::byKey('service::cloud::url','core','https://cloud.jeedom.com').'/service/fcm';
 			$options = [
 				'contentAvailable' => true,
+				'mutableContent' => true,
 				'priority' => 'high',
 				'collapseKey' => strval($publish[data][idNotif])
 			];

@@ -76,6 +76,42 @@ function createMobile($params){
 
 }
 
+function checkDateMenu($menu, $mobile){
+    $dateMobile = $mobile->getConfiguration('DateMenu', 'pasdedate');
+		$dateMenuFromApp = $menu['date'];
+		if(isset($dateMobile) && isset($menu['date'])){
+			if($dateMobile < $dateMenuFromApp){
+				saveMenuFromAppV2($menu, $mobile);
+			}
+		}else{
+			return;
+		}
+}
+
+
+function saveMenuFromAppV2($menu, $mobile){
+	if(is_object($mobile)){
+		$count = 0;
+			$i=1;
+		foreach ($menu as $key => $value) {
+		    if (isset($value['active']) && $value['active'] === true) {
+		        $count++;
+						if($value['typeObject'] != 'dashboard' || $value['typeObject'] == 'views' || $value['typeObject'] == 'plan' || $value['typeObject'] != 'panel'){
+							$mobile->setConfiguration('selectNameMenu'.$i, $value['typeObject']);
+						}else{
+							$mobile->setConfiguration('selectNameMenu'.$i, $value['objectId'].'_'.$value['typeObject']);
+						}
+						$mobile->setConfiguration('renameIcon'.$i, $value['name']);
+						$mobile->setConfiguration('spanIcon'.$i, 'icon '.$value['icon']['type'].'-'.$value['icon']['name']);
+
+		    }
+				$i++;
+		}
+		$mobile->setConfiguration('nbIcones', $count);
+   	$mobile->save();
+	}
+}
+
 $params = $jsonrpc->getParams();
 
 log::add('mobile', 'debug', 'Appel API Mobile > ' . $jsonrpc->getMethod());
@@ -89,6 +125,7 @@ if($jsonrpc->getMethod() == 'setConfigs'){
 	//log::add('mobile', 'debug', 'APRAMS > ' . json_encode($params));
   	$configs = $params['configs'];
   	$menu = $configs['menu'];
+
   	$notification = $configs['notification'];
 
   	log::add('mobile', 'debug', 'configs > ' . json_encode($configs));
@@ -117,7 +154,8 @@ if($jsonrpc->getMethod() == 'setConfigs'){
 
       }
      $mobile->save();
-
+		 // TEMPORAIREMENT DESACTIVE 
+		 //checkDateMenu($menu, $mobile);
 		 $geolocs = $params['geolocs'];
 		 if($geolocs){
 			 if($geolocs != []){
@@ -163,6 +201,40 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$return = array();
   	/* -------- MOBILE FIRST ------- */
   	log::add('mobile', 'debug', 'Creation du retour de base pour l app');
+		//$objectsDashboard = ['ids' => [], 'names' => []];
+		$objectsDashboard = [];
+		foreach(jeeObject::all() as $object){
+			  $obArray = utils::o2a($object);
+				$objectId = $obArray['id'];
+				$objectName = $obArray['name'];
+				$objectsDashboard[$objectId] =  $objectName;
+		}
+	$return[$idBox]['informations']['objects']['dashboard'] = $objectsDashboard;
+
+	//$objectsViews = ['ids' => [], 'names' => []];
+	$objectsViews = [];
+	foreach(view::all() as $object){
+			$obArray = utils::o2a($object);
+			$objectId = $obArray['id'];
+			$objectName = $obArray['name'];
+			$objectsViews[$objectId] =  $objectName;
+		//	array_push($objectsViews['ids'], $objectId);
+			//array_push($objectsViews['names'], $objectName);
+	}
+  $return[$idBox]['informations']['objects']['views'] = $objectsViews;
+
+	$objectsPlan = [];
+	//$objectsPlan = ['ids' => [], 'names' => []];
+	foreach(planHeader::all() as $object){
+			$obArray = utils::o2a($object);
+			$objectId = $obArray['id'];
+			$objectName = $obArray['name'];
+			$objectsPlan[$objectId] =  $objectName;
+			//array_push($objectsPlan['ids'], $objectId);
+		//	array_push($objectsPlan['names'], $objectName);
+	}
+	$return[$idBox]['informations']['objects']['plan'] = $objectsPlan;
+
 	$return[$idBox]['userRights'] = $_USER_GLOBAL->getProfils();
 	$return[$idBox]['apikeyUser'] = $_USER_GLOBAL->getHash();
 	$return[$idBox]['configs'] = 'undefined';
@@ -186,7 +258,13 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$changeLogs = [];
 	$healthPlugins = [];
 	$deamons_infos = [];
+	$objectsPanel = [];
+	//$objectsPanel = ['ids' => [], 'names' => []];
 	foreach ((plugin::listPlugin()) as $plugin) {
+					$obArray = utils::o2a($plugin);
+					$objectId = $obArray['id'];
+					$objectName = $obArray['name'];
+					$objectsPanel[$objectId] =  $objectName;
 	      	$update = $plugin->getUpdate();
 					if(is_object($update)){
 						  $pluginUpdateArray = utils::o2a($update);
@@ -202,6 +280,7 @@ if($jsonrpc->getMethod() == 'getJson'){
 						  array_push($arrayPlugins, $pluginUpdateArray);
 					}
   }
+	$return[$idBox]['informations']['objects']['panel'] = $objectsPanel;
 	sleep(1);
   $coreData = [];
   $resultCore = utils::o2a(update::byLogicalId('jeedom'));

@@ -954,6 +954,8 @@ public static function deleteFileImg(){
                       }
 								 $i++;
 			 }
+			 log::add('mobile','debug','SAVEMENU >>>>> '.time());
+			 $eqLogic->setConfiguration('DateMenu', time());
        $eqLogic->save();
 			 if($checkDefault == 'true'){
 				//	$eqLogic->setConfiguration('checkdefaultID', 'yes');
@@ -1010,6 +1012,7 @@ public static function deleteFileImg(){
 											$webviewUrl = 'm';
 										}
                     ${ 'tabIconName' . $i} = $eqLogic->getConfiguration('spanIcon'.$i , 'none');
+										log::add('mobile','debug','CHANGETABICON '.${ 'tabIconName' . $i} );
                     config::save('icon'.$i.'NoCut', ${ 'tabIconName' . $i} , 'mobile');
                     if(${ 'tabIconName' . $i} != 'none'){
                       $arrayIcon = explode(' ', ${ 'tabIconName' . $i});

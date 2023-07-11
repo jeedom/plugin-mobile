@@ -672,17 +672,21 @@ class mobile extends eqLogic {
 			'headers' => [
 				'apns-priority' => '10',
 				'apns-collapse-id' => strval($idNotif),
-				//'apns-push-type' => 'alert',
-				'apns-topic' => '4G374KJ6HT.com.jeedom.jeedomobile',
+              	'apns-push-type' => 'alert',
+              	'apns-topic' => 'com.jeedom.jeedomobile'
 			],
 			'payload' => [
 				'aps' => [
-					'content-available' => true,
-                  	'mutable-content' => true,
+					'content-available' => 1,
 					'sound' => [
 						'name' => 'default',
 						'critical' => $critical
-					]
+					],
+                  	'alert' => [
+                    	'subtitle' => config::byKey('name'),
+                      	'title' => $titre,
+                      	'body' => $message
+                    ]
 				],
 				'notifee_options' => [
 					'ios' => [
@@ -696,13 +700,12 @@ class mobile extends eqLogic {
 					]
 				]
 				]
+              	
 			];
 
 
               if($photo != null){
                  $android['data']['image'] = $photo;
-				 $notification['image'] = $photo;
-				 $apns['payload']['aps']['launch-image'] = $photo;
                  $apns['payload']['notifee_options']['image'] = $photo;
                  $apns['payload']['notifee_options']['ios']['attachments'] = [
                    [
@@ -723,7 +726,6 @@ class mobile extends eqLogic {
 				  'token' => $token,
 				  'data' => $data,
 				  'apns' => $apns,
-				  'notification' => $notification
 				];
 			}
 	     }

@@ -56,7 +56,7 @@ if(typeof jeeDialog !== 'undefined'){
     })
   })
 
-  document.querySelector('#bt_customMenu').addEventListener('click', function(event) {
+  document.querySelector('#bt_customMenu')?.addEventListener('click', function(event) {
     jeedom.version({
     success: function(version) {
       if(version >= '4.4.0'){

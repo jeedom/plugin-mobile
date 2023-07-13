@@ -700,7 +700,7 @@ class mobile extends eqLogic {
 					]
 				]
 				]
-              	
+
 			];
 
 
@@ -751,7 +751,7 @@ class mobile extends eqLogic {
 				'contentAvailable' => true,
 				'mutableContent' => true,
 				'priority' => 'high',
-				'collapseKey' => strval($publish[data][idNotif])
+				'collapseKey' => strval($publish['data']['idNotif'])
 			];
 
             $post = ['message' => $publish, 'options' => $options];
@@ -993,15 +993,17 @@ public static function deleteFileImg(){
  }
 
 	public static function configMenuCustom($eqId){
-		$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
-										"tab1":{"active":true,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
-										"tab2":{"active":true,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
-										"tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}}';
+		$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home","objectType":"home","mobile":"m","objectId" : ""},"type":"WebviewApp"},
+										"tab1":{"active":true,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview","objectType":"overview","mobile":"m","objectId" : ""},"type":"WebviewApp"},
+										"tab2":{"active":true,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health","objectType":"health","mobile":"m","objectId" : ""},"type":"WebviewApp"},
+										"tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1","objectType":"home","mobile":"m","objectId" : ""},"type":"WebviewApp"}}';
 		$defaultMenuArray = json_decode($defaultMenuJson, true);
 	  $eqLogic = eqLogic::byId($eqId);
 		if(is_object($eqLogic)){
 			$nbIcones = $eqLogic->getConfiguration('nbIcones', 3);
 			$arrayElements = array();
+		/*	$eqLogic->setConfiguration('DateMenu', time());
+			$eqLogic->save();*/
 			$j = 0;
       $count = 1;
 			for($i=1;$i<5; $i++){
@@ -1032,11 +1034,18 @@ public static function deleteFileImg(){
                       ${ 'tabRenameInput' . $i} = 'Accueil';
                     }
                     $objectId = $eqLogic->getConfiguration('selectNameMenu'.$i);
+											//log::add('mobile','debug', 'OBECTIDCUSTOMMENU : ' .	$objectId );
                     if($objectId && $objectId != -1 && $objectId != 'none' && $objectId != 'url'){
+										//	$typeObject;
 											if($objectId != 'overview' && $objectId != 'health' && $objectId != 'home' && $objectId != 'timeline'){
+
 													$arrayObjects = explode('_', $objectId);
 													$objectId = $arrayObjects[0];
 													$typeObject = $arrayObjects[1];
+													$idUrl =  $objectId;
+													${ 'typeObject' . $i} = $typeObject;
+													${ 'typewebviewurl' . $i} = $webviewUrl;
+													${ 'typeobjectId' . $i} = $idUrl;
 													if($typeObject == 'view'){
 														 ${ 'tabUrl' . $i} = "/index.php?v={$webviewUrl}&p={$typeObject}&view_id={$objectId}";
 													}else if($typeObject == 'dashboard'){
@@ -1048,34 +1057,56 @@ public static function deleteFileImg(){
 																log::add('mobile','debug', 'PANEL : ' .	${ '$tabUrl' . $i});
 													}
 											}else if($objectId == 'overview'){
+											 	 ${ 'typeObject' . $i} = $objectId;
+											  	${ 'typewebviewurl' . $i} = $webviewUrl;
+												  ${ 'typeobjectId' . $i} = '';
 													${ 'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=overview";
 											}else if($objectId == 'home'){
+												 log::add('mobile','debug','HOHMHOHO');
+												${ 'typeObject' . $i} = $objectId;
+												 ${ 'typewebviewurl' . $i} = $webviewUrl;
+												 ${ 'typeobjectId' . $i} = '';
 													${ 'tabUrl' . $i} =  "/index.php?v=m&p=home";
+												//	 log::add('mobile','debug','HOHMHOHO   '.${ 'tabUrl' . $i});
 											}else if($objectId == 'health'){
+												${ 'typeObject' . $i} = $objectId;
+												 ${ 'typewebviewurl' . $i} = $webviewUrl;
+												 ${ 'typeobjectId' . $i} = '';
 													${ 'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=health";
 											}
 											else if($objectId == 'timeline'){
+												${ 'typeObject' . $i} = $objectId;
+												 ${ 'typewebviewurl' . $i} = $webviewUrl;
+												 ${ 'typeobjectId' . $i} = '';
 													${ 'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=timeline";
 											}
                     }else if($objectId == 'url' && $eqLogic->getConfiguration('urlUser'.$i) != 'http://www.'){
                       ${ 'tabUrl' . $i} = $eqLogic->getConfiguration('urlUser'.$i);
                     }else{
+											${ 'typeObject' . $i} = $objectId;
+											 ${ 'typewebviewurl' . $i} = 'm';
+											 ${ 'typeobjectId' . $i} = '';
                       ${ 'tabUrl' . $i} = '/index.php?v=m&app_mode=1';
                     }
 				   if($count > intval($nbIcones)){
 						 $isActive = false;
 					 }
+					  log::add('mobile','debug','Construction jsonTemplate >>>');
                     $jsonTemplate = array('active' => $isActive,
                                           'icon' => ['name' =>${ 'tabIconName' . $i},
                                                      'type' => ${ 'tabLibName' . $i}],
                                           'name' => ${ 'tabRenameInput' . $i} ,
-                                          'options' => ['uri' => ${ 'tabUrl' . $i} ],
+                                          'options' => ['uri' => ${ 'tabUrl' . $i},
+																					 							'objectType' => ${ 'typeObject' . $i},
+																												'mobile' =>  ${ 'typewebviewurl' . $i},
+																												'objectId' => ${ 'typeobjectId' . $i}
+																												],
                                           'type' =>  strpos(${ 'tabUrl' . $i}, 'www') !== false ? 'urlwww' : 'WebviewApp' );
                     $arrayElements['tab'.$j] =  $jsonTemplate;
                     $j++;
                     $count++;
 			}
-		  log::add('mobile','debug','JSONTEMPLATEARRAY :'.json_encode($arrayElements));
+		  log::add('mobile','debug','Function MobileconfigMenuCustom :'.json_encode($arrayElements));
 			if(count($arrayElements) == 4){
 					 $j = 0;
 					for($i=0;$i < 4; $i++){

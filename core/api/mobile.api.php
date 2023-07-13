@@ -81,7 +81,10 @@ function checkDateMenu($menu, $mobile){
 		$dateMenuFromApp = $menu['date'];
 		if(isset($dateMobile) && isset($menu['date'])){
 			if($dateMobile < $dateMenuFromApp){
+				log::add('mobile','debug','SAVE MENU DEPUIS L APP');
 				saveMenuFromAppV2($menu, $mobile);
+			}else{
+				log::add('mobile','debug','SAVE MENU DEPUIS LE PLUGIN');
 			}
 		}else{
 			return;
@@ -90,20 +93,22 @@ function checkDateMenu($menu, $mobile){
 
 
 function saveMenuFromAppV2($menu, $mobile){
+	log::add('mobile','debug','MENU_SAVE_FROM_APPV2 ' .json_encode($menu));
 	if(is_object($mobile)){
 		$count = 0;
 			$i=1;
-		foreach ($menu as $key => $value) {
+		foreach ($menu as $key => $value){
 		    if (isset($value['active']) && $value['active'] === true) {
 		        $count++;
-						if($value['typeObject'] != 'dashboard' || $value['typeObject'] == 'views' || $value['typeObject'] == 'plan' || $value['typeObject'] != 'panel'){
-							$mobile->setConfiguration('selectNameMenu'.$i, $value['typeObject']);
+
+						if($value['options']['objectType'] != 'dashboard' && $value['options']['objectType'] != 'views' &&
+						  $value['options']['objectType'] != 'plan' && $value['options']['objectType'] != 'panel'){
+							$mobile->setConfiguration('selectNameMenu'.$i, $value['options']['objectType']);
 						}else{
-							$mobile->setConfiguration('selectNameMenu'.$i, $value['objectId'].'_'.$value['typeObject']);
+							$mobile->setConfiguration('selectNameMenu'.$i, $value['options']['objectId'].'_'.$value['options']['objectType']);
 						}
 						$mobile->setConfiguration('renameIcon'.$i, $value['name']);
 						$mobile->setConfiguration('spanIcon'.$i, 'icon '.$value['icon']['type'].'-'.$value['icon']['name']);
-
 		    }
 				$i++;
 		}
@@ -154,8 +159,8 @@ if($jsonrpc->getMethod() == 'setConfigs'){
 
       }
      $mobile->save();
-		 // TEMPORAIREMENT DESACTIVE 
-		 //checkDateMenu($menu, $mobile);
+		 // TEMPORAIREMENT DESACTIVE
+		 checkDateMenu($menu, $mobile);
 		 $geolocs = $params['geolocs'];
 		 if($geolocs){
 			 if($geolocs != []){
@@ -175,7 +180,7 @@ function handleVersionJeedomMenu(){
 		$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
 									 "tab1":{"active":false,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
 									 "tab2":{"active":false,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
-									 "tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}}';
+									 "tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"}}';
 	 $defaultMenuArray = json_decode($defaultMenuJson, true);
   	return $defaultMenuArray;
 }
@@ -201,7 +206,6 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$return = array();
   	/* -------- MOBILE FIRST ------- */
   	log::add('mobile', 'debug', 'Creation du retour de base pour l app');
-		//$objectsDashboard = ['ids' => [], 'names' => []];
 		$objectsDashboard = [];
 		foreach(jeeObject::all() as $object){
 			  $obArray = utils::o2a($object);
@@ -210,31 +214,23 @@ if($jsonrpc->getMethod() == 'getJson'){
 				$objectsDashboard[$objectId] =  $objectName;
 		}
 	$return[$idBox]['informations']['objects']['dashboard'] = $objectsDashboard;
-
-	//$objectsViews = ['ids' => [], 'names' => []];
 	$objectsViews = [];
 	foreach(view::all() as $object){
 			$obArray = utils::o2a($object);
 			$objectId = $obArray['id'];
 			$objectName = $obArray['name'];
 			$objectsViews[$objectId] =  $objectName;
-		//	array_push($objectsViews['ids'], $objectId);
-			//array_push($objectsViews['names'], $objectName);
 	}
   $return[$idBox]['informations']['objects']['views'] = $objectsViews;
 
 	$objectsPlan = [];
-	//$objectsPlan = ['ids' => [], 'names' => []];
 	foreach(planHeader::all() as $object){
 			$obArray = utils::o2a($object);
 			$objectId = $obArray['id'];
 			$objectName = $obArray['name'];
 			$objectsPlan[$objectId] =  $objectName;
-			//array_push($objectsPlan['ids'], $objectId);
-		//	array_push($objectsPlan['names'], $objectName);
 	}
 	$return[$idBox]['informations']['objects']['plan'] = $objectsPlan;
-
 	$return[$idBox]['userRights'] = $_USER_GLOBAL->getProfils();
 	$return[$idBox]['apikeyUser'] = $_USER_GLOBAL->getHash();
 	$return[$idBox]['configs'] = 'undefined';
@@ -259,7 +255,6 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$healthPlugins = [];
 	$deamons_infos = [];
 	$objectsPanel = [];
-	//$objectsPanel = ['ids' => [], 'names' => []];
 	foreach ((plugin::listPlugin()) as $plugin) {
 					$obArray = utils::o2a($plugin);
 					$objectId = $obArray['id'];
@@ -273,7 +268,6 @@ if($jsonrpc->getMethod() == 'getJson'){
 							    $deamons_infos[$plugin->getId()] = $plugin->deamon_info();
 							}else{
 								$deamons_infos[$plugin->getId()] = array('launchable_message' => 'nodemon', 'launchable' => 'nodemon', 'state' => 'nodemon', 'log' => 'nodemon', 'auto' => 0);
-								//array('launchable_message' => '', 'launchable' => 'nok', 'state' => 'nok', 'log' => 'nok', 'auto' => 0)
 							}
 							$changeLogs[$arrayDataPlugins['id']]['changelog'] = $arrayDataPlugins['changelog'];
 						  $changeLogs[$arrayDataPlugins['id']]['changelog_beta'] = $arrayDataPlugins['changelog_beta'];
@@ -281,6 +275,17 @@ if($jsonrpc->getMethod() == 'getJson'){
 					}
   }
 	$return[$idBox]['informations']['objects']['panel'] = $objectsPanel;
+
+
+
+
+
+ 	$categories = [];
+	foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
+			$categories[$value['name']] =  $value['icon'];
+	}
+	$return[$idBox]['informations']['objects']['categories'] = $categories;
+
 	sleep(1);
   $coreData = [];
   $resultCore = utils::o2a(update::byLogicalId('jeedom'));

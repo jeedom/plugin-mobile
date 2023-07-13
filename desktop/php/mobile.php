@@ -21,7 +21,7 @@ $plugin_widget = mobile::$_pluginWidget;
 					<span>{{Configuration}}</span>
 			</div>
 			   <?php if(jeedom::version() >= '4.4.0'){
-								echo '<div class="cursor eqLogicAction logoSecondary" data-action="bt_customMenu" id="bt_customMenu">';
+						/*		echo '<div class="cursor eqLogicAction logoSecondary" data-action="bt_customMenu" id="bt_customMenu">';
 								echo '<i class="fas icon jeedomapp-plugin"></i><br>';
 								echo '<span >{{Menu Custom}}</span>';
 								echo '</div>';
@@ -29,7 +29,7 @@ $plugin_widget = mobile::$_pluginWidget;
 									echo '<div style="color:orange;" class="cursor eqLogicAction logoSecondary" data-action="bt_customMenu" id="bt_customMenu">';
 									echo '<i class="fas icon jeedomapp-plugin"></i><br>';
 									echo '<span style="color:orange;">{{Menu Custom}}</span>';
-									echo '</div>';
+									echo '</div>';*/
 								}
 				?>
 
@@ -47,7 +47,7 @@ $plugin_widget = mobile::$_pluginWidget;
 			<input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
 			<div class="input-group-btn">
 				<a id="bt_resetSearch" class="btn" style="width:30px"><i class="fas fa-times"></i></a>
-			
+
 				<a class="btn hidden roundedRight" id="bt_pluginDisplayAsTable" data-coreSupport="1" data-state="0"><i class="fas fa-grip-lines"></i></a>
 			</div>
 		</div>

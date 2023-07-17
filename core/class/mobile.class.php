@@ -1080,7 +1080,10 @@ public static function deleteFileImg(){
 												 ${ 'typeobjectId' . $i} = '';
 													${ 'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=timeline";
 											}
-                    }else if($objectId == 'url' && $eqLogic->getConfiguration('urlUser'.$i) != 'http://www.'){
+                    }else if($objectId == 'url'){
+											${ 'typeObject' . $i} = $objectId;
+											 ${ 'typewebviewurl' . $i} = $webviewUrl;
+											 ${ 'typeobjectId' . $i} = 'url';
                       ${ 'tabUrl' . $i} = $eqLogic->getConfiguration('urlUser'.$i);
                     }else{
 											${ 'typeObject' . $i} = $objectId;

@@ -103,7 +103,17 @@ function saveMenuFromAppV2($menu, $mobile){
 
 						if($value['options']['objectType'] != 'dashboard' && $value['options']['objectType'] != 'views' &&
 						  $value['options']['objectType'] != 'plan' && $value['options']['objectType'] != 'panel'){
+
 							$mobile->setConfiguration('selectNameMenu'.$i, $value['options']['objectType']);
+              if($value['options']['objectType'] == 'url'){
+								    if($value['options']['objectId'] != ''){
+												$mobile->setConfiguration('urlUser'.$i, $value['options']['objectId']);
+										}else{
+												$mobile->setConfiguration('urlUser'.$i, 'https://www.jeedom.com/fr/');
+										}
+
+							}
+
 						}else{
 							$mobile->setConfiguration('selectNameMenu'.$i, $value['options']['objectId'].'_'.$value['options']['objectType']);
 						}
@@ -282,7 +292,7 @@ if($jsonrpc->getMethod() == 'getJson'){
 
  	$categories = [];
 	foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
-			$categories[$value['name']] =  $value['icon'];
+			$categories[$value['icon']] =  $value['name'];
 	}
 	$return[$idBox]['informations']['objects']['categories'] = $categories;
 

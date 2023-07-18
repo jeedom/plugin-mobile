@@ -83,7 +83,7 @@ if(typeof jeeDialog !== 'undefined'){
     })
   })
 
-  document.querySelector('#bt_startTuto').addEventListener('click', function(event) {
+  document.querySelector('#bt_startTuto')?.addEventListener('click', function(event) {
     jeeDialog.dialog({
       id: 'startTuto',
       title: "{{Bien demarrer}}",

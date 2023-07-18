@@ -37,10 +37,10 @@ $plugin_widget = mobile::$_pluginWidget;
 				         <i class="fa fa-qrcode"></i><br>
 				    	 	 <span>{{QR Code}}</span>
 			      </div>
-						<div style="color:#94CA02;"class="cursor eqLogicAction logoSecondary" data-action="bt_qrCodev2" id="bt_startTuto">
+				 <!-- 		<div style="color:#94CA02;"class="cursor eqLogicAction logoSecondary" data-action="bt_qrCodev2" id="bt_startTuto">
 								 <i class="fas fa-book"></i><br>
 								 <span>{{Documentation APP V2}}</span>
-						</div>
+						</div> -->
 		</div>
 		<legend><i class="icon techno-listening3"></i> {{Mes Téléphones Mobiles}}</legend>
 		<div class="input-group" style="margin:5px;">

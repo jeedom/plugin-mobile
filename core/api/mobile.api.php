@@ -611,9 +611,9 @@ if($jsonrpc->getMethod() == "qrcodemethod"){
 
 if($jsonrpc->getMethod() == "nfc"){
 	log::add('mobile', 'debug', 'NFC > '.json_encode($params));
-	if($params['payload']){
-		log::add('mobile', 'debug', 'valeur du NFC > '.json_encode($params['payload']));
-        	mobile::cmdForApi($params['Iq'],"nfc",json_encode($params['payload']),"nfc");
+	if($params['appInfos']['payload']){
+		log::add('mobile', 'debug', 'valeur du NFC > '.json_encode($params['appInfos']['payload']));
+        	mobile::cmdForApi($params['Iq'],"nfc",json_encode($params['appInfos']['payload']),"nfc");
 		$jsonrpc->makeSuccess();
 	}
 }

@@ -670,14 +670,14 @@ class mobile extends eqLogic {
 
 			$apns = [
 			'headers' => [
-				'apns-priority' => '10',
+				'apns-priority' => '5',
 				'apns-collapse-id' => strval($idNotif),
               	'apns-push-type' => 'alert',
               	'apns-topic' => 'com.jeedom.jeedomobile'
 			],
 			'payload' => [
 				'aps' => [
-					'content-available' => 1,
+					'content-available' => true,
 					'sound' => [
 						'name' => 'default',
 						'critical' => $critical

@@ -572,28 +572,33 @@ if ($jsonrpc->getMethod() == 'geolocDel'){
 }
 
 if($jsonrpc->getMethod() == 'mobile::geoloc'){
-      log::add('mobile', 'debug', 'event > '.$params['event']);
+	log::add('mobile', 'debug', '|-----------------------------------');
+	log::add('mobile', 'debug', '|-GeoLocV2 geofencing --');
+    log::add('mobile', 'debug', '| event > '.$params['event']);
 
-      if($params['event'] == 'geofence'){
-        $geofence = $params['geofence'];
-        log::add('mobile', 'debug', 'event > '.json_encode($geofence));
-				$eqLogicMobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
-				if($eqLogicMobile){
-					  log::add('mobile', 'debug', 'EQLOGICEXIST > ');
-					  $cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geofence['identifier']);
-					  if(is_object($cmdgeoloc)){
-							  log::add('mobile', 'debug', 'CMDGEOLOC');
-							  if($geofence['action'] == 'ENTER'){
-									 $cmdgeoloc->event(1);
-								}elseif($geofence['action'] == 'EXIT'){
-									$cmdgeoloc->event(0);
-								}
-					  }
+	if($params['event'] == 'geofence'){
+		$geofence = $params['geofence'];
+		log::add('mobile', 'debug', '| event > '.json_encode($geofence));
+		$eqLogicMobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
+		if($eqLogicMobile){
+			log::add('mobile', 'debug', '| Mobile trouvé');
+			$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geofence['identifier']);
+			if(is_object($cmdgeoloc)){
+				log::add('mobile', 'debug', '| commande trouvé');
+				if($geofence['action'] == 'ENTER'){
+					log::add('mobile', 'debug', '| commande passé à 1');
+					$cmdgeoloc->event(1);
+				}elseif($geofence['action'] == 'EXIT'){
+					log::add('mobile', 'debug', '| commande passé à 0');
+					$cmdgeoloc->event(0);
 				}
-      $jsonrpc->makeSuccess();
-      }else{
-      	throw new Exception(__('pas de parametre de geofencing : ', __FILE__));
-      }
+			}
+		}
+	log::add('mobile', 'debug', '|-----------------------------------');
+	$jsonrpc->makeSuccess();
+	}else{
+	throw new Exception(__('pas de parametre de geofencing : ', __FILE__));
+	}
 }
 
 if($jsonrpc->getMethod() == "qrcodemethod"){

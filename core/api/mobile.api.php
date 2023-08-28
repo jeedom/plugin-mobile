@@ -128,24 +128,24 @@ function saveMenuFromAppV2($menu, $mobile){
 }
 
 $params = $jsonrpc->getParams();
-
-log::add('mobile', 'debug', 'Appel API Mobile > ' . $jsonrpc->getMethod());
-log::add('mobile', 'debug', 'paramettres passés > ' . json_encode($params));
+log::add('mobile', 'debug', '|------------------------------------------------------------------------------------------------------|');
+log::add('mobile', 'debug', '|                                   Appel API Mobile > ' . $jsonrpc->getMethod());
+log::add('mobile', 'debug', '| paramettres passés > ' . json_encode($params));
 if($params['Iq']){
-	log::add('mobile', 'debug', 'Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));
+	log::add('mobile', 'debug', '| Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));
 }
-
+log::add('mobile', 'debug', '|-----------------------------------');
 if($jsonrpc->getMethod() == 'setConfigs'){
-	log::add('mobile', 'debug', 'App V2 Demande > ' . $jsonrpc->getMethod());
+	log::add('mobile', 'debug', '| App V2 Demande > ' . $jsonrpc->getMethod());
 	//log::add('mobile', 'debug', 'APRAMS > ' . json_encode($params));
   	$configs = $params['configs'];
   	$menu = $configs['menu'];
 
   	$notification = $configs['notification'];
 
-  	log::add('mobile', 'debug', 'configs > ' . json_encode($configs));
-  	log::add('mobile', 'debug', 'menu > ' . json_encode($menu));
-		log::add('mobile', 'debug', 'notification > ' . json_encode($notification));
+  	log::add('mobile', 'debug', '| configs > ' . json_encode($configs));
+  	log::add('mobile', 'debug', '| menu > ' . json_encode($menu));
+	log::add('mobile', 'debug', '| notification > ' . json_encode($notification));
 
 
   	$mobile = null;

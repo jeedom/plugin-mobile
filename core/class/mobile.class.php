@@ -815,44 +815,41 @@ class mobile extends eqLogic {
 	public static function createCmdGeoLocV2($Iq, $geolocs){
 		log::add('mobile', 'debug', '|-----------------------------------');
 		log::add('mobile', 'debug', '|-GeoLocV2--');
-				$mobile = eqLogic::byLogicalId($Iq, 'mobile');
-				if (is_object($mobile)) {
-					log::add('mobile', 'debug', '| Mobile existant');
-						log::add('mobile', 'debug', '| GEOLOCS > ' .$geolocs);
+		$mobile = eqLogic::byLogicalId($Iq, 'mobile');
+		if (is_object($mobile)) {
+			log::add('mobile', 'debug', '| Mobile existant');
+			log::add('mobile', 'debug', '| GEOLOCS > ' .$geolocs);
 
-						$noExistCmd = 0;
-						$decodedGeolocs = json_decode($geolocs, true);
-						foreach($decodedGeolocs as $index=>$geoloc){
-							log::add('mobile', 'debug', '| index > ' .$index);
-								$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' .$index);
-								if (!is_object($cmdgeoloc)) {
-											$noExistCmd = 1;
-											$cmdgeoloc = new mobileCmd();
-											$cmdgeoloc->setLogicalId('geoloc_' . $index);
-											$cmdgeoloc->setEqLogic_id($mobile->getId());
-											$cmdgeoloc->setType('info');
-											$cmdgeoloc->setSubType('binary');
-											$cmdgeoloc->setIsVisible(1);
-											$cmdgeoloc->setIsHistorized(1);
-								}
-
-									$cmdgeoloc->setName($geoloc['name']);
-									$cmdgeoloc->setConfiguration('latitude', $geoloc['latitude']);
-									$cmdgeoloc->setConfiguration('longitude', $geoloc['longitude']);
-									$cmdgeoloc->setConfiguration('radius', $geoloc['radius']);
-									$cmdgeoloc->save();
-
-									//if($noExistCmd == 1){
-										$cmdgeoloc->event($geoloc['value']);
-										log::add('mobile', 'debug', '| valeur enregistrée > ' .$geoloc['value']);
-									//}
-
-									$noExistCmd = 0;
-						}
-
-			}else{
-					log::add('mobile', 'debug', 'Mobile inexistant');
+			$noExistCmd = 0;
+			$decodedGeolocs = json_decode($geolocs, true);
+			foreach($decodedGeolocs as $index=>$geoloc){
+				log::add('mobile', 'debug', '| index > ' .$index. ' / '.$geoloc['name']);
+				$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' .$index);
+				if (!is_object($cmdgeoloc)) {
+					$noExistCmd = 1;
+					$cmdgeoloc = new mobileCmd();
+					$cmdgeoloc->setLogicalId('geoloc_' . $index);
+					$cmdgeoloc->setEqLogic_id($mobile->getId());
+					$cmdgeoloc->setType('info');
+					$cmdgeoloc->setSubType('binary');
+					$cmdgeoloc->setIsVisible(1);
+					$cmdgeoloc->setIsHistorized(1);
+				}
+				$cmdgeoloc->setName($geoloc['name']);
+				$cmdgeoloc->setConfiguration('latitude', $geoloc['latitude']);
+				$cmdgeoloc->setConfiguration('longitude', $geoloc['longitude']);
+				$cmdgeoloc->setConfiguration('radius', $geoloc['radius']);
+				$cmdgeoloc->save();
+				//if($noExistCmd == 1){
+					$cmdgeoloc->event($geoloc['value']);
+					log::add('mobile', 'debug', '| valeur enregistrée > ' .$geoloc['value']);
+				//}
+				$noExistCmd = 0;
 			}
+			log::add('mobile', 'debug', '|-----------------------------------');
+		}else{
+			log::add('mobile', 'debug', 'Mobile inexistant');
+		}
 
 	}
 

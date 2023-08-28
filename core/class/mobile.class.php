@@ -844,6 +844,7 @@ class mobile extends eqLogic {
 
 									//if($noExistCmd == 1){
 										$cmdgeoloc->event($geoloc['value']);
+										log::add('mobile', 'debug', '| valeur enregistrée > ' .$geoloc['value']);
 									//}
 
 									$noExistCmd = 0;

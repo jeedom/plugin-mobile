@@ -842,9 +842,9 @@ class mobile extends eqLogic {
 									$cmdgeoloc->setConfiguration('radius', $geoloc['radius']);
 									$cmdgeoloc->save();
 
-									if($noExistCmd == 1){
+									//if($noExistCmd == 1){
 										$cmdgeoloc->event($geoloc['value']);
-									}
+									//}
 
 									$noExistCmd = 0;
 						}

@@ -840,10 +840,10 @@ class mobile extends eqLogic {
 				$cmdgeoloc->setConfiguration('longitude', $geoloc['longitude']);
 				$cmdgeoloc->setConfiguration('radius', $geoloc['radius']);
 				$cmdgeoloc->save();
-				//if($noExistCmd == 1){
+				if($noExistCmd == 1){
 					$cmdgeoloc->event($geoloc['value']);
 					log::add('mobile', 'debug', '| valeur enregistrée > ' .$geoloc['value']);
-				//}
+				}
 				$noExistCmd = 0;
 			}
 			log::add('mobile', 'debug', '|-----------------------------------');

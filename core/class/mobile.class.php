@@ -1135,30 +1135,35 @@ public static function deleteFileImg(){
         }
 	}
 
-	public function cmdForApi($Iq,$action,$info,$name = "",$subtype = "string") {
+  /*
+  * Call by
+    - jsonrpc -> nfc
+    - jsonrpc -> qrcodemethod
+  */
+  public function cmdForApi($Iq, $logicalId, $value, $name = "", $subtype = "string") {
 	$mobile = eqLogic::byLogicalId($Iq, 'mobile');
 	if(is_object($mobile)){
-		$cmd = $mobile->getCmd(null, $action);
+		$cmd = $mobile->getCmd(null, $logicalId);
 		if (!is_object($cmd)) {
 			if($name == ""){
-				$name = $action;
+				$name = $logicalId;
 			}
 			$cmd = new mobileCmd();
-			$cmd->setLogicalId($action);
+			$cmd->setLogicalId($logicalId);
 			$cmd->setName($name);
 			$cmd->setOrder(0);
 			$cmd->setEqLogic_id($mobile->getId());
 			$cmd->setType('info');
 			$cmd->setSubType($subtype);
 			$cmd->setIsVisible(1);
-			if($action == 'barrecodemethod'){
+			if (in_array($logicalId, array('barrecodemethod','nfcPayload', 'nfcId'))){
 				$cmd->setConfiguration('repeatEventManagement', 'always');
 			}
 			$cmd->save();
 		}
-		$cmd->event($info);
+		$cmd->event($value);
 	}
-}
+  }
 
 	public function postSave() {
 		$cmdNotif = $this->getCmd(null, 'notif');

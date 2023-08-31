@@ -304,8 +304,8 @@ $plugin_widget = mobile::$_pluginWidget;
 							<th class="hidden-xs" style="min-width:50px;width:70px;">ID</th>
 							<th style="min-width:400px;width:450px;">{{Nom}}</th>
 							<th style="width:400px;">{{Type}}</th>
-							<th style="min-width:260px;">{{Options}}</th>
-							<th>{{Valeur}}</th>
+							<th style="min-width:160px;">{{Options}}</th>
+							<th style="min-width:160px;">{{Valeur}}</th>
 							<th style="min-width:80px;width:140px;">{{Actions}}</th>
 						</tr>
 					</thead>

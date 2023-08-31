@@ -43,7 +43,7 @@ $plugin_widget = mobile::$_pluginWidget;
 			</div> 
 			-->
 		</div>
-		<legend><i class="icon techno-listening3"></i> {{Mes Téléphones Mobiles}}</legend>
+		<legend><i class="fas fa-mobile"></i> {{Mes Téléphones Mobiles}}</legend>
 		<div class="input-group" style="margin:5px;">
 			<input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
 			<div class="input-group-btn">
@@ -76,71 +76,64 @@ $plugin_widget = mobile::$_pluginWidget;
 			?>
 		</div>
 	</div>
-
-	<div class="row row-overflow">
-		<div class="col-xs-12 eqLogicThumbnailDisplay">
-			<legend><i class="fas fa-mobile"></i> {{App V1}}</legend>
-			<div class="eqLogicThumbnailContainer">
-				<div class="cursor eqLogicAction logoPrimary" data-action="add">
-					<i class="fas fa-plus-circle"></i><br>
-					<span>{{Ajouter}}</span>
-				</div>
-				<div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
-					<i class="fas fa-wrench"></i><br>
-					<span>{{Configuration}}</span>
-				</div>
-				<div class="cursor eqLogicAction logoSecondary" data-action="bt_pluguinmobile" id="bt_pluguinmobile">
-					<i class="fas jeedomapp-plugin"></i><br>
-					<span>{{Plugins}}</span>
-				</div>
-				<div class="cursor eqLogicAction logoSecondary" data-action="bt_piecemobile" id="bt_piecemobile">
-					<i class="fas icon jeedomapp-piece-jeedom"></i><br>
-					<span>{{Objets / Pièces}}</span>
-				</div>
-				<div class="cursor eqLogicAction logoSecondary" data-action="bt_piecemobile" id="bt_scenariomobile">
-					<i class="fas icon jeedomapp-scenario-jeedom"></i><br>
-					<span>{{Scénarios}}</span>
-				</div>
-				<div class="cursor eqLogicAction logoSecondary" data-action="bt_healthmobile" id="bt_healthmobile">
-					<i class="fas fa-medkit"></i><br>
-					<span>{{Santé}}</span>
-				</div>
-				<div class="cursor eqLogicAction logoSecondary" data-action="bt_regenConfig" id="bt_regenConfig">
-					<i class="fas fa-cogs"></i><br>
-					<span>{{Régénérer la configuration}}</span>
-				</div>
-
+	<div class="col-xs-12 eqLogicThumbnailDisplay">
+		<legend><i class="fas fa-mobile-alt"></i> {{App V1}}</legend>
+		<div class="eqLogicThumbnailContainer">
+			<div class="cursor eqLogicAction logoPrimary" data-action="add">
+				<i class="fas fa-plus-circle"></i><br>
+				<span>{{Ajouter}}</span>
 			</div>
-			<legend><i class="icon techno-listening3"></i> {{Mes Téléphones Mobiles}}</legend>
-
-
-			<div class="eqLogicThumbnailContainer">
-				<?php
-				foreach ($eqLogics as $eqLogic) {
-					if ($eqLogic->getConfiguration('appVersion', '1') != '2') {
-						$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-						echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
-						$file = 'plugins/mobile/core/img/' . $eqLogic->getConfiguration('type_mobile') . '.png';
-						if (file_exists($file)) {
-							$path = 'plugins/mobile/core/img/' . $eqLogic->getConfiguration('type_mobile') . '.png';
-							echo '<img src="' . $path . '" />';
-						} else {
-							$path = 'plugins/mobile/core/img/mobile_icon.png';
-							echo '<img src="' . $path . '" />';
-						}
-						echo '<br>';
-						echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
-						echo '<span class="hidden hiddenAsCard displayTableRight">';
-						echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Équipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Équipement non visible}}"></i>';
-						echo '</span>';
-						echo '</div>';
-					}
-				}
-				?>
+			<div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
+				<i class="fas fa-wrench"></i><br>
+				<span>{{Configuration}}</span>
+			</div>
+			<div class="cursor eqLogicAction logoSecondary" data-action="bt_pluguinmobile" id="bt_pluguinmobile">
+				<i class="fas jeedomapp-plugin"></i><br>
+				<span>{{Plugins}}</span>
+			</div>
+			<div class="cursor eqLogicAction logoSecondary" data-action="bt_piecemobile" id="bt_piecemobile">
+				<i class="fas icon jeedomapp-piece-jeedom"></i><br>
+				<span>{{Objets/Pièces}}</span>
+			</div>
+			<div class="cursor eqLogicAction logoSecondary" data-action="bt_piecemobile" id="bt_scenariomobile">
+				<i class="fas icon jeedomapp-scenario-jeedom"></i><br>
+				<span>{{Scénarios}}</span>
+			</div>
+			<div class="cursor eqLogicAction logoSecondary" data-action="bt_healthmobile" id="bt_healthmobile">
+				<i class="fas fa-medkit"></i><br>
+				<span>{{Santé}}</span>
+			</div>
+			<div class="cursor eqLogicAction logoSecondary" data-action="bt_regenConfig" id="bt_regenConfig">
+				<i class="fas fa-cogs"></i><br>
+				<span>{{Régénérer la configuration}}</span>
 			</div>
 		</div>
+		<legend><i class="fas fa-mobile"></i> {{Mes Téléphones Mobiles}}</legend>
+		<div class="eqLogicThumbnailContainer">
+			<?php
+			foreach ($eqLogics as $eqLogic) {
+				if ($eqLogic->getConfiguration('appVersion', '1') != '2') {
+					$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+					echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
+					$file = 'plugins/mobile/core/img/' . $eqLogic->getConfiguration('type_mobile') . '.png';
+					if (file_exists($file)) {
+						$path = 'plugins/mobile/core/img/' . $eqLogic->getConfiguration('type_mobile') . '.png';
+						echo '<img src="' . $path . '" />';
+					} else {
+						$path = 'plugins/mobile/core/img/mobile_icon.png';
+						echo '<img src="' . $path . '" />';
+					}
+					echo '<br>';
+					echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+					echo '<span class="hidden hiddenAsCard displayTableRight">';
+					echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Équipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Équipement non visible}}"></i>';
+					echo '</span>';
+					echo '</div>';
+				}
+			}
+			?>
+		</div>
 	</div>
-
 	<div id="div_editSmartphone" class="col-xs-12 eqLogic" style="display: none;">
 		<div class="input-group pull-right" style="display:inline-flex">
 			<span class="input-group-btn">

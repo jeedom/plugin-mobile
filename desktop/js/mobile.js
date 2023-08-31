@@ -315,11 +315,11 @@ function userSelect(idSelect){
             let el = document.querySelector('.qrCodeImg')
             el.innerHTML = '';
             if (data.result == 'internalError') {
-              el.innerHTML = '{{Erreur Pas d\'adresse interne (voir configuration de votre Jeedom !)}}';
+              el.innerHTML = '{{Erreur pas d\'adresse interne (voir configuration de votre Jeedom !)}}';
           }else if(data.result == 'externalError'){
-            el.innerHTML = '{{Erreur Pas d\'adresse externe (voir configuration de votre Jeedom !)}}'
+            el.innerHTML = '{{Erreur pas d\'adresse externe (voir configuration de votre Jeedom !)}}'
           }else if(data.result == 'UserError'){
-            el.innerHTML = '{{Erreur Pas d\'utilisateur selectionné}}'
+            el.innerHTML = '{{Erreur pas d\'utilisateur selectionné}}'
           }else{
             el.innerHTML = '<img src="data:image/png;base64, '+data.result+'" />'
           }

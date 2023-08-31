@@ -315,11 +315,11 @@ function userSelect(idSelect){
             let el = document.querySelector('.qrCodeImg')
             el.innerHTML = '';
             if (data.result == 'internalError') {
-              el.innerHTML = '{{Erreur Pas d\'adresse interne (voir configuration de votre Jeedom !)}}';
+              el.innerHTML = '{{Erreur pas d\'adresse interne (voir configuration de votre Jeedom !)}}';
           }else if(data.result == 'externalError'){
-            el.innerHTML = '{{Erreur Pas d\'adresse externe (voir configuration de votre Jeedom !)}}'
+            el.innerHTML = '{{Erreur pas d\'adresse externe (voir configuration de votre Jeedom !)}}'
           }else if(data.result == 'UserError'){
-            el.innerHTML = '{{Erreur Pas d\'utilisateur selectionné}}'
+            el.innerHTML = '{{Erreur pas d\'utilisateur selectionné}}'
           }else{
             el.innerHTML = '<img src="data:image/png;base64, '+data.result+'" />'
           }
@@ -439,34 +439,42 @@ function addCmdToTable(_cmd) {
         _cmd.configuration = {};
     }
 
-    var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
-    tr += '<td>';
-    tr += '<span class="cmdAttr" data-l1key="id" style="display:none;"></span>';
-    tr += '<input class="cmdAttr form-control input-sm" data-l1key="name" style="width : 140px;" placeholder="{{Nom}}">';
-    tr += '</td>';
+  var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
+    tr += '<td class="hidden-xs">'
+    tr += '<span class="cmdAttr" data-l1key="id"></span>'
+    tr += '</td>'
+    tr += '<td>'
+  	tr += '<div class="input-group">'
+  	tr += '<input class="cmdAttr form-control input-sm roundedLeft" data-l1key="name" placeholder="{{Nom de la commande}}">'
+  	tr += '<span class="input-group-btn"><a class="cmdAction btn btn-sm btn-default" data-l1key="chooseIcon" title="{{Choisir une icône}}"><i class="fas fa-icons"></i></a></span>'
+  	tr += '<span class="cmdAttr input-group-addon roundedRight" data-l1key="display" data-l2key="icon" style="font-size:19px;padding:0 5px 0 0!important;"></span>'
+    tr += '</div>'
     tr += '<td>';
     tr += '<span class="type" type="' + init(_cmd.type) + '">' + jeedom.cmd.availableType() + '</span>';
     tr += '<span class="subType" subType="' + init(_cmd.subType) + '"></span>';
     tr += '</td>';
     tr += '<td>';
+    tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr" data-l1key="isVisible" checked/>{{Afficher}}</label> '
+    tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr" data-l1key="isHistorized" checked/>{{Historiser}}</label> '
+    tr += '<div style="margin-top:7px;">'
+    tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="minValue" placeholder="{{Min}}" title="{{Min}}" style="width:30%;max-width:80px;display:inline-block;margin-right:2px;">'
+    tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="maxValue" placeholder="{{Max}}" title="{{Max}}" style="width:30%;max-width:80px;display:inline-block;margin-right:2px;">'
+    tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="unite" placeholder="Unité" title="{{Unité}}" style="width:30%;max-width:80px;display:inline-block;margin-right:2px;">'
+    tr += '</div>'
+    tr += '<td>';
     tr += '<span class="cmdAttr" data-l1key="htmlstate"></span>';
     tr += '</td>';
     tr += '<td>';
     if (is_numeric(_cmd.id)) {
-        tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fa fa-cogs"></i></a> ';
-        tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fa fa-rss"></i> {{Tester}}</a>';
+      tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
+      tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> {{Tester}}</a>';
     }
     tr += '</td>';
     tr += '<td>';
-    tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr" data-l1key="isVisible" checked/>{{Afficher}}</label> '
-    tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr" data-l1key="isHistorized" checked/>{{Historiser}}</label> '
-    tr += '</td>';
-      tr += '<td>';
-  	if (init(_cmd.logicalId) !== 'notif'){
-    	tr += '<i class="fa fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i>';
+  	if (init(_cmd.logicalId) !== 'notif' && init(_cmd.logicalId) !== 'notifCritical' ){
+    	tr += '<i class="fas fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i>';
     }
     tr += '</td>';
-
     tr += '</tr>';
     $('#table_cmd tbody').append(tr);
     $('#table_cmd tbody tr:last').setValues(_cmd, '.cmdAttr');

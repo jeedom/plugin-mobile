@@ -116,7 +116,7 @@
         "ID": "ID",
         "Scénario": "Cenas",
         "Transmis": "Transmitido",
-        "Actions": "Ações",
+        "Actions": "Estoque",
         "Envoyer à l\\'application": "Enviar para a aplicação"
     },
     "plugins\/mobile\/desktop\/modal\/object.mobile.php": {

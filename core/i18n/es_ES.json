@@ -116,7 +116,7 @@
         "ID": "Identificación",
         "Scénario": "Escenario",
         "Transmis": "Transmitido",
-        "Actions": "Comportamiento",
+        "Actions": "Acciones",
         "Envoyer à l\\'application": "Enviar a la solicitud"
     },
     "plugins\/mobile\/desktop\/modal\/object.mobile.php": {

@@ -116,7 +116,7 @@
         "ID": "Id",
         "Scénario": "Scenario",
         "Transmis": "Transmitted",
-        "Actions": "Shares",
+        "Actions": "Actions",
         "Envoyer à l\\'application": "Send to application"
     },
     "plugins\/mobile\/desktop\/modal\/object.mobile.php": {

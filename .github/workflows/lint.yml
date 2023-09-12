@@ -39,6 +39,6 @@ jobs:
         with:
           php_codesniffer: true
           # Optional: Ignore warnings
-          php_codesniffer_args: "-n"
+          php_codesniffer_args: "-n --ignore-annotations ./core ./desktop ./plugin_info"
           black: true
           flake8: true

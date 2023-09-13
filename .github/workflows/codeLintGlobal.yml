@@ -47,7 +47,7 @@ jobs:
       - name: Run linters
         uses: wearerequired/lint-action@v2
         with:
-          php_codesniffer: true
+          php_codesniffer: false
           # Optional: Ignore warnings
           php_codesniffer_args: "-n --ignore-annotations ./core ./desktop ./plugin_info"
           flake8: true

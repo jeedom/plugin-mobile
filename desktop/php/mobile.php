@@ -13,7 +13,7 @@ $plugin_widget = mobile::$_pluginWidget;
 
 <div class="row row-overflow">
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
-		<legend><i class="fas fa-mobile-alt"></i> {{App V2 - VERSION ALPHA PRIVEE SEULEMENT}}</legend>
+		<legend><i class="fas fa-mobile-alt"></i> {{App V2 - (VERSION ALPHA PRIVEE SEULEMENT)}}</legend>
 		<div class="eqLogicThumbnailContainer">
 			<div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
 				<i class="fas fa-wrench"></i><br>
@@ -40,8 +40,11 @@ $plugin_widget = mobile::$_pluginWidget;
 			<div style="color:#94CA02;" class="cursor eqLogicAction logoSecondary" data-action="bt_qrCodev2" id="bt_startTuto">
 				<i class="fas fa-book"></i><br>
 				<span>{{Documentation APP V2}}</span>
-			</div> 
-			-->
+			</div> -->
+			<div class="cursor eqLogicAction logoSecondary" data-action="bt_healthmobile" id="bt_healthmobile">
+				<i class="fas fa-medkit"></i><br>
+				<span>{{Santé}}</span>
+			</div>
 		</div>
 		<legend><i class="fas fa-mobile"></i> {{Mes Téléphones Mobiles}}</legend>
 		<div class="input-group" style="margin:5px;">
@@ -83,10 +86,6 @@ $plugin_widget = mobile::$_pluginWidget;
 				<i class="fas fa-plus-circle"></i><br>
 				<span>{{Ajouter}}</span>
 			</div>
-			<div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
-				<i class="fas fa-wrench"></i><br>
-				<span>{{Configuration}}</span>
-			</div>
 			<div class="cursor eqLogicAction logoSecondary" data-action="bt_pluguinmobile" id="bt_pluguinmobile">
 				<i class="fas jeedomapp-plugin"></i><br>
 				<span>{{Plugins}}</span>
@@ -98,10 +97,6 @@ $plugin_widget = mobile::$_pluginWidget;
 			<div class="cursor eqLogicAction logoSecondary" data-action="bt_piecemobile" id="bt_scenariomobile">
 				<i class="fas icon jeedomapp-scenario-jeedom"></i><br>
 				<span>{{Scénarios}}</span>
-			</div>
-			<div class="cursor eqLogicAction logoSecondary" data-action="bt_healthmobile" id="bt_healthmobile">
-				<i class="fas fa-medkit"></i><br>
-				<span>{{Santé}}</span>
 			</div>
 			<div class="cursor eqLogicAction logoSecondary" data-action="bt_regenConfig" id="bt_regenConfig">
 				<i class="fas fa-cogs"></i><br>

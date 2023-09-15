@@ -20,51 +20,55 @@ if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
 ?>
-<div class="col-lg-12 col-md-12 col-sm-12 eqLogicPluginDisplay" >
-<legend><i class="fas fa-cogs"></i>  {{Scénarios}}
-	<!--<a id="bt_saveScenarios" class="btn btn-sm btn-success pull-right" ><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>-->
-</legend>
+<div class="col-lg-12 col-md-12 col-sm-12 eqLogicPluginDisplay">
+	<legend><i class="fas fa-cogs"></i> {{Scénarios}}
+		<!--<a id="bt_saveScenarios" class="btn btn-sm btn-success pull-right" ><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>-->
+	</legend>
 
-<div>
-	<table id="table_scenarioSummary" class="table table-bordered table-condensed tablesorter" >
-		<thead>
-			<tr>
-				<th>{{ID}}</th>
-				<th>{{Scénario}}</th>
-				<th data-sorter="checkbox" data-filter="false">{{Transmis}}</th>
-				<!--<th data-sorter="false" data-filter="false">{{Actions}}</th>-->
-			</tr>
-		</thead>
-		<tbody>
-			<?php
+	<div>
+		<table id="table_scenarioSummary" class="table table-bordered table-condensed tablesorter">
+			<thead>
+				<tr>
+					<th>{{ID}}</th>
+					<th>{{Scénario}}</th>
+					<th data-sorter="checkbox" data-filter="false">{{Transmis}}</th>
+					<!--<th data-sorter="false" data-filter="false">{{Actions}}</th>-->
+				</tr>
+			</thead>
+			<tbody>
+				<?php
 				$scenarios = scenario::all();
-				foreach ($scenarios as $scenario){
+				foreach ($scenarios as $scenario) {
 					$check = 'unchecked';
 					$scenario_id = $scenario->getId();
-                  	if($scenario->getDisplay('sendToApp', 0) == 1){
-                      $check = 'checked';
-                    }
-					$tr = '<tr data-id="' .$scenario_id.'"><td>'.$scenario_id.'</td>';
-					$tr .= '<td>'.$scenario->getHumanName().'</td>';
-					$tr .= '<td><label><input type="checkbox" class="configuration sendtoapp" value="'.$scenario_id.'" '.$check.' title="{{Envoyer à l\'application}}"/></label></td>';
+					if ($scenario->getDisplay('sendToApp', 0) == 1) {
+						$check = 'checked';
+					}
+					$tr = '<tr data-id="' . $scenario_id . '"><td>' . $scenario_id . '</td>';
+					$tr .= '<td>' . $scenario->getHumanName() . '</td>';
+					$tr .= '<td><label><input type="checkbox" class="configuration sendtoapp" value="' . $scenario_id . '" ' . $check . ' title="{{Envoyer à l\'application}}"/></label></td>';
 					/*$tr .= '<td><a class="btn btn-xs btn-success bt_saveScenario"><i class="fas fa-save"></i></a>';*/
 					$tr .= '</tr>';
 					echo $tr;
-				 }
-			?>
-		</tbody>
-	</table>
-</div>
+				}
+				?>
+			</tbody>
+		</table>
+	</div>
 
-<script>
-	jeedomUtils.initTableSorter();
-	var tableScSummary = $('#table_scenarioSummary')
-	tableScSummary[0].config.widgetOptions.resizable_widths = ['60px', '', '100px']
-	tableScSummary.trigger('applyWidgets')
-	tableScSummary.trigger('resizableReset')
-	tableScSummary.trigger('sorton', [[[1,0]]])
+	<script>
+		jeedomUtils.initTableSorter();
+		var tableScSummary = $('#table_scenarioSummary')
+		tableScSummary[0].config.widgetOptions.resizable_widths = ['60px', '', '100px']
+		tableScSummary.trigger('applyWidgets')
+		tableScSummary.trigger('resizableReset')
+		tableScSummary.trigger('sorton', [
+			[
+				[1, 0]
+			]
+		])
 
-    /*$('#bt_saveScenarios').off('click').on('click', function () {
+		/*$('#bt_saveScenarios').off('click').on('click', function () {
       console.log('save all scenarios')
 	  $('#table_scenarioSummary tbody tr').each(function(){
         var scID = $(this).attr('data-id')
@@ -80,32 +84,35 @@ if (!isConnect('admin')) {
 
     })*/
 
-    $('.sendtoapp').click( function() {
-      	idScenario = $(this).val();
-        if( $(this).is(':checked') ){
-    		sendApp = 1;
-		} else {
-    		sendApp = 0;
-		}
-        $.ajax({
-            type: "POST",
-            url: "plugins/mobile/core/ajax/mobile.ajax.php",
-            data: {
-                action: "savescenario",
-                id: idScenario,
-                valueSend : sendApp
-            },
-            dataType: 'json',
-            global: false,
-            error: function (request, status, error) {
-                handleAjaxError(request, status, error);
-            },
-            success: function (data) {
-                if (data.state != 'ok') {
-                    $('#div_alert').showAlert({message: data.result, level: 'danger'});
-                    return;
-                }
-            }
-  		});
-    })
-</script>
+		$('.sendtoapp').click(function() {
+			idScenario = $(this).val();
+			if ($(this).is(':checked')) {
+				sendApp = 1;
+			} else {
+				sendApp = 0;
+			}
+			$.ajax({
+				type: "POST",
+				url: "plugins/mobile/core/ajax/mobile.ajax.php",
+				data: {
+					action: "savescenario",
+					id: idScenario,
+					valueSend: sendApp
+				},
+				dataType: 'json',
+				global: false,
+				error: function(request, status, error) {
+					handleAjaxError(request, status, error);
+				},
+				success: function(data) {
+					if (data.state != 'ok') {
+						$('#div_alert').showAlert({
+							message: data.result,
+							level: 'danger'
+						});
+						return;
+					}
+				}
+			});
+		})
+	</script>

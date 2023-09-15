@@ -25,39 +25,39 @@ $eqLogics = mobile::byType('mobile');
 	<thead>
 		<tr>
 			<th>{{Plateforme}}</th>
-			<th>{{Equipement}}</th>
+			<th>{{Équipement}}</th>
 			<th>{{ID}}</th>
-			<th>{{User}}</th>
-			<th>{{Depuis}}</th>
+			<th>{{Utilisateur}}</th>
+			<th>{{Dernière activité}}</th>
 		</tr>
 	</thead>
 	<tbody>
-	 <?php
-foreach ($eqLogics as $eqLogic) {
-  	$typeMobile = $eqLogic->getConfiguration('type_mobile');
-	$file = 'plugins/mobile/core/img/' . $typeMobile . '.png';
-	if (file_exists($file)) {
-		$path = 'plugins/mobile/core/img/' . $typeMobile . '.png';
-		$img = '<img src="' . $path . '" width="35px" /> '.$typeMobile;
-	} else {
-		$path = 'plugins/mobile/core/img/mobile_icon.png';
-		$img = '<img src="' . $path . '" width="35px" /> '.$typeMobile;
-	}
-	$userId = $eqLogic->getConfiguration('affect_user');
-	$userType = user::byId($userId);
-	if(is_object($userType)){
-		$username = $userType->getLogin();
-		echo '<tr><td>' . $img . '</td><td><a href="' . $eqLogic->getLinkToConfiguration() . '">' . $eqLogic->getHumanName(true) . '</a></td>';
-		echo '<td><span class="label label-info">' . $eqLogic->getId() . '</span></td>';
-		echo '<td><span class="label label-info">' . $username . '</span></td>';
-		echo '<td><span class="label label-info">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';
-	}else{
-		echo '<tr><td>' . $img . '</td><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';
-		echo '<td><span class="label label-info">' . $eqLogic->getId() . '</span></td>';
-		echo '<td><span class="label label-info">{{Utilisateur non trouvé}}</span></td>';
-		echo '<td><span class="label label-info">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';
-	}
-}
-?>
+		<?php
+		foreach ($eqLogics as $eqLogic) {
+			$typeMobile = $eqLogic->getConfiguration('type_mobile');
+			$file = 'plugins/mobile/core/img/' . $typeMobile . '.png';
+			if (file_exists($file)) {
+				$path = 'plugins/mobile/core/img/' . $typeMobile . '.png';
+				$img = '<img src="' . $path . '" width="35px" /> ' . $typeMobile;
+			} else {
+				$path = 'plugins/mobile/core/img/mobile_icon.png';
+				$img = '<img src="' . $path . '" width="35px" /> ' . $typeMobile;
+			}
+			$userId = $eqLogic->getConfiguration('affect_user');
+			$userType = user::byId($userId);
+			if (is_object($userType)) {
+				$username = $userType->getLogin();
+				echo '<tr><td>' . $img . '</td><td><a href="' . $eqLogic->getLinkToConfiguration() . '">' . $eqLogic->getHumanName(true) . '</a></td>';
+				echo '<td><span class="label label-info">' . $eqLogic->getId() . '</span></td>';
+				echo '<td><span class="label label-info">' . $username . '</span></td>';
+				echo '<td><span class="label label-info">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';
+			} else {
+				echo '<tr><td>' . $img . '</td><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';
+				echo '<td><span class="label label-info">' . $eqLogic->getId() . '</span></td>';
+				echo '<td><span class="label label-info">{{Utilisateur non trouvé}}</span></td>';
+				echo '<td><span class="label label-info">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';
+			}
+		}
+		?>
 	</tbody>
 </table>

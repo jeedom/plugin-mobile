@@ -30,26 +30,28 @@ $plugin_widget = mobile::$_pluginWidget;
 </legend>
 <div class="pluginListContainer">
 	<?php
-		$num = 0;
-		$_echo = '';
-		foreach ($plugins as $plugin) {
-			$opacity = '';
-			if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
-				if (in_array($plugin->getId(), $plugin_compatible)) {
-					if (in_array($plugin->getId(), $plugin_widget)) {
-						$_echo .= '<div class="cursor pluginDisplayCard" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="'.$opacity.'">';
-						$_echo .= '<center>';
-						$_echo .= '<img class="img-responsive" src="' . $plugin->getPathImgIcon() . '" />';
-						$_echo .= '</center>';
-						$_echo .= '<span class="name">' . $plugin->getName() . '</span>';
-						$_echo .= '</div>';
-						$num++;
-					}
+	$num = 0;
+	$_echo = '';
+	foreach ($plugins as $plugin) {
+		$opacity = '';
+		if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
+			if (in_array($plugin->getId(), $plugin_compatible)) {
+				if (in_array($plugin->getId(), $plugin_widget)) {
+					$_echo .= '<div class="cursor pluginDisplayCard" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="' . $opacity . '">';
+					$_echo .= '<center>';
+					$_echo .= '<img class="img-responsive" src="' . $plugin->getPathImgIcon() . '" />';
+					$_echo .= '</center>';
+					$_echo .= '<span class="name">' . $plugin->getName() . '</span>';
+					$_echo .= '</div>';
+					$num++;
 				}
 			}
 		}
-		echo $_echo;
-		if($num == 0){ echo '<style>.pluspecial { Display:None; }</style>';}
+	}
+	echo $_echo;
+	if ($num == 0) {
+		echo '<style>.pluspecial { Display:None; }</style>';
+	}
 	?>
 </div>
 
@@ -58,26 +60,28 @@ $plugin_widget = mobile::$_pluginWidget;
 </legend>
 <div class="pluginListContainer">
 	<?php
-		$num = 0;
-		$_echo = '';
-		foreach ($plugins as $plugin) {
-			$opacity = '';
-			if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
-				if (in_array($plugin->getId(), $plugin_compatible)) {
-					if (config::byKey('sendToApp', $plugin->getId(), 1) == 1 && !in_array($plugin->getId(), $plugin_widget)) {
-						$_echo .= '<div class="cursor pluginDisplayCard" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="'.$opacity.'">';
-						$_echo .= '<center>';
-						$_echo .= '<img class="img-responsive" src="' . $plugin->getPathImgIcon() . '" />';
-						$_echo .= '</center>';
-						$_echo .= '<span class="name">' . $plugin->getName() . '</span>';
-						$_echo .= '</div>';
-						$num++;
-					}
+	$num = 0;
+	$_echo = '';
+	foreach ($plugins as $plugin) {
+		$opacity = '';
+		if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
+			if (in_array($plugin->getId(), $plugin_compatible)) {
+				if (config::byKey('sendToApp', $plugin->getId(), 1) == 1 && !in_array($plugin->getId(), $plugin_widget)) {
+					$_echo .= '<div class="cursor pluginDisplayCard" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="' . $opacity . '">';
+					$_echo .= '<center>';
+					$_echo .= '<img class="img-responsive" src="' . $plugin->getPathImgIcon() . '" />';
+					$_echo .= '</center>';
+					$_echo .= '<span class="name">' . $plugin->getName() . '</span>';
+					$_echo .= '</div>';
+					$num++;
 				}
 			}
 		}
-		echo $_echo;
-		if($num == 0){ echo '<style>.pluvaltg { Display:None; }</style>';}
+	}
+	echo $_echo;
+	if ($num == 0) {
+		echo '<style>.pluvaltg { Display:None; }</style>';
+	}
 	?>
 </div>
 
@@ -86,27 +90,29 @@ $plugin_widget = mobile::$_pluginWidget;
 </legend>
 <div class="pluginListContainer">
 	<?php
-		$num = 0;
-		$_echo = '';
-		foreach ($plugins as $plugin) {
-			$opacity = '';
-			if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
-				if (in_array($plugin->getId(), $plugin_compatible)) {
-					if (config::byKey('sendToApp', $plugin->getId(), 1) != 1 && !in_array($plugin->getId(), $plugin_widget)) {
-						$opacity = jeedom::getConfiguration('eqLogic:style:noactive');
-						$_echo .= '<div class="cursor pluginDisplayCard" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="'.$opacity.'">';
-						$_echo .= '<center>';
-						$_echo .= '<img class="img-responsive" src="' . $plugin->getPathImgIcon() . '" />';
-						$_echo .= '</center>';
-						$_echo .= '<span class="name">' . $plugin->getName() . '</span>';
-						$_echo .= '</div>';
-						$num++;
-					}
+	$num = 0;
+	$_echo = '';
+	foreach ($plugins as $plugin) {
+		$opacity = '';
+		if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
+			if (in_array($plugin->getId(), $plugin_compatible)) {
+				if (config::byKey('sendToApp', $plugin->getId(), 1) != 1 && !in_array($plugin->getId(), $plugin_widget)) {
+					$opacity = jeedom::getConfiguration('eqLogic:style:noactive');
+					$_echo .= '<div class="cursor pluginDisplayCard" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="' . $opacity . '">';
+					$_echo .= '<center>';
+					$_echo .= '<img class="img-responsive" src="' . $plugin->getPathImgIcon() . '" />';
+					$_echo .= '</center>';
+					$_echo .= '<span class="name">' . $plugin->getName() . '</span>';
+					$_echo .= '</div>';
+					$num++;
 				}
 			}
 		}
-		echo $_echo;
-		if($num == 0){ echo '<style>.plucomnontran { Display:None; }</style>';}
+	}
+	echo $_echo;
+	if ($num == 0) {
+		echo '<style>.plucomnontran { Display:None; }</style>';
+	}
 	?>
 </div>
 
@@ -115,26 +121,28 @@ $plugin_widget = mobile::$_pluginWidget;
 </legend>
 <div class="pluginListContainer">
 	<?php
-		$num = 0;
-		$_echo = '';
-		foreach ($plugins as $plugin) {
-			$opacity = '';
-			if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
-				if (!in_array($plugin->getId(), $plugin_compatible)) {
-					if (config::byKey('sendToApp', $plugin->getId(), 0) == 1) {
-						$_echo .= '<div class="cursor pluginDisplayCard" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="'.$opacity.'">';
-						$_echo .= '<center>';
-						$_echo .= '<img class="img-responsive" src="' . $plugin->getPathImgIcon() . '" />';
-						$_echo .= '</center>';
-						$_echo .= '<span class="name">' . $plugin->getName() . '</span>';
-						$_echo .= '</div>';
-						$num++;
-					}
+	$num = 0;
+	$_echo = '';
+	foreach ($plugins as $plugin) {
+		$opacity = '';
+		if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
+			if (!in_array($plugin->getId(), $plugin_compatible)) {
+				if (config::byKey('sendToApp', $plugin->getId(), 0) == 1) {
+					$_echo .= '<div class="cursor pluginDisplayCard" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="' . $opacity . '">';
+					$_echo .= '<center>';
+					$_echo .= '<img class="img-responsive" src="' . $plugin->getPathImgIcon() . '" />';
+					$_echo .= '</center>';
+					$_echo .= '<span class="name">' . $plugin->getName() . '</span>';
+					$_echo .= '</div>';
+					$num++;
 				}
 			}
 		}
-		echo $_echo;
-		if($num == 0){ echo '<style>.plunontestran { Display:None; }</style>';}
+	}
+	echo $_echo;
+	if ($num == 0) {
+		echo '<style>.plunontestran { Display:None; }</style>';
+	}
 	?>
 </div>
 
@@ -143,41 +151,43 @@ $plugin_widget = mobile::$_pluginWidget;
 </legend>
 <div class="pluginListContainer">
 	<?php
-		$num = 0;
-		$_echo = '';
-		foreach ($plugins as $plugin) {
-			$opacity = '';
-			if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
-				if (!in_array($plugin->getId(), $plugin_compatible)) {
-					if (config::byKey('sendToApp', $plugin->getId(), 0) != 1) {
-						$opacity = jeedom::getConfiguration('eqLogic:style:noactive');
-						$_echo .= '<div class="cursor pluginDisplayCard" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="'.$opacity.'">';
-						$_echo .= '<center>';
-						$_echo .= '<img class="img-responsive" src="' . $plugin->getPathImgIcon() . '" />';
-						$_echo .= '</center>';
-						$_echo .= '<span class="name">' . $plugin->getName() . '</span>';
-						$_echo .= '</div>';
-						$num++;
-					}
+	$num = 0;
+	$_echo = '';
+	foreach ($plugins as $plugin) {
+		$opacity = '';
+		if ($plugin->getId() != 'mobile' && $plugin->getId() != 'homebridge') {
+			if (!in_array($plugin->getId(), $plugin_compatible)) {
+				if (config::byKey('sendToApp', $plugin->getId(), 0) != 1) {
+					$opacity = jeedom::getConfiguration('eqLogic:style:noactive');
+					$_echo .= '<div class="cursor pluginDisplayCard" onclick="clickplugin(\'' . $plugin->getId() . '\',\'' . $plugin->getName() . '\')" style="' . $opacity . '">';
+					$_echo .= '<center>';
+					$_echo .= '<img class="img-responsive" src="' . $plugin->getPathImgIcon() . '" />';
+					$_echo .= '</center>';
+					$_echo .= '<span class="name">' . $plugin->getName() . '</span>';
+					$_echo .= '</div>';
+					$num++;
 				}
 			}
 		}
-		echo $_echo;
-		if($num == 0){ echo '<style>.plugnontestetnontrans { Display:None; }</style>';}
+	}
+	echo $_echo;
+	if ($num == 0) {
+		echo '<style>.plugnontestetnontrans { Display:None; }</style>';
+	}
 	?>
 </div>
 
 <?php
-	include_file('desktop', 'mobile', 'js', 'mobile');
-	include_file('core', 'plugin.template', 'js');
+include_file('desktop', 'mobile', 'js', 'mobile');
+include_file('core', 'plugin.template', 'js');
 ?>
 
 <script>
-setTimeout(function(){
-	$('.pluginListContainer').packery()
-},100)
+	setTimeout(function() {
+		$('.pluginListContainer').packery()
+	}, 100)
 
-$(window).resize(function () {
-	$('.pluginListContainer').packery()
-})
+	$(window).resize(function() {
+		$('.pluginListContainer').packery()
+	})
 </script>

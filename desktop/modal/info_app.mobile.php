@@ -36,7 +36,7 @@ $replace = array('<i' => '\<\i');
 	<li role="presentation"><a href="#plan" aria-controls="plan" role="tab" data-toggle="tab">{{Designs}}</a></li>
 	<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">{{Configurations}}</a></li>
 </ul>
-<div class="tab-content" >
+<div class="tab-content">
 	<div role="tabpanel" class="tab-pane active" id="object">
 		<pre style='overflow: auto; with:90%;'><?php echo str_replace(array_keys($replace), $replace, json_encode($data['objects'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
 		</pre>
@@ -64,5 +64,5 @@ $replace = array('<i' => '\<\i');
 	<div role="tabpanel" class="tab-pane" id="settings">
 		<pre style='overflow: auto; with:90%;'><?php echo str_replace(array_keys($replace), $replace, json_encode($data['config'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)); ?>
 	</pre>
-</div>
+	</div>
 </div>

@@ -30,9 +30,9 @@ if (!isConnect()) {
 		<div class="form-group">
 			<label class="col-sm-3 control-label">{{Réponse Ask sensible à la case : }}</label>
 			<div class="col-sm-1">
-				<input type="checkbox" class="configKey orm-control" data-l1key="askCasse"/>
+				<input type="checkbox" class="configKey orm-control" data-l1key="askCasse" />
 			</div>
 		</div>
-	</div>
-</fieldset>
+		</div>
+	</fieldset>
 </form>

@@ -116,17 +116,17 @@ if (init('action') == 'saveMenuEqLogics') {
 		ajax::success($reponse);
 	    }
 
-  		if (init('action') == 'savescenario'){
-          $id = init('id');
-          $sendApp = init('valueSend');
-          $scenario = scenario::byId($id);
-          if(!is_object($scenario)){
-              ajax::error('{{scenario non trouvé}}');
-          }
-          $scenario->setDisplay("sendToApp",$sendApp);
-          $scenario->save();
-          ajax::success($reponse);
-	    }
+  if (init('action') == 'savescenario'){
+    $id = init('id');
+    $sendApp = init('valueSend');
+    $scenario = scenario::byId($id);
+    if(!is_object($scenario)){
+      throw new Exception(__('scenario non trouvé', __FILE__));
+    }
+    $scenario->setDisplay("sendToApp",$sendApp);
+    $scenario->save();
+    ajax::success();
+  }
 
 	throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
 

@@ -29,6 +29,7 @@ $eqLogics = mobile::byType('mobile');
 			<th>{{ID}}</th>
 			<th>{{Utilisateur}}</th>
 			<th>{{Dernière activité}}</th>
+			<th>{{Date création}}</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -50,11 +51,13 @@ $eqLogics = mobile::byType('mobile');
 				echo '<tr><td>' . $img . '</td><td><a href="' . $eqLogic->getLinkToConfiguration() . '">' . $eqLogic->getHumanName(true) . '</a></td>';
 				echo '<td><span class="label label-info">' . $eqLogic->getId() . '</span></td>';
 				echo '<td><span class="label label-info">' . $username . '</span></td>';
+				echo '<td><span class="label label-info">' . $eqLogic->getStatus('lastCommunication') . '</span></td>';
 				echo '<td><span class="label label-info">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';
 			} else {
 				echo '<tr><td>' . $img . '</td><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';
 				echo '<td><span class="label label-info">' . $eqLogic->getId() . '</span></td>';
 				echo '<td><span class="label label-info">{{Utilisateur non trouvé}}</span></td>';
+				echo '<td><span class="label label-info">' . $eqLogic->getStatus('lastCommunication') . '</span></td>';
 				echo '<td><span class="label label-info">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';
 			}
 		}

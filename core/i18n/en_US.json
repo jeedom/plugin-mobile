@@ -257,12 +257,12 @@
         "401 - Accès non autorisé": "401 - Unauthorized access",
         "Equipement non trouvé : ": "Equipment not found:",
         "User inexistant : ": "Non-existent user:",
-        "Aucune methode correspondante à : ": "No method corresponding to:",
-        "scenario non trouvé": "scenario not found"
+        "scenario non trouvé": "scenario not found",
+        "Aucune methode correspondante à : ": "No method corresponding to:"
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {
         "Echec de l\\'envoi de la notification :": "Failed to send notification:",
-        "$geoloc['id'].'-'.$geoloc['name']": "$ geoloc ['id'] .'- '. $ geoloc [' name ']",
+        "$geoloc['id'] . '-' . $geoloc['name']": "$geoloc['id'] . '-' . $geoloc['name']",
         "Notification": "Notification",
         "Notification Critique": "Critical Notification"
     },

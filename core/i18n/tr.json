@@ -257,12 +257,12 @@
         "401 - Accès non autorisé": "401 - Yetkisiz erişim",
         "Equipement non trouvé : ": "Equipement non trouvé :",
         "User inexistant : ": "User inexistant :",
-        "Aucune methode correspondante à : ": "Aşağıdakilere karşılık gelen bir yöntem yok:",
-        "scenario non trouvé": "scenario non trouvé"
+        "scenario non trouvé": "scenario non trouvé",
+        "Aucune methode correspondante à : ": "Aşağıdakilere karşılık gelen bir yöntem yok:"
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {
         "Echec de l\\'envoi de la notification :": "Echec de l\\'envoi de la notification :",
-        "$geoloc['id'].'-'.$geoloc['name']": "$geoloc['id'].'-'.$geoloc['name']",
+        "$geoloc['id'] . '-' . $geoloc['name']": "$geoloc['id'] . '-' . $geoloc['name']",
         "Notification": "Notification",
         "Notification Critique": "Notification Critique"
     },

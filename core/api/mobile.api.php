@@ -78,9 +78,8 @@ function createMobile($params){
 
 function checkDateMenu($menu, $mobile){
     $dateMobile = $mobile->getConfiguration('DateMenu', 'pasdedate');
-		$dateMenuFromApp = $menu['date'];
 		if(isset($dateMobile) && isset($menu['date'])){
-			if($dateMobile < $dateMenuFromApp){
+			if($dateMobile < $menu['date']){
 				log::add('mobile','debug','SAVE MENU DEPUIS L APP');
 				saveMenuFromAppV2($menu, $mobile);
 			}else{

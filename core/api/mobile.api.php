@@ -25,8 +25,8 @@ if (!is_object($jsonrpc)) {
 	throw new Exception(__('JSONRPC object not defined', __FILE__), -32699);
 }
 
-function createMobile($params){
-	log::add('mobile','debug','----CREATE_NEW_MOBILE----');
+function createMobile($params, $nbIcones = 3){
+	log::add('mobile','debug',' ---- CREATE_NEW_MOBILE WITH  '.$nbIcones.' ICONS ----');
 	$configs = $params['configs'];
 	$notification = $configs['notification'];
 	$user = user::byHash($params['apikey']);
@@ -50,22 +50,22 @@ function createMobile($params){
 				}
 			}
 	}else{
-			$mobile->setConfiguration('selectNameMenu1', 'home');
-			$mobile->setConfiguration('renameIcon1', 'Accueil');
-			$mobile->setConfiguration('spanIcon1', 'icon jeedomapp-in');
-			$mobile->setConfiguration('urlUser1', 'none');
-			$mobile->setConfiguration('selectNameMenu2', 'overview');
-			$mobile->setConfiguration('renameIcon2', 'Synthese');
-			$mobile->setConfiguration('spanIcon2', 'fab fa-hubspot');
-			$mobile->setConfiguration('urlUser2', 'none');
-			$mobile->setConfiguration('selectNameMenu3', 'health');
-			$mobile->setConfiguration('renameIcon3', 'Santé');
-			$mobile->setConfiguration('spanIcon3', 'fas fa-medkit');
-			$mobile->setConfiguration('urlUser3', 'none');
-			$mobile->setConfiguration('nbIcones', 3);
-
-
+		$namesMenus =  ['home', 'overview', 'health', 'home'];
+		$renamesIcons =  ['Accueil', 'Synthese', 'Santé', 'Accueil'];
+		$spanIcons =  ['icon jeedomapp-in', 'fab fa-hubspot', 'fas fa-medkit', 'icon jeedomapp-in'];
+		$urlUsers =  ['none', 'none', 'none', 'none'];
+		$j = 0;
+		$countFor = intval($nbIcones) + 1;
+		for($i=1; $i < $countFor; $i++){
+				$mobile->setConfiguration(${'selectNameMenu' . $i}, $namesMenus[$j]);
+				$mobile->setConfiguration(${'renameIcon' . $i}, $renamesIcons[$j]);
+				$mobile->setConfiguration(${'spanIcon' . $i}, $spanIcons[$j]);
+				$mobile->setConfiguration(${'urlUser' . $i}, $urlUsers[$j]);
+				$mobile->setConfiguration('nbIcones', intval($nbIcones));
+				$j++;
+		}
 	}
+	
 	$mobile->setConfiguration('type_mobile', $notification['platform']);
 	$mobile->setConfiguration('affect_user', $userId);
 	$mobile->setConfiguration('validate', 'no');
@@ -73,21 +73,20 @@ function createMobile($params){
 	$mobile->setLogicalId($params['Iq']);
 	$mobile->setIsEnable(1);
 	return $mobile;
-
 }
 
 function checkDateMenu($menu, $mobile){
     $dateMobile = $mobile->getConfiguration('DateMenu', 'pasdedate');
-		if(isset($dateMobile) && isset($menu['date'])){
-			if($dateMobile < $menu['date']){
-				log::add('mobile','debug','SAVE MENU DEPUIS L APP');
-				saveMenuFromAppV2($menu, $mobile);
-			}else{
-				log::add('mobile','debug','SAVE MENU DEPUIS LE PLUGIN');
-			}
+	if(isset($dateMobile) && isset($menu['date'])){
+		if($dateMobile < $menu['date']){
+			log::add('mobile','debug','SAVE MENU DEPUIS L APP');
+			saveMenuFromAppV2($menu, $mobile);
 		}else{
-			return;
+			log::add('mobile','debug','SAVE MENU DEPUIS LE PLUGIN');
 		}
+	}else{
+		return;
+	}
 }
 
 
@@ -95,34 +94,30 @@ function saveMenuFromAppV2($menu, $mobile){
 	log::add('mobile','debug','MENU_SAVE_FROM_APPV2 ' .json_encode($menu));
 	if(is_object($mobile)){
 		$count = 0;
-			$i=1;
+		$i=1;
 		foreach ($menu as $key => $value){
 		    if (isset($value['active']) && $value['active'] === true) {
 		        $count++;
 
-						if($value['options']['objectType'] != 'dashboard' && $value['options']['objectType'] != 'views' &&
-						  $value['options']['objectType'] != 'plan' && $value['options']['objectType'] != 'panel'){
-
+						if($value['options']['objectType'] != 'dashboard' && $value['options']['objectType'] != 'views' && $value['options']['objectType'] != 'plan' && $value['options']['objectType'] != 'panel'){
 							$mobile->setConfiguration('selectNameMenu'.$i, $value['options']['objectType']);
-              if($value['options']['objectType'] == 'url'){
+              				if($value['options']['objectType'] == 'url'){
 								    if($value['options']['objectId'] != ''){
 												$mobile->setConfiguration('urlUser'.$i, $value['options']['objectId']);
 										}else{
 												$mobile->setConfiguration('urlUser'.$i, 'https://www.jeedom.com/fr/');
 										}
-
 							}
-
 						}else{
 							$mobile->setConfiguration('selectNameMenu'.$i, $value['options']['objectId'].'_'.$value['options']['objectType']);
 						}
 						$mobile->setConfiguration('renameIcon'.$i, $value['name']);
 						$mobile->setConfiguration('spanIcon'.$i, 'icon '.$value['icon']['type'].'-'.$value['icon']['name']);
 		    }
-				$i++;
+			$i++;
 		}
 		$mobile->setConfiguration('nbIcones', $count);
-   	$mobile->save();
+   		$mobile->save();
 	}
 }
 
@@ -134,28 +129,24 @@ if($params['Iq']){
 	log::add('mobile', 'debug', '| Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));
 }
 log::add('mobile', 'debug', '|-----------------------------------');
+
 if($jsonrpc->getMethod() == 'setConfigs'){
 	log::add('mobile', 'debug', '| App V2 Demande > ' . $jsonrpc->getMethod());
 	//log::add('mobile', 'debug', 'APRAMS > ' . json_encode($params));
   	$configs = $params['configs'];
   	$menu = $configs['menu'];
-
   	$notification = $configs['notification'];
-
   	log::add('mobile', 'debug', '| configs > ' . json_encode($configs));
   	log::add('mobile', 'debug', '| menu > ' . json_encode($menu));
 	log::add('mobile', 'debug', '| notification > ' . json_encode($notification));
-
-
   	$mobile = null;
-
-  if(isset($params['Iq'])) {
+   if(isset($params['Iq'])) {
 		$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	}
-  if (!is_object($mobile)) {
-    $mobile = createMobile($params);
+   if (!is_object($mobile)) {
+     $mobile = createMobile($params, 3);
 	}
-     if(isset($notification['token'])) {
+    if(isset($notification['token'])) {
           	log::add('mobile', 'debug', 'token a ajouter > ' . $notification['token']);
             if($notification['token'] == 'notifsBGDisabled'){
               message::removeAll(__CLASS__, 'alertNotifs');
@@ -165,34 +156,20 @@ if($jsonrpc->getMethod() == 'setConfigs'){
         	if($notification['token'] != ''){
              $mobile->setConfiguration('notificationRegistrationToken', $notification['token']);
             }
-
-      }
-     $mobile->save();
+    }
+    $mobile->save();
 		 // TEMPORAIREMENT DESACTIVE
-		 checkDateMenu($menu, $mobile);
-		 $geolocs = $params['geolocs'];
-		 if($geolocs){
-			 if($geolocs != []){
-				 mobile::createCmdGeoLocV2($params['Iq'], $params['geolocs']);
-			 }
-
-		 }
-
-		// mobile::createCmdGeoLocV2($params);
-  $jsonrpc->makeSuccess('ok');
-
-
+	checkDateMenu($menu, $mobile);
+	$geolocs = $params['geolocs'];
+	if($geolocs){
+		if($geolocs != []){
+			mobile::createCmdGeoLocV2($params['Iq'], $params['geolocs']);
+		}
+	}
+	// mobile::createCmdGeoLocV2($params);
+    $jsonrpc->makeSuccess('ok');
 }
 
-
-function handleVersionJeedomMenu(){
-		$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
-									 "tab1":{"active":false,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
-									 "tab2":{"active":false,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
-									 "tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"}}';
-	 $defaultMenuArray = json_decode($defaultMenuJson, true);
-  	return $defaultMenuArray;
-}
 
 if($jsonrpc->getMethod() == 'getJson'){
 
@@ -244,11 +221,12 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$return[$idBox]['apikeyUser'] = $_USER_GLOBAL->getHash();
 	$return[$idBox]['configs'] = 'undefined';
 	$return[$idBox]['externalIp'] = network::getNetworkAccess('external');
-  $return[$idBox]['localIp'] = network::getNetworkAccess('internal');
+    $return[$idBox]['localIp'] = network::getNetworkAccess('internal');
 	$return[$idBox]['hardware'] = jeedom::getHardwareName();
 	$return[$idBox]['hwkey'] = jeedom::getHardwareKey();
 	$return[$idBox]['appMobile'] = '0.4';
-  $return[$idBox]['ping'] = true;
+    $return[$idBox]['ping'] = true;
+	$return[$idBox]['informations']['userRights'] = $_USER_GLOBAL->getProfils();
 	$return[$idBox]['informations']['hardware'] = jeedom::getHardwareName();
 	$return[$idBox]['informations']['language'] = config::byKey('language');
 	$return[$idBox]['informations']['nbMessage'] = message::nbMessage();
@@ -268,8 +246,10 @@ if($jsonrpc->getMethod() == 'getJson'){
 					$obArray = utils::o2a($plugin);
 					$objectId = $obArray['id'];
 					$objectName = $obArray['name'];
-					$objectsPanel[$objectId] =  $objectName;
-	      	$update = $plugin->getUpdate();
+					if($plugin->getMobile() !== 'panel' && $plugin->getMobile() !== ''){
+						$objectsPanel[$objectId] =  $objectName;
+				  }
+	            	$update = $plugin->getUpdate();
 					if(is_object($update)){
 						  $pluginUpdateArray = utils::o2a($update);
 						  $arrayDataPlugins = utils::o2a($plugin);
@@ -283,19 +263,13 @@ if($jsonrpc->getMethod() == 'getJson'){
 						  array_push($arrayPlugins, $pluginUpdateArray);
 					}
   }
-	$return[$idBox]['informations']['objects']['panel'] = $objectsPanel;
-
-
-
-
-
- 	$categories = [];
-	foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
-			$categories[$value['icon']] =  $value['name'];
+  $return[$idBox]['informations']['objects']['panel'] = $objectsPanel;
+  $categories = [];
+  foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
+		$categories[$value['icon']] =  $value['name'];
 	}
-	$return[$idBox]['informations']['objects']['categories'] = $categories;
-
-	sleep(1);
+  $return[$idBox]['informations']['objects']['categories'] = $categories;
+  sleep(1);
   $coreData = [];
   $resultCore = utils::o2a(update::byLogicalId('jeedom'));
 	array_push($coreData, $resultCore);
@@ -304,39 +278,39 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$return[$idBox]['informations']['plugins'] = $arrayPlugins;
 	$return[$idBox]['informations']['changelog'] = $changeLogs;
 	$return[$idBox]['informations']['infosDemon'] = $deamons_infos;
-  $return[$idBox]['informations']['nbUpdate'] = update::nbNeedUpdate();
+    $return[$idBox]['informations']['nbUpdate'] = update::nbNeedUpdate();
 	$return[$idBox]['informations']['uname'] = system::getDistrib() . ' ' . method_exists('system','getOsVersion') ? system::getOsVersion() : 'UnknownVersion';
 	$return[$idBox]['jeedom_version'] = jeedom::version();
-  $return[$idBox]['rdk'] = $rdk;
+    $return[$idBox]['rdk'] = $rdk;
 	$return[$idBox]['name'] = config::byKey('name');
   	log::add('mobile', 'debug', 'retour de base > '.json_encode($return));
 
   	log::add('mobile', 'debug', 'recherche du mobile via sont Iq >'.$params['Iq']);
   	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
   	log::add('mobile', 'debug', 'mobile object');
-		if(is_object($mobile)){
-		    log::add('mobile', 'debug', 'mobile bien trouvé > '.$mobile->getName());
-				$return[$idBox]['configs'] = array();
-				if(jeedom::version() < '4.4.0'){
-				     	$return[$idBox]['configs']['menu'] =  handleVersionJeedomMenu();
-				}else{
-					$menuCustom = mobile::configMenuCustom($mobile->getId());
-					$return[$idBox]['configs']['menu'] = $menuCustom;
-				}
-		 }else{
-			 if(jeedom::version() < '4.4.0'){
-			   	$return[$idBox]['configs']['menu'] =  handleVersionJeedomMenu();
-			 }else{
-				 $defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
-												 "tab1":{"active":true,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
-												 "tab2":{"active":true,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
-												 "tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}}';
-				 $defaultMenuArray = json_decode($defaultMenuJson, true);
-				 $return[$idBox]['configs']['menu'] = $defaultMenuArray;
-			 }
-		 }
-  	log::add('mobile', 'debug', 'CustomENVOICONFIGSAPI ' .json_encode($return[$idBox]['configs']));
-	  log::add('mobile','debug','INFOS GETJSONINITAL : '.json_encode($return));
+	if(is_object($mobile)){
+		log::add('mobile', 'debug', 'mobile bien trouvé > '.$mobile->getName());
+		$return[$idBox]['configs'] = array();
+		if(jeedom::version() < '4.4.0'){
+			// $return[$idBox]['configs']['menu'] =  handleVersionJeedomMenu();
+				$return[$idBox]['configs']['menu'] = mobile::configMenuCustom($mobile->getId(), jeedom::version());
+		}else{
+				$return[$idBox]['configs']['menu'] = mobile::configMenuCustom($mobile->getId(), jeedom::version());
+			}
+		}else{
+			if(jeedom::version() < '4.4.0'){
+			$return[$idBox]['configs']['menu'] = mobile::configMenuCustom($mobile->getId(), jeedom::version());
+			}else{
+				$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
+								"tab1":{"active":true,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
+								"tab2":{"active":true,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
+								"tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}}';
+				$defaultMenuArray = json_decode($defaultMenuJson, true);
+				$return[$idBox]['configs']['menu'] = $defaultMenuArray;
+			}
+		}
+  	log::add('mobile', 'debug', 'CustomENVOICONFIGSAPI GETJSON' .json_encode($return[$idBox]['configs']));
+	log::add('mobile','debug','INFOS GETJSONINITAL : '.json_encode($return));
 	$jsonrpc->makeSuccess($return);
 
 }
@@ -348,7 +322,6 @@ if ($jsonrpc->getMethod() == 'deleteMessage') {
  		 $jsonrpc->makeSuccess("true");
  	 }
  	 $jsonrpc->makeSuccess("false");
-
  }
 
 

@@ -1013,10 +1013,22 @@ class mobile extends eqLogic
 		}
 	}
 
-	public static function configMenuCustom($eqId)
+	public static function configMenuCustom($eqId, $jeedomVersion)
 	{
+
+        if($jeedomVersion <'4.4.0'){
+			log::add('mobile', 'debug', '|-----------------------------------');
+			log::add('mobile', 'debug', '|-CONFIGMENU CUSTOM JEEDOM 4.3.0--');
+			$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
+								"tab1":{"active":false,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
+								"tab2":{"active":false,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
+								"tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"}}';
+			$defaultMenuArray = json_decode($defaultMenuJson, true);
+			return $defaultMenuArray;
+		}else if($jeedomVersion >='4.4.0'){
+
 		log::add('mobile', 'debug', '|-----------------------------------');
-		log::add('mobile', 'debug', '|-MENU--');
+		log::add('mobile', 'debug', '|-CONFIGMENU CUSTOM JEEDOM 4.4.0--');
 		$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home","objectType":"home","mobile":"m","objectId" : ""},"type":"WebviewApp"},
 			"tab1":{"active":true,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview","objectType":"overview","mobile":"m","objectId" : ""},"type":"WebviewApp"},
 			"tab2":{"active":true,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health","objectType":"health","mobile":"m","objectId" : ""},"type":"WebviewApp"},
@@ -1162,6 +1174,7 @@ class mobile extends eqLogic
 			return $defaultMenuArray;
 		}
 	}
+}
 
 	/*
   * Call by

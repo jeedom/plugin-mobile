@@ -246,9 +246,9 @@ if($jsonrpc->getMethod() == 'getJson'){
 					$obArray = utils::o2a($plugin);
 					$objectId = $obArray['id'];
 					$objectName = $obArray['name'];
-					if($plugin->getMobile() !== 'panel' && $plugin->getMobile() !== ''){
+					if($plugin->getDisplay() != '' || $plugin->getMobile() != ''){
 						$objectsPanel[$objectId] =  $objectName;
-				  }
+				   }
 	            	$update = $plugin->getUpdate();
 					if(is_object($update)){
 						  $pluginUpdateArray = utils::o2a($update);

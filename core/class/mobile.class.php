@@ -1043,14 +1043,15 @@ class mobile extends eqLogic
 			$j = 0;
 			$count = 1;
 			for ($i = 1; $i < 5; $i++) {
-				$webviewUrl = '';
+				//$webviewUrl = '';
 				$isActive = true;
-				$webview = $eqLogic->getConfiguration('checkboxWebViewMenu' . $i, 'WebviewMobile');
+				/*$webview = $eqLogic->getConfiguration('checkboxWebViewMenu' . $i, 'WebviewDesktop');
 				if ($webview == 'WebviewDesktop') {
 					$webviewUrl = 'd';
 				} else if ($webview == 'WebviewMobile') {
 					$webviewUrl = 'm';
-				}
+				}*/
+				$webviewUrl = 'd';
 				${'tabIconName' . $i} = $eqLogic->getConfiguration('spanIcon' . $i, 'none');
 				log::add('mobile', 'debug', '| CHANGETABICON ' . ${'tabIconName' . $i});
 				config::save('icon' . $i . 'NoCut', ${'tabIconName' . $i}, 'mobile');
@@ -1082,14 +1083,14 @@ class mobile extends eqLogic
 						${'typeObject' . $i} = $typeObject;
 						${'typewebviewurl' . $i} = $webviewUrl;
 						${'typeobjectId' . $i} = $idUrl;
-						if ($typeObject == 'view') {
-							${'tabUrl' . $i} = "/index.php?v={$webviewUrl}&p={$typeObject}&view_id={$objectId}";
+						if ($typeObject == 'views') {
+							${'tabUrl' . $i} = "/index.php?v={$webviewUrl}&p=view&view_id={$objectId}";
 						} else if ($typeObject == 'dashboard') {
 							${'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=dashboard&object_id={$objectId}";
 						} else if ($typeObject == 'plan') {
 							${'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=plan&plan_id={$objectId}";
 						} else if ($typeObject == 'panel') {
-							${'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p={$objectId}";
+							${'tabUrl' . $i} =  "/index.php?v=m&p={$objectId}";
 							log::add('mobile', 'debug', 'PANEL : ' .	${'$tabUrl' . $i});
 						}
 					} else if ($objectId == 'overview') {

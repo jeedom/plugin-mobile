@@ -91,7 +91,7 @@ function checkDateMenu($menu, $mobile){
 
 
 function saveMenuFromAppV2($menu, $mobile){
-	log::add('mobile','debug','MENU_SAVE_FROM_APPV2 ' .json_encode($menu));
+	log::add('mobile','debug','MENU_SAVE_FRM_APPV2 ' .json_encode($menu));
 	if(is_object($mobile)){
 		$count = 0;
 		$i=1;
@@ -291,13 +291,8 @@ if($jsonrpc->getMethod() == 'getJson'){
 	if(is_object($mobile)){
 		log::add('mobile', 'debug', 'mobile bien trouvé > '.$mobile->getName());
 		$return[$idBox]['configs'] = array();
-		if(jeedom::version() < '4.4.0'){
-			// $return[$idBox]['configs']['menu'] =  handleVersionJeedomMenu();
-				$return[$idBox]['configs']['menu'] = mobile::configMenuCustom($mobile->getId(), jeedom::version());
-		}else{
-				$return[$idBox]['configs']['menu'] = mobile::configMenuCustom($mobile->getId(), jeedom::version());
-			}
-		}else{
+		$return[$idBox]['configs']['menu'] = mobile::configMenuCustom($mobile->getId(), jeedom::version());
+	}else{
 			if(jeedom::version() < '4.4.0'){
 			$return[$idBox]['configs']['menu'] = mobile::configMenuCustom($mobile->getId(), jeedom::version());
 			}else{
@@ -308,7 +303,7 @@ if($jsonrpc->getMethod() == 'getJson'){
 				$defaultMenuArray = json_decode($defaultMenuJson, true);
 				$return[$idBox]['configs']['menu'] = $defaultMenuArray;
 			}
-		}
+	}
   	log::add('mobile', 'debug', 'CustomENVOICONFIGSAPI GETJSON' .json_encode($return[$idBox]['configs']));
 	log::add('mobile','debug','INFOS GETJSONINITAL : '.json_encode($return));
 	$jsonrpc->makeSuccess($return);

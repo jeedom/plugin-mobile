@@ -124,7 +124,7 @@ function saveMenuFromAppV2($menu, $mobile){
 $params = $jsonrpc->getParams();
 log::add('mobile', 'debug', '|------------------------------------------------------------------------------------------------------|');
 log::add('mobile', 'debug', '|                                   Appel API Mobile > ' . $jsonrpc->getMethod());
-log::add('mobile', 'debug', '| paramettres passés > ' . json_encode($params));
+log::add('mobile', 'debug', '| paramètres passés > ' . json_encode($params));
 if($params['Iq']){
 	log::add('mobile', 'debug', '| Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));
 }

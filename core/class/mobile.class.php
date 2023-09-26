@@ -1135,7 +1135,7 @@ class mobile extends eqLogic
 						${'typeObject' . $i} = $objectId;
 						${'typewebviewurl' . $i} = $webviewUrl;
 						${'typeobjectId' . $i} = '';
-						${'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=overview";
+						${'tabUrl' . $i} =  "/index.php?v=m&p=overview";
 					} else if ($objectId == 'home') {
 						${'typeObject' . $i} = $objectId;
 						${'typewebviewurl' . $i} = $webviewUrl;
@@ -1146,12 +1146,12 @@ class mobile extends eqLogic
 						${'typeObject' . $i} = $objectId;
 						${'typewebviewurl' . $i} = $webviewUrl;
 						${'typeobjectId' . $i} = '';
-						${'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=health";
+						${'tabUrl' . $i} =  "/index.php?v=m&p=health";
 					} else if ($objectId == 'timeline') {
 						${'typeObject' . $i} = $objectId;
 						${'typewebviewurl' . $i} = $webviewUrl;
 						${'typeobjectId' . $i} = '';
-						${'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=timeline";
+						${'tabUrl' . $i} =  "/index.php?v=m&p=timeline";
 					}
 				} else if ($objectId == 'url') {
 					${'typeObject' . $i} = $objectId;

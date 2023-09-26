@@ -26,7 +26,6 @@ if (!is_object($jsonrpc)) {
 }
 
 function createMobile($params, $nbIcones = 3){
-	log::add('mobile','debug',' ---- CREATE_NEW_MOBILE WITH  '.$nbIcones.' ICONS ----');
 	$configs = $params['configs'];
 	$notification = $configs['notification'];
 	$user = user::byHash($params['apikey']);
@@ -34,8 +33,8 @@ function createMobile($params, $nbIcones = 3){
 	$mobile = new mobile();
 	$mobile->setEqType_name('mobile');
 	$mobile->setName($notification['platform'] . '-' . $params['Iq']);
-	$isMobileActivId = config::byKey('checkdefaultID','mobile');
-	if($isMobileActivId != 'noActivMobile' && $isMobileActivId != ''){
+	//$isMobileActivId = config::byKey('checkdefaultID','mobile');
+	/*if($isMobileActivId != 'noActivMobile' && $isMobileActivId != ''){
 			$mobileActive = eqLogic::byId(intval($isMobileActivId));
 			if(is_object($mobileActive)){
 				for($i=1; $i<5; $i++){
@@ -49,7 +48,8 @@ function createMobile($params, $nbIcones = 3){
 					$mobile->setConfiguration('urlUser'.$i, ${ 'urlUser' . $i});
 				}
 			}
-	}else{
+	}else{*/
+		log::add('mobile','debug',' ---- CREATE_NEW_MOBILE WITH DFDFDF '.$nbIcones.' ICONS ----');
 		$namesMenus =  ['home', 'overview', 'health', 'home'];
 		$renamesIcons =  ['Accueil', 'Synthese', 'Santé', 'Accueil'];
 		$spanIcons =  ['icon jeedomapp-in', 'fab fa-hubspot', 'fas fa-medkit', 'icon jeedomapp-in'];
@@ -57,14 +57,15 @@ function createMobile($params, $nbIcones = 3){
 		$j = 0;
 		$countFor = intval($nbIcones) + 1;
 		for($i=1; $i < $countFor; $i++){
-				$mobile->setConfiguration(${'selectNameMenu' . $i}, $namesMenus[$j]);
-				$mobile->setConfiguration(${'renameIcon' . $i}, $renamesIcons[$j]);
-				$mobile->setConfiguration(${'spanIcon' . $i}, $spanIcons[$j]);
-				$mobile->setConfiguration(${'urlUser' . $i}, $urlUsers[$j]);
+				$mobile->setConfiguration( 'selectNameMenu'.$i, $namesMenus[$j]);
+				$mobile->setConfiguration( 'renameIcon'.$i, $renamesIcons[$j]);
+				$mobile->setConfiguration('spanIcon'.$i, $spanIcons[$j]);
+				$mobile->setConfiguration('urlUser'.$i, $urlUsers[$j]);
 				$mobile->setConfiguration('nbIcones', intval($nbIcones));
+				$mobile->save();
 				$j++;
 		}
-	}
+	//}
 	
 	$mobile->setConfiguration('type_mobile', $notification['platform']);
 	$mobile->setConfiguration('affect_user', $userId);
@@ -72,6 +73,7 @@ function createMobile($params, $nbIcones = 3){
 	$mobile->setConfiguration('appVersion', '2');
 	$mobile->setLogicalId($params['Iq']);
 	$mobile->setIsEnable(1);
+	$mobile->save();
 	return $mobile;
 }
 
@@ -81,8 +83,6 @@ function checkDateMenu($menu, $mobile){
 		if($dateMobile < $menu['date']){
 			log::add('mobile','debug','SAVE MENU DEPUIS L APP');
 			saveMenuFromAppV2($menu, $mobile);
-		}else{
-			log::add('mobile','debug','SAVE MENU DEPUIS LE PLUGIN');
 		}
 	}else{
 		return;
@@ -108,7 +108,10 @@ function saveMenuFromAppV2($menu, $mobile){
 												$mobile->setConfiguration('urlUser'.$i, 'https://www.jeedom.com/fr/');
 										}
 							}
-						}else{
+						}/*else if($value['options']['objectType'] == 'panel'){
+							$mobile->setConfiguration('selectNameMenu'.$i, $value['options']['objectId']);
+							//$mobile->setConfiguration('selectNameMenu'.$i, $value['options']['objectId']);
+						}*/else{
 							$mobile->setConfiguration('selectNameMenu'.$i, $value['options']['objectId'].'_'.$value['options']['objectType']);
 						}
 						$mobile->setConfiguration('renameIcon'.$i, $value['name']);

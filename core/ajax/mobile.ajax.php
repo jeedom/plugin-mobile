@@ -55,7 +55,10 @@ if (init('action') == 'getEqLogicConfigs') {
 ajax::success($arrayMenuConfig);
 }
 
-
+if(init('action') == 'menuDefault'){
+	mobile::handleMenuDefault(init('eqId'));
+	ajax::success();
+}
 
 if (init('action') == 'saveMenuEqLogics') {
 	mobile::saveMenuEqLogics(init('eqId'), init('arrayMenu'), init('checkDefaultBtn'), init('nbIcones'));

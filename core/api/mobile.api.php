@@ -245,21 +245,21 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$healthPlugins = [];
 	$deamons_infos = [];
 	$objectsPanel = [];
-	$pluginPanelMobile = [];
-	$pluginPanelDesktop= [];
+	//$pluginPanelMobile = [];
+	//$pluginPanelDesktop= [];
 	foreach ((plugin::listPlugin()) as $plugin) {
 					$obArray = utils::o2a($plugin);
 					$objectId = $obArray['id'];
 					$objectName = $obArray['name'];
-					if($plugin->getMobile() != '' || $plugin->getDisplay() != ''){
+					if($plugin->getMobile() != '' && $plugin->getMobile() != 'panel'){
 						$objectsPanel[$objectId] =  $objectName;
-						if($plugin->getMobile() != 'panel'){
+						/*if($plugin->getMobile() != 'panel'){
 							array_push($pluginPanelMobile, $objectId);
 						}
-						if($plugin->getDisplay() == 'panel' || $plugin->getMobile() == 'panel'){
+						if( $plugin->getMobile() == 'panel'){
 							$objectsPanel[$objectId] =  $objectName;
 							array_push($pluginPanelDesktop, $objectId);
-						}					
+						}		*/			
 				   }
 	            	$update = $plugin->getUpdate();
 					if(is_object($update)){
@@ -275,8 +275,8 @@ if($jsonrpc->getMethod() == 'getJson'){
 						  array_push($arrayPlugins, $pluginUpdateArray);
 					}
   }
-  config::save('pluginPanelMobile', $pluginPanelMobile, 'mobile');
-  config::save('pluginPanelDesktop', $pluginPanelDesktop, 'mobile');
+  //config::save('pluginPanelMobile', $pluginPanelMobile, 'mobile');
+  //config::save('pluginPanelDesktop', $pluginPanelDesktop, 'mobile');
   $return[$idBox]['informations']['objects']['panel'] = $objectsPanel;
   $categories = [];
   foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {

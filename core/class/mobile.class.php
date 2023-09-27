@@ -1014,41 +1014,36 @@ class mobile extends eqLogic
 	}
 
 
-	public static function handleMenuDefault($eqId){
+	public static function handleMenuDefaultBySelect($eqId, $eqDefault){
 		log::add('mobile', 'debug', 'HANDLEDEFAULTMENU' .$eqId);
 		$mobile = eqLogic::byId($eqId, 'mobile');
-		if(is_object($mobile)){
-			config::save('checkdefaultID',$eqId, 'mobile');
+		$mobileDefault = eqLogic::byId($eqDefault, 'mobile');
+		if(is_object($mobile) && is_object($mobileDefault)){
+            $mobile->setConfiguration('defaultIdMobile', $eqDefault);
+			//config::save('checkdefaultID',$eqId, 'mobile');
 			$selectNameMenu = [];
 			$renameIcon = [];
 			$spanIcon = [];
 			$urlUser = [];
-			$nbIcones = $mobile->getConfiguration('nbIcones', 3);
+			$nbIcones = $mobileDefault->getConfiguration('nbIcones', 3);
 			for ($i = 1; $i < $nbIcones+1; $i++) {
-				$selectNameMenu[$i] = $mobile->getConfiguration('selectNameMenu' . $i, 'none');
-				$renameIcon[$i] = $mobile->getConfiguration('renameIcon' . $i, '');
-				$spanIcon[$i] = $mobile->getConfiguration('spanIcon' . $i, 'none');
-				$urlUser[$i] = $mobile->getConfiguration('urlUser' . $i, 'none');
+				$selectNameMenu[$i] = $mobileDefault->getConfiguration('selectNameMenu' . $i, 'none');
+				$renameIcon[$i] = $mobileDefault->getConfiguration('renameIcon' . $i, '');
+				$spanIcon[$i] = $mobileDefault->getConfiguration('spanIcon' . $i, 'none');
+				$urlUser[$i] = $mobileDefault->getConfiguration('urlUser' . $i, 'none');
 			}
-			$mobiles = eqLogic::byType('mobile');
-			foreach ($mobiles as $otherMobile) {
-				for ($i = 1; $i < $nbIcones+1; $i++) {
-					$otherMobile->setConfiguration('selectNameMenu' . $i, $selectNameMenu[$i]);
-					$otherMobile->setConfiguration('renameIcon' . $i, $renameIcon[$i]);
-					$otherMobile->setConfiguration('spanIcon' . $i, $spanIcon[$i]);
-					$otherMobile->setConfiguration('urlUser' . $i, $urlUser[$i]);
-					$otherMobile->save();
-					
-				}
-				$otherMobile->setConfiguration('nbIcones', $nbIcones);
-				$otherMobile->save();
+			for ($i = 1; $i < $nbIcones+1; $i++) {
+				$mobile->setConfiguration('selectNameMenu' . $i, $selectNameMenu[$i]);
+				$mobile->setConfiguration('renameIcon' . $i, $renameIcon[$i]);
+				$mobile->setConfiguration('spanIcon' . $i, $spanIcon[$i]);
+				$mobile->setConfiguration('urlUser' . $i, $urlUser[$i]);
+				$mobile->setConfiguration('nbIcones', $nbIcones);
 				
-			}
-			
-
-		}
-	
+			}	
+			$mobile->save();	
+		}			
 	}
+	
 
 	public static function configMenuCustom($eqId, $jeedomVersion)
 	{
@@ -1090,7 +1085,6 @@ class mobile extends eqLogic
 				}*/
 				$webviewUrl = 'd';
 				${'tabIconName' . $i} = $eqLogic->getConfiguration('spanIcon' . $i, 'none');
-				log::add('mobile', 'debug', '| CHANGETABICON ' . ${'tabIconName' . $i});
 				config::save('icon' . $i . 'NoCut', ${'tabIconName' . $i}, 'mobile');
 				if (${'tabIconName' . $i} != 'none') {
 					$arrayIcon = explode(' ', ${'tabIconName' . $i});
@@ -1108,7 +1102,6 @@ class mobile extends eqLogic
 					${'tabRenameInput' . $i} = 'Accueil';
 				}
 				$objectId = $eqLogic->getConfiguration('selectNameMenu' . $i);
-				//log::add('mobile','debug', 'OBECTIDCUSTOMMENU : ' .	$objectId );
 				if ($objectId && $objectId != -1 && $objectId != 'none' && $objectId != 'url') {
 					//	$typeObject;
 					if ($objectId != 'overview' && $objectId != 'health' && $objectId != 'home' && $objectId != 'timeline') {
@@ -1127,7 +1120,14 @@ class mobile extends eqLogic
 						} else if ($typeObject == 'plan') {
 							${'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=plan&plan_id={$objectId}";
 						} else if ($typeObject == 'panel') {
-							${'tabUrl' . $i} =  "/index.php?v=m&p={$objectId}";
+							$pluginPanelMobile = config::byKey('pluginPanelMobile', 'mobile');
+							$pluginPanelDesktop = config::byKey('pluginPanelDesktop', 'mobile');
+							if(in_array($objectId, $pluginPanelDesktop)){
+								${'tabUrl' . $i} =  "/index.php?v=d&m={$objectId}&p=panel";
+							}else if(in_array($objectId, $pluginPanelMobile)){
+								${'tabUrl' . $i} =  "/index.php?v=m&p={$objectId}";
+							}
+						
 							//$test = "/index.php?v=m&p={$objectId}";
 							//log::add('mobile', 'debug', 'PANEL : ' .$test);
 						}

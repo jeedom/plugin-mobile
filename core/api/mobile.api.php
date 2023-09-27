@@ -245,14 +245,18 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$healthPlugins = [];
 	$deamons_infos = [];
 	$objectsPanel = [];
-	//$pluginPanelMobile = [];
+	$pluginPanelMobile = [];
 	//$pluginPanelDesktop= [];
 	foreach ((plugin::listPlugin()) as $plugin) {
 					$obArray = utils::o2a($plugin);
 					$objectId = $obArray['id'];
 					$objectName = $obArray['name'];
 					if($plugin->getMobile() != '' && $plugin->getMobile() != 'panel'){
-						$objectsPanel[$objectId] =  $objectName;
+						if($plugin->getMobile() == $objectId){
+							$objectsPanel[$objectId] =  $objectName;
+							$pluginPanelMobile[$objectId] = $plugin->getMobile();
+						}
+						
 						/*if($plugin->getMobile() != 'panel'){
 							array_push($pluginPanelMobile, $objectId);
 						}
@@ -275,7 +279,7 @@ if($jsonrpc->getMethod() == 'getJson'){
 						  array_push($arrayPlugins, $pluginUpdateArray);
 					}
   }
-  //config::save('pluginPanelMobile', $pluginPanelMobile, 'mobile');
+  config::save('pluginPanelMobile', $pluginPanelMobile, 'mobile');
   //config::save('pluginPanelDesktop', $pluginPanelDesktop, 'mobile');
   $return[$idBox]['informations']['objects']['panel'] = $objectsPanel;
   $categories = [];

@@ -14,7 +14,7 @@ name : 'Code Lint Global'
 jobs:
   run-linters:
     name: Test Linters
-    runs-on: ubuntu-latest-m
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check out Git repository

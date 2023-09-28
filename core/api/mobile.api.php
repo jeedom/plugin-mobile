@@ -248,27 +248,28 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$pluginPanelMobile = [];
 	$pluginPanelOutMobile= [];
 	foreach ((plugin::listPlugin(true)) as $plugin) {
-					$obArray = utils::o2a($plugin);
-					$objectId = $obArray['id'];
-					$objectName = $obArray['name'];
-				   if($plugin->getMobile() != ''){
-					$objectsPanel[$objectId] =  $objectName;
-					$pluginPanelMobile[$objectId] = $plugin->getMobile();         
-			       }
-	            	$update = $plugin->getUpdate();
-					if(is_object($update)){
-						  $pluginUpdateArray = utils::o2a($update);
-						  $arrayDataPlugins = utils::o2a($plugin);
-							if($plugin->getHasOwnDeamon() == 1){
-							    $deamons_infos[$plugin->getId()] = $plugin->deamon_info();
-							}else{
-								$deamons_infos[$plugin->getId()] = array('launchable_message' => 'nodemon', 'launchable' => 'nodemon', 'state' => 'nodemon', 'log' => 'nodemon', 'auto' => 0);
-							}
-							$changeLogs[$arrayDataPlugins['id']]['changelog'] = $arrayDataPlugins['changelog'];
-						  $changeLogs[$arrayDataPlugins['id']]['changelog_beta'] = $arrayDataPlugins['changelog_beta'];
-						  array_push($arrayPlugins, $pluginUpdateArray);
-					}
-  }
+		$obArray = utils::o2a($plugin);
+		$obArray['displayMobilePanel'] = config::byKey('displayMobilePanel', $plugin->getId(), 0);
+		$objectId = $obArray['id'];
+		$objectName = $obArray['name'];
+		if($plugin->getMobile() != '' && $obArray['displayMobilePanel'] != 0){
+			$objectsPanel[$objectId] =  $objectName;
+			$pluginPanelMobile[$objectId] = $plugin->getMobile();
+		}
+		$update = $plugin->getUpdate();
+		if(is_object($update)){
+			$pluginUpdateArray = utils::o2a($update);
+			$arrayDataPlugins = utils::o2a($plugin);
+			if($plugin->getHasOwnDeamon() == 1){
+				$deamons_infos[$plugin->getId()] = $plugin->deamon_info();
+			}else{
+				$deamons_infos[$plugin->getId()] = array('launchable_message' => 'nodemon', 'launchable' => 'nodemon', 'state' => 'nodemon', 'log' => 'nodemon', 'auto' => 0);
+			}
+			$changeLogs[$arrayDataPlugins['id']]['changelog'] = $arrayDataPlugins['changelog'];
+			$changeLogs[$arrayDataPlugins['id']]['changelog_beta'] = $arrayDataPlugins['changelog_beta'];
+			array_push($arrayPlugins, $pluginUpdateArray);
+		}
+	}
   config::save('pluginPanelMobile', $pluginPanelMobile, 'mobile');
   config::save('pluginPanelOutMobile', $pluginPanelOutMobile, 'mobile');
   $return[$idBox]['informations']['objects']['panel'] = $objectsPanel;

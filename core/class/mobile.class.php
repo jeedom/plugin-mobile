@@ -1119,15 +1119,13 @@ class mobile extends eqLogic
 							${'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=dashboard&object_id={$objectId}";
 						} else if ($typeObject == 'plan') {
 							${'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=plan&plan_id={$objectId}";
-						} else if ($typeObject == 'panel') {
-							
+						} else if ($typeObject == 'panel') {							
 							$pluginPanelMobile = config::byKey('pluginPanelMobile', 'mobile');
-							${'tabUrl' . $i} =  "/index.php?v=m&p={$pluginPanelMobile[$objectId]}&app_mode=1";
-							//$pluginPanelDesktop = config::byKey('pluginPanelDesktop', 'mobile');
-						    
-						
-							//$test = "/index.php?v=m&p={$objectId}";
-							//log::add('mobile', 'debug', 'PANEL : ' .$test);
+							if($pluginPanelOutMobile[$objectId] == $objectId){
+								${'tabUrl' . $i} =  "/index.php?v=m&p={$objectId}";
+							}else{
+								${'tabUrl' . $i} =  "/index.php?v=m&p={$objectId}&app_mode=1";
+							}
 						}
 					} else if ($objectId == 'overview') {
 						${'typeObject' . $i} = $objectId;

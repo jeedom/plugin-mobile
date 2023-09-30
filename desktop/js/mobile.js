@@ -465,7 +465,7 @@ function addCmdToTable(_cmd) {
     tr += '</td>';
     tr += '<td>';
   	if (init(_cmd.logicalId) !== 'notif' && init(_cmd.logicalId) !== 'notifCritical' ){
-    	tr += '<i class="fas fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i>';
+    	tr += '<i class="fas fa-minus-circle pull-right cmdAction cursor" data-action="remove" title="{{Supprimer la commande}}"></i>';
     }
     tr += '</td>';
     tr += '</tr>';

@@ -29,7 +29,7 @@ $eqLogics = mobile::byType('mobile');
       <th>{{ID}}</th>
       <th>{{User}}</th>
       <th>{{Menu Defaut}}</th>
-      <th>{{Nb Icones}}</th>
+      <th>{{Nb Icônes}}</th>
     </tr>
   </thead>
   <tbody>
@@ -62,11 +62,11 @@ $eqLogics = mobile::byType('mobile');
             }
           }
           echo '</select></td>';
-          echo '<td width="12.5%"><button class="btn btn-primary menuConfigBtn" eqId="' . $eqLogic->getId() . '">Configurer Menu</td>';
+          echo '<td width="12.5%"><button class="btn btn-primary menuConfigBtn" eqId="' . $eqLogic->getId() . '">{{Configurer Menu}}</td>';
         } else {
-          echo '<td width="12.5%"><span class="label label-warning">PAS D\'APP V2 SUR CE MOBILE</span></td>';
+          echo '<td width="12.5%"><span class="label label-warning">{{PAS D\'APP V2 SUR CE MOBILE}}</span></td>';
         }
-        echo '<td width="12.5%"><button class="btn btn-success validConfigBtn"  eqId="' . $eqLogic->getId() . '" style="display:none;">Valider Menu</td></tr>';
+        echo '<td width="12.5%"><button class="btn btn-success validConfigBtn"  eqId="' . $eqLogic->getId() . '" style="display:none;">{{Valider Menu}}</td></tr>';
       } else {
         echo '<tr><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';
         echo '<td><span class="label label-info">' . $eqLogic->getId() . '</span></td>';
@@ -85,44 +85,44 @@ $eqLogics = mobile::byType('mobile');
         <span class="spanIconTest" id="spanIconTest1">
           <i id="area1" class="icon jeedomapp-in" style="font-size:60px;"></i>
         </span>
-        <p id="titleArea1" style="color:white;">Home</p>
+        <p id="titleArea1" style="color:white;">{{Home}}</p>
       </div>
       <div class="containerArea" id="containerArea2" style="padding-top:1%;width:20%;height:10%;display:flex;justify-content:space-evenly;align-items:center;flex-direction:column;color:white;">
         <span class="spanIconTest" id="spanIconTest2">
           <i id="area2" class="icon jeedomapp-dash01" style="font-size:60px;"></i>
         </span>
-        <p id="titleArea2" style="color:white;">Dashboard</p>
+        <p id="titleArea2" style="color:white;">{{Dashboard}}</p>
       </div>
       <div class="containerArea" id="containerArea3" style="padding-top:1%;width:20%;height:10%;display:flex;justify-content:space-evenly;align-items:center;flex-direction:column;color:white;">
         <span class="spanIconTest" id="spanIconTest3">
           <i id="area3" class="icon jeedom2-bright4" style="font-size:60px;"></i>
         </span>
-        <p id="titleArea3" style="color:white;">Lumieres</p>
+        <p id="titleArea3" style="color:white;">{{Lumières}}</p>
       </div>
       <div class="containerArea" id="containerArea4" style="padding-top:1%;width:20%;height:10%;display:flex;justify-content:space-evenly;align-items:center;flex-direction:column;color:white;">
         <span class="spanIconTest" id="spanIconTest4">
           <i id="area4" class="icon jeedomapp-plugin" style="font-size:60px;"></i>
         </span>
-        <p id="titleArea4" style="color:white;">Synthese</p>
+        <p id="titleArea4" style="color:white;">{{Synthèse}}</p>
       </div>
     </div>
   </div>
   <div class="container">
     <div class="panelCustomMenuMobile active" id="panelIcon1">
       <div class="nameIconNoActive" id="nameIconNoActive1">
-        <h6 class="iconh6" style="text-transform:uppercase;color:#93ca02;font-weight:bold;font-size:24px;">icone</h6>
+        <h6 class="iconh6" style="text-transform:uppercase;color:#93ca02;font-weight:bold;font-size:24px;">{{Icône}}</h6>
         <h6 class="iconh6Num" style="color:#93ca02;font-weight:bold;font-size:24px;">1</h6>
       </div>
       <div class="panelContainer panelBootstrap active" id="panelContainer" style="display:flex; justify-content:center; width:100%;align-items:center;">
         <div class="panel panel-success " id="panel1" style="width:70%;">
-          <h3 class="panel-title"><i class='icon jeedomapp-plugin '></i></i>{{ Icone 1}}</h3>
+          <h3 class="panel-title"><i class='icon jeedomapp-plugin '></i></i>{{ Icône 1}}</h3>
           <div class="panel-body" style="display:flex;flex-direction:column;z-index:5;">
             <div class="menusSelectors" style="margin-bottom:2%;margin-left:5%;">
               <label>{{Type}}</label>
               <select id="typeMenu1" class="form-control selectMenuMobile" onInput="userSelect('typeMenu1')">;
                 <option value="none" disabled selected>{{Choisir un Type}}</option>
                 <option value="home">{{Accueil}}</option>
-                <option value="overview">{{Synthese}}</option>
+                <option value="overview">{{Synthèse}}</option>
                 <option value="dashboard">{{Dashboard}}</option>
                 <option value="view">{{Vue}}</option>
                 <option value="plan">{{Design}}</option>
@@ -134,7 +134,7 @@ $eqLogics = mobile::byType('mobile');
             </div>
             <div id="divnameMenu1" style="margin-bottom:5%;margin-left:5%;">
               <select class="form-control selectObject item_dash" id="item_dashboard1" style="display:none;">;
-                <option value="none">Aucun</option>
+                <option value="none">{{Aucun}}</option>
                 <?php
                 $objects = jeeObject::all();
                 foreach ($objects as $object) {
@@ -144,7 +144,7 @@ $eqLogics = mobile::byType('mobile');
                 ?>
               </select>
               <select class="form-control selectObject item_dash" id="item_view1" style="display:none;">;
-                <option value="none">Aucun</option>
+                <option value="none">{{Aucun}}</option>
                 <?php
                 $views = view::all();
                 foreach ($views as $view) {
@@ -154,7 +154,7 @@ $eqLogics = mobile::byType('mobile');
                 ?>
               </select>
               <select class="form-control selectObject item_dash" id="item_panel1" style="display:none;">;
-                <option value="none">Aucun</option>
+                <option value="none">{{Aucun}}</option>
                 <?php $pluginsPanel = plugin::listPlugin();
                 foreach ($pluginsPanel as $plugin) {
                   $obArray = utils::o2a($plugin);
@@ -166,7 +166,7 @@ $eqLogics = mobile::byType('mobile');
 
               </select>
               <select class="form-control selectObject item_dash" id="item_plan1" style="display:none;">;
-                <option value="none">Aucun</option>
+                <option value="none">{{Aucun}}</option>
                 <?php $panels = planHeader::all();
                 foreach ($panels as $panel) {
                   $obArray = utils::o2a($panel);
@@ -177,11 +177,11 @@ $eqLogics = mobile::byType('mobile');
               <input class="form-control urlUser" id="urlUser1" type=text style="display:none;" placeholder="url perso" />
             </div>
             <div class="renameDivClass" id="renameIcon1" style="margin-bottom:2%;margin-left:5%;display:none;">
-              <label>Renommer Icone</label>
-              <input class="form-control inputUser" id="inputUser1" type=text maxlength="15" />
+              <label>{{Renommer Icône<}}/label>
+                <input class="form-control inputUser" id="inputUser1" type=text maxlength="15" />
             </div>
             <div id="divIconMenu1" style="display:flex;justify-content:center;margin-bottom:5%;">
-              <a class="btn btn-default btn-sm btIconClass" id="bt_chooseIconMenu1"><i class="fas fa-flag"></i> {{Choisir Icone}}</a>
+              <a class="btn btn-default btn-sm btIconClass" id="bt_chooseIconMenu1"><i class="fas fa-flag"></i> {{Choisir Icône}}</a>
               <span class="spanIcon" id="spanIcon1"></span>
             </div>
           </div>
@@ -190,19 +190,19 @@ $eqLogics = mobile::byType('mobile');
     </div>
     <div class="panelCustomMenuMobile" id="panelIcon2">
       <div class="nameIconNoActive" id="nameIconNoActive2">
-        <h6 class="iconh6" style="text-transform:uppercase;color:#93ca02;font-weight:bold;font-size:24px;">icone</h6>
+        <h6 class="iconh6" style="text-transform:uppercase;color:#93ca02;font-weight:bold;font-size:24px;">{{Icône}}</h6>
         <h6 class="iconh6Num" style="color:#93ca02;font-weight:bold;font-size:24px;">2</h6>
       </div>
       <div class="panelContainer panelBootstrap" id="panelContainer" style="display:none; justify-content:center; width:100%;align-items:center;">
         <div class="panel panel-success " id="panel1" style="width:70%;">
-          <h3 class="panel-title"><i class='icon jeedomapp-plugin '></i>{{ Icone 2}}</h3>
+          <h3 class="panel-title"><i class='icon jeedomapp-plugin '></i>{{ Icône 2}}</h3>
           <div class="panel-body" style="display:flex;flex-direction:column;">
             <div class="menusSelectors" style="margin-bottom:2%;margin-left:5%;">
               <label>{{Type}}</label>
               <select id="typeMenu2" class="form-control selectMenuMobile" onInput="userSelect('typeMenu2')">;
                 <option value="none" disabled selected>{{Choisir un Type}}</option>
                 <option value="home">{{Accueil}}</option>
-                <option value="overview">{{Synthese}}</option>
+                <option value="overview">{{Synthèse}}</option>
                 <option value="dashboard">{{Dashboard}}</option>
                 <option value="view">{{Vue}}</option>
                 <option value="plan">{{Design}}</option>
@@ -214,7 +214,7 @@ $eqLogics = mobile::byType('mobile');
             </div>
             <div id="divnameMenu2" style="margin-bottom:2%;margin-left:5%;">
               <select class="form-control selectObject item_dash" id="item_dashboard2" style="display:none;">
-                <option value="none">Aucun</option>
+                <option value="none">{{Aucun}}</option>
                 <?php
                 $objects = jeeObject::all();
                 foreach ($objects as $object) {
@@ -224,7 +224,7 @@ $eqLogics = mobile::byType('mobile');
                 ?>
               </select>
               <select class="form-control selectObject item_dash" id="item_view2" style="display:none;">
-                <option value="none">Aucun</option>
+                <option value="none">{{Aucun}}</option>
                 <?php
                 $views = view::all();
                 foreach ($views as $view) {
@@ -234,7 +234,7 @@ $eqLogics = mobile::byType('mobile');
                 ?>
               </select>
               <select class="form-control selectObject item_dash" id="item_panel2" style="display:none;">
-                <option value="none">Aucun</option>
+                <option value="none">{{Aucun}}</option>
                 <?php $pluginsPanel = plugin::listPlugin();
                 foreach ($pluginsPanel as $plugin) {
                   $obArray = utils::o2a($plugin);
@@ -245,7 +245,7 @@ $eqLogics = mobile::byType('mobile');
                 ?>
               </select>
               <select class="form-control selectObject item_dash" id="item_plan2" style="display:none;">
-                <option value="none">Aucun</option>
+                <option value="none">{{Aucun}}</option>
                 <?php $panels = planHeader::all();
                 foreach ($panels as $panel) {
                   $obArray = utils::o2a($panel);
@@ -256,11 +256,11 @@ $eqLogics = mobile::byType('mobile');
               <input class="form-control urlUser" id="urlUser2" type=text style="display:none;" placeholder="url perso" />
             </div>
             <div class="renameDivClass" id="renameIcon2" style="margin-bottom:2%;margin-left:5%;display:none;">
-              <label>Renommer Icone</label>
+              <label>{{Renommer Icône}}</label>
               <input class="form-control inputUser" id="inputUser2" type=text maxlength="15" />
             </div>
             <div id="divIconMenu2" style="display:flex;justify-content:center;margin-bottom:5%;">
-              <a class="btn btn-default btn-sm btIconClass" id="bt_chooseIconMenu2"><i class="fas fa-flag"></i> {{Choisir Icone}}</a>
+              <a class="btn btn-default btn-sm btIconClass" id="bt_chooseIconMenu2"><i class="fas fa-flag"></i> {{Choisir Icône}}</a>
               <span class="spanIcon" id="spanIcon2"></span>
             </div>
           </div>
@@ -269,19 +269,19 @@ $eqLogics = mobile::byType('mobile');
     </div>
     <div class="panelCustomMenuMobile" id="panelIcon3">
       <div class="nameIconNoActive" id="nameIconNoActive3">
-        <h6 class="iconh6" style="text-transform:uppercase;color:#93ca02;font-weight:bold;font-size:24px;">icone</h6>
+        <h6 class="iconh6" style="text-transform:uppercase;color:#93ca02;font-weight:bold;font-size:24px;">{{Icône}}</h6>
         <h6 class="iconh6Num" style="color:#93ca02;font-weight:bold;font-size:24px;">3</h6>
       </div>
       <div class="panelContainer panelBootstrap" id="panelContainer" style="display:none; justify-content:center; width:100%;align-items:center;">
         <div class="panel panel-success " id="panel1" style="width:70%;">
-          <h3 class="panel-title"><i class='icon jeedomapp-plugin '></i>{{ Icone 3}}</h3>
+          <h3 class="panel-title"><i class='icon jeedomapp-plugin '></i>{{ Icône 3}}</h3>
           <div class="panel-body" style="display:flex;flex-direction:column;">
             <div class="menusSelectors" style="margin-bottom:2%;margin-left:5%;">
               <label>{{Type}}</label>
               <select id="typeMenu3" class="form-control selectMenuMobile" onInput="userSelect('typeMenu3')">;
                 <option value="none" disabled selected>{{Choisir un Type}}</option>
                 <option value="home">{{Accueil}}</option>
-                <option value="overview">{{Synthese}}</option>
+                <option value="overview">{{Synthèse}}</option>
                 <option value="dashboard">{{Dashboard}}</option>
                 <option value="view">{{Vue}}</option>
                 <option value="plan">{{Design}}</option>
@@ -293,7 +293,7 @@ $eqLogics = mobile::byType('mobile');
             </div>
             <div id="divnameMenu3" style="margin-bottom:2%;margin-left:5%;">
               <select class="form-control selectObject item_dash" id="item_dashboard3" style="display:none;">
-                <option value="none">Aucun</option>
+                <option value="none">{{Aucun}}</option>
                 <?php
                 $objects = jeeObject::all();
                 foreach ($objects as $object) {
@@ -303,7 +303,7 @@ $eqLogics = mobile::byType('mobile');
                 ?>
               </select>
               <select class="form-control selectObject item_dash" id="item_view3" style="display:none;">
-                <option value="none">Aucun</option>
+                <option value="none">{{Aucun}}</option>
                 <?php
                 $views = view::all();
                 foreach ($views as $view) {
@@ -313,7 +313,7 @@ $eqLogics = mobile::byType('mobile');
                 ?>
               </select>
               <select class="form-control selectObject item_dash" id="item_panel3" style="display:none;">
-                <option value="none">Aucun</option>
+                <option value="none">{{Aucun}}</option>
                 <?php $pluginsPanel = plugin::listPlugin();
                 foreach ($pluginsPanel as $plugin) {
                   $obArray = utils::o2a($plugin);
@@ -324,7 +324,7 @@ $eqLogics = mobile::byType('mobile');
                 ?>
               </select>
               <select class="form-control selectObject item_dash" id="item_plan3" style="display:none;">
-                <option value="none">Aucun</option>
+                <option value="none">{{Aucun}}</option>
                 <?php $panels = planHeader::all();
                 foreach ($panels as $panel) {
                   $obArray = utils::o2a($panel);
@@ -335,11 +335,11 @@ $eqLogics = mobile::byType('mobile');
               <input class="form-control urlUser" id="urlUser3" type=text style="display:none;" placeholder="url perso" />
             </div>
             <div class="renameDivClass" id="renameIcon3" style="margin-bottom:2%;margin-left:5%;display:none;">
-              <label>Renommer Icone</label>
+              <label>{{Renommer Icône}}</label>
               <input class="form-control inputUser" id="inputUser3" type=text maxlength="15" />
             </div>
             <div id="divIconMenu3" style="display:flex;justify-content:center;margin-bottom:5%;">
-              <a class="btn btn-default btn-sm btIconClass" id="bt_chooseIconMenu3"><i class="fas fa-flag"></i> {{Choisir Icone}}</a>
+              <a class="btn btn-default btn-sm btIconClass" id="bt_chooseIconMenu3"><i class="fas fa-flag"></i> {{Choisir Icône}}</a>
               <span class="spanIcon" id="spanIcon3"></span>
             </div>
           </div>
@@ -348,19 +348,19 @@ $eqLogics = mobile::byType('mobile');
     </div>
     <div class="panelCustomMenuMobile" id="panelIcon4">
       <div class="nameIconNoActive" id="nameIconNoActive4">
-        <h6 class="iconh6" style="text-transform:uppercase;color:#93ca02;font-weight:bold;font-size:24px;">icone</h6>
+        <h6 class="iconh6" style="text-transform:uppercase;color:#93ca02;font-weight:bold;font-size:24px;">{{Icône}}</h6>
         <h6 class="iconh6Num" style="color:#93ca02;font-weight:bold;font-size:24px;">4</h6>
       </div>
       <div class="panelContainer panelBootstrap" id="panelContainer" style="display:none; justify-content:center; width:100%;align-items:center;">
         <div class="panel panel-success " id="panel1" style="width:70%;">
-          <h3 class="panel-title"><i class='icon jeedomapp-plugin '></i>{{ Icone 4}}</h3>
+          <h3 class="panel-title"><i class='icon jeedomapp-plugin '></i>{{ Icône 4}}</h3>
           <div class="panel-body" style="display:flex;flex-direction:column;">
             <div class="menusSelectors" style="margin-bottom:2%;margin-left:5%;">
               <label>{{Type}}</label>
               <select id="typeMenu4" class="form-control selectMenuMobile" onInput="userSelect('typeMenu4')">;
                 <option value="none" disabled selected>{{Choisir un Type}}</option>
                 <option value="home">{{Accueil}}</option>
-                <option value="overview">{{Synthese}}</option>
+                <option value="overview">{{Synthèse}}</option>
                 <option value="dashboard">{{Dashboard}}</option>
                 <option value="view">{{Vue}}</option>
                 <option value="plan">{{Design}}</option>
@@ -372,7 +372,7 @@ $eqLogics = mobile::byType('mobile');
             </div>
             <div id="divnameMenu4" style="margin-bottom:2%;margin-left:5%;">
               <select class="form-control selectObject item_dash" id="item_dashboard4" style="display:none;">
-                <option value="none">Aucun</option>
+                <option value="none">{{Aucun}}</option>
                 <?php
                 $objects = jeeObject::all();
                 foreach ($objects as $object) {
@@ -382,7 +382,7 @@ $eqLogics = mobile::byType('mobile');
                 ?>
               </select>
               <select class="form-control selectObject item_dash" id="item_view4" style="display:none;">
-                <option value="none">Aucun</option>
+                <option value="none">{{Aucun}}</option>
                 <?php
                 $views = view::all();
                 foreach ($views as $view) {
@@ -392,7 +392,7 @@ $eqLogics = mobile::byType('mobile');
                 ?>
               </select>
               <select class="form-control selectObject item_dash" id="item_panel4" style="display:none;">
-                <option value="none">Aucun</option>
+                <option value="none">{{Aucun}}</option>
                 <?php $pluginsPanel = plugin::listPlugin();
                 foreach ($pluginsPanel as $plugin) {
                   $obArray = utils::o2a($plugin);
@@ -403,7 +403,7 @@ $eqLogics = mobile::byType('mobile');
                 ?>
               </select>
               <select class="form-control selectObject item_dash" id="item_plan4" style="display:none;">
-                <option value="none">Aucun</option>
+                <option value="none">{{Aucun}}</option>
                 <?php $panels = planHeader::all();
                 foreach ($panels as $panel) {
                   $obArray = utils::o2a($panel);
@@ -414,11 +414,11 @@ $eqLogics = mobile::byType('mobile');
               <input class="form-control urlUser" id="urlUser4" type=text style="display:none;" placeholder="url perso" />
             </div>
             <div class="renameDivClass" id="renameIcon4" style="margin-bottom:2%;margin-left:5%;display:none;">
-              <label>Renommer Icone</label>
+              <label>{{Renommer Icône}}</label>
               <input class="form-control inputUser" id="inputUser4" type=text maxlength="15" />
             </div>
             <div id="divIconMenu4" style="display:flex;justify-content:center;margin-bottom:5%;">
-              <a class="btn btn-default btn-sm btIconClass" id="bt_chooseIconMenu4"><i class="fas fa-flag"></i> {{Choisir Icone}}</a>
+              <a class="btn btn-default btn-sm btIconClass" id="bt_chooseIconMenu4"><i class="fas fa-flag"></i> {{Choisir Icône}}</a>
               <span class="spanIcon" id="spanIcon4"></span>
             </div>
           </div>
@@ -676,7 +676,7 @@ $eqLogics = mobile::byType('mobile');
         }
 
         $('#div_alert').showAlert({
-          message: 'Configuration Menu Enregistrée',
+          message: '{{Configuration Menu Enregistrée}}',
           level: 'success'
         });
         if (typeof jeeDialog !== 'undefined') {

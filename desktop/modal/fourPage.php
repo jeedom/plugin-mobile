@@ -15,7 +15,7 @@ $path_img = 'plugins/mobile/core/img/';
     <div style="display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;width:33%;">
       <p style="font-weight:bold;margin-top:2%;">{{Pour cela, dans l'onglet Boxs, il faut selectionner une box, et s'identifier.}}</p>
       <p style="font-weight:bold">{{Une fois les identifiants entrés, la box passe en haut de liste.}}</p>
-      <p style="font-weight:bold">{{Si elle est répond au ping, elle a un voyant vert}}</p>
+      <p style="font-weight:bold">{{Si elle répond au ping, elle a un voyant vert}}</p>
       <p style="font-weight:bold">{{On peut cliquer sur Synchroniser pour mettre à jour le statut des boxs}}</p>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:33%;text-align:center;">

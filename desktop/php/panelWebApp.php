@@ -12,16 +12,16 @@ if (!isConnect()) {
     <i class="icon jeedomapp-in" style="font-size:6em;color:white;"></i>
   </div>
   <div class="principal">
-    <h6>Parametrer Icone 2</h6>
+    <h6>{{Paramétrer Icône 2}}</h6>
     <a class="iconePush" style="margin: 5px;">
       <i class="jeedomapp-in" style="font-size: 12em;"></i><br /><span style="color:#94ca02;">{{ICÔNE 1}}</span></a>
   </div>
   <div class="principal">
-    <h6>Parametrer Icone 3</h6>
+    <h6>{{Paramétrer Icône 3}}</h6>
 
   </div>
   <div class="principal">
-    <h6>Parametrer Icone 4</h6>
+    <h6>{{Paramétrer Icône4}}</h6>
     <p>IMG
     <P>
   </div>

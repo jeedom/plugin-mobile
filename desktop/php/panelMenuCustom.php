@@ -91,7 +91,7 @@ if (isset($_GET["Iq"])) {
             <select id="typeMenu1" class="form-control selectMenuMobile" onInput="userSelectPanel('typeMenu1')">;
               <option value="none" disabled selected>{{Choisir un Type}}</option>
               <option value="home">{{Accueil}}</option>
-              <option value="overview">{{Synthese}}</option>
+              <option value="overview">{{Synthèse}}</option>
               <option value="dashboard">{{Dashboard}}</option>
               <option value="view">{{Vue}}</option>
               <option value="plan">{{Design}}</option>
@@ -103,7 +103,7 @@ if (isset($_GET["Iq"])) {
           </div>
           <div id="divnameMenu1" style="margin-bottom:5%;">
             <select class="form-control selectObject item_dash" id="item_dashboard1" style="display:none;width:80vw;">;
-              <option value="none">Aucun</option>
+              <option value="none">{{Aucun}}</option>
               <?php
               $objects = jeeObject::all();
               foreach ($objects as $object) {
@@ -113,7 +113,7 @@ if (isset($_GET["Iq"])) {
               ?>
             </select>
             <select class="form-control selectObject item_dash" id="item_view1" style="display:none;width:80vw;">;
-              <option value="none">Aucun</option>
+              <option value="none">{{Aucun}}</option>
               <?php
               $views = view::all();
               foreach ($views as $view) {
@@ -123,7 +123,7 @@ if (isset($_GET["Iq"])) {
               ?>
             </select>
             <select class="form-control selectObject item_dash" id="item_panel1" style="display:none;width:80vw;">;
-              <option value="none">Aucun</option>
+              <option value="none">{{Aucun}}</option>
               <?php $pluginsPanel = plugin::listPlugin();
               foreach ($pluginsPanel as $plugin) {
                 $obArray = utils::o2a($plugin);
@@ -135,7 +135,7 @@ if (isset($_GET["Iq"])) {
 
             </select>
             <select class="form-control selectObject item_dash" id="item_plan1" style="display:none;width:80vw;">;
-              <option value="none">Aucun</option>
+              <option value="none">{{Aucun}}</option>
               <?php $panels = planHeader::all();
               foreach ($panels as $panel) {
                 $obArray = utils::o2a($panel);
@@ -181,7 +181,7 @@ if (isset($_GET["Iq"])) {
           </div>
           <div id="divnameMenu2" style="margin-bottom:5%;">
             <select class="form-control selectObject item_dash" id="item_dashboard2" style="display:none;width:80vw;">;
-              <option value="none">Aucun</option>
+              <option value="none">{{Aucun}}</option>
               <?php
               $objects = jeeObject::all();
               foreach ($objects as $object) {
@@ -191,7 +191,7 @@ if (isset($_GET["Iq"])) {
               ?>
             </select>
             <select class="form-control selectObject item_dash" id="item_view2" style="display:none;width:80vw;">;
-              <option value="none">Aucun</option>
+              <option value="none">{{Aucun}}</option>
               <?php
               $views = view::all();
               foreach ($views as $view) {
@@ -201,7 +201,7 @@ if (isset($_GET["Iq"])) {
               ?>
             </select>
             <select class="form-control selectObject item_dash" id="item_panel2" style="display:none;width:80vw;">;
-              <option value="none">Aucun</option>
+              <option value="none">{{Aucun}}</option>
               <?php $pluginsPanel = plugin::listPlugin();
               foreach ($pluginsPanel as $plugin) {
                 $obArray = utils::o2a($plugin);
@@ -213,7 +213,7 @@ if (isset($_GET["Iq"])) {
 
             </select>
             <select class="form-control selectObject item_dash" id="item_plan2" style="display:none;width:80vw;">;
-              <option value="none">Aucun</option>
+              <option value="none">{{Aucun}}</option>
               <?php $panels = planHeader::all();
               foreach ($panels as $panel) {
                 $obArray = utils::o2a($panel);
@@ -257,7 +257,7 @@ if (isset($_GET["Iq"])) {
           </div>
           <div id="divnameMenu3" style="margin-bottom:5%;">
             <select class="form-control selectObject item_dash" id="item_dashboard3" style="display:none;width:80vw;">;
-              <option value="none">Aucun</option>
+              <option value="none">{{Aucun}}</option>
               <?php
               $objects = jeeObject::all();
               foreach ($objects as $object) {
@@ -267,7 +267,7 @@ if (isset($_GET["Iq"])) {
               ?>
             </select>
             <select class="form-control selectObject item_dash" id="item_view3" style="display:none;width:80vw;">;
-              <option value="none">Aucun</option>
+              <option value="none">{{Aucun}}</option>
               <?php
               $views = view::all();
               foreach ($views as $view) {
@@ -277,7 +277,7 @@ if (isset($_GET["Iq"])) {
               ?>
             </select>
             <select class="form-control selectObject item_dash" id="item_panel3" style="display:none;width:80vw;">;
-              <option value="none">Aucun</option>
+              <option value="none">{{Aucun}}</option>
               <?php $pluginsPanel = plugin::listPlugin();
               foreach ($pluginsPanel as $plugin) {
                 $obArray = utils::o2a($plugin);
@@ -289,7 +289,7 @@ if (isset($_GET["Iq"])) {
 
             </select>
             <select class="form-control selectObject item_dash" id="item_plan3" style="display:none;width:80vw;">;
-              <option value="none">Aucun</option>
+              <option value="none">{{Aucun}}</option>
               <?php $panels = planHeader::all();
               foreach ($panels as $panel) {
                 $obArray = utils::o2a($panel);
@@ -333,7 +333,7 @@ if (isset($_GET["Iq"])) {
           </div>
           <div id="divnameMenu4" style="margin-bottom:5%;">
             <select class="form-control selectObject item_dash" id="item_dashboard4" style="display:none;width:80vw;">;
-              <option value="none">Aucun</option>
+              <option value="none">{{Aucun}}</option>
               <?php
               $objects = jeeObject::all();
               foreach ($objects as $object) {
@@ -343,7 +343,7 @@ if (isset($_GET["Iq"])) {
               ?>
             </select>
             <select class="form-control selectObject item_dash" id="item_view4" style="display:none;width:80vw;">;
-              <option value="none">Aucun</option>
+              <option value="none">{{Aucun}}</option>
               <?php
               $views = view::all();
               foreach ($views as $view) {
@@ -353,7 +353,7 @@ if (isset($_GET["Iq"])) {
               ?>
             </select>
             <select class="form-control selectObject item_dash" id="item_panel4" style="display:none;width:80vw;">;
-              <option value="none">Aucun</option>
+              <option value="none">{{Aucun}}</option>
               <?php $pluginsPanel = plugin::listPlugin();
               foreach ($pluginsPanel as $plugin) {
                 $obArray = utils::o2a($plugin);
@@ -365,7 +365,7 @@ if (isset($_GET["Iq"])) {
 
             </select>
             <select class="form-control selectObject item_dash" id="item_plan4" style="display:none;width:80vw;">;
-              <option value="none">Aucun</option>
+              <option value="none">{{Aucun}}</option>
               <?php $panels = planHeader::all();
               foreach ($panels as $panel) {
                 $obArray = utils::o2a($panel);
@@ -401,15 +401,15 @@ if (isset($_GET["Iq"])) {
     include_file('core', 'plugin.template', 'js');
   } else {
     echo  '<div class="greenApp title" style="margin-top:50%;display:flex;flex-direction:column;justify-content:center;align-items:center;">';
-    echo  '<h6 class="greenApp title">Pas de mobile enregistré sur l\'application mobile.</h6>';
-    echo  '<h6 class="greenApp title">Scanner le QRCode du plugin mobile depuis l\'application</h6>';
-    echo  '<h6 class="greenApp title">Version minimale du core pour etre fonctionnel : 4.4.0 </h6>';
+    echo  '<h6 class="greenApp title">{{Pas de mobile enregistré sur l\'application mobile.}}</h6>';
+    echo  '<h6 class="greenApp title">{{Scanner le QRCode du plugin mobile depuis l\'application}}</h6>';
+    echo  '<h6 class="greenApp title">{{Version minimale du core pour etre fonctionnel : 4.4.0}}</h6>';
     if (jeedom::version() >= '4.4.0') {
       echo  '<h6 class="greenApp title">{{Cliquer sur synchronisation de l\'application}}</h6>';
       echo '</br>';
       echo '</br>';
       echo '</br>';
-      echo  '<button class="bt_syncBox" id="bt_syncBox" type="button">Synchronisation de la box</button>';
+      echo  '<button class="bt_syncBox" id="bt_syncBox" type="button">{{Synchronisation de la box}}</button>';
     ?>
       <script>
         document.querySelector('.bt_syncBox').addEventListener('click', function() {
@@ -426,15 +426,15 @@ if (isset($_GET["Iq"])) {
 } else {
 
   echo  '<div class="greenApp title" style="margin-top:50%;display:flex;flex-direction:column;justify-content:center;align-items:center;">';
-  echo  '<h6 class="greenApp title">Pas de mobile enregistré sur l\'application mobile.</h6>';
-  echo  '<h6 class="greenApp title">Scanner le QRCode du plugin mobile depuis l\'application</h6>';
-  echo  '<h6 class="greenApp title">Version minimale du core pour etre fonctionnel : 4.4.0 </h6>';
+  echo  '<h6 class="greenApp title">{{Pas de mobile enregistré sur l\'application mobile.}}</h6>';
+  echo  '<h6 class="greenApp title">{{Scanner le QRCode du plugin mobile depuis l\'application}}</h6>';
+  echo  '<h6 class="greenApp title">{{Version minimale du core pour etre fonctionnel : 4.4.0}}</h6>';
   if (jeedom::version() >= '4.4.0') {
-    echo  '<h6 class="greenApp title">Cliquer sur synchronisation de l\'application</h6>';
+    echo  '<h6 class="greenApp title">{{Cliquer sur synchronisation de l\'application}}</h6>';
     echo '</br>';
     echo '</br>';
     echo '</br>';
-    echo  '<button class="bt_syncBox" id="bt_syncBox" type="button">Synchronisation de la box</button>';
+    echo  '<button class="bt_syncBox" id="bt_syncBox" type="button">{{Synchronisation de la box}}</button>';
     ?>
     <script>
       document.querySelector('.bt_syncBox').addEventListener('click', function() {

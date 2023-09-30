@@ -13,7 +13,7 @@ $plugin_widget = mobile::$_pluginWidget;
 
 <div class="row row-overflow">
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
-		<legend><i class="fas fa-mobile-alt"></i> {{App V2 - (VERSION ALPHA PRIVEE SEULEMENT)}}</legend>
+		<legend><i class="fas fa-mobile-alt"></i> {{App V2 - (VERSION BETA SEULEMENT)}}</legend>
 		<div class="eqLogicThumbnailContainer">
 			<div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
 				<i class="fas fa-wrench"></i><br>
@@ -69,9 +69,9 @@ $plugin_widget = mobile::$_pluginWidget;
 						echo '<img src="' . $path . '" />';
 					}
 					echo '<a style="width: 30px;height: 30px;border-radius: 15px;background-color: #94CA02;position: absolute;bottom: 65px;right: 7px;">';
-					if($eqLogic->getConfiguration('type_mobile') == 'android'){
+					if ($eqLogic->getConfiguration('type_mobile') == 'android') {
 						echo '<i class="fab fa-android" style="margin: 8px;color: #FFFFFF;"></i>';
-					}else{
+					} else {
 						echo '<i class="fab fa-apple" style="margin: 8px;color: #FFFFFF;"></i>';
 					}
 					echo '</a>';

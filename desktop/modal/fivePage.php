@@ -13,7 +13,7 @@ $path_img = 'plugins/mobile/core/img/';
   <div style="display:flex;width:100%;height:100%;padding-top:0;margin-top:2%;">
     <div style="display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;width:25%;">
       <p style="font-weight:bold;margin-top:2%;">{{On ajoute une zone de Géolocalisation}}</p>
-      <p style="font-weight:bold">{{On recherce l'adresse, on nomme la Zone, et on valide}}</p>
+      <p style="font-weight:bold">{{On recherche l'adresse, on nomme la Zone, et on valide}}</p>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:25%;text-align:center;">
       <p style="font-weight:bold">{{La zone apparaitra en rouge, signifiant que l'on se trouve pas dans la Zone}}</p>

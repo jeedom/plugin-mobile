@@ -382,13 +382,6 @@ function userSelect(idSelect){
 
 }
 
-
-
-
-
-
-
-
 document.getElementById('bt_regenConfig').addEventListener('click', function(){
   $.ajax({
       type: "POST",

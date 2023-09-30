@@ -16,7 +16,7 @@
 */
 
 if (!isConnect('admin')) {
-  throw new Exception('401 Unauthorized');
+  throw new Exception('{{401 - Accès non autorisé}}');
 }
 $eqLogics = mobile::byType('mobile');
 
@@ -177,7 +177,7 @@ $eqLogics = mobile::byType('mobile');
               <input class="form-control urlUser" id="urlUser1" type=text style="display:none;" placeholder="url perso" />
             </div>
             <div class="renameDivClass" id="renameIcon1" style="margin-bottom:2%;margin-left:5%;display:none;">
-              <label>{{Renommer Icône<}}/label>
+              <label>{{Renommer Icône}}/label>
                 <input class="form-control inputUser" id="inputUser1" type=text maxlength="15" />
             </div>
             <div id="divIconMenu1" style="display:flex;justify-content:center;margin-bottom:5%;">

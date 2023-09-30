@@ -17,7 +17,7 @@
 
 ini_set('display_errors', 0);
 if (!isConnect('admin')) {
-	throw new Exception('{{401 - AccèÈs non autorisÈ}}');
+	throw new Exception('{{401 - Accès non autorisé}}');
 }
 
 $object = jeeObject::byId($_GET['object_id']);

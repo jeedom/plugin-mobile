@@ -16,7 +16,7 @@
 */
 
 if (!isConnect('admin')) {
-  throw new Exception('401 Unauthorized');
+  throw new Exception('{{401 - Accès non autorisé}}');
 }
 $eqLogics = mobile::byType('mobile');
 
@@ -28,7 +28,7 @@ if (isset($_GET["Iq"])) {
     $nbIcones = $mobile->getConfiguration('nbIcones');
 
     echo  '<div class="firstDiv" style="display:flex;align-items:center;">';
-    echo  '<div class="greenApp title" style="margin-top:2%;margin-bottom:2%;font-size:10px;font-family:Raleway;">{{NOMBRE ICONES}}</div>';
+    echo  '<div class="greenApp title" style="margin-top:2%;margin-bottom:2%;font-size:10px;font-family:Raleway;">{{NOMBRE ICÔNES}}</div>';
     echo  '<select class="nbIconesPanel" onInput="userIconSelectPanel()">';
     echo        '<option value=1>1</option>';
     echo        '<option value=2>2</option>';
@@ -146,7 +146,7 @@ if (isset($_GET["Iq"])) {
             <input class="form-control urlUser" id="urlUser1" value="http://www." onkeydown="preventDefaultInput(event)" type=text style="display:none;width:80vw;" placeholder="url perso" />
           </div>
           <div class="renameDivClass" id="renameIcon1" style="margin-bottom:2%;width:80vw;">
-            <label>Renommer Icone</label>
+            <label>{{Renommer Icône}}</label>
             <input class="form-control inputUser inputPanel" id="inputUser1" type=text maxlength="15" value="<?= $mobile->getConfiguration('renameIcon1', 'none'); ?>" />
           </div>
           <div id="divIconMenu1" style="display:flex;justify-content:center;margin-bottom:5%;">

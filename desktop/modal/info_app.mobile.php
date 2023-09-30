@@ -15,7 +15,7 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 if (!isConnect('admin')) {
-	throw new Exception('401 Unauthorized');
+	throw new Exception('{{401 - Accès non autorisé}}');
 }
 mobile::makeTemplateJson();
 $data = mobile::getTemplateJson();

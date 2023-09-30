@@ -57,16 +57,17 @@ if (!isConnect('admin')) {
 	</div>
 
 	<script>
-		jeedomUtils.initTableSorter();
-		var tableScSummary = $('#table_scenarioSummary')
-		tableScSummary[0].config.widgetOptions.resizable_widths = ['60px', '', '100px']
-		tableScSummary.trigger('applyWidgets')
-		tableScSummary.trigger('resizableReset')
-		tableScSummary.trigger('sorton', [
-			[
-				[1, 0]
-			]
-		])
+    var table_scenarioSummary = document.getElementById('table_scenarioSummary')
+    new DataTable(table_scenarioSummary, {
+      columns: [
+        { select: 1, sort: "asc" },
+        { select: [2], sortable: false }
+      ],
+      paging: true,
+      perPage: 20,
+      perPageSelect: [10, 20, 30, 50, 100, 200],
+      searchable: true,
+    })
 
 		/*$('#bt_saveScenarios').off('click').on('click', function () {
       console.log('save all scenarios')
@@ -84,35 +85,38 @@ if (!isConnect('admin')) {
 
     })*/
 
-		$('.sendtoapp').click(function() {
-			idScenario = $(this).val();
-			if ($(this).is(':checked')) {
-				sendApp = 1;
-			} else {
-				sendApp = 0;
-			}
-			$.ajax({
-				type: "POST",
-				url: "plugins/mobile/core/ajax/mobile.ajax.php",
-				data: {
-					action: "savescenario",
-					id: idScenario,
-					valueSend: sendApp
-				},
-				dataType: 'json',
-				global: false,
-				error: function(request, status, error) {
-					handleAjaxError(request, status, error);
-				},
-				success: function(data) {
-					if (data.state != 'ok') {
-						$('#div_alert').showAlert({
-							message: data.result,
-							level: 'danger'
-						});
-						return;
-					}
-				}
-			});
-		})
-	</script>
+    document.getElementById('table_scenarioSummary')?.addEventListener('click', function(event) {
+      var _target = null
+      var sendApp = 0
+      if (_target = event.target.closest('.sendtoapp')) {
+        idScenario = _target.value
+        if( _target.checked == true ) sendApp = 1;
+        domUtils.ajax({
+          type: "POST",
+          url: "plugins/mobile/core/ajax/mobile.ajax.php",
+          data: {
+            action: "savescenario",
+            id: idScenario,
+            valueSend : sendApp
+          },
+          dataType: 'json',
+          global: false,
+          error: function(error) {
+            jeedomUtils.showAlert({
+              message: error.message,
+              level: 'danger'
+            })
+          },
+          success: function(data) {
+            if (data.state != 'ok') {
+              jeedomUtils.showAlert({
+                message: data.result,
+                level: 'danger'
+              })
+              return;
+            }
+          }
+        })
+      }
+    })
+</script>

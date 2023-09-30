@@ -1013,10 +1013,54 @@ class mobile extends eqLogic
 		}
 	}
 
-	public static function configMenuCustom($eqId)
+
+	public static function handleMenuDefaultBySelect($eqId, $eqDefault){
+		log::add('mobile', 'debug', 'HANDLEDEFAULTMENU' .$eqId);
+		$mobile = eqLogic::byId($eqId, 'mobile');
+		$mobileDefault = eqLogic::byId($eqDefault, 'mobile');
+		if(is_object($mobile) && is_object($mobileDefault)){
+            $mobile->setConfiguration('defaultIdMobile', $eqDefault);
+			//config::save('checkdefaultID',$eqId, 'mobile');
+			$selectNameMenu = [];
+			$renameIcon = [];
+			$spanIcon = [];
+			$urlUser = [];
+			$nbIcones = $mobileDefault->getConfiguration('nbIcones', 3);
+			for ($i = 1; $i < $nbIcones+1; $i++) {
+				$selectNameMenu[$i] = $mobileDefault->getConfiguration('selectNameMenu' . $i, 'none');
+				$renameIcon[$i] = $mobileDefault->getConfiguration('renameIcon' . $i, '');
+				$spanIcon[$i] = $mobileDefault->getConfiguration('spanIcon' . $i, 'none');
+				$urlUser[$i] = $mobileDefault->getConfiguration('urlUser' . $i, 'none');
+			}
+			for ($i = 1; $i < $nbIcones+1; $i++) {
+				$mobile->setConfiguration('selectNameMenu' . $i, $selectNameMenu[$i]);
+				$mobile->setConfiguration('renameIcon' . $i, $renameIcon[$i]);
+				$mobile->setConfiguration('spanIcon' . $i, $spanIcon[$i]);
+				$mobile->setConfiguration('urlUser' . $i, $urlUser[$i]);
+				$mobile->setConfiguration('nbIcones', $nbIcones);
+				
+			}	
+			$mobile->save();	
+		}			
+	}
+	
+
+	public static function configMenuCustom($eqId, $jeedomVersion)
 	{
+
+        if($jeedomVersion <'4.4.0'){
+			log::add('mobile', 'debug', '|-----------------------------------');
+			log::add('mobile', 'debug', '|-CONFIGMENU CUSTOM JEEDOM 4.3.0--');
+			$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
+								"tab1":{"active":false,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
+								"tab2":{"active":false,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
+								"tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"}}';
+			$defaultMenuArray = json_decode($defaultMenuJson, true);
+			return $defaultMenuArray;
+		}else if($jeedomVersion >='4.4.0'){
+
 		log::add('mobile', 'debug', '|-----------------------------------');
-		log::add('mobile', 'debug', '|-MENU--');
+		log::add('mobile', 'debug', '|-CONFIGMENU CUSTOM JEEDOM 4.4.0--');
 		$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home","objectType":"home","mobile":"m","objectId" : ""},"type":"WebviewApp"},
 			"tab1":{"active":true,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview","objectType":"overview","mobile":"m","objectId" : ""},"type":"WebviewApp"},
 			"tab2":{"active":true,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health","objectType":"health","mobile":"m","objectId" : ""},"type":"WebviewApp"},
@@ -1031,16 +1075,16 @@ class mobile extends eqLogic
 			$j = 0;
 			$count = 1;
 			for ($i = 1; $i < 5; $i++) {
-				$webviewUrl = '';
+				//$webviewUrl = '';
 				$isActive = true;
-				$webview = $eqLogic->getConfiguration('checkboxWebViewMenu' . $i, 'WebviewMobile');
+				/*$webview = $eqLogic->getConfiguration('checkboxWebViewMenu' . $i, 'WebviewDesktop');
 				if ($webview == 'WebviewDesktop') {
 					$webviewUrl = 'd';
 				} else if ($webview == 'WebviewMobile') {
 					$webviewUrl = 'm';
-				}
+				}*/
+				$webviewUrl = 'd';
 				${'tabIconName' . $i} = $eqLogic->getConfiguration('spanIcon' . $i, 'none');
-				log::add('mobile', 'debug', '| CHANGETABICON ' . ${'tabIconName' . $i});
 				config::save('icon' . $i . 'NoCut', ${'tabIconName' . $i}, 'mobile');
 				if (${'tabIconName' . $i} != 'none') {
 					$arrayIcon = explode(' ', ${'tabIconName' . $i});
@@ -1058,7 +1102,6 @@ class mobile extends eqLogic
 					${'tabRenameInput' . $i} = 'Accueil';
 				}
 				$objectId = $eqLogic->getConfiguration('selectNameMenu' . $i);
-				//log::add('mobile','debug', 'OBECTIDCUSTOMMENU : ' .	$objectId );
 				if ($objectId && $objectId != -1 && $objectId != 'none' && $objectId != 'url') {
 					//	$typeObject;
 					if ($objectId != 'overview' && $objectId != 'health' && $objectId != 'home' && $objectId != 'timeline') {
@@ -1070,21 +1113,25 @@ class mobile extends eqLogic
 						${'typeObject' . $i} = $typeObject;
 						${'typewebviewurl' . $i} = $webviewUrl;
 						${'typeobjectId' . $i} = $idUrl;
-						if ($typeObject == 'view') {
-							${'tabUrl' . $i} = "/index.php?v={$webviewUrl}&p={$typeObject}&view_id={$objectId}";
+						if ($typeObject == 'views') {
+							${'tabUrl' . $i} = "/index.php?v={$webviewUrl}&p=view&view_id={$objectId}";
 						} else if ($typeObject == 'dashboard') {
 							${'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=dashboard&object_id={$objectId}";
 						} else if ($typeObject == 'plan') {
 							${'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=plan&plan_id={$objectId}";
-						} else if ($typeObject == 'panel') {
-							${'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p={$objectId}";
-							log::add('mobile', 'debug', 'PANEL : ' .	${'$tabUrl' . $i});
+						} else if ($typeObject == 'panel') {							
+							$pluginPanelMobile = config::byKey('pluginPanelMobile', 'mobile');
+							if($pluginPanelOutMobile[$objectId] == $objectId){
+								${'tabUrl' . $i} =  "/index.php?v=m&p={$objectId}";
+							}else{
+								${'tabUrl' . $i} =  "/index.php?v=m&p={$objectId}&app_mode=1";
+							}
 						}
 					} else if ($objectId == 'overview') {
 						${'typeObject' . $i} = $objectId;
 						${'typewebviewurl' . $i} = $webviewUrl;
 						${'typeobjectId' . $i} = '';
-						${'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=overview";
+						${'tabUrl' . $i} =  "/index.php?v=m&p=overview";
 					} else if ($objectId == 'home') {
 						${'typeObject' . $i} = $objectId;
 						${'typewebviewurl' . $i} = $webviewUrl;
@@ -1095,12 +1142,12 @@ class mobile extends eqLogic
 						${'typeObject' . $i} = $objectId;
 						${'typewebviewurl' . $i} = $webviewUrl;
 						${'typeobjectId' . $i} = '';
-						${'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=health";
+						${'tabUrl' . $i} =  "/index.php?v=m&p=health";
 					} else if ($objectId == 'timeline') {
 						${'typeObject' . $i} = $objectId;
 						${'typewebviewurl' . $i} = $webviewUrl;
 						${'typeobjectId' . $i} = '';
-						${'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=timeline";
+						${'tabUrl' . $i} =  "/index.php?v=m&p=timeline";
 					}
 				} else if ($objectId == 'url') {
 					${'typeObject' . $i} = $objectId;
@@ -1162,6 +1209,7 @@ class mobile extends eqLogic
 			return $defaultMenuArray;
 		}
 	}
+}
 
 	/*
   * Call by

@@ -8,10 +8,11 @@
     },
     "plugins\/mobile\/desktop\/modal\/health.php": {
         "Plateforme": "Plataforma",
-        "Equipement": "Dispositivos",
+        "Équipement": "Dispositivos",
         "ID": "Identificación",
-        "User": "Desgaste",
-        "Depuis": "Desde",
+        "Utilisateur": "Usuario",
+        "Dernière activité": "Última actividad",
+        "Date création": "Fecha de creación",
         "Utilisateur non trouvé": "Usuario no encontrado"
     },
     "plugins\/mobile\/desktop\/modal\/secPage.php": {
@@ -65,7 +66,8 @@
     },
     "plugins\/mobile\/desktop\/modal\/qrcodev2.php": {
         "AJOUT DE LA BOX SUR VOTRE APPLICATiON MOBILE ": "AGREGAR LA CAJA A SU APLICACIÓN MÓVIL",
-        "Utilisateurs": "Usuarios",
+        "Vous pouvez choisir un utilisateur : un QRCode sera généré. Vous pourrez ensuite scanner le QRCode depuis la nouvelle application, et ainsi ajouter cette box à votre application": "Puedes elegir un usuario: se generará un QRCode. Luego podrás escanear el QRCode desde la nueva aplicación, y así agregar este cuadro a tu aplicación",
+        "Utilisateur": "Usuario",
         "Aucun": "Ninguno",
         "QRCode": "Código QR",
         "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Error Sin dirección interna (ver configuración de su Jeedom!)",
@@ -153,11 +155,12 @@
     },
     "plugins\/mobile\/desktop\/php\/mobile.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado",
-        "App V2 - VERSION ALPHA PRIVEE SEULEMENT": "App V2 - VERSIÓN ALFA PRIVADA SOLAMENTE",
+        "App V2 - (VERSION ALPHA PRIVEE SEULEMENT)": "Aplicación V2 - (SOLO VERSIÓN ALFA PRIVADA)",
         "Configuration": "Configuración",
         "Menu Custom": "Menú personalizado",
         "QR Code": "Código QR",
         "Documentation APP V2": "Documentación de la aplicación V2",
+        "Santé": "Salud",
         "Mes Téléphones Mobiles": "Mis teléfonos móviles",
         "Rechercher": "Buscar",
         "Équipement visible": "Equipos visibles",
@@ -167,7 +170,6 @@
         "Plugins": "Plugins",
         "Objets\/Pièces": "Artículos\/Piezas",
         "Scénarios": "Escenarios",
-        "Santé": "Salud",
         "Régénérer la configuration": "Regenerar configuración",
         "Configuration avancée": "Configuración avanzada",
         "Infos envoyées à l'app": "Información enviada a la aplicación",
@@ -255,12 +257,12 @@
         "401 - Accès non autorisé": "401 - Acceso no autorizado",
         "Equipement non trouvé : ": "Equipo no encontrado:",
         "User inexistant : ": "Usuario inexistente:",
-        "Aucune methode correspondante à : ": "Ningún método correspondiente a:",
-        "scenario non trouvé": "escenario no encontrado"
+        "scenario non trouvé": "escenario no encontrado",
+        "Aucune methode correspondante à : ": "Ningún método correspondiente a:"
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {
         "Echec de l\\'envoi de la notification :": "Error al enviar la notificación:",
-        "$geoloc['id'].'-'.$geoloc['name']": "$ geoloc ['id'] .'- '. $ geoloc [' nombre ']",
+        "$geoloc['id'] . '-' . $geoloc['name']": "$geoloc['id'] . '-'. $geoloc['nombre']",
         "Notification": "Notificación",
         "Notification Critique": "Notificación crítica"
     },

@@ -8,10 +8,11 @@
     },
     "plugins\/mobile\/desktop\/modal\/health.php": {
         "Plateforme": "Plateforme",
-        "Equipement": "Cihaz",
+        "Équipement": "Cihaz",
         "ID": "Kimlik",
-        "User": "User",
-        "Depuis": "Depuis",
+        "Utilisateur": "Utilisateur",
+        "Dernière activité": "Dernière activité",
+        "Date création": "Date création",
         "Utilisateur non trouvé": "Utilisateur non trouvé"
     },
     "plugins\/mobile\/desktop\/modal\/secPage.php": {
@@ -65,7 +66,8 @@
     },
     "plugins\/mobile\/desktop\/modal\/qrcodev2.php": {
         "AJOUT DE LA BOX SUR VOTRE APPLICATiON MOBILE ": "AJOUT DE LA BOX SUR VOTRE APPLICATiON MOBILE",
-        "Utilisateurs": "Utilisateurs",
+        "Vous pouvez choisir un utilisateur : un QRCode sera généré. Vous pourrez ensuite scanner le QRCode depuis la nouvelle application, et ainsi ajouter cette box à votre application": "Vous pouvez choisir un utilisateur : un QRCode sera généré. Vous pourrez ensuite scanner le QRCode depuis la nouvelle application, et ainsi ajouter cette box à votre application",
+        "Utilisateur": "Utilisateur",
         "Aucun": "Aucun",
         "QRCode": "QRCode",
         "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)",
@@ -153,11 +155,12 @@
     },
     "plugins\/mobile\/desktop\/php\/mobile.php": {
         "401 - Accès non autorisé": "401 - Yetkisiz erişim",
-        "App V2 - VERSION ALPHA PRIVEE SEULEMENT": "App V2 - VERSION ALPHA PRIVEE SEULEMENT",
+        "App V2 - (VERSION ALPHA PRIVEE SEULEMENT)": "App V2 - (VERSION ALPHA PRIVEE SEULEMENT)",
         "Configuration": "Ayar",
         "Menu Custom": "Menu Custom",
         "QR Code": "QR Code",
         "Documentation APP V2": "Documentation APP V2",
+        "Santé": "Sağlık",
         "Mes Téléphones Mobiles": "Mes Téléphones Mobiles",
         "Rechercher": "Arayın",
         "Équipement visible": "Équipement visible",
@@ -167,7 +170,6 @@
         "Plugins": "Ekler",
         "Objets\/Pièces": "Objets\/Pièces",
         "Scénarios": "Senaryolar",
-        "Santé": "Sağlık",
         "Régénérer la configuration": "Régénérer la configuration",
         "Configuration avancée": "Gelişmiş ayarlar",
         "Infos envoyées à l'app": "Infos envoyées à l'app",
@@ -255,12 +257,12 @@
         "401 - Accès non autorisé": "401 - Yetkisiz erişim",
         "Equipement non trouvé : ": "Equipement non trouvé :",
         "User inexistant : ": "User inexistant :",
-        "Aucune methode correspondante à : ": "Aşağıdakilere karşılık gelen bir yöntem yok:",
-        "scenario non trouvé": "scenario non trouvé"
+        "scenario non trouvé": "scenario non trouvé",
+        "Aucune methode correspondante à : ": "Aşağıdakilere karşılık gelen bir yöntem yok:"
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {
         "Echec de l\\'envoi de la notification :": "Echec de l\\'envoi de la notification :",
-        "$geoloc['id'].'-'.$geoloc['name']": "$geoloc['id'].'-'.$geoloc['name']",
+        "$geoloc['id'] . '-' . $geoloc['name']": "$geoloc['id'] . '-' . $geoloc['name']",
         "Notification": "Notification",
         "Notification Critique": "Notification Critique"
     },

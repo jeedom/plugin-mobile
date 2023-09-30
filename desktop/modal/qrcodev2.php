@@ -36,7 +36,9 @@ $eqLogics = mobile::byType('mobile');
                         <?php
                         foreach (user::all() as $user) {
                             $userArray = utils::o2a($user);
+                            log::add('mobile', 'debug', 'USERARRAY '.json_encode($userArray));
                             if ($userArray['enable'] == 1) {
+                                if($userArray['profils'] == 'admin')
                                 echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
                             }
                         }

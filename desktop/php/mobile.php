@@ -78,6 +78,8 @@ $plugin_widget = mobile::$_pluginWidget;
 					echo '<br>';
 					echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
 					echo '<span class="hidden hiddenAsCard displayTableRight">';
+					echo '<span class="label">' . $eqLogic->getConfiguration('type_mobile')  .  '</span>';
+					echo '<span class="label">' . $eqLogic->getConfiguration('affect_user')  .  '</span>';
 					echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Équipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Équipement non visible}}"></i>';
 					echo '</span>';
 					echo '</div>';
@@ -127,6 +129,8 @@ $plugin_widget = mobile::$_pluginWidget;
 					}
 					echo '<br>';
 					echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+					echo '<span class="label">' . $eqLogic->getConfiguration('type_mobile')  .  '</span>';
+					echo '<span class="label">' . $eqLogic->getConfiguration('affect_user')  .  '</span>';
 					echo '<span class="hidden hiddenAsCard displayTableRight">';
 					echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Équipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Équipement non visible}}"></i>';
 					echo '</span>';

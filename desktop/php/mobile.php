@@ -13,7 +13,7 @@ $plugin_widget = mobile::$_pluginWidget;
 
 <div class="row row-overflow">
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
-		<legend><i class="fas fa-mobile-alt"></i> {{App V2 - (VERSION ALPHA PRIVEE SEULEMENT)}}</legend>
+		<legend><i class="fas fa-mobile-alt"></i> {{App V2 - (VERSION BETA SEULEMENT)}}</legend>
 		<div class="eqLogicThumbnailContainer">
 			<div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
 				<i class="fas fa-wrench"></i><br>
@@ -39,7 +39,7 @@ $plugin_widget = mobile::$_pluginWidget;
 			<!--
 			<div style="color:#94CA02;" class="cursor eqLogicAction logoSecondary" data-action="bt_qrCodev2" id="bt_startTuto">
 				<i class="fas fa-book"></i><br>
-				<span>{{Documentation APP V2}}</span>
+				<span>{{Documentation APP}}</span>
 			</div> -->
 			<div class="cursor eqLogicAction logoSecondary" data-action="bt_healthmobile" id="bt_healthmobile">
 				<i class="fas fa-medkit"></i><br>
@@ -56,28 +56,30 @@ $plugin_widget = mobile::$_pluginWidget;
 		</div>
 		<div class="eqLogicThumbnailContainer">
 			<?php
+			if (file_exists('plugins/mobile/core/img/v2app.png')) $path = 'plugins/mobile/core/img/v2app.png';
+			else $path = 'plugins/mobile/core/img/mobile_icon.png';
 			foreach ($eqLogics as $eqLogic) {
 				if ($eqLogic->getConfiguration('appVersion', '1') == '2') {
 					$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 					echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
-					$file = 'plugins/mobile/core/img/v2app.png';
-					if (file_exists($file)) {
-						$path = 'plugins/mobile/core/img/v2app.png';
-						echo '<img src="' . $path . '" style="border-radius: 15px;"/>';
-					} else {
-						$path = 'plugins/mobile/core/img/mobile_icon.png';
-						echo '<img src="' . $path . '" />';
-					}
+					echo '<img src="' . $path . '"/>';
 					echo '<a style="width: 30px;height: 30px;border-radius: 15px;background-color: #94CA02;position: absolute;bottom: 65px;right: 7px;">';
-					if($eqLogic->getConfiguration('type_mobile') == 'android'){
+					if ($eqLogic->getConfiguration('type_mobile') == 'android') {
 						echo '<i class="fab fa-android" style="margin: 8px;color: #FFFFFF;"></i>';
-					}else{
+					} else {
 						echo '<i class="fab fa-apple" style="margin: 8px;color: #FFFFFF;"></i>';
 					}
 					echo '</a>';
 					echo '<br>';
 					echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
 					echo '<span class="hidden hiddenAsCard displayTableRight">';
+					echo '<span class="label">' . $eqLogic->getConfiguration('type_mobile')  .  '</span>';
+					$user = $eqLogic->getConfiguration('affect_user');
+					$username = user::byId($user);
+					if (is_object($username)) {
+						$user = $username->getLogin();
+					}
+					echo '<span class="label">' . $user  .  '</span>';
 					echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Équipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Équipement non visible}}"></i>';
 					echo '</span>';
 					echo '</div>';
@@ -128,6 +130,13 @@ $plugin_widget = mobile::$_pluginWidget;
 					echo '<br>';
 					echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
 					echo '<span class="hidden hiddenAsCard displayTableRight">';
+					echo '<span class="label">' . $eqLogic->getConfiguration('type_mobile')  .  '</span>';
+					$user = $eqLogic->getConfiguration('affect_user');
+					$username = user::byId($user);
+					if (is_object($username)) {
+						$user = $username->getLogin();
+					}
+					echo '<span class="label">' . $user  .  '</span>';
 					echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Équipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Équipement non visible}}"></i>';
 					echo '</span>';
 					echo '</div>';
@@ -293,20 +302,22 @@ $plugin_widget = mobile::$_pluginWidget;
 			<div role="tabpanel" class="tab-pane" id="commandtab">
 
 				<br><br>
-				<table id="table_cmd" class="table table-bordered table-condensed">
-					<thead>
-						<tr>
-							<th class="hidden-xs" style="min-width:50px;width:70px;">ID</th>
-							<th style="min-width:400px;width:450px;">{{Nom}}</th>
-							<th style="width:400px;">{{Type}}</th>
-							<th style="min-width:160px;">{{Options}}</th>
-							<th style="min-width:160px;">{{Valeur}}</th>
-							<th style="min-width:80px;width:140px;">{{Actions}}</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
+				<div class="table-responsive">
+					<table id="table_cmd" class="table table-bordered table-condensed">
+						<thead>
+							<tr>
+								<th class="hidden-xs" style="min-width:50px;width:70px;">ID</th>
+								<th style="min-width:400px;width:450px;">{{Nom}}</th>
+								<th style="width:400px;">{{Type}}</th>
+								<th style="min-width:160px;">{{Options}}</th>
+								<th style="min-width:160px;">{{Valeur}}</th>
+								<th style="min-width:80px;width:140px;">{{Actions}}</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>

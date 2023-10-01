@@ -382,13 +382,6 @@ function userSelect(idSelect){
 
 }
 
-
-
-
-
-
-
-
 document.getElementById('bt_regenConfig').addEventListener('click', function(){
   $.ajax({
       type: "POST",
@@ -466,13 +459,13 @@ function addCmdToTable(_cmd) {
     tr += '</td>';
     tr += '<td>';
     if (is_numeric(_cmd.id)) {
-      tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
+      tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure" title="{{Configuration avancée}}"><i class="fas fa-cogs"></i></a> ';
       tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> {{Tester}}</a>';
     }
     tr += '</td>';
     tr += '<td>';
   	if (init(_cmd.logicalId) !== 'notif' && init(_cmd.logicalId) !== 'notifCritical' ){
-    	tr += '<i class="fas fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i>';
+    	tr += '<i class="fas fa-minus-circle pull-right cmdAction cursor" data-action="remove" title="{{Supprimer la commande}}"></i>';
     }
     tr += '</td>';
     tr += '</tr>';

@@ -15,33 +15,28 @@
  * along with Jeedom. If not, see <http://www..gnu.org/licenses/>.
 */
 
-if (!isConnect('admin'))
-{
-    throw new Exception('401 Unauthorized');
+if (!isConnect('admin')) {
+  throw new Exception('{{401 - Accès non autorisé}}');
 }
 
 
-  $logicalPlugin = secureXSS(init('logicalPlugin'));
-  echo '<div class="container">';
-  if(!@include('plugins/'.$logicalPlugin.'/plugin_info/configuration.php')) throw new Exception("Pas de configuration sur ce plugin");
-  //if(!@include('plugins/zigbee/plugin_info/configuration.php')) throw new Exception("Pas de configuration sur ce plugin");
-  echo '</div>';
+$logicalPlugin = secureXSS(init('logicalPlugin'));
+echo '<div class="container">';
+if (!@include('plugins/' . $logicalPlugin . '/plugin_info/configuration.php')) throw new Exception("{{Pas de configuration sur ce plugin}}");
+//if(!@include('plugins/zigbee/plugin_info/configuration.php')) throw new Exception("Pas de configuration sur ce plugin");
+echo '</div>';
 
 
 
 
 
- ?>
+?>
 
 <script src="core/php/getJS.php?file=core/js/appMobile.class.js"></script>
 
 <style>
-
-.container{
-  width:100%;
-  height:100%;
-}
-
-
-
+  .container {
+    width: 100%;
+    height: 100%;
+  }
 </style>

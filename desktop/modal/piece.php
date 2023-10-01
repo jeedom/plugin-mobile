@@ -16,7 +16,7 @@
  */
 
 if (!isConnect('admin')) {
-	throw new Exception('401 Unauthorized');
+	throw new Exception('{{401 - Accès non autorisé}}');
 }
 sendVarToJS('eqType', 'mobile');
 $eqLogics = eqLogic::byType('mobile');

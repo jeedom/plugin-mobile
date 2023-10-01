@@ -16,7 +16,7 @@
  */
 ini_set('display_errors', 0);
 if (!isConnect('admin')) {
-	throw new Exception('{{401 - AccèÈs non autorisÈ}}');
+	throw new Exception('{{401 - Accès non autorisé}}');
 }
 
 $plugin_compatible = mobile::$_pluginSuported;

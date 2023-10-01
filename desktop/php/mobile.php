@@ -63,7 +63,7 @@ $plugin_widget = mobile::$_pluginWidget;
 					$file = 'plugins/mobile/core/img/v2app.png';
 					if (file_exists($file)) {
 						$path = 'plugins/mobile/core/img/v2app.png';
-						echo '<img src="' . $path . '" style="border-radius: 15px;"/>';
+						echo '<img src="' . $path . '" />';
 					} else {
 						$path = 'plugins/mobile/core/img/mobile_icon.png';
 						echo '<img src="' . $path . '" />';

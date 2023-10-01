@@ -56,18 +56,13 @@ $plugin_widget = mobile::$_pluginWidget;
 		</div>
 		<div class="eqLogicThumbnailContainer">
 			<?php
+			if (file_exists('plugins/mobile/core/img/v2app.png')) $path = 'plugins/mobile/core/img/v2app.png';
+			else $path = 'plugins/mobile/core/img/mobile_icon.png';
 			foreach ($eqLogics as $eqLogic) {
 				if ($eqLogic->getConfiguration('appVersion', '1') == '2') {
 					$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 					echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
-					$file = 'plugins/mobile/core/img/v2app.png';
-					if (file_exists($file)) {
-						$path = 'plugins/mobile/core/img/v2app.png';
-						echo '<img src="' . $path . '" />';
-					} else {
-						$path = 'plugins/mobile/core/img/mobile_icon.png';
-						echo '<img src="' . $path . '" />';
-					}
+					echo '<img src="' . $path . '"/>';
 					echo '<a style="width: 30px;height: 30px;border-radius: 15px;background-color: #94CA02;position: absolute;bottom: 65px;right: 7px;">';
 					if ($eqLogic->getConfiguration('type_mobile') == 'android') {
 						echo '<i class="fab fa-android" style="margin: 8px;color: #FFFFFF;"></i>';

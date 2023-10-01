@@ -39,7 +39,7 @@ $plugin_widget = mobile::$_pluginWidget;
 			<!--
 			<div style="color:#94CA02;" class="cursor eqLogicAction logoSecondary" data-action="bt_qrCodev2" id="bt_startTuto">
 				<i class="fas fa-book"></i><br>
-				<span>{{Documentation APP V2}}</span>
+				<span>{{Documentation APP}}</span>
 			</div> -->
 			<div class="cursor eqLogicAction logoSecondary" data-action="bt_healthmobile" id="bt_healthmobile">
 				<i class="fas fa-medkit"></i><br>
@@ -307,20 +307,22 @@ $plugin_widget = mobile::$_pluginWidget;
 			<div role="tabpanel" class="tab-pane" id="commandtab">
 
 				<br><br>
-				<table id="table_cmd" class="table table-bordered table-condensed">
-					<thead>
-						<tr>
-							<th class="hidden-xs" style="min-width:50px;width:70px;">ID</th>
-							<th style="min-width:400px;width:450px;">{{Nom}}</th>
-							<th style="width:400px;">{{Type}}</th>
-							<th style="min-width:160px;">{{Options}}</th>
-							<th style="min-width:160px;">{{Valeur}}</th>
-							<th style="min-width:80px;width:140px;">{{Actions}}</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
+				<div class="table-responsive">
+					<table id="table_cmd" class="table table-bordered table-condensed">
+						<thead>
+							<tr>
+								<th class="hidden-xs" style="min-width:50px;width:70px;">ID</th>
+								<th style="min-width:400px;width:450px;">{{Nom}}</th>
+								<th style="width:400px;">{{Type}}</th>
+								<th style="min-width:160px;">{{Options}}</th>
+								<th style="min-width:160px;">{{Valeur}}</th>
+								<th style="min-width:80px;width:140px;">{{Actions}}</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -32,7 +32,6 @@
         "ID": "ID",
         "User": "User",
         "Menu Defaut": "Default menu",
-        "Nb Icônes": "Nb Icons",
         "Utilisateur non trouvé": "User not found"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {

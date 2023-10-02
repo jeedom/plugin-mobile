@@ -33,33 +33,7 @@
         "User": "User",
         "Menu Defaut": "Default menu",
         "Nb Icônes": "Nb Icons",
-        "Configurer Menu": "Configure Menu",
-        "PAS D\\'APP V2 SUR CE MOBILE": "NO V2 APP ON THIS MOBILE",
-        "Valider Menu": "Validate Menu",
-        "Utilisateur non trouvé": "User not found",
-        "Home": "Home",
-        "Dashboard": "Dashboard",
-        "Lumières": "Lights",
-        "Synthèse": "Synthesis",
-        "Icône": "Icon",
-        " Icône 1": "Icon 1",
-        "Type": "Kind",
-        "Choisir un Type": "Choose a Type",
-        "Accueil": "Accueil",
-        "Vue": "Seen",
-        "Design": "Design",
-        "Panel": "Panel",
-        "URL externe": "URL externe",
-        "Santé": "Santé",
-        "TimeLine": "TimeLine",
-        "Aucun": "None",
-        "Renommer Icône": "Rename Icon",
-        "Choisir Icône": "Choose Icon",
-        " Icône 2": "Icon 2",
-        " Icône 3": "Icon 3",
-        " Icône 4": "Icon 4",
-        "Configuration Menu Enregistrée": "Saved Menu Configuration",
-        "Menu Custom": "Custom menu"
+        "Utilisateur non trouvé": "User not found"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
         "401 - Accès non autorisé": "401 - Unauthorized Access",
@@ -117,7 +91,7 @@
         "Pour connecter votre téléphone : il y a 2 méthodes possible": "To connect your phone: there are 2 possible methods"
     },
     "plugins\/mobile\/desktop\/modal\/update.mobile.php": {
-        "401 - Accès non autorisé": "401 - Unauthorized Access",
+        "401 - Accès non autorisé": "401 - Unauthorized access",
         "Pause": "Pause",
         "Rechercher": "Search"
     },
@@ -141,7 +115,7 @@
         "Sauvegarde effectuée": "Backup completed"
     },
     "plugins\/mobile\/desktop\/modal\/scenario.php": {
-        "401 - Accès non autorisé": "401 - Unauthorized Access",
+        "401 - Accès non autorisé": "401 - Unauthorized access",
         "Scénarios": "Scenarios",
         "Sauvegarder": "Save",
         "ID": "Id",
@@ -201,10 +175,10 @@
         "401 - Accès non autorisé": "401 - Unauthorized Access"
     },
     "plugins\/mobile\/desktop\/php\/mobile.php": {
-        "401 - Accès non autorisé": "401 - Unauthorized Access",
+        "401 - Accès non autorisé": "401 - Unauthorized access",
         "App V2 - (VERSION BETA SEULEMENT)": "App V2 - (BETA VERSION ONLY)",
         "Configuration": "Setup",
-        "Menu Custom": "Custom menu",
+        "Gestion Mobiles": "Mobile Management",
         "QR Code": "QR Code",
         "Documentation APP": "APP Documentation",
         "Santé": "Health",
@@ -310,9 +284,10 @@
         "Objets \/ Pièces": "Objects \/ Pieces",
         "Scénarios": "Scenarios",
         "Informations envoyées à l'app": "Information sent to the app",
-        "Menu Custom": "Custom menu",
+        "Gestion des Mobiles": "Mobile Management",
         "QrCode": "QrCode",
         "Bien demarrer": "Get off to a good start",
+        "Menu Custom": "Custom menu",
         "Configuration Mobile du Plugin \"+name_plugin+": "Mobile configuration of the plugin \"+ name_plugin +",
         "Configuration Mobile de la Pièce": "Mobile Room Configuration",
         "Configuration Mobile du Scénario \"+name_scenario+": "Mobile Configuration of Scenario \"+name_scenario+",
@@ -332,7 +307,7 @@
         "Supprimer la commande": "Delete order"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
-        "401 - Accès non autorisé": "401 - Unauthorized Access",
+        "401 - Accès non autorisé": "401 - Unauthorized access",
         "Equipement non trouvé : ": "Equipment not found:",
         "User inexistant : ": "Non-existent user:",
         "scenario non trouvé": "scenario not found",

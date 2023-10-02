@@ -1021,7 +1021,7 @@ class mobile extends eqLogic
 		$renamesIcons =  ['Accueil', 'Synthese', 'Santé', 'Accueil'];
 		$spanIcons =  ['icon jeedomapp-in', 'fab fa-hubspot', 'fas fa-medkit', 'icon jeedomapp-in'];
 		$urlUsers =  ['none', 'none', 'none', 'none'];
-		if($eqDefault == 'none'){
+		if($eqDefault == 'default'){
 			$j = 0;
 			for($i=1; $i < 4; $i++){
 					$mobile->setConfiguration( 'selectNameMenu'.$i, $namesMenus[$j]);
@@ -1032,7 +1032,7 @@ class mobile extends eqLogic
 					$mobile->save();
 					$j++;
 			}
-			$mobile->setConfiguration('defaultIdMobile', 'none');
+			$mobile->setConfiguration('defaultIdMobile', 'default');
 			$mobile->save();	
 			return;
 		}

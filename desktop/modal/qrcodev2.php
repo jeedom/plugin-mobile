@@ -36,9 +36,8 @@ $eqLogics = mobile::byType('mobile');
                         <?php
                         foreach (user::all() as $user) {
                             $userArray = utils::o2a($user);
-                            log::add('mobile', 'debug', 'USERARRAY '.json_encode($userArray));
                             if ($userArray['enable'] == 1) {
-                                if($userArray['profils'] == 'admin')
+                                if($userArray['profils'] == 'admin' && $user->getLogin() != 'jeedom_support')
                                 echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
                             }
                         }
@@ -57,6 +56,18 @@ $eqLogics = mobile::byType('mobile');
 </div>
 
 <script>
+
+
+    var selectQrCode = document.getElementById('selectUserqrCodeV2');
+
+    selectQrCode.addEventListener('change', function() {
+        console.log('jechange')
+        userSelectqrCodev2();
+    });
+
+
+
+
     function userSelectqrCodev2() {
         document.getElementById('qrCodecontainer').style.display = "none";
         let chooseUser = document.getElementById('selectUserqrCodeV2').value;

@@ -26,10 +26,10 @@ $eqLogics = mobile::byType('mobile');
 <table class="table table-condensed tablesorter" id="table_menuCustom">
   <thead>
     <tr>
-      <th>{{Mobile}}</th>
-      <th>{{ID}}</th>
-      <th>{{User}}</th>
-      <th>{{Menu Defaut}}</th>
+      <th>{{Téléphone Mobile}}</th>
+      <th>{{Type}}</th>
+      <th>{{Utilisateur}}</th>
+      <th>{{Menu Défaut}}</th>
     </tr>
   </thead>
   <tbody>
@@ -43,7 +43,7 @@ $eqLogics = mobile::byType('mobile');
       if (is_object($userType)) {
         $username = $userType->getLogin();
         echo '<tr><td width="35%"><a href="' . $eqLogic->getLinkToConfiguration() . '">' . $eqLogic->getHumanName(true) . '</a></td>';
-        echo '<td width="12.5%"><span class="label label-info">' . $eqLogic->getId() . '</span></td>';
+        echo '<td width="12.5%"><span class="label label-info">' . $eqLogic->getConfiguration('type_mobile') . '</span></td>';
         echo '<td width="12.5%"><span class="label label-info">' . $username . '</span></td>';
         if ($eqLogic->getConfiguration('appVersion') == 2) {
             echo '<td><select class="menuDefault" eqIdMobile="'. $eqLogic->getId() .'">';

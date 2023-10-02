@@ -1017,11 +1017,11 @@ class mobile extends eqLogic
 	public static function handleMenuDefaultBySelect($eqId, $eqDefault){
 		$mobile = eqLogic::byId($eqId, 'mobile');
 		$mobileDefault = eqLogic::byId($eqDefault, 'mobile');
+		$namesMenus =  ['home', 'overview', 'health', 'home'];
+		$renamesIcons =  ['Accueil', 'Synthese', 'Santé', 'Accueil'];
+		$spanIcons =  ['icon jeedomapp-in', 'fab fa-hubspot', 'fas fa-medkit', 'icon jeedomapp-in'];
+		$urlUsers =  ['none', 'none', 'none', 'none'];
 		if($eqDefault == 'none'){
-			$namesMenus =  ['home', 'overview', 'health', 'home'];
-			$renamesIcons =  ['Accueil', 'Synthese', 'Santé', 'Accueil'];
-			$spanIcons =  ['icon jeedomapp-in', 'fab fa-hubspot', 'fas fa-medkit', 'icon jeedomapp-in'];
-			$urlUsers =  ['none', 'none', 'none', 'none'];
 			$j = 0;
 			for($i=1; $i < 4; $i++){
 					$mobile->setConfiguration( 'selectNameMenu'.$i, $namesMenus[$j]);
@@ -1044,11 +1044,13 @@ class mobile extends eqLogic
 			$spanIcon = [];
 			$urlUser = [];
 			$nbIcones = $mobileDefault->getConfiguration('nbIcones', 3);
+			$j = 0;
 			for ($i = 1; $i < $nbIcones+1; $i++) {
-				$selectNameMenu[$i] = $mobileDefault->getConfiguration('selectNameMenu' . $i, 'none');
-				$renameIcon[$i] = $mobileDefault->getConfiguration('renameIcon' . $i, '');
-				$spanIcon[$i] = $mobileDefault->getConfiguration('spanIcon' . $i, 'none');
-				$urlUser[$i] = $mobileDefault->getConfiguration('urlUser' . $i, 'none');
+				$selectNameMenu[$i] = $mobileDefault->getConfiguration('selectNameMenu' . $i,  $namesMenus[$j]);
+				$renameIcon[$i] = $mobileDefault->getConfiguration('renameIcon' . $i, $renamesIcons[$j]);
+				$spanIcon[$i] = $mobileDefault->getConfiguration('spanIcon' . $i, $spanIcons[$j]);
+				$urlUser[$i] = $mobileDefault->getConfiguration('urlUser' . $i, $urlUsers[$j]);
+				$j++;
 			}
 			for ($i = 1; $i < $nbIcones+1; $i++) {
 				$mobile->setConfiguration('selectNameMenu' . $i, $selectNameMenu[$i]);

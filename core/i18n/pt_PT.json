@@ -28,10 +28,10 @@
     },
     "plugins\/mobile\/desktop\/modal\/menuCustom.php": {
         "401 - Accès non autorisé": "401 - Acesso não autorizado",
-        "Mobile": "Móvel",
-        "ID": "EU IRIA",
-        "User": "Do utilizador",
-        "Menu Defaut": "Menu padrão",
+        "Téléphone Mobile": "Celular",
+        "Type": "Tipo",
+        "Utilisateur": "Do utilizador",
+        "Menu Défaut": "Menu padrão",
         "Utilisateur non trouvé": "Usuário não encontrado"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {

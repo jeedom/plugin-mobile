@@ -28,10 +28,10 @@
     },
     "plugins\/mobile\/desktop\/modal\/menuCustom.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
-        "Mobile": "Mobile",
-        "ID": "ID",
-        "User": "User",
-        "Menu Defaut": "Menu Defaut",
+        "Téléphone Mobile": "Téléphone Mobile",
+        "Type": "Type",
+        "Utilisateur": "Utilisateur",
+        "Menu Défaut": "Menu Défaut",
         "Utilisateur non trouvé": "Utilisateur non trouvé"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {

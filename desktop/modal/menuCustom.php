@@ -50,7 +50,10 @@ $eqLogics = mobile::byType('mobile');
             echo '<option value="none"  ' . ($activeMobileId === 'none' ? 'selected' : '').' disabled>- Choisir Menu -</option>';
             echo '<option value="default" ' . ($activeMobileId === 'default' ? 'selected' : '').'>Menu basique de l\'application</option>';
             foreach ($eqLogics as $mobileToChoose) {
-              echo '<option value="' . $mobileToChoose->getId() . '" eqIdMobile="'. $eqLogic->getId() .'" ' . ($activeMobileId === $mobileToChoose->getId() ? 'selected' : '') . '>' . $mobileToChoose->getHumanName(true) . '</option>';
+              if($mobileToChoose->getConfiguration('appVersion') == 2){
+                echo '<option value="' . $mobileToChoose->getId() . '" eqIdMobile="'. $eqLogic->getId() .'" ' . ($activeMobileId === $mobileToChoose->getId() ? 'selected' : '') . '>' . $mobileToChoose->getHumanName(true) . '</option>';
+              }
+             
             }
             echo '</select></td>';
 

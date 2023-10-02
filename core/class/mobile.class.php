@@ -1088,6 +1088,24 @@ class mobile extends eqLogic
 		$defaultMenuArray = json_decode($defaultMenuJson, true);
 		$eqLogic = eqLogic::byId($eqId);
 		if (is_object($eqLogic)) {
+			$eqLogics = eqLogic::byType('mobile');
+			foreach($eqLogics as $mobile){
+				if($mobile->getConfiguration('defaultIdMobile') == $eqId){
+					$countFor = intval($eqLogic->getConfiguration('nbIcones', 3)) + 1;
+					for($i=1; $i < $countFor; $i++){
+						${ 'selectNameMenu' . $i} = $eqLogic->getConfiguration('selectNameMenu'.$i, 'none');
+						${ 'renameIcon' . $i} = $eqLogic->getConfiguration('renameIcon'.$i, '');
+						${ 'spanIcon' . $i} = $eqLogic->getConfiguration('spanIcon'.$i, 'none');
+						${ 'urlUser' . $i} = $eqLogic->getConfiguration('urlUser'.$i, 'none');
+						$mobile->setConfiguration('selectNameMenu'.$i, ${ 'selectNameMenu' . $i});
+						$mobile->setConfiguration('renameIcon'.$i, ${ 'renameIcon' . $i});
+						$mobile->setConfiguration('spanIcon'.$i, ${ 'spanIcon' . $i});
+						$mobile->setConfiguration('urlUser'.$i, ${ 'urlUser' . $i});
+						$mobile->save();
+					}
+				};
+				
+			}
 			$nbIcones = $eqLogic->getConfiguration('nbIcones', 3);
 			$arrayElements = array();
 			/*	$eqLogic->setConfiguration('DateMenu', time());

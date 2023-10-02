@@ -1023,7 +1023,7 @@ class mobile extends eqLogic
 		$urlUsers =  ['none', 'none', 'none', 'none'];
 		if($eqDefault == 'default'){
 			$j = 0;
-			for($i=1; $i < 4; $i++){
+			for($i=1; $i < 5; $i++){
 					$mobile->setConfiguration( 'selectNameMenu'.$i, $namesMenus[$j]);
 					$mobile->setConfiguration( 'renameIcon'.$i, $renamesIcons[$j]);
 					$mobile->setConfiguration('spanIcon'.$i, $spanIcons[$j]);

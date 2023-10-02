@@ -28,10 +28,10 @@
     },
     "plugins\/mobile\/desktop\/modal\/menuCustom.php": {
         "401 - Accès non autorisé": "401 - Unauthorized Access",
-        "Mobile": "Mobile",
-        "ID": "ID",
-        "User": "User",
-        "Menu Defaut": "Default menu",
+        "Téléphone Mobile": "Mobile phone",
+        "Type": "Kind",
+        "Utilisateur": "User",
+        "Menu Défaut": "Default menu",
         "Utilisateur non trouvé": "User not found"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
@@ -227,7 +227,7 @@
         "Vérification en Cours": "Verification in progress",
         "Sauvegarde Favoris": "Save Favorites",
         "Nom": "Name",
-        "Type": "Type",
+        "Type": "Kind",
         "Valeur": "Value",
         "Actions": "Shares"
     },

@@ -28,10 +28,10 @@
     },
     "plugins\/mobile\/desktop\/modal\/menuCustom.php": {
         "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "Mobile": "Handy, Mobiltelefon",
-        "ID": "ICH WÜRDE",
-        "User": "Benutzer",
-        "Menu Defaut": "Standardmenü",
+        "Téléphone Mobile": "Mobiltelefon",
+        "Type": "Art",
+        "Utilisateur": "Benutzer",
+        "Menu Défaut": "Standardmenü",
         "Utilisateur non trouvé": "Benutzer nicht gefunden"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
@@ -227,7 +227,7 @@
         "Vérification en Cours": "Überprüfung läuft",
         "Sauvegarde Favoris": "Favoriten speichern",
         "Nom": "Name",
-        "Type": "Typ",
+        "Type": "Art",
         "Valeur": "Wert",
         "Actions": "Aktionen"
     },

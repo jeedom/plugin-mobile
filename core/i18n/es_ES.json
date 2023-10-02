@@ -28,10 +28,10 @@
     },
     "plugins\/mobile\/desktop\/modal\/menuCustom.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado",
-        "Mobile": "Móvil",
-        "ID": "IDENTIFICACIÓN",
-        "User": "Usuario",
-        "Menu Defaut": "Menú predeterminado",
+        "Téléphone Mobile": "Teléfono móvil",
+        "Type": "Amable",
+        "Utilisateur": "Usuario",
+        "Menu Défaut": "Menú predeterminado",
         "Utilisateur non trouvé": "Usuario no encontrado"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
@@ -227,7 +227,7 @@
         "Vérification en Cours": "Verificación en progreso",
         "Sauvegarde Favoris": "Guardar favoritos",
         "Nom": "Nombre",
-        "Type": "Tipo",
+        "Type": "Amable",
         "Valeur": "Valor",
         "Actions": "Comportamiento"
     },

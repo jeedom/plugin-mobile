@@ -1159,7 +1159,7 @@ class mobile extends eqLogic
 							${'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=plan&plan_id={$objectId}";
 						} else if ($typeObject == 'panel') {							
 							$pluginPanelMobile = config::byKey('pluginPanelMobile', 'mobile');
-							if($pluginPanelOutMobile[$objectId] == $objectId){
+							if($pluginPanelMobile[$objectId] == $objectId){
 								${'tabUrl' . $i} =  "/index.php?v=m&p={$objectId}";
 							}else{
 								${'tabUrl' . $i} =  "/index.php?v=m&p={$objectId}&app_mode=1";

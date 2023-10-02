@@ -1028,10 +1028,9 @@ class mobile extends eqLogic
 					$mobile->setConfiguration( 'renameIcon'.$i, $renamesIcons[$j]);
 					$mobile->setConfiguration('spanIcon'.$i, $spanIcons[$j]);
 					$mobile->setConfiguration('urlUser'.$i, $urlUsers[$j]);
-					$mobile->setConfiguration('nbIcones', 3);
-					$mobile->save();
 					$j++;
 			}
+			$mobile->setConfiguration('nbIcones', 3);
 			$mobile->setConfiguration('defaultIdMobile', 'default');
 			$mobile->save();	
 			return;

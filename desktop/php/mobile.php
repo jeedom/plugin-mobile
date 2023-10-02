@@ -20,18 +20,18 @@ $plugin_widget = mobile::$_pluginWidget;
 				<span>{{Configuration}}</span>
 			</div>
 			<?php if (jeedom::version() >= '4.4.0') {
-				/*
-				echo '<div class="cursor eqLogicAction logoSecondary" data-action="bt_customMenu" id="bt_customMenu">';
-				echo '<i class="fas icon jeedomapp-plugin"></i><br>';
-				echo '<span >{{Menu Custom}}</span>';
-				echo '</div>';
-				}else{
-				echo '<div style="color:orange;" class="cursor eqLogicAction logoSecondary" data-action="bt_customMenu" id="bt_customMenu">';
-				echo '<i class="fas icon jeedomapp-plugin"></i><br>';
-				echo '<span style="color:orange;">{{Menu Custom}}</span>';
-				echo '</div>';*/
-			}
-			?>
+			
+			echo '<div class="cursor eqLogicAction logoSecondary" data-action="bt_handlePhones" id="bt_handlePhones">';
+			echo '<i class="fas icon kiko-old-phone"></i><br>';		 
+			echo '<span >{{Gestion Mobiles}}</span>';
+			echo '</div>';
+			}else{
+			echo '<div style="color:orange;" class="cursor eqLogicAction logoSecondary" data-action="bt_handlePhones" id="bt_handlePhones">';
+			echo '<i class="fas icon jeedomapp-plugin"></i><br>';
+			echo '<span style="color:orange;">{{Gestion Mobiles}}</span>';
+			echo '</div>';
+		     }
+		    ?>
 			<div class="cursor eqLogicAction logoSecondary" data-action="bt_qrCodev2" id="bt_qrCodev2">
 				<i class="fas fa-qrcode"></i><br>
 				<span>{{QR Code}}</span>

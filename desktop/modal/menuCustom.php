@@ -30,7 +30,6 @@ $eqLogics = mobile::byType('mobile');
       <th>{{ID}}</th>
       <th>{{User}}</th>
       <th>{{Menu Defaut}}</th>
-      <th>{{Nb Icônes}}</th>
     </tr>
   </thead>
   <tbody>
@@ -73,7 +72,7 @@ $eqLogics = mobile::byType('mobile');
 
 <script>
  
- const selects = document.querySelectorAll('.menuDefault');
+ var selects = document.querySelectorAll('.menuDefault');
 
 
  selects.forEach(function(select) {

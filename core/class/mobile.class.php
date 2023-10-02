@@ -1015,9 +1015,27 @@ class mobile extends eqLogic
 
 
 	public static function handleMenuDefaultBySelect($eqId, $eqDefault){
-		log::add('mobile', 'debug', 'HANDLEDEFAULTMENU' .$eqId);
 		$mobile = eqLogic::byId($eqId, 'mobile');
 		$mobileDefault = eqLogic::byId($eqDefault, 'mobile');
+		if($eqDefault == 'none'){
+			$namesMenus =  ['home', 'overview', 'health', 'home'];
+			$renamesIcons =  ['Accueil', 'Synthese', 'Santé', 'Accueil'];
+			$spanIcons =  ['icon jeedomapp-in', 'fab fa-hubspot', 'fas fa-medkit', 'icon jeedomapp-in'];
+			$urlUsers =  ['none', 'none', 'none', 'none'];
+			$j = 0;
+			for($i=1; $i < 4; $i++){
+					$mobile->setConfiguration( 'selectNameMenu'.$i, $namesMenus[$j]);
+					$mobile->setConfiguration( 'renameIcon'.$i, $renamesIcons[$j]);
+					$mobile->setConfiguration('spanIcon'.$i, $spanIcons[$j]);
+					$mobile->setConfiguration('urlUser'.$i, $urlUsers[$j]);
+					$mobile->setConfiguration('nbIcones', intval($nbIcones));
+					$mobile->save();
+					$j++;
+			}
+			$mobile->setConfiguration('defaultIdMobile', 'none');
+			$mobile->save();	
+			return;
+		}
 		if(is_object($mobile) && is_object($mobileDefault)){
             $mobile->setConfiguration('defaultIdMobile', $eqDefault);
 			//config::save('checkdefaultID',$eqId, 'mobile');

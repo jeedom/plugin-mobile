@@ -56,7 +56,7 @@ ajax::success($arrayMenuConfig);
 }
 
 if(init('action') == 'menuDefault'){
-	mobile::handleMenuDefault(init('eqId'));
+	mobile::handleMenuDefaultBySelect(init('eqId'), init('eqIdDefault'));
 	ajax::success();
 }
 

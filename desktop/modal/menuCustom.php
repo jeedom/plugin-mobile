@@ -56,7 +56,7 @@ $eqLogics = mobile::byType('mobile');
         if ($eqLogic->getConfiguration('appVersion') == 2) {
           echo '<td><select class="menuDefault" eqIdMobile="' . $eqLogic->getId() . '">';
           echo '<option value="none"  ' . ($activeMobileId === 'none' ? 'selected' : '') . ' disabled>- {{Choisir Menu}} -</option>';
-          echo '<option value="default" ' . ($activeMobileId === 'default' ? 'selected' : '') . '>{{Menu basique de l\'application}}</option>';
+          echo '<option value="default" ' . ($activeMobileId === 'default' ? 'selected' : '') . '>{{Menu par défaut}}</option>';
           foreach ($eqLogics as $mobileToChoose) {
             if ($mobileToChoose->getConfiguration('appVersion') == 2) {
               echo '<option value="' . $mobileToChoose->getId() . '" eqIdMobile="' . $eqLogic->getId() . '" ' . ($activeMobileId === $mobileToChoose->getId() ? 'selected' : '') . '>' . $mobileToChoose->getHumanName(true) . '</option>';

@@ -236,7 +236,9 @@ $plugin_widget = mobile::$_pluginWidget;
 									<select class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="affect_user">
 										<option value="">{{Aucun}}</option>
 										<?php
+										$hidden_user = array('jeedom_support', 'internal_report');
 										foreach (user::all() as $user) {
+											if (in_array($user->getLogin(), $hidden_user) || $user->getEnable() != 1 || $user->getProfils() != 'admin') continue;
 											echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
 										}
 										?>

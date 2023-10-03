@@ -29,10 +29,14 @@
     "plugins\/mobile\/desktop\/modal\/menuCustom.php": {
         "401 - Accès non autorisé": "401 - Acesso não autorizado",
         "Téléphone Mobile": "Celular",
-        "Type": "Tipo",
+        "Type de Mobile": "Tipo de celular",
         "Utilisateur": "Do utilizador",
         "Menu Défaut": "Menu padrão",
-        "Utilisateur non trouvé": "Usuário não encontrado"
+        "Choisir Menu": "Escolha o cardápio",
+        "Menu basique de l\\'application": "Menu básico do aplicativo",
+        "PAS D\\'APP V2 SUR CE MOBILE": "NENHUM APLICATIVO V2 NESTE CELULAR",
+        "Utilisateur non trouvé": "Usuário não encontrado",
+        "Configuration Menu Enregistrée": "Configuração de menu salva"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
         "401 - Accès non autorisé": "401 - Acesso não autorizado",

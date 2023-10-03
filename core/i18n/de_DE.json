@@ -29,10 +29,14 @@
     "plugins\/mobile\/desktop\/modal\/menuCustom.php": {
         "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Téléphone Mobile": "Mobiltelefon",
-        "Type": "Art",
+        "Type de Mobile": "Mobiler Typ",
         "Utilisateur": "Benutzer",
         "Menu Défaut": "Standardmenü",
-        "Utilisateur non trouvé": "Benutzer nicht gefunden"
+        "Choisir Menu": "Wählen Sie Menü",
+        "Menu basique de l\\'application": "Grundlegendes Anwendungsmenü",
+        "PAS D\\'APP V2 SUR CE MOBILE": "KEINE V2-APP AUF DIESEM MOBILGERÄT",
+        "Utilisateur non trouvé": "Benutzer nicht gefunden",
+        "Configuration Menu Enregistrée": "Gespeicherte Menükonfiguration"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
         "401 - Accès non autorisé": "401 – Unbefugter Zugriff",

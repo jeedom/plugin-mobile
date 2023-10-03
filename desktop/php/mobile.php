@@ -19,15 +19,15 @@ $plugin_widget = mobile::$_pluginWidget;
 				<i class="fas fa-wrench"></i><br>
 				<span>{{Configuration}}</span>
 			</div>
-			<?php 
+			<?php
 			$jeedomVersion  = jeedom::version() ?? '0';
 			$displayInfo = version_compare($jeedomVersion, '4.4.0', '>=');
 			if ($displayInfo) {
 				echo '<div class="cursor eqLogicAction logoSecondary" data-action="bt_handlePhones" id="bt_handlePhones">';
-				echo '<i class="fas icon kiko-old-phone"></i><br>';		 
+				echo '<i class="fas icon kiko-old-phone"></i><br>';
 				echo '<span >{{Gestion Mobiles}}</span>';
 				echo '</div>';
-			}else{
+			} else {
 				echo '<div style="color:orange;" class="cursor eqLogicAction logoSecondary" data-action="bt_handlePhones" id="bt_handlePhones">';
 				echo '<i class="fas icon jeedomapp-plugin"></i><br>';
 				echo '<span style="color:orange;">{{Gestion Mobiles}}</span>';
@@ -49,7 +49,7 @@ $plugin_widget = mobile::$_pluginWidget;
 			</div>
 			<?php
 			if ($displayInfo) {
-				echo '<div class="cursor eqLogicAction logoSecondary" data-action="createCommunityPost">';
+				echo '<div class="cursor eqLogicAction info tippied" data-action="createCommunityPost">';
 				echo '<i class="fas fa-ambulance"></i><br>';
 				echo '<span>{{Community}}</span>';
 				echo '</div>';

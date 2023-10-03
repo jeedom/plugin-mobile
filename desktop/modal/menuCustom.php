@@ -64,7 +64,7 @@ $eqLogics = mobile::byType('mobile');
           }
           echo '</select></td>';
         } else {
-          echo '<td width="25%"><span class="label label-warning">{{APPLICATION V2 NON INTALLÉ}}</span></td>';
+          echo '<td width="25%"><span class="label label-warning">{{APPLICATION V2 NON INTALLÉE}}</span></td>';
         }
       } else {
         echo '<tr><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';

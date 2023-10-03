@@ -49,7 +49,7 @@ $plugin_widget = mobile::$_pluginWidget;
 			</div>
 			<?php
 			if ($displayInfo) {
-				echo '<div class="cursor eqLogicAction info tippied" data-action="createCommunityPost">';
+				echo '<div class="cursor eqLogicAction info" data-action="createCommunityPost">';
 				echo '<i class="fas fa-ambulance"></i><br>';
 				echo '<span>{{Community}}</span>';
 				echo '</div>';

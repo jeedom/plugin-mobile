@@ -27,13 +27,13 @@ $eqLogics = mobile::byType('mobile');
   <thead>
     <tr>
       <th>{{Téléphone Mobile}}</th>
-      <th>{{Type}}</th>
+      <th>{{Type de Mobile}}</th>
       <th>{{Utilisateur}}</th>
       <th>{{Menu Défaut}}</th>
     </tr>
   </thead>
   <tbody>
-  <?php
+    <?php
     $idEqlogicMobile = intval(config::byKey('checkdefaultID', 'mobile'));
 
     foreach ($eqLogics as $eqLogic) {
@@ -46,19 +46,17 @@ $eqLogics = mobile::byType('mobile');
         echo '<td width="12.5%"><span class="label label-info">' . $eqLogic->getConfiguration('type_mobile') . '</span></td>';
         echo '<td width="12.5%"><span class="label label-info">' . $username . '</span></td>';
         if ($eqLogic->getConfiguration('appVersion') == 2) {
-            echo '<td><select class="menuDefault" eqIdMobile="'. $eqLogic->getId() .'">';
-            echo '<option value="none"  ' . ($activeMobileId === 'none' ? 'selected' : '').' disabled>- Choisir Menu -</option>';
-            echo '<option value="default" ' . ($activeMobileId === 'default' ? 'selected' : '').'>Menu basique de l\'application</option>';
-            foreach ($eqLogics as $mobileToChoose) {
-              if($mobileToChoose->getConfiguration('appVersion') == 2){
-                echo '<option value="' . $mobileToChoose->getId() . '" eqIdMobile="'. $eqLogic->getId() .'" ' . ($activeMobileId === $mobileToChoose->getId() ? 'selected' : '') . '>' . $mobileToChoose->getHumanName(true) . '</option>';
-              }
-             
+          echo '<td><select class="menuDefault" eqIdMobile="' . $eqLogic->getId() . '">';
+          echo '<option value="none"  ' . ($activeMobileId === 'none' ? 'selected' : '') . ' disabled>- {{Choisir Menu}} -</option>';
+          echo '<option value="default" ' . ($activeMobileId === 'default' ? 'selected' : '') . '>{{Menu basique de l\'application}}</option>';
+          foreach ($eqLogics as $mobileToChoose) {
+            if ($mobileToChoose->getConfiguration('appVersion') == 2) {
+              echo '<option value="' . $mobileToChoose->getId() . '" eqIdMobile="' . $eqLogic->getId() . '" ' . ($activeMobileId === $mobileToChoose->getId() ? 'selected' : '') . '>' . $mobileToChoose->getHumanName(true) . '</option>';
             }
-            echo '</select></td>';
-
-        }else{
-          echo '<td width="12.5%"><span class="label label-warning">PAS D\'APP V2 SUR CE MOBILE</span></td>';
+          }
+          echo '</select></td>';
+        } else {
+          echo '<td width="12.5%"><span class="label label-warning">{{PAS D\'APP V2 SUR CE MOBILE}}</span></td>';
         }
       } else {
         echo '<tr><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';
@@ -75,49 +73,46 @@ $eqLogics = mobile::byType('mobile');
 
 
 <script>
- 
- var selects = document.querySelectorAll('.menuDefault');
+  var selects = document.querySelectorAll('.menuDefault');
 
 
- selects.forEach(function(select) {
-  select.addEventListener('change', function() {
-    var selectedValue = this.value;
-    var eqIdMobile = this.getAttribute("eqIdMobile");
-    console.log("Valeur sélectionnée : " + selectedValue);
-    console.log("eqIdMobile : " + eqIdMobile);
-  $.ajax({
-                type: "POST",
-                url: "plugins/mobile/core/ajax/mobile.ajax.php",
-                data: {
-                  action: "menuDefault",
-                  eqId: eqIdMobile,
-                  eqIdDefault : selectedValue
-                },
-                dataType: 'json',
-                global: false,
-                error: function(request, status, error) {
-                  handleAjaxError(request, status, error);
-                },
-                success: function(data) {
-                  if (data.state != 'ok') {
-                    $('#div_alert').showAlert({
-                      message: data.result,
-                      level: 'danger'
-                    });
-                    return;
-                  }
+  selects.forEach(function(select) {
+    select.addEventListener('change', function() {
+      var selectedValue = this.value;
+      var eqIdMobile = this.getAttribute("eqIdMobile");
+      console.log("Valeur sélectionnée : " + selectedValue);
+      console.log("eqIdMobile : " + eqIdMobile);
+      $.ajax({
+        type: "POST",
+        url: "plugins/mobile/core/ajax/mobile.ajax.php",
+        data: {
+          action: "menuDefault",
+          eqId: eqIdMobile,
+          eqIdDefault: selectedValue
+        },
+        dataType: 'json',
+        global: false,
+        error: function(request, status, error) {
+          handleAjaxError(request, status, error);
+        },
+        success: function(data) {
+          if (data.state != 'ok') {
+            $('#div_alert').showAlert({
+              message: data.result,
+              level: 'danger'
+            });
+            return;
+          }
 
-                  $('#div_alert').showAlert({
-                    message: 'Configuration Menu Enregistrée',
-                    level: 'success'
-                  });
+          $('#div_alert').showAlert({
+            message: '{{Configuration Menu Enregistrée}}',
+            level: 'success'
+          });
 
-                }
-              });
+        }
+      });
+    });
   });
-});
-
-
 </script>
 
 

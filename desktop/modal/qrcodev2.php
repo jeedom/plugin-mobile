@@ -34,13 +34,10 @@ $eqLogics = mobile::byType('mobile');
                     <select style="width:250px;" class="eqLogicAttr configuration form-control" id="selectUserqrCodeV2" onInput="userSelectqrCodev2()">
                         <option value="" disabled selected>{{Aucun}}</option>
                         <?php
+                        $hidden_user = array('jeedom_support', 'internal_report');
                         foreach (user::all() as $user) {
-                            $userArray = utils::o2a($user);
-                            log::add('mobile', 'debug', 'USERARRAY '.json_encode($userArray));
-                            if ($userArray['enable'] == 1) {
-                                if($userArray['profils'] == 'admin')
-                                echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
-                            }
+                            if (in_array($user->getLogin(), $hidden_user) || $user->getEnable() != 1 || $user->getProfils() != 'admin') continue;
+                            echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
                         }
                         ?>
                     </select>
@@ -57,6 +54,18 @@ $eqLogics = mobile::byType('mobile');
 </div>
 
 <script>
+
+
+    var selectQrCode = document.getElementById('selectUserqrCodeV2');
+
+    selectQrCode.addEventListener('change', function() {
+        console.log('jechange')
+        userSelectqrCodev2();
+    });
+
+
+
+
     function userSelectqrCodev2() {
         document.getElementById('qrCodecontainer').style.display = "none";
         let chooseUser = document.getElementById('selectUserqrCodeV2').value;

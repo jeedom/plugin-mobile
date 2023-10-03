@@ -1015,9 +1015,26 @@ class mobile extends eqLogic
 
 
 	public static function handleMenuDefaultBySelect($eqId, $eqDefault){
-		log::add('mobile', 'debug', 'HANDLEDEFAULTMENU' .$eqId);
 		$mobile = eqLogic::byId($eqId, 'mobile');
 		$mobileDefault = eqLogic::byId($eqDefault, 'mobile');
+		$namesMenus =  ['home', 'overview', 'health', 'home'];
+		$renamesIcons =  ['Accueil', 'Synthese', 'Santé', 'Accueil'];
+		$spanIcons =  ['icon jeedomapp-in', 'fab fa-hubspot', 'fas fa-medkit', 'icon jeedomapp-in'];
+		$urlUsers =  ['none', 'none', 'none', 'none'];
+		if($eqDefault == 'default'){
+			$j = 0;
+			for($i=1; $i < 5; $i++){
+					$mobile->setConfiguration( 'selectNameMenu'.$i, $namesMenus[$j]);
+					$mobile->setConfiguration( 'renameIcon'.$i, $renamesIcons[$j]);
+					$mobile->setConfiguration('spanIcon'.$i, $spanIcons[$j]);
+					$mobile->setConfiguration('urlUser'.$i, $urlUsers[$j]);
+					$j++;
+			}
+			$mobile->setConfiguration('nbIcones', 3);
+			$mobile->setConfiguration('defaultIdMobile', 'default');
+			$mobile->save();	
+			return;
+		}
 		if(is_object($mobile) && is_object($mobileDefault)){
             $mobile->setConfiguration('defaultIdMobile', $eqDefault);
 			//config::save('checkdefaultID',$eqId, 'mobile');
@@ -1026,11 +1043,13 @@ class mobile extends eqLogic
 			$spanIcon = [];
 			$urlUser = [];
 			$nbIcones = $mobileDefault->getConfiguration('nbIcones', 3);
+			$j = 0;
 			for ($i = 1; $i < $nbIcones+1; $i++) {
-				$selectNameMenu[$i] = $mobileDefault->getConfiguration('selectNameMenu' . $i, 'none');
-				$renameIcon[$i] = $mobileDefault->getConfiguration('renameIcon' . $i, '');
-				$spanIcon[$i] = $mobileDefault->getConfiguration('spanIcon' . $i, 'none');
-				$urlUser[$i] = $mobileDefault->getConfiguration('urlUser' . $i, 'none');
+				$selectNameMenu[$i] = $mobileDefault->getConfiguration('selectNameMenu' . $i,  $namesMenus[$j]);
+				$renameIcon[$i] = $mobileDefault->getConfiguration('renameIcon' . $i, $renamesIcons[$j]);
+				$spanIcon[$i] = $mobileDefault->getConfiguration('spanIcon' . $i, $spanIcons[$j]);
+				$urlUser[$i] = $mobileDefault->getConfiguration('urlUser' . $i, $urlUsers[$j]);
+				$j++;
 			}
 			for ($i = 1; $i < $nbIcones+1; $i++) {
 				$mobile->setConfiguration('selectNameMenu' . $i, $selectNameMenu[$i]);
@@ -1068,6 +1087,24 @@ class mobile extends eqLogic
 		$defaultMenuArray = json_decode($defaultMenuJson, true);
 		$eqLogic = eqLogic::byId($eqId);
 		if (is_object($eqLogic)) {
+			$eqLogics = eqLogic::byType('mobile');
+			foreach($eqLogics as $mobile){
+				if($mobile->getConfiguration('defaultIdMobile') == $eqId){
+					$countFor = intval($eqLogic->getConfiguration('nbIcones', 3)) + 1;
+					for($i=1; $i < $countFor; $i++){
+						${ 'selectNameMenu' . $i} = $eqLogic->getConfiguration('selectNameMenu'.$i, 'none');
+						${ 'renameIcon' . $i} = $eqLogic->getConfiguration('renameIcon'.$i, '');
+						${ 'spanIcon' . $i} = $eqLogic->getConfiguration('spanIcon'.$i, 'none');
+						${ 'urlUser' . $i} = $eqLogic->getConfiguration('urlUser'.$i, 'none');
+						$mobile->setConfiguration('selectNameMenu'.$i, ${ 'selectNameMenu' . $i});
+						$mobile->setConfiguration('renameIcon'.$i, ${ 'renameIcon' . $i});
+						$mobile->setConfiguration('spanIcon'.$i, ${ 'spanIcon' . $i});
+						$mobile->setConfiguration('urlUser'.$i, ${ 'urlUser' . $i});
+						$mobile->save();
+					}
+				};
+				
+			}
 			$nbIcones = $eqLogic->getConfiguration('nbIcones', 3);
 			$arrayElements = array();
 			/*	$eqLogic->setConfiguration('DateMenu', time());
@@ -1121,7 +1158,7 @@ class mobile extends eqLogic
 							${'tabUrl' . $i} =  "/index.php?v={$webviewUrl}&p=plan&plan_id={$objectId}";
 						} else if ($typeObject == 'panel') {							
 							$pluginPanelMobile = config::byKey('pluginPanelMobile', 'mobile');
-							if($pluginPanelOutMobile[$objectId] == $objectId){
+							if($pluginPanelMobile[$objectId] == $objectId){
 								${'tabUrl' . $i} =  "/index.php?v=m&p={$objectId}";
 							}else{
 								${'tabUrl' . $i} =  "/index.php?v=m&p={$objectId}&app_mode=1";

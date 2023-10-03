@@ -4,9 +4,11 @@
         "Réponse Ask sensible à la case : ": "Pregunta respuesta sensible a la caja:"
     },
     "plugins\/mobile\/desktop\/modal\/piece.php": {
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
         "Les Pièces": "Las piezas"
     },
     "plugins\/mobile\/desktop\/modal\/health.php": {
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
         "Plateforme": "Plataforma",
         "Équipement": "Dispositivos",
         "ID": "Identificación",
@@ -25,31 +27,15 @@
         "- Vous cliquez sur QR Code : un nouvel écran apparait; vous pourrez scanner un QRCode depuis le plugin Mobile de la box que vous souhaitez ajoutée, via l'onglet QRCODE du plugin.": "- Haces clic en Código QR: aparece una nueva pantalla; puede escanear un QRCode desde el complemento móvil del cuadro que desea agregar, a través de la pestaña QRCODE del complemento"
     },
     "plugins\/mobile\/desktop\/modal\/menuCustom.php": {
-        "Mobile": "Móvil",
-        "ID": "IDENTIFICACIÓN",
-        "User": "Usuario",
-        "Menu Defaut": "Menú predeterminado",
-        "Nb Icones": "Iconos Nb",
-        "Utilisateur non trouvé": "Usuario no encontrado",
-        " Icone 1": "Icono 1",
-        "Type": "Tipo",
-        "Choisir un Type": "Elija un tipo",
-        "Accueil": "Accueil",
-        "Synthese": "Synthese",
-        "Dashboard": "Tablero",
-        "Vue": "Visto",
-        "Design": "Diseño",
-        "Panel": "Panel",
-        "URL externe": "URL externe",
-        "Santé": "Santé",
-        "TimeLine": "TimeLine",
-        "Choisir Icone": "Elegir icono",
-        " Icone 2": "Icono 2",
-        " Icone 3": "Icono 3",
-        " Icone 4": "icono 4",
-        "Menu Custom": "Menú personalizado"
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
+        "Téléphone Mobile": "Teléfono móvil",
+        "Type": "Amable",
+        "Utilisateur": "Usuario",
+        "Menu Défaut": "Menú predeterminado",
+        "Utilisateur non trouvé": "Usuario no encontrado"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
         "Plugins Spéciaux Compatibles": "Complementos especiales compatibles",
         "Disponibles dans la liste des plugins et intégrés au Dashboard de l’App Mobile.": "Disponible en la lista de complementos e integrado en el Panel de la aplicación móvil",
         "Plugins Validés Type générique": "Complementos validados Tipo genérico",
@@ -62,7 +48,14 @@
         "Ne sont pas transmis à l’App Mobile": "No se transmiten a la aplicación móvil"
     },
     "plugins\/mobile\/desktop\/modal\/fivePage.php": {
-        "401 - Accès non autorisé": "401 - Acceso no autorizado"
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
+        "Fonctionnement de la Géolocalisation": "Cómo funciona la geolocalización",
+        "On ajoute une zone de Géolocalisation": "Agregamos una zona de Geolocalización",
+        "On recherche l'adresse, on nomme la Zone, et on valide": "Buscamos la dirección, nombramos la Zona y validamos",
+        "La zone apparaitra en rouge, signifiant que l'on se trouve pas dans la Zone": "La zona aparecerá en rojo, lo que significa que no estás en la Zona",
+        "Si vous vous trouvé dans la zone à sa création, elle passera en vert apres quelques secondes": "Si estás en el área cuando se crea, se volverá verde después de unos segundos",
+        "Modifier largueur de la zone": "Cambiar ancho de zona",
+        "Ajouter une zone ajoutera dans votre équipement téléphone dans le plugin Mobile une commande binaire, qui pourra nous servir à programmer des actions en fonction de son état.": "Agregar una zona agregará un comando binario a tu equipo telefónico en el complemento Móvil, que podremos utilizar para programar acciones en función de su estado"
     },
     "plugins\/mobile\/desktop\/modal\/qrcodev2.php": {
         "AJOUT DE LA BOX SUR VOTRE APPLICATiON MOBILE ": "AGREGAR LA CAJA A SU APLICACIÓN MÓVIL",
@@ -81,7 +74,16 @@
         "401 - Accès non autorisé": "401 - Acceso no autorizado"
     },
     "plugins\/mobile\/desktop\/modal\/sixPage.php": {
-        "401 - Accès non autorisé": "401 - Acceso no autorizado"
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
+        "Personnalisation du Menu": "Personalización del menú",
+        "Vous pouvez personnaliser le Menu de votre WebView via le plugin Mobile ou l'application": "Puede personalizar el menú de su WebView a través del complemento móvil o la aplicación",
+        "On clique sur Menu Custom": "Damos clic en Menú Personalizado",
+        "Une modale s'ouvre et vous propose vos téléphones deja connectés": "Se abre un modal y te ofrece tus teléfonos ya conectados",
+        "Cliquer sur Configurer Menu sur le téléphone choisi": "Haga clic en Configurar Menú en el teléfono elegido",
+        "Le nombre d'icônes peut aller de 1 à 4": "El número de iconos puede variar de 1 a 4",
+        "En cochant Menu Default, le menu configuré sur ce téléphone devient celui par défaut sur tous vos téléphones": "Al marcar Menú predeterminado, el menú configurado en este teléfono se convierte en el predeterminado en todos sus teléfonos",
+        "Via l'application Mobile : si vous avez configuré une box par défaut, alors le Menu Custom apparait dans le menu de l'application": "A través de la aplicación móvil: si ha configurado un cuadro predeterminado, aparece el Menú personalizado en el menú de la aplicación",
+        "Même principe que via le plugin Mobile": "Mismo principio que a través del complemento móvil"
     },
     "plugins\/mobile\/desktop\/modal\/firstPage.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado",
@@ -93,7 +95,7 @@
         "Rechercher": "Buscar"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.mobile.php": {
-        "401 - AccèÈs non autorisÈ": "401 - Acceso no autorizado",
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
         "Envoi auprès de l'app mobile": "Envío a la aplicación móvil",
         "Ce Plugin est entièrement compatible, il ne nécessite aucune action de votre part": "Este complemento es totalmente compatible, no requiere ninguna acción por su parte",
         "Ce plugin est compatible, pensez à vérifier les Types Génériques des Commandes": "Este complemento es compatible, recuerde verificar los tipos genéricos de pedidos",
@@ -122,7 +124,7 @@
         "Envoyer à l\\'application": "Enviar a la solicitud"
     },
     "plugins\/mobile\/desktop\/modal\/object.mobile.php": {
-        "401 - AccèÈs non autorisÈ": "401 - Acceso no autorizado",
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
         "Envoyer cette pièce vers l\\'application": "Enviar esta parte a la aplicación",
         "Activer": "Activar",
         "Type Générique de cet objet": "Tipo genérico de este objeto",
@@ -138,6 +140,7 @@
         "Sauvegarde effectuée avec succès": "Guardado correctamente"
     },
     "plugins\/mobile\/desktop\/modal\/info_app.mobile.php": {
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
         "JSON valide": "Json válido",
         "Objets \/ Pièces": "Objetos \/ Piezas",
         "Modules": "Módulos",
@@ -148,19 +151,37 @@
         "Configurations": "Configuraciones"
     },
     "plugins\/mobile\/desktop\/modal\/fiveModal.php": {
-        "401 - Accès non autorisé": "401 - Acceso no autorizado"
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
+        "Fonctionnement de la Géolocalisation": "Cómo funciona la geolocalización",
+        "On ajoute une zone de Géolocalisation": "Agregamos una zona de Geolocalización",
+        "On recherche l'adresse, on nomme la Zone, et on valide": "Buscamos la dirección, nombramos la Zona y validamos",
+        "La zone apparaitra en rouge, signifiant que l'on se trouve pas dans la Zone": "La zona aparecerá en rojo, lo que significa que no estás en la Zona",
+        "Si vous vous trouvé dans la zone à sa création, elle passera en vert après quelques secondes": "Si estás en el área cuando se crea, se volverá verde después de unos segundos",
+        "Modifier largueur de la zone": "Cambiar ancho de zona",
+        "Ajouter une zone ajoutera dans votre équipement téléphone dans le plugin Mobile une commande binaire, qui pourra vous servir à programmer des actions en fonction de son état.": "Agregar una zona agregará un comando binario a su equipo telefónico en el complemento Móvil, que puede usar para programar acciones según su estado"
     },
     "plugins\/mobile\/desktop\/modal\/fourPage.php": {
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
+        "Pour acceder aux fonctionnalités comme les Notifications, la Personnalisation du Menu ou la Géolocalisation, il faut au préalable avoir selectionné au moins une box 'actuelle": "Para acceder a funciones como Notificaciones, Personalización de Menú o Geolocalización, primero debes haber seleccionado al menos una casilla actual",
+        "Pour cela, dans l'onglet Boxs, il faut selectionner une box, et s'identifier.": "Para ello, en la pestaña Casillas, deberás seleccionar una casilla e identificarte",
+        "Une fois les identifiants entrés, la box passe en haut de liste.": "Una vez que se han ingresado los identificadores, el cuadro se mueve a la parte superior de la lista",
+        "Si elle répond au ping, elle a un voyant vert": "Si responde al ping tiene luz verde",
+        "On peut cliquer sur Synchroniser pour mettre à jour le statut des boxs": "Puede hacer clic en Sincronizar para actualizar el estado de las casillas",
+        "Pour acceder a toutes les fonctionnalités, il faut cliquer sur la box configurée; cela permettra à l'application de recuperer ses informations, et donc autoriser les affichages du menu.": "Para acceder a todas las funciones, debe hacer clic en la casilla configurada; esto permitirá que la aplicación recupere su información y, por lo tanto, autorizará la visualización del menú",
+        "Menu Complet": "Menú completo"
+    },
+    "plugins\/mobile\/desktop\/php\/widgetLight.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado"
     },
     "plugins\/mobile\/desktop\/php\/mobile.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado",
-        "App V2 - (VERSION ALPHA PRIVEE SEULEMENT)": "Aplicación V2 - (SOLO VERSIÓN ALFA PRIVADA)",
+        "App V2 - (VERSION BETA SEULEMENT)": "Aplicación V2 - (SOLO VERSIÓN BETA)",
         "Configuration": "Configuración",
-        "Menu Custom": "Menú personalizado",
+        "Gestion Mobiles": "Gestión Móvil",
         "QR Code": "Código QR",
-        "Documentation APP V2": "Documentación de la aplicación V2",
+        "Documentation APP": "Documentación de la aplicación",
         "Santé": "Salud",
+        "Community": "Comunidad",
         "Mes Téléphones Mobiles": "Mis teléfonos móviles",
         "Rechercher": "Buscar",
         "Équipement visible": "Equipos visibles",
@@ -211,11 +232,22 @@
         "Valeur": "Valor",
         "Actions": "Comportamiento"
     },
+    "plugins\/mobile\/desktop\/php\/modalConfigPlugin.php": {
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
+        "Pas de configuration sur ce plugin": "No hay configuración en este complemento"
+    },
+    "plugins\/mobile\/desktop\/php\/widgetSlider.php": {
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
+        "ERREUR SUR LA COMMANDE": "ERROR DE ORDEN"
+    },
     "plugins\/mobile\/desktop\/php\/panelMenuCustom.php": {
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
+        "NOMBRE ICÔNES": "NÚMERO DE ICONOS",
+        "MENU ACTUEL": "MENÚ ACTUAL",
         "Type": "Amable",
         "Choisir un Type": "Elija un tipo",
         "Accueil": "Bienvenida",
-        "Synthese": "Síntesis",
+        "Synthèse": "Síntesis",
         "Dashboard": "Panel",
         "Vue": "Visto",
         "Design": "Diseño",
@@ -223,10 +255,28 @@
         "URL externe": "URL externa",
         "Santé": "Salud",
         "TimeLine": "Línea de tiempo",
-        "Choix TypeWebView": "Tipo de elecciónWebView"
+        "Aucun": "Ninguno",
+        "Renommer Icône": "Icono de cambio de nombre",
+        "Choisir Icône": "Elija el icono",
+        "Choix TypeWebView": "Tipo de elecciónWebView",
+        "Valider Menu Global": "Validar menú global",
+        "Pas de mobile enregistré sur l\\'application mobile.": "Ningún móvil registrado en la aplicación móvil",
+        "Scanner le QRCode du plugin mobile depuis l\\'application": "Escanee el código QR del complemento móvil desde la aplicación",
+        "Version minimale du core pour etre fonctionnel : 4.4.0": "Versión básica mínima para ser funcional: 4.4.0",
+        "Cliquer sur synchronisation de l\\'application": "Haga clic en sincronización de aplicaciones",
+        "Synchronisation de la box": "Sincronización de caja"
     },
     "plugins\/mobile\/desktop\/php\/panelWebApp.php": {
-        "ICONE 1": "ICONO 1"
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
+        "Paramétrer Icône 1": "Configurar icono 1",
+        "Paramétrer Icône 2": "Configurar icono 2",
+        "ICÔNE 1": "ICONO 1",
+        "Paramétrer Icône 3": "Configurar icono 3",
+        "Paramétrer Icône4": "Configurar Icon4"
+    },
+    "plugins\/mobile\/desktop\/php\/widgetThermo.php": {
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
+        "Température": "Temperatura"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
         "Santé Mobile": "Salud móvil",
@@ -234,9 +284,10 @@
         "Objets \/ Pièces": "Objetos \/ Piezas",
         "Scénarios": "Escenarios",
         "Informations envoyées à l'app": "Información enviada a la aplicación",
-        "Menu Custom": "Menú personalizado",
+        "Gestion des Mobiles": "Gestión Móvil",
         "QrCode": "Código QR",
         "Bien demarrer": "Empezar bien",
+        "Menu Custom": "Menú personalizado",
         "Configuration Mobile du Plugin \"+name_plugin+": "Configuración móvil del complemento \"+ name_plugin +",
         "Configuration Mobile de la Pièce": "Configuración de sala móvil",
         "Configuration Mobile du Scénario \"+name_scenario+": "Configuración Móvil del Escenario \"+name_scenario+",
@@ -251,7 +302,9 @@
         "Min": "Mín.",
         "Max": "Máx.",
         "Unité": "Unidad",
-        "Tester": "Probar"
+        "Configuration avancée": "Configuración avanzada",
+        "Tester": "Probar",
+        "Supprimer la commande": "Eliminar pedido"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado",

@@ -56,14 +56,13 @@ if(typeof jeeDialog !== 'undefined'){
     })
   })
 
-  document.querySelector('#bt_customMenu')?.addEventListener('click', function(event) {
+  document.querySelector('#bt_handlePhones')?.addEventListener('click', function(event) {
     jeedom.version({
     success: function(version) {
       if(version >= '4.4.0'){
         jeeDialog.dialog({
           id: 'menuCustom',
-          title: "{{Menu Custom}}",
-          fullScreen:1,
+          title: "{{Gestion des Mobiles}}",
           contentUrl: 'index.php?v=d&plugin=mobile&modal=menuCustom'
         })
       }else{

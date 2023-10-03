@@ -19,17 +19,19 @@ $plugin_widget = mobile::$_pluginWidget;
 				<i class="fas fa-wrench"></i><br>
 				<span>{{Configuration}}</span>
 			</div>
-			<?php if (jeedom::version() >= '4.4.0') {
-				/*
-				echo '<div class="cursor eqLogicAction logoSecondary" data-action="bt_customMenu" id="bt_customMenu">';
-				echo '<i class="fas icon jeedomapp-plugin"></i><br>';
-				echo '<span >{{Menu Custom}}</span>';
+			<?php 
+			$jeedomVersion  = jeedom::version() ?? '0';
+			$displayInfo = version_compare($jeedomVersion, '4.4.0', '>=');
+			if ($displayInfo) {
+				echo '<div class="cursor eqLogicAction logoSecondary" data-action="bt_handlePhones" id="bt_handlePhones">';
+				echo '<i class="fas icon kiko-old-phone"></i><br>';		 
+				echo '<span >{{Gestion Mobiles}}</span>';
 				echo '</div>';
-				}else{
-				echo '<div style="color:orange;" class="cursor eqLogicAction logoSecondary" data-action="bt_customMenu" id="bt_customMenu">';
+			}else{
+				echo '<div style="color:orange;" class="cursor eqLogicAction logoSecondary" data-action="bt_handlePhones" id="bt_handlePhones">';
 				echo '<i class="fas icon jeedomapp-plugin"></i><br>';
-				echo '<span style="color:orange;">{{Menu Custom}}</span>';
-				echo '</div>';*/
+				echo '<span style="color:orange;">{{Gestion Mobiles}}</span>';
+				echo '</div>';
 			}
 			?>
 			<div class="cursor eqLogicAction logoSecondary" data-action="bt_qrCodev2" id="bt_qrCodev2">
@@ -45,6 +47,14 @@ $plugin_widget = mobile::$_pluginWidget;
 				<i class="fas fa-medkit"></i><br>
 				<span>{{Santé}}</span>
 			</div>
+			<?php
+			if ($displayInfo) {
+				echo '<div class="cursor eqLogicAction logoSecondary" data-action="createCommunityPost">';
+				echo '<i class="fas fa-ambulance"></i><br>';
+				echo '<span>{{Community}}</span>';
+				echo '</div>';
+			}
+			?>
 		</div>
 		<legend><i class="fas fa-mobile"></i> {{Mes Téléphones Mobiles}}</legend>
 		<div class="input-group" style="margin:5px;">
@@ -221,12 +231,16 @@ $plugin_widget = mobile::$_pluginWidget;
 										<option value="windows">{{Windows (non officiel)}}</option>
 									</select>
 								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-4 control-label">{{Utilisateur}}</label>
 								<div class="col-sm-6">
 									<select class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="affect_user">
 										<option value="">{{Aucun}}</option>
 										<?php
+										$hidden_user = array('jeedom_support', 'internal_report');
 										foreach (user::all() as $user) {
+											if (in_array($user->getLogin(), $hidden_user) || $user->getEnable() != 1 || $user->getProfils() != 'admin') continue;
 											echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
 										}
 										?>

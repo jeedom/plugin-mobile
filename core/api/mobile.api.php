@@ -62,6 +62,7 @@ function createMobile($params, $nbIcones = 3){
 				$mobile->setConfiguration('spanIcon'.$i, $spanIcons[$j]);
 				$mobile->setConfiguration('urlUser'.$i, $urlUsers[$j]);
 				$mobile->setConfiguration('nbIcones', intval($nbIcones));
+				$mobile->setConfiguration('defaultIdMobile', 'default');
 				$mobile->save();
 				$j++;
 		}

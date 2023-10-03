@@ -38,12 +38,6 @@ $eqLogics = mobile::byType('mobile');
 			$userId = $eqLogic->getConfiguration('affect_user');
 			$userType = user::byId($userId);
 			echo '<tr><td width="40%"><a href="' . $eqLogic->getLinkToConfiguration() . '">' . $eqLogic->getHumanName(true) . '</a></td>';
-			if (is_object($userType)) {
-				$username = $userType->getLogin();
-				echo '<td width="15.5%"><span class="label label-info">' . $username . '</span></td>';
-			} else {
-				echo '<td width="15.5%"><span class="label label-info">{{Utilisateur non trouvé}}</span></td>';
-			}
 			if ($eqLogic->getConfiguration('type_mobile') == 'android') {
 				echo '<td width="12.5%"><span class="label label-info"><i class="fab fa-android"></i></span></td>';
 			} else if ($eqLogic->getConfiguration('type_mobile') == 'windows') {
@@ -52,6 +46,12 @@ $eqLogics = mobile::byType('mobile');
 				echo '<td width="12.5%"><span class="label label-info"><i class="fab fa-apple"></i></span></td>';
 			} else {
 				echo '<td width="12.5%"><span class="label label-info"><i class="far fa-question-circle"></i></i></span></td>';
+			}
+			if (is_object($userType)) {
+				$username = $userType->getLogin();
+				echo '<td width="15.5%"><span class="label label-info">' . $username . '</span></td>';
+			} else {
+				echo '<td width="15.5%"><span class="label label-info">{{Utilisateur non trouvé}}</span></td>';
 			}
 			echo '<td><span class="label label-info">' . $eqLogic->getStatus('lastCommunication') . '</span></td>';
 			echo '<td><span class="label label-info">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';

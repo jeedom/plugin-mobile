@@ -26,7 +26,7 @@ $eqLogics = mobile::byType('mobile');
 <table class="table table-condensed tablesorter" id="table_menuCustom">
   <thead>
     <tr>
-      <th>{{Téléphone Mobile}}</th>
+      <th>{{Équipement}}</th>
       <th>{{Type de Mobile}}</th>
       <th>{{Utilisateur}}</th>
       <th>{{Menu Défaut}}</th>
@@ -42,9 +42,17 @@ $eqLogics = mobile::byType('mobile');
       $userType = user::byId($userId);
       if (is_object($userType)) {
         $username = $userType->getLogin();
-        echo '<tr><td width="35%"><a href="' . $eqLogic->getLinkToConfiguration() . '">' . $eqLogic->getHumanName(true) . '</a></td>';
-        echo '<td width="12.5%"><span class="label label-info">' . $eqLogic->getConfiguration('type_mobile') . '</span></td>';
-        echo '<td width="12.5%"><span class="label label-info">' . $username . '</span></td>';
+        echo '<tr><td width="40%"><a href="' . $eqLogic->getLinkToConfiguration() . '">' . $eqLogic->getHumanName(true) . '</a></td>';
+        if ($eqLogic->getConfiguration('type_mobile') == 'android') {
+          echo '<td width="12.5%"><span class="label label-info"><i class="fab fa-android"></i></span></td>';
+        } else if ($eqLogic->getConfiguration('type_mobile') == 'windows') {
+          echo '<td width="12.5%"><span class="label label-info"><i class="fab fa-windows"></i></span></td>';
+        } else if ($eqLogic->getConfiguration('type_mobile') == 'ios') {
+          echo '<td width="12.5%"><span class="label label-info"><i class="fab fa-apple"></i></span></td>';
+        } else {
+          echo '<td width="12.5%"><span class="label label-info"><i class="far fa-question-circle"></i></i></span></td>';
+        }
+        echo '<td width="15.5%"><span class="label label-info">' . $username . '</span></td>';
         if ($eqLogic->getConfiguration('appVersion') == 2) {
           echo '<td><select class="menuDefault" eqIdMobile="' . $eqLogic->getId() . '">';
           echo '<option value="none"  ' . ($activeMobileId === 'none' ? 'selected' : '') . ' disabled>- {{Choisir Menu}} -</option>';
@@ -56,7 +64,7 @@ $eqLogics = mobile::byType('mobile');
           }
           echo '</select></td>';
         } else {
-          echo '<td width="12.5%"><span class="label label-warning">{{PAS D\'APP V2 SUR CE MOBILE}}</span></td>';
+          echo '<td width="25%"><span class="label label-warning">{{PAS D\'APP V2 SUR CE MOBILE}}</span></td>';
         }
       } else {
         echo '<tr><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';

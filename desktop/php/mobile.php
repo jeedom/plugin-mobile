@@ -231,6 +231,8 @@ $plugin_widget = mobile::$_pluginWidget;
 										<option value="windows">{{Windows (non officiel)}}</option>
 									</select>
 								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-4 control-label">{{Utilisateur}}</label>
 								<div class="col-sm-6">
 									<select class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="affect_user">

@@ -34,12 +34,10 @@ $eqLogics = mobile::byType('mobile');
                     <select style="width:250px;" class="eqLogicAttr configuration form-control" id="selectUserqrCodeV2" onInput="userSelectqrCodev2()">
                         <option value="" disabled selected>{{Aucun}}</option>
                         <?php
+                        $hidden_user = array('jeedom_support', 'internal_report');
                         foreach (user::all() as $user) {
-                            $userArray = utils::o2a($user);
-                            if ($userArray['enable'] == 1) {
-                                if($userArray['profils'] == 'admin' && $user->getLogin() != 'jeedom_support')
-                                echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
-                            }
+                            if (in_array($user->getLogin(), $hidden_user) || $user->getEnable() != 1 || $user->getProfils() != 'admin') continue;
+                            echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
                         }
                         ?>
                     </select>

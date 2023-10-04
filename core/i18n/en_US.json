@@ -9,7 +9,7 @@
     },
     "plugins\/mobile\/desktop\/modal\/health.php": {
         "401 - Accès non autorisé": "401 - Unauthorized Access",
-        "Équipement": "Equipment",
+        "Équipement": "Device",
         "Type de Mobile": "Mobile Type",
         "Utilisateur": "User",
         "Dernière activité": "Last activity",
@@ -31,6 +31,7 @@
         "Type de Mobile": "Mobile Type",
         "Utilisateur": "User",
         "Menu Défaut": "Default menu",
+        "Dernière activité": "Last activity",
         "Choisir Menu": "Choose Menu",
         "Menu par défaut": "Default menu",
         "APPLICATION V2 NON INTALLÉE": "APPLICATION V2 NOT INSTALLED",
@@ -183,7 +184,6 @@
         "Gestion Mobiles": "Mobile Management",
         "QR Code": "QR Code",
         "Documentation APP": "APP Documentation",
-        "Santé": "Health",
         "Community": "Community",
         "Mes Téléphones Mobiles": "My Mobile Phones",
         "Rechercher": "Search",
@@ -256,7 +256,6 @@
         "Température": "Temperature"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
-        "Santé Mobile": "Mobile Health",
         "Plugins compatibles": "Compatible plugins",
         "Objets \/ Pièces": "Objects \/ Pieces",
         "Scénarios": "Scenarios",

@@ -9,7 +9,7 @@
     },
     "plugins\/mobile\/desktop\/modal\/health.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado",
-        "Équipement": "Equipo",
+        "Équipement": "Dispositivos",
         "Type de Mobile": "Tipo de móvil",
         "Utilisateur": "Usuario",
         "Dernière activité": "Última actividad",
@@ -31,6 +31,7 @@
         "Type de Mobile": "Tipo de móvil",
         "Utilisateur": "Usuario",
         "Menu Défaut": "Menú predeterminado",
+        "Dernière activité": "Última actividad",
         "Choisir Menu": "Elija Menú",
         "Menu par défaut": "Menú predeterminado",
         "APPLICATION V2 NON INTALLÉE": "APLICACIÓN V2 NO INSTALADA",
@@ -183,7 +184,6 @@
         "Gestion Mobiles": "Gestión Móvil",
         "QR Code": "Código QR",
         "Documentation APP": "Documentación de la aplicación",
-        "Santé": "Salud",
         "Community": "Comunidad",
         "Mes Téléphones Mobiles": "Mis teléfonos móviles",
         "Rechercher": "Buscar",
@@ -256,7 +256,6 @@
         "Température": "Temperatura"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
-        "Santé Mobile": "Salud móvil",
         "Plugins compatibles": "Complementos compatibles",
         "Objets \/ Pièces": "Objetos \/ Piezas",
         "Scénarios": "Escenarios",

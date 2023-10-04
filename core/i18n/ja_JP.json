@@ -31,6 +31,7 @@
         "Type de Mobile": "Type de Mobile",
         "Utilisateur": "Utilisateur",
         "Menu Défaut": "Menu Defaut",
+        "Dernière activité": "Dernière activité",
         "Choisir Menu": "Choisir Menu",
         "Menu par défaut": "Menu par défaut",
         "APPLICATION V2 NON INTALLÉE": "APPLICATION V2 NON INTALLÉE",
@@ -183,7 +184,6 @@
         "Gestion Mobiles": "Gestion Mobiles",
         "QR Code": "QR Code",
         "Documentation APP": "Documentation APP",
-        "Santé": "健康",
         "Community": "Community",
         "Mes Téléphones Mobiles": "Mes Téléphones Mobiles",
         "Rechercher": "検索",
@@ -256,7 +256,6 @@
         "Température": "Température"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
-        "Santé Mobile": "Santé Mobile",
         "Plugins compatibles": "Plugins compatibles",
         "Objets \/ Pièces": "Objets \/ Pièces",
         "Scénarios": "シナリオ",

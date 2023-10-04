@@ -31,6 +31,7 @@
         "Type de Mobile": "Tipo de celular",
         "Utilisateur": "Do utilizador",
         "Menu Défaut": "Menu padrão",
+        "Dernière activité": "Ultima atividade",
         "Choisir Menu": "Escolha o cardápio",
         "Menu par défaut": "Menu padrão",
         "APPLICATION V2 NON INTALLÉE": "APLICATIVO V2 NÃO INSTALADO",
@@ -183,7 +184,6 @@
         "Gestion Mobiles": "Gerenciamento móvel",
         "QR Code": "Código QR",
         "Documentation APP": "Documentação do APP",
-        "Santé": "Saúde",
         "Community": "Comunidade",
         "Mes Téléphones Mobiles": "Meus telefones móveis",
         "Rechercher": "Pesquisa",
@@ -256,7 +256,6 @@
         "Température": "Temperatura"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
-        "Santé Mobile": "Saúde móvel",
         "Plugins compatibles": "Plugins compatíveis",
         "Objets \/ Pièces": "Objetos \/ Peças",
         "Scénarios": "Cenas",

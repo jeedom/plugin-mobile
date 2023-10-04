@@ -1,23 +1,11 @@
 # Plugin Mobile Jeedom
 
-Validation PHP Version (branche BETA) :
+Validation (branche BETA) :
 
-![PHP 7.3](https://github.com/jeedom/plugin-mobile/actions/workflows/lint_Php73.yml/badge.svg?branch=beta)
-![PHP 7.4](https://github.com/jeedom/plugin-mobile/actions/workflows/lint_Php74.yml/badge.svg?branch=beta)
-
-Validation Code int (branche BETA):
-
-![PHP](https://github.com/jeedom/plugin-mobile/actions/workflows/php.yml/badge.svg?branch=beta)
-![PHP](https://github.com/jeedom/plugin-mobile/actions/workflows/codeLintGlobal.yml/badge.svg?branch=beta)
+[![Test Plugin Jeedom](https://github.com/jeedom/plugin-mobile/actions/workflows/work.yml/badge.svg?branch=beta)](https://github.com/jeedom/plugin-mobile/actions/workflows/work.yml)
 
 
 --------
-Validation PHP Version (branche MASTER) :
+Validation (branche MASTER) :
 
-![PHP 7.3](https://github.com/jeedom/plugin-mobile/actions/workflows/lint_Php73.yml/badge.svg?branch=master)
-![PHP 7.4](https://github.com/jeedom/plugin-mobile/actions/workflows/lint_Php74.yml/badge.svg?branch=master)
-
-Validation Code int (branche MASTER):
-
-![PHP](https://github.com/jeedom/plugin-mobile/actions/workflows/php.yml/badge.svg?branch=master)
-![PHP](https://github.com/jeedom/plugin-mobile/actions/workflows/codeLintGlobal.yml/badge.svg?branch=master)
+[![Test Plugin Jeedom](https://github.com/jeedom/plugin-mobile/actions/workflows/work.yml/badge.svg?branch=master)](https://github.com/jeedom/plugin-mobile/actions/workflows/work.yml)

@@ -24,9 +24,8 @@ $eqLogics = mobile::byType('mobile');
 <table class="table table-condensed tablesorter" id="table_healthneato">
 	<thead>
 		<tr>
-			<th>{{Plateforme}}</th>
 			<th>{{Équipement}}</th>
-			<th>{{ID}}</th>
+			<th>{{Type de Mobile}}</th>
 			<th>{{Utilisateur}}</th>
 			<th>{{Dernière activité}}</th>
 			<th>{{Date création}}</th>
@@ -36,30 +35,26 @@ $eqLogics = mobile::byType('mobile');
 		<?php
 		foreach ($eqLogics as $eqLogic) {
 			$typeMobile = $eqLogic->getConfiguration('type_mobile');
-			$file = 'plugins/mobile/core/img/' . $typeMobile . '.png';
-			if (file_exists($file)) {
-				$path = 'plugins/mobile/core/img/' . $typeMobile . '.png';
-				$img = '<img src="' . $path . '" width="35px" /> ' . $typeMobile;
-			} else {
-				$path = 'plugins/mobile/core/img/mobile_icon.png';
-				$img = '<img src="' . $path . '" width="35px" /> ' . $typeMobile;
-			}
 			$userId = $eqLogic->getConfiguration('affect_user');
 			$userType = user::byId($userId);
+			echo '<tr><td width="40%"><a href="' . $eqLogic->getLinkToConfiguration() . '">' . $eqLogic->getHumanName(true) . '</a></td>';
+			if ($eqLogic->getConfiguration('type_mobile') == 'android') {
+				echo '<td width="12.5%"><span class="label label-info"><i class="fab fa-android"></i></span></td>';
+			} else if ($eqLogic->getConfiguration('type_mobile') == 'windows') {
+				echo '<td width="12.5%"><span class="label label-info"><i class="fab fa-windows"></i></span></td>';
+			} else if ($eqLogic->getConfiguration('type_mobile') == 'ios') {
+				echo '<td width="12.5%"><span class="label label-info"><i class="fab fa-apple"></i></span></td>';
+			} else {
+				echo '<td width="12.5%"><span class="label label-info"><i class="far fa-question-circle"></i></i></span></td>';
+			}
 			if (is_object($userType)) {
 				$username = $userType->getLogin();
-				echo '<tr><td>' . $img . '</td><td><a href="' . $eqLogic->getLinkToConfiguration() . '">' . $eqLogic->getHumanName(true) . '</a></td>';
-				echo '<td><span class="label label-info">' . $eqLogic->getId() . '</span></td>';
-				echo '<td><span class="label label-info">' . $username . '</span></td>';
-				echo '<td><span class="label label-info">' . $eqLogic->getStatus('lastCommunication') . '</span></td>';
-				echo '<td><span class="label label-info">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';
+				echo '<td width="15.5%"><span class="label label-info">' . $username . '</span></td>';
 			} else {
-				echo '<tr><td>' . $img . '</td><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';
-				echo '<td><span class="label label-info">' . $eqLogic->getId() . '</span></td>';
-				echo '<td><span class="label label-info">{{Utilisateur non trouvé}}</span></td>';
-				echo '<td><span class="label label-info">' . $eqLogic->getStatus('lastCommunication') . '</span></td>';
-				echo '<td><span class="label label-info">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';
+				echo '<td width="15.5%"><span class="label label-info">{{Utilisateur non trouvé}}</span></td>';
 			}
+			echo '<td><span class="label label-info">' . $eqLogic->getStatus('lastCommunication') . '</span></td>';
+			echo '<td><span class="label label-info">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';
 		}
 		?>
 	</tbody>

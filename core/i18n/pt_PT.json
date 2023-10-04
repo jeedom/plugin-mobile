@@ -9,9 +9,8 @@
     },
     "plugins\/mobile\/desktop\/modal\/health.php": {
         "401 - Accès non autorisé": "401 - Acesso não autorizado",
-        "Plateforme": "Plataforma",
         "Équipement": "Equipamento",
-        "ID": "ID",
+        "Type de Mobile": "Tipo de celular",
         "Utilisateur": "Do utilizador",
         "Dernière activité": "Ultima atividade",
         "Date création": "Data de criação",
@@ -28,13 +27,13 @@
     },
     "plugins\/mobile\/desktop\/modal\/menuCustom.php": {
         "401 - Accès non autorisé": "401 - Acesso não autorizado",
-        "Téléphone Mobile": "Celular",
+        "Équipement": "Equipamento",
         "Type de Mobile": "Tipo de celular",
         "Utilisateur": "Do utilizador",
         "Menu Défaut": "Menu padrão",
         "Choisir Menu": "Escolha o cardápio",
-        "Menu basique de l\\'application": "Menu básico do aplicativo",
-        "PAS D\\'APP V2 SUR CE MOBILE": "NENHUM APLICATIVO V2 NESTE CELULAR",
+        "Menu par défaut": "Menu padrão",
+        "APPLICATION V2 NON INTALLÉE": "APLICATIVO V2 NÃO INSTALADO",
         "Utilisateur non trouvé": "Usuário não encontrado",
         "Configuration Menu Enregistrée": "Configuração de menu salva"
     },

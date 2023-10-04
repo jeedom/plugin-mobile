@@ -43,10 +43,6 @@ $plugin_widget = mobile::$_pluginWidget;
 				<i class="fas fa-book"></i><br>
 				<span>{{Documentation APP}}</span>
 			</div> -->
-			<div class="cursor eqLogicAction logoSecondary" data-action="bt_healthmobile" id="bt_healthmobile">
-				<i class="fas fa-medkit"></i><br>
-				<span>{{Santé}}</span>
-			</div>
 			<?php
 			if ($displayInfo) {
 				echo '<div class="cursor eqLogicAction info" data-action="createCommunityPost">';

@@ -9,9 +9,8 @@
     },
     "plugins\/mobile\/desktop\/modal\/health.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
-        "Plateforme": "Plateforme",
         "Équipement": "Dispositivo",
-        "ID": "ID",
+        "Type de Mobile": "Type de Mobile",
         "Utilisateur": "Utilisateur",
         "Dernière activité": "Dernière activité",
         "Date création": "Date création",
@@ -28,11 +27,16 @@
     },
     "plugins\/mobile\/desktop\/modal\/menuCustom.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
-        "Téléphone Mobile": "Téléphone Mobile",
-        "Type": "Type",
+        "Équipement": "Équipement",
+        "Type de Mobile": "Type de Mobile",
         "Utilisateur": "Utilisateur",
         "Menu Défaut": "Menu Defaut",
-        "Utilisateur non trouvé": "Utilisateur non trouvé"
+        "Dernière activité": "Dernière activité",
+        "Choisir Menu": "Choisir Menu",
+        "Menu par défaut": "Menu par défaut",
+        "APPLICATION V2 NON INTALLÉE": "APPLICATION V2 NON INTALLÉE",
+        "Utilisateur non trouvé": "Utilisateur non trouvé",
+        "Configuration Menu Enregistrée": "Configuration Menu Enregistrée"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
@@ -180,7 +184,6 @@
         "Gestion Mobiles": "Gestion Mobiles",
         "QR Code": "QR Code",
         "Documentation APP": "Documentation APP",
-        "Santé": "Salute",
         "Community": "Community",
         "Mes Téléphones Mobiles": "Mes Téléphones Mobiles",
         "Rechercher": "Ricercare",
@@ -240,32 +243,6 @@
         "401 - Accès non autorisé": "401 - Accès non autorisé",
         "ERREUR SUR LA COMMANDE": "ERREUR SUR LA COMMANDE"
     },
-    "plugins\/mobile\/desktop\/php\/panelMenuCustom.php": {
-        "401 - Accès non autorisé": "401 - Accès non autorisé",
-        "NOMBRE ICÔNES": "NOMBRE ICÔNES",
-        "MENU ACTUEL": "MENU ACTUEL",
-        "Type": "Type",
-        "Choisir un Type": "Choisir un Type",
-        "Accueil": "Accueil",
-        "Synthèse": "Synthese",
-        "Dashboard": "Dashboard",
-        "Vue": "Vue",
-        "Design": "Design",
-        "Panel": "Panel",
-        "URL externe": "URL externe",
-        "Santé": "Santé",
-        "TimeLine": "TimeLine",
-        "Aucun": "Aucun",
-        "Renommer Icône": "Renommer Icône",
-        "Choisir Icône": "Choisir Icône",
-        "Choix TypeWebView": "Choix TypeWebView",
-        "Valider Menu Global": "Valider Menu Global",
-        "Pas de mobile enregistré sur l\\'application mobile.": "Pas de mobile enregistré sur l\\'application mobile",
-        "Scanner le QRCode du plugin mobile depuis l\\'application": "Scanner le QRCode du plugin mobile depuis l\\'application",
-        "Version minimale du core pour etre fonctionnel : 4.4.0": "Version minimale du core pour etre fonctionnel : 4.4.0",
-        "Cliquer sur synchronisation de l\\'application": "Cliquer sur synchronisation de l\\'application",
-        "Synchronisation de la box": "Synchronisation de la box"
-    },
     "plugins\/mobile\/desktop\/php\/panelWebApp.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
         "Paramétrer Icône 1": "Paramétrer Icône 1",
@@ -279,7 +256,6 @@
         "Température": "Température"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
-        "Santé Mobile": "Santé Mobile",
         "Plugins compatibles": "Plugins compatibles",
         "Objets \/ Pièces": "Objets \/ Pièces",
         "Scénarios": "Scenari",

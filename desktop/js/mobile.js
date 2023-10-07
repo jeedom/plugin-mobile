@@ -16,13 +16,6 @@
  */
 
 if(typeof jeeDialog !== 'undefined'){
-  document.querySelector('#bt_healthmobile').addEventListener('click', function(event) {
-    jeeDialog.dialog({
-      id: 'santémobile',
-      title: "{{Santé Mobile}}",
-      contentUrl: 'index.php?v=d&plugin=mobile&modal=health'
-    })
-  })
 
   document.querySelector('#bt_pluguinmobile').addEventListener('click', function(event) {
     jeeDialog.dialog({
@@ -95,10 +88,6 @@ if(typeof jeeDialog !== 'undefined'){
 
 
 }else{
-  $('#bt_healthmobile').on('click', function () {
-     $('#md_modal').dialog({title: "{{Santé Mobile}}"});
-     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=health').dialog('open');
- })
  $('#bt_startTuto').on('click', function () {
     $('#md_modal').dialog({title: "{{Bien demarrer}}"});
     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=wizard').dialog('open');

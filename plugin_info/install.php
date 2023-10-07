@@ -18,6 +18,15 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 function mobile_install()
 {
+	$oldFiles = [dirname(__FILE__) . '/../desktop/css/panel.css', 
+				 dirname(__FILE__) . '/../desktop/php/panelMenuCustom.php',
+				 dirname(__FILE__) . '/../desktop/js/panelMenuCustom.js',
+				 dirname(__FILE__) . '/../desktop/modal/health.php'];
+	foreach ($oldFiles as $oldFile) {
+		if (file_exists($oldFile)) {
+			shell_exec('rm ' . $oldFile);
+		} 		
+	}
 	//config::save('displayMobilePanel',1, 'mobile');
 	jeedom::getApiKey('mobile');
 }
@@ -27,6 +36,16 @@ function mobile_install()
 function mobile_update()
 {
 	//	config::save('displayMobilePanel',1, 'mobile');
+	$oldFiles = [dirname(__FILE__) . '/../desktop/css/panel.css', 
+	             dirname(__FILE__) . '/../desktop/php/panelMenuCustom.php',
+				 dirname(__FILE__) . '/../desktop/js/panelMenuCustom.js',
+				 dirname(__FILE__) . '/../desktop/modal/health.php'];
+	foreach ($oldFiles as $oldFile) {
+		if (file_exists($oldFile)) {
+			shell_exec('rm ' . $oldFile);
+		} 		
+	}
+
 	jeedom::getApiKey('mobile');
 	foreach (eqLogic::byType('mobile') as $mobile) {
 		if ($mobile->getLogicalId() == null || $mobile->getLogicalId() == "") {

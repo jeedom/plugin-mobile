@@ -30,6 +30,7 @@ $eqLogics = mobile::byType('mobile');
       <th>{{Type de Mobile}}</th>
       <th>{{Utilisateur}}</th>
       <th>{{Menu Défaut}}</th>
+      <th>{{Dernière activité}}</th>
     </tr>
   </thead>
   <tbody>
@@ -44,13 +45,13 @@ $eqLogics = mobile::byType('mobile');
         $username = $userType->getLogin();
         echo '<tr><td width="40%"><a href="' . $eqLogic->getLinkToConfiguration() . '">' . $eqLogic->getHumanName(true) . '</a></td>';
         if ($eqLogic->getConfiguration('type_mobile') == 'android') {
-          echo '<td width="12.5%"><span class="label label-info"><i class="fab fa-android"></i></span></td>';
+          echo '<td width="12.5%"><span class="label label-info" style="width:20%;display:flex;justify-content:center;"><i class="fab fa-android"></i></span></td>';
         } else if ($eqLogic->getConfiguration('type_mobile') == 'windows') {
-          echo '<td width="12.5%"><span class="label label-info"><i class="fab fa-windows"></i></span></td>';
+          echo '<td width="12.5%"><span class="label label-info" style="width:20%;display:flex;justify-content:center;"><i class="fab fa-windows"></i></span></td>';
         } else if ($eqLogic->getConfiguration('type_mobile') == 'ios') {
-          echo '<td width="12.5%"><span class="label label-info"><i class="fab fa-apple"></i></span></td>';
+          echo '<td width="12.5%"><span class="label label-info" style="width:20%;display:flex;justify-content:center;"><i class="fab fa-apple"></i></span></td>';
         } else {
-          echo '<td width="12.5%"><span class="label label-info"><i class="far fa-question-circle"></i></i></span></td>';
+          echo '<td width="12.5%"><span class="label label-info" style="width:20%;display:flex;justify-content:center;"><i class="far fa-question-circle"></i></span></td>';
         }
         echo '<td width="15.5%"><span class="label label-info">' . $username . '</span></td>';
         if ($eqLogic->getConfiguration('appVersion') == 2) {
@@ -66,9 +67,18 @@ $eqLogics = mobile::byType('mobile');
         } else {
           echo '<td width="25%"><span class="label label-warning">{{APPLICATION V2 NON INTALLÉE}}</span></td>';
         }
+        echo '<td><span class="label label-info">' . $eqLogic->getStatus('lastCommunication') . '</span></td>';
       } else {
         echo '<tr><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';
-        echo '<td><span class="label label-info">' . $eqLogic->getId() . '</span></td>';
+        if ($eqLogic->getConfiguration('type_mobile') == 'android') {
+          echo '<td width="12.5%"><span class="label label-info" style="width:20%;display:flex;justify-content:center;"><i class="fab fa-android"></i></span></td>';
+        } else if ($eqLogic->getConfiguration('type_mobile') == 'windows') {
+          echo '<td width="12.5%"><span class="label label-info" style="width:20%;display:flex;justify-content:center;"><i class="fab fa-windows"></i></span></td>';
+        } else if ($eqLogic->getConfiguration('type_mobile') == 'ios') {
+          echo '<td width="12.5%"><span class="label label-info" style="width:20%;display:flex;justify-content:center;"><i class="fab fa-apple"></i></span></td>';
+        } else {
+          echo '<td width="12.5%"><span class="label label-info" style="width:20%;display:flex;justify-content:center;"><i class="icon far fa-question-circle"></i></span></td>';
+        }
         echo '<td><span class="label label-info">{{Utilisateur non trouvé}}</span></td></tr>';
       }
     }

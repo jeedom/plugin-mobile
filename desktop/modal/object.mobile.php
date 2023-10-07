@@ -24,28 +24,25 @@ $object = jeeObject::byId($_GET['object_id']);
 sendVarToJS('object', $_GET['object_id']);
 ?>
 
-<div class="row">
-	<ul class="nav nav-tabs" style="padding-left:8px">
-		<li><a class="cursor" id="bt_returnObjects" style="width:32px;"><i class="fas fa-arrow-circle-left"></i></a></li>
-		<li class="active">
-			<?php
-			echo '<a>' . $object->getDisplay('icon', '<i class="fas fa-lemon-o"></i>') . ' ' . $object->getName() . '</a>';
-			?>
-		</li>
-	</ul>
-	<br>
-	<?php
-	echo '<div class="alert alert-info div_object_configuration" role="alert">';
-	echo '{{Envoyer cette pièce vers l\'application}}';
-	$check = 'checked';
-	if ($object->getDisplay('sendToApp', 1) == 0) {
-		$check = 'unchecked';
-	}
-	echo '<label class="checkbox-inline pull-right"><input type="checkbox" class="objectAttr" data-l1key="display" data-l2key="sendToApp" ' . $check . '/>{{Activer}}</label>';
-	?>
-	<span class="form-control objectAttr hidden" type="text" data-l1key="id"><?php echo $_GET['object_id']; ?></span>
-	<span class="form-control objectAttr hidden" type="text" data-l1key="name"><?php echo $object->getName(); ?></span>
-</div>
+<ul class="nav nav-tabs" style="padding-left:8px">
+	<li class="active">
+		<?php
+		echo '<a>' . $object->getDisplay('icon', '<i class="fas fa-lemon-o"></i>') . ' ' . $object->getName() . '</a>';
+		?>
+	</li>
+</ul>
+<br>
+<?php
+echo '<div class="alert alert-info div_object_configuration" role="alert">';
+echo '{{Envoyer cette pièce vers l\'application}}';
+$check = 'checked';
+if ($object->getDisplay('sendToApp', 1) == 0) {
+	$check = 'unchecked';
+}
+echo '<label class="checkbox-inline pull-right"><input type="checkbox" class="objectAttr" data-l1key="display" data-l2key="sendToApp" ' . $check . '/>{{Activer}}</label>';
+?>
+<span class="form-control objectAttr hidden" type="text" data-l1key="id"><?php echo $_GET['object_id']; ?></span>
+<span class="form-control objectAttr hidden" type="text" data-l1key="name"><?php echo $object->getName(); ?></span>
 
 <div class="col-lg-12 col-md-12 col-sm-12 eqLogicPluginDisplay">
 	<legend><i class="fas fa-building"></i> {{Type Générique de cet objet}}
@@ -62,7 +59,7 @@ sendVarToJS('object', $_GET['object_id']);
 		echo '<div class="panel panel-default">';
 		echo ' <div class="panel-heading">
 						<h3 class="panel-title">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionConfiguration" href="#config_' . $eqLogic->getId() . '"><span class="eqLogicAttr hidden" data-l1key="id">' . $eqLogic->getId() . '</span>' . $eqLogic->getHumanName(true) . '<a class="btn btn-xs btn-success eqLogicAction pull-right" onclick="SaveObject()"><i class="fas fa-save"></i></a>' . $checkHomebridge . '
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionConfiguration" href="#config_' . $eqLogic->getId() . '"><span class="eqLogicAttr hidden" data-l1key="id">' . $eqLogic->getId() . '</span>' . $eqLogic->getHumanName(true) . '<a class="btn btn-xs btn-success eqLogicAction pull-right" onclick="SaveObject()"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>' . $checkHomebridge . '
 							</a>
 						</h3>
 					</div>';

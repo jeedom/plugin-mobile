@@ -25,7 +25,7 @@ $plugin_compatible = mobile::$_pluginSuported;
 $plugin_widget = mobile::$_pluginWidget;
 ?>
 
-<legend><i class="icon maison-modern13"></i> {{Les Pièces}}</legend>
+<legend><i class="icon maison-modern13"></i> {{Les Pièces - Application V1}}</legend>
 <div class="eqLogicThumbnailContainer">
 	<?php
 	$allObject = jeeObject::buildTree(null, false);

@@ -725,8 +725,7 @@ class mobile extends eqLogic
 
 
 				if ($photo != null) {
-					$android['data']['image'] = $photo;
-					$android['data']['largeIcon'] = $photo;
+					$data['image'] = $photo;
 					$apns['payload']['notifee_options']['image'] = $photo;
 					$apns['payload']['notifee_options']['ios']['attachments'] = [
 						[

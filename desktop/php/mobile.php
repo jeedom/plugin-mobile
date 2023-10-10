@@ -121,18 +121,23 @@ $plugin_widget = mobile::$_pluginWidget;
 		<legend><i class="fas fa-mobile"></i> {{Mes Téléphones Mobiles}}</legend>
 		<div class="eqLogicThumbnailContainer">
 			<?php
+			$path = 'plugins/mobile/core/img/mobile_icon.png';
 			foreach ($eqLogics as $eqLogic) {
 				if ($eqLogic->getConfiguration('appVersion', '1') != '2') {
 					$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 					echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
-					$file = 'plugins/mobile/core/img/' . $eqLogic->getConfiguration('type_mobile') . '.png';
-					if (file_exists($file)) {
-						$path = 'plugins/mobile/core/img/' . $eqLogic->getConfiguration('type_mobile') . '.png';
-						echo '<img src="' . $path . '" />';
+					echo '<img src="' . $path . '"/>';
+					echo '<a style="width: 30px;height: 30px;border-radius: 15px;background-color: #94CA02;position: absolute;bottom: 65px;right: 7px;">';
+					if ($eqLogic->getConfiguration('type_mobile') == 'android') {
+						echo '<i class="fab fa-android" style="margin: 8px;color: #FFFFFF;"></i>';
+					} else if ($eqLogic->getConfiguration('type_mobile') == 'windows') {
+						echo '<i class="fab fa-windows" style="margin: 8px;color: #FFFFFF;"></i>';
+					} else if ($eqLogic->getConfiguration('type_mobile') == 'ios') {
+						echo '<i class="fab fa-apple" style="margin: 8px;color: #FFFFFF;"></i>';
 					} else {
-						$path = 'plugins/mobile/core/img/mobile_icon.png';
-						echo '<img src="' . $path . '" />';
+						echo '<i class="far fa-question-circle" style="margin: 8px;color: #FFFFFF;"></i>';
 					}
+					echo '</a>';
 					echo '<br>';
 					echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
 					echo '<span class="hidden hiddenAsCard displayTableRight">';
@@ -165,7 +170,7 @@ $plugin_widget = mobile::$_pluginWidget;
 			<li role="presentation"><a class="eqLogicAction cursor" aria-controls="home" role="tab" data-action="returnToThumbnailDisplay"><i class="fas fa-arrow-circle-left"></i></a></li>
 			<li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Mobile}}</a></li>
 			<li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-mobile-alt"></i> {{Notifications}}</a></li>
-			<li role="presentation" class="saveTab"><a href="#sauvegardetab" aria-controls="sauvegarde" role="tab" data-toggle="tab"><i class="fas fa-save"></i> {{Sauvegarde Mobile}}</a></li>
+			<li role="presentation" class="saveTab"><a href="#sauvegardetab" aria-controls="sauvegarde" role="tab" data-toggle="tab"><i class="fas fa-check-circle"></i> {{Sauvegarde Mobile}}</a></li>
 			<li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list"></i> {{Commandes}}</a></li>
 		</ul>
 		<div class="tab-content">

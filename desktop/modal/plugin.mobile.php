@@ -25,226 +25,187 @@ $plugin = plugin::byId($_GET['plugin_id']);
 sendVarToJS('pluginId', $_GET['plugin_id']);
 ?>
 
-<div class="row">
-	<ul class="nav nav-tabs" style="padding-left:8px">
-		<li><a class="cursor" id="bt_returnPlugins" data-toggle="tabPlug" style="width:32px;"><i class="fas fa-arrow-circle-left"></i></a></li>
-		<li class="active">
-			<?php
-			if (file_exists(dirname(__FILE__) . '/../../../../' . $plugin->getPathImgIcon())) {
-				echo '<a><img width="14px" src="' . $plugin->getPathImgIcon() . '" /> ' . $plugin->getName() . '</a>';
-			} else {
-				echo '<a><i class="fas fa-tags"></i> ' . $plugin->getName() . '</a>';
-			}
-			?>
-		</li>
-	</ul>
 
-	<div class="col-lg-12 col-md-12 col-sm-12 eqLogicThumbnailDisplay">
-		<legend><i class="fas fa-info"></i> {{Envoi auprès de l'app mobile}}</legend>
+<ul class="nav nav-tabs" style="padding-left:8px">
+	<li class="active">
 		<?php
-		if (in_array($plugin->getId(), $plugin_widget)) {
-			$div = '<div class="alert alert-success" role="alert">';
-			$div .= '{{Ce Plugin est entièrement compatible, il ne nécessite aucune action de votre part}}';
-			$div .= '</div>';
-			$div .= '<center>';
-			$path = dirname(__FILE__) . '/../../core/template/images/' . $plugin->getId();
-			$files = scandir($path);
-			foreach ($files as $imgname) {
-				if (!in_array($imgname, ['.', '..'])) {
-					$div .= '<img margin="10px" src="plugins/mobile/core/template/images/' . $plugin->getId() . '/' . $imgname . '" height="500"/>';
-				}
-			}
-			$div .= '</center>';
-			echo $div;
-			$generique_ok = false;
-		} else if (in_array($plugin->getId(), $plugin_compatible)) {
-			$div = '<div class="alert alert-info div_plugin_configuration" role="alert">';
-			$div .=  '{{Ce plugin est compatible, pensez à vérifier les Types Génériques des Commandes}}';
-			$check = 'checked';
-			if (config::byKey('sendToApp', $plugin->getId(), 1) == 0) {
-				$check = 'unchecked';
-			}
-			$div .=  '<label class="checkbox-inline pull-right"><input type="checkbox" class="configKey" data-l1key="sendToApp" ' . $check . '/>{{Activer}}</label>';
-			$div .=  '</div>';
-			echo $div;
-			$generique_ok = true;
+		if (file_exists(dirname(__FILE__) . '/../../../../' . $plugin->getPathImgIcon())) {
+			echo '<a><img width="14px" src="' . $plugin->getPathImgIcon() . '" /> ' . $plugin->getName() . '</a>';
 		} else {
-			$div = '<div class="alert alert-danger div_plugin_configuration" role="alert">';
-			$div .=   '{{Le Plugin n est pas compatible, vous pouvez l activer si vous le souhaitez}}';
-			$check = 'unchecked';
-			if (config::byKey('sendToApp', $plugin->getId(), 0) == 1) {
-				$check = 'checked';
-			}
-			$div .=   '<label class="checkbox-inline pull-right"><input type="checkbox" class="configKey" data-l1key="sendToApp" ' . $check . '/>{{Activer}}</label>';
-			$div .=   '</div>';
-			echo $div;
-			$generique_ok = true;
+			echo '<a><i class="fas fa-tags"></i> ' . $plugin->getName() . '</a>';
 		}
 		?>
-	</div>
+	</li>
+</ul>
+
+<div class="col-lg-12 col-md-12 col-sm-12 eqLogicThumbnailDisplay">
+	<legend><i class="fas fa-info"></i> {{Envoi auprès de l'app mobile}}</legend>
 	<?php
-	if ($generique_ok) {
-		echo '<div class="col-lg-12 col-md-12 col-sm-12 eqLogicPluginDisplay">';
-		echo '<legend><i class="fas fa-building"></i>  {{Type Générique du Plugin}}<a class="btn btn-sm btn-success pull-right" onclick="SavePlugin()"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a></legend>';
-	?>
-		<div class="EnregistrementDisplay"></div>
-		<?php
-		$tableau_cmd = array();
-		$eqLogics = eqLogic::byType($_GET['plugin_id']);
-		$subClasses = config::byKey('subClass', $_GET['plugin_id'], '');
-		if ($subClasses != '') {
-			$subClassesList = explode(';', $subClasses);
-			foreach ($subClassesList as $subClass) {
-				$subEqLogics = eqLogic::byType($subClass);
-				$eqLogics = array_merge($eqLogics, $subEqLogics);
+	if (in_array($plugin->getId(), $plugin_widget)) {
+		$div = '<div class="alert alert-success" role="alert">';
+		$div .= '{{Ce Plugin est entièrement compatible, il ne nécessite aucune action de votre part}}';
+		$div .= '</div>';
+		$div .= '<center>';
+		$path = dirname(__FILE__) . '/../../core/template/images/' . $plugin->getId();
+		$files = scandir($path);
+		foreach ($files as $imgname) {
+			if (!in_array($imgname, ['.', '..'])) {
+				$div .= '<img margin="10px" src="plugins/mobile/core/template/images/' . $plugin->getId() . '/' . $imgname . '" height="500"/>';
 			}
 		}
-		$checkHomebridge = '';
-		echo '<div class="panel-group" id="accordionConfiguration">';
-		foreach ($eqLogics as $eqLogic) {
-			echo '<div class="panel panel-default">';
-			if ($eqLogic->getEqType_name() != $_GET['plugin_id']) {
-				$subClassName = ' (' . $eqLogic->getEqType_name() . ') ';
-			} else {
-				$subClassName = '';
-			}
-			$eqLogicId = $eqLogic->getId();
-			echo ' <div class="panel-heading">
+		$div .= '</center>';
+		echo $div;
+		$generique_ok = false;
+	} else if (in_array($plugin->getId(), $plugin_compatible)) {
+		$div = '<div class="alert alert-info div_plugin_configuration" role="alert">';
+		$div .=  '{{Ce plugin est compatible, penser à vérifier les Types Génériques sur les commandes}}';
+		$check = 'checked';
+		if (config::byKey('sendToApp', $plugin->getId(), 1) == 0) {
+			$check = 'unchecked';
+		}
+		$div .=  '<label class="checkbox-inline pull-right"><input type="checkbox" class="configKey" data-l1key="sendToApp" ' . $check . '/>{{Activer}}</label>';
+		$div .=  '</div>';
+		echo $div;
+		$generique_ok = true;
+	} else {
+		$div = '<div class="alert alert-danger div_plugin_configuration" role="alert">';
+		$div .=   '{{Le Plugin n\'est pas compatible, vous pouvez l\'activer si vous le souhaitez}}';
+		$check = 'unchecked';
+		if (config::byKey('sendToApp', $plugin->getId(), 0) == 1) {
+			$check = 'checked';
+		}
+		$div .=   '<label class="checkbox-inline pull-right"><input type="checkbox" class="configKey" data-l1key="sendToApp" ' . $check . '/>{{Activer}}</label>';
+		$div .=   '</div>';
+		echo $div;
+		$generique_ok = true;
+	}
+	?>
+</div>
+<?php
+if ($generique_ok) {
+	echo '<div class="col-lg-12 col-md-12 col-sm-12 eqLogicPluginDisplay">';
+	echo '<legend><i class="fas fa-building"></i>  {{Type Générique du Plugin}}<a class="btn btn-sm btn-success pull-right" onclick="SavePlugin()"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a></legend>';
+?>
+	<div class="EnregistrementDisplay"></div>
+	<?php
+	$tableau_cmd = array();
+	$eqLogics = eqLogic::byType($_GET['plugin_id']);
+	$subClasses = config::byKey('subClass', $_GET['plugin_id'], '');
+	if ($subClasses != '') {
+		$subClassesList = explode(';', $subClasses);
+		foreach ($subClassesList as $subClass) {
+			$subEqLogics = eqLogic::byType($subClass);
+			$eqLogics = array_merge($eqLogics, $subEqLogics);
+		}
+	}
+	$checkHomebridge = '';
+	echo '<div class="panel-group" id="accordionConfiguration">';
+	foreach ($eqLogics as $eqLogic) {
+		echo '<div class="panel panel-default">';
+		if ($eqLogic->getEqType_name() != $_GET['plugin_id']) {
+			$subClassName = ' (' . $eqLogic->getEqType_name() . ') ';
+		} else {
+			$subClassName = '';
+		}
+		$eqLogicId = $eqLogic->getId();
+		echo ' <div class="panel-heading">
 					<h3 class="panel-title">
-						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionConfiguration" href="#config_' . $eqLogicId . '" style="text-decoration:none"><span class="eqLogicAttr hidden" data-l1key="id">' . $eqLogicId . '</span>' . $eqLogic->getHumanName(true) . $subClassName . '<a class="btn btn-xs btn-success eqLogicAction pull-right" onclick="SavePlugin()"><i class="fas fa-save"></i></a>' . $checkHomebridge . '
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionConfiguration" href="#config_' . $eqLogicId . '" style="text-decoration:none"><span class="eqLogicAttr hidden" data-l1key="id">' . $eqLogicId . '</span>' . $eqLogic->getHumanName(true) . $subClassName . '<a class="btn btn-xs btn-success eqLogicAction pull-right" onclick="SavePlugin()"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>' . $checkHomebridge . '
 						</a>
 					</h3>
 				</div>';
-			echo '<div id="config_' . $eqLogicId . '" class="panel-collapse collapse">';
-			echo '<div class="panel-body">';
-			$cmds = null;
-			$cmds = cmd::byEqLogicId($eqLogicId);
-			echo '<table id=' . $eqLogicId . ' class="table TableCMD">';
-			echo '<tr>
+		echo '<div id="config_' . $eqLogicId . '" class="panel-collapse collapse">';
+		echo '<div class="panel-body">';
+		$cmds = null;
+		$cmds = cmd::byEqLogicId($eqLogicId);
+		echo '<table id=' . $eqLogicId . ' class="table TableCMD">';
+		echo '<tr>
 					<th>{{Id Cmd}}</th>
 					<th>{{Nom de la Commande}}</th>
 					<th>{{Type Générique}}</th>
 				</tr>';
-			foreach ($cmds as $cmd) {
-				array_push($tableau_cmd, $cmd->getId());
-				echo '<tr class="cmdLine">';
-				echo '<td>';
-				echo '<span class="cmdAttr" data-l1key="id">' . $cmd->getId() . '</span>';
-				echo '</td>';
-				echo '<td>';
-				echo $cmd->getName();
-				$display_icon = 'none';
-				$icon = '';
-				if (in_array($cmd->getGeneric_type(), ['GENERIC_INFO', 'GENERIC_ACTION'])) {
-					$display_icon = 'block';
-					$icon = $cmd->getDisplay('icon');
-				}
-				echo '<div class="iconeGeneric pull-right" style="display:' . $display_icon . ';">
+		foreach ($cmds as $cmd) {
+			array_push($tableau_cmd, $cmd->getId());
+			echo '<tr class="cmdLine">';
+			echo '<td>';
+			echo '<span class="cmdAttr" data-l1key="id">' . $cmd->getId() . '</span>';
+			echo '</td>';
+			echo '<td>';
+			echo $cmd->getName();
+			$display_icon = 'none';
+			$icon = '';
+			if (in_array($cmd->getGeneric_type(), ['GENERIC_INFO', 'GENERIC_ACTION'])) {
+				$display_icon = 'block';
+				$icon = $cmd->getDisplay('icon');
+			}
+			echo '<div class="iconeGeneric pull-right" style="display:' . $display_icon . ';">
 					<div>
 					<span class="cmdAttr label label-info cursor" data-l1key="display" data-l2key="icon" style="font-size : 1.2em;" >' . $icon . '</span>
 					<a class="cmdAction btn btn-default btn-sm" data-l1key="chooseIcon"><i class="fas fa-flag"></i> {{Icône}}</a>
 					</div>
 					</div>';
-				echo '</td>';
-				echo '<td>';
-		?>
-				<select class="cmdAttr form-control" data-l1key="generic_type" data-cmd_id="<?php echo $cmd->getId(); ?>">
-					<option value="">{{Aucun}}</option>
-					<?php
-					$groups = array();
-					foreach (jeedom::getConfiguration('cmd::generic_type') as $key => $info) {
-						if (strtolower($cmd->getType()) != strtolower($info['type'])) {
-							continue;
+			echo '</td>';
+			echo '<td>';
+	?>
+			<select class="cmdAttr form-control" data-l1key="generic_type" data-cmd_id="<?php echo $cmd->getId(); ?>">
+				<option value="">{{Aucun}}</option>
+				<?php
+				$groups = array();
+				foreach (jeedom::getConfiguration('cmd::generic_type') as $key => $info) {
+					if (strtolower($cmd->getType()) != strtolower($info['type'])) {
+						continue;
+					}
+					$info['key'] = $key;
+					if (!isset($groups[$info['family']])) {
+						$groups[$info['family']][0] = $info;
+					} else {
+						array_push($groups[$info['family']], $info);
+					}
+				}
+				ksort($groups);
+				foreach ($groups as $group) {
+					usort($group, function ($a, $b) {
+						return strcmp($a['name'], $b['name']);
+					});
+					foreach ($group as $key => $info) {
+						if ($key == 0) {
+							echo '<optgroup label="{{' . $info['family'] . '}}">';
 						}
-						$info['key'] = $key;
-						if (!isset($groups[$info['family']])) {
-							$groups[$info['family']][0] = $info;
+						$name = $info['name'];
+						if (isset($info['noapp']) && $info['noapp']) {
+							$name .= ' (Non géré par Application Mobile)';
+						}
+						if ($info['key'] == $cmd->getGeneric_type()) {
+							echo '<option value="' . $info['key'] . '" selected>' . $name . '</option>';
 						} else {
-							array_push($groups[$info['family']], $info);
+							echo '<option value="' . $info['key'] . '">' . $name . '</option>';
 						}
 					}
-					ksort($groups);
-					foreach ($groups as $group) {
-						usort($group, function ($a, $b) {
-							return strcmp($a['name'], $b['name']);
-						});
-						foreach ($group as $key => $info) {
-							if ($key == 0) {
-								echo '<optgroup label="{{' . $info['family'] . '}}">';
-							}
-							$name = $info['name'];
-							if (isset($info['noapp']) && $info['noapp']) {
-								$name .= ' (Non géré par Application Mobile)';
-							}
-							if ($info['key'] == $cmd->getGeneric_type()) {
-								echo '<option value="' . $info['key'] . '" selected>' . $name . '</option>';
-							} else {
-								echo '<option value="' . $info['key'] . '">' . $name . '</option>';
-							}
-						}
-						echo '</optgroup>';
-					}
-					?>
-				</select>
-		<?php
-				echo '</td>';
-				echo '</tr>';
-			}
-			echo '</table>';
-			echo '</div>';
-			echo '</div>';
-			echo '</div>';
-		}
-		echo '</div>';
-		?>
-		<a class="btn btn-sm btn-success pull-right" onclick="SavePlugin()"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
+					echo '</optgroup>';
+				}
+				?>
+			</select>
 	<?php
+			echo '</td>';
+			echo '</tr>';
+		}
+		echo '</table>';
+		echo '</div>';
+		echo '</div>';
 		echo '</div>';
 	}
+	echo '</div>';
 	?>
+	<a class="btn btn-sm btn-success pull-right" onclick="SavePlugin()"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
+<?php
+	echo '</div>';
+}
+?>
 </div>
 
 
 
 <script>
-	/*
-document.querySelectorAll('#bt_returnPlugins').forEach(el => {
-      el.addEventListener('click', function(e){
-				if(typeof jeeDialog !== 'undefined'){
-					jeedomUtils.closeJeeDialogs();
-					jeeDialog.dialog({
-						id: 'plugsCompta',
-						title: "{{Plugins compatibles}}",
-						contentUrl: 'index.php?v=d&plugin=mobile&modal=plugin'
-					})
-				}else{
-					  $('#md_modal').dialog({title: "{{Plugins compatibles}}"})
-						$('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin').dialog('open')
-				}
-
-			});
-})*/
-
-
-	/*
-	document.getElementById('bt_returnPlugins').addEventListener("click", function() {
-		if(typeof jeeDialog !== 'undefined'){
-			jeedomUtils.closeJeeDialogs();
-			jeeDialog.dialog({
-				id: 'plugsCompta',
-				title: "{{Plugins compatibles}}",
-				contentUrl: 'index.php?v=d&plugin=mobile&modal=plugin'
-			})
-		}else{
-			$('#md_modal').dialog({title: "{{Plugins compatibles}}"})
-				$('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin').dialog('open')
-		}
-
-
-	});*/
-
-
-
 	$('#bt_returnPlugins').on('click', function() {
 
 

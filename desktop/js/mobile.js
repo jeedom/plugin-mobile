@@ -20,7 +20,7 @@ if(typeof jeeDialog !== 'undefined'){
   document.querySelector('#bt_pluguinmobile').addEventListener('click', function(event) {
     jeeDialog.dialog({
       id: 'pluginsCompatibles',
-      title: "{{Plugins compatibles}}",
+      title: "{{Plugins compatibles - Application V1}}",
       contentUrl: 'index.php?v=d&plugin=mobile&modal=plugin'
     })
   })
@@ -28,7 +28,7 @@ if(typeof jeeDialog !== 'undefined'){
   document.querySelector('#bt_piecemobile').addEventListener('click', function(event) {
     jeeDialog.dialog({
       id: 'objectsModal',
-      title: "{{Objets / Pièces}}",
+      title: "{{Objets / Pièces - Application V1}}",
       contentUrl: 'index.php?v=d&plugin=mobile&modal=piece'
     })
   })
@@ -36,7 +36,7 @@ if(typeof jeeDialog !== 'undefined'){
   document.querySelector('#bt_scenariomobile').addEventListener('click', function(event) {
     jeeDialog.dialog({
       id: 'scenariosModal',
-      title: "{{Scénarios}}",
+      title: "{{Scénarios  - Application V1}}",
       contentUrl: 'index.php?v=d&plugin=mobile&modal=scenario'
     })
   })
@@ -93,15 +93,15 @@ if(typeof jeeDialog !== 'undefined'){
     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=wizard').dialog('open');
 })
   $('#bt_pluguinmobile').on('click', function () {
-     $('#md_modal').dialog({title: "{{Plugins compatibles}}"});
+     $('#md_modal').dialog({title: "{{Plugins compatibles - Application V1}}"});
      $('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin').dialog('open');
  })
   $('#bt_piecemobile').on('click', function () {
-     $('#md_modal').dialog({title: "{{Objets / Pièces}}"});
+     $('#md_modal').dialog({title: "{{Objets / Pièces - Application V1}}"});
      $('#md_modal').load('index.php?v=d&plugin=mobile&modal=piece').dialog('open');
  })
   $('#bt_scenariomobile').on('click', function () {
-     $('#md_modal').dialog({title: "{{Scénarios}}"});
+     $('#md_modal').dialog({title: "{{Scénarios - Application V1}}"});
      $('#md_modal').load('index.php?v=d&plugin=mobile&modal=scenario').dialog('open');
  })
   $('#info_app').on('click', function(){
@@ -135,11 +135,11 @@ if(typeof jeeDialog !== 'undefined'){
    if(typeof jeeDialog !== 'undefined'){
        jeeDialog.dialog({
          id: 'configMobile',
-         title: "{{Configuration Mobile du Plugin "+name_plugin+"}}",
+         title: "{{Configuration Mobile du Plugin "+name_plugin+" - Application V1}}",
          contentUrl: 'index.php?v=d&plugin=mobile&modal=plugin.mobile&plugin_id=' +id_plugin
        })
    }else{
-     $('#md_modal').dialog({title: "{{Configuration Mobile du Plugin "+name_plugin+"}}"});
+     $('#md_modal').dialog({title: "{{Configuration Mobile du Plugin "+name_plugin+" - Application V1}}"});
      $('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin.mobile&plugin_id=' +id_plugin).dialog('open');
    }
  }
@@ -148,11 +148,11 @@ if(typeof jeeDialog !== 'undefined'){
    if(typeof jeeDialog !== 'undefined'){
        jeeDialog.dialog({
          id: 'configMobilePiece',
-         title: "{{Configuration Mobile de la Pièce}}",
+         title: "{{Configuration Mobile de la Pièce - Application V1}}",
          contentUrl: 'index.php?v=d&plugin=mobile&modal=object.mobile&object_id=' +id_object
        })
    }else{
-     $('#md_modal').dialog({title: "{{Configuration Mobile de la Pièce}}"});
+     $('#md_modal').dialog({title: "{{Configuration Mobile de la Pièce - Application V1}}"});
      $('#md_modal').load('index.php?v=d&plugin=mobile&modal=object.mobile&object_id=' +id_object).dialog('open');
    }
 
@@ -163,11 +163,11 @@ function clickscenario(id_scenario,name_scenario){
   if(typeof jeeDialog !== 'undefined'){
       jeeDialog.dialog({
         id: 'configMobileScenario',
-        title: "{{Configuration Mobile du Scénario "+name_scenario+"}}",
+        title: "{{Configuration Mobile du Scénario "+name_scenario+" - Application V1}}",
         contentUrl: 'index.php?v=d&plugin=mobile&modal=scenario.mobile&scenario_id=' +id_scenario
       })
   }else{
-    $('#md_modal').dialog({title: "{{Configuration Mobile du Scénario "+name_scenario+"}}"});
+    $('#md_modal').dialog({title: "{{Configuration Mobile du Scénario "+name_scenario+" - Application V1}}"});
     $('#md_modal').load('index.php?v=d&plugin=mobile&modal=scenario.mobile&scenario_id=' +id_scenario).dialog('open');
   }
 

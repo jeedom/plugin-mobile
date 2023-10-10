@@ -5,7 +5,7 @@
     },
     "plugins\/mobile\/desktop\/modal\/piece.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
-        "Les Pièces": "Les Pièces"
+        "Les Pièces - Application V1": "Les Pièces - Application V1"
     },
     "plugins\/mobile\/desktop\/modal\/health.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
@@ -102,9 +102,9 @@
         "401 - Accès non autorisé": "401 - Accès non autorisé",
         "Envoi auprès de l'app mobile": "Envoi auprès de l'app mobile",
         "Ce Plugin est entièrement compatible, il ne nécessite aucune action de votre part": "Ce Plugin est entièrement compatible, il ne nécessite aucune action de votre part",
-        "Ce plugin est compatible, pensez à vérifier les Types Génériques des Commandes": "Ce plugin est compatible, pensez à vérifier les Types Génériques des Commandes",
+        "Ce plugin est compatible, penser à vérifier les Types Génériques sur les commandes": "Ce plugin est compatible, penser à vérifier les Types Génériques sur les commandes",
         "Activer": "Mengaktifkan",
-        "Le Plugin n est pas compatible, vous pouvez l activer si vous le souhaitez": "Le Plugin n est pas compatible, vous pouvez l activer si vous le souhaitez",
+        "Le Plugin n\\'est pas compatible, vous pouvez l\\'activer si vous le souhaitez": "Le Plugin n\\'est pas compatible, vous pouvez l\\'activer si vous le souhaitez",
         "Type Générique du Plugin": "Type Générique du Plugin",
         "Sauvegarder": "Menyimpan",
         "Id Cmd": "Id Cmd",
@@ -256,17 +256,18 @@
         "Température": "Température"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
-        "Plugins compatibles": "Plugins compatibles",
-        "Objets \/ Pièces": "Objets \/ Pièces",
-        "Scénarios": "Skenario",
+        "Plugins compatibles - Application V1": "Plugins compatibles - Application V1",
+        "Objets \/ Pièces - Application V1": "Objets \/ Pièces - Application V1",
+        "Scénarios  - Application V1": "Scénarios  - Application V1",
         "Informations envoyées à l'app": "Informations envoyées à l'app",
         "Gestion des Mobiles": "Gestion des Mobiles",
         "QrCode": "QrCode",
         "Bien demarrer": "Bien demarrer",
+        "Scénarios - Application V1": "Scénarios - Application V1",
         "Menu Custom": "Menu Custom",
-        "Configuration Mobile du Plugin \"+name_plugin+": "Configuration Mobile du Plugin \"+name_plugin+",
-        "Configuration Mobile de la Pièce": "Configuration Mobile de la Pièce",
-        "Configuration Mobile du Scénario \"+name_scenario+": "Configuration Mobile du Scénario \"+name_scenario+",
+        "Configuration Mobile du Plugin \"+name_plugin+\" - Application V1": "Configuration Mobile du Plugin \"+name_plugin+\" - Application V1",
+        "Configuration Mobile de la Pièce - Application V1": "Configuration Mobile de la Pièce - Application V1",
+        "Configuration Mobile du Scénario \"+name_scenario+\" - Application V1": "Configuration Mobile du Scénario \"+name_scenario+\" - Application V1",
         "Erreur pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)",
         "Erreur pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)",
         "Erreur pas d\\'utilisateur selectionné": "Erreur Pas d\\'utilisateur selectionné",

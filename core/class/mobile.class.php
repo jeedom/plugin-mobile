@@ -725,7 +725,7 @@ class mobile extends eqLogic
 
 
 				if ($photo != null) {
-					$android['data']['image'] = $photo;
+					$data['image'] = $photo;
 					$apns['payload']['notifee_options']['image'] = $photo;
 					$apns['payload']['notifee_options']['ios']['attachments'] = [
 						[
@@ -762,8 +762,14 @@ class mobile extends eqLogic
 		if ($token != null) {
 			if ($token == 'notifsBGDisabled') {
 				log::add('mobile', 'debug', 'NOTIFICATION NON ENVOYEE : SERVICES NOTIF DESACTIVE SUR VOTRE TELEPHONE : ');
-				message::removeAll(__CLASS__, 'alertNotifsSend');
+				//message::removeAll(__CLASS__, 'alertNotifsSend');
 				message::add(__CLASS__, 'Echec envoie de notification : service desactive dans les parametres de votre telephone', 'notifsbgSend', 'alertNotifsSend');
+				return;
+			}
+			if ($token == 'desactivate') {
+				log::add('mobile', 'debug', 'NOTIFICATION NON ENVOYEE : VOUS AVEZ DESACTIVE LES NOTIFICATIONS SUR L\'APP : ');
+				//message::removeAll(__CLASS__, 'alertNotifsSend');
+				message::add(__CLASS__, 'Echec envoie de notification : service desactive dans les parametres de votre application', 'notifsbgSend', 'alertNotifsSend');
 				return;
 			}
 			$url = config::byKey('service::cloud::url', 'core', 'https://cloud.jeedom.com') . '/service/fcm';
@@ -778,7 +784,7 @@ class mobile extends eqLogic
 			log::add('mobile', 'debug', 'JSON envoyé en mode FCM : ' . json_encode($post));
 		} elseif ($token == null && $version == 2) {
 			log::add('mobile', 'debug', 'NOTIFICATION NON ENVOYEE : PAS DE TOKEN ENREGISTRE SUR VOTRE TELEPHONE :  ');
-			message::removeAll(__CLASS__, 'noValidToken');
+			//message::removeAll(__CLASS__, 'noValidToken');
 			message::add(__CLASS__, 'NOTIFICATION NON ENVOYEE : PAS DE TOKEN ENREGISTRE SUR VOTRE TELEPHONE :', 'noValidTok', 'noValidToken');
 			return;
 		} else {

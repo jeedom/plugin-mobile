@@ -60,10 +60,6 @@ if(init('action') == 'menuDefault'){
 	ajax::success();
 }
 
-if (init('action') == 'saveMenuEqLogics') {
-	mobile::saveMenuEqLogics(init('eqId'), init('arrayMenu'), init('checkDefaultBtn'), init('nbIcones'));
-	ajax::success();
-}
 
 	if (init('action') == 'getQrCode') {
 		$eqLogic = mobile::byId(init('id'));

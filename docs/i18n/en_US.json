@@ -47,13 +47,13 @@
         "Slider avec pourcentage": "Slider with percentage",
         "grosse modification de la synchronisation": "big change in timing",
         "suppression du push to refresh": "removal of push to refresh",
-        " IMPORTANT.": " IMPORTANT.",
-        " IMPORTANT?": " IMPORTANT?",
-        "IMPORTANT ": "IMPORTANT ",
-        " IMPORTANT]": " IMPORTANT]",
-        "[IMPORTANT]": "[IMPORTANT]",
-        "*IMPORTANT*": "*IMPORTANT*",
-        " IMPORTANT*": " IMPORTANT*"
+        " IMPORTANT.": " Important.",
+        " IMPORTANT?": " Important?",
+        "IMPORTANT ": "Important ",
+        " IMPORTANT]": " Important]",
+        "[IMPORTANT]": "[Important]",
+        "*IMPORTANT*": "*Important*",
+        " IMPORTANT*": " Important*"
     },
     "index.md": {
         "type générique": "Type generic",

@@ -47,13 +47,13 @@
         "Slider avec pourcentage": "Control deslizante con porcentaje",
         "grosse modification de la synchronisation": "gran cambio en el tiempo",
         "suppression du push to refresh": "eliminación de empuje para actualizar",
-        " IMPORTANT.": " IMPORTANTE.",
-        " IMPORTANT?": " IMPORTANTE?",
-        "IMPORTANT ": "IMPORTANTE ",
-        " IMPORTANT]": " IMPORTANTE]",
-        "[IMPORTANT]": "[IMPORTANTE]",
-        "*IMPORTANT*": "*IMPORTANTE*",
-        " IMPORTANT*": " IMPORTANTE*"
+        " IMPORTANT.": " Importante.",
+        " IMPORTANT?": " Importante?",
+        "IMPORTANT ": "Importante ",
+        " IMPORTANT]": " Importante]",
+        "[IMPORTANT]": "[Importante]",
+        "*IMPORTANT*": "*Importante*",
+        " IMPORTANT*": " Importante*"
     },
     "index.md": {
         "type générique": "Tipo genérico",

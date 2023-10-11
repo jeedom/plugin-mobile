@@ -47,13 +47,13 @@
         "Slider avec pourcentage": "Schieberegler mit Prozentsatz",
         "grosse modification de la synchronisation": "große Änderung im Timing",
         "suppression du push to refresh": "Entfernen von Push zum Aktualisieren",
-        " IMPORTANT.": " WICHTIG.",
-        " IMPORTANT?": " WICHTIG?",
-        "IMPORTANT ": "WICHTIG ",
-        " IMPORTANT]": " WICHTIG]",
-        "[IMPORTANT]": "[WICHTIG]",
-        "*IMPORTANT*": "*WICHTIG*",
-        " IMPORTANT*": " WICHTIG*"
+        " IMPORTANT.": " Wichtig.",
+        " IMPORTANT?": " Wichtig?",
+        "IMPORTANT ": "Wichtig ",
+        " IMPORTANT]": " Wichtig]",
+        "[IMPORTANT]": "[Wichtig]",
+        "*IMPORTANT*": "*Wichtig*",
+        " IMPORTANT*": " Wichtig*"
     },
     "index.md": {
         "type générique": "Typ Gattung",

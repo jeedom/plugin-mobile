@@ -292,7 +292,7 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$return[$idBox]['informations']['uname'] = system::getDistrib() . ' ' . method_exists('system','getOsVersion') ? system::getOsVersion() : 'UnknownVersion';
 	$return[$idBox]['jeedom_version'] = jeedom::version();
     $return[$idBox]['rdk'] = $rdk;
-	$return[$idBox]['name'] = config::byKey('name');
+	$return[$idBox]['name'] = config::byKey('name') == '' ? 'Jeedom' : config::byKey('name');
   	log::add('mobile', 'debug', 'retour de base > '.json_encode($return));
 
   	log::add('mobile', 'debug', 'recherche du mobile via sont Iq >'.$params['Iq']);

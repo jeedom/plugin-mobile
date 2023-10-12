@@ -224,7 +224,7 @@ if($jsonrpc->getMethod() == 'getJson'){
     $return[$idBox]['localIp'] = network::getNetworkAccess('internal');
 	$return[$idBox]['hardware'] = jeedom::getHardwareName();
 	$return[$idBox]['hwkey'] = jeedom::getHardwareKey();
-	$return[$idBox]['appMobile'] = '0.4';
+	$return[$idBox]['appMobile'] = '0.1';
     $return[$idBox]['ping'] = true;
 	$return[$idBox]['informations']['userRights'] = $_USER_GLOBAL->getProfils();
 	$return[$idBox]['informations']['hardware'] = jeedom::getHardwareName();

@@ -6,7 +6,7 @@
 
 # 12/10/2023
 
-- Mise à jour pour prendre en compte la beta de l'APP mobile
+- Mise à jour pour prendre en compte la nouvelle Application mobile
 
 
 # 09/06/2023

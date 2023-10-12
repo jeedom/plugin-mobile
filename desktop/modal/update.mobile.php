@@ -20,9 +20,9 @@ if (!isConnect('admin')) {
 ?>
 <div id='div_updateMobileAlert' style="display: none;"></div>
 
-<a class="btn btn-warning pull-right" data-state="1" id="bt_mobileLogStopStart"><i class="fa fa-pause"></i> {{Pause}}</a>
+<a class="btn btn-warning pull-right" data-state="1" id="bt_mobileLogStopStart"><i class="fas fa-pause"></i> {{Pause}}</a>
 <input class="form-control pull-right" id="in_mobileLogSearch" style="width : 300px;" placeholder="{{Rechercher}}" />
-<br/><br/><br/>
+<br /><br /><br />
 <pre id='pre_mobileupdate' style='overflow: auto; height: 90%;with:90%;'></pre>
 
 <script>
@@ -34,16 +34,16 @@ if (!isConnect('admin')) {
 		},
 		dataType: 'json',
 		global: false,
-		error: function (request, status, error) {
+		error: function(request, status, error) {
 			handleAjaxError(request, status, error, $('#div_updateMobileAlert'));
 		},
-		success: function () {
+		success: function() {
 			jeedom.log.autoupdate({
-               log : 'mobile_update',
-               display : $('#pre_mobileupdate'),
-               search : $('#in_mobileLogSearch'),
-               control : $('#bt_mobileLogStopStart'),
-           });
+				log: 'mobile_update',
+				display: $('#pre_mobileupdate'),
+				search: $('#in_mobileLogSearch'),
+				control: $('#bt_mobileLogStopStart'),
+			});
 		}
 	});
 </script>

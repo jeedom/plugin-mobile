@@ -25,9 +25,9 @@ $plugin_compatible = mobile::$_pluginSuported;
 $plugin_widget = mobile::$_pluginWidget;
 ?>
 
-<legend><i class="icon maison-modern13"></i>  {{Les Pièces}}</legend>
+<legend><i class="icon maison-modern13"></i> {{Les Pièces}}</legend>
 <div class="eqLogicThumbnailContainer">
-<?php
+	<?php
 	$allObject = jeeObject::buildTree(null, false);
 	$_echo = '';
 	foreach ($allObject as $object) {
@@ -36,14 +36,14 @@ $plugin_widget = mobile::$_pluginWidget;
 			$opacity = 'opacity:0.3;';
 		}
 		$_echo .= '<div class="objectDisplayCard cursor dClrIcon" data-object_id="' . $object->getId() . '" onclick="clickobject(\'' . $object->getId() . '\')">';
-		$_echo .= $object->getDisplay('icon', '<i class="fa fa-lemon-o"></i>');
+		$_echo .= $object->getDisplay('icon', '<i class="fas fa-lemon-o"></i>');
 		$_echo .= '<span><center>' . $object->getName() . '</center></span>';
 		$_echo .= '</div>';
 	}
 	echo $_echo;
-?>
+	?>
 </div>
 <?php
-	include_file('desktop', 'mobile', 'js', 'mobile');
-	include_file('core', 'plugin.template', 'js');
+include_file('desktop', 'mobile', 'js', 'mobile');
+include_file('core', 'plugin.template', 'js');
 ?>

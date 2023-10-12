@@ -8,11 +8,46 @@
     },
     "plugins\/mobile\/desktop\/modal\/health.php": {
         "Plateforme": "Platform",
-        "Equipement": "Device",
+        "Équipement": "Device",
         "ID": "Id",
-        "User": "Wear",
-        "Depuis": "Since",
+        "Utilisateur": "User",
+        "Dernière activité": "Last activity",
+        "Date création": "Creation Date",
         "Utilisateur non trouvé": "User not found"
+    },
+    "plugins\/mobile\/desktop\/modal\/secPage.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized Access",
+        "COMPTE MARKET": "MARKET ACCOUNT",
+        "BOX ID": "BOX-ID",
+        "Il vous faut simplement rentrer votre identifiant Market ainsi que votre mot de passe.": "All you have to do is enter your Market ID and password",
+        "Plusieurs choix sur cet écran :": "Several choices on this screen:",
+        "- Vous entrez l'url de votre Jeedom (interne ou externe), ainsi que les identifiants d'accès à celle-ci et vous confirmez avec le bouton CONNEXION": "- You enter the url of your Jeedom (internal or external), as well as the access identifiers to it and you confirm with the LOGIN button",
+        "- Vous cliquez sur QR Code : un nouvel écran apparait; vous pourrez scanner un QRCode depuis le plugin Mobile de la box que vous souhaitez ajoutée, via l'onglet QRCODE du plugin.": "- You click on QR Code: a new screen appears; you can scan a QRCode from the Mobile plugin of the box you want to add, via the QRCODE tab of the plugin"
+    },
+    "plugins\/mobile\/desktop\/modal\/menuCustom.php": {
+        "Mobile": "Mobile",
+        "ID": "ID",
+        "User": "User",
+        "Menu Defaut": "Default menu",
+        "Nb Icones": "Nb Icons",
+        "Utilisateur non trouvé": "User not found",
+        " Icone 1": "Icon 1",
+        "Type": "Kind",
+        "Choisir un Type": "Choose a Type",
+        "Accueil": "Accueil",
+        "Synthese": "Synthesis",
+        "Dashboard": "Dashboard",
+        "Vue": "Seen",
+        "Design": "Design",
+        "Panel": "Panel",
+        "URL externe": "URL externe",
+        "Santé": "Santé",
+        "TimeLine": "TimeLine",
+        "Choisir Icone": "Choose Icon",
+        " Icone 2": "Icon 2",
+        " Icone 3": "Icon 3",
+        " Icone 4": "Icon 4",
+        "Menu Custom": "Custom menu"
     },
     "plugins\/mobile\/desktop\/modal\/plugin.php": {
         "Plugins Spéciaux Compatibles": "Compatible Special Plugins",
@@ -26,6 +61,32 @@
         "Plugins non testés et non transmis": "Plugins not tested and not transmitted",
         "Ne sont pas transmis à l’App Mobile": "Are not transmitted to the Mobile App"
     },
+    "plugins\/mobile\/desktop\/modal\/fivePage.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized Access"
+    },
+    "plugins\/mobile\/desktop\/modal\/qrcodev2.php": {
+        "AJOUT DE LA BOX SUR VOTRE APPLICATiON MOBILE ": "ADDING THE BOX TO YOUR MOBILE APP",
+        "Vous pouvez choisir un utilisateur : un QRCode sera généré. Vous pourrez ensuite scanner le QRCode depuis la nouvelle application, et ainsi ajouter cette box à votre application": "You can choose a user: a QRCode will be generated. You can then scan the QRCode from the new application, and thus add this box to your application",
+        "Utilisateur": "User",
+        "Aucun": "None",
+        "QRCode": "QRCode",
+        "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Error No internal address (see configuration of your Jeedom!)",
+        "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Error No external address (see configuration of your Jeedom!)",
+        "Erreur Pas d\\'utilisateur selectionné": "Error No user selected"
+    },
+    "plugins\/mobile\/desktop\/modal\/thirdPage.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized Access"
+    },
+    "plugins\/mobile\/desktop\/modal\/wizard.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized Access"
+    },
+    "plugins\/mobile\/desktop\/modal\/sixPage.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized Access"
+    },
+    "plugins\/mobile\/desktop\/modal\/firstPage.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized Access",
+        "Pour connecter votre téléphone : il y a 2 méthodes possible": "To connect your phone: there are 2 possible methods"
+    },
     "plugins\/mobile\/desktop\/modal\/update.mobile.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",
         "Pause": "Pause",
@@ -37,7 +98,7 @@
         "Ce Plugin est entièrement compatible, il ne nécessite aucune action de votre part": "This plugin is fully compatible, it requires no action on your part",
         "Ce plugin est compatible, pensez à vérifier les Types Génériques des Commandes": "This plugin is compatible, remember to check the Generic Types of Orders",
         "Activer": "Activate",
-        "Le Plugin n\\'est pas compatible, vous pouvez l\\'activer si vous le souhaitez": "The Plugin is not compatible, you can activate it if you wish",
+        "Le Plugin n est pas compatible, vous pouvez l activer si vous le souhaitez": "The Plugin is not compatible, you can activate it if you wish",
         "Type Générique du Plugin": "Generic Plugin Type",
         "Sauvegarder": "Save",
         "Id Cmd": "Id Cmd",
@@ -86,18 +147,30 @@
         "Designs": "Designs",
         "Configurations": "Configurations"
     },
+    "plugins\/mobile\/desktop\/modal\/fiveModal.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized Access"
+    },
+    "plugins\/mobile\/desktop\/modal\/fourPage.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized Access"
+    },
     "plugins\/mobile\/desktop\/php\/mobile.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",
-        "Gestion": "Management",
-        "Ajouter": "Add",
+        "App V2 - (VERSION ALPHA PRIVEE SEULEMENT)": "App V2 - (PRIVATE ALPHA VERSION ONLY)",
         "Configuration": "Setup",
-        "Plugins": "Plugins",
-        "Objets \/ Pièces": "Objects \/ Pieces",
-        "Scénarios": "Scenarios",
+        "Menu Custom": "Custom menu",
+        "QR Code": "QR Code",
+        "Documentation APP V2": "APP V2 documentation",
         "Santé": "Health",
-        "Régénérer la configuration": "Regenerate configuration",
         "Mes Téléphones Mobiles": "My Mobile Phones",
         "Rechercher": "Search",
+        "Équipement visible": "Visible equipment",
+        "Équipement non visible": "Equipment not visible",
+        "App V1": "App V1",
+        "Ajouter": "Add",
+        "Plugins": "Plugins",
+        "Objets\/Pièces": "Items\/Parts",
+        "Scénarios": "Scenarios",
+        "Régénérer la configuration": "Regenerate configuration",
         "Configuration avancée": "Advanced configuration",
         "Infos envoyées à l'app": "Info sent to the app",
         "Sauvegarder": "Save",
@@ -106,33 +179,54 @@
         "Notifications": "Notifications",
         "Sauvegarde Mobile": "Mobile Backup",
         "Commandes": "Commands",
-        "Nom de l'équipement mobile": "Name of mobile equipment",
-        "Nom de l'équipement template": "Equipment name template",
+        "Paramètres généraux": "General settings",
+        "Nom de l'équipement": "Equipment Name",
         "Objet parent": "Parent object",
         "Aucun": "None",
+        "Catégorie": "Category",
+        "Options": "Options",
         "Activer": "Activate",
         "Visible": "Visible",
+        "Paramètres spécifiques": "Specific settings",
         "Type de Mobile": "Mobile Type",
         "iPhone": "iphone",
         "Android": "Android",
         "Windows (non officiel)": "Windows (unofficial)",
-        "Utilisateurs": "Users",
+        "Utilisateur": "User",
         "QRCode": "QRCode",
-        "Id Mobile :": "Mobile Id:",
+        "Id Mobile": "IdMobile",
         "Iq": "Iq",
-        "ARN Mobile :": "ARN Mobile:",
+        "ARN Mobile": "ARN Mobile",
         "ARN": "RNA",
-        "TOKEN Mobile :": "TOKEN Mobile:",
+        "TOKEN Mobile": "TOKEN Mobile",
         "TOKEN": "TOKEN",
-        "ARN pour Monitoring :": "RNA for Monitoring:",
         "ARN pour Monitoring": "ARN for Monitoring",
         "Copier pour Monitoring": "Copy for Monitoring",
-        "Sauvegarde Dashboard :": "Dashboard backup:",
+        "Sauvegarde": "Backup",
+        "Sauvegarde Dashboard": "Dashboard Backup",
         "Vérification en Cours": "Verification in progress",
-        "Sauvegarde Favoris :": "Save Favorites:",
+        "Sauvegarde Favoris": "Save Favorites",
         "Nom": "Name",
         "Type": "Type",
-        "Action": "Action"
+        "Valeur": "Value",
+        "Actions": "Shares"
+    },
+    "plugins\/mobile\/desktop\/php\/panelMenuCustom.php": {
+        "Type": "Kind",
+        "Choisir un Type": "Choose a Type",
+        "Accueil": "Welcome",
+        "Synthese": "Synthesis",
+        "Dashboard": "Dashboard",
+        "Vue": "Seen",
+        "Design": "Design",
+        "Panel": "Panel",
+        "URL externe": "External URL",
+        "Santé": "Health",
+        "TimeLine": "Timeline",
+        "Choix TypeWebView": "Choice TypeWebView"
+    },
+    "plugins\/mobile\/desktop\/php\/panelWebApp.php": {
+        "ICONE 1": "ICON 1"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
         "Santé Mobile": "Mobile Health",
@@ -140,35 +234,55 @@
         "Objets \/ Pièces": "Objects \/ Pieces",
         "Scénarios": "Scenarios",
         "Informations envoyées à l'app": "Information sent to the app",
+        "Menu Custom": "Custom menu",
+        "QrCode": "QrCode",
+        "Bien demarrer": "Get off to a good start",
         "Configuration Mobile du Plugin \"+name_plugin+": "Mobile configuration of the plugin \"+ name_plugin +",
         "Configuration Mobile de la Pièce": "Mobile Room Configuration",
-        "Configuration Mobile du Scnéario \"+name_scenario+": "Mobile Configuration of the Scenario \"+ name_scenario +",
-        "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Error No internal address (see configuration of your Jeedom!)",
-        "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Error No external address (see configuration of your Jeedom!)",
-        "Erreur Pas d\\'utilisateur selectionné": "Error No user selected",
+        "Configuration Mobile du Scénario \"+name_scenario+": "Mobile Configuration of Scenario \"+name_scenario+",
+        "Erreur pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Error No internal address (see configuration of your Jeedom!)",
+        "Erreur pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Error No external address (see configuration of your Jeedom!)",
+        "Erreur pas d\\'utilisateur selectionné": "Error No user selected",
         "Configuration mise à jour": "Updated configuration",
-        "Nom": "Name",
+        "Nom de la commande": "Command name",
+        "Choisir une icône": "Choose an icon",
+        "Afficher": "Display",
+        "Historiser": "Historize",
+        "Min": "Min",
+        "Max": "Max",
+        "Unité": "Unit",
         "Tester": "Test"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",
         "Equipement non trouvé : ": "Equipment not found:",
-        "Aucune methode correspondante à : ": "No method corresponding to:",
-        "scenario non trouvé": "scenario not found"
+        "User inexistant : ": "Non-existent user:",
+        "scenario non trouvé": "scenario not found",
+        "Aucune methode correspondante à : ": "No method corresponding to:"
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {
         "Echec de l\\'envoi de la notification :": "Failed to send notification:",
-        "$geoloc['id'].'-'.$geoloc['name']": "$ geoloc ['id'] .'- '. $ geoloc [' name ']",
-        "Notification": "Notification"
+        "$geoloc['id'] . '-' . $geoloc['name']": "$geoloc['id'] . '-' . $geoloc['name']",
+        "Notification": "Notification",
+        "Notification Critique": "Critical Notification"
+    },
+    "plugins\/mobile\/core\/template\/widgets.html": {
+        "Couleur de l'indicateur de valeur": "Value indicator color",
+        "Pas du changement de valeur": "No change in value",
+        "Inverse la position de l'indicateur de valeur": "Reverses the position of the value indicator",
+        "Affiche durée ou date de la valeur": "Displays duration or date of the value",
+        "Date de valeur": "Value date",
+        "Date de collecte": "Date of collection"
     },
     "plugins\/mobile\/core\/api\/mobile.api.php": {
         "JSONRPC object not defined": "JSONRPC object not defined",
         "EqLogic inconnu : ": "Unknown EqLogic:",
         "Cmd inconnu : ": "Unknown Cmd:",
         "pas d\\'id : ": "no id:",
+        "pas de parametre de geofencing : ": "no geofencing parameter:",
         "Aucune demande": "No request"
     },
     "info.json": {
-        "L'application officielle Jeedom permet le pilotage de votre système domotique Jeedom, que ce soit en Wifi local, ou sur le réseau 3G\/4G de votre opérateur.<br\/><br\/>L'app se connecte automatiquement à votre Jeedom avec une initialisation automatique par QRcode, aucune configuration n'est nécessaire. (possibilité de le faire manuellement)<br\/>Vous retrouverez sur votre mobile toutes les fonctionnalités de votre Jeedom.<br\/>Vous pourrez personnaliser votre application avec des raccourcis et plus encore...<br\/><br\/>Fonctionnalités actuelles:<br\/>- Gestion de vos scénarios.<br\/>- Gestion de votre domotique en fonction de vos pièces et équipements.<br\/>- Maj et retour d'état automatique<br\/>- Compatibilité aves les plugins, tel que thermostat, alarme, caméra etc...<br\/>- Interface personnalisable avec les raccourcis.<br\/>- Résumé domotique général et par pièce<br\/>- Notifications (avec prise en charge du ASK)<br\/>- Affichage des Designs <br\/><br\/>D'autres fonctionnalités et compatibilités sont à venir dans les prochaines mises à jour !<br\/><br\/>Respect de la vie privée.<br\/>Aucune donnée (domotique ou personnelle) n'est stockée ou conservée sur nos serveurs.": "The official Jeedom application allows you to control your Jeedom home automation system, whether over local WiFi, or on your operator's 3G \/ 4G network. <br\/><br\/> The app automatically connects to your Jeedom with automatic initialization by QRcode, no configuration is necessary. (possibility to do it manually) <br\/> You will find all the features of your Jeedom on your mobile. <br\/> You will be able to customize your application with shortcuts and more ... <br\/><br\/> Current features: <br\/> - Management of your scenarios. <br\/> - Management of your home automation according to your parts and equipment. <br\/> - Automatic update and return <br\/> - Compatibility with plugins, such as thermostat, alarm, camera etc ... <br\/> - Customizable interface with shortcuts. <br\/> - General home automation summary and by room <br\/> - Notifications (with ASK support) <br\/> - Display of Designs <br\/><br\/> Other features and compatibilities are coming in the next updates! <br\/><br\/> Respect for private life. <br\/> No data (home automation or personal) is stored or kept on our servers"
+        "Attzltion l'app v1 n'est pas compatible avec le dernier Android. L'application officielle Jeedom permet le pilotage de votre système domotique Jeedom, que ce soit en Wifi local, ou sur le réseau 3G\/4G de votre opérateur.<br\/><br\/>L'app se connecte automatiquement à votre Jeedom avec une initialisation automatique par QRcode, aucune configuration n'est nécessaire. (possibilité de le faire manuellement)<br\/>Vous retrouverez sur votre mobile toutes les fonctionnalités de votre Jeedom.<br\/>Vous pourrez personnaliser votre application avec des raccourcis et plus encore...<br\/><br\/>Fonctionnalités actuelles:<br\/>- Gestion de vos scénarios.<br\/>- Gestion de votre domotique en fonction de vos pièces et équipements.<br\/>- Maj et retour d'état automatique<br\/>- Compatibilité aves les plugins, tel que thermostat, alarme, caméra etc...<br\/>- Interface personnalisable avec les raccourcis.<br\/>- Résumé domotique général et par pièce<br\/>- Notifications (avec prise en charge du ASK)<br\/>- Affichage des Designs <br\/><br\/>D'autres fonctionnalités et compatibilités sont à venir dans les prochaines mises à jour !<br\/><br\/>Respect de la vie privée.<br\/>Aucune donnée (domotique ou personnelle) n'est stockée ou conservée sur nos serveurs.": "Attzltion the v1 app is not compatible with the latest Android. The official Jeedom application allows you to control your Jeedom home automation system, whether in local Wifi, or on your operator's 3G\/4G network.<br\/><br\/> The app automatically connects to your Jeedom with automatic initialization by QRcode, no configuration is necessary. (possibility to do it manually)<br\/> You will find on your mobile all the features of your Jeedom.<br\/> You will be able to customize your application with shortcuts and more...<br\/><br\/> Current features:<br\/> - Management of your scenarios.<br\/> - Management of your home automation according to your rooms and equipment.<br\/> - Shift and automatic status return<br\/> - Compatibility with plugins, such as thermostat, alarm, camera etc...<br\/> - Customizable interface with shortcuts.<br\/> - General home automation summary and by room<br\/> - Notifications (with ASK support)<br\/> - Display of Designs<br\/><br\/> More features and compatibilities are coming in future updates!<br\/><br\/> Privacy.<br\/> No data (home automation or personal) is stored or kept on our servers"
     }
 }

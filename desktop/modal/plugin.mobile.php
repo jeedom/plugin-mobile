@@ -27,20 +27,20 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 
 <div class="row">
 	<ul class="nav nav-tabs" style="padding-left:8px">
-		<li><a class="cursor" id="bt_returnPlugins" style="width:32px;"><i class="fas fa-arrow-circle-left"></i></a></li>
+		<li><a class="cursor" id="bt_returnPlugins" data-toggle="tabPlug" style="width:32px;"><i class="fas fa-arrow-circle-left"></i></a></li>
 		<li class="active">
-		<?php
+			<?php
 			if (file_exists(dirname(__FILE__) . '/../../../../' . $plugin->getPathImgIcon())) {
-			  echo '<a><img width="14px" src="' . $plugin->getPathImgIcon() . '" /> '.$plugin->getName().'</a>';
+				echo '<a><img width="14px" src="' . $plugin->getPathImgIcon() . '" /> ' . $plugin->getName() . '</a>';
 			} else {
-			  echo '<a><i class="fas fa-tags"></i> '.$plugin->getName().'</a>';
+				echo '<a><i class="fas fa-tags"></i> ' . $plugin->getName() . '</a>';
 			}
-		?>
+			?>
 		</li>
 	</ul>
 
 	<div class="col-lg-12 col-md-12 col-sm-12 eqLogicThumbnailDisplay">
-		<legend><i class="fa fa-info"></i>  {{Envoi auprès de l'app mobile}}</legend>
+		<legend><i class="fas fa-info"></i> {{Envoi auprès de l'app mobile}}</legend>
 		<?php
 		if (in_array($plugin->getId(), $plugin_widget)) {
 			$div = '<div class="alert alert-success" role="alert">';
@@ -70,7 +70,7 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 			$generique_ok = true;
 		} else {
 			$div = '<div class="alert alert-danger div_plugin_configuration" role="alert">';
-			$div .=   '{{Le Plugin n\'est pas compatible, vous pouvez l\'activer si vous le souhaitez}}';
+			$div .=   '{{Le Plugin n est pas compatible, vous pouvez l activer si vous le souhaitez}}';
 			$check = 'unchecked';
 			if (config::byKey('sendToApp', $plugin->getId(), 0) == 1) {
 				$check = 'checked';
@@ -83,12 +83,12 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 		?>
 	</div>
 	<?php
-		if ($generique_ok) {
-			echo '<div class="col-lg-12 col-md-12 col-sm-12 eqLogicPluginDisplay">';
-			echo '<legend><i class="fa fa-building"></i>  {{Type Générique du Plugin}}<a class="btn btn-sm btn-success pull-right" onclick="SavePlugin()"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a></legend>';
+	if ($generique_ok) {
+		echo '<div class="col-lg-12 col-md-12 col-sm-12 eqLogicPluginDisplay">';
+		echo '<legend><i class="fas fa-building"></i>  {{Type Générique du Plugin}}<a class="btn btn-sm btn-success pull-right" onclick="SavePlugin()"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a></legend>';
 	?>
-	<div class="EnregistrementDisplay"></div>
-	<?php
+		<div class="EnregistrementDisplay"></div>
+		<?php
 		$tableau_cmd = array();
 		$eqLogics = eqLogic::byType($_GET['plugin_id']);
 		$subClasses = config::byKey('subClass', $_GET['plugin_id'], '');
@@ -142,64 +142,64 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 				echo '<div class="iconeGeneric pull-right" style="display:' . $display_icon . ';">
 					<div>
 					<span class="cmdAttr label label-info cursor" data-l1key="display" data-l2key="icon" style="font-size : 1.2em;" >' . $icon . '</span>
-					<a class="cmdAction btn btn-default btn-sm" data-l1key="chooseIcon"><i class="fa fa-flag"></i> {{Icône}}</a>
+					<a class="cmdAction btn btn-default btn-sm" data-l1key="chooseIcon"><i class="fas fa-flag"></i> {{Icône}}</a>
 					</div>
 					</div>';
 				echo '</td>';
 				echo '<td>';
-			?>
-			<select class="cmdAttr form-control" data-l1key="generic_type" data-cmd_id="<?php echo $cmd->getId(); ?>">
-				<option value="">{{Aucun}}</option>
-				<?php
-			$groups = array();
-			foreach (jeedom::getConfiguration('cmd::generic_type') as $key => $info) {
-				if (strtolower($cmd->getType()) != strtolower($info['type'])) {
-					continue;
-				}
-				$info['key'] = $key;
-				if (!isset($groups[$info['family']])) {
-					$groups[$info['family']][0] = $info;
-				} else {
-					array_push($groups[$info['family']], $info);
-				}
-			}
-			ksort($groups);
-			foreach ($groups as $group) {
-				usort($group, function ($a, $b) {
-					return strcmp($a['name'], $b['name']);
-				});
-				foreach ($group as $key => $info) {
-					if ($key == 0) {
-						echo '<optgroup label="{{' . $info['family'] . '}}">';
+		?>
+				<select class="cmdAttr form-control" data-l1key="generic_type" data-cmd_id="<?php echo $cmd->getId(); ?>">
+					<option value="">{{Aucun}}</option>
+					<?php
+					$groups = array();
+					foreach (jeedom::getConfiguration('cmd::generic_type') as $key => $info) {
+						if (strtolower($cmd->getType()) != strtolower($info['type'])) {
+							continue;
+						}
+						$info['key'] = $key;
+						if (!isset($groups[$info['family']])) {
+							$groups[$info['family']][0] = $info;
+						} else {
+							array_push($groups[$info['family']], $info);
+						}
 					}
-					$name = $info['name'];
-					if (isset($info['noapp']) && $info['noapp']) {
-						$name .= ' (Non géré par Application Mobile)';
+					ksort($groups);
+					foreach ($groups as $group) {
+						usort($group, function ($a, $b) {
+							return strcmp($a['name'], $b['name']);
+						});
+						foreach ($group as $key => $info) {
+							if ($key == 0) {
+								echo '<optgroup label="{{' . $info['family'] . '}}">';
+							}
+							$name = $info['name'];
+							if (isset($info['noapp']) && $info['noapp']) {
+								$name .= ' (Non géré par Application Mobile)';
+							}
+							if ($info['key'] == $cmd->getGeneric_type()) {
+								echo '<option value="' . $info['key'] . '" selected>' . $name . '</option>';
+							} else {
+								echo '<option value="' . $info['key'] . '">' . $name . '</option>';
+							}
+						}
+						echo '</optgroup>';
 					}
-					if ($info['key'] == $cmd->getGeneric_type()) {
- 						echo '<option value="' . $info['key'] . '" selected>' . $name . '</option>';
-					} else {
- 						echo '<option value="' . $info['key'] . '">' . $name . '</option>';		
- 					}
-				}
-				echo '</optgroup>';
-			}
-			?>
-          </select>
-		  <?php
-			echo '</td>';
-			echo '</tr>';
+					?>
+				</select>
+		<?php
+				echo '</td>';
+				echo '</tr>';
 			}
 			echo '</table>';
 			echo '</div>';
 			echo '</div>';
 			echo '</div>';
-	}
-	echo '</div>';
-	?>
-	<a class="btn btn-sm btn-success pull-right" onclick="SavePlugin()" ><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
+		}
+		echo '</div>';
+		?>
+		<a class="btn btn-sm btn-success pull-right" onclick="SavePlugin()"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
 	<?php
-	echo '</div>';
+		echo '</div>';
 	}
 	?>
 </div>
@@ -207,103 +207,163 @@ sendVarToJS('pluginId', $_GET['plugin_id']);
 
 
 <script>
+	/*
+document.querySelectorAll('#bt_returnPlugins').forEach(el => {
+      el.addEventListener('click', function(e){
+				if(typeof jeeDialog !== 'undefined'){
+					jeedomUtils.closeJeeDialogs();
+					jeeDialog.dialog({
+						id: 'plugsCompta',
+						title: "{{Plugins compatibles}}",
+						contentUrl: 'index.php?v=d&plugin=mobile&modal=plugin'
+					})
+				}else{
+					  $('#md_modal').dialog({title: "{{Plugins compatibles}}"})
+						$('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin').dialog('open')
+				}
 
-$('#bt_returnPlugins').on('click', function () {
-	$('#md_modal').dialog({title: "{{Plugins compatibles}}"})
-	$('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin').dialog('open')
-})
+			});
+})*/
 
-var changed = 0
-var eqLogicsHomebridge = []
 
-$('.cmdAttr').on('change click',function() {
-	$(this).closest('tr').attr('data-change','1')
-})
-$('.configKey').on('change click',function() {
-	changed = 1
-})
-$('.eqLogicAttr').on('change click',function() {
-	var eqLogic = $(this).closest('.panel-title').getValues('.eqLogicAttr')[0]
-	eqLogicsHomebridge.push(eqLogic)
-})
-
-function SavePlugin() {
-	var cmds = []
-	$('.TableCMD tr').each(function() {
-		if($(this).attr('data-change') == '1') {
-			cmds.push($(this).getValues('.cmdAttr')[0])
+	/*
+	document.getElementById('bt_returnPlugins').addEventListener("click", function() {
+		if(typeof jeeDialog !== 'undefined'){
+			jeedomUtils.closeJeeDialogs();
+			jeeDialog.dialog({
+				id: 'plugsCompta',
+				title: "{{Plugins compatibles}}",
+				contentUrl: 'index.php?v=d&plugin=mobile&modal=plugin'
+			})
+		}else{
+			$('#md_modal').dialog({title: "{{Plugins compatibles}}"})
+				$('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin').dialog('open')
 		}
-	})
 
-	var eqLogicsHomebridgeFiltered = []
-	$.each(eqLogicsHomebridge, function(index, eqLogic) {
-		var eqLogics = $.grep(eqLogicsHomebridgeFiltered, function (e) {
-			return eqLogic.id === e.id
+
+	});*/
+
+
+
+	$('#bt_returnPlugins').on('click', function() {
+
+
+
+		$('#md_modal').dialog({
+			title: "{{Plugins compatibles}}"
 		})
-		if (eqLogics.length === 0) {
-			eqLogicsHomebridgeFiltered.push(eqLogic)
-		}
+		$('#md_modal').load('index.php?v=d&plugin=mobile&modal=plugin').dialog('open')
 	})
-	$.each(eqLogicsHomebridgeFiltered ,function(index, eqLogic) {
-		jeedom.eqLogic.simpleSave({
-			eqLogic : eqLogic,
-			error: function (error) {
-				$('.EnregistrementDisplay').showAlert({message: error.message, level: 'danger'})
-			},
-			success: function (data) {
-				$('.EnregistrementDisplay').showAlert({message: '{{Modifications sauvegardées avec succès}}', level: 'success'})
-				eqLogicsHomebridge = []
+
+	var changed = 0
+	var eqLogicsHomebridge = []
+
+	$('.cmdAttr').on('change click', function() {
+		$(this).closest('tr').attr('data-change', '1')
+	})
+	$('.configKey').on('change click', function() {
+		changed = 1
+	})
+	$('.eqLogicAttr').on('change click', function() {
+		var eqLogic = $(this).closest('.panel-title').getValues('.eqLogicAttr')[0]
+		eqLogicsHomebridge.push(eqLogic)
+	})
+
+	function SavePlugin() {
+		var cmds = []
+		$('.TableCMD tr').each(function() {
+			if ($(this).attr('data-change') == '1') {
+				cmds.push($(this).getValues('.cmdAttr')[0])
 			}
 		})
-	})
 
-	jeedom.cmd.multiSave({
-		cmds : cmds,
-		error: function (error) {
-			$('.EnregistrementDisplay').showAlert({message: error.message, level: 'danger'})
-		},
-		success: function (data) {
-			$('.EnregistrementDisplay').showAlert({message: '{{Modifications sauvegardées avec succès}}', level: 'success'})
-		}
-	})
+		var eqLogicsHomebridgeFiltered = []
+		$.each(eqLogicsHomebridge, function(index, eqLogic) {
+			var eqLogics = $.grep(eqLogicsHomebridgeFiltered, function(e) {
+				return eqLogic.id === e.id
+			})
+			if (eqLogics.length === 0) {
+				eqLogicsHomebridgeFiltered.push(eqLogic)
+			}
+		})
+		$.each(eqLogicsHomebridgeFiltered, function(index, eqLogic) {
+			jeedom.eqLogic.simpleSave({
+				eqLogic: eqLogic,
+				error: function(error) {
+					$('.EnregistrementDisplay').showAlert({
+						message: error.message,
+						level: 'danger'
+					})
+				},
+				success: function(data) {
+					$('.EnregistrementDisplay').showAlert({
+						message: '{{Modifications sauvegardées avec succès}}',
+						level: 'success'
+					})
+					eqLogicsHomebridge = []
+				}
+			})
+		})
 
-	jeedom.config.save({
-		configuration: $('.div_plugin_configuration').getValues('.configKey')[0],
-		plugin: pluginId,
-		error: function (error) {
-			$('.EnregistrementDisplay').showAlert({message: error.message, level: 'danger'})
-		},
-		success: function () {
-			$('.EnregistrementDisplay').showAlert({message: '{{Sauvegarde effectuée}}', level: 'success'})
-		}
-	})
-}
+		jeedom.cmd.multiSave({
+			cmds: cmds,
+			error: function(error) {
+				$('.EnregistrementDisplay').showAlert({
+					message: error.message,
+					level: 'danger'
+				})
+			},
+			success: function(data) {
+				$('.EnregistrementDisplay').showAlert({
+					message: '{{Modifications sauvegardées avec succès}}',
+					level: 'success'
+				})
+			}
+		})
 
-$('body').undelegate('.cmdAction[data-l1key=chooseIcon]', 'click').delegate('.cmdAction[data-l1key=chooseIcon]', 'click', function () {
-	var iconeGeneric = $(this).closest('.iconeGeneric');
-	chooseIcon(function (_icon) {
-		iconeGeneric.find('.cmdAttr[data-l1key=display][data-l2key=icon]').empty().append(_icon)
-	})
-	$(this).closest('tr').attr('data-change','1')
-})
-
-$('body').undelegate('.cmdAttr[data-l1key=display][data-l2key=icon]', 'click').delegate('.cmdAttr[data-l1key=display][data-l2key=icon]', 'click', function () {
-   $(this).empty()
-})
-
-$('.cmdAttr[data-l1key=generic_type]').on('change', function () {
-	var cmdLine = $(this).closest('.cmdLine')
-	if ($(this).value() == 'GENERIC_INFO' || $(this).value() == 'GENERIC_ACTION') {
-		cmdLine.find('.iconeGeneric').show()
-	} else {
-		cmdLine.find('.iconeGeneric').hide()
-		cmdLine.find('.cmdAttr[data-l1key=display][data-l2key=icon]').empty()
+		jeedom.config.save({
+			configuration: $('.div_plugin_configuration').getValues('.configKey')[0],
+			plugin: pluginId,
+			error: function(error) {
+				$('.EnregistrementDisplay').showAlert({
+					message: error.message,
+					level: 'danger'
+				})
+			},
+			success: function() {
+				$('.EnregistrementDisplay').showAlert({
+					message: '{{Sauvegarde effectuée}}',
+					level: 'success'
+				})
+			}
+		})
 	}
-})
 
-$('#md_modal').on('dialogclose', function () {
-   if (changed == 1) {
-	   location.reload()
-   }
-})
+	$('body').undelegate('.cmdAction[data-l1key=chooseIcon]', 'click').delegate('.cmdAction[data-l1key=chooseIcon]', 'click', function() {
+		var iconeGeneric = $(this).closest('.iconeGeneric');
+		chooseIcon(function(_icon) {
+			iconeGeneric.find('.cmdAttr[data-l1key=display][data-l2key=icon]').empty().append(_icon)
+		})
+		$(this).closest('tr').attr('data-change', '1')
+	})
+
+	$('body').undelegate('.cmdAttr[data-l1key=display][data-l2key=icon]', 'click').delegate('.cmdAttr[data-l1key=display][data-l2key=icon]', 'click', function() {
+		$(this).empty()
+	})
+
+	$('.cmdAttr[data-l1key=generic_type]').on('change', function() {
+		var cmdLine = $(this).closest('.cmdLine')
+		if ($(this).value() == 'GENERIC_INFO' || $(this).value() == 'GENERIC_ACTION') {
+			cmdLine.find('.iconeGeneric').show()
+		} else {
+			cmdLine.find('.iconeGeneric').hide()
+			cmdLine.find('.cmdAttr[data-l1key=display][data-l2key=icon]').empty()
+		}
+	})
+
+	$('#md_modal').on('dialogclose', function() {
+		if (changed == 1) {
+			location.reload()
+		}
+	})
 </script>

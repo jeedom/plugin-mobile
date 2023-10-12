@@ -13,7 +13,7 @@ $plugin_widget = mobile::$_pluginWidget;
 
 <div class="row row-overflow">
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
-		<legend><i class="fas fa-mobile-alt"></i> {{App V2 - (VERSION ALPHA PRIVEE SEULEMENT)}}</legend>
+		<legend><i class="fas fa-mobile-alt"></i> {{App V2 - (VERSION BETA PUBLIQUE SEULEMENT)}}</legend>
 		<div class="eqLogicThumbnailContainer">
 			<div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
 				<i class="fas fa-wrench"></i><br>

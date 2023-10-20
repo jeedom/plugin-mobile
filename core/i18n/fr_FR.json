@@ -244,12 +244,7 @@
         "ERREUR SUR LA COMMANDE": "ERREUR SUR LA COMMANDE"
     },
     "plugins\/mobile\/desktop\/php\/panelWebApp.php": {
-        "401 - Accès non autorisé": "401 - Accès non autorisé",
-        "Paramétrer Icône 1": "Paramétrer Icône 1",
-        "Paramétrer Icône 2": "Paramétrer Icône 2",
-        "ICÔNE 1": "ICÔNE 1",
-        "Paramétrer Icône 3": "Paramétrer Icône 3",
-        "Paramétrer Icône4": "Paramétrer Icône4"
+        "401 - Accès non autorisé": "401 - Accès non autorisé"
     },
     "plugins\/mobile\/desktop\/php\/widgetThermo.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",

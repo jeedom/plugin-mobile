@@ -244,12 +244,7 @@
         "ERREUR SUR LA COMMANDE": "BESTELLFEHLER"
     },
     "plugins\/mobile\/desktop\/php\/panelWebApp.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "Paramétrer Icône 1": "Konfigurieren Sie Symbol 1",
-        "Paramétrer Icône 2": "Konfigurieren Sie Symbol 2",
-        "ICÔNE 1": "IKONE 1",
-        "Paramétrer Icône 3": "Konfigurieren Sie Symbol 3",
-        "Paramétrer Icône4": "Konfigurieren Sie Icon4"
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff"
     },
     "plugins\/mobile\/desktop\/php\/widgetThermo.php": {
         "401 - Accès non autorisé": "401 – Unbefugter Zugriff",

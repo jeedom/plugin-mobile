@@ -746,7 +746,7 @@ class mobile extends eqLogic
 					$publish = [
 						'token' => $token,
 						'data' => $data,
-						'apns' => $apns,
+						'apns' => $apns
 					];
 				}
 			}
@@ -897,7 +897,7 @@ class mobile extends eqLogic
 	{
 		log::add('mobile', 'debug', 'Geoloc Event du mobile > ' . $geoloc['Iq'] . ' pour ' . $geoloc['id']);
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
-		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
+		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geoloc['id']);
 		if (is_object($cmdgeoloc)) {
 			log::add('mobile', 'debug', 'commande trouvé');
 			if ($geoloc['value'] !== $cmdgeoloc->execCmd()) {

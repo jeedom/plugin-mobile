@@ -899,12 +899,12 @@ class mobile extends eqLogic
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
 		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geoloc['id']);
 		if (is_object($cmdgeoloc)) {
-			log::add('mobile', 'debug', 'commande trouvé');
+			log::add('mobile', 'debug', 'Zone Geoloc '.$cmdgeoloc->getName() .' trouvée');
 			if ($geoloc['value'] !== $cmdgeoloc->execCmd()) {
-				log::add('mobile', 'debug', 'Valeur non pareille.');
+				log::add('mobile', 'debug', 'Changement Etat Zone Geoloc '.$cmdgeoloc->getName());
 				$cmdgeoloc->event($geoloc['value']);
 			} else {
-				log::add('mobile', 'debug', 'Valeur pareille. >' . $geoloc['value'] . ' / ' . $cmdgeoloc->execCmd());
+				log::add('mobile', 'debug', 'Pas de Changement Etat Zone Geoloc >' . $geoloc['value'] . ' / ' . $cmdgeoloc->execCmd());
 			}
 		}
 	}

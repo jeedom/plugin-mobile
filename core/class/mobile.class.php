@@ -897,14 +897,24 @@ class mobile extends eqLogic
 	{
 		log::add('mobile', 'debug', 'Geoloc Event du mobile > ' . $geoloc['Iq'] . ' pour ' . $geoloc['id']);
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
-		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geoloc['id']);
+		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
+		$cmdgeolocv2 = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geoloc['id']);
 		if (is_object($cmdgeoloc)) {
-			log::add('mobile', 'debug', 'Zone Geoloc '.$cmdgeoloc->getName() .' trouvée');
+			log::add('mobile', 'debug', 'commande trouvé');
 			if ($geoloc['value'] !== $cmdgeoloc->execCmd()) {
-				log::add('mobile', 'debug', 'Changement Etat Zone Geoloc '.$cmdgeoloc->getName());
+				log::add('mobile', 'debug', 'Valeur non pareille.');
 				$cmdgeoloc->event($geoloc['value']);
 			} else {
-				log::add('mobile', 'debug', 'Pas de Changement Etat Zone Geoloc >' . $geoloc['value'] . ' / ' . $cmdgeoloc->execCmd());
+				log::add('mobile', 'debug', 'Valeur pareille. >' . $geoloc['value'] . ' / ' . $cmdgeoloc->execCmd());
+			}
+		}
+		if (is_object($cmdgeolocv2)) {
+			log::add('mobile', 'debug', 'commande trouvé');
+			if ($geoloc['value'] !== $cmdgeolocv2->execCmd()) {
+				log::add('mobile', 'debug', 'Valeur non pareille.');
+				$cmdgeolocv2->event($geoloc['value']);
+			} else {
+				log::add('mobile', 'debug', 'Valeur pareille. >' . $geoloc['value'] . ' / ' . $cmdgeolocv2->execCmd());
 			}
 		}
 	}

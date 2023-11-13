@@ -7,7 +7,7 @@
 # 13/11/2023
 
 - Fix page scénario app V1
-- 
+  
 # 30/10/2023
 
 - Fix mise à jour geolocalisation de l'app v2

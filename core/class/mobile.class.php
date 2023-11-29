@@ -29,8 +29,6 @@ class mobile extends eqLogic
 
 	public static $_pluginMulti = array('LIGHT_STATE', 'ENERGY_STATE', 'FLAP_STATE', 'HEATING_STATE', 'SIREN_STATE', 'LOCK_STATE');
 
-	//public static $_urlAws = 'https://api-notif.jeedom.com/notif/';
-
 	public static $_listenEvents = array('cmd::update', 'scenario::update', 'jeeObject::summary::update');
 
 	/*     * ***********************Methode static*************************** */

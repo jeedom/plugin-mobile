@@ -114,7 +114,7 @@ class mobile extends eqLogic
 		return json_decode(cmd::cmdToValue(file_get_contents(dirname(__FILE__) . '/../../data/mobile.json')), true);
 	}
 
-	public static function makeSaveJson($data = array(), $mobileID, $type = 'dashboard')
+	public static function makeSaveJson($_data = array(), $mobileID, $type = 'dashboard')
 	{
 		$path = dirname(__FILE__) . '/../../data/' . $mobileID . '/' . $type . '.json';
 		if (!file_exists(dirname(__FILE__) . '/../../data')) {
@@ -126,7 +126,7 @@ class mobile extends eqLogic
 		if (file_exists(dirname(__FILE__) . '/../../data/' . $mobileID . '/' . $type . '.json')) {
 			unlink(dirname(__FILE__) . '/../../data/' . $mobileID . '/' . $type . '.json');
 		}
-		file_put_contents(dirname(__FILE__) . '/../../data/' . $mobileID . '/' . $type . '.json', json_encode($data));
+		file_put_contents(dirname(__FILE__) . '/../../data/' . $mobileID . '/' . $type . '.json', json_encode($_data));
 	}
 
 	public static function getSaveJson($mobileID, $type = 'dashboard')

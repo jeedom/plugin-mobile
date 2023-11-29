@@ -578,7 +578,7 @@ class mobile extends eqLogic
 	}
 
 
-	public static function jsonPublish($os, $titre, $message, $badge = 'null', $type, $idNotif, $answer, $timeout, $token, $photo, $version, $optionsNotif = [], $critical = false)
+	public static function jsonPublish($os, $titre, $message, $type, $idNotif, $answer, $timeout, $token, $photo, $version,$badge = 'null', $optionsNotif = [], $critical = false)
 	{
 		$dateNotif = date("Y-m-d H:i:s");
 		$badge = 0;
@@ -758,7 +758,7 @@ class mobile extends eqLogic
 	public static function notification($arn, $os, $titre, $message, $badge = 'null', $type, $idNotif, $answer,  $timeout, $token, $photo, $version = 1, $optionsNotif = [], $critical = false)
 	{
 		log::add('mobile', 'debug', 'notification en cours !');
-		$publish = ($badge == 'null') ? mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer,  $timeout, $token, $photo, $version, $optionsNotif, $critical) : mobile::jsonPublish($os, $titre, $message, $badge, $type, $idNotif, $answer,  $timeout, $token, $photo, $version, $optionsNotif, $critical);
+		$publish = ($badge == 'null') ? mobile::jsonPublish($os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version,$badge, $optionsNotif, $critical) : mobile::jsonPublish($os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version,$badge, $optionsNotif, $critical);
 		log::add('mobile', 'debug', 'JSON publish >  : ' . json_encode($publish));
 		if ($token != null) {
 			if ($token == 'notifsBGDisabled') {

@@ -763,13 +763,11 @@ class mobile extends eqLogic
 		if ($token != null) {
 			if ($token == 'notifsBGDisabled') {
 				log::add('mobile', 'debug', 'NOTIFICATION NON ENVOYEE : SERVICES NOTIF DESACTIVE SUR VOTRE TELEPHONE : ');
-				//message::removeAll(__CLASS__, 'alertNotifsSend');
 				message::add(__CLASS__, 'Échec de l\'envoie de notification : le service est désactivé dans les paramètres du téléphone', 'notifsbgSend', 'alertNotifsSend');
 				return;
 			}
 			if ($token == 'desactivate') {
 				log::add('mobile', 'debug', 'NOTIFICATION NON ENVOYEE : VOUS AVEZ DESACTIVE LES NOTIFICATIONS SUR L\'APP : ');
-				//message::removeAll(__CLASS__, 'alertNotifsSend');
 				message::add(__CLASS__, 'Échec de l\'envoie de notification : le service est désactivé dans les paramètres de l\'application', 'notifsbgSend', 'alertNotifsSend');
 				return;
 			}

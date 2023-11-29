@@ -603,5 +603,9 @@ if($jsonrpc->getMethod() == "nfc"){
   $jsonrpc->makeSuccess();
 }
 
+if($jsonrpc->getMethod() == "syncBella"){
+	log::add('mobile', 'debug', 'JeedomApp > syncBella');
+}
+
 throw new Exception(__('Aucune demande', __FILE__));
 ?>

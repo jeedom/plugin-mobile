@@ -4,6 +4,12 @@
 >
 >Zur Erinnerung: Wenn keine Informationen zum Update vorhanden sind, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt
 
+
+
+# 22.10.2023
+
+- Geolokalisierungsaktualisierung der v2-App behoben
+  
 # 10.12.2023
 
 - Aktualisiert, um die neue mobile Anwendung zu berücksichtigen

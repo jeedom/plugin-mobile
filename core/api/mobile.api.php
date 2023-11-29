@@ -153,7 +153,7 @@ if($jsonrpc->getMethod() == 'setConfigs'){
     if(isset($notification['token'])) {
           	log::add('mobile', 'debug', 'token a ajouter > ' . $notification['token']);
             if($notification['token'] == 'notifsBGDisabled'){
-              message::removeAll(__CLASS__, 'alertNotifs');
+              message::removeAll("mobile", 'alertNotifs');
               $phoneName = $mobile->getName();
               message::add('mobile', 'Les Notifications sur votre mobile : '.$phoneName.' sont desactivées', 'notifsbg', 'alertNotifs');
             }

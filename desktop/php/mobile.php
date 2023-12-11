@@ -241,7 +241,7 @@ $plugin_widget = mobile::$_pluginWidget;
 										<?php
 										$hidden_user = array('jeedom_support', 'internal_report');
 										foreach (user::all() as $user) {
-											if (in_array($user->getLogin(), $hidden_user) || $user->getEnable() != 1 || $user->getProfils() != 'admin') continue;
+											if (in_array($user->getLogin(), $hidden_user) || $user->getEnable() != 1) continue;
 											echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
 										}
 										?>

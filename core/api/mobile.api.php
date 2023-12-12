@@ -26,102 +26,85 @@ if (!is_object($jsonrpc)) {
 }
 
 function createMobile($params, $nbIcones = 3){
-	$configs = $params['configs'];
-	$notification = $configs['notification'];
-	$user = user::byHash($params['apikey']);
-	$userId = $user->getId();
-	$mobile = new mobile();
-	$mobile->setEqType_name('mobile');
-	$mobile->setName($notification['platform'] . '-' . $params['Iq']);
-	//$isMobileActivId = config::byKey('checkdefaultID','mobile');
-	/*if($isMobileActivId != 'noActivMobile' && $isMobileActivId != ''){
-			$mobileActive = eqLogic::byId(intval($isMobileActivId));
-			if(is_object($mobileActive)){
-				for($i=1; $i<5; $i++){
-					${ 'selectNameMenu' . $i} = $mobileActive->getConfiguration('selectNameMenu'.$i, 'none');
-					${ 'renameIcon' . $i} = $mobileActive->getConfiguration('renameIcon'.$i, '');
-					${ 'spanIcon' . $i} = $mobileActive->getConfiguration('spanIcon'.$i, 'none');
-					${ 'urlUser' . $i} = $mobileActive->getConfiguration('urlUser'.$i, 'none');
-					$mobile->setConfiguration('selectNameMenu'.$i, ${ 'selectNameMenu' . $i});
-					$mobile->setConfiguration('renameIcon'.$i, ${ 'renameIcon' . $i});
-					$mobile->setConfiguration('spanIcon'.$i, ${ 'spanIcon' . $i});
-					$mobile->setConfiguration('urlUser'.$i, ${ 'urlUser' . $i});
-				}
-			}
-	}else{*/
-		log::add('mobile','debug',' ---- CREATE_NEW_MOBILE WITH DFDFDF '.$nbIcones.' ICONS ----');
+		$configs = $params['configs'];
+		$notification = $configs['notification'];
+		$user = user::byHash($params['apikey']);
+		$userId = $user->getId();
+		$mobile = new mobile();
+		$mobile->setEqType_name('mobile');
+		$mobile->setName($notification['platform'] . '-' . $params['Iq']);
+		log::add('mobile','debug',' ---- CREATE_NEW_MOBILE WITH '.$nbIcones.' ICONS ----');
 		$namesMenus =  ['home', 'overview', 'health', 'home'];
 		$renamesIcons =  ['Accueil', 'Synthese', 'Santé', 'Accueil'];
 		$spanIcons =  ['icon jeedomapp-in', 'fab fa-hubspot', 'fas fa-medkit', 'icon jeedomapp-in'];
 		$urlUsers =  ['none', 'none', 'none', 'none'];
 		$j = 0;
 		$countFor = intval($nbIcones) + 1;
+		$menuCustomArray = [];
 		for($i=1; $i < $countFor; $i++){
-				$mobile->setConfiguration( 'selectNameMenu'.$i, $namesMenus[$j]);
-				$mobile->setConfiguration( 'renameIcon'.$i, $renamesIcons[$j]);
-				$mobile->setConfiguration('spanIcon'.$i, $spanIcons[$j]);
-				$mobile->setConfiguration('urlUser'.$i, $urlUsers[$j]);
-				$mobile->setConfiguration('nbIcones', intval($nbIcones));
-				$mobile->setConfiguration('defaultIdMobile', 'default');
-				$mobile->save();
+			  $menuCustomArray[$i] = array('selectNameMenu' => $namesMenus[$j],
+																		 'renameIcon' => $renamesIcons[$j],
+																		 'spanIcon' => $spanIcons[$j],
+																		 'urlUser' => $urlUsers[$j],
+																);
 				$j++;
 		}
-	//}
-	
-	$mobile->setConfiguration('type_mobile', $notification['platform']);
-	$mobile->setConfiguration('affect_user', $userId);
-	$mobile->setConfiguration('validate', 'no');
-	$mobile->setConfiguration('appVersion', '2');
-	$mobile->setLogicalId($params['Iq']);
-	$mobile->setIsEnable(1);
-	$mobile->save();
-	return $mobile;
+		$mobile->setConfiguration('menuCustomArray', $menuCustomArray);
+		$mobile->setConfiguration('nbIcones', intval($nbIcones));
+		$mobile->setConfiguration('defaultIdMobile', 'default');
+		$mobile->setConfiguration('type_mobile', $notification['platform']);
+		$mobile->setConfiguration('affect_user', $userId);
+		$mobile->setConfiguration('validate', 'no');
+		$mobile->setConfiguration('appVersion', '2');
+		$mobile->setLogicalId($params['Iq']);
+		$mobile->setIsEnable(1);
+		$mobile->save();
+		return $mobile;
 }
 
 function checkDateMenu($menu, $mobile){
     $dateMobile = $mobile->getConfiguration('DateMenu', 'pasdedate');
-	if(isset($dateMobile) && isset($menu['date'])){
-		if($dateMobile < $menu['date']){
-			log::add('mobile','debug','SAVE MENU DEPUIS L APP');
-			saveMenuFromAppV2($menu, $mobile);
+		if(isset($dateMobile) && isset($menu['date'])){
+			if($dateMobile < $menu['date']){
+				log::add('mobile','debug','SAVE MENU DEPUIS L APP');
+				saveMenuFromAppV2($menu, $mobile);
+			}
+		}else{
+			return;
 		}
-	}else{
-		return;
-	}
 }
 
 
 function saveMenuFromAppV2($menu, $mobile){
 	log::add('mobile','debug','MENU_SAVE_FRM_APPV2 ' .json_encode($menu));
 	if(is_object($mobile)){
+		$menuCustomArray = [];
 		$count = 0;
 		$i=1;
 		foreach ($menu as $key => $value){
 		    if (isset($value['active']) && $value['active'] === true) {
 		        $count++;
-
-						if($value['options']['objectType'] != 'dashboard' && $value['options']['objectType'] != 'views' && $value['options']['objectType'] != 'plan' && $value['options']['objectType'] != 'panel'){
-							$mobile->setConfiguration('selectNameMenu'.$i, $value['options']['objectType']);
-              				if($value['options']['objectType'] == 'url'){
-								    if($value['options']['objectId'] != ''){
-												$mobile->setConfiguration('urlUser'.$i, $value['options']['objectId']);
-										}else{
-												$mobile->setConfiguration('urlUser'.$i, 'https://www.jeedom.com/fr/');
-										}
-							}
-						}/*else if($value['options']['objectType'] == 'panel'){
-							$mobile->setConfiguration('selectNameMenu'.$i, $value['options']['objectId']);
-							//$mobile->setConfiguration('selectNameMenu'.$i, $value['options']['objectId']);
-						}*/else{
-							$mobile->setConfiguration('selectNameMenu'.$i, $value['options']['objectId'].'_'.$value['options']['objectType']);
+						$excludedArray = ['dashboard', 'views', 'plan', 'panel'];
+						if(!in_array($value['options']['objectType'], $excludedArray)){
+								$menuCustomArray[$i]['selectNameMenu'] = $value['options']['objectType'];
+								if($value['options']['objectType'] == 'url'){
+											if($value['options']['objectId'] != ''){
+												$menuCustomArray[$i]['urlUser'] = $value['options']['objectId'];
+											}else{
+												$menuCustomArray[$i]['urlUser'] = 'https://www.jeedom.com/fr/';
+											}
+								}
+						}else{
+							$menuCustomArray[$i]['selectNameMenu'] =  $value['options']['objectId'].'_'.$value['options']['objectType'];
 						}
-						$mobile->setConfiguration('renameIcon'.$i, $value['name']);
-						$mobile->setConfiguration('spanIcon'.$i, 'icon '.$value['icon']['type'].'-'.$value['icon']['name']);
+						$menuCustomArray[$i]['renameIcon'] =  $value['name'];
+						$menuCustomArray[$i]['spanIcon'] = 'icon '.$value['icon']['type'].'-'.$value['icon']['name'];
 		    }
 			$i++;
 		}
+	  $mobile->setConfiguration('menuCustomArray', $menuCustomArray);
 		$mobile->setConfiguration('nbIcones', $count);
-   		$mobile->save();
+   	$mobile->save();
 	}
 }
 

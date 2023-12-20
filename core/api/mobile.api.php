@@ -160,32 +160,32 @@ if($jsonrpc->getMethod() == 'setConfigs'){
 
 if($jsonrpc->getMethod() == 'getJson'){
 
-  	log::add('mobile', 'debug', 'Demande du RDK to get Json');
-    log::add('mobile', 'debug', 'Demande du RDK');
-    $registerDevice = $_USER_GLOBAL->getOptions('registerDevice', array());
-    if (!is_array($registerDevice)) {
-      $registerDevice = array();
-    }
-    $rdk = (!isset($params['rdk']) || !isset($registerDevice[sha512($params['rdk'])])) ? config::genKey() : $params['rdk'];
-    $registerDevice[sha512($rdk)] = array();
-    $registerDevice[sha512($rdk)]['datetime'] = date('Y-m-d H:i:s');
-    $registerDevice[sha512($rdk)]['ip'] = getClientIp();
-    $registerDevice[sha512($rdk)]['session_id'] = session_id();
-    $_USER_GLOBAL->setOptions('registerDevice', $registerDevice);
-    $_USER_GLOBAL->save();
-    log::add('mobile', 'debug', 'RDK :' . $rdk);
-	 log::add('mobile', 'debug', 'Demande du GetJson');
+	log::add('mobile', 'debug', 'Demande du RDK to get Json');
+	log::add('mobile', 'debug', 'Demande du RDK');
+	$registerDevice = $_USER_GLOBAL->getOptions('registerDevice', array());
+	if (!is_array($registerDevice)) {
+		$registerDevice = array();
+	}
+	$rdk = (!isset($params['rdk']) || !isset($registerDevice[sha512($params['rdk'])])) ? config::genKey() : $params['rdk'];
+	$registerDevice[sha512($rdk)] = array();
+	$registerDevice[sha512($rdk)]['datetime'] = date('Y-m-d H:i:s');
+	$registerDevice[sha512($rdk)]['ip'] = getClientIp();
+	$registerDevice[sha512($rdk)]['session_id'] = session_id();
+	$_USER_GLOBAL->setOptions('registerDevice', $registerDevice);
+	$_USER_GLOBAL->save();
+  log::add('mobile', 'debug', 'RDK :' . $rdk);
+	log::add('mobile', 'debug', 'Demande du GetJson');
 	$idBox = jeedom::getHardwareKey();
 	$return = array();
-  	/* -------- MOBILE FIRST ------- */
-  	log::add('mobile', 'debug', 'Creation du retour de base pour l app');
-		$objectsDashboard = [];
-		foreach(jeeObject::all() as $object){
-			  $obArray = utils::o2a($object);
-				$objectId = $obArray['id'];
-				$objectName = $obArray['name'];
-				$objectsDashboard[$objectId] =  $objectName;
-		}
+	/* -------- MOBILE FIRST ------- */
+	log::add('mobile', 'debug', 'Creation du retour de base pour l app');
+	$objectsDashboard = [];
+	foreach(jeeObject::all() as $object){
+			$obArray = utils::o2a($object);
+			$objectId = $obArray['id'];
+			$objectName = $obArray['name'];
+			$objectsDashboard[$objectId] =  $objectName;
+	}
 	$return[$idBox]['informations']['objects']['dashboard'] = $objectsDashboard;
 	$objectsViews = [];
 	foreach(view::all() as $object){
@@ -208,11 +208,11 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$return[$idBox]['apikeyUser'] = $_USER_GLOBAL->getHash();
 	$return[$idBox]['configs'] = 'undefined';
 	$return[$idBox]['externalIp'] = network::getNetworkAccess('external');
-    $return[$idBox]['localIp'] = network::getNetworkAccess('internal');
+  $return[$idBox]['localIp'] = network::getNetworkAccess('internal');
 	$return[$idBox]['hardware'] = jeedom::getHardwareName();
 	$return[$idBox]['hwkey'] = jeedom::getHardwareKey();
 	$return[$idBox]['appMobile'] = '0.4';
-    $return[$idBox]['ping'] = true;
+  $return[$idBox]['ping'] = true;
 	$return[$idBox]['informations']['userRights'] = $_USER_GLOBAL->getProfils();
 	$return[$idBox]['informations']['hardware'] = jeedom::getHardwareName();
 	$return[$idBox]['informations']['language'] = config::byKey('language');
@@ -271,16 +271,16 @@ if($jsonrpc->getMethod() == 'getJson'){
 	$return[$idBox]['informations']['plugins'] = $arrayPlugins;
 	$return[$idBox]['informations']['changelog'] = $changeLogs;
 	$return[$idBox]['informations']['infosDemon'] = $deamons_infos;
-    $return[$idBox]['informations']['nbUpdate'] = update::nbNeedUpdate();
+  $return[$idBox]['informations']['nbUpdate'] = update::nbNeedUpdate();
 	$return[$idBox]['informations']['uname'] = system::getDistrib() . ' ' . method_exists('system','getOsVersion') ? system::getOsVersion() : 'UnknownVersion';
 	$return[$idBox]['jeedom_version'] = jeedom::version();
-    $return[$idBox]['rdk'] = $rdk;
+  $return[$idBox]['rdk'] = $rdk;
 	$return[$idBox]['name'] = config::byKey('name') == '' ? 'Jeedom' : config::byKey('name');
-  	log::add('mobile', 'debug', 'retour de base > '.json_encode($return));
+  log::add('mobile', 'debug', 'retour de base > '.json_encode($return));
 
-  	log::add('mobile', 'debug', 'recherche du mobile via sont Iq >'.$params['Iq']);
-  	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
-  	log::add('mobile', 'debug', 'mobile object');
+  log::add('mobile', 'debug', 'recherche du mobile via sont Iq >'.$params['Iq']);
+  $mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
+  log::add('mobile', 'debug', 'mobile object');
 	if(is_object($mobile)){
 		log::add('mobile', 'debug', 'mobile bien trouvé > '.$mobile->getName());
 		$return[$idBox]['configs'] = array();
@@ -297,7 +297,30 @@ if($jsonrpc->getMethod() == 'getJson'){
 				$return[$idBox]['configs']['menu'] = $defaultMenuArray;
 			}
 	}
-  	log::add('mobile', 'debug', 'CustomENVOICONFIGSAPI GETJSON' .json_encode($return[$idBox]['configs']));
+	// ENREGISTRER LES 5 DERNIERS MENUS DU TELEPHONE :
+	// Récupérer les enregistrements précédents pour ce téléphone
+	$previousMenus = config::byKey('previousMenus', 'mobile');
+	if (empty($previousMenus)) {
+			$previousMenus = [];
+	}
+	
+	$phoneMenus = isset($previousMenus[$params['Iq']]) ? $previousMenus[$params['Iq']] : [];
+	
+	$newMenu = $return[$idBox]['configs']['menu'];
+	
+
+	if (empty($phoneMenus) || $newMenu != $phoneMenus[0]) {
+			array_unshift($phoneMenus, $newMenu);
+			$phoneMenus = array_slice($phoneMenus, 0, 5);
+			$previousMenus[$params['Iq']] = $phoneMenus;
+			
+			// 5 DERNIERS
+			config::save('previousMenus', $previousMenus, 'mobile');
+	
+	}
+	config::save('menuCustom_' . $params['Iq'], $newMenu, 'mobile');
+
+  log::add('mobile', 'debug', 'CustomENVOICONFIGSAPI GETJSON' .json_encode($return[$idBox]['configs']));
 	log::add('mobile','debug','INFOS GETJSONINITAL : '.json_encode($return));
 	$jsonrpc->makeSuccess($return);
 

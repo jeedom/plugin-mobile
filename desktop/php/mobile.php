@@ -38,6 +38,11 @@ $plugin_widget = mobile::$_pluginWidget;
 				<i class="fas fa-qrcode"></i><br>
 				<span>{{QR Code}}</span>
 			</div>
+			<!-- A VENIR -->
+			<!-- <div class="cursor eqLogicAction logoSecondary"  id="bt_previousMenu">
+			  <i class="icon kiko-hamburger-menu"></i><br>
+				<span>{{Sauvegardes Menu Custom Mobile}}</span>
+			</div> -->
 			<!--
 			<div style="color:#94CA02;" class="cursor eqLogicAction logoSecondary" data-action="bt_qrCodev2" id="bt_startTuto">
 				<i class="fas fa-book"></i><br>

@@ -303,6 +303,29 @@ document.querySelectorAll(".btIconClass").forEach((el) => {
   });
 });
 
+
+
+document.querySelector("#bt_previousMenu")?.addEventListener("click", function (event) {
+  jeedom.version({
+    success: function (version) {
+      if (version >= "4.4.0") {
+        jeeDialog.dialog({
+          id: "PreviousMenus",
+          title: "{{Menus enregistrés}}",
+          contentUrl: "index.php?v=d&plugin=mobile&modal=modal.previousMenus",
+        });
+      } else {
+        $("#div_alert").showAlert({
+          message:
+            "Module compatible uniquement avec la version core 4.4.0 et supérieure",
+          level: "warning",
+        });
+        return;
+      }
+    },
+  });
+});
+
 function userSelect(idSelect) {
   let eqLogicId = document.getElementById(idSelect).getAttribute("eqid");
   let numElement = idSelect.substr(-1, 1);

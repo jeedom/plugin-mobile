@@ -9,7 +9,7 @@
     },
     "plugins\/mobile\/desktop\/modal\/health.php": {
         "401 - Accès non autorisé": "401 - Unauthorized Access",
-        "Équipement": "Device",
+        "Équipement": "Equipment",
         "Type de Mobile": "Mobile Type",
         "Utilisateur": "User",
         "Dernière activité": "Last activity",
@@ -94,7 +94,7 @@
         "Pour connecter votre téléphone : il y a 2 méthodes possible": "To connect your phone: there are 2 possible methods"
     },
     "plugins\/mobile\/desktop\/modal\/update.mobile.php": {
-        "401 - Accès non autorisé": "401 - Unauthorized access",
+        "401 - Accès non autorisé": "401 - Unauthorized Access",
         "Pause": "Pause",
         "Rechercher": "Search"
     },
@@ -118,7 +118,7 @@
         "Sauvegarde effectuée": "Backup completed"
     },
     "plugins\/mobile\/desktop\/modal\/scenario.php": {
-        "401 - Accès non autorisé": "401 - Unauthorized access",
+        "401 - Accès non autorisé": "401 - Unauthorized Access",
         "Scénarios": "Scenarios",
         "Sauvegarder": "Save",
         "ID": "Id",
@@ -174,15 +174,27 @@
         "Pour acceder a toutes les fonctionnalités, il faut cliquer sur la box configurée; cela permettra à l'application de recuperer ses informations, et donc autoriser les affichages du menu.": "To access all the features, you must click on the configured box; this will allow the application to retrieve its information, and therefore authorize the menu displays",
         "Menu Complet": "Full Menu"
     },
+    "plugins\/mobile\/desktop\/modal\/modal.previousMenus.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized Access",
+        "Équipement": "Equipment",
+        "Type de Mobile": "Mobile Type",
+        "Utilisateur": "User",
+        "Menu Enregistrés": "Menu Saved",
+        "Aucun menu enregistré": "No saved menu",
+        "APPLICATION V2 NON INTALLÉE": "APPLICATION V2 NOT INSTALLED",
+        "Utilisateur non trouvé": "User not found",
+        "Configuration Menu Enregistrée": "Saved Menu Configuration"
+    },
     "plugins\/mobile\/desktop\/php\/widgetLight.php": {
         "401 - Accès non autorisé": "401 - Unauthorized Access"
     },
     "plugins\/mobile\/desktop\/php\/mobile.php": {
-        "401 - Accès non autorisé": "401 - Unauthorized access",
+        "401 - Accès non autorisé": "401 - Unauthorized Access",
         "App V2 - (VERSION BETA SEULEMENT)": "App V2 - (BETA VERSION ONLY)",
         "Configuration": "Setup",
         "Gestion Mobiles": "Mobile Management",
         "QR Code": "QR Code",
+        "Sauvegardes Menu Custom Mobile": "Backups Menu Custom Mobile",
         "Documentation APP": "APP Documentation",
         "Community": "Community",
         "Mes Téléphones Mobiles": "My Mobile Phones",
@@ -261,6 +273,7 @@
         "Scénarios - Application V1": "Scenarios - Application V1",
         "Menu Custom": "Custom menu",
         "Configuration Mobile de la Pièce - Application V1": "Mobile Room Configuration - Application V1",
+        "Menus enregistrés": "Saved menus",
         "Erreur pas d'adresse interne (voir configuration de votre Jeedom !)": "No internal address error (see configuration of your Jeedom!)",
         "Erreur pas d'adresse externe (voir configuration de votre Jeedom !)": "No external address error (see configuration of your Jeedom!)",
         "Erreur pas d'utilisateur selectionné": "Error no user selected",
@@ -277,7 +290,7 @@
         "Supprimer la commande": "Delete order"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
-        "401 - Accès non autorisé": "401 - Unauthorized access",
+        "401 - Accès non autorisé": "401 - Unauthorized Access",
         "Equipement non trouvé : ": "Equipment not found:",
         "User inexistant : ": "Non-existent user:",
         "scenario non trouvé": "scenario not found",

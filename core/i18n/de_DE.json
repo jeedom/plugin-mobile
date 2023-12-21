@@ -9,7 +9,7 @@
     },
     "plugins\/mobile\/desktop\/modal\/health.php": {
         "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "Équipement": "Gerät",
+        "Équipement": "Ausrüstung",
         "Type de Mobile": "Mobiler Typ",
         "Utilisateur": "Benutzer",
         "Dernière activité": "Letzte Aktivität",
@@ -94,7 +94,7 @@
         "Pour connecter votre téléphone : il y a 2 méthodes possible": "So verbinden Sie Ihr Telefon: Es gibt 2 mögliche Methoden"
     },
     "plugins\/mobile\/desktop\/modal\/update.mobile.php": {
-        "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Pause": "Pause",
         "Rechercher": "Suchen nach"
     },
@@ -118,7 +118,7 @@
         "Sauvegarde effectuée": "Sicherung abgeschlossen"
     },
     "plugins\/mobile\/desktop\/modal\/scenario.php": {
-        "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Scénarios": "Szenarien",
         "Sauvegarder": "Speichern",
         "ID": "Identifikation",
@@ -174,15 +174,27 @@
         "Pour acceder a toutes les fonctionnalités, il faut cliquer sur la box configurée; cela permettra à l'application de recuperer ses informations, et donc autoriser les affichages du menu.": "Um auf alle Funktionen zuzugreifen, müssen Sie auf das konfigurierte Feld klicken. Dadurch kann die Anwendung ihre Informationen abrufen und somit die Menüanzeigen autorisieren",
         "Menu Complet": "Volles Menü"
     },
+    "plugins\/mobile\/desktop\/modal\/modal.previousMenus.php": {
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
+        "Équipement": "Ausrüstung",
+        "Type de Mobile": "Mobiler Typ",
+        "Utilisateur": "Benutzer",
+        "Menu Enregistrés": "Menü gespeichert",
+        "Aucun menu enregistré": "Kein gespeichertes Menü",
+        "APPLICATION V2 NON INTALLÉE": "ANWENDUNG V2 NICHT INSTALLIERT",
+        "Utilisateur non trouvé": "Benutzer nicht gefunden",
+        "Configuration Menu Enregistrée": "Gespeicherte Menükonfiguration"
+    },
     "plugins\/mobile\/desktop\/php\/widgetLight.php": {
         "401 - Accès non autorisé": "401 – Unbefugter Zugriff"
     },
     "plugins\/mobile\/desktop\/php\/mobile.php": {
-        "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "App V2 - (VERSION BETA SEULEMENT)": "App V2 – (NUR BETA-VERSION)",
         "Configuration": "Konfiguration",
         "Gestion Mobiles": "Mobiles Management",
         "QR Code": "QR-Code",
+        "Sauvegardes Menu Custom Mobile": "Backups-Menü, benutzerdefiniert, mobil",
         "Documentation APP": "APP-Dokumentation",
         "Community": "Gemeinschaft",
         "Mes Téléphones Mobiles": "Meine Handys",
@@ -261,6 +273,7 @@
         "Scénarios - Application V1": "Szenarien – Anwendung V1",
         "Menu Custom": "Benutzerdefiniertes Menü",
         "Configuration Mobile de la Pièce - Application V1": "Mobile Raumkonfiguration – Anwendung V1",
+        "Menus enregistrés": "Gespeicherte Menüs",
         "Erreur pas d'adresse interne (voir configuration de votre Jeedom !)": "Kein interner Adressfehler (siehe Konfiguration Ihres Jeedom!)",
         "Erreur pas d'adresse externe (voir configuration de votre Jeedom !)": "Kein externer Adressfehler (siehe Konfiguration Ihres Jeedom!)",
         "Erreur pas d'utilisateur selectionné": "Fehler: Kein Benutzer ausgewählt",
@@ -277,7 +290,7 @@
         "Supprimer la commande": "Auftrag löschen"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
-        "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
+        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Equipement non trouvé : ": "Ausrüstung nicht gefunden:",
         "User inexistant : ": "Nicht vorhandener Benutzer:",
         "scenario non trouvé": "Szenario nicht gefunden",

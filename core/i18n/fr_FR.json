@@ -174,6 +174,17 @@
         "Pour acceder a toutes les fonctionnalités, il faut cliquer sur la box configurée; cela permettra à l'application de recuperer ses informations, et donc autoriser les affichages du menu.": "Pour acceder a toutes les fonctionnalités, il faut cliquer sur la box configurée; cela permettra à l'application de recuperer ses informations, et donc autoriser les affichages du menu.",
         "Menu Complet": "Menu Complet"
     },
+    "plugins\/mobile\/desktop\/modal\/modal.previousMenus.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Équipement": "Équipement",
+        "Type de Mobile": "Type de Mobile",
+        "Utilisateur": "Utilisateur",
+        "Menu Enregistrés": "Menu Enregistrés",
+        "Aucun menu enregistré": "Aucun menu enregistré",
+        "APPLICATION V2 NON INTALLÉE": "APPLICATION V2 NON INTALLÉE",
+        "Utilisateur non trouvé": "Utilisateur non trouvé",
+        "Configuration Menu Enregistrée": "Configuration Menu Enregistrée"
+    },
     "plugins\/mobile\/desktop\/php\/widgetLight.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé"
     },
@@ -183,6 +194,7 @@
         "Configuration": "Configuration",
         "Gestion Mobiles": "Gestion Mobiles",
         "QR Code": "QR Code",
+        "Sauvegardes Menu Custom Mobile": "Sauvegardes Menu Custom Mobile",
         "Documentation APP": "Documentation APP",
         "Community": "Community",
         "Mes Téléphones Mobiles": "Mes Téléphones Mobiles",
@@ -261,6 +273,7 @@
         "Scénarios - Application V1": "Scénarios - Application V1",
         "Menu Custom": "Menu Custom",
         "Configuration Mobile de la Pièce - Application V1": "Configuration Mobile de la Pièce - Application V1",
+        "Menus enregistrés": "Menus enregistrés",
         "Erreur pas d'adresse interne (voir configuration de votre Jeedom !)": "Erreur pas d'adresse interne (voir configuration de votre Jeedom !)",
         "Erreur pas d'adresse externe (voir configuration de votre Jeedom !)": "Erreur pas d'adresse externe (voir configuration de votre Jeedom !)",
         "Erreur pas d'utilisateur selectionné": "Erreur pas d'utilisateur selectionné",

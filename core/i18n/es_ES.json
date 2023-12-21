@@ -9,7 +9,7 @@
     },
     "plugins\/mobile\/desktop\/modal\/health.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado",
-        "Équipement": "Dispositivos",
+        "Équipement": "Equipo",
         "Type de Mobile": "Tipo de móvil",
         "Utilisateur": "Usuario",
         "Dernière activité": "Última actividad",
@@ -174,6 +174,17 @@
         "Pour acceder a toutes les fonctionnalités, il faut cliquer sur la box configurée; cela permettra à l'application de recuperer ses informations, et donc autoriser les affichages du menu.": "Para acceder a todas las funciones, debe hacer clic en la casilla configurada; esto permitirá que la aplicación recupere su información y, por lo tanto, autorizará la visualización del menú",
         "Menu Complet": "Menú completo"
     },
+    "plugins\/mobile\/desktop\/modal\/modal.previousMenus.php": {
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
+        "Équipement": "Equipo",
+        "Type de Mobile": "Tipo de móvil",
+        "Utilisateur": "Usuario",
+        "Menu Enregistrés": "Menú guardado",
+        "Aucun menu enregistré": "No hay menú guardado",
+        "APPLICATION V2 NON INTALLÉE": "APLICACIÓN V2 NO INSTALADA",
+        "Utilisateur non trouvé": "Usuario no encontrado",
+        "Configuration Menu Enregistrée": "Configuración del menú guardado"
+    },
     "plugins\/mobile\/desktop\/php\/widgetLight.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado"
     },
@@ -183,6 +194,7 @@
         "Configuration": "Configuración",
         "Gestion Mobiles": "Gestión Móvil",
         "QR Code": "Código QR",
+        "Sauvegardes Menu Custom Mobile": "Menú de copias de seguridad Móvil personalizado",
         "Documentation APP": "Documentación de la aplicación",
         "Community": "Comunidad",
         "Mes Téléphones Mobiles": "Mis teléfonos móviles",
@@ -261,6 +273,7 @@
         "Scénarios - Application V1": "Escenarios - Aplicación V1",
         "Menu Custom": "Menú personalizado",
         "Configuration Mobile de la Pièce - Application V1": "Configuración de sala móvil: aplicación V1",
+        "Menus enregistrés": "Menús guardados",
         "Erreur pas d'adresse interne (voir configuration de votre Jeedom !)": "No hay error de dirección interna (¡consulte la configuración de su Jeedom!)",
         "Erreur pas d'adresse externe (voir configuration de votre Jeedom !)": "Sin error de dirección externa (¡consulte la configuración de su Jeedom!)",
         "Erreur pas d'utilisateur selectionné": "Error ningún usuario seleccionado",

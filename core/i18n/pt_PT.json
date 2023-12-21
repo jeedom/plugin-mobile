@@ -174,6 +174,17 @@
         "Pour acceder a toutes les fonctionnalités, il faut cliquer sur la box configurée; cela permettra à l'application de recuperer ses informations, et donc autoriser les affichages du menu.": "Para acessar todos os recursos, você deve clicar na caixa configurada; isso permitirá que o aplicativo recupere suas informações e, portanto, autorize a exibição do menu",
         "Menu Complet": "Menu completo"
     },
+    "plugins\/mobile\/desktop\/modal\/modal.previousMenus.php": {
+        "401 - Accès non autorisé": "401 - Acesso não autorizado",
+        "Équipement": "Equipamento",
+        "Type de Mobile": "Tipo de celular",
+        "Utilisateur": "Do utilizador",
+        "Menu Enregistrés": "Menu salvo",
+        "Aucun menu enregistré": "Nenhum menu salvo",
+        "APPLICATION V2 NON INTALLÉE": "APLICATIVO V2 NÃO INSTALADO",
+        "Utilisateur non trouvé": "Usuário não encontrado",
+        "Configuration Menu Enregistrée": "Configuração de menu salva"
+    },
     "plugins\/mobile\/desktop\/php\/widgetLight.php": {
         "401 - Accès non autorisé": "401 - Acesso não autorizado"
     },
@@ -183,6 +194,7 @@
         "Configuration": "Configuração",
         "Gestion Mobiles": "Gerenciamento móvel",
         "QR Code": "Código QR",
+        "Sauvegardes Menu Custom Mobile": "Menu Backups Personalizado Móvel",
         "Documentation APP": "Documentação do APP",
         "Community": "Comunidade",
         "Mes Téléphones Mobiles": "Meus telefones móveis",
@@ -261,6 +273,7 @@
         "Scénarios - Application V1": "Cenários - Aplicação V1",
         "Menu Custom": "Menu customizado",
         "Configuration Mobile de la Pièce - Application V1": "Configuração de Sala Móvel - Aplicação V1",
+        "Menus enregistrés": "Menus salvos",
         "Erreur pas d'adresse interne (voir configuration de votre Jeedom !)": "Nenhum erro de endereço interno (veja a configuração do seu Jeedom!)",
         "Erreur pas d'adresse externe (voir configuration de votre Jeedom !)": "Nenhum erro de endereço externo (veja a configuração do seu Jeedom!)",
         "Erreur pas d'utilisateur selectionné": "Erro nenhum usuário selecionado",

@@ -281,9 +281,9 @@ if($jsonrpc->getMethod() == 'getJson'){
   log::add('mobile', 'debug', 'recherche du mobile via sont Iq >'.$params['Iq']);
   $mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
   log::add('mobile', 'debug', 'mobile object');
+  $return[$idBox]['configs'] = array();
 	if(is_object($mobile)){
 		log::add('mobile', 'debug', 'mobile bien trouvé > '.$mobile->getName());
-		$return[$idBox]['configs'] = array();
 		$return[$idBox]['configs']['menu'] = mobile::configMenuCustom($mobile->getId(), jeedom::version());
 	}else{
 			if(jeedom::version() < '4.4.0'){

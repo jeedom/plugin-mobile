@@ -38,7 +38,7 @@ function mobile_update()
 	//	config::save('displayMobilePanel',1, 'mobile');
 	$mobiles = eqLogic::byType('mobile');
 	foreach($mobiles as $mobile){
-		if(!isset($mobile->getConfiguration('menuCustomArray'))){
+		if($mobile->getConfiguration('menuCustomArray', null) !== null){
 			$icons = $mobile->getConfiguration('nbIcones', 3);
 			$menuCustomArray = array();
 			for($i=1; $i < intval($icons) + 1; $i++){

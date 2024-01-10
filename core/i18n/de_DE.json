@@ -9,7 +9,7 @@
     },
     "plugins\/mobile\/desktop\/modal\/health.php": {
         "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "Équipement": "Ausrüstung",
+        "Équipement": "Gerät",
         "Type de Mobile": "Mobiler Typ",
         "Utilisateur": "Benutzer",
         "Dernière activité": "Letzte Aktivität",
@@ -94,7 +94,7 @@
         "Pour connecter votre téléphone : il y a 2 méthodes possible": "So verbinden Sie Ihr Telefon: Es gibt 2 mögliche Methoden"
     },
     "plugins\/mobile\/desktop\/modal\/update.mobile.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
         "Pause": "Pause",
         "Rechercher": "Suchen nach"
     },
@@ -118,7 +118,7 @@
         "Sauvegarde effectuée": "Sicherung abgeschlossen"
     },
     "plugins\/mobile\/desktop\/modal\/scenario.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
         "Scénarios": "Szenarien",
         "Sauvegarder": "Speichern",
         "ID": "Identifikation",
@@ -189,7 +189,7 @@
         "401 - Accès non autorisé": "401 – Unbefugter Zugriff"
     },
     "plugins\/mobile\/desktop\/php\/mobile.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
         "App V2 - (VERSION BETA SEULEMENT)": "App V2 – (NUR BETA-VERSION)",
         "Configuration": "Konfiguration",
         "Gestion Mobiles": "Mobiles Management",
@@ -290,7 +290,7 @@
         "Supprimer la commande": "Auftrag löschen"
     },
     "plugins\/mobile\/core\/ajax\/mobile.ajax.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
+        "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
         "Equipement non trouvé : ": "Ausrüstung nicht gefunden:",
         "User inexistant : ": "Nicht vorhandener Benutzer:",
         "scenario non trouvé": "Szenario nicht gefunden",

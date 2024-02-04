@@ -48,14 +48,6 @@ $plugin_widget = mobile::$_pluginWidget;
 				<i class="fas fa-book"></i><br>
 				<span>{{Documentation APP}}</span>
 			</div> -->
-			<?php
-			if ($displayInfo) {
-				echo '<div class="cursor eqLogicAction info" data-action="createCommunityPost">';
-				echo '<i class="fas fa-ambulance"></i><br>';
-				echo '<span>{{Community}}</span>';
-				echo '</div>';
-			}
-			?>
 		</div>
 		<legend><i class="fas fa-mobile"></i> {{Mes Téléphones Mobiles}}</legend>
 		<div class="input-group" style="margin:5px;">
@@ -83,7 +75,7 @@ $plugin_widget = mobile::$_pluginWidget;
 					echo '</a>';
 					echo '<br>';
 					echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
-					echo '<span class="hidden hiddenAsCard displayTableRight">';
+					echo '<span class="hiddenAsCard displayTableRight hidden">';
 					echo '<span class="label">' . $eqLogic->getConfiguration('type_mobile')  .  '</span>';
 					$user = $eqLogic->getConfiguration('affect_user');
 					$username = user::byId($user);
@@ -145,7 +137,7 @@ $plugin_widget = mobile::$_pluginWidget;
 					echo '</a>';
 					echo '<br>';
 					echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
-					echo '<span class="hidden hiddenAsCard displayTableRight">';
+					echo '<span class="hiddenAsCard displayTableRight hidden">';
 					echo '<span class="label">' . $eqLogic->getConfiguration('type_mobile')  .  '</span>';
 					$user = $eqLogic->getConfiguration('affect_user');
 					$username = user::byId($user);

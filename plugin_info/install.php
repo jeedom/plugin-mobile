@@ -36,10 +36,25 @@ function mobile_install()
 function mobile_update()
 {
 	//	config::save('displayMobilePanel',1, 'mobile');
+	$mobiles = eqLogic::byType('mobile');
+	foreach($mobiles as $mobile){
+		if($mobile->getConfiguration('menuCustomArray', null) !== null){
+			$icons = $mobile->getConfiguration('nbIcones', 3);
+			$menuCustomArray = array();
+			for($i=1; $i < intval($icons) + 1; $i++){
+				$menuCustomArray[$i]['selectNameMenu'] = $mobile->getConfiguration('selectNameMenu'.$i);
+				$menuCustomArray[$i]['renameIcon'] = $mobile->getConfiguration('renameIcon'.$i);
+				$menuCustomArray[$i]['spanIcon'] = $mobile->getConfiguration('spanIcon'.$i);
+				$menuCustomArray[$i]['urlUser'] = $mobile->getConfiguration('urlUser'.$i);
+			}
+			$mobile->setConfiguration('menuCustomArray', $menuCustomArray);
+			$mobile->save();
+		}
+	}
 	$oldFiles = [dirname(__FILE__) . '/../desktop/css/panel.css', 
 	             dirname(__FILE__) . '/../desktop/php/panelMenuCustom.php',
-				 dirname(__FILE__) . '/../desktop/js/panelMenuCustom.js',
-				 dirname(__FILE__) . '/../desktop/modal/health.php'];
+							 dirname(__FILE__) . '/../desktop/js/panelMenuCustom.js',
+							 dirname(__FILE__) . '/../desktop/modal/health.php'];
 	foreach ($oldFiles as $oldFile) {
 		if (file_exists($oldFile)) {
 			shell_exec('rm ' . $oldFile);

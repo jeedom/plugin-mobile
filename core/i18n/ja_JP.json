@@ -174,6 +174,17 @@
         "Pour acceder a toutes les fonctionnalités, il faut cliquer sur la box configurée; cela permettra à l'application de recuperer ses informations, et donc autoriser les affichages du menu.": "Pour acceder a toutes les fonctionnalités, il faut cliquer sur la box configurée; cela permettra à l'application de recuperer ses informations, et donc autoriser les affichages du menu",
         "Menu Complet": "Menu Complet"
     },
+    "plugins\/mobile\/desktop\/modal\/modal.previousMenus.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Équipement": "Équipement",
+        "Type de Mobile": "Type de Mobile",
+        "Utilisateur": "Utilisateur",
+        "Menu Enregistrés": "Menu Enregistrés",
+        "Aucun menu enregistré": "Aucun menu enregistré",
+        "APPLICATION V2 NON INTALLÉE": "APPLICATION V2 NON INTALLÉE",
+        "Utilisateur non trouvé": "Utilisateur non trouvé",
+        "Configuration Menu Enregistrée": "Configuration Menu Enregistrée"
+    },
     "plugins\/mobile\/desktop\/php\/widgetLight.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé"
     },
@@ -183,6 +194,7 @@
         "Configuration": "コンフィギュレーション",
         "Gestion Mobiles": "Gestion Mobiles",
         "QR Code": "QR Code",
+        "Sauvegardes Menu Custom Mobile": "Sauvegardes Menu Custom Mobile",
         "Documentation APP": "Documentation APP",
         "Community": "Community",
         "Mes Téléphones Mobiles": "Mes Téléphones Mobiles",
@@ -244,12 +256,7 @@
         "ERREUR SUR LA COMMANDE": "ERREUR SUR LA COMMANDE"
     },
     "plugins\/mobile\/desktop\/php\/panelWebApp.php": {
-        "401 - Accès non autorisé": "401 - Accès non autorisé",
-        "Paramétrer Icône 1": "Paramétrer Icône 1",
-        "Paramétrer Icône 2": "Paramétrer Icône 2",
-        "ICÔNE 1": "ICONE 1",
-        "Paramétrer Icône 3": "Paramétrer Icône 3",
-        "Paramétrer Icône4": "Paramétrer Icône4"
+        "401 - Accès non autorisé": "401 - Accès non autorisé"
     },
     "plugins\/mobile\/desktop\/php\/widgetThermo.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
@@ -265,12 +272,11 @@
         "Bien demarrer": "Bien demarrer",
         "Scénarios - Application V1": "Scénarios - Application V1",
         "Menu Custom": "Menu Custom",
-        "Configuration Mobile du Plugin \"+name_plugin+\" - Application V1": "Configuration Mobile du Plugin \"+name_plugin+\" - Application V1",
         "Configuration Mobile de la Pièce - Application V1": "Configuration Mobile de la Pièce - Application V1",
-        "Configuration Mobile du Scénario \"+name_scenario+\" - Application V1": "Configuration Mobile du Scénario \"+name_scenario+\" - Application V1",
-        "Erreur pas d\\'adresse interne (voir configuration de votre Jeedom !)": "Erreur Pas d\\'adresse interne (voir configuration de votre Jeedom !)",
-        "Erreur pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)",
-        "Erreur pas d\\'utilisateur selectionné": "Erreur Pas d\\'utilisateur selectionné",
+        "Menus enregistrés": "Menus enregistrés",
+        "Erreur pas d'adresse interne (voir configuration de votre Jeedom !)": "Erreur pas d'adresse interne (voir configuration de votre Jeedom !)",
+        "Erreur pas d'adresse externe (voir configuration de votre Jeedom !)": "Erreur pas d'adresse externe (voir configuration de votre Jeedom !)",
+        "Erreur pas d'utilisateur selectionné": "Erreur pas d'utilisateur selectionné",
         "Configuration mise à jour": "Configuration mise à jour",
         "Nom de la commande": "Nom de la commande",
         "Choisir une icône": "Choisir une icône",

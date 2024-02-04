@@ -38,6 +38,11 @@ $plugin_widget = mobile::$_pluginWidget;
 				<i class="fas fa-qrcode"></i><br>
 				<span>{{QR Code}}</span>
 			</div>
+			<!-- A VENIR -->
+			<!-- <div class="cursor eqLogicAction logoSecondary"  id="bt_previousMenu">
+			  <i class="icon kiko-hamburger-menu"></i><br>
+				<span>{{Sauvegardes Menu Custom Mobile}}</span>
+			</div> -->
 			<!--
 			<div style="color:#94CA02;" class="cursor eqLogicAction logoSecondary" data-action="bt_qrCodev2" id="bt_startTuto">
 				<i class="fas fa-book"></i><br>
@@ -241,7 +246,7 @@ $plugin_widget = mobile::$_pluginWidget;
 										<?php
 										$hidden_user = array('jeedom_support', 'internal_report');
 										foreach (user::all() as $user) {
-											if (in_array($user->getLogin(), $hidden_user) || $user->getEnable() != 1 || $user->getProfils() != 'admin') continue;
+											if (in_array($user->getLogin(), $hidden_user) || $user->getEnable() != 1) continue;
 											echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
 										}
 										?>

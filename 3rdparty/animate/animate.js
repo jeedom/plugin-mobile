@@ -1,11 +1,11 @@
 $.fn.extend({
-  animateCss: function(animationName, callback) {
-    var animationEnd = (function(el) {
+  animateCss: function (animationName, callback) {
+    var animationEnd = (function (el) {
       var animations = {
-        animation: 'animationend',
-        OAnimation: 'oAnimationEnd',
-        MozAnimation: 'mozAnimationEnd',
-        WebkitAnimation: 'webkitAnimationEnd',
+        animation: "animationend",
+        OAnimation: "oAnimationEnd",
+        MozAnimation: "mozAnimationEnd",
+        WebkitAnimation: "webkitAnimationEnd",
       };
 
       for (var t in animations) {
@@ -13,12 +13,12 @@ $.fn.extend({
           return animations[t];
         }
       }
-    })(document.createElement('div'));
+    })(document.createElement("div"));
 
-    this.addClass('animated ' + animationName).one(animationEnd, function() {
-      $(this).removeClass('animated ' + animationName);
+    this.addClass("animated " + animationName).one(animationEnd, function () {
+      $(this).removeClass("animated " + animationName);
 
-      if (typeof callback === 'function') callback();
+      if (typeof callback === "function") callback();
     });
 
     return this;

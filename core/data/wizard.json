@@ -1,56 +1,46 @@
 {
-"trame": {
-  "firstPage" :
-    {
+  "trame": {
+    "firstPage": {
       "title": "Bien demarrer",
       "wizard": "firstPage",
       "order": 1,
       "custom": "",
       "visible": 1
-    }
-  ,
-  "SecPage" :
-    {
+    },
+    "SecPage": {
       "title": "Identification",
       "wizard": "secPage",
       "order": 2,
       "custom": "",
       "visible": 1
     },
-    "ThirdPage" :
-      {
-        "title": "Mes Boxs",
-        "wizard": "thirdPage",
-        "order": 3,
-        "custom": "",
-        "visible": 1
-      }
-    ,
-    "FourPage" :
-      {
-        "title": "Synchronisation Boxs",
-        "wizard": "fourPage",
-        "order": 4,
-        "custom": "",
-        "visible": 1
-      }
-    ,
-    "FivePage" :
-      {
-        "title": "Geolocalisation",
-        "wizard": "fivePage",
-        "order": 5,
-        "custom": "",
-        "visible": 1
-      }
-    ,
-    "SixPage" :
-      {
-        "title": "Personnalisation Menu",
-        "wizard": "sixPage",
-        "order": 6,
-        "custom": "",
-        "visible": 1
-      }
+    "ThirdPage": {
+      "title": "Mes Boxs",
+      "wizard": "thirdPage",
+      "order": 3,
+      "custom": "",
+      "visible": 1
+    },
+    "FourPage": {
+      "title": "Synchronisation Boxs",
+      "wizard": "fourPage",
+      "order": 4,
+      "custom": "",
+      "visible": 1
+    },
+    "FivePage": {
+      "title": "Geolocalisation",
+      "wizard": "fivePage",
+      "order": 5,
+      "custom": "",
+      "visible": 1
+    },
+    "SixPage": {
+      "title": "Personnalisation Menu",
+      "wizard": "sixPage",
+      "order": 6,
+      "custom": "",
+      "visible": 1
+    }
   }
 }

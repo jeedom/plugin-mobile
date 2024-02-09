@@ -685,6 +685,7 @@ class mobile extends eqLogic
 				$android = [
 					'data' => $data,
 					'priority' => 'high',
+					'pressAction' => ['id' => 'default'],
 				];
 
 				$apns = [

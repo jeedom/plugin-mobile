@@ -672,8 +672,7 @@ class mobile extends eqLogic
 					'channelId' => $channelId,
 					'date' => $dateNotif,
 					'boxName' => config::byKey('name'),
-					'boxApiKey' => jeedom::getHardwareKey(),
-					'pressAction' => ['id' => 'default']
+					'boxApiKey' => jeedom::getHardwareKey()
 				];
 
 				$notification = [

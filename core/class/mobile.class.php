@@ -672,7 +672,8 @@ class mobile extends eqLogic
 					'channelId' => $channelId,
 					'date' => $dateNotif,
 					'boxName' => config::byKey('name'),
-					'boxApiKey' => jeedom::getHardwareKey()
+					'boxApiKey' => jeedom::getHardwareKey(),
+					'pressAction' => ['id' => 'default']
 				];
 
 				$notification = [
@@ -684,8 +685,7 @@ class mobile extends eqLogic
 
 				$android = [
 					'data' => $data,
-					'priority' => 'high',
-					'pressAction' => ['id' => 'default'],
+					'priority' => 'high'
 				];
 
 				$apns = [

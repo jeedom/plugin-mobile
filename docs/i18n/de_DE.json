@@ -2,6 +2,9 @@
     "changelog.md": {
         "Changelog App Mobile": "Changelog Mobile App",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Zur Erinnerung: Wenn keine Informationen zum Update vorhanden sind, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "05\/04\/2023": "04.05.2023",
+        "Compatible uniquement avec la 4": "Kompatibel nur mit der 4",
+        "4 du core ou supérieur": "4 Kern oder höher",
         "15\/12\/2023": "15.12.2023",
         "Refactorisation importante du code": "Erhebliche Code-Umgestaltung",
         "le menu Custom préalablement enregistré sur l'appV2 est susceptible de ne plus etre enregistré": "Das zuvor auf der AppV2 gespeicherte benutzerdefinierte Menü kann möglicherweise nicht mehr gespeichert werden",

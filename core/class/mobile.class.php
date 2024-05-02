@@ -1265,30 +1265,30 @@ private static function getDefaultMenuArray(){
 		$cmdNotif = $this->getCmd(null, 'notif');
 		if (!is_object($cmdNotif)) {
 			$cmdNotif = new mobileCmd();
+			$cmdNotif->setIsVisible(1);
+			$cmdNotif->setName(__('Notification', __FILE__));
+			$cmdNotif->setOrder(0);
 		}
 		$cmdNotif->setLogicalId('notif');
-		$cmdNotif->setName(__('Notification', __FILE__));
-		$cmdNotif->setOrder(0);
 		$cmdNotif->setEqLogic_id($this->getId());
 		$cmdNotif->setDisplay('generic_type', 'GENERIC_ACTION');
 		$cmdNotif->setType('action');
 		$cmdNotif->setSubType('message');
-		$cmdNotif->setIsVisible(1);
 		$cmdNotif->save();
 
 		if ($this->getConfiguration('appVersion', 1) == 2) {
 			$cmdNotif = $this->getCmd(null, 'notifCritical');
 			if (!is_object($cmdNotif)) {
 				$cmdNotif = new mobileCmd();
+				$cmdNotif->setIsVisible(1);
+				$cmdNotif->setName(__('Notification Critique', __FILE__));
+				$cmdNotif->setOrder(0);
 			}
 			$cmdNotif->setLogicalId('notifCritical');
-			$cmdNotif->setName(__('Notification Critique', __FILE__));
-			$cmdNotif->setOrder(0);
 			$cmdNotif->setEqLogic_id($this->getId());
 			$cmdNotif->setDisplay('generic_type', 'GENERIC_ACTION');
 			$cmdNotif->setType('action');
 			$cmdNotif->setSubType('message');
-			$cmdNotif->setIsVisible(1);
 			$cmdNotif->save();
 		}
 

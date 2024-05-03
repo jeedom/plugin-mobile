@@ -389,14 +389,20 @@ if (!isConnect()) {
 </style>
 
 <script>
-  jeedom.appMobile.postToApp("updateBella",
-    {0: {
-      options: {
-        on: 1, 
-        value : "Allumée",
-      }
-    }}
-  );
+    //JEEDOM APP ENVOI BELLA : 
+
+  jeedom.appMobile.postToApp('createBella', <?php echo bellaMobile::jsonBella(); ?>);
+
+  setTimeout(() => {
+    jeedom.appMobile.postToApp("updateBella",
+      {0: {
+        options: {
+          on: 1, 
+          value : "Allumée",
+        }
+      }}
+    );
+  }, 1000);
 setTimeout(() => {
   jeedom.appMobile.postToApp("updateBella",
     {1: {
@@ -441,104 +447,6 @@ setTimeout(() => {
     }
   );
 }, 1000);
-
-
-  //JEEDOM APP ENVOI BELLA : 
-
-jeedom.appMobile.postToApp('createBella',
-                          {
-    0: {
-      0: {
-        size : 1,
-        type: 'onOff',
-        options: {
-          on: 0, 
-          title: "Prise",
-          value : null,
-          icons:{
-            on: {type: "jeedomapp",name: "prise", color: "#f7d959"},
-            off: {type: "jeedomapp",name: "prise-off", color: "#a4a4a3"}
-          },
-          iconBlur: false
-        }
-      },
-      1: {
-        size : 1,
-        type: 'onOff',
-        options: {
-          on: 0, 
-          title: "Lumière salon",
-          value : null,
-          icons:{
-            on: {type: "jeedomapp",name: "ampoule-on", color: "#f7d959"},
-            off: {type: "jeedomapp",name: "ampoule-off", color: "#a4a4a3"}
-          },
-          iconBlur: false
-        }
-      },
-      2: {
-          size : 1,
-          type: 'info',
-          options: {
-            on:0, 
-            title: "Température",
-            value : null,
-            icons:{
-              on: {type: "jeedomapp",name: "temperature", color: "#00ff00"},
-              off: {type: "jeedomapp",name: "temperature", color: "#a4a4a3"}
-            },
-            iconBlur: false
-          }
-      },
-      4: {
-        size : 1,
-        type: 'info',
-        options: {
-          on: 0, 
-          title: "Présence",
-          value : null,
-          icons:{
-            on: {type: "jeedom",name: "mouvement", color: "#FF0000"},
-            off: {type: "jeedom",name: "mouvement", color: "#a4a4a3"}
-          },
-          iconBlur: true
-        }
-      }
-    },
-    1: {
-      5: {
-        size : 2,
-        type: 'meteo',
-        options: {
-          on: 0, 
-          title: "Météo",
-          value : null,
-          icons:{
-            on: {type: "jeedomapp",name: "meteo", color: "#FF0000"},
-            off: {type: "jeedomapp",name: "meteo", color: "#a4a4a3"}
-          },
-          iconBlur: true
-        }
-      },
-      6: {
-        size : 1,
-        type: 'test',
-        options: {}
-      },
-      7: {
-        size : 1,
-        type: 'test',
-        options: {}
-      }
-    },
-    2: {
-      8: {
-        size : 4,
-        type: 'test',
-        options: {}
-      }
-    }
-  });
 
 
   </script>

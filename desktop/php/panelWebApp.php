@@ -457,7 +457,7 @@ $( document ).ready(function() {
     }
     jeedom.cmd.update[cmdId]();
   } 
-}
+});
 
 
   </script>

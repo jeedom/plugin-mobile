@@ -448,7 +448,7 @@ setTimeout(() => {
   );
 }, 1000);
 
-$( document ).ready(function() {
+document.addEventListener("DOMContentLoaded", function() {
     var cmdId = 7;
     jeedom.cmd.update[cmdId] = function(_options){
       if (_options) {

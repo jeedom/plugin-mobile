@@ -448,6 +448,17 @@ setTimeout(() => {
   );
 }, 1000);
 
+$( document ).ready(function() {
+    var cmdId = 7;
+    jeedom.cmd.update[cmdId] = function(_options){
+      if (_options) {
+        console.log(_options);
+      }
+    }
+    jeedom.cmd.update[cmdId]();
+  } 
+}
+
 
   </script>
 

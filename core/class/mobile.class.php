@@ -19,6 +19,8 @@
 /* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
+include_file('core', 'bellaMobile', 'class', 'mobile');
+
 class mobile extends eqLogic
 {
 	/*     * *************************Attributs****************************** */

@@ -47,6 +47,7 @@ class bellaMobile extends eqLogic
                 0 => array(
                     'size' => 1,
                     'type' => 'onOff',
+                  	'idEvent' => [7],
                     'options' => array(
                         'on' => 0,
                         'title' => "Prise",
@@ -54,6 +55,14 @@ class bellaMobile extends eqLogic
                         'icons' => array(
                             'on' => array('type' => "jeedomapp", 'name' => "prise", 'color' => "#f7d959"),
                             'off' => array('type' => "jeedomapp", 'name' => "prise-off", 'color' => "#a4a4a3")
+                        ),
+                      	'actions' => array(
+                        	'on' => array(
+                            	'id' => 8
+                            ),
+                          	'off' => array(
+                            	'id' => 9
+                            )
                         ),
                         'iconBlur' => false
                     )

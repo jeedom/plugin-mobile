@@ -25,6 +25,23 @@ try {
 		throw new Exception(__('401 - Accès non autorisé', __FILE__));
 	}
 
+
+	if(init('action') == 'getEqlogicByGenericType'){
+		$cmds = cmd::byGenericType(init('model'));
+		$cmds = array_map(function($cmd){
+			return utils::o2a($cmd);
+		}, $cmds);
+		ajax::success($cmds);
+	}
+
+	if(init('action') == 'getCmdsByValues'){
+		$cmds = cmd::byValue(init('id'));
+		$cmds = array_map(function($cmd){
+			return utils::o2a($cmd);
+		}, $cmds);
+		ajax::success($cmds);
+	}
+
 	if (init('action') == 'updatemobile') {
 		mobile::updatemobile();
 		ajax::success();

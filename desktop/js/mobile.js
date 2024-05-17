@@ -15,6 +15,19 @@
  */
 
 if (typeof jeeDialog !== "undefined") {
+
+
+  document
+    .querySelector('#bt_bellaConfig')
+    ?.addEventListener("click", function (event) {
+      jeeDialog.dialog({
+        id: "configBella",
+        title: "{{Configuration WebView}}",
+        contentUrl: "index.php?v=d&plugin=mobile&modal=modal.configBella",
+        width:'400px',
+        height:'100vh'
+      });
+    });
   
   document
     .querySelector("#bt_pluguinmobile")

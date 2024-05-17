@@ -38,6 +38,10 @@ $plugin_widget = mobile::$_pluginWidget;
 				<i class="fas fa-qrcode"></i><br>
 				<span>{{QR Code}}</span>
 			</div>
+			<div class="cursor eqLogicAction logoSecondary" data-action="bt_qrCodev2" id="bt_bellaConfig">
+				<i class="fas fa-qrcode"></i><br>
+				<span>{{Configuration Bella}}</span>
+			</div>
 			<!-- A VENIR -->
 			<!-- <div class="cursor eqLogicAction logoSecondary"  id="bt_previousMenu">
 			  <i class="icon kiko-hamburger-menu"></i><br>

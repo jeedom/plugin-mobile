@@ -99,7 +99,13 @@ if (!isConnect()) {
       <div class="title bold">Volets</div>
       <div class="title mini">Tous Fermés</div>
     </div>
+    
   </div>
+
+  <div class="resumeTile" id="validView">
+     <button class="btn btn-success">Valider la vue</button>
+  </div>
+
 </div>
 <div class="gridPage">
   <div class="tile  tileConfig">
@@ -388,91 +394,86 @@ if (!isConnect()) {
 }
 </style>
 
+
 <script>
 
 
 
-    //JEEDOM APP ENVOI BELLA : 
+var tiles = document.querySelectorAll('.tile');
 
-  jeedom.appMobile.postToApp('createBella', <?php echo bellaMobile::jsonBella(); ?>);
 
-      jeedom.cmd.addUpdateFunction('11140', function(_options) {
-        console.log('updateFUNCTION', _options);
-        jeedom.appMobile.postToApp("updateBella",
-            {0: {
-              options: {
-                on: 1, 
-                value : _options.display_value,
-              }
-            }}
-          );
+for (var i = 0; i < tiles.length; i++) {
 
-      })
+  tiles[i].dataset.state = '1';
 
-  // setTimeout(() => {
-  //   jeedom.appMobile.postToApp("updateBella",
-  //     {0: {
-  //       options: {
-  //         on: 1, 
-  //         value : "Allumée",
-  //       }
-  //     }}
-  //   );
-  // }, 1000);
-setTimeout(() => {
-  jeedom.appMobile.postToApp("updateBella",
-    {1: {
-        options: {
-          on: 1, 
-          value : "30% Allumée",
-      }}}
-  );
-}, 4000);
 
-setTimeout(() => {
-  jeedom.appMobile.postToApp("updateBella",
-    {2: {
-          options: {
-            on: 1, 
-            value : "22,5°C",
-          }
-      }}
-  );
-}, 2000);
+  tiles[i].addEventListener('click', function(event) {
 
-setTimeout(() => {
-  jeedom.appMobile.postToApp("updateBella",
-    {4: {
-        options: {
-          on: 1, 
-          value : "1 Personne",
-        }
-      }}
-  );
-}, 1000);
+    this.classList.remove('1', 'dual', 'quadral');
 
-setTimeout(() => {
-  jeedom.appMobile.postToApp("updateBella",
-    {
-      5: {
-        options: {
-          on: 1, 
-          value : "Il Pleut !",
-        }
+
+    if (this.dataset.state === '1') {
+      this.dataset.state = 'dual';
+    } else if (this.dataset.state === 'dual') {
+      this.dataset.state = 'quadral';
+    } else {
+      this.dataset.state = '1';
+    }
+
+    this.classList.add(this.dataset.state);
+  });
+
+
+  var timer = null;
+
+
+    tiles[i].addEventListener('mousedown', function(event) {
+      timer = setTimeout(function() {
+        jeedom.cmd.getSelectModal({
+                cmd: {
+                  type: 'info',
+                  subType: 'numeric'
+                }
+              }, function(result) {
+                console.log('result', result)
+              });
+      }, 500);
+    });
+
+    tiles[i].addEventListener('mouseup', cancelLongClick);
+    tiles[i].addEventListener('mouseleave', cancelLongClick);
+
+    function cancelLongClick() {
+      if (timer !== null) {
+        clearTimeout(timer);
+        timer = null;
       }
     }
-  );
-}, 1000);
 
-document.addEventListener("DOMContentLoaded", function() {
-    var cmdId = 7;
-    jeedom.cmd.update[cmdId] = function(_options){
-      if (_options) {
-        console.log(_options);
-      }
-    }
-    jeedom.cmd.update[cmdId]();
+
+
+}
+
+
+document.getElementById('validView').addEventListener('click', function(event) {
+    event.preventDefault();
+ 
 });
+
+
+
+//    document.querySelectorAll('.tileConfig').forEach(function(element) {
+//       element.addEventListener('click', function() {
+//             jeedom.cmd.getSelectModal({
+//                 cmd: {
+//                   type: 'info',
+//                   subType: 'numeric'
+//                 }
+//               }, function(result) {
+//                 console.log('result', result)
+//               });
+//       });
+//   });
 
 
   </script>

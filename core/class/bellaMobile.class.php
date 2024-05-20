@@ -41,6 +41,9 @@ class bellaMobile extends eqLogic
 
     }
 
+
+
+
     public static function jsonBella(){
         $arrayBella = array(
             0 => array(

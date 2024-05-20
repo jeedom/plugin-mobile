@@ -1335,6 +1335,33 @@ private static function getDefaultMenuArray(){
 	}
 
 
+	public static function createSubArray($size, $type, $title, $icons, $iconBlur) {
+		return array(
+			'size' => $size,
+			'type' => $type,
+			'options' => array(
+				'on' => 0,
+				'title' => $title,
+				'value' => null,
+				'icons' => $icons,
+				'iconBlur' => $iconBlur
+			)
+		);
+	}
+	
+	public static function createMainArray($subArrays) {
+
+		log::add('mobile', 'debug', 'createMainArray > ' . json_encode($subArrays));
+		$mainArray = $subArrays;
+		while (count($mainArray) < 4) {
+			$mainArray[] = array(); 
+		}
+		return $mainArray;
+	}
+
+	
+
+
 	/*	public function postRemove() {
 		$eqId = $this->getId();
     $mobileActive = eqLogic::byId(intval($mobileActiveDefault));

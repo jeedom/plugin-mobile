@@ -299,46 +299,115 @@ if (!isConnect()) {
 
 <script>
 
-
-
 document.getElementById('validView').addEventListener('click', function(event) {
     event.preventDefault();
     var tiles = document.querySelectorAll('.tile');
     var config = [];
     tiles.forEach(function(tile) {
+      let idTile = tile.id;
+      let sizeAttribute = tile.getAttribute('data-state');
+      // console.log(tile);
+      // console.log(tile.classList); 
+      if (!sizeAttribute || sizeAttribute == undefined || sizeAttribute == "null") {
+          if (tile.classList.contains('dual')) {
+              sizeAttribute = 2;
+          } else if (tile.classList.contains('quadral')) {
+              sizeAttribute = 4;
+          } else {
+              sizeAttribute = 1;
+          }
+      }
+      console.log('sizeAttribute', sizeAttribute)
       var tileConfig = {
-        size: tile.getAttribute('data-state'),
+        size: sizeAttribute ,
         type: 'info',
         options: {
           on: 0,
-          title: "Lumière Salon",
+          title: tile.getAttribute('data-title'),
           value: null,
           icons: {
             on: {
               type: "jeedomapp",
-              name: "ampoule-off",
+              name: tile.getAttribute('data-icon-on'),
               color: "#00ff00"
             },
             off: {
               type: "jeedomapp",
-              name: "ampoule-off",
+              name: tile.getAttribute('data-icon-off'),
               color: "#a4a4a3"
             }
           },
           iconBlur: false
         }
       };
+      if (!config[idTile]) {
+        config[idTile] = [];
+      }
+      config[idTile].push(tileConfig);
     });
 
 
+    console.log('config', config);
+    $.ajax({
+      type: 'POST',
+      url: 'plugins/mobile/core/ajax/mobile.ajax.php',
+      data: {
+        action: 'createJsonBellaMobile',
+        config: config
+      },
+      dataType: 'json',
+      error: function(request, status, error) {
+        handleAjaxError(request, status, error);
+      },
+      success: function(data) {
+        if (data.state != 'ok') {
+          $('#div_alert').showAlert({message: data.result, level: 'danger'});
+          return;
+        }
+        $('#div_alert').showAlert({message: '{{Configuration sauvegardée}}', level: 'success'});
+      }
+    });
+  
 });
+
+// document.getElementById('validView').addEventListener('click', function(event) {
+//     event.preventDefault();
+//     var tiles = document.querySelectorAll('.tile');
+//     var config = [];
+//     tiles.forEach(function(tile) {
+//       var tileConfig = {
+//         size: tile.getAttribute('data-state'),
+//         type: 'info',
+//         options: {
+//           on: 0,
+//           title: "Lumière Salon",
+//           value: null,
+//           icons: {
+//             on: {
+//               type: "jeedomapp",
+//               name: "ampoule-off",
+//               color: "#00ff00"
+//             },
+//             off: {
+//               type: "jeedomapp",
+//               name: "ampoule-off",
+//               color: "#a4a4a3"
+//             }
+//           },
+//           iconBlur: false
+//         }
+//       };
+//     });
+
+
+// });
 
 
 var tiles = document.querySelectorAll('.tile');
 
 tiles.forEach(function(tile) {
 
-  tile.dataset.state = '1';
+  tile.dataset.state = null;
 
   tile.addEventListener('click', function(event) {
 

@@ -20,9 +20,37 @@ header('Content-Type: application/json');
 try {
 	require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 	include_file('core', 'authentification', 'php');
+	// require_once dirname(__FILE__) . '../class/bellaMobile.class.php';  
 
 	if (!isConnect('admin')) {
 		throw new Exception(__('401 - Accès non autorisé', __FILE__));
+	}
+
+	if(init('action') == 'createJsonBellaMobile'){
+		$configArray = init('config');
+		$subArrays = array();
+		$currentIndex = 0;
+		$currentSizeSum = 0;
+		foreach ($configArray as $idTile => $tileConfigs) {
+			log::add('mobile','debug','TILECONFIGS ' . json_encode($tileConfigs));
+			log::add('mobile','debug','IDTILE ' . $idTile);
+			foreach ($tileConfigs as $tileConfig) {
+				$size = $tileConfig['size'];
+				$type = $tileConfig['type'];
+				$title = $tileConfig['options']['title'];
+				$icons = $tileConfig['options']['icons'];
+				$iconBlur = $tileConfig['options']['iconBlur'];
+				$subArrays[$currentIndex][] = mobile::createSubArray($size, $type, $title, $icons, $iconBlur);
+				$currentSizeSum += $size;
+				if ($currentSizeSum >= 4) {
+					$currentIndex++;
+					$currentSizeSum = 0;
+				}
+			}
+		}
+		$mainArray = mobile::createMainArray($subArrays);
+		log::add('mobile','debug','RETURNAJAX ' . json_encode($mainArray));
+		ajax::success();
 	}
 
 

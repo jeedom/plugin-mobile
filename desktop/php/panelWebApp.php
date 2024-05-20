@@ -389,14 +389,20 @@ if (!isConnect()) {
 </style>
 
 <script>
-  jeedom.appMobile.postToApp("updateBella",
-    {0: {
-      options: {
-        on: 1, 
-        value : "Allumée",
-      }
-    }}
-  );
+    //JEEDOM APP ENVOI BELLA : 
+
+  jeedom.appMobile.postToApp('createBella', <?php echo bellaMobile::jsonBella(); ?>);
+
+  setTimeout(() => {
+    jeedom.appMobile.postToApp("updateBella",
+      {0: {
+        options: {
+          on: 1, 
+          value : "Allumée",
+        }
+      }}
+    );
+  }, 1000);
 setTimeout(() => {
   jeedom.appMobile.postToApp("updateBella",
     {1: {
@@ -441,6 +447,17 @@ setTimeout(() => {
     }
   );
 }, 1000);
+
+document.addEventListener("DOMContentLoaded", function() {
+    var cmdId = 7;
+    jeedom.cmd.update[cmdId] = function(_options){
+      if (_options) {
+        console.log(_options);
+      }
+    }
+    jeedom.cmd.update[cmdId]();
+});
+
 
   </script>
 

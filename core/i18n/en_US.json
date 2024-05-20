@@ -196,7 +196,6 @@
         "QR Code": "QR Code",
         "Sauvegardes Menu Custom Mobile": "Backups Menu Custom Mobile",
         "Documentation APP": "APP Documentation",
-        "Community": "Community",
         "Mes Téléphones Mobiles": "My Mobile Phones",
         "Rechercher": "Search",
         "Équipement visible": "Visible equipment",
@@ -282,8 +281,8 @@
         "Choisir une icône": "Choose an icon",
         "Afficher": "Display",
         "Historiser": "Historize",
-        "Min": "Min",
-        "Max": "Max",
+        "Min": "Minimum",
+        "Max": "Maximum",
         "Unité": "Unit",
         "Configuration avancée": "Advanced configuration",
         "Tester": "Test",
@@ -316,6 +315,7 @@
         "Cmd inconnu : ": "Unknown Cmd:",
         "pas d\\'id : ": "no id:",
         "pas de parametre de geofencing : ": "no geofencing parameter:",
+        "Pas de paramètre de geofencing : ": "No geofencing parameter:",
         "Aucune demande": "No request"
     },
     "info.json": {

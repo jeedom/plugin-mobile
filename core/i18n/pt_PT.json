@@ -196,7 +196,6 @@
         "QR Code": "Código QR",
         "Sauvegardes Menu Custom Mobile": "Menu Backups Personalizado Móvel",
         "Documentation APP": "Documentação do APP",
-        "Community": "Comunidade",
         "Mes Téléphones Mobiles": "Meus telefones móveis",
         "Rechercher": "Pesquisa",
         "Équipement visible": "Equipamento visível",
@@ -316,6 +315,7 @@
         "Cmd inconnu : ": "Cmd desconhecido:",
         "pas d\\'id : ": "no id:",
         "pas de parametre de geofencing : ": "nenhum parâmetro de geofencing:",
+        "Pas de paramètre de geofencing : ": "Nenhum parâmetro de geofencing:",
         "Aucune demande": "Nenhum pedido"
     },
     "info.json": {

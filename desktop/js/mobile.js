@@ -15,9 +15,10 @@
  */
 
 if (typeof jeeDialog !== "undefined") {
+  
   document
     .querySelector("#bt_pluguinmobile")
-    .addEventListener("click", function (event) {
+    ?.addEventListener("click", function (event) {
       jeeDialog.dialog({
         id: "pluginsCompatibles",
         title: "{{Plugins compatibles - Application V1}}",
@@ -27,7 +28,7 @@ if (typeof jeeDialog !== "undefined") {
 
   document
     .querySelector("#bt_piecemobile")
-    .addEventListener("click", function (event) {
+    ?.addEventListener("click", function (event) {
       jeeDialog.dialog({
         id: "objectsModal",
         title: "{{Objets / Pièces - Application V1}}",
@@ -37,7 +38,7 @@ if (typeof jeeDialog !== "undefined") {
 
   document
     .querySelector("#bt_scenariomobile")
-    .addEventListener("click", function (event) {
+    ?.addEventListener("click", function (event) {
       jeeDialog.dialog({
         id: "scenariosModal",
         title: "{{Scénarios  - Application V1}}",
@@ -47,7 +48,7 @@ if (typeof jeeDialog !== "undefined") {
 
   document
     .querySelector("#info_app")
-    .addEventListener("click", function (event) {
+    ?.addEventListener("click", function (event) {
       jeeDialog.dialog({
         id: "infosApp",
         title: "{{Informations envoyées à l'app}}",
@@ -80,7 +81,7 @@ if (typeof jeeDialog !== "undefined") {
 
   document
     .querySelector("#bt_qrCodev2")
-    .addEventListener("click", function (event) {
+    ?.addEventListener("click", function (event) {
       jeeDialog.dialog({
         id: "qrcodev2",
         title: "{{QrCode}}",
@@ -260,7 +261,7 @@ for (let i = 0; i < aTabs.length; i++) {
 
 document
   .querySelector(".nav-tabs a")
-  .addEventListener("shown.bs.tab", function (e) {
+  ?.addEventListener("shown.bs.tab", function (e) {
     window.location.hash = e.target.hash;
   });
 
@@ -473,7 +474,7 @@ function printEqLogic(_eqLogic) {
 
 document
   .getElementById("bt_regenConfig")
-  .addEventListener("click", function () {
+  ?.addEventListener("click", function () {
     $.ajax({
       type: "POST",
       url: "plugins/mobile/core/ajax/mobile.ajax.php",
@@ -502,14 +503,17 @@ var toCopy = document.getElementById("to-copy-monitoring");
 var arnComplet = document.getElementById("arnComplet");
 var btnCopy = document.getElementById("copy-monitoring");
 
-btnCopy.addEventListener("click", function () {
-  var fichier = arnComplet.value;
-  var fichierCouper = fichier.substr(44);
-  toCopy.value = fichierCouper;
-  toCopy.select();
-  document.execCommand("copy");
-  return false;
-});
+if(toCopy && arnComplet && btnCopy){
+  btnCopy.addEventListener("click", function () {
+    var fichier = arnComplet.value;
+    var fichierCouper = fichier.substr(44);
+    toCopy.value = fichierCouper;
+    toCopy.select();
+    document.execCommand("copy");
+    return false;
+  });
+}
+
 
 $("#table_cmd").sortable({
   axis: "y",

@@ -31,6 +31,23 @@ try {
 		$subArrays = array();
 		$currentIndex = 0;
 		$currentSizeSum = 0;
+		// foreach ($configArray as $idTile => $tileConfigs) {
+		// 	log::add('mobile','debug','TILECONFIGS ' . json_encode($tileConfigs));
+		// 	log::add('mobile','debug','IDTILE ' . $idTile);
+		// 	foreach ($tileConfigs as $tileConfig) {
+		// 		$size = $tileConfig['size'];
+		// 		$type = $tileConfig['type'];
+		// 		$title = $tileConfig['options']['title'];
+		// 		$icons = $tileConfig['options']['icons'];
+		// 		$iconBlur = $tileConfig['options']['iconBlur'];
+		// 		$subArrays[$currentIndex][] = mobile::createSubArray($size, $type, $title, $icons, $iconBlur, $idTile);
+		// 		$currentSizeSum += $size;
+		// 		if ($currentSizeSum >= 4) {
+		// 			$currentIndex++;
+		// 			$currentSizeSum = 0;
+		// 		}
+		// 	}
+		// }
 		foreach ($configArray as $idTile => $tileConfigs) {
 			log::add('mobile','debug','TILECONFIGS ' . json_encode($tileConfigs));
 			log::add('mobile','debug','IDTILE ' . $idTile);
@@ -40,12 +57,14 @@ try {
 				$title = $tileConfig['options']['title'];
 				$icons = $tileConfig['options']['icons'];
 				$iconBlur = $tileConfig['options']['iconBlur'];
-				$subArrays[$currentIndex][] = mobile::createSubArray($size, $type, $title, $icons, $iconBlur);
-				$currentSizeSum += $size;
-				if ($currentSizeSum >= 4) {
+		
+				if ($currentSizeSum + $size > 4) {
 					$currentIndex++;
 					$currentSizeSum = 0;
 				}
+		
+				$subArrays[$currentIndex][] = mobile::createSubArray($size, $type, $title, $icons, $iconBlur, $idTile);
+				$currentSizeSum += $size;
 			}
 		}
 		$mainArray = mobile::createMainArray($subArrays);

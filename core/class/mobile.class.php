@@ -1335,8 +1335,8 @@ private static function getDefaultMenuArray(){
 	}
 
 
-	public static function createSubArray($size, $type, $title, $icons, $iconBlur) {
-		return array(
+	public static function createSubArray($size, $type, $title, $icons, $iconBlur, $idTile) {
+		return array( $idTile => array(
 			'size' => $size,
 			'type' => $type,
 			'options' => array(
@@ -1346,16 +1346,41 @@ private static function getDefaultMenuArray(){
 				'icons' => $icons,
 				'iconBlur' => $iconBlur
 			)
+			)
 		);
 	}
 	
-	public static function createMainArray($subArrays) {
+	// public static function createMainArray($subArrays) {
 
+	// 	log::add('mobile', 'debug', 'createMainArray > ' . json_encode($subArrays));
+	// 	$mainArray = $subArrays;
+	// 	while (count($mainArray) < 4) {
+	// 		$mainArray[] = array(); 
+	// 	}
+	// 	return $mainArray;
+	// }
+	public static function createMainArray($subArrays) {
 		log::add('mobile', 'debug', 'createMainArray > ' . json_encode($subArrays));
-		$mainArray = $subArrays;
-		while (count($mainArray) < 4) {
-			$mainArray[] = array(); 
+		$mainArray = array();
+		$tempArray = array();
+		$sizeSum = 0;
+		$index = 0;
+	
+		foreach ($subArrays as $subArray) {
+			$sizeSum += $subArray['size'];
+			$tempArray[] = $subArray;
+			if ($sizeSum >= 4) {
+				$mainArray[$index] = $tempArray;
+				$tempArray = array();
+				$sizeSum = 0;
+				$index++;
+			}
 		}
+	
+		if (!empty($tempArray)) {
+			$mainArray[$index] = $tempArray;
+		}
+	
 		return $mainArray;
 	}
 

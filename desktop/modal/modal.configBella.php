@@ -10,7 +10,7 @@ if (!isConnect()) {
 </div>
 
 <div class="gridPage">
-  <div class="tile  customTile">
+  <div class="tile  customTile" id="1">
     <div class="TileUp">
       <div class="UpLeft">
         <i class="iconTile icon jeedomapp-ampoule-off"></i>
@@ -25,7 +25,7 @@ if (!isConnect()) {
     </div>
   </div>  
 
-  <div class="tile on">
+  <div class="tile on" id="2">
     <div class="TileUp">
         <div class="UpLeft">
           <i class="iconTile on icon jeedomapp-ampoule-on"></i>
@@ -39,41 +39,41 @@ if (!isConnect()) {
         <div class="title on">Allumée à 30%</div>
       </div>
   </div>
-  <div class="tile customTile">
+  <div class="tile customTile" id="3">
 
   </div>
-  <div class="tile customTile">
+  <div class="tile customTile" id="4">
 
   </div>
-  <div class="tile dual on">
+  <div class="tile dual on" id="5">
 
   </div>
 
-  <div class="tile dual">
+  <div class="tile dual" id="6">
 
   </div>
-  <div class="tile">
+  <div class="tile" id="7">
 
   </div>
-  <div class="tile">
+  <div class="tile" id="8">
 
   </div>
-  <div class="tile quadral on">
+  <div class="tile quadral on" id="9">
 
   </div>
-  <div class="tile">
+  <div class="tile" id="10">
 
   </div>
-  <div class="tile">
+  <div class="tile" id="11">
 
   </div>
-  <div class="tile">
+  <div class="tile" id="12">
 
   </div>
-  <div class="tile">
+  <div class="tile" id="13">
 
   </div>
-  <div class="tile">
+  <div class="tile" id="14">
 
   </div>
 <div>
@@ -360,6 +360,7 @@ tiles.forEach(function(tile) {
 
 
   tile.addEventListener('mousedown', function(event) {
+     let idTile = tile.id;
       timer = setTimeout(function() {
         var MODELS_CHOICE = [ {text :'Info', value:'Info'}, 
                               {text :'Meteo', value:'Meteo'}, 

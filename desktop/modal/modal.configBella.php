@@ -5,11 +5,14 @@ if (!isConnect()) {
 }
 
 ?>
-<div class="resumeBtn" style="display:flex;justify-content:center;">
-     <button class="btn btn-success" id="validView" style="border-radius:20px !important;padding-left:5px !important;padding-right:5px !important;">Valider la vue</button>
+
+<div class="resumeBtn" style="display:flex;justify-content:flex-end;">
+     <button class="btn btn-success" id="validView" style="border-radius:20px !important;padding-left:5px !important;padding-right:5px !important;margin-bottom:10px;">Valider la vue</button>
 </div>
 
-<div class="gridPage">
+
+<div id="main" style="display:flex;flex-direction:row;">
+<div class="gridPage" style="width:400px; height;100vh;">
   <div class="tile  customTile" id="1">
     <div class="TileUp">
       <div class="UpLeft">
@@ -76,9 +79,26 @@ if (!isConnect()) {
   <div class="tile" id="14">
 
   </div>
-<div>
+
+</div>
+  <div id="rightContent" style="width:100%;height;100vh; display:flex;flex-direction:column;align-items:center;">
+
+  </div>
+</div>
 
 <style>
+
+/* #main > div:first-child {
+    border-right: 3px solid #96C927; 
+    padding-right:2%;
+} */
+
+
+.bootBoxClass{
+  position: absolute;
+    top: 50px;
+    left: 50px;
+}
 
   .resume{
   display: flex;
@@ -438,18 +458,83 @@ tiles.forEach(function(tile) {
   var timer = null;
 
 
+//   function getRandomGreen() {
+//     var g = Math.floor(Math.random() * 256);
+//     var r = Math.floor(Math.random() * 100); 
+//     var b = Math.floor(Math.random() * 100); 
+//     var a = 0.5; 
+//     return "rgba(" + r + "," + g + "," + b + "," + a + ")";
+// }
+
+  var colors = ["#94ca02", "#9fcf1b", "#a9d535", "#b4da4e", "#bfdf67", "#cae581", "#d4ea9a", "#dfefb3", "#eaf4cc", "#f4fae6"];
+
+  function getRandomColor() {
+      var randomIndex = Math.floor(Math.random() * colors.length);
+      return colors[randomIndex];
+  }
+
+
   tile.addEventListener('mousedown', function(event) {
      let idTile = tile.id;
      let tileElement = this;
+
+     let existingConfigTileDiv = document.getElementById('configTileDiv' + idTile);
+      if (existingConfigTileDiv) return;
+       
       timer = setTimeout(function() {
+        let randomColor = getRandomColor();
+        tileElement.style.setProperty("background-color", randomColor, "important");
         var MODELS_CHOICE = [ {text :'Info', value:'Info'}, 
                               {text :'Meteo', value:'Meteo'}, 
                               {text :'Lumière', value:'OnOff'}
                             ];
+            let configTileDiv = document.createElement('div');
+            configTileDiv.setAttribute('style', 'padding-left:10px;margin-bottom:10px;width:100% !important;height:100px;background-color:' + randomColor + ';display:flex;border-radius:10px !important;');
+            configTileDiv.setAttribute('id', 'configTileDiv'+idTile);
+            configTileDiv.classList.add('configTileDiv');
+            configTileDiv.setAttribute('data-id', idTile);
+            let firstDiv = document.createElement('div');
+            let label = document.createElement('label');
+            label.innerHTML = 'Choisir le type de template à appliquer';
+            firstDiv.appendChild(label);
+            firstDiv.setAttribute('style', 'width:20% !important;display:flex;flex-direction:column;justify-content:center !important;');
+            let firstSelect = document.createElement('select');
+            firstSelect.setAttribute('id', 'firstSelect');
+            firstSelect.setAttribute('style', 'margin-bottom: 10px;');
+            configTileDiv.appendChild(firstDiv);
+
+            configTileDiv.addEventListener('mouseover', function() {
+              var associatedTile = configTileDiv.getAttribute('data-id')
+              if (associatedTile) {
+                document.getElementById(associatedTile).style.transform = 'scale(1.1)';
+                document.getElementById(associatedTile).style.zIndex = '10'; 
+              }
+            });
+            configTileDiv.addEventListener('mouseout', function() {
+              var associatedTile = configTileDiv.getAttribute('data-id')
+              if (associatedTile) {
+                document.getElementById(associatedTile).style.transform = 'scale(1.0)';
+                document.getElementById(associatedTile).style.zIndex = '1'; 
+              }
+          });
+            
+            MODELS_CHOICE.forEach(function(model) {
+              let option = document.createElement('option');
+              option.value = model.value;
+              option.text = model.text;
+              firstSelect.appendChild(option);
+            });
+            firstDiv.appendChild(firstSelect);
+            document.getElementById('rightContent').appendChild(configTileDiv);
+            return;
+
           bootbox.prompt({
             title: "{{Choisir le type de template à appliquer}}",
             inputType: 'select',
             inputOptions: MODELS_CHOICE,
+            className: 'slideInUp animated',
+            // className: 'bootBoxClass',
+            
             callback: function(model) {
               if (model == null) {
                 return
@@ -460,6 +545,7 @@ tiles.forEach(function(tile) {
                 title: "{{Choisir une commande manuellement ou via les generics types ? }}",
                 inputType: 'select',
                 inputOptions: CHOICE_TYPECMD_TOSEARCH,
+                className: 'slideInDown animated',
                 callback: function(choiceCmd) {
                   if (choiceCmd == null) {
                     return
@@ -484,6 +570,29 @@ tiles.forEach(function(tile) {
           })
       }, 1000);
     });
+
+
+
+    // document.querySelectorAll('configTileDiv')?.forEach(function(configTileDiv) {
+    //   configTileDiv.addEventListener('mouseover', function() {
+    //           var associatedTile = configTileDiv.getAttribute('data-id')
+    //           if (associatedTile) {
+    //             document.getElementById(associatedTile).style.transform = 'scale(1.1)';
+    //             document.getElementById(associatedTile).style.zIndex = '10'; 
+    //           }
+    //         });
+    //         configTileDiv.addEventListener('mouseout', function() {
+    //           var associatedTile = configTileDiv.getAttribute('data-id')
+    //           if (associatedTile) {
+    //             document.getElementById(associatedTile).style.transform = 'scale(1.1)';
+    //             document.getElementById(associatedTile).style.zIndex = '10'; 
+    //           }
+    //       });
+    // });
+
+
+      
+
     
 
    
@@ -603,6 +712,9 @@ tiles.forEach(function(tile) {
       });
 };
 
+
+
+
   //   const bootBoxGenericTypeFunction = (model, choiceCmd, tileElement) => {
   //     return new Promise((resolve, reject) => {
   //         var idOn;
@@ -711,6 +823,8 @@ tiles.forEach(function(tile) {
 
 
 <?php
+  include_file('3rdparty', 'animate/animate', 'css');
 include_file('desktop', 'mobile', 'js', 'mobile');
 include_file('core', 'plugin.template', 'js');
+
 ?>

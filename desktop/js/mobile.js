@@ -24,8 +24,7 @@ if (typeof jeeDialog !== "undefined") {
         id: "configBella",
         title: "{{Configuration WebView}}",
         contentUrl: "index.php?v=d&plugin=mobile&modal=modal.configBella",
-        width:'400px',
-        height:'100vh'
+        fullScreen: true
       });
     });
   

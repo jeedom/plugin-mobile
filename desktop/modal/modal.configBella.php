@@ -435,64 +435,21 @@ document.getElementById('validView').addEventListener('click', function(event) {
 
 var tiles = document.querySelectorAll('.tile');
 
-tiles.forEach(function(tile) {
+var colors = ["#94ca02", "#9fcf1b", "#a9d535", "#b4da4e", "#bfdf67", "#cae581", "#d4ea9a", "#dfefb3", "#eaf4cc", "#f4fae6"];
 
-  tile.dataset.state = null;
-
-  tile.addEventListener('click', function(event) {
-
-      tile.classList.remove('1', 'dual', 'quadral');
-
-      if (tile.dataset.state === '1') {
-        tile.dataset.state = 'dual';
-      } else if (tile.dataset.state === 'dual') {
-        tile.dataset.state = 'quadral';
-      } else {
-        tile.dataset.state = '1';
-      }
-
-      tile.classList.add(tile.dataset.state);
-  });
+function getRandomColor() {
+    var randomIndex = Math.floor(Math.random() * colors.length);
+    return colors[randomIndex];
+}
 
 
-  var timer = null;
-
-
-//   function getRandomGreen() {
-//     var g = Math.floor(Math.random() * 256);
-//     var r = Math.floor(Math.random() * 100); 
-//     var b = Math.floor(Math.random() * 100); 
-//     var a = 0.5; 
-//     return "rgba(" + r + "," + g + "," + b + "," + a + ")";
-// }
-
-  var colors = ["#94ca02", "#9fcf1b", "#a9d535", "#b4da4e", "#bfdf67", "#cae581", "#d4ea9a", "#dfefb3", "#eaf4cc", "#f4fae6"];
-
-  function getRandomColor() {
-      var randomIndex = Math.floor(Math.random() * colors.length);
-      return colors[randomIndex];
-  }
-
-
-  tile.addEventListener('mousedown', function(event) {
-     let idTile = tile.id;
-     let tileElement = this;
-
-     let existingConfigTileDiv = document.getElementById('configTileDiv' + idTile);
-      if (existingConfigTileDiv) return;
-       
-      timer = setTimeout(function() {
-        let randomColor = getRandomColor();
-        tileElement.style.setProperty("background-color", randomColor, "important");
-        var MODELS_CHOICE = [ {text :'Info', value:'Info'}, 
-                              {text :'Meteo', value:'Meteo'}, 
-                              {text :'Lumière', value:'OnOff'}
-                            ];
-            let configTileDiv = document.createElement('div');
+const createConfigTile = (idTile, randomColor, MODELS_CHOICE) => {
+    let configTileDiv = document.createElement('div');
             configTileDiv.setAttribute('style', 'padding-left:10px;margin-bottom:10px;width:100% !important;height:100px;background-color:' + randomColor + ';display:flex;border-radius:10px !important;');
             configTileDiv.setAttribute('id', 'configTileDiv'+idTile);
             configTileDiv.classList.add('configTileDiv');
             configTileDiv.setAttribute('data-id', idTile);
+            configTileDiv.style.order = idTile; 
             let firstDiv = document.createElement('div');
             let label = document.createElement('label');
             label.innerHTML = 'Choisir le type de template à appliquer';
@@ -526,6 +483,58 @@ tiles.forEach(function(tile) {
             });
             firstDiv.appendChild(firstSelect);
             document.getElementById('rightContent').appendChild(configTileDiv);
+  }
+
+
+let longClickOccurred = false;
+let timer;
+
+
+tiles.forEach(function(tile) {
+
+  tile.dataset.state = null;
+
+  tile.addEventListener('mouseup', function(event) {
+    clearTimeout(timer); 
+
+    if (!longClickOccurred) {
+        tile.classList.remove('1', 'dual', 'quadral');
+
+        if (tile.dataset.state === '1') {
+            tile.dataset.state = 'dual';
+        } else if (tile.dataset.state === 'dual') {
+            tile.dataset.state = 'quadral';
+        } else {
+            tile.dataset.state = '1';
+        }
+
+        tile.classList.add(tile.dataset.state);
+    }
+});
+
+
+  tile.addEventListener('mousedown', function(event) {
+    longClickOccurred = false;
+     let idTile = tile.id;
+     let tileElement = this;
+
+
+      timer = setTimeout(function() {
+        longClickOccurred = true; 
+        let existingConfigTileDiv = document.getElementById('configTileDiv' + idTile);
+        if (existingConfigTileDiv){
+          existingConfigTileDiv.remove();
+          tileElement.style.setProperty("background-color", 'white', "important");
+          return;
+        }  
+       
+        let randomColor = getRandomColor();
+        tileElement.style.setProperty("background-color", randomColor, "important");
+        var MODELS_CHOICE = [ {text :'Info', value:'Info'}, 
+                              {text :'Meteo', value:'Meteo'}, 
+                              {text :'Lumière', value:'OnOff'}
+                            ];
+            createConfigTile(idTile, randomColor, MODELS_CHOICE);
             return;
 
           bootbox.prompt({
@@ -569,6 +578,9 @@ tiles.forEach(function(tile) {
             }
           })
       }, 1000);
+      // tile.addEventListener('mouseup', function() {
+      //   clearTimeout(timer); 
+      // });
     });
 
 

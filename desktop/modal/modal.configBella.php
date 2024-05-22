@@ -6,7 +6,7 @@ if (!isConnect()) {
 
 ?>
 <div class="resumeBtn" style="display:flex;justify-content:center;">
-     <button class="btn btn-success" id="validView">Valider la vue</button>
+     <button class="btn btn-success" id="validView" style="border-radius:20px !important;padding-left:5px !important;padding-right:5px !important;">Valider la vue</button>
 </div>
 
 <div class="gridPage">
@@ -39,10 +39,10 @@ if (!isConnect()) {
         <div class="title on">Allumée à 30%</div>
       </div>
   </div>
-  <div class="tile customTile" id="3">
+  <div class="tile customTile" id="3" data-title="Météo">
 
   </div>
-  <div class="tile customTile" id="4">
+  <div class="tile customTile" id="4" data-title="Prise Chambre">
 
   </div>
   <div class="tile dual on" id="5">
@@ -299,6 +299,11 @@ if (!isConnect()) {
 
 <script>
 
+
+if (typeof AJAX_URL === 'undefined') {
+    const AJAX_URL = 'plugins/mobile/core/ajax/mobile.ajax.php';
+}
+
 document.getElementById('validView').addEventListener('click', function(event) {
     event.preventDefault();
     var tiles = document.querySelectorAll('.tile');
@@ -318,34 +323,39 @@ document.getElementById('validView').addEventListener('click', function(event) {
           }
       }
       console.log('sizeAttribute', sizeAttribute)
-      var tileConfig = {
-        size: sizeAttribute ,
-        type: 'info',
-        options: {
-          on: 0,
-          title: tile.getAttribute('data-title'),
-          value: null,
-          icons: {
-            on: {
-              type: "jeedomapp",
-              name: tile.getAttribute('data-icon-on'),
-              color: "#00ff00"
+      var tileConfig;
+      if (tile.hasAttribute('data-array')) {
+        tileConfig = JSON.parse(tile.getAttribute('data-array'));
+      } else {
+         tileConfig = {
+          size: sizeAttribute ,
+          type: 'info',
+          options: {
+            on: 0,
+            title: tile.getAttribute('data-title'),
+            value: null,
+            icons: {
+              on: {
+                type: "jeedomapp",
+                name: tile.getAttribute('data-icon-on'),
+                color: "#00ff00"
+              },
+              off: {
+                type: "jeedomapp",
+                name: tile.getAttribute('data-icon-off'),
+                color: "#a4a4a3"
+              }
             },
-            off: {
-              type: "jeedomapp",
-              name: tile.getAttribute('data-icon-off'),
-              color: "#a4a4a3"
-            }
-          },
-          iconBlur: false
-        }
-      };
+            iconBlur: false
+          }
+        };
+    }
       if (!config[idTile]) {
         config[idTile] = [];
       }
       config[idTile].push(tileConfig);
     });
-
+ 
 
     console.log('config', config);
     $.ajax({
@@ -430,6 +440,7 @@ tiles.forEach(function(tile) {
 
   tile.addEventListener('mousedown', function(event) {
      let idTile = tile.id;
+     let tileElement = this;
       timer = setTimeout(function() {
         var MODELS_CHOICE = [ {text :'Info', value:'Info'}, 
                               {text :'Meteo', value:'Meteo'}, 
@@ -443,99 +454,239 @@ tiles.forEach(function(tile) {
               if (model == null) {
                 return
               }
+              var CHOICE_TYPECMD_TOSEARCH = [ {text :'Manuellement', value:'manualSearch'}, {text :'Generic Type', value:'genericType'}];
 
-              if(model == 'OnOff'){
-                var idOn;
-                var idOff;
-                $.ajax({
-                  type: 'POST',
-                  url: 'plugins/mobile/core/ajax/mobile.ajax.php',
-                  data: {
-                    action: 'getEqlogicByGenericType',
-                    model: 'LIGHT_COLOR'
-                  },
-                  dataType: 'json',
-                  error: function(request, status, error) {
-                    handleAjaxError(request, status, error);
-                  },
-                  success: function(data) {
-                    var EQLOGICS = [];
-                    data.result.forEach(function(cmd) {
-                      EQLOGICS.push({
-                        text: cmd.name,
-                        value: cmd.id
-                      });
-                    });
-                    bootbox.prompt({
-                        title: "Choisir l equipement",
-                        inputType: 'select',
-                        inputOptions: EQLOGICS,
-                        callback: function(id) {
-                          if (id == null) {
-                            return
-                          } 
-                          $.ajax({
-                            type: 'POST',
-                            url: 'plugins/mobile/core/ajax/mobile.ajax.php',
-                            data: {
-                              action: 'getCmdsByValues',
-                              id: id
-                            },
-                            dataType: 'json',
-                            error: function(request, status, error) {
-                              handleAjaxError(request, status, error);
-                            },
-                            success: function(data) {
-                              data.result.forEach(function(cmd) {
-                               if(cmd.name == 'On'){
-                                  idOn = cmd.id
-                               }else if(cmd.name == 'Off'){
-                                  idOff = cmd.id
-                               }
-                              });
-
-                              var selectedOption = EQLOGICS.find(function(option) {
-                                  return option.value == id;
-                                });
-                                  var array = {
-                                      'size': tile.getAttribute('data-state'),
-                                      'type': 'onOff',
-                                      'idEvent': id,
-                                      'options': {
-                                          'on': 0,
-                                          'title': selectedOption.text,
-                                          'value': null,
-                                          'icons': {
-                                              'on': {'type' : "jeedomapp", 'name' : "ampoule-on", 'color' : "#f7d959"},
-                                              'off': {'type' : "jeedomapp", 'name' : "ampoule-off", 'color' : "#a4a4a3"}
-                                          },
-                                          'actions': {
-                                              'on': {'id': idOn},
-                                              'off': {'id': idOff}
-                                          },
-                                          'iconBlur': false
-                                      }
-                                  }    
-                                  
-                                  console.log('arraySLELELE', array)
-                                  title.classList.add('on');
-                                  
-
-
-                            }
-                          })
-             
-                          
-                        }
-                    });
+              bootbox.prompt({
+                title: "{{Choisir une commande manuellement ou via les generics types ? }}",
+                inputType: 'select',
+                inputOptions: CHOICE_TYPECMD_TOSEARCH,
+                callback: function(choiceCmd) {
+                  if (choiceCmd == null) {
+                    return
                   }
-                });
-              }
+                  if(choiceCmd == 'genericType'){
+                    if(model == 'OnOff'){
+                      bootBoxGenericTypeFunction(model, choiceCmd, tileElement).then(returnBootBox => {
+                            console.log('returnBootBox', returnBootBox);
+                        }).catch(error => {
+                            console.error('Une erreur est survenue :', error);
+                        });                
+                    }
+
+                  }else{
+                    bootBoxAllCmds(model, choiceCmd, tileElement)
+                  }
+                }})
+
+
 
             }
           })
       }, 1000);
     });
+    
+
+   
+
+    const ajaxConfig = (action, data) => ({
+      type: 'POST',
+      url: AJAX_URL,
+      data: {
+        action,
+        ...data
+      },
+      dataType: 'json',
+      error: (request, status, error) => handleAjaxError(request, status, error)
+    });
+
+
+  const bootBoxAllCmds = (tmodel, choiceCmd, tileElement) => {
+      jeedom.eqLogic.getSelectModal({}, function(eqLogic) {
+         jeedom.eqLogic.getCmd({
+            id: eqLogic.id,
+            typeCmd : 'info',
+            error: function(error) {
+              jeedomUtils.showAlert({
+                attachTo: jeeDialog.get('#md_search', 'dialog'),
+                message: error.message,
+                level: 'danger'
+              })
+            },
+            success: function(result) {
+              const ALLCMDS = result.map(cmd => ({ text: cmd.name, value: cmd.id }));
+              bootbox.prompt({
+                  title: "Choisir la commande",
+                  inputType: 'select',
+                  inputOptions: ALLCMDS,
+                  callback: idCmd => {
+                    if (idCmd == null) return;
+                      var _icon = false
+                     jeedomUtils.chooseIcon(function(_icon) {
+                      var iconElement = tileElement.querySelector('.iconTile');
+                      var newIconClasses = _icon.match(/class='([^']*)'/)[1].split(' ');
+                      iconElement.className = 'iconTile';
+                      newIconClasses.forEach(function(className) {
+                          if (className !== 'iconTile') {
+                              iconElement.classList.add(className);
+                          }
+                      });
+                        jeeFrontEnd.modifyWithoutSave = true
+                      }, { icon: _icon })
+                  }
+                })
+            }
+          })
+      })
+    // return new Promise((resolve, reject) => {
+
+    // });
+    
+  }
+
+
+  const bootBoxGenericTypeFunction = (model, choiceCmd, tileElement) => {
+      return new Promise((resolve, reject) => {
+            let idOn, idOff;
+
+            $.ajax({
+              ...ajaxConfig('getEqlogicByGenericType', { model: 'LIGHT_COLOR' }),
+              success: data => {
+                const EQLOGICS = data.result.map(cmd => ({ text: cmd.name, value: cmd.id }));
+
+                bootbox.prompt({
+                  title: "Choisir l equipement",
+                  inputType: 'select',
+                  inputOptions: EQLOGICS,
+                  callback: id => {
+                    if (id == null) return;
+
+                    $.ajax({
+                      ...ajaxConfig('getCmdsByValues', { id }),
+                      success: data => {
+                        data.result.forEach(cmd => {
+                          if (cmd.name === 'On') idOn = cmd.id;
+                          else if (cmd.name === 'Off') idOff = cmd.id;
+                        });
+
+                        const selectedOption = EQLOGICS.find(option => option.value === id);
+                        const array = {
+                          size: tile.getAttribute('data-state'),
+                          type: 'onOff',
+                          idEvent: id,
+                          options: {
+                            on: 0,
+                            title: selectedOption.text,
+                            value: null,
+                            icons: {
+                              on: { type: "jeedomapp", name: "ampoule-on", color: "#f7d959" },
+                              off: { type: "jeedomapp", name: "ampoule-off", color: "#a4a4a3" }
+                            },
+                            actions: {
+                              on: { id: idOn },
+                              off: { id: idOff }
+                            },
+                            iconBlur: false
+                          }
+                        };
+
+                        const jsonString = JSON.stringify(array);
+                        tileElement.setAttribute('data-array', jsonString);
+                        tileElement.classList.add('on');
+                        resolve(array);
+                      },
+                      error: reject
+                    });
+                  }
+                });
+              }
+            });
+      });
+};
+
+  //   const bootBoxGenericTypeFunction = (model, choiceCmd, tileElement) => {
+  //     return new Promise((resolve, reject) => {
+  //         var idOn;
+  //         var idOff;
+  //         $.ajax({
+  //           type: 'POST',
+  //           url: 'plugins/mobile/core/ajax/mobile.ajax.php',
+  //           data: {
+  //             action: 'getEqlogicByGenericType',
+  //             model: 'LIGHT_COLOR'
+  //           },
+  //           dataType: 'json',
+  //           error: function(request, status, error) {
+  //             handleAjaxError(request, status, error);
+  //           },
+  //           success: function(data) {
+  //             var EQLOGICS = [];
+  //             data.result.forEach(function(cmd) {
+  //               EQLOGICS.push({text: cmd.name, value: cmd.id});
+  //             });
+  //             bootbox.prompt({
+  //                 title: "Choisir l equipement",
+  //                 inputType: 'select',
+  //                 inputOptions: EQLOGICS,
+  //                 callback: function(id) {
+  //                   if (id == null) {
+  //                     return
+  //                   } 
+  //                   console.log('ajax')
+  //                   $.ajax({
+  //                     type: 'POST',
+  //                     url: 'plugins/mobile/core/ajax/mobile.ajax.php',
+  //                     data: {
+  //                       action: 'getCmdsByValues',
+  //                       id: id
+  //                     },
+  //                     dataType: 'json',
+  //                     error: function(request, status, error) {
+  //                       handleAjaxError(request, status, error);
+  //                       reject(error);
+  //                     },
+  //                     success: function(data) {
+  //                             data.result.forEach(function(cmd) {
+  //                                 if(cmd.name == 'On'){
+  //                                     idOn = cmd.id
+  //                                 }else if(cmd.name == 'Off'){
+  //                                     idOff = cmd.id
+  //                                 }
+  //                             });
+
+  //                             var selectedOption = EQLOGICS.find(function(option) {
+  //                                 return option.value == id;
+  //                               });
+  //                                 var array = {
+  //                                     'size': tile.getAttribute('data-state'),
+  //                                     'type': 'onOff',
+  //                                     'idEvent': id,
+  //                                     'options': {
+  //                                         'on': 0,
+  //                                         'title': selectedOption.text,
+  //                                         'value': null,
+  //                                         'icons': {
+  //                                             'on': {'type' : "jeedomapp", 'name' : "ampoule-on", 'color' : "#f7d959"},
+  //                                             'off': {'type' : "jeedomapp", 'name' : "ampoule-off", 'color' : "#a4a4a3"}
+  //                                         },
+  //                                         'actions': {
+  //                                             'on': {'id': idOn},
+  //                                             'off': {'id': idOff}
+  //                                         },
+  //                                         'iconBlur': false
+  //                                     }
+  //                                 }   
+  //                                 var jsonString = JSON.stringify(array);
+  //                                 tileElement.setAttribute('data-array', jsonString); 
+  //                                 tileElement.classList.add('on');
+  //                                 resolve(array)
+  //                           }
+  //                   })
+  //                 }
+  //             });
+  //           }
+  //         });
+  //   });
+  // }
 
     tile.addEventListener('mouseup', cancelLongClick);
     tile.addEventListener('mouseleave', cancelLongClick);

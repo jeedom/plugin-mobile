@@ -484,4 +484,5 @@ document.getElementById('validView').addEventListener('click', function(event) {
 <?php
 include_file('desktop', 'mobile', 'js', 'mobile');
 include_file('core', 'plugin.template', 'js');
+
 ?>

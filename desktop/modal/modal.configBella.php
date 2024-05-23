@@ -88,10 +88,52 @@ if (!isConnect()) {
 
 <style>
 
+@keyframes bounceAndScale {
+    0%, 20%, 50%, 80%, 100% {
+        transform: scale(1.0);
+    }
+    40% {
+        transform: scale(1.1) translateY(-30px);
+    }
+    60% {
+        transform: scale(1.1) translateY(-15px);
+    }
+}
+
+.bounceAndScale {
+    animation: bounceAndScale 1s;
+}
+
 /* #main > div:first-child {
     border-right: 3px solid #96C927; 
     padding-right:2%;
 } */
+
+.firstSection{
+  z-index: 2;;
+}
+
+/* .configTileDiv:hover{
+  text-decoration: none;
+  color: #FFF;
+} */
+
+
+.bgDiv{
+  height: 128px;
+  width: 128px;
+  z-index: 1;
+  position: absolute;
+  top: -90px;
+  right: -90px;
+
+  border-radius: 50%;
+
+  -webkit-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+
+}
 
 
 .bootBoxClass{
@@ -319,6 +361,8 @@ if (!isConnect()) {
 
 <script>
 
+  
+
 
 if (typeof AJAX_URL === 'undefined') {
     const AJAX_URL = 'plugins/mobile/core/ajax/mobile.ajax.php';
@@ -400,38 +444,6 @@ document.getElementById('validView').addEventListener('click', function(event) {
   
 });
 
-// document.getElementById('validView').addEventListener('click', function(event) {
-//     event.preventDefault();
-//     var tiles = document.querySelectorAll('.tile');
-//     var config = [];
-//     tiles.forEach(function(tile) {
-//       var tileConfig = {
-//         size: tile.getAttribute('data-state'),
-//         type: 'info',
-//         options: {
-//           on: 0,
-//           title: "Lumière Salon",
-//           value: null,
-//           icons: {
-//             on: {
-//               type: "jeedomapp",
-//               name: "ampoule-off",
-//               color: "#00ff00"
-//             },
-//             off: {
-//               type: "jeedomapp",
-//               name: "ampoule-off",
-//               color: "#a4a4a3"
-//             }
-//           },
-//           iconBlur: false
-//         }
-//       };
-//     });
-
-
-// });
-
 
 var tiles = document.querySelectorAll('.tile');
 
@@ -443,51 +455,90 @@ function getRandomColor() {
 }
 
 
-const createConfigTile = (idTile, randomColor, MODELS_CHOICE) => {
+const createConfigTile = (tileElement, idTile, randomColor, MODELS_CHOICE) => {
     let configTileDiv = document.createElement('div');
-            configTileDiv.setAttribute('style', 'padding-left:10px;margin-bottom:10px;width:100% !important;height:100px;background-color:' + randomColor + ';display:flex;border-radius:10px !important;');
-            configTileDiv.setAttribute('id', 'configTileDiv'+idTile);
-            configTileDiv.classList.add('configTileDiv');
-            configTileDiv.setAttribute('data-id', idTile);
-            configTileDiv.style.order = idTile; 
-            let firstDiv = document.createElement('div');
-            let label = document.createElement('label');
-            label.innerHTML = 'Choisir le type de template à appliquer';
-            firstDiv.appendChild(label);
-            firstDiv.setAttribute('style', 'width:20% !important;display:flex;flex-direction:column;justify-content:center !important;');
-            let firstSelect = document.createElement('select');
-            firstSelect.setAttribute('id', 'firstSelect');
-            firstSelect.setAttribute('style', 'margin-bottom: 10px;');
-            configTileDiv.appendChild(firstDiv);
+    let bgDiv = document.createElement('div');
+    bgDiv.classList.add('bgDiv');
+    bgDiv.setAttribute('data-id', idTile);
+    bgDiv.setAttribute('style', 'background-color:' + randomColor + ';');
+    configTileDiv.appendChild(bgDiv);
+   //configTileDiv.setAttribute('style', 'position: relative;overflow: hidden;padding-left:10px;margin-bottom:10px;width:100% !important;height:100px;background-color:' + randomColor + ';display:flex;border-radius:10px !important;');
+    configTileDiv.setAttribute('style', 'position: relative;overflow: hidden;padding-left:10px;margin-bottom:10px;width:100% !important;height:100px;background-color:#ffffff;display:flex;border-radius:10px !important;');
+    configTileDiv.setAttribute('id', 'configTileDiv'+idTile);
+    configTileDiv.classList.add('configTileDiv');
+    configTileDiv.setAttribute('data-id', idTile);
+    configTileDiv.style.order = idTile; 
+    let firstSection = document.createElement('div');
+    let label = document.createElement('label');
+    label.innerHTML = 'Choisir le type de template à appliquer';
+    firstSection.appendChild(label);
+    firstSection.classList.add('firstSection')
+    firstSection.setAttribute('style', 'width:20% !important;display:flex;flex-direction:column;justify-content:center !important;');
+    let firstSelect = document.createElement('select');
+    firstSelect.setAttribute('id', 'firstSelect');
+    firstSelect.setAttribute('style', 'margin-bottom: 10px;');
+    configTileDiv.appendChild(firstSection);
 
-            configTileDiv.addEventListener('mouseover', function() {
-              var associatedTile = configTileDiv.getAttribute('data-id')
-              if (associatedTile) {
-                document.getElementById(associatedTile).style.transform = 'scale(1.1)';
-                document.getElementById(associatedTile).style.zIndex = '10'; 
-              }
-            });
-            configTileDiv.addEventListener('mouseout', function() {
-              var associatedTile = configTileDiv.getAttribute('data-id')
-              if (associatedTile) {
-                document.getElementById(associatedTile).style.transform = 'scale(1.0)';
-                document.getElementById(associatedTile).style.zIndex = '1'; 
-              }
+    // ADD ANIMATIONS HOVER
+    configTileDiv.addEventListener('mouseover', function() {
+        var associatedTile = configTileDiv.getAttribute('data-id')
+        if (associatedTile) {
+          var associatedElement = document.getElementById(associatedTile);
+          associatedElement.style.zIndex = '10'; 
+          associatedElement.classList.add('bounceAndScale');
+          associatedElement.addEventListener('animationend', function() {
+              this.classList.remove('bounceAndScale');
           });
+          let bgDiv = document.querySelector(`.bgDiv[data-id="${associatedTile}"]`);
+         bgDiv.style.transform = 'scale(20)';
+        }
+    });
+  // REMOVE ANIMATIONS OUT HOVER
+    configTileDiv.addEventListener('mouseout', function() {
+      var associatedTile = configTileDiv.getAttribute('data-id')
+      if (associatedTile) {
+        var associatedElement = document.getElementById(associatedTile);
+        associatedElement.style.transform = 'scale(1.0)';
+        associatedElement.style.zIndex = '1'; 
+        let bgDiv = document.querySelector(`.bgDiv[data-id="${associatedTile}"]`);
+         bgDiv.style.transform = 'scale(1)';
+      }
+   });
+
+  tileElement.addEventListener('mouseover', function() {
+        let tileId = tileElement.getAttribute('id');
+        let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
+        bgDiv.style.transform = 'scale(20)';
+        tileElement.style.transform = 'scale(1.1)';
+    });
+    tileElement.addEventListener('mouseout', function() {
+        let tileId = tileElement.getAttribute('id');
+        let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
+        bgDiv.style.transform = 'scale(1)';
+        tileElement.style.transform = 'scale(1.0)';
+    });
             
-            MODELS_CHOICE.forEach(function(model) {
-              let option = document.createElement('option');
-              option.value = model.value;
-              option.text = model.text;
-              firstSelect.appendChild(option);
-            });
-            firstDiv.appendChild(firstSelect);
-            document.getElementById('rightContent').appendChild(configTileDiv);
+  MODELS_CHOICE.forEach(function(model) {
+    let option = document.createElement('option');
+    option.value = model.value;
+    option.text = model.text;
+    firstSelect.appendChild(option);
+  });
+  firstSection.appendChild(firstSelect);
+  document.getElementById('rightContent').appendChild(configTileDiv);
   }
 
 
-let longClickOccurred = false;
-let timer;
+
+
+
+
+if (typeof longClickOccurred === 'undefined') {
+    var longClickOccurred = false;
+}
+if (typeof timer === 'undefined') {
+    var timer;
+}
 
 
 tiles.forEach(function(tile) {
@@ -534,7 +585,7 @@ tiles.forEach(function(tile) {
                               {text :'Meteo', value:'Meteo'}, 
                               {text :'Lumière', value:'OnOff'}
                             ];
-            createConfigTile(idTile, randomColor, MODELS_CHOICE);
+            createConfigTile(tileElement, idTile, randomColor, MODELS_CHOICE);
             return;
 
           bootbox.prompt({

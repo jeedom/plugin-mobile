@@ -39,8 +39,9 @@ $plugin_widget = mobile::$_pluginWidget;
 				<span>{{QR Code}}</span>
 			</div>
 			<div class="cursor eqLogicAction logoSecondary" data-action="bt_qrCodev2" id="bt_bellaConfig">
-				<i class="fas fa-qrcode"></i><br>
-				<span>{{Configuration Bella}}</span>
+			    <!-- <i class='icon jeedomapp-design-jeedom'></i><br> -->
+				<i class='icon fas fa-pencil-alt'></i><br>
+				<span>{{WebView}}</span>
 			</div>
 			<!-- A VENIR -->
 			<!-- <div class="cursor eqLogicAction logoSecondary"  id="bt_previousMenu">
@@ -336,7 +337,7 @@ $plugin_widget = mobile::$_pluginWidget;
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>							
 	<?php
 	include_file('desktop', 'mobile', 'js', 'mobile');
 	include_file('core', 'plugin.template', 'js');

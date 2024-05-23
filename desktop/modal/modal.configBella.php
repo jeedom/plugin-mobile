@@ -120,14 +120,14 @@ if (!isConnect()) {
 
 
 .bgDiv{
-  height: 128px;
+  height: 100px;
   width: 128px;
   z-index: 1;
   position: absolute;
-  top: -90px;
-  right: -90px;
+  /* top: -90px; */
+  right: -100px;
 
-  border-radius: 50%;
+  border-radius: 30%;
 
   -webkit-transition: all 1s ease;
   -o-transition: all 1s ease;

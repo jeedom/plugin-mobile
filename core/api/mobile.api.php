@@ -557,7 +557,6 @@ if ($jsonrpc->getMethod() == 'geolocDel'){
 }
 
 
-FOR NEXT APP VERSION WITH TRANSIMITION ARRAY
 if($jsonrpc->getMethod() == 'mobile::geoloc'){
 	log::add('mobile', 'debug', '|-----------------------------------');
 	log::add('mobile', 'debug', '|-GeoLocV2 geofencing --');
@@ -643,6 +642,8 @@ if($jsonrpc->getMethod() == 'mobile::geoloc'){
 						}elseif($geofence['action'] == 'EXIT'){
 							log::add('mobile', 'debug', '| commande passé à 0');
 							$cmdgeoloc->event(0);
+						}else{
+							log::add('mobile', 'debug', 'Event DWELL');
 						}
 					}
 				}
@@ -687,6 +688,54 @@ if($jsonrpc->getMethod() == "nfc"){
 if($jsonrpc->getMethod() == "syncBella"){
 	log::add('mobile', 'debug', 'JeedomApp > syncBella');
 }
+
+if($jsonrpc->getMethod() == 'getNotificationsFromFile'){
+    log::add('mobile', 'debug', 'Get notifications from file');
+    $Iq = $params['Iq'];
+    $pathNotification = __DIR__ . '/../data/notifications';
+    $return = array();
+    if(file_exists($pathNotification)){
+        $notifications = file_get_contents($pathNotification.'/'.$Iq.'.json');
+        if($notifications){
+			$notifications = json_decode($notifications, true);
+			foreach($notifications as $id => $value){
+				$data = json_decode($value['data'], true);
+				$dateNew = substr($value['data']['date'], 0, 10);
+				$horaire = substr($value['data']['date'], -8);
+				$horaireFormat = substr($horaire, 0, 5);
+				$notifications[$id]['data']['newDate'] = $dateNew;
+				$notifications[$id]['data']['horaireFormat'] = $horaireFormat;
+			}
+			$notifications = json_encode($notifications);
+            $jsonrpc->makeSuccess($notifications);
+        }else{
+            $jsonrpc->makeSuccess('noNotifications');
+        
+        }
+    }
+}
+
+
+if($jsonrpc->getMethod() == 'deleteNotificationInJsonFile'){
+    $Iq = $params['Iq'];
+    $idNotif = $params['IdNotif'];
+    log::add('mobile', 'debug', 'Delete notification in file > '.$Iq.' > '.$idNotif);
+    $pathNotification = __DIR__ . '/../data/notifications';
+    if(file_exists($pathNotification)){
+        $notifications = file_get_contents($pathNotification.'/'.$Iq.'.json');
+        $notificationsArray = json_decode($notifications, true); 
+
+        if(isset($notificationsArray[$idNotif])) { 
+            unset($notificationsArray[$idNotif]); 
+        }
+
+        $notifications = json_encode($notificationsArray); 
+        file_put_contents($pathNotification.'/'.$Iq.'.json', $notifications);
+
+		$jsonrpc->makeSuccess('ok');
+    }
+}
+
 
 throw new Exception(__('Aucune demande', __FILE__));
 ?>

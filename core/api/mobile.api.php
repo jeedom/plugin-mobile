@@ -613,8 +613,8 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 					}
 				}else{
 			      throw new Exception(__('EqLogic inconnu : ', __FILE__) . $params['Iq']);
-        }
-			  log::add('mobile', 'debug', '|-----------------------------------');	
+                }
+			     log::add('mobile', 'debug', '|-----------------------------------');	
 			}else{
 				$errorCount++;
 			}

@@ -584,9 +584,10 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 			}
 			log::add('mobile', 'debug', '|-----------------------------------');
 			$jsonrpc->makeSuccess();
-		} else {
+		}else{
 			throw new Exception(__('EqLogic inconnu : ', __FILE__) . $params['Iq']);
-    }else{
+                }
+	}else{
 		$transmitions = $params['transmition'];
 		$errorCount = 0;
 		foreach($transmitions as $transmition){

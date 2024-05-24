@@ -315,7 +315,6 @@
         "Cmd inconnu : ": "Unknown Cmd:",
         "pas d\\'id : ": "no id:",
         "pas de parametre de geofencing : ": "no geofencing parameter:",
-        "Pas de paramètre de geofencing : ": "No geofencing parameter:",
         "Aucune demande": "No request"
     },
     "info.json": {

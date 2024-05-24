@@ -29,6 +29,10 @@ function mobile_install()
 	}
 	//config::save('displayMobilePanel',1, 'mobile');
 	jeedom::getApiKey('mobile');
+	$pathNotifications = dirname(__FILE__) . '/../core/data/notifications/';
+	if(!is_dir($pathNotifications)){
+		mkdir($pathNotifications, 0775, true);
+	}
 }
 
 
@@ -53,8 +57,8 @@ function mobile_update()
 	}
 	$oldFiles = [dirname(__FILE__) . '/../desktop/css/panel.css', 
 	             dirname(__FILE__) . '/../desktop/php/panelMenuCustom.php',
-							 dirname(__FILE__) . '/../desktop/js/panelMenuCustom.js',
-							 dirname(__FILE__) . '/../desktop/modal/health.php'];
+				 dirname(__FILE__) . '/../desktop/js/panelMenuCustom.js',
+				dirname(__FILE__) . '/../desktop/modal/health.php'];
 	foreach ($oldFiles as $oldFile) {
 		if (file_exists($oldFile)) {
 			shell_exec('rm ' . $oldFile);
@@ -68,4 +72,8 @@ function mobile_update()
 		}
 	}
 	mobile::makeTemplateJson();
+	$pathNotifications = dirname(__FILE__) . '/../core/data/notifications/';
+	if(!is_dir($pathNotifications)){
+		mkdir($pathNotifications, 0775, true);
+	}
 }

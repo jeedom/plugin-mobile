@@ -1334,7 +1334,7 @@ private static function getDefaultMenuArray(){
 		}
 	}
 
-
+	// FONCTIONS FOR BELLA
 	public static function createSubArray($size, $type, $title, $icons, $iconBlur, $idTile) {
 		return array( $idTile => array(
 			'size' => $size,
@@ -1350,15 +1350,6 @@ private static function getDefaultMenuArray(){
 		);
 	}
 	
-	// public static function createMainArray($subArrays) {
-
-	// 	log::add('mobile', 'debug', 'createMainArray > ' . json_encode($subArrays));
-	// 	$mainArray = $subArrays;
-	// 	while (count($mainArray) < 4) {
-	// 		$mainArray[] = array(); 
-	// 	}
-	// 	return $mainArray;
-	// }
 	public static function createMainArray($subArrays) {
 		log::add('mobile', 'debug', 'createMainArray > ' . json_encode($subArrays));
 		$mainArray = array();

@@ -4,25 +4,28 @@ if (!isConnect()) {
   throw new Exception('{{401 - Accès non autorisé}}');
 }
 
-// $jsonrpc = repo_market::getJsonRpc();
-// $market = $jsonrpc->sendRequest('jeedom::getList');
-
-
-$market = repo_market::getJsonRpc();
-if (!$market->sendRequest('jeedom::getList')) {
-  throw new Exception($market->getError(), $market->getErrorCode());
-}
-$results = $market->getResult();
 $arrayInfos = array();
-foreach($results as $result){
+foreach(jeeObject::all() as $object){
+  $objetArray = utils::o2a($object);
+  $pathHtmlBella = __DIR__ . '/../../core/data/jsonBella/';
+  if(!is_dir($pathHtmlBella)){
+    mkdir($pathHtmlBella, 0777, true);
+  }
+  $pathHtmlBella .= 'jsonObject_'.$objetArray['id'].'.html';
+  if(file_exists($pathHtmlBella)){
+    $bellaHtml= file_get_contents($pathHtmlBella);
+  }else{
+    $bellaHtml = file_get_contents(__DIR__ . '/../../core/data/jsonBella/jsonObject_default.html');
+  }
   $arrayInfos[] = array(
-    'nameBox' => $result['name'],
-    'hardware' => $result['information']['hardware']
-  );
+        'nameBox' => $objetArray['name'],
+        'imageBg' => $objetArray['img'] ? $objetArray['img'] : 'core/img/background/jeedom_abstract_04_light.jpg',
+        'idObject' => $objetArray['id'],
+        'bellaHtml' => $bellaHtml);
 }
-log::add('mobile', 'debug', 'RESULT ' . json_encode($arrayInfos));
 
-// sendVarToJS('arrayInfos', $arrayInfos);
+
+
 ?>
 
 
@@ -30,85 +33,87 @@ log::add('mobile', 'debug', 'RESULT ' . json_encode($arrayInfos));
      <button class="btn btn-success" id="validView" style="border-radius:20px !important;padding-left:5px !important;padding-right:5px !important;margin-bottom:10px;">Valider la vue</button>
 </div>
 
-
-<div id="main" style="display:flex;flex-direction:row;">
-<div style="display:flex;flex-direction:column;">
 <div id="carousel" style="height:20vh;margin-bottom:2vh;width:400px;">
     <div id="box-name" style="position:absolute;top:10vh;width:150px;color:white;font-size:20px;font-weight:bold;z-index:1;background-color:#B5DA4E;padding-left:5px;"></div>
     <div id="carousel-image" style="height:20vh;background-image: url('https://www.jeedom.com/background/background-Luna2.jpg');background-size: cover; background-position: center;"></div> 
     <div id="carousel-dots"></div>
 </div>
-<div class="gridPage" style="width:400px; height;100vh;">
-  <div class="tile  customTile" id="1">
-    <div class="TileUp">
-      <div class="UpLeft">
-        <i class="iconTile icon jeedomapp-ampoule-off"></i>
-      </div>
-      <div class="UpRight">
+<div id="main" style="display:flex;flex-direction:row;">
+    <div style="display:flex;flex-direction:column;" id="bella-container">
 
-      </div>
+  
+
+        <!-- <div class="gridPage" style="width:400px; height:100vh;">
+          <div class="tile  customTile" id="1">
+            <div class="TileUp">
+              <div class="UpLeft">
+                <i class="iconTile icon jeedomapp-ampoule-off"></i>
+              </div>
+              <div class="UpRight">
+
+              </div>
+            </div>
+            <div class="TileDown" >
+              <div class="title bold">Lumière Salon</div>
+              <div class="title">Eteinte</div>
+            </div>
+          </div>  
+
+          <div class="tile on" id="2">
+            <div class="TileUp">
+                <div class="UpLeft">
+                  <i class="iconTile on icon jeedomapp-ampoule-on"></i>
+                </div>
+                <div class="UpRight">
+
+                </div>
+              </div>
+              <div class="TileDown">
+                <div class="title on bold">Lumière Cuisine</div>
+                <div class="title on">Allumée à 30%</div>
+              </div>
+          </div>
+          <div class="tile customTile" id="3" data-title="Météo">
+
+          </div>
+          <div class="tile customTile" id="4" data-title="Prise Chambre">
+
+          </div>
+          <div class="tile dual on" id="5">
+
+          </div>
+
+          <div class="tile dual" id="6">
+
+          </div>
+          <div class="tile" id="7">
+
+          </div>
+          <div class="tile" id="8">
+
+          </div>
+          <div class="tile quadral on" id="9">
+
+          </div>
+          <div class="tile" id="10">
+
+          </div>
+          <div class="tile" id="11">
+
+          </div>
+          <div class="tile" id="12">
+
+          </div>
+          <div class="tile" id="13">
+
+          </div>
+          <div class="tile" id="14">
+
+          </div>
+
+        </div> -->
     </div>
-    <div class="TileDown" >
-      <div class="title bold">Lumière Salon</div>
-      <div class="title">Eteinte</div>
-    </div>
-  </div>  
-
-  <div class="tile on" id="2">
-    <div class="TileUp">
-        <div class="UpLeft">
-          <i class="iconTile on icon jeedomapp-ampoule-on"></i>
-        </div>
-        <div class="UpRight">
-
-        </div>
-      </div>
-      <div class="TileDown">
-        <div class="title on bold">Lumière Cuisine</div>
-        <div class="title on">Allumée à 30%</div>
-      </div>
-  </div>
-  <div class="tile customTile" id="3" data-title="Météo">
-
-  </div>
-  <div class="tile customTile" id="4" data-title="Prise Chambre">
-
-  </div>
-  <div class="tile dual on" id="5">
-
-  </div>
-
-  <div class="tile dual" id="6">
-
-  </div>
-  <div class="tile" id="7">
-
-  </div>
-  <div class="tile" id="8">
-
-  </div>
-  <div class="tile quadral on" id="9">
-
-  </div>
-  <div class="tile" id="10">
-
-  </div>
-  <div class="tile" id="11">
-
-  </div>
-  <div class="tile" id="12">
-
-  </div>
-  <div class="tile" id="13">
-
-  </div>
-  <div class="tile" id="14">
-
-  </div>
-
-</div>
-</div>
-  <div id="rightContent" style="width:100%;height;100vh; display:flex;flex-direction:column;align-items:center;">
+    <div id="rightContent" style="width:100%;height;100vh; display:flex;flex-direction:column;align-items:center;">
 
   </div>
 
@@ -431,24 +436,20 @@ var associatedImagesHardware = {
 };
 
 
-
-// var images = ["https://www.jeedom.com/background/background-Luna2.jpg", 
-//               "https://www.jeedom.com/background/background12.png", 
-//               "https://www.jeedom.com/background/background9-4.jpg"];
-
-
-
-
-// var currentImageIndex = 0;
 var currentImageIndex = 0;
 
 function changeImage(newIndex) {
     currentImageIndex = newIndex;
-    var hardware = arrayInfos[currentImageIndex]['hardware'];
+    var imgBg = arrayInfos[currentImageIndex]['imageBg'];
     var nameBox = arrayInfos[currentImageIndex]['nameBox'];
-    var imageUrl = associatedImagesHardware[hardware];
-    document.getElementById('carousel-image').style.backgroundImage = "url('" + imageUrl + "')";
-    document.getElementById('box-name').textContent = nameBox ? nameBox : 'Box sans nom';
+    var bellaHtml = arrayInfos[currentImageIndex]['bellaHtml'];
+    var idObject = arrayInfos[currentImageIndex]['idObject'];
+    document.getElementById('carousel-image').style.backgroundImage = "url('" + imgBg + "')";
+    document.getElementById('box-name').textContent = nameBox ? nameBox : 'Objet sans nom';
+    bellaHtml = bellaHtml.replace(/(\d+)_defaut/g, "$1_" + idObject);
+    document.getElementById('bella-container').innerHTML = bellaHtml;
+    document.getElementById('rightContent').innerHTML = "";
+    mainScript();
     updateDots();
 }
 
@@ -554,7 +555,6 @@ document.getElementById('validView').addEventListener('click', function(event) {
     });
  
 
-    console.log('config', config);
     $.ajax({
       type: 'POST',
       url: 'plugins/mobile/core/ajax/mobile.ajax.php',
@@ -576,6 +576,13 @@ document.getElementById('validView').addEventListener('click', function(event) {
     });
   
 });
+
+function mainScript() {
+
+  var btnClose = jeeDialog.get('#configBella', 'title').querySelector('button.btClose')
+    btnClose.addEventListener('click', function() {
+      location.reload()
+  });
 
 
 var tiles = document.querySelectorAll('.tile');
@@ -1010,7 +1017,7 @@ tiles.forEach(function(tile) {
 })
 
 
-
+}
 
 
 

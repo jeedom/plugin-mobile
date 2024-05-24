@@ -132,7 +132,7 @@ class mobile extends eqLogic
 	public static function getSaveJson($mobileID, $type = 'dashboard')
 	{
 		if (!file_exists(dirname(__FILE__) . '/../../data/' . $mobileID . '/' . $type . '.json')) {
-			self::makeSaveJson($mobileID, array() , $type);
+			self::makeSaveJson($mobileID, array(), $type);
 		}
 		return json_decode(file_get_contents(dirname(__FILE__) . '/../../data/' . $mobileID . '/' . $type . '.json'), true);
 	}
@@ -751,23 +751,23 @@ class mobile extends eqLogic
 				}
 			}
 		}
-		log::add('mobile', 'debug', 'JSON publish >  : ' . json_encode($publish));
+		log::add('mobile', 'debug', '| JSON publish >  : ' . json_encode($publish));
 		return $publish;
 	}
 
 	public static function notification($arn, $os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version = 1, $optionsNotif = [], $critical = false)
 	{
-		log::add('mobile', 'debug', 'notification en cours !');
+		log::add('mobile', 'debug', '| Notification en cours !');
 		$publish = mobile::jsonPublish($os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version, $optionsNotif, $critical);
-		log::add('mobile', 'debug', 'JSON publish >  : ' . json_encode($publish));
+		log::add('mobile', 'debug', '| JSON publish >  : ' . json_encode($publish));
 		if ($token != null) {
 			if ($token == 'notifsBGDisabled') {
-				log::add('mobile', 'debug', 'NOTIFICATION NON ENVOYEE : SERVICES NOTIF DESACTIVE SUR VOTRE TELEPHONE : ');
+				log::add('mobile', 'debug', '| NOTIFICATION NON ENVOYEE : LE SERVICE NOTIF EST DESACTIVE SUR LE TELEPHONE');
 				message::add(__CLASS__, 'Échec de l\'envoie de notification : le service est désactivé dans les paramètres du téléphone', 'notifsbgSend', 'alertNotifsSend');
 				return;
 			}
 			if ($token == 'desactivate') {
-				log::add('mobile', 'debug', 'NOTIFICATION NON ENVOYEE : VOUS AVEZ DESACTIVE LES NOTIFICATIONS SUR L\'APP : ');
+				log::add('mobile', 'debug', '| NOTIFICATION NON ENVOYEE : LES NOTIFICATIONS SONT DESACTIVEES DANS L\'APP : ');
 				message::add(__CLASS__, 'Échec de l\'envoie de notification : le service est désactivé dans les paramètres de l\'application', 'notifsbgSend', 'alertNotifsSend');
 				return;
 			}
@@ -780,11 +780,11 @@ class mobile extends eqLogic
 			];
 
 			$post = ['message' => $publish, 'options' => $options];
-			log::add('mobile', 'debug', 'JSON envoyé en mode FCM : ' . json_encode($post));
+			log::add('mobile', 'debug', '| JSON envoyé en mode FCM : ' . json_encode($post));
 		} elseif ($token == null && $version == 2) {
-			log::add('mobile', 'debug', 'NOTIFICATION NON ENVOYEE : PAS DE TOKEN ENREGISTRE SUR VOTRE TELEPHONE :  ');
+			log::add('mobile', 'debug', '| NOTIFICATION NON ENVOYEE : PAS DE TOKEN ENREGISTRE SUR LE TELEPHONE :  ');
 			//message::removeAll(__CLASS__, 'noValidToken');
-			message::add(__CLASS__, 'NOTIFICATION NON ENVOYÉE : PAS DE TOKEN ENREGISTRE SUR LE TÉLÉPHONE :', 'noValidTok', 'noValidToken');
+			message::add(__CLASS__, '| NOTIFICATION NON ENVOYÉE : PAS DE TOKEN ENREGISTRE SUR LE TÉLÉPHONE :', 'noValidTok', 'noValidToken');
 			return;
 		} else {
 			log::add('mobile', 'debug', 'JSON envoyé : APN' . $publish);
@@ -947,7 +947,8 @@ class mobile extends eqLogic
 	}
 
 
-	public static function handleDefaultMenu($mobileActiveDefault){
+	public static function handleDefaultMenu($mobileActiveDefault)
+	{
 
 		$mobileActive = eqLogic::byId(intval($mobileActiveDefault));
 		if (is_object($mobileActive)) {
@@ -970,10 +971,11 @@ class mobile extends eqLogic
 	}
 
 
-	public static function handleMenuDefaultBySelect($eqId, $eqDefault){
-		 
-		if(!is_object($mobileDefault = eqLogic::byId($eqDefault, 'mobile'))) return;
-		if(!is_object($mobile = eqLogic::byId($eqId, 'mobile'))) return;
+	public static function handleMenuDefaultBySelect($eqId, $eqDefault)
+	{
+
+		if (!is_object($mobileDefault = eqLogic::byId($eqDefault, 'mobile'))) return;
+		if (!is_object($mobile = eqLogic::byId($eqId, 'mobile'))) return;
 		$namesMenus =  ['home', 'overview', 'health', 'home'];
 		$renamesIcons =  ['Accueil', 'Synthese', 'Santé', 'Accueil'];
 		$spanIcons =  ['icon jeedomapp-in', 'fab fa-hubspot', 'fas fa-medkit', 'icon jeedomapp-in'];
@@ -981,254 +983,257 @@ class mobile extends eqLogic
 
 		// ATTRIBUTION DUN MENU PAR DEFAULT AU MOBILE
 		if ($eqDefault == 'default') {
-				$j = 0;
-				$menuCustomArray = [];
-				for ($i = 1; $i < 5; $i++) {
-					$menuCustomArray[$i]['selectNameMenu'] = $namesMenus[$j];
-					$menuCustomArray[$i]['renameIcon'] = $renamesIcons[$j];
-					$menuCustomArray[$i]['spanIcon'] = $spanIcons[$j];
-					$menuCustomArray[$i]['urlUser'] = $urlUsers[$j];
-					$j++;
-				}
-				$mobile->setConfiguration('menuCustomArray', $menuCustomArray);
-				$mobile->setConfiguration('nbIcones', 3);
-				$mobile->setConfiguration('defaultIdMobile', 'default');
-				$mobile->save();
-				return;
-		}
-
-			// ATTRIBUTION DU MENU PAR DEFAULT DU MOBILE DEFAULT AU MOBILE
-			$mobile->setConfiguration('defaultIdMobile', $eqDefault);
-			$nbIcones = $mobileDefault->getConfiguration('nbIcones', 3);
-			$selectNameMenu = $renameIcon = $spanIcon = $urlUser  = $menuTemp = [];
-			$menuCustomArray = $mobileDefault->getConfiguration('menuCustomArray');
 			$j = 0;
-			for ($i = 1; $i < $nbIcones + 1; $i++) {
-				$menuTemp[$i]['selectNameMenu'] = isset($menuCustomArray[$i]['selectNameMenu']) ? $menuCustomArray[$i]['selectNameMenu'] : $namesMenus[$j];
-				$menuTemp[$i]['renameIcon'] = isset($menuCustomArray[$i]['renameIcon']) ? $menuCustomArray[$i]['renameIcon'] : $renamesIcons[$j];
-				$menuTemp[$i]['spanIcon'] = isset($menuCustomArray[$i]['spanIcon']) ? $menuCustomArray[$i]['spanIcon'] : $spanIcons[$j];
-				$menuTemp[$i]['urlUser'] = isset($menuCustomArray[$i]['urlUser']) ? $menuCustomArray[$i]['urlUser'] : $urlUsers[$j];
+			$menuCustomArray = [];
+			for ($i = 1; $i < 5; $i++) {
+				$menuCustomArray[$i]['selectNameMenu'] = $namesMenus[$j];
+				$menuCustomArray[$i]['renameIcon'] = $renamesIcons[$j];
+				$menuCustomArray[$i]['spanIcon'] = $spanIcons[$j];
+				$menuCustomArray[$i]['urlUser'] = $urlUsers[$j];
 				$j++;
 			}
-			$mobile->setConfiguration('nbIcones', $nbIcones);
-			$mobile->setConfiguration('menuCustomArray', $menuTemp);
+			$mobile->setConfiguration('menuCustomArray', $menuCustomArray);
+			$mobile->setConfiguration('nbIcones', 3);
+			$mobile->setConfiguration('defaultIdMobile', 'default');
 			$mobile->save();
+			return;
+		}
+
+		// ATTRIBUTION DU MENU PAR DEFAULT DU MOBILE DEFAULT AU MOBILE
+		$mobile->setConfiguration('defaultIdMobile', $eqDefault);
+		$nbIcones = $mobileDefault->getConfiguration('nbIcones', 3);
+		$selectNameMenu = $renameIcon = $spanIcon = $urlUser  = $menuTemp = [];
+		$menuCustomArray = $mobileDefault->getConfiguration('menuCustomArray');
+		$j = 0;
+		for ($i = 1; $i < $nbIcones + 1; $i++) {
+			$menuTemp[$i]['selectNameMenu'] = isset($menuCustomArray[$i]['selectNameMenu']) ? $menuCustomArray[$i]['selectNameMenu'] : $namesMenus[$j];
+			$menuTemp[$i]['renameIcon'] = isset($menuCustomArray[$i]['renameIcon']) ? $menuCustomArray[$i]['renameIcon'] : $renamesIcons[$j];
+			$menuTemp[$i]['spanIcon'] = isset($menuCustomArray[$i]['spanIcon']) ? $menuCustomArray[$i]['spanIcon'] : $spanIcons[$j];
+			$menuTemp[$i]['urlUser'] = isset($menuCustomArray[$i]['urlUser']) ? $menuCustomArray[$i]['urlUser'] : $urlUsers[$j];
+			$j++;
+		}
+		$mobile->setConfiguration('nbIcones', $nbIcones);
+		$mobile->setConfiguration('menuCustomArray', $menuTemp);
+		$mobile->save();
 	}
 
 
-	public static function configMenuCustom($eqId, $jeedomVersion){
+	public static function configMenuCustom($eqId, $jeedomVersion)
+	{
 
-			if ($jeedomVersion < '4.4.0') {
-				log::add('mobile', 'info', '|-CONFIGMENU CUSTOM JEEDOM 4.3.0--');
-				return $defaultMenuArray = self::getDefaultMenuArray();
-			}
-			log::add('mobile', 'info', '|-CONFIGMENU CUSTOM JEEDOM 4.4.0--');
-			$defaultMenuArray = self::getDefaultMenuArray();
+		if ($jeedomVersion < '4.4.0') {
+			log::add('mobile', 'info', '|-CONFIGMENU CUSTOM JEEDOM 4.3.0--');
+			return $defaultMenuArray = self::getDefaultMenuArray();
+		}
+		log::add('mobile', 'info', '|-CONFIGMENU CUSTOM JEEDOM 4.4.0--');
+		$defaultMenuArray = self::getDefaultMenuArray();
 
-			if (is_object($eqLogic = eqLogic::byId($eqId))) {
-				$eqLogics = eqLogic::byType('mobile');
-				$menuCustomArray = $eqLogic->getConfiguration('menuCustomArray');
+		if (is_object($eqLogic = eqLogic::byId($eqId))) {
+			$eqLogics = eqLogic::byType('mobile');
+			$menuCustomArray = $eqLogic->getConfiguration('menuCustomArray');
 
-				// ATTRIBUTION MOBILE PAR DEFAUT A TOUS LES MOBILES
-				foreach ($eqLogics as $mobile) {
-							if ($mobile->getConfiguration('defaultIdMobile') == $eqId) {
-								$countFor = intval($eqLogic->getConfiguration('nbIcones', 3)) + 1;
-								$menuArrayTemp = [];
-								for ($i = 1; $i < $countFor; $i++) {
-									$menuArrayTemp[$i]['selectNameMenu'] = isset($menuCustomArray[$i]['selectNameMenu']) ? $menuCustomArray[$i]['selectNameMenu'] : 'none';
-									$menuArrayTemp[$i]['renameIcon'] = isset($menuCustomArray[$i]['renameIcon']) ? $menuCustomArray[$i]['renameIcon'] : '';
-									$menuArrayTemp[$i]['spanIcon'] = isset($menuCustomArray[$i]['spanIcon']) ? $menuCustomArray[$i]['spanIcon'] : 'none';
-									$menuArrayTemp[$i]['urlUser'] = isset($menuCustomArray[$i]['urlUser']) ? $menuCustomArray[$i]['urlUser'] : 'none';
-								}
-								$mobile->setConfiguration('menuCustomArray', $menuArrayTemp);
-								$mobile->save();
-							};
-				}
-				$nbIcones = $eqLogic->getConfiguration('nbIcones', 3);
-				$arrayElements = array();
-				$j = 0;
-				$count = 1;
-				for ($i = 1; $i < 5; $i++) {
-					
-					// GENERATE TAB ICON LIBRARY AND RENAME BY USER
-					$resultTabIcon = self::generateTabIcon($menuCustomArray, $i);
-					$tabIconName = $resultTabIcon['tabIconName'];
-					$tabLibName = $resultTabIcon['tabLibName'];
-					$tabRenameInput = $resultTabIcon['tabRenameInput'];
-						
-	
-					$objectId = $menuCustomArray[$i]['selectNameMenu'];
-					$isActive = true;
-					$webviewUrl = 'd'; 
-					
-					log::add('mobile', 'debug', '| - objectId > ' . $objectId);
-
-					// GENERATE URLS FOR MENU CUSTOM 
-					$result = self::generateTypeObject($objectId, $i, $webviewUrl, $pluginPanelMobile);
-					$typeObject = $result['typeObject'];
-					$typewebviewurl = $result['typewebviewurl'];
-					$typeobjectId = $result['typeobjectId'];
-					$tabUrl = $result['tabUrl'];
-				
-					if ($count > intval($nbIcones)) {
-						$isActive = false;
+			// ATTRIBUTION MOBILE PAR DEFAUT A TOUS LES MOBILES
+			foreach ($eqLogics as $mobile) {
+				if ($mobile->getConfiguration('defaultIdMobile') == $eqId) {
+					$countFor = intval($eqLogic->getConfiguration('nbIcones', 3)) + 1;
+					$menuArrayTemp = [];
+					for ($i = 1; $i < $countFor; $i++) {
+						$menuArrayTemp[$i]['selectNameMenu'] = isset($menuCustomArray[$i]['selectNameMenu']) ? $menuCustomArray[$i]['selectNameMenu'] : 'none';
+						$menuArrayTemp[$i]['renameIcon'] = isset($menuCustomArray[$i]['renameIcon']) ? $menuCustomArray[$i]['renameIcon'] : '';
+						$menuArrayTemp[$i]['spanIcon'] = isset($menuCustomArray[$i]['spanIcon']) ? $menuCustomArray[$i]['spanIcon'] : 'none';
+						$menuArrayTemp[$i]['urlUser'] = isset($menuCustomArray[$i]['urlUser']) ? $menuCustomArray[$i]['urlUser'] : 'none';
 					}
-					log::add('mobile', 'debug', '| - Construction jsonTemplate');
-					$jsonTemplate = array(
-						'active' => $isActive,
-						'icon' => [
-							'name' => $tabIconName,
-							'type' => $tabLibName
-						],
-						'name' => $tabRenameInput,
-						'options' => [
-							'uri' => $tabUrl,
-							'objectType' => $typeObject,
-							'mobile' => $typewebviewurl,
-							'objectId' => $typeobjectId 
-						],
-						'type' =>  strpos($tabUrl, 'www') !== false ? 'urlwww' : 'WebviewApp'
-					);
-					$arrayElements['tab' . $j] =  $jsonTemplate;
-					$j++;
-					$count++;
+					$mobile->setConfiguration('menuCustomArray', $menuArrayTemp);
+					$mobile->save();
+				};
+			}
+			$nbIcones = $eqLogic->getConfiguration('nbIcones', 3);
+			$arrayElements = array();
+			$j = 0;
+			$count = 1;
+			for ($i = 1; $i < 5; $i++) {
+
+				// GENERATE TAB ICON LIBRARY AND RENAME BY USER
+				$resultTabIcon = self::generateTabIcon($menuCustomArray, $i);
+				$tabIconName = $resultTabIcon['tabIconName'];
+				$tabLibName = $resultTabIcon['tabLibName'];
+				$tabRenameInput = $resultTabIcon['tabRenameInput'];
+
+
+				$objectId = $menuCustomArray[$i]['selectNameMenu'];
+				$isActive = true;
+				$webviewUrl = 'd';
+
+				log::add('mobile', 'debug', '| - objectId > ' . $objectId);
+
+				// GENERATE URLS FOR MENU CUSTOM 
+				$result = self::generateTypeObject($objectId, $i, $webviewUrl, $pluginPanelMobile);
+				$typeObject = $result['typeObject'];
+				$typewebviewurl = $result['typewebviewurl'];
+				$typeobjectId = $result['typeobjectId'];
+				$tabUrl = $result['tabUrl'];
+
+				if ($count > intval($nbIcones)) {
+					$isActive = false;
 				}
-		
-				log::add('mobile', 'info', '| - Function MobileconfigMenuCustom :' . json_encode($arrayElements));
-				log::add('mobile', 'debug', '|-----------------------------------');
-				if (count($arrayElements) == 4) {
-								$j = 0;
-								for ($i = 0; $i < 4; $i++) {
-									$isBool = is_bool($arrayElements['tab' . $i]['active']);
-									if ($isBool) {
-										if ($arrayElements['tab' . $i]['active'] == true) {
-											$j++;
-										}
-									} else {
-										return $defaultMenuArray;
-									}
-								}
-								return ($j == 0) ? $defaultMenuArray : $arrayElements;
-				} 
-				return $defaultMenuArray;
-			} 
+				log::add('mobile', 'debug', '| - Construction jsonTemplate');
+				$jsonTemplate = array(
+					'active' => $isActive,
+					'icon' => [
+						'name' => $tabIconName,
+						'type' => $tabLibName
+					],
+					'name' => $tabRenameInput,
+					'options' => [
+						'uri' => $tabUrl,
+						'objectType' => $typeObject,
+						'mobile' => $typewebviewurl,
+						'objectId' => $typeobjectId
+					],
+					'type' =>  strpos($tabUrl, 'www') !== false ? 'urlwww' : 'WebviewApp'
+				);
+				$arrayElements['tab' . $j] =  $jsonTemplate;
+				$j++;
+				$count++;
+			}
+
+			log::add('mobile', 'info', '| - Function MobileconfigMenuCustom :' . json_encode($arrayElements));
+			log::add('mobile', 'debug', '|-----------------------------------');
+			if (count($arrayElements) == 4) {
+				$j = 0;
+				for ($i = 0; $i < 4; $i++) {
+					$isBool = is_bool($arrayElements['tab' . $i]['active']);
+					if ($isBool) {
+						if ($arrayElements['tab' . $i]['active'] == true) {
+							$j++;
+						}
+					} else {
+						return $defaultMenuArray;
+					}
+				}
+				return ($j == 0) ? $defaultMenuArray : $arrayElements;
+			}
 			return $defaultMenuArray;
-			
+		}
+		return $defaultMenuArray;
 	}
 
-	public static function generateTabIcon($menuCustomArray, $i){
-    $result = array();
+	public static function generateTabIcon($menuCustomArray, $i)
+	{
+		$result = array();
 
-    $tabIconName = isset($menuCustomArray[$i]['spanIcon']) ? $menuCustomArray[$i]['spanIcon'] : 'none';
+		$tabIconName = isset($menuCustomArray[$i]['spanIcon']) ? $menuCustomArray[$i]['spanIcon'] : 'none';
 
-    if ($tabIconName != 'none') {
-        $arrayIcon = explode(' ', $tabIconName);
-        $tabIconName = substr(strstr($arrayIcon[1], '-'), 1);
-        $tabLibName = strstr($arrayIcon[1], '-', true);
-        if ($tabLibName == 'mdi') {
-            $tabLibName = 'Mdi';
-        }
-    } else {
-        $tabIconName = 'in';
-        $tabLibName = 'jeedomapp';
-    }
+		if ($tabIconName != 'none') {
+			$arrayIcon = explode(' ', $tabIconName);
+			$tabIconName = substr(strstr($arrayIcon[1], '-'), 1);
+			$tabLibName = strstr($arrayIcon[1], '-', true);
+			if ($tabLibName == 'mdi') {
+				$tabLibName = 'Mdi';
+			}
+		} else {
+			$tabIconName = 'in';
+			$tabLibName = 'jeedomapp';
+		}
 
-    $tabRenameInput = isset($menuCustomArray[$i]['renameIcon']) ? $menuCustomArray[$i]['renameIcon'] : 'none';
+		$tabRenameInput = isset($menuCustomArray[$i]['renameIcon']) ? $menuCustomArray[$i]['renameIcon'] : 'none';
 
-    if ($tabRenameInput == 'none') {
-        $tabRenameInput = 'Accueil';
-    }
-    $result['tabIconName'] = $tabIconName;
-    $result['tabLibName'] = $tabLibName;
-    $result['tabRenameInput'] = $tabRenameInput;
+		if ($tabRenameInput == 'none') {
+			$tabRenameInput = 'Accueil';
+		}
+		$result['tabIconName'] = $tabIconName;
+		$result['tabLibName'] = $tabLibName;
+		$result['tabRenameInput'] = $tabRenameInput;
 
-    return $result;
-  }
+		return $result;
+	}
 
 
-	public static function generateTypeObject($objectId, $i, $webviewUrl, $pluginPanelMobile){
+	public static function generateTypeObject($objectId, $i, $webviewUrl, $pluginPanelMobile)
+	{
 
-    $result = array();
-    if ($objectId && $objectId != -1 && $objectId != 'none' && $objectId != 'url') {
-        // SPECIFIC OBJETS FOR URL
-        $excludedRefs = array('overview', 'health', 'home', 'timeline');
-        if (!in_array($objectId, $excludedRefs)) {
-            $arrayObjects = explode('_', $objectId);
-            $objectId = $arrayObjects[0];
-            $typeObject = $arrayObjects[1];
+		$result = array();
+		if ($objectId && $objectId != -1 && $objectId != 'none' && $objectId != 'url') {
+			// SPECIFIC OBJETS FOR URL
+			$excludedRefs = array('overview', 'health', 'home', 'timeline');
+			if (!in_array($objectId, $excludedRefs)) {
+				$arrayObjects = explode('_', $objectId);
+				$objectId = $arrayObjects[0];
+				$typeObject = $arrayObjects[1];
 
-            $typewebviewurl = $webviewUrl;
-            $typeobjectId = $objectId;
+				$typewebviewurl = $webviewUrl;
+				$typeobjectId = $objectId;
 
-            switch ($typeObject) {
-                case 'views':
-                    $tabUrl = "/index.php?v={$webviewUrl}&p=view&view_id={$objectId}";
-                    break;
-                case 'dashboard':
-                    $tabUrl = "/index.php?v={$webviewUrl}&p=dashboard&object_id={$objectId}";
-                    break;
-                case 'plan':
-                    $tabUrl = "/index.php?v={$webviewUrl}&p=plan&plan_id={$objectId}";
-                    break;
-                case 'panel':
-                    $tabUrl = ($pluginPanelMobile[$objectId] == $objectId) ? "/index.php?v=m&p={$objectId}" : "/index.php?v=m&p={$objectId}&app_mode=1";
-                    break;
-                default:
-                    break;
-            }
-        } else {
-            $typeObject = $objectId;
-            $typewebviewurl = $webviewUrl;
-            $typeobjectId = '';
+				switch ($typeObject) {
+					case 'views':
+						$tabUrl = "/index.php?v={$webviewUrl}&p=view&view_id={$objectId}";
+						break;
+					case 'dashboard':
+						$tabUrl = "/index.php?v={$webviewUrl}&p=dashboard&object_id={$objectId}";
+						break;
+					case 'plan':
+						$tabUrl = "/index.php?v={$webviewUrl}&p=plan&plan_id={$objectId}";
+						break;
+					case 'panel':
+						$tabUrl = ($pluginPanelMobile[$objectId] == $objectId) ? "/index.php?v=m&p={$objectId}" : "/index.php?v=m&p={$objectId}&app_mode=1";
+						break;
+					default:
+						break;
+				}
+			} else {
+				$typeObject = $objectId;
+				$typewebviewurl = $webviewUrl;
+				$typeobjectId = '';
 
-            switch ($objectId) {
-                case 'overview':
-                    $tabUrl = "/index.php?v=m&p=overview";
-                    break;
-                case 'home':
-                    $tabUrl = "/index.php?v=m&p=home";
-                    break;
-                case 'health':
-                    $tabUrl = "/index.php?v=m&p=health";
-                    break;
-                case 'timeline':
-                    $tabUrl = "/index.php?v=m&p=timeline";
-                    break;
-                default:
-                    $typeObject = $objectId;
-                    $typewebviewurl = 'm';
-                    $typeobjectId = '';
-                    $tabUrl = '/index.php?v=m&app_mode=1';
-                    break;
-            }
-        }
-    } elseif ($objectId == 'url') {
-        $typeObject = $objectId;
-        $typewebviewurl = $webviewUrl;
-        $typeobjectId = 'url';
-        $tabUrl = $menuCustomArray[$i]['urlUser'];
-    } else {
-        $typeObject = $objectId;
-        $typewebviewurl = 'm';
-        $typeobjectId = '';
-        $tabUrl = '/index.php?v=m&app_mode=1';
-    }
+				switch ($objectId) {
+					case 'overview':
+						$tabUrl = "/index.php?v=m&p=overview";
+						break;
+					case 'home':
+						$tabUrl = "/index.php?v=m&p=home";
+						break;
+					case 'health':
+						$tabUrl = "/index.php?v=m&p=health";
+						break;
+					case 'timeline':
+						$tabUrl = "/index.php?v=m&p=timeline";
+						break;
+					default:
+						$typeObject = $objectId;
+						$typewebviewurl = 'm';
+						$typeobjectId = '';
+						$tabUrl = '/index.php?v=m&app_mode=1';
+						break;
+				}
+			}
+		} elseif ($objectId == 'url') {
+			$typeObject = $objectId;
+			$typewebviewurl = $webviewUrl;
+			$typeobjectId = 'url';
+			$tabUrl = $menuCustomArray[$i]['urlUser'];
+		} else {
+			$typeObject = $objectId;
+			$typewebviewurl = 'm';
+			$typeobjectId = '';
+			$tabUrl = '/index.php?v=m&app_mode=1';
+		}
 
-    $result['typeObject'] = $typeObject;
-    $result['typewebviewurl'] = $typewebviewurl;
-    $result['typeobjectId'] = $typeobjectId;
-    $result['tabUrl'] = $tabUrl;
+		$result['typeObject'] = $typeObject;
+		$result['typewebviewurl'] = $typewebviewurl;
+		$result['typeobjectId'] = $typeobjectId;
+		$result['tabUrl'] = $tabUrl;
 
-    return $result;
-}
+		return $result;
+	}
 
-private static function getDefaultMenuArray(){
-    $defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
+	private static function getDefaultMenuArray()
+	{
+		$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
                         "tab1":{"active":false,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
                         "tab2":{"active":false,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
                         "tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"}}';
-    return json_decode($defaultMenuJson, true);
-}
+		return json_decode($defaultMenuJson, true);
+	}
 
 
 	/*
@@ -1344,7 +1349,8 @@ class mobileCmd extends cmd
 
 	public static function fileInMessage($data)
 	{
-		log::add('mobile', 'debug', 'test FileInMessage');
+		log::add('mobile', 'debug', '|-----------------------------------');
+		log::add('mobile', 'debug', '| -- FileInMessage --');
 		$dataArray = explode('|', $data);
 		$result = array();
 		foreach ($dataArray as $item) {
@@ -1355,14 +1361,15 @@ class mobileCmd extends cmd
 			}
 		}
 		$result['message'] = $dataArray[0];
-		log::add('mobile', 'debug', 'file Parse > ' . json_encode($result));
+		log::add('mobile', 'debug', '| file Parse > ' . json_encode($result));
 		if (array_key_exists('file', $result)) {
-			log::add('mobile', 'debug', 'file > ' . $result['file']);
+			log::add('mobile', 'debug', '| file > ' . $result['file']);
 			return $result;
 		} else {
-			log::add('mobile', 'debug', 'null');
+			//log::add('mobile', 'debug', '| null');
 			return null;
 		}
+		log::add('mobile', 'debug', '|-----------------------------------');
 	}
 
 	public function execute($_options = array())
@@ -1398,15 +1405,15 @@ class mobileCmd extends cmd
 			$askType = ($_options['answer']) ? 'ask_Text' : 'notif';
 			$timeout = ($_options['timeout']) ? $_options['timeout'] : 'nok';
 			$optionsNotif['askVariable'] = $askVariable;
-
-			log::add('mobile', 'debug', 'Commande de notification ' . $askType, 'config');
+			log::add('mobile', 'debug', '|-----------------------------------');
+			log::add('mobile', 'debug', '| Commande de notification : ' . $askType, 'config');
 			if (($eqLogic->getConfiguration('notificationArn', null) != null || $eqLogic->getConfiguration('notificationRegistrationToken', null) != null) && $eqLogic->getConfiguration('type_mobile', null) != null) {
 				$idNotif = $eqLogic->getConfiguration('idNotif', 0);
 				$idNotif = $idNotif + 1;
 				$eqLogic->setConfiguration('idNotif', $idNotif);
 				$eqLogic->save();
 
-				log::add('mobile', 'debug', 'Notif > ' . json_encode($_options) . ' / ' . $eqLogic->getId() . ' / ' . $this->getLogicalId() . ' / idNotif =' . $idNotif, 'config');
+				log::add('mobile', 'debug', '| Notif > ' . json_encode($_options) . ' / ' . $eqLogic->getId() . ' / ' . $this->getLogicalId() . ' / idNotif =' . $idNotif, 'config');
 				if (isset($options['file'])) {
 					log::add('mobile', 'debug', 'FILE');
 					unset($data['file']);
@@ -1460,10 +1467,11 @@ class mobileCmd extends cmd
 					mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], $askType, $idNotif, $answer,  $timeout, $eqLogic->getConfiguration('notificationRegistrationToken', null), null, $eqLogic->getConfiguration('appVersion', 1), $optionsNotif, $critical);
 				}
 
-				log::add('mobile', 'debug', 'Action : Envoi d\'une configuration ', 'config');
+				log::add('mobile', 'debug', '| Action : Envoi d\'une configuration ', 'config');
 			} else {
 				log::add('mobile', 'debug', 'ARN non configuré ', 'config');
 			}
+			log::add('mobile', 'debug', '|-----------------------------------');
 		}
 	}
 

@@ -557,76 +557,73 @@ if ($jsonrpc->getMethod() == 'geolocDel'){
 }
 
 
-// FOR NEXT APP VERSION WITH TRANSIMITION ARRAY
+
+
+
 if($jsonrpc->getMethod() == 'mobile::geoloc'){
 	log::add('mobile', 'debug', '|-----------------------------------');
 	log::add('mobile', 'debug', '|-GeoLocV2 geofencing --');
-    $transmitions = $params['transmition'];
-	$errorCount = 0;
-	foreach($transmitions as $transmition){
-		if($transmition['event'] == 'geofence'){
-			log::add('mobile', 'debug', 'Transmition :' . json_encode($params['transmition']));
-			$geofence = $transmition['geofence'];
-			log::add('mobile', 'debug', '| event > '.json_encode($geofence));
-			$eqLogicMobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
-			if($eqLogicMobile){
-				log::add('mobile', 'debug', '| Mobile trouvé');
-				$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geofence['identifier']);
-				if(is_object($cmdgeoloc)){
-					log::add('mobile', 'debug', '| commande trouvée');
-					if($geofence['action'] == 'ENTER'){
-						log::add('mobile', 'debug', '| commande passée à 1');
-						$cmdgeoloc->event(1);
-					}elseif($geofence['action'] == 'EXIT'){
-						log::add('mobile', 'debug', '| commande passée à 0');
-						$cmdgeoloc->event(0);
+
+	if(isset($params['transmition']) && isset($params['transmition']['event']) && $params['transmition']['event'] == 'geofence'){
+        log::add('mobile', 'debug', '| event > '.$params['transmition']['event']);
+		$geofence = $params['transmition']['geofence'];
+		log::add('mobile', 'debug', '| event > '.json_encode($geofence));
+		$eqLogicMobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
+		if($eqLogicMobile){
+			log::add('mobile', 'debug', '| Mobile trouvé');
+			$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geofence['identifier']);
+			if(is_object($cmdgeoloc)){
+				log::add('mobile', 'debug', '| commande trouvé');
+				if($geofence['action'] == 'ENTER'){
+					log::add('mobile', 'debug', '| commande passé à 1');
+					$cmdgeoloc->event(1);
+				}elseif($geofence['action'] == 'EXIT'){
+					log::add('mobile', 'debug', '| commande passé à 0');
+					$cmdgeoloc->event(0);
+                }
+            }
+          	log::add('mobile', 'debug', '|-----------------------------------');
+          	$jsonrpc->makeSuccess();
+		}else{
+          	throw new Exception(__('EqLogic inconnu : ', __FILE__) . $params['Iq']);
+		}
+    }else{
+		$transmitions = $params['transmition'];
+		$errorCount = 0;
+		foreach($transmitions as $transmition){
+			if($transmition['event'] == 'geofence'){
+				log::add('mobile', 'debug', 'Transmition :' . json_encode($params['transmition']));
+				$geofence = $transmition['geofence'];
+				log::add('mobile', 'debug', '| event > '.json_encode($geofence));
+				$eqLogicMobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
+				if($eqLogicMobile){
+					log::add('mobile', 'debug', '| Mobile trouvé');
+					$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geofence['identifier']);
+					if(is_object($cmdgeoloc)){
+						log::add('mobile', 'debug', '| commande trouvé');
+						if($geofence['action'] == 'ENTER'){
+							log::add('mobile', 'debug', '| commande passé à 1');
+							$cmdgeoloc->event(1);
+						}elseif($geofence['action'] == 'EXIT'){
+							log::add('mobile', 'debug', '| commande passé à 0');
+							$cmdgeoloc->event(0);
+						}else{
+							log::add('mobile', 'debug', 'Event DWELL');
+						}
 					}
 				}
+			log::add('mobile', 'debug', '|-----------------------------------');	
+			}else{
+				$errorCount++;
 			}
-		log::add('mobile', 'debug', '|-----------------------------------');	
+		}
+		if($errorCount == 0){
+			$jsonrpc->makeSuccess();
 		}else{
-			$errorCount++;
+			throw new Exception(__('pas de parametre de geofencing : ', __FILE__));
 		}
 	}
-	if($errorCount == 0){
-		$jsonrpc->makeSuccess();
-	}else{
-		throw new Exception(__('pas de parametre de geofencing : ', __FILE__));
-	}
 }
-
-
-// if($jsonrpc->getMethod() == 'mobile::geoloc'){
-// 	log::add('mobile', 'debug', '|-----------------------------------');
-// 	log::add('mobile', 'debug', '|-GeoLocV2 geofencing --');
-	
-// 	if(isset($params['transmition']) && isset($params['transmition']['event']) && $params['transmition']['event'] == 'geofence'){
-//         log::add('mobile', 'debug', '| event > '.$params['transmition']['event']);
-// 		$geofence = $params['transmition']['geofence'];
-// 		log::add('mobile', 'debug', '| event > '.json_encode($geofence));
-// 		$eqLogicMobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
-// 		if($eqLogicMobile){
-// 			log::add('mobile', 'debug', '| Mobile trouvé');
-// 			$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geofence['identifier']);
-// 			if(is_object($cmdgeoloc)){
-// 				log::add('mobile', 'debug', '| commande trouvée');
-// 				if($geofence['action'] == 'ENTER'){
-// 					log::add('mobile', 'debug', '| commande passée à 1');
-// 					$cmdgeoloc->event(1);
-// 				}elseif($geofence['action'] == 'EXIT'){
-// 					log::add('mobile', 'debug', '| commande passée à 0');
-// 					$cmdgeoloc->event(0);
-//                 }
-//             }
-//           	log::add('mobile', 'debug', '|-----------------------------------');
-//           	$jsonrpc->makeSuccess();
-// 		}else{
-//           	throw new Exception(__('EqLogic inconnu : ', __FILE__) . $params['Iq']);
-// 		}
-//     } else {
-//         throw new Exception(__('Pas de paramètre de geofencing : ', __FILE__));
-// 	}
-// }
 
 if($jsonrpc->getMethod() == "qrcodemethod"){
 	log::add('mobile', 'debug', 'QrCode > '.json_encode($params));
@@ -703,7 +700,6 @@ if($jsonrpc->getMethod() == 'deleteNotificationInJsonFile'){
 		$jsonrpc->makeSuccess('ok');
     }
 }
-
 
 
 throw new Exception(__('Aucune demande', __FILE__));

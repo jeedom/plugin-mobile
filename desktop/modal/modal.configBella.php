@@ -5,6 +5,20 @@ if (!isConnect()) {
 }
 
 $arrayInfos = array();
+$bellaHtml = file_get_contents(__DIR__ . '/../../core/data/jsonBella/jsonObject_default.html');
+$arrayInfos[] = array(
+  'name' => 'Equipements',
+  'imageBg' => 'core/img/background/jeedom_abstract_04_light.jpg',
+   'bellaHtml' => $bellaHtml);
+$arrayInfos[] = array(
+    'name' => 'Objets',
+    'imageBg' => 'core/img/background/jeedom_abstract_04_light.jpg',
+    'bellaHtml' => $bellaHtml);
+
+
+
+
+$arrayObjects = array();
 foreach(jeeObject::all() as $object){
   $objetArray = utils::o2a($object);
   $pathHtmlBella = __DIR__ . '/../../core/data/jsonBella/';
@@ -17,7 +31,7 @@ foreach(jeeObject::all() as $object){
   }else{
     $bellaHtml = file_get_contents(__DIR__ . '/../../core/data/jsonBella/jsonObject_default.html');
   }
-  $arrayInfos[] = array(
+  $arrayObjects[] = array(
         'nameBox' => $objetArray['name'],
         'imageBg' => $objetArray['img'] ? $objetArray['img'] : 'core/img/background/jeedom_abstract_04_light.jpg',
         'idObject' => $objetArray['id'],
@@ -33,16 +47,26 @@ foreach(jeeObject::all() as $object){
      <button class="btn btn-success" id="validView" style="border-radius:20px !important;padding-left:5px !important;padding-right:5px !important;margin-bottom:10px;">Valider la vue</button>
 </div>
 
+<div id="carousels" style="height:30vh;margin-bottom:2vh;width:100%;display:none;flex-direction:row;">
+
 <div id="carousel" style="height:20vh;margin-bottom:2vh;width:400px;">
     <div id="box-name" style="position:absolute;top:10vh;width:150px;color:white;font-size:20px;font-weight:bold;z-index:1;background-color:#B5DA4E;padding-left:5px;"></div>
     <div id="carousel-image" style="height:20vh;background-image: url('https://www.jeedom.com/background/background-Luna2.jpg');background-size: cover; background-position: center;"></div> 
     <div id="carousel-dots"></div>
 </div>
+
+<div id="carousel2" style="height:20vh;margin-bottom:2vh;width:400px;margin-left:20px;display:none;">
+    <div id="box-name2" style="position:absolute;top:10vh;width:150px;color:white;font-size:20px;font-weight:bold;z-index:1;background-color:#B5DA4E;padding-left:5px;"></div>
+    <div id="carousel2-image" style="height:20vh;background-image: url('https://www.jeedom.com/background/background-Luna2.jpg');background-size: cover; background-position: center;"></div> 
+    <div id="carousel2-dots"></div>
+</div>
+
+
+
+</div>
+
 <div id="main" style="display:flex;flex-direction:row;">
     <div style="display:flex;flex-direction:column;" id="bella-container">
-
-  
-
         <!-- <div class="gridPage" style="width:400px; height:100vh;">
           <div class="tile  customTile" id="1">
             <div class="TileUp">
@@ -119,314 +143,16 @@ foreach(jeeObject::all() as $object){
 
 </div>
 
-<style>
-
-@keyframes bounceAndScale {
-    0%, 20%, 50%, 80%, 100% {
-        transform: scale(1.0);
-    }
-    40% {
-        transform: scale(1.1) translateY(-30px);
-    }
-    60% {
-        transform: scale(1.1) translateY(-15px);
-    }
-}
-
-.bounceAndScale {
-    animation: bounceAndScale 1s;
-}
-
-.carousel-dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    margin: 5px;
-    background-color: #bbb;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.carousel-dot.active {
-    background-color: #717171;
-}
-
-/* 
-#model-selector img {
-    width: 100px;
-    height: 100px;
-    border: 1px solid #ccc;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 10px;
-    cursor: pointer;
-    transition: box-shadow 0.3s ease;
-}
-
-#model-selector img:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-} */
-
-
-
-/* #main > div:first-child {
-    border-right: 3px solid #96C927; 
-    padding-right:2%;
-} */
-
-.firstSection{
-  z-index: 2;;
-}
-
-/* .configTileDiv:hover{
-  text-decoration: none;
-  color: #FFF;
-} */
-
-
-.bgDiv{
-  height: 100px;
-  width: 128px;
-  z-index: 1;
-  position: absolute;
-  /* top: -90px; */
-  right: -100px;
-
-  border-radius: 30%;
-
-  -webkit-transition: all 1s ease;
-  -o-transition: all 1s ease;
-  transition: all 1s ease;
-
-}
-
-
-.bootBoxClass{
-  position: absolute;
-    top: 50px;
-    left: 50px;
-}
-
-  .resume{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  height: 50px;
-  width: 100%;
-  margin-bottom: 15px;
-  margin-top: 15px;
-  font-family: Raleway, Helvetica, sans-serif;
-  font-size: 1.1em;
-  overflow-x: auto;
-  overflow-y: hidden;
-  }
-
-  .iconResume{
-    position: relative;
-    top: -72px;
-    left: 11px;
-    font-size: 0.8em;
-    color: #000;
-  }
-
-  .resumeTile{
-    display: flex;
-    flex-direction: row;
-    width: 150px;
-    min-width: 150px;
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    background-color: rgba(255, 255, 255, 0.9);
-    margin: 5px;
-    border-radius: 10px;
-    box-shadow:
-      0 1px 1px hsl(0deg 0% 0% / 0.075),
-      0 2px 2px hsl(0deg 0% 0% / 0.075),
-      0 4px 4px hsl(0deg 0% 0% / 0.075)
-    ;
-  }
-
-  .resumeLabel{
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    align-items: center;
-    width: 100px;
-    color: #002439;
-  }
-  .resumeTitle{
-    margin-left: 5px;
-  }
-  .resumeValue{
-    font-size: 2em;
-    width: 50px;
-    height: 50px;
-    max-height: 50px;
-    display: inline-block;
-  }
-
-.gridPage {
-  display: grid;
-  justify-content: center;
-  grid-template-rows: 150px;
-  grid-auto-rows: 150px;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 150px));
-  row-gap: 15px;
-  column-gap: 15px;
-  grid-column-gap: 15px;
-  padding-right: 10px;
-  padding-top: 15px;
-  font-family: Raleway, Helvetica, sans-serif;
-  font-size: 1.1em;
-}
-
-.tile{
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: left;
-  height: 150px;
-  width: 150px;
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
-  background-color: rgba(235, 235, 233, 0.9);
-  margin: 5px;
-  border-radius: 10px;
-  box-shadow:
-    0 1px 1px hsl(0deg 0% 0% / 0.075),
-    0 2px 2px hsl(0deg 0% 0% / 0.075),
-    0 4px 4px hsl(0deg 0% 0% / 0.075),
-    0 8px 8px hsl(0deg 0% 0% / 0.075),
-    0 16px 16px hsl(0deg 0% 0% / 0.075)
-  ;
-}
-
-.tile.on {
-  background-color: rgba(255, 255, 255, 0.9) !important;
-}
-
-.tile.dual{
-  height: 150px;
-  width: 315px;
-  grid-column: span 2;
-}
-
-.tile.quadral{
-  height: 315px;
-  width: 315px;
-  grid-column: span 2;
-  grid-row: span 2;
-}
-
-.TileUp{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  height: 65%;
-  width: 100%;
-}
-.TileDown{
-  display: flex;
-  flex-direction: column;
-  height: 35%;
-  align-items: start;
-  margin-bottom: 5px;
-  margin-left: 5px;
-}
-.UpLeft{
-  display: flex;
-  height: 100%;
-  width: 50%;
-  justify-content: center;
-  align-items: center;
-}
-.UpRight{
-  height: 100%;
-  width: 50%;
-}
-.iconTile{
-  font-size: 3.5em;
-  color: #a4a4a3;
-}
-.iconTile.on{
-  color: #f7d959;
-}
-.title{
-  text-align: left;
-  color: #a4a4a3;
-  margin-left: 5px;
-  width: 100%;
-}
-.title.bold{
-  font-weight: bold;
-}
-.title.on{
-  color: #002439;
-}
-.title.mini{
-  font-size: 0.8em;
-  margin-left: 5px;
-}
-
-.single-chart {
-  width: 100%;
-}
-
-.circular-chart {
-  display: block;
-  margin: 10px auto;
-  max-width: 80%;
-  max-height: 60px;
-}
-
-.circle-bg {
-  fill: none;
-  stroke: #eee;
-  stroke-width: 3.8;
-}
-
-.circle {
-  fill: none;
-  stroke-width: 2.8;
-  stroke-linecap: round;
-  animation: progress 1s ease-out forwards;
-}
-
-@keyframes progress {
-  0% {
-    stroke-dasharray: 0 100;
-  }
-}
-
-.circular-chart.orange .circle {
-  stroke: #ff9f00;
-}
-
-.circular-chart.red .circle {
-  stroke: red;
-}
-
-.circular-chart.green .circle {
-  stroke: #4CC790;
-}
-
-.circular-chart.blue .circle {
-  stroke: #3c9ee5;
-}
-
-.percentage {
-  fill: #666;
-  font-family: sans-serif;
-  font-size: 0.5em;
-  text-anchor: middle;
-}
-</style>
 
 
 <script>
 
 
 var arrayInfos = <?php echo json_encode($arrayInfos); ?>;
+var arrayObjects = <?php echo json_encode($arrayObjects); ?>;
+console.log(arrayObjects.length);
+// console.log('arrayObjects', arrayObjects);
+// console.log('arrayInfos', arrayInfos);
 
 var associatedImagesHardware = {
     "Luna": "https://www.jeedom.com/background/background-Luna2.jpg",
@@ -437,21 +163,51 @@ var associatedImagesHardware = {
 
 
 var currentImageIndex = 0;
+var currentImageIndex2 = 0;
+
+// function changeImage(newIndex) {
+//     currentImageIndex = newIndex;
+//     var imgBg = arrayInfos[currentImageIndex]['imageBg'];
+//     var nameBox = arrayInfos[currentImageIndex]['nameBox'];
+//     var bellaHtml = arrayInfos[currentImageIndex]['bellaHtml'];
+//     var idObject = arrayInfos[currentImageIndex]['idObject'];
+//     document.getElementById('carousel-image').style.backgroundImage = "url('" + imgBg + "')";
+//     document.getElementById('box-name').textContent = nameBox ? nameBox : 'Objet sans nom';
+//     bellaHtml = bellaHtml.replace(/(\d+)_defaut/g, "$1_" + idObject);
+//     document.getElementById('bella-container').innerHTML = bellaHtml;
+//     document.getElementById('rightContent').innerHTML = "";
+//     mainScript();
+//     updateDots();
+// }
 
 function changeImage(newIndex) {
     currentImageIndex = newIndex;
     var imgBg = arrayInfos[currentImageIndex]['imageBg'];
-    var nameBox = arrayInfos[currentImageIndex]['nameBox'];
+    var name = arrayInfos[currentImageIndex]['name'];
     var bellaHtml = arrayInfos[currentImageIndex]['bellaHtml'];
-    var idObject = arrayInfos[currentImageIndex]['idObject'];
+    if(name == 'Objets'){
+      document.getElementById('carousel2').style.display = "block";
+    }else{
+      document.getElementById('carousel2').style.display = "none";
+    }
     document.getElementById('carousel-image').style.backgroundImage = "url('" + imgBg + "')";
-    document.getElementById('box-name').textContent = nameBox ? nameBox : 'Objet sans nom';
-    bellaHtml = bellaHtml.replace(/(\d+)_defaut/g, "$1_" + idObject);
+    document.getElementById('box-name').textContent = name ? name : 'Objet sans nom';
     document.getElementById('bella-container').innerHTML = bellaHtml;
     document.getElementById('rightContent').innerHTML = "";
     mainScript();
     updateDots();
 }
+
+function changeImage2(newIndex) {
+    currentImageIndex2 = newIndex;
+    var imgBg = arrayObjects[currentImageIndex2]['imageBg'];
+    var name = arrayObjects[currentImageIndex2]['name'];
+    var bellaHtml = arrayObjects[currentImageIndex2]['bellaHtml'];
+    document.getElementById('carousel2-image').style.backgroundImage = "url('" + imgBg + "')";
+    document.getElementById('box-name2').textContent = name ? name : 'Objet sans nom';
+    updateDots2();
+}
+
 
 function updateDots() {
     var dotsContainer = document.getElementById('carousel-dots');
@@ -468,35 +224,25 @@ function updateDots() {
     }
 }
 
+function updateDots2() {
+    var dotsContainer2 = document.getElementById('carousel2-dots');
+    dotsContainer2.innerHTML = '';
+    for (var i = 0; i < arrayObjects.length; i++) {
+        var dot = document.createElement('span');
+        dot.className = 'carousel-dot' + (i === currentImageIndex2 ? ' active' : '');
+        dot.addEventListener('click', (function(index) {
+            return function() {
+                changeImage2(index);
+            };
+        })(i));
+        dotsContainer2.appendChild(dot);
+    }
+}
+
 changeImage(0);
+changeImage2(0);
 updateDots();
-
-//WORKS
-// function changeImage(newIndex) {
-//     currentImageIndex = newIndex;
-//     document.getElementById('carousel-image').style.backgroundImage = "url('" + images[currentImageIndex] + "')";
-//     updateDots();
-// }
-
-// function updateDots() {
-//     var dotsContainer = document.getElementById('carousel-dots');
-//     dotsContainer.innerHTML = '';
-//     for (var i = 0; i < images.length; i++) {
-//         var dot = document.createElement('span');
-//         dot.className = 'carousel-dot' + (i === currentImageIndex ? ' active' : '');
-//         dot.addEventListener('click', (function(index) {
-//             return function() {
-//                 changeImage(index);
-//             };
-//         })(i));
-//         dotsContainer.appendChild(dot);
-//     }
-// }
-
-// updateDots();
-
-
-
+updateDots2();
 
 if (typeof AJAX_URL === 'undefined') {
     const AJAX_URL = 'plugins/mobile/core/ajax/mobile.ajax.php';
@@ -596,6 +342,7 @@ function getRandomColor() {
 
 
 const createConfigTile = (tileElement, idTile, randomColor, MODELS_CHOICE) => {
+  console.log('idTile', idTile)
     let configTileDiv = document.createElement('div');
     let bgDiv = document.createElement('div');
     bgDiv.classList.add('bgDiv');
@@ -607,7 +354,9 @@ const createConfigTile = (tileElement, idTile, randomColor, MODELS_CHOICE) => {
     configTileDiv.setAttribute('id', 'configTileDiv'+idTile);
     configTileDiv.classList.add('configTileDiv');
     configTileDiv.setAttribute('data-id', idTile);
-    configTileDiv.style.order = idTile; 
+    var splitIdTile = idTile.split('_');
+    var numberTile = splitIdTile[0];
+    configTileDiv.style.order = numberTile; 
     let firstSection = document.createElement('div');
     let label = document.createElement('label');
     label.innerHTML = 'Choisir le type de template à appliquer';
@@ -718,7 +467,9 @@ tiles.forEach(function(tile) {
           tileElement.style.setProperty("background-color", 'white', "important");
           return;
         }  
-       
+
+        document.getElementById('carousels').style.display = "flex";
+ 
         let randomColor = getRandomColor();
         tileElement.style.setProperty("background-color", randomColor, "important");
         var MODELS_CHOICE = [ {text :'Info', value:'Info'}, 
@@ -774,29 +525,6 @@ tiles.forEach(function(tile) {
       // });
     });
 
-
-
-    // document.querySelectorAll('configTileDiv')?.forEach(function(configTileDiv) {
-    //   configTileDiv.addEventListener('mouseover', function() {
-    //           var associatedTile = configTileDiv.getAttribute('data-id')
-    //           if (associatedTile) {
-    //             document.getElementById(associatedTile).style.transform = 'scale(1.1)';
-    //             document.getElementById(associatedTile).style.zIndex = '10'; 
-    //           }
-    //         });
-    //         configTileDiv.addEventListener('mouseout', function() {
-    //           var associatedTile = configTileDiv.getAttribute('data-id')
-    //           if (associatedTile) {
-    //             document.getElementById(associatedTile).style.transform = 'scale(1.1)';
-    //             document.getElementById(associatedTile).style.zIndex = '10'; 
-    //           }
-    //       });
-    // });
-
-
-      
-
-    
 
    
 
@@ -916,93 +644,6 @@ tiles.forEach(function(tile) {
 };
 
 
-
-
-  //   const bootBoxGenericTypeFunction = (model, choiceCmd, tileElement) => {
-  //     return new Promise((resolve, reject) => {
-  //         var idOn;
-  //         var idOff;
-  //         $.ajax({
-  //           type: 'POST',
-  //           url: 'plugins/mobile/core/ajax/mobile.ajax.php',
-  //           data: {
-  //             action: 'getEqlogicByGenericType',
-  //             model: 'LIGHT_COLOR'
-  //           },
-  //           dataType: 'json',
-  //           error: function(request, status, error) {
-  //             handleAjaxError(request, status, error);
-  //           },
-  //           success: function(data) {
-  //             var EQLOGICS = [];
-  //             data.result.forEach(function(cmd) {
-  //               EQLOGICS.push({text: cmd.name, value: cmd.id});
-  //             });
-  //             bootbox.prompt({
-  //                 title: "Choisir l equipement",
-  //                 inputType: 'select',
-  //                 inputOptions: EQLOGICS,
-  //                 callback: function(id) {
-  //                   if (id == null) {
-  //                     return
-  //                   } 
-  //                   console.log('ajax')
-  //                   $.ajax({
-  //                     type: 'POST',
-  //                     url: 'plugins/mobile/core/ajax/mobile.ajax.php',
-  //                     data: {
-  //                       action: 'getCmdsByValues',
-  //                       id: id
-  //                     },
-  //                     dataType: 'json',
-  //                     error: function(request, status, error) {
-  //                       handleAjaxError(request, status, error);
-  //                       reject(error);
-  //                     },
-  //                     success: function(data) {
-  //                             data.result.forEach(function(cmd) {
-  //                                 if(cmd.name == 'On'){
-  //                                     idOn = cmd.id
-  //                                 }else if(cmd.name == 'Off'){
-  //                                     idOff = cmd.id
-  //                                 }
-  //                             });
-
-  //                             var selectedOption = EQLOGICS.find(function(option) {
-  //                                 return option.value == id;
-  //                               });
-  //                                 var array = {
-  //                                     'size': tile.getAttribute('data-state'),
-  //                                     'type': 'onOff',
-  //                                     'idEvent': id,
-  //                                     'options': {
-  //                                         'on': 0,
-  //                                         'title': selectedOption.text,
-  //                                         'value': null,
-  //                                         'icons': {
-  //                                             'on': {'type' : "jeedomapp", 'name' : "ampoule-on", 'color' : "#f7d959"},
-  //                                             'off': {'type' : "jeedomapp", 'name' : "ampoule-off", 'color' : "#a4a4a3"}
-  //                                         },
-  //                                         'actions': {
-  //                                             'on': {'id': idOn},
-  //                                             'off': {'id': idOff}
-  //                                         },
-  //                                         'iconBlur': false
-  //                                     }
-  //                                 }   
-  //                                 var jsonString = JSON.stringify(array);
-  //                                 tileElement.setAttribute('data-array', jsonString); 
-  //                                 tileElement.classList.add('on');
-  //                                 resolve(array)
-  //                           }
-  //                   })
-  //                 }
-  //             });
-  //           }
-  //         });
-  //   });
-  // }
-
     tile.addEventListener('mouseup', cancelLongClick);
     tile.addEventListener('mouseleave', cancelLongClick);
 
@@ -1027,6 +668,7 @@ tiles.forEach(function(tile) {
 
 <?php
 
+include_file('desktop', 'configBella', 'css', 'mobile');
 include_file('3rdparty', 'animate/animate', 'css');
 include_file('desktop', 'mobile', 'js', 'mobile');
 include_file('core', 'plugin.template', 'js');

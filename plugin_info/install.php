@@ -43,7 +43,7 @@ function mobile_update()
 	$mobiles = eqLogic::byType('mobile');
 	foreach($mobiles as $mobile){
 		$customMenu  = $mobile->getConfiguration('menuCustomArray');
-		if(!isset($customMenu)){	
+		if($customMenu !== null){	
 			$icons = $mobile->getConfiguration('nbIcones', 3);
 			$menuCustomArray = array();
 			for($i=1; $i < intval($icons) + 1; $i++){

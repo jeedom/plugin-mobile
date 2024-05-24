@@ -7,35 +7,37 @@ if (!isConnect()) {
 $arrayInfos = array();
 $bellaHtml = file_get_contents(__DIR__ . '/../../core/data/jsonBella/jsonObject_default.html');
 $arrayInfos[] = array(
-  'name' => 'Equipements',
-  'imageBg' => 'core/img/background/jeedom_abstract_04_light.jpg',
-   'bellaHtml' => $bellaHtml);
+                        'name' => 'Commande d\'equipement',
+                        'imageBg' => 'core/img/background/jeedom_abstract_04_light.jpg',
+                        'bellaHtml' => $bellaHtml
+                      );
 $arrayInfos[] = array(
-    'name' => 'Objets',
-    'imageBg' => 'core/img/background/jeedom_abstract_04_light.jpg',
-    'bellaHtml' => $bellaHtml);
+                        'name' => 'Objets de votre Jeedom',
+                        'imageBg' => 'core/img/background/jeedom_abstract_04_light.jpg',
+                        'bellaHtml' => $bellaHtml
+                      );
 
 
 
 
 $arrayObjects = array();
 foreach(jeeObject::all() as $object){
-  $objetArray = utils::o2a($object);
-  $pathHtmlBella = __DIR__ . '/../../core/data/jsonBella/';
-  if(!is_dir($pathHtmlBella)){
-    mkdir($pathHtmlBella, 0777, true);
-  }
-  $pathHtmlBella .= 'jsonObject_'.$objetArray['id'].'.html';
-  if(file_exists($pathHtmlBella)){
-    $bellaHtml= file_get_contents($pathHtmlBella);
-  }else{
-    $bellaHtml = file_get_contents(__DIR__ . '/../../core/data/jsonBella/jsonObject_default.html');
-  }
-  $arrayObjects[] = array(
-        'nameBox' => $objetArray['name'],
-        'imageBg' => $objetArray['img'] ? $objetArray['img'] : 'core/img/background/jeedom_abstract_04_light.jpg',
-        'idObject' => $objetArray['id'],
-        'bellaHtml' => $bellaHtml);
+    $objetArray = utils::o2a($object);
+    $pathHtmlBella = __DIR__ . '/../../core/data/jsonBella/';
+    if(!is_dir($pathHtmlBella)){
+      mkdir($pathHtmlBella, 0777, true);
+    }
+    $pathHtmlBella .= 'jsonObject_'.$objetArray['id'].'.html';
+    if(file_exists($pathHtmlBella)){
+      $bellaHtml= file_get_contents($pathHtmlBella);
+    }else{
+      $bellaHtml = file_get_contents(__DIR__ . '/../../core/data/jsonBella/jsonObject_default.html');
+    }
+    $arrayObjects[] = array(
+          'name' => $objetArray['name'],
+          'imageBg' => $objetArray['img'] ? $objetArray['img'] : 'core/img/background/jeedom_abstract_04_light.jpg',
+          'idObject' => $objetArray['id'],
+          'bellaHtml' => $bellaHtml);
 }
 
 
@@ -47,100 +49,17 @@ foreach(jeeObject::all() as $object){
      <button class="btn btn-success" id="validView" style="border-radius:20px !important;padding-left:5px !important;padding-right:5px !important;margin-bottom:10px;">Valider la vue</button>
 </div>
 
-<div id="carousels" style="height:30vh;margin-bottom:2vh;width:100%;display:none;flex-direction:row;">
-
-<div id="carousel" style="height:20vh;margin-bottom:2vh;width:400px;">
-    <div id="box-name" style="position:absolute;top:10vh;width:150px;color:white;font-size:20px;font-weight:bold;z-index:1;background-color:#B5DA4E;padding-left:5px;"></div>
-    <div id="carousel-image" style="height:20vh;background-image: url('https://www.jeedom.com/background/background-Luna2.jpg');background-size: cover; background-position: center;"></div> 
-    <div id="carousel-dots"></div>
-</div>
-
-<div id="carousel2" style="height:20vh;margin-bottom:2vh;width:400px;margin-left:20px;display:none;">
-    <div id="box-name2" style="position:absolute;top:10vh;width:150px;color:white;font-size:20px;font-weight:bold;z-index:1;background-color:#B5DA4E;padding-left:5px;"></div>
-    <div id="carousel2-image" style="height:20vh;background-image: url('https://www.jeedom.com/background/background-Luna2.jpg');background-size: cover; background-position: center;"></div> 
-    <div id="carousel2-dots"></div>
-</div>
-
-
-
+<div class="carousels" id="carousels" style="height:30vh;margin-bottom:2vh;width:100%;display:none;flex-direction:row;">
+  <?php 
+   $htmlContent = file_get_contents(__DIR__ . '/../../core/data/html/carouselHtml.html');
+   echo $htmlContent;
+   ?>
 </div>
 
 <div id="main" style="display:flex;flex-direction:row;">
-    <div style="display:flex;flex-direction:column;" id="bella-container">
-        <!-- <div class="gridPage" style="width:400px; height:100vh;">
-          <div class="tile  customTile" id="1">
-            <div class="TileUp">
-              <div class="UpLeft">
-                <i class="iconTile icon jeedomapp-ampoule-off"></i>
-              </div>
-              <div class="UpRight">
-
-              </div>
-            </div>
-            <div class="TileDown" >
-              <div class="title bold">Lumière Salon</div>
-              <div class="title">Eteinte</div>
-            </div>
-          </div>  
-
-          <div class="tile on" id="2">
-            <div class="TileUp">
-                <div class="UpLeft">
-                  <i class="iconTile on icon jeedomapp-ampoule-on"></i>
-                </div>
-                <div class="UpRight">
-
-                </div>
-              </div>
-              <div class="TileDown">
-                <div class="title on bold">Lumière Cuisine</div>
-                <div class="title on">Allumée à 30%</div>
-              </div>
-          </div>
-          <div class="tile customTile" id="3" data-title="Météo">
-
-          </div>
-          <div class="tile customTile" id="4" data-title="Prise Chambre">
-
-          </div>
-          <div class="tile dual on" id="5">
-
-          </div>
-
-          <div class="tile dual" id="6">
-
-          </div>
-          <div class="tile" id="7">
-
-          </div>
-          <div class="tile" id="8">
-
-          </div>
-          <div class="tile quadral on" id="9">
-
-          </div>
-          <div class="tile" id="10">
-
-          </div>
-          <div class="tile" id="11">
-
-          </div>
-          <div class="tile" id="12">
-
-          </div>
-          <div class="tile" id="13">
-
-          </div>
-          <div class="tile" id="14">
-
-          </div>
-
-        </div> -->
-    </div>
-    <div id="rightContent" style="width:100%;height;100vh; display:flex;flex-direction:column;align-items:center;">
-
-  </div>
-
+    <!-- INJECTION OF BELLA HTML -->
+    <div style="display:flex;flex-direction:column;" id="bella-container"></div>
+    <div id="rightContent" style="width:100%;height;100vh;display:flex;flex-direction:column;align-items:center;"></div>
 </div>
 
 
@@ -150,9 +69,6 @@ foreach(jeeObject::all() as $object){
 
 var arrayInfos = <?php echo json_encode($arrayInfos); ?>;
 var arrayObjects = <?php echo json_encode($arrayObjects); ?>;
-console.log(arrayObjects.length);
-// console.log('arrayObjects', arrayObjects);
-// console.log('arrayInfos', arrayInfos);
 
 var associatedImagesHardware = {
     "Luna": "https://www.jeedom.com/background/background-Luna2.jpg",
@@ -185,15 +101,17 @@ function changeImage(newIndex) {
     var imgBg = arrayInfos[currentImageIndex]['imageBg'];
     var name = arrayInfos[currentImageIndex]['name'];
     var bellaHtml = arrayInfos[currentImageIndex]['bellaHtml'];
-    if(name == 'Objets'){
+    if(name == 'Objets de votre Jeedom'){
       document.getElementById('carousel2').style.display = "block";
+      document.getElementById('rightContent').style.display = "none";
     }else{
       document.getElementById('carousel2').style.display = "none";
+      document.getElementById('rightContent').style.display = "flex";
     }
     document.getElementById('carousel-image').style.backgroundImage = "url('" + imgBg + "')";
     document.getElementById('box-name').textContent = name ? name : 'Objet sans nom';
     document.getElementById('bella-container').innerHTML = bellaHtml;
-    document.getElementById('rightContent').innerHTML = "";
+   // document.getElementById('rightContent').innerHTML = "";
     mainScript();
     updateDots();
 }
@@ -255,8 +173,6 @@ document.getElementById('validView').addEventListener('click', function(event) {
     tiles.forEach(function(tile) {
       let idTile = tile.id;
       let sizeAttribute = tile.getAttribute('data-state');
-      // console.log(tile);
-      // console.log(tile.classList); 
       if (!sizeAttribute || sizeAttribute == undefined || sizeAttribute == "null") {
           if (tile.classList.contains('dual')) {
               sizeAttribute = 2;
@@ -325,109 +241,104 @@ document.getElementById('validView').addEventListener('click', function(event) {
 
 function mainScript() {
 
-  var btnClose = jeeDialog.get('#configBella', 'title').querySelector('button.btClose')
-    btnClose.addEventListener('click', function() {
-      location.reload()
-  });
+  if (typeof longClickOccurred === 'undefined') {
+        var longClickOccurred = false;
+    }
+    if (typeof timer === 'undefined') {
+        var timer;
+    }
 
-
-var tiles = document.querySelectorAll('.tile');
-
-var colors = ["#94ca02", "#9fcf1b", "#a9d535", "#b4da4e", "#bfdf67", "#cae581", "#d4ea9a", "#dfefb3", "#eaf4cc", "#f4fae6"];
-
-function getRandomColor() {
-    var randomIndex = Math.floor(Math.random() * colors.length);
-    return colors[randomIndex];
-}
-
-
-const createConfigTile = (tileElement, idTile, randomColor, MODELS_CHOICE) => {
-  console.log('idTile', idTile)
-    let configTileDiv = document.createElement('div');
-    let bgDiv = document.createElement('div');
-    bgDiv.classList.add('bgDiv');
-    bgDiv.setAttribute('data-id', idTile);
-    bgDiv.setAttribute('style', 'background-color:' + randomColor + ';');
-    configTileDiv.appendChild(bgDiv);
-   //configTileDiv.setAttribute('style', 'position: relative;overflow: hidden;padding-left:10px;margin-bottom:10px;width:100% !important;height:100px;background-color:' + randomColor + ';display:flex;border-radius:10px !important;');
-    configTileDiv.setAttribute('style', 'position: relative;overflow: hidden;padding-left:10px;margin-bottom:10px;width:100% !important;height:100px;background-color:#ffffff;display:flex;border-radius:10px !important;');
-    configTileDiv.setAttribute('id', 'configTileDiv'+idTile);
-    configTileDiv.classList.add('configTileDiv');
-    configTileDiv.setAttribute('data-id', idTile);
-    var splitIdTile = idTile.split('_');
-    var numberTile = splitIdTile[0];
-    configTileDiv.style.order = numberTile; 
-    let firstSection = document.createElement('div');
-    let label = document.createElement('label');
-    label.innerHTML = 'Choisir le type de template à appliquer';
-    firstSection.appendChild(label);
-    firstSection.classList.add('firstSection')
-    firstSection.setAttribute('style', 'width:20% !important;display:flex;flex-direction:column;justify-content:center !important;');
-    let firstSelect = document.createElement('select');
-    firstSelect.setAttribute('id', 'firstSelect');
-    firstSelect.setAttribute('style', 'margin-bottom: 10px;');
-    configTileDiv.appendChild(firstSection);
-
-    // ADD ANIMATIONS HOVER
-    configTileDiv.addEventListener('mouseover', function() {
-        var associatedTile = configTileDiv.getAttribute('data-id')
-        if (associatedTile) {
-          var associatedElement = document.getElementById(associatedTile);
-          associatedElement.style.zIndex = '10'; 
-          associatedElement.classList.add('bounceAndScale');
-          associatedElement.addEventListener('animationend', function() {
-              this.classList.remove('bounceAndScale');
-          });
-          let bgDiv = document.querySelector(`.bgDiv[data-id="${associatedTile}"]`);
-         bgDiv.style.transform = 'scale(20)';
-        }
+    var btnClose = jeeDialog.get('#configBella', 'title').querySelector('button.btClose')
+      btnClose.addEventListener('click', function() {
+        location.reload()
     });
-  // REMOVE ANIMATIONS OUT HOVER
-    configTileDiv.addEventListener('mouseout', function() {
-      var associatedTile = configTileDiv.getAttribute('data-id')
-      if (associatedTile) {
-        var associatedElement = document.getElementById(associatedTile);
-        associatedElement.style.transform = 'scale(1.0)';
-        associatedElement.style.zIndex = '1'; 
-        let bgDiv = document.querySelector(`.bgDiv[data-id="${associatedTile}"]`);
-         bgDiv.style.transform = 'scale(1)';
+
+
+    var tiles = document.querySelectorAll('.tile');
+
+    var colors = ["#94ca02", "#9fcf1b", "#a9d535", "#b4da4e", "#bfdf67", "#cae581", "#d4ea9a", "#dfefb3", "#eaf4cc", "#f4fae6"];
+
+    function getRandomColor() {
+        var randomIndex = Math.floor(Math.random() * colors.length);
+        return colors[randomIndex];
+    }
+
+
+    const createConfigTile = (tileElement, idTile, randomColor, MODELS_CHOICE) => {
+      console.log('idTile', idTile)
+        let configTileDiv = document.createElement('div');
+        let bgDiv = document.createElement('div');
+        bgDiv.classList.add('bgDiv');
+        bgDiv.setAttribute('data-id', idTile);
+        bgDiv.setAttribute('style', 'background-color:' + randomColor + ';');
+        configTileDiv.appendChild(bgDiv);
+        configTileDiv.setAttribute('style', 'position: relative;overflow: hidden;padding-left:10px;margin-bottom:10px;width:100% !important;height:100px;background-color:#ffffff;display:flex;border-radius:10px !important;');
+        configTileDiv.setAttribute('id', 'configTileDiv'+idTile);
+        configTileDiv.classList.add('configTileDiv');
+        configTileDiv.setAttribute('data-id', idTile);
+        var splitIdTile = idTile.split('_');
+        var numberTile = splitIdTile[0];
+        configTileDiv.style.order = numberTile; 
+        let firstSection = document.createElement('div');
+        let label = document.createElement('label');
+        label.innerHTML = 'Choisir le type de template à appliquer';
+        firstSection.appendChild(label);
+        firstSection.classList.add('firstSection')
+        firstSection.setAttribute('style', 'width:20% !important;display:flex;flex-direction:column;justify-content:center !important;');
+        let firstSelect = document.createElement('select');
+        firstSelect.setAttribute('id', 'firstSelect');
+        firstSelect.setAttribute('style', 'margin-bottom: 10px;');
+        configTileDiv.appendChild(firstSection);
+
+        // ADD ANIMATIONS HOVER
+        configTileDiv.addEventListener('mouseover', function() {
+            var associatedTile = configTileDiv.getAttribute('data-id')
+            if (associatedTile) {
+              var associatedElement = document.getElementById(associatedTile);
+              associatedElement.style.zIndex = '10'; 
+              associatedElement.classList.add('bounceAndScale');
+              associatedElement.addEventListener('animationend', function() {
+                  this.classList.remove('bounceAndScale');
+              });
+              let bgDiv = document.querySelector(`.bgDiv[data-id="${associatedTile}"]`);
+            bgDiv.style.transform = 'scale(20)';
+            }
+        });
+      // REMOVE ANIMATIONS OUT HOVER
+        configTileDiv.addEventListener('mouseout', function() {
+          var associatedTile = configTileDiv.getAttribute('data-id')
+          if (associatedTile) {
+            var associatedElement = document.getElementById(associatedTile);
+            associatedElement.style.transform = 'scale(1.0)';
+            associatedElement.style.zIndex = '1'; 
+            let bgDiv = document.querySelector(`.bgDiv[data-id="${associatedTile}"]`);
+            bgDiv.style.transform = 'scale(1)';
+          }
+      });
+
+      tileElement.addEventListener('mouseover', function() {
+            let tileId = tileElement.getAttribute('id');
+            let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
+            bgDiv.style.transform = 'scale(20)';
+            tileElement.style.transform = 'scale(1.1)';
+        });
+        tileElement.addEventListener('mouseout', function() {
+            let tileId = tileElement.getAttribute('id');
+            let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
+            bgDiv.style.transform = 'scale(1)';
+            tileElement.style.transform = 'scale(1.0)';
+        });
+                
+      MODELS_CHOICE.forEach(function(model) {
+        let option = document.createElement('option');
+        option.value = model.value;
+        option.text = model.text;
+        firstSelect.appendChild(option);
+      });
+      firstSection.appendChild(firstSelect);
+      document.getElementById('rightContent').appendChild(configTileDiv);
       }
-   });
 
-  tileElement.addEventListener('mouseover', function() {
-        let tileId = tileElement.getAttribute('id');
-        let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
-        bgDiv.style.transform = 'scale(20)';
-        tileElement.style.transform = 'scale(1.1)';
-    });
-    tileElement.addEventListener('mouseout', function() {
-        let tileId = tileElement.getAttribute('id');
-        let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
-        bgDiv.style.transform = 'scale(1)';
-        tileElement.style.transform = 'scale(1.0)';
-    });
-            
-  MODELS_CHOICE.forEach(function(model) {
-    let option = document.createElement('option');
-    option.value = model.value;
-    option.text = model.text;
-    firstSelect.appendChild(option);
-  });
-  firstSection.appendChild(firstSelect);
-  document.getElementById('rightContent').appendChild(configTileDiv);
-  }
-
-
-
-
-
-
-if (typeof longClickOccurred === 'undefined') {
-    var longClickOccurred = false;
-}
-if (typeof timer === 'undefined') {
-    var timer;
-}
 
 
 tiles.forEach(function(tile) {

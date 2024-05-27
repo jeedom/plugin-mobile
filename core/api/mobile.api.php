@@ -691,7 +691,11 @@ if($jsonrpc->getMethod() == 'deleteNotificationInJsonFile'){
     if(file_exists($pathNotification)){
         $notifications = file_get_contents($pathNotification.'/'.$Iq.'.json');
         $notificationsArray = json_decode($notifications, true); 
-
+		if($idNotif == 'allNotifs'){
+			file_put_contents($pathNotification.'/'.$Iq.'.json', '');
+			$jsonrpc->makeSuccess('ok');
+			return;
+		}
         if(isset($notificationsArray[$idNotif])) { 
             unset($notificationsArray[$idNotif]); 
         }

@@ -673,6 +673,7 @@ class mobile extends eqLogic
 					'idNotif' => strval($idNotif),
 					'channelId' => $channelId,
 					'date' => $dateNotif,
+					'critical' => $critical,
 					'boxName' => config::byKey('name'),
 					'boxApiKey' => jeedom::getHardwareKey()
 				];

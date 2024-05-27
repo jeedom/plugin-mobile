@@ -666,14 +666,13 @@ class mobile extends eqLogic
 				if ($os == 'android' && $critical == true) {
 					$channelId = "critical";
 				}
-
 				$customData = [
 					'title' => $titre,
 					'body' => $message,
 					'idNotif' => strval($idNotif),
 					'channelId' => $channelId,
 					'date' => $dateNotif,
-					'critical' => strVal($critical),
+					'critical' => strval($critical),
 					'boxName' => config::byKey('name'),
 					'boxApiKey' => jeedom::getHardwareKey()
 				];

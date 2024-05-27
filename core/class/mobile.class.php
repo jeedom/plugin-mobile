@@ -673,7 +673,7 @@ class mobile extends eqLogic
 					'idNotif' => strval($idNotif),
 					'channelId' => $channelId,
 					'date' => $dateNotif,
-					'critical' => $critical,
+					'critical' => strVal($critical),
 					'boxName' => config::byKey('name'),
 					'boxApiKey' => jeedom::getHardwareKey()
 				];
@@ -806,6 +806,7 @@ class mobile extends eqLogic
 		if (!isset($result['state']) || $result['state'] != 'ok') {
 			throw new Exception(__('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));
 		}
+
 	}
 
 	public function SaveGeoloc($geoloc)

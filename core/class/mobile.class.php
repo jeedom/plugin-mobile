@@ -679,7 +679,8 @@ class mobile extends eqLogic
 					'date' => $dateNotif,
 					'critical' => $criticalString,
 					'boxName' => config::byKey('name'),
-					'boxApiKey' => jeedom::getHardwareKey()
+					'boxApiKey' => jeedom::getHardwareKey(),
+					"askParams" => $askParams
 				];
 
 				$notification = [

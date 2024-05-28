@@ -2,7 +2,11 @@
     "changelog.md": {
         "Changelog App Mobile": "Changelog Mobile App",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "As a reminder if there is no information on the update, it means that it only concerns the updating of documentation, translation or text",
-        "05\/04\/2023": "04\/05\/2023",
+        "28\/05\/2024": "05\/28\/2024",
+        "Modification Géolocalisation pour prochaine version App": "Geolocation modification for next App version",
+        "Stockage Notifications dans le plugin": "Storage Notifications in the plugin",
+        "Nouvelles Api pour l'application": "New APIs for the application",
+        "05\/04\/2024": "04\/05\/2024",
         "Compatible uniquement avec la 4": "Compatible only with the 4",
         "4 du core ou supérieur": "4 core or higher",
         "15\/12\/2023": "15\/12\/2023",

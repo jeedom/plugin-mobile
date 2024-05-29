@@ -578,8 +578,9 @@ class mobile extends eqLogic
 	}
 
 
-	public static function jsonPublish($os, $titre, $message, $type, $idNotif, $answer, $timeout, $token, $photo, $version, $optionsNotif = [], $critical = false)
+	public static function jsonPublish($os, $titre, $message, $type, $idNotif, $answer, $timeout, $token, $photo, $version, $optionsNotif = [], $critical = false, $Iq = null)
 	{
+		log::add('mobile','debug', 'TESTIQ ' .$Iq);
 		$dateNotif = date("Y-m-d H:i:s");
 		$badge = 0;
 		if ($timeout != 'nok') {
@@ -680,7 +681,8 @@ class mobile extends eqLogic
 					'critical' => $criticalString,
 					'boxName' => config::byKey('name'),
 					'boxApiKey' => jeedom::getHardwareKey(),
-					"askParams" => $askParams
+					"askParams" => $askParams,
+					'textToDisplay' => 'none'
 				];
 
 				$notification = [
@@ -755,16 +757,59 @@ class mobile extends eqLogic
 						'apns' => $apns
 					];
 				}
+
+				$publishJson = [
+					'token' => $token,
+					'data' => $data,
+				];
+
+				
+
+				// SAVE NOTIFS IN JSON
+				$pathNotificationData = '/../data/notifications';
+				if(!is_dir(dirname(__FILE__) . $pathNotificationData)){
+					mkdir(dirname(__FILE__) . $pathNotificationData, 0775, true);
+				}
+				$filePath = dirname(__FILE__) . $pathNotificationData . '/'.$Iq.'.json';
+
+				if (!file_exists($filePath)) {
+					file_put_contents($filePath, '');
+				}
+				$notificationsContent = file_get_contents($filePath);
+				$notifications = json_decode($notificationsContent, true);
+				
+				if ($notifications === null) {
+					$notifications = array();
+				}
+
+				foreach ($notifications as &$notification) {
+					if (isset($notification['data']['askParams'])) {
+						$askParams = json_decode($notification['data']['askParams'], true);
+						if ($askParams !== null && isset($askParams['timeout'])) {
+							log::add('mobile', 'debug', 'Timeout Ask remis à zero');
+							$askParams['timeout'] = 0;
+							$notification['data']['askParams'] = json_encode($askParams);
+						}
+						
+					}
+				}
+				
+				$notifications[$idNotif] = $publishJson;
+				log::add('mobile', 'debug', 'Notification enregistrée : ' . json_encode($notifications));
+				file_put_contents($filePath, json_encode($notifications));
+
 			}
 		}
 		log::add('mobile', 'debug', '| JSON publish >  : ' . json_encode($publish));
+
+
 		return $publish;
 	}
 
 	public static function notification($arn, $os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version = 1, $optionsNotif = [], $critical = false, $Iq = null)
 	{
 		log::add('mobile', 'debug', '| Notification en cours !');
-		$publish = mobile::jsonPublish($os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version, $optionsNotif, $critical);
+		$publish = mobile::jsonPublish($os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version, $optionsNotif, $critical, $Iq);
 		log::add('mobile', 'debug', '| JSON publish >  : ' . json_encode($publish));
 		if ($token != null) {
 			if ($token == 'notifsBGDisabled') {
@@ -812,26 +857,7 @@ class mobile extends eqLogic
 			throw new Exception(__('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));
 		}
 
-		$pathNotificationData = '/../data/notifications';
-		if(!is_dir(dirname(__FILE__) . $pathNotificationData)){
-			mkdir(dirname(__FILE__) . $pathNotificationData, 0775, true);
-		}
-		$filePath = dirname(__FILE__) . $pathNotificationData . '/'.$Iq.'.json';
-
-		if (!file_exists($filePath)) {
-			file_put_contents($filePath, '');
-		}
-		$notificationsContent = file_get_contents($filePath);
-		$notifications = json_decode($notificationsContent, true);
-		
-		if ($notifications === null) {
-			$notifications = array();
-		}
-
-		$notifications[$idNotif] = $publish;
-		log::add('mobile', 'debug', 'Notification enregistrée : ' . json_encode($notifications));
-		file_put_contents($filePath, json_encode($notifications));
-
+	
 	}
 
 	public function SaveGeoloc($geoloc)

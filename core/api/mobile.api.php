@@ -731,36 +731,5 @@ if($jsonrpc->getMethod() == 'getAskResponse'){
 }
 
 
-// if($jsonrpc->getMethod() == 'modifyNotifInJsonFile'){
-//     log::add('mobile', 'debug', 'modifyNotifInJsonFile');
-//     $Iq = $params['Iq'];
-//     $notifsToModify =  $params['notifsToModify'];
-//     $pathNotification = __DIR__ . '/../data/notifications';
-//     if(file_exists($pathNotification)){
-//         $notifications = file_get_contents($pathNotification.'/'.$Iq.'.json');
-//         $notificationsArray = json_decode($notifications, true); 
-
-//         foreach ($notificationsArray as $key => $notif) {
-// 			log::add('mobile', 'debug', 'Notif > '.json_encode($notif));
-
-//             foreach ($notifsToModify as $notifToModify) {
-// 				log::add('mobile', 'debug', 'NotifMODIFY > '.json_encode($notifToModify));
-// 				if ($notif['data']['idNotif'] == $notifToModify['data']['idNotif']) {
-// 					if (!isset($notif['data']['textToDisplay'])) {
-// 						$notificationsArray[$key]['data']['textToDisplay'] = $notifToModify['textToDisplay']; 
-// 					}
-// 					$notificationsArray[$key]['data']['textToDisplay'] = $notifToModify['textToDisplay'];
-// 					break;
-// 				}
-//             }
-//         }
-
-//         $updatedNotifications = json_encode($notificationsArray);
-//         file_put_contents($pathNotification.'/'.$Iq.'.json', $updatedNotifications);
-//     }
-
-//     $jsonrpc->makeSuccess('ok');
-// }
-
 throw new Exception(__('Aucune demande', __FILE__));
 ?>

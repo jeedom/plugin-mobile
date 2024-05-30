@@ -40,10 +40,15 @@ function mobile_install()
 function mobile_update()
 {
 	//	config::save('displayMobilePanel',1, 'mobile');
+	$pathNotifications = dirname(__FILE__) . '/../core/data/notifications/';
+    if(!is_dir($pathNotifications)){
+        mkdir($pathNotifications, 0775, true);
+    }
+	
 	$mobiles = eqLogic::byType('mobile');
 	foreach($mobiles as $mobile){
 		$customMenu  = $mobile->getConfiguration('menuCustomArray');
-		if($customMenu !== null){	
+		if(!isset($customMenu)){	
 			$icons = $mobile->getConfiguration('nbIcones', 3);
 			$menuCustomArray = array();
 			for($i=1; $i < intval($icons) + 1; $i++){

@@ -10,6 +10,85 @@
     }
 }
 
+
+.configTileDiv {
+  position: relative;
+  overflow: hidden;
+  padding-left:10px;
+  margin-bottom:10px;
+  width:100% !important;
+  height:100px;
+  background-color:#ffffff;
+  display:flex;
+  border-radius:10px !important;
+}
+
+
+.firstSection {
+  width:20% !important;
+  display:flex;
+  flex-direction:column;
+  justify-content:center !important;
+  z-index: 2;;
+}
+
+
+.selected {
+  border-color: #94CA02; 
+  border-width: 4px;
+  border-style: solid;
+  /* scale: 1.1; */
+}
+
+.carouselFirstConfig{
+  height:20vh;
+  margin-bottom:2vh;
+  width:400px;
+}
+
+.carouselObjects{
+  height:20vh;
+  margin-bottom:2vh;
+  width:400px;
+  margin-left:20px;
+}
+
+
+.hiddenElement{
+  display: none;
+}
+
+.visibleElement{
+  display: block;
+}
+
+.box-name{
+  position:absolute;
+  top:10vh;
+  width:150px;
+  color:white;
+  font-size:20px;
+  font-weight:bold;
+  z-index:1;
+  background-color:#B5DA4E;
+  padding-left:5px;
+}
+
+
+.carousel-image{
+  height:20vh;
+  background-image: url('https://www.jeedom.com/background/background-Luna2.jpg');
+  background-size: cover; 
+  background-position: center;
+}
+
+
+.carousel-div{
+  height:20vh;
+  margin-bottom:2vh;
+  width:400px;
+}
+
 .bounceAndScale {
     animation: bounceAndScale 1s;
 }
@@ -29,9 +108,7 @@
 }
 
 
-.firstSection{
-  z-index: 2;;
-}
+
 
 
 .bgDiv{

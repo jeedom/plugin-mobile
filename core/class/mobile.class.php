@@ -859,7 +859,7 @@ class mobile extends eqLogic
 	public function SaveGeoloc($geoloc)
 	{
 		log::add('mobile', 'debug', '|-----------------------------------');
-		log::add('mobile', 'debug', '|-- Début de la fonction SaveGeoLoc --');
+		log::add('mobile', 'debug', '| -- Début de la fonction SaveGeoLoc --');
 		log::add('mobile', 'debug', '|-----------------------------------');
 		log::add('mobile', 'debug', '|');
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');

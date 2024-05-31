@@ -660,13 +660,11 @@ if($jsonrpc->getMethod() == 'getNotificationsFromFile'){
     log::add('mobile', 'debug', 'Get notifications from file');
     $Iq = $params['Iq'];
     $pathNotification = __DIR__ . '/../data/notifications';
-    $return = array();
     if(file_exists($pathNotification)){
         $notifications = file_get_contents($pathNotification.'/'.$Iq.'.json');
         if($notifications){
 			$notifications = json_decode($notifications, true);
 			foreach($notifications as $id => $value){
-				$data = json_decode($value['data'], true);
 				$dateNew = substr($value['data']['date'], 0, 10);
 				$horaire = substr($value['data']['date'], -8);
 				$horaireFormat = substr($horaire, 0, 5);

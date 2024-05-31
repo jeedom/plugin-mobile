@@ -7,6 +7,10 @@ if (!isConnect()) {
 $carouselHtml = file_get_contents(__DIR__ . '/../../core/data/html/carouselHtml.html');
 $arrayInfos = array();
 $bellaHtml = file_get_contents(__DIR__ . '/../../core/data/jsonBella/jsonObject_default.html');
+
+
+
+
 $arrayInfos[] = array(
                         'name' => 'Commande d\'equipement',
                         'imageBg' => 'core/img/background/jeedom_abstract_04_light.jpg',
@@ -15,7 +19,7 @@ $arrayInfos[] = array(
                       );
 $arrayInfos[] = array(
                         'name' => 'Objets de votre Jeedom',
-                        'imageBg' => 'core/img/background/jeedom_abstract_04_light.jpg',
+                        'imageBg' => 'https://www.jeedom.com/background/background12.png',
                         'bellaHtml' => $bellaHtml,
                         'idBella' => 'jsonObject_default'
                       );
@@ -62,13 +66,13 @@ foreach(jeeObject::all() as $object){
 </div>
 
 
-
 <script>
 
 
 var arrayInfos = <?php echo json_encode($arrayInfos); ?>;
 var arrayObjects = <?php echo json_encode($arrayObjects); ?>;
 var carouselHtml = <?php echo json_encode($carouselHtml); ?>;
+
 
 var associatedImagesHardware = {
     "Luna": "https://www.jeedom.com/background/background-Luna2.jpg",
@@ -81,26 +85,9 @@ var associatedImagesHardware = {
 var currentImageIndex = 0;
 var currentImageIndex2 = 0;
 
-// function changeImage(newIndex) {
-//     currentImageIndex = newIndex;
-//     var imgBg = arrayInfos[currentImageIndex]['imageBg'];
-//     var nameBox = arrayInfos[currentImageIndex]['nameBox'];
-//     var bellaHtml = arrayInfos[currentImageIndex]['bellaHtml'];
-//     var idObject = arrayInfos[currentImageIndex]['idObject'];
-//     document.getElementById('carousel-image').style.backgroundImage = "url('" + imgBg + "')";
-//     document.getElementById('box-name').textContent = nameBox ? nameBox : 'Objet sans nom';
-//     bellaHtml = bellaHtml.replace(/(\d+)_defaut/g, "$1_" + idObject);
-//     document.getElementById('bella-container').innerHTML = bellaHtml;
-//     document.getElementById('rightContent').innerHTML = "";
-//     mainScript();
-//     updateDots();
-// }
 
+function starting_script(){
 
-
-
-function changeImage(newIndex) {
-    currentImageIndex = newIndex;
     var imgBg = arrayInfos[currentImageIndex]['imageBg'];
     var name = arrayInfos[currentImageIndex]['name'];
     var bellaHtml = arrayInfos[currentImageIndex]['bellaHtml'];
@@ -110,20 +97,19 @@ function changeImage(newIndex) {
     carousels.forEach(function(carousel) {
         carousel.innerHTML = carouselHtml;
     });
-    // if(name == 'Objets de votre Jeedom'){
-
-    //   document.getElementById('carousel2').style.display = "block";
-    //   document.getElementById('rightContent').style.display = "none";
-    // }else{
-    //   document.getElementById('carousel2').style.display = "none";
-    //   document.getElementById('rightContent').style.display = "flex";
-    // }
-    // document.getElementById('carousel-image').style.backgroundImage = "url('" + imgBg + "')";
-    // document.getElementById('box-name').textContent = name ? name : 'Objet sans nom';
-   
-   // document.getElementById('rightContent').innerHTML = "";
     mainScript();
-   // updateDots();
+    
+}
+
+
+
+function changeImage(newIndex, divContainerCarousels, tileId) {
+    currentImageIndex = newIndex;
+    var imgBg = arrayInfos[currentImageIndex]['imageBg'];
+    var name = arrayInfos[currentImageIndex]['name'];
+    divContainerCarousels.querySelector('.carousel-image').style.backgroundImage = "url('" + imgBg + "')";
+    divContainerCarousels.querySelector('.box-name').textContent = name ? name : 'Objet sans nom';
+    updateDots(divContainerCarousels, tileId);
 }
 
 function changeImage2(newIndex) {
@@ -137,15 +123,16 @@ function changeImage2(newIndex) {
 }
 
 
-function updateDots() {
-    var dotsContainer = document.getElementById('carousel-dots');
+function updateDots(divContainerCarousels, tileId) {
+   
+    var dotsContainer = divContainerCarousels.querySelector('.carousel-dots');
     dotsContainer.innerHTML = '';
     for (var i = 0; i < arrayInfos.length; i++) {
         var dot = document.createElement('span');
         dot.className = 'carousel-dot' + (i === currentImageIndex ? ' active' : '');
         dot.addEventListener('click', (function(index) {
             return function() {
-                changeImage(index);
+                changeImage(index, divContainerCarousels, tileId);
             };
         })(i));
         dotsContainer.appendChild(dot);
@@ -167,8 +154,9 @@ function updateDots2() {
     }
 }
 
-changeImage(0);
-changeImage2(0);
+//changeImage(0);
+starting_script();
+//changeImage2(0);
 // updateDots();
 // updateDots2();
 
@@ -274,46 +262,6 @@ function mainScript() {
     }
 
 
-    // const createCarouselForTile = (tileElement, idTile) => {
-    //     let carousel = document.createElement('div');
-    //     carousel.classList.add('carousel-div');
-    //     carousel.setAttribute('id', 'carousel' + idTile);
-    //     let carouselBoxName = document.createElement('div');
-    //     carouselBoxName.setAttribute('id', 'box-name' + idTile);
-    //     carouselBoxName.classList.add('box-name');
-    //     carousel.appendChild(carouselBoxName);
-    //     let carouselImage = document.createElement('div');
-    //     carouselImage.setAttribute('id', 'carousel-image' + idTile);
-    //     carouselImage.classList.add('carousel-image');
-    //     carousel.appendChild(carouselImage);
-    //     let carouselDots = document.createElement('div');
-    //     carouselDots.setAttribute('id', 'carousel-dots' + idTile);
-    //     carouselDots.classList.add('carousel-dots');
-    //     document.getElementById('carousels').appendChild(carousel);
-    // }
-
-
-
-// const replaceCarouselByTile = (tileElement, idTile) => {
-//         let carousel = document.createElement('div');
-//         carousel.classList.add('carousel-div');
-//         carousel.setAttribute('id', 'carousel' + idTile);
-//         let carouselBoxName = document.createElement('div');
-//         carouselBoxName.setAttribute('id', 'box-name' + idTile);
-//         carouselBoxName.classList.add('box-name');
-//         carousel.appendChild(carouselBoxName);
-//         let carouselImage = document.createElement('div');
-//         carouselImage.setAttribute('id', 'carousel-image' + idTile);
-//         carouselImage.classList.add('carousel-image');
-//         carousel.appendChild(carouselImage);
-//         let carouselDots = document.createElement('div');
-//         carouselDots.setAttribute('id', 'carousel-dots' + idTile);
-//         carouselDots.classList.add('carousel-dots');
-//         document.getElementById('carousels').appendChild(carousel);
-//     }
-
-
-  
 
     const createConfigTile = (tileElement, idTile, randomColor, MODELS_CHOICE) => {
         let carousels = tileElement.querySelector('.carousels');
@@ -395,27 +343,6 @@ function mainScript() {
 
   }
 
-
-        // DISPLAYING CAROUSELS 
-        // let carouselFirstConfigElement = tileElement.querySelector('.carouselFirstConfig');
-        // let carouselObjectsElement = tileElement.querySelector('.carouselObjects');
-        // carouselFirstConfigElement.classList.toggle('hiddenElement');
-        // carouselFirstConfigElement.classList.toggle('visibleElement');
-
-        // carouselObjectsElement.classList.toggle('hiddenElement');
-        // carouselObjectsElement.classList.toggle('visibleElement');
-
-        // let divContainerCarousels = document.getElementById('containerCarousels');
-       
-        // if (carousels) {
-        //     divContainerCarousels.innerHTML = '';
-        //     let carouselClone = carousels.cloneNode(true);
-        //     carouselClone.style.display = "flex";
-        //     divContainerCarousels.appendChild(carouselClone);
-        // }
-
-
-
 tiles.forEach(function(tile) {
 
   tile.dataset.state = null;
@@ -467,6 +394,8 @@ tiles.forEach(function(tile) {
               let carouselClone = carousels.cloneNode(true);
               carouselClone.style.display = "flex";
               divContainerCarousels.appendChild(carouselClone);
+              changeImage(0, divContainerCarousels, carouselClone.id) 
+              // updateDots(divContainerCarousels, carouselClone.id);
           }else{
             existingClone.style.display = "flex";
           }

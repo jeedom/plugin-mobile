@@ -11,6 +11,15 @@
 }
 
 
+.carousels{
+  height:30vh;
+  margin-bottom:2vh;
+  width:100%;
+  display:none;
+  flex-direction:row;
+
+}
+
 .configTileDiv {
   position: relative;
   overflow: hidden;
@@ -62,7 +71,7 @@
   display: block;
 }
 
-.box-name{
+.box-name, .box-name2{
   position:absolute;
   top:10vh;
   width:150px;
@@ -75,7 +84,7 @@
 }
 
 
-.carousel-image{
+.carousel-image, .carousel2-image{
   height:20vh;
   background-image: url('https://www.jeedom.com/background/background-Luna2.jpg');
   background-size: cover; 

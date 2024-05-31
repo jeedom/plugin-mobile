@@ -21,13 +21,14 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
 class bellaMobile extends eqLogic
 {
-    function recupAllCmd($jeeObject_id){
+    function recupAllCmd($jeeObject_id)
+    {
         $arrayBella = array();
         $jeeObject = jeeObject::byId();
         $eqLogics = $jeeObject->getEqLogic();
         foreach ($eqLogics as $eqLogic) {
             $cmds = $eqLogic->getCmd();
-            foreach($cmds as $cmd){
+            foreach ($cmds as $cmd) {
                 $arrayBella[$cmd->getId()] = array();
                 $arrayBella[$cmd->getId()]['options'] = array();
                 $arrayBella[$cmd->getId()]['options']['name'] = $cmd->getName();
@@ -37,17 +38,18 @@ class bellaMobile extends eqLogic
         }
     }
 
-	function syncBella(){
-
+    function syncBella()
+    {
     }
 
-    public static function jsonBella(){
+    public static function jsonBella()
+    {
         $arrayBella = array(
             0 => array(
                 0 => array(
                     'size' => 1,
                     'type' => 'onOff',
-                  	'idEvent' => [7],
+                    'idEvent' => [7],
                     'options' => array(
                         'on' => 0,
                         'title' => "Prise",
@@ -56,12 +58,12 @@ class bellaMobile extends eqLogic
                             'on' => array('type' => "jeedomapp", 'name' => "prise", 'color' => "#f7d959"),
                             'off' => array('type' => "jeedomapp", 'name' => "prise-off", 'color' => "#a4a4a3")
                         ),
-                      	'actions' => array(
-                        	'on' => array(
-                            	'id' => 8
+                        'actions' => array(
+                            'on' => array(
+                                'id' => 8
                             ),
-                          	'off' => array(
-                            	'id' => 9
+                            'off' => array(
+                                'id' => 9
                             )
                         ),
                         'iconBlur' => false
@@ -146,7 +148,5 @@ class bellaMobile extends eqLogic
         );
 
         return json_encode($arrayBella);
-
     }
-
 }

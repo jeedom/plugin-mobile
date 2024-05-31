@@ -114,7 +114,7 @@ function saveMenuFromAppV2($menu, $mobile)
 
 $params = $jsonrpc->getParams();
 log::add('mobile', 'debug', '|------------------------------------------------------------------------------------------------------|');
-log::add('mobile', 'debug', '|                                   Appel API Mobile > ' . $jsonrpc->getMethod());
+log::add('mobile', 'debug', '| Appel API Mobile > ' . $jsonrpc->getMethod());
 log::add('mobile', 'debug', '| Paramètres passés > ' . json_encode($params));
 if ($params['Iq']) {
 	log::add('mobile', 'debug', '| Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));
@@ -138,7 +138,7 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 		$mobile = createMobile($params, 3);
 	}
 	if (isset($notification['token'])) {
-		log::add('mobile', 'debug', 'token a ajouter > ' . $notification['token']);
+		log::add('mobile', 'debug', '| Token à ajouter > ' . $notification['token']);
 		if ($notification['token'] == 'notifsBGDisabled') {
 			message::removeAll("mobile", 'alertNotifs');
 			$phoneName = $mobile->getName();
@@ -166,8 +166,8 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 
 if ($jsonrpc->getMethod() == 'getJson') {
 
-	log::add('mobile', 'debug', 'Demande du RDK to get Json');
-	log::add('mobile', 'debug', 'Demande du RDK');
+	log::add('mobile', 'debug', '| Demande du RDK to get Json');
+	log::add('mobile', 'debug', '| Demande du RDK');
 	$registerDevice = $_USER_GLOBAL->getOptions('registerDevice', array());
 	if (!is_array($registerDevice)) {
 		$registerDevice = array();
@@ -179,12 +179,12 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	$registerDevice[sha512($rdk)]['session_id'] = session_id();
 	$_USER_GLOBAL->setOptions('registerDevice', $registerDevice);
 	$_USER_GLOBAL->save();
-	log::add('mobile', 'debug', 'RDK :' . $rdk);
-	log::add('mobile', 'debug', 'Demande du GetJson');
+	log::add('mobile', 'debug', '| RDK :' . $rdk);
+	log::add('mobile', 'debug', '| Demande du GetJson');
 	$idBox = jeedom::getHardwareKey();
 	$return = array();
 	/* -------- MOBILE FIRST ------- */
-	log::add('mobile', 'debug', 'Creation du retour de base pour l app');
+	log::add('mobile', 'debug', '| Creation du retour de base pour l\'APP');
 	$objectsDashboard = [];
 	foreach (jeeObject::all() as $object) {
 		$obArray = utils::o2a($object);
@@ -282,14 +282,14 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	$return[$idBox]['jeedom_version'] = jeedom::version();
 	$return[$idBox]['rdk'] = $rdk;
 	$return[$idBox]['name'] = config::byKey('name') == '' ? 'Jeedom' : config::byKey('name');
-	log::add('mobile', 'debug', 'retour de base > ' . json_encode($return));
+	log::add('mobile', 'debug', '| Retour de base > ' . json_encode($return));
 
-	log::add('mobile', 'debug', 'recherche du mobile via sont Iq >' . $params['Iq']);
+	log::add('mobile', 'debug', '| Recherche du mobile via sont Iq > ' . $params['Iq']);
 	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
-	log::add('mobile', 'debug', 'mobile object');
+	log::add('mobile', 'debug', '| Mobile object');
 	$return[$idBox]['configs'] = array();
 	if (is_object($mobile)) {
-		log::add('mobile', 'debug', 'mobile bien trouvé > ' . $mobile->getName());
+		log::add('mobile', 'debug', '| Mobile bien trouvé > ' . $mobile->getName());
 		$return[$idBox]['configs']['menu'] = mobile::configMenuCustom($mobile->getId(), jeedom::version());
 	} else {
 		if (jeedom::version() < '4.4.0') {
@@ -325,8 +325,8 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	}
 	config::save('menuCustom_' . $params['Iq'], $newMenu, 'mobile');
 
-	log::add('mobile', 'debug', 'CustomENVOICONFIGSAPI GETJSON' . json_encode($return[$idBox]['configs']));
-	log::add('mobile', 'debug', 'INFOS GETJSONINITAL : ' . json_encode($return));
+	log::add('mobile', 'debug', '| CustomENVOICONFIGSAPI GETJSON > ' . json_encode($return[$idBox]['configs']));
+	log::add('mobile', 'debug', '| INFOS GETJSONINITAL > ' . json_encode($return));
 	$jsonrpc->makeSuccess($return);
 }
 
@@ -565,9 +565,9 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 	log::add('mobile', 'debug', '| -- GeoLocV2 geofencing --');
 
 	if (isset($params['transmition']) && isset($params['transmition']['event']) && $params['transmition']['event'] == 'geofence') {
-		log::add('mobile', 'debug', '| event > ' . $params['transmition']['event']);
+		log::add('mobile', 'debug', '| Event > ' . $params['transmition']['event']);
 		$geofence = $params['transmition']['geofence'];
-		log::add('mobile', 'debug', '| event > ' . json_encode($geofence));
+		log::add('mobile', 'debug', '| Event > ' . json_encode($geofence));
 		$eqLogicMobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 		if ($eqLogicMobile) {
 			log::add('mobile', 'debug', '| Mobile trouvé : ' . $params['Iq']);
@@ -584,44 +584,44 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 			}
 			log::add('mobile', 'debug', '|-----------------------------------');
 			$jsonrpc->makeSuccess();
-		}else{
+		} else {
 			throw new Exception(__('EqLogic inconnu : ', __FILE__) . $params['Iq']);
-                }
-	}else{
+		}
+	} else {
 		$transmitions = $params['transmition'];
 		$errorCount = 0;
-		foreach($transmitions as $transmition){
-			if($transmition['event'] == 'geofence'){
-				log::add('mobile', 'debug', 'Transmition :' . json_encode($params['transmition']));
+		foreach ($transmitions as $transmition) {
+			if ($transmition['event'] == 'geofence') {
+				log::add('mobile', 'debug', '| Transmition :' . json_encode($params['transmition']));
 				$geofence = $transmition['geofence'];
-				log::add('mobile', 'debug', '| event > '.json_encode($geofence));
+				log::add('mobile', 'debug', '| Event > ' . json_encode($geofence));
 				$eqLogicMobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
-				if($eqLogicMobile){
+				if ($eqLogicMobile) {
 					log::add('mobile', 'debug', '| Mobile trouvé');
 					$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geofence['identifier']);
-					if(is_object($cmdgeoloc)){
-						log::add('mobile', 'debug', '| commande trouvé');
-						if($geofence['action'] == 'ENTER'){
-							log::add('mobile', 'debug', '| commande passé à 1');
+					if (is_object($cmdgeoloc)) {
+						log::add('mobile', 'debug', '| Commande trouvé');
+						if ($geofence['action'] == 'ENTER') {
+							log::add('mobile', 'debug', '| Commande passé à 1');
 							$cmdgeoloc->event(1);
-						}elseif($geofence['action'] == 'EXIT'){
-							log::add('mobile', 'debug', '| commande passé à 0');
+						} elseif ($geofence['action'] == 'EXIT') {
+							log::add('mobile', 'debug', '| Commande passé à 0');
 							$cmdgeoloc->event(0);
-						}else{
-							log::add('mobile', 'debug', 'Event DWELL');
+						} else {
+							log::add('mobile', 'debug', '| Event DWELL');
 						}
 					}
-				}else{
-			      throw new Exception(__('EqLogic inconnu : ', __FILE__) . $params['Iq']);
-                }
-			     log::add('mobile', 'debug', '|-----------------------------------');	
-			}else{
+				} else {
+					throw new Exception(__('EqLogic inconnu : ', __FILE__) . $params['Iq']);
+				}
+				log::add('mobile', 'debug', '|-----------------------------------');
+			} else {
 				$errorCount++;
 			}
 		}
-		if($errorCount == 0){
+		if ($errorCount == 0) {
 			$jsonrpc->makeSuccess();
-		}else{
+		} else {
 			throw new Exception(__('pas de parametre de geofencing : ', __FILE__));
 		}
 	}
@@ -656,17 +656,17 @@ if ($jsonrpc->getMethod() == "syncBella") {
 	log::add('mobile', 'debug', 'JeedomApp > syncBella');
 }
 
-if($jsonrpc->getMethod() == 'getNotificationsFromFile'){
-    log::add('mobile', 'debug', 'Get notifications from file');
-    $Iq = $params['Iq'];
-    $pathNotification = __DIR__ . '/../data/notifications';
-    $return = array();
-    if(file_exists($pathNotification)){
-        $notifications = file_get_contents($pathNotification.'/'.$Iq.'.json');
-        if($notifications){
+if ($jsonrpc->getMethod() == 'getNotificationsFromFile') {
+	log::add('mobile', 'debug', '| Get notifications from file');
+	$Iq = $params['Iq'];
+	$pathNotification = __DIR__ . '/../data/notifications';
+	//$return = array();
+	if (file_exists($pathNotification)) {
+		$notifications = file_get_contents($pathNotification . '/' . $Iq . '.json');
+		if ($notifications) {
 			$notifications = json_decode($notifications, true);
-			foreach($notifications as $id => $value){
-				$data = json_decode($value['data'], true); 
+			foreach ($notifications as $id => $value) {
+				//$data = json_decode($value['data'], true);
 				$dateNew = substr($value['data']['date'], 0, 10);
 				$horaire = substr($value['data']['date'], -8);
 				$horaireFormat = substr($horaire, 0, 5);
@@ -674,60 +674,58 @@ if($jsonrpc->getMethod() == 'getNotificationsFromFile'){
 				$notifications[$id]['data']['horaireFormat'] = $horaireFormat;
 			}
 			$notifications = json_encode($notifications);
-            $jsonrpc->makeSuccess($notifications);
-        }else{
-            $jsonrpc->makeSuccess('noNotifications');
-        
-        }
-    }
+			$jsonrpc->makeSuccess($notifications);
+		} else {
+			$jsonrpc->makeSuccess('noNotifications');
+		}
+	}
 }
 
 
-if($jsonrpc->getMethod() == 'deleteNotificationInJsonFile'){
-    $Iq = $params['Iq'];
-    $idNotif = $params['IdNotif'];
-    log::add('mobile', 'debug', 'Delete notification in file > '.$Iq.' > '.$idNotif);
-    $pathNotification = __DIR__ . '/../data/notifications';
-    if(file_exists($pathNotification)){
-        $notifications = file_get_contents($pathNotification.'/'.$Iq.'.json');
-        $notificationsArray = json_decode($notifications, true); 
-		if($idNotif == 'allNotifs'){
-			file_put_contents($pathNotification.'/'.$Iq.'.json', '');
+if ($jsonrpc->getMethod() == 'deleteNotificationInJsonFile') {
+	$Iq = $params['Iq'];
+	$idNotif = $params['IdNotif'];
+	log::add('mobile', 'debug', 'Delete notification in file > ' . $Iq . ' > ' . $idNotif);
+	$pathNotification = __DIR__ . '/../data/notifications';
+	if (file_exists($pathNotification)) {
+		$notifications = file_get_contents($pathNotification . '/' . $Iq . '.json');
+		$notificationsArray = json_decode($notifications, true);
+		if ($idNotif == 'allNotifs') {
+			file_put_contents($pathNotification . '/' . $Iq . '.json', '');
 			$jsonrpc->makeSuccess('ok');
 			return;
 		}
-        if(isset($notificationsArray[$idNotif])) { 
-            unset($notificationsArray[$idNotif]); 
-        }
+		if (isset($notificationsArray[$idNotif])) {
+			unset($notificationsArray[$idNotif]);
+		}
 
-        $notifications = json_encode($notificationsArray); 
-        file_put_contents($pathNotification.'/'.$Iq.'.json', $notifications);
+		$notifications = json_encode($notificationsArray);
+		file_put_contents($pathNotification . '/' . $Iq . '.json', $notifications);
 
 		$jsonrpc->makeSuccess('ok');
-    }
+	}
 }
 
-if($jsonrpc->getMethod() == 'getAskResponse'){
+if ($jsonrpc->getMethod() == 'getAskResponse') {
 	log::add('mobile', 'debug', 'Get ask response');
 	$Iq = $params['Iq'];
-    $idNotif = $params['idNotif'];
-    $choiceAsk = $params['choiceAsk'];
-	log::add('mobile', 'debug', 'Get ask response > '.$Iq.' > '.$idNotif.' > '.$choiceAsk);
+	$idNotif = $params['idNotif'];
+	$choiceAsk = $params['choiceAsk'];
+	log::add('mobile', 'debug', 'Get ask response > ' . $Iq . ' > ' . $idNotif . ' > ' . $choiceAsk);
 	$pathNotification = __DIR__ . '/../data/notifications';
-	if(file_exists($pathNotification)){
-		$notifications = file_get_contents($pathNotification.'/'.$Iq.'.json');
-		$notificationsArray = json_decode($notifications, true); 
+	if (file_exists($pathNotification)) {
+		$notifications = file_get_contents($pathNotification . '/' . $Iq . '.json');
+		$notificationsArray = json_decode($notifications, true);
 		foreach ($notificationsArray as $key => $notif) {
-			if($notif['data']['idNotif'] == $idNotif){
+			if ($notif['data']['idNotif'] == $idNotif) {
 				$notificationsArray[$key]['data']['choiceAsk'] = $choiceAsk;
 				break;
 			}
 		}
 		$updatedNotifications = json_encode($notificationsArray);
-		file_put_contents($pathNotification.'/'.$Iq.'.json', $updatedNotifications);
+		file_put_contents($pathNotification . '/' . $Iq . '.json', $updatedNotifications);
 	}
 	$jsonrpc->makeSuccess('ok');
-
 }
 
 

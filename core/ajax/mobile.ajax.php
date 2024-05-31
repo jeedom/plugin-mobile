@@ -31,34 +31,34 @@ try {
 	}
 
 	if (init('action') == 'constructMenu') {
-      $reponse = mobile::constructMenu(init('eqId'));
-      ajax::success($reponse);
-      }
-
-
-if (init('action') == 'getEqLogicConfigs') {
-
-	$eqLogic = eqLogic::byId(intval(init('eqId')));
-	if(is_object($eqLogic)){
-		$j = 0;
-		$arrayMenuConfig = array();
-		 for($i=1;$i < 5;$i++){
-				 $arrayTemp = [];
-				 ${ 'spanIcon' . $i} = $eqLogic->getConfiguration('spanIcon'.$i ,'pasencorela');
-				 ${ 'renameIcon' . $i} = $eqLogic->getConfiguration('renameIcon'.$i ,'pasencorela');
-				 ${ 'selectNameMenu' . $i} = $eqLogic->getConfiguration('selectNameMenu'.$i, 'pasencorela');
-					array_push($arrayMenuConfig, [${ 'spanIcon' . $i}, ${ 'renameIcon' . $i}, ${ 'selectNameMenu' . $i}]);
-				$j++;
-		 }
-		log::add('mobile','debug','RETURNAJAXGETCONFIG ' . json_encode($arrayMenuConfig));
+		$reponse = mobile::constructMenu(init('eqId'));
+		ajax::success($reponse);
 	}
-ajax::success($arrayMenuConfig);
-}
 
-if(init('action') == 'menuDefault'){
-	mobile::handleMenuDefaultBySelect(init('eqId'), init('eqIdDefault'));
-	ajax::success();
-}
+
+	if (init('action') == 'getEqLogicConfigs') {
+
+		$eqLogic = eqLogic::byId(intval(init('eqId')));
+		if (is_object($eqLogic)) {
+			$j = 0;
+			$arrayMenuConfig = array();
+			for ($i = 1; $i < 5; $i++) {
+				$arrayTemp = [];
+				${'spanIcon' . $i} = $eqLogic->getConfiguration('spanIcon' . $i, 'pasencorela');
+				${'renameIcon' . $i} = $eqLogic->getConfiguration('renameIcon' . $i, 'pasencorela');
+				${'selectNameMenu' . $i} = $eqLogic->getConfiguration('selectNameMenu' . $i, 'pasencorela');
+				array_push($arrayMenuConfig, [${'spanIcon' . $i}, ${'renameIcon' . $i}, ${'selectNameMenu' . $i}]);
+				$j++;
+			}
+			log::add('mobile', 'debug', 'RETURNAJAXGETCONFIG ' . json_encode($arrayMenuConfig));
+		}
+		ajax::success($arrayMenuConfig);
+	}
+
+	if (init('action') == 'menuDefault') {
+		mobile::handleMenuDefaultBySelect(init('eqId'), init('eqIdDefault'));
+		ajax::success();
+	}
 
 
 	if (init('action') == 'getQrCode') {
@@ -70,7 +70,7 @@ if(init('action') == 'menuDefault'){
 		}
 	}
 
-  	if (init('action') == 'getQrCodeV2') {
+	if (init('action') == 'getQrCodeV2') {
 		$user = user::byId(init('chooseUser'));
 		if (!is_object($user)) {
 			throw new Exception(__('User inexistant : ', __FILE__));
@@ -88,43 +88,41 @@ if(init('action') == 'menuDefault'){
 	}
 
 
-	if (init('action') == 'getSaveDashboard'){
+	if (init('action') == 'getSaveDashboard') {
 		$iq = init('iq');
 		$jsonDashboard = mobile::getSaveJson($iq, 'dashboard');
-		if ($jsonDashboard == ""){
+		if ($jsonDashboard == "") {
 			$reponse = false;
-		}else{
+		} else {
 			$reponse = true;
 		}
 		ajax::success($reponse);
-	    }
+	}
 
-	  if (init('action') == 'getSaveFavDash'){
+	if (init('action') == 'getSaveFavDash') {
 		$iq = init('iq');
 		$jsonFavDash = mobile::getSaveJson($iq, 'favdash');
-		if ($jsonFavDash == ""){
+		if ($jsonFavDash == "") {
 			$reponse = false;
-		}else{
+		} else {
 			$reponse = true;
 		}
 		ajax::success($reponse);
-	    }
+	}
 
-  if (init('action') == 'savescenario'){
-    $id = init('id');
-    $sendApp = init('valueSend');
-    $scenario = scenario::byId($id);
-    if(!is_object($scenario)){
-      throw new Exception(__('scenario non trouvé', __FILE__));
-    }
-    $scenario->setDisplay("sendToApp",$sendApp);
-    $scenario->save();
-    ajax::success();
-  }
+	if (init('action') == 'savescenario') {
+		$id = init('id');
+		$sendApp = init('valueSend');
+		$scenario = scenario::byId($id);
+		if (!is_object($scenario)) {
+			throw new Exception(__('scenario non trouvé', __FILE__));
+		}
+		$scenario->setDisplay("sendToApp", $sendApp);
+		$scenario->save();
+		ajax::success();
+	}
 
 	throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
-
 } catch (Exception $e) {
 	ajax::error(displayException($e), $e->getCode());
 }
-?>

@@ -25,7 +25,7 @@ if (!isConnect()) {
 <form class="form-horizontal">
 	<fieldset>
 		<legend>
-			<i class="fas fa-list-alt"></i> {{Notifications de l'app}}
+			<i class="fas fa-mobile-alt"></i> {{Notifications de l'app}}
 		</legend>
 		<div class="form-group">
 			<label class="col-sm-3 control-label">{{Réponse Ask sensible à la case : }}</label>

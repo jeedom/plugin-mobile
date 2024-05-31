@@ -613,8 +613,8 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 					}
 				}else{
 			      throw new Exception(__('EqLogic inconnu : ', __FILE__) . $params['Iq']);
-        }
-			  log::add('mobile', 'debug', '|-----------------------------------');	
+                }
+			     log::add('mobile', 'debug', '|-----------------------------------');	
 			}else{
 				$errorCount++;
 			}
@@ -666,7 +666,7 @@ if($jsonrpc->getMethod() == 'getNotificationsFromFile'){
         if($notifications){
 			$notifications = json_decode($notifications, true);
 			foreach($notifications as $id => $value){
-				$data = json_decode($value['data'], true);
+				$data = json_decode($value['data'], true); 
 				$dateNew = substr($value['data']['date'], 0, 10);
 				$horaire = substr($value['data']['date'], -8);
 				$horaireFormat = substr($horaire, 0, 5);
@@ -691,7 +691,11 @@ if($jsonrpc->getMethod() == 'deleteNotificationInJsonFile'){
     if(file_exists($pathNotification)){
         $notifications = file_get_contents($pathNotification.'/'.$Iq.'.json');
         $notificationsArray = json_decode($notifications, true); 
-
+		if($idNotif == 'allNotifs'){
+			file_put_contents($pathNotification.'/'.$Iq.'.json', '');
+			$jsonrpc->makeSuccess('ok');
+			return;
+		}
         if(isset($notificationsArray[$idNotif])) { 
             unset($notificationsArray[$idNotif]); 
         }
@@ -703,5 +707,59 @@ if($jsonrpc->getMethod() == 'deleteNotificationInJsonFile'){
     }
 }
 
+if($jsonrpc->getMethod() == 'getAskResponse'){
+	log::add('mobile', 'debug', 'Get ask response');
+	$Iq = $params['Iq'];
+    $idNotif = $params['idNotif'];
+    $choiceAsk = $params['choiceAsk'];
+	log::add('mobile', 'debug', 'Get ask response > '.$Iq.' > '.$idNotif.' > '.$choiceAsk);
+	$pathNotification = __DIR__ . '/../data/notifications';
+	if(file_exists($pathNotification)){
+		$notifications = file_get_contents($pathNotification.'/'.$Iq.'.json');
+		$notificationsArray = json_decode($notifications, true); 
+		foreach ($notificationsArray as $key => $notif) {
+			if($notif['data']['idNotif'] == $idNotif){
+				$notificationsArray[$key]['data']['choiceAsk'] = $choiceAsk;
+				break;
+			}
+		}
+		$updatedNotifications = json_encode($notificationsArray);
+		file_put_contents($pathNotification.'/'.$Iq.'.json', $updatedNotifications);
+	}
+	$jsonrpc->makeSuccess('ok');
+
+}
+
+
+// if($jsonrpc->getMethod() == 'modifyNotifInJsonFile'){
+//     log::add('mobile', 'debug', 'modifyNotifInJsonFile');
+//     $Iq = $params['Iq'];
+//     $notifsToModify =  $params['notifsToModify'];
+//     $pathNotification = __DIR__ . '/../data/notifications';
+//     if(file_exists($pathNotification)){
+//         $notifications = file_get_contents($pathNotification.'/'.$Iq.'.json');
+//         $notificationsArray = json_decode($notifications, true); 
+
+//         foreach ($notificationsArray as $key => $notif) {
+// 			log::add('mobile', 'debug', 'Notif > '.json_encode($notif));
+
+//             foreach ($notifsToModify as $notifToModify) {
+// 				log::add('mobile', 'debug', 'NotifMODIFY > '.json_encode($notifToModify));
+// 				if ($notif['data']['idNotif'] == $notifToModify['data']['idNotif']) {
+// 					if (!isset($notif['data']['textToDisplay'])) {
+// 						$notificationsArray[$key]['data']['textToDisplay'] = $notifToModify['textToDisplay']; 
+// 					}
+// 					$notificationsArray[$key]['data']['textToDisplay'] = $notifToModify['textToDisplay'];
+// 					break;
+// 				}
+//             }
+//         }
+
+//         $updatedNotifications = json_encode($notificationsArray);
+//         file_put_contents($pathNotification.'/'.$Iq.'.json', $updatedNotifications);
+//     }
+
+//     $jsonrpc->makeSuccess('ok');
+// }
 
 throw new Exception(__('Aucune demande', __FILE__));

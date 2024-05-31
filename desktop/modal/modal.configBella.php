@@ -5,10 +5,10 @@ if (!isConnect()) {
 }
 
 $carouselHtml = file_get_contents(__DIR__ . '/../../core/data/html/carouselHtml.html');
-$arrayInfos = array();
-$bellaHtml = file_get_contents(__DIR__ . '/../../core/data/jsonBella/jsonObject_default.html');
+$bellaHtml    = file_get_contents(__DIR__ . '/../../core/data/jsonBella/jsonObject_default.html');
 
 
+$arrayInfos   = array();
 $arrayInfos[] = array(
                         'name' => 'Commande d\'equipement',
                         'imageBg' => 'core/img/background/jeedom_abstract_04_light.jpg',
@@ -51,7 +51,7 @@ foreach(jeeObject::all() as $object){
      <button class="btn btn-success" id="validView" style="border-radius:20px !important;padding-left:5px !important;padding-right:5px !important;margin-bottom:10px;">Valider la vue</button>
 </div>
 
-<div id="containerCarousels" style="height:30vh;width:100%;"></div>
+<div id="containerCarousels" style="height:30vh;width:100%;"><!-- INJECTION CAROUSELS --></div>
 
 <div id="main" style="display:flex;flex-direction:row;">
     <!-- INJECTION OF BELLA HTML -->
@@ -63,7 +63,7 @@ foreach(jeeObject::all() as $object){
 <script>
 
 
-var arrayInfos = <?php echo json_encode($arrayInfos); ?>;
+var arrayInfos   = <?php echo json_encode($arrayInfos); ?>;
 var arrayObjects = <?php echo json_encode($arrayObjects); ?>;
 var carouselHtml = <?php echo json_encode($carouselHtml); ?>;
 
@@ -76,7 +76,7 @@ var associatedImagesHardware = {
 };
 
 
-var currentImageIndex = 0;
+var currentImageIndex  = 0;
 var currentImageIndex2 = 0;
 
 
@@ -99,18 +99,29 @@ function starting_script(){
 function changeImageCarousel(newIndex, divContainerCarousels, tileId) {
     currentImageIndex = newIndex;
     var imgBg = arrayInfos[currentImageIndex]['imageBg'];
-    var name = arrayInfos[currentImageIndex]['name'];
+    var name  = arrayInfos[currentImageIndex]['name'];
     var specificDiv = divContainerCarousels.querySelector(`#${tileId}`);
     specificDiv.querySelector('.carousel-image').style.backgroundImage = "url('" + imgBg + "')";
     specificDiv.querySelector('.box-name').textContent = name ? name : 'Objet sans nom';
 
-    updateDots(specificDiv, tileId);
+    updateDots(specificDiv, tileId, name);
+    if(name == 'Objets de votre Jeedom'){
+        changeImageCarousel2(2, divContainerCarousels, tileId);
+      }else{
+          changeImageCarousel2(newIndex, divContainerCarousels, tileId);
+      }
 }
 
-function changeImageCarousel2(newIndex) {
+function changeImageCarousel2(newIndex, divContainerCarousels, tileId) {
     currentImageIndex2 = newIndex;
     var imgBg = arrayObjects[currentImageIndex2]['imageBg'];
-    var name = arrayObjects[currentImageIndex2]['name'];
+    var name  = arrayObjects[currentImageIndex2]['name'];
+
+    var specificDiv = divContainerCarousels.querySelector(`#${tileId}`);
+    specificDiv.querySelector('.carousel2-image').style.backgroundImage = "url('" + imgBg + "')";
+    specificDiv.querySelector('.box-name2').textContent = name ? name : 'Objet sans nom';
+
+    updateDots2(specificDiv, tileId);
    // var bellaHtml = arrayObjects[currentImageIndex2]['bellaHtml'];
     // document.getElementById('carousel2-image').style.backgroundImage = "url('" + imgBg + "')";
     // document.getElementById('box-name2').textContent = name ? name : 'Objet sans nom';
@@ -118,7 +129,7 @@ function changeImageCarousel2(newIndex) {
 }
 
 
-function updateDots(specificDiv, tileId) {
+function updateDots(specificDiv, tileId, name) {
    
     var dotsContainer = specificDiv.querySelector('.carousel-dots');
     var divContainerCarousels = document.getElementById('containerCarousels');
@@ -135,15 +146,16 @@ function updateDots(specificDiv, tileId) {
     }
 }
 
-function updateDots2() {
-    var dotsContainer2 = document.getElementById('carousel2-dots');
+function updateDots2(specificDiv, tileId) {
+    var dotsContainer2 = specificDiv.querySelector('.carousel2-dots');
+    var divContainerCarousels = document.getElementById('containerCarousels');
     dotsContainer2.innerHTML = '';
     for (var i = 0; i < arrayObjects.length; i++) {
         var dot = document.createElement('span');
         dot.className = 'carousel-dot' + (i === currentImageIndex2 ? ' active' : '');
         dot.addEventListener('click', (function(index) {
             return function() {
-              changeImageCarousel2(index);
+              changeImageCarousel2(index, divContainerCarousels, tileId);
             };
         })(i));
         dotsContainer2.appendChild(dot);
@@ -413,6 +425,7 @@ tiles.forEach(function(tile) {
                   carouselClone.style.display = "none"; 
                   divContainerCarousels.appendChild(carouselClone);
                   changeImageCarousel(0, divContainerCarousels, carouselClone.id) 
+                 // changeImageCarousel2(0, divContainerCarousels, carouselClone.id)
                   // updateDots(divContainerCarousels, carouselClone.id);
 
                   setTimeout(() => {

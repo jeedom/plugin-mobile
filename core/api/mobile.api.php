@@ -325,8 +325,8 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	}
 	config::save('menuCustom_' . $params['Iq'], $newMenu, 'mobile');
 
-	log::add('mobile', 'debug', 'CustomENVOICONFIGSAPI GETJSON' . json_encode($return[$idBox]['configs']));
-	log::add('mobile', 'debug', 'INFOS GETJSONINITAL : ' . json_encode($return));
+	log::add('mobile', 'debug', '| CustomENVOICONFIGSAPI GETJSON > ' . json_encode($return[$idBox]['configs']));
+	log::add('mobile', 'debug', '| INFOS GETJSONINITAL > ' . json_encode($return));
 	$jsonrpc->makeSuccess($return);
 }
 

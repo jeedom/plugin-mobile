@@ -9,8 +9,6 @@ $arrayInfos = array();
 $bellaHtml = file_get_contents(__DIR__ . '/../../core/data/jsonBella/jsonObject_default.html');
 
 
-
-
 $arrayInfos[] = array(
                         'name' => 'Commande d\'equipement',
                         'imageBg' => 'core/img/background/jeedom_abstract_04_light.jpg',
@@ -23,8 +21,6 @@ $arrayInfos[] = array(
                         'bellaHtml' => $bellaHtml,
                         'idBella' => 'jsonObject_default'
                       );
-
-
 
 
 $arrayObjects = array();
@@ -48,7 +44,6 @@ foreach(jeeObject::all() as $object){
 }
 
 
-
 ?>
 
 
@@ -56,8 +51,7 @@ foreach(jeeObject::all() as $object){
      <button class="btn btn-success" id="validView" style="border-radius:20px !important;padding-left:5px !important;padding-right:5px !important;margin-bottom:10px;">Valider la vue</button>
 </div>
 
-<div id="containerCarousels" style="height:30vh;width:100%;">
-</div>
+<div id="containerCarousels" style="height:30vh;width:100%;"></div>
 
 <div id="main" style="display:flex;flex-direction:row;">
     <!-- INJECTION OF BELLA HTML -->
@@ -97,42 +91,44 @@ function starting_script(){
     carousels.forEach(function(carousel) {
         carousel.innerHTML = carouselHtml;
     });
-    mainScript();
-    
+    mainScript();   
 }
 
 
 
-function changeImage(newIndex, divContainerCarousels, tileId) {
+function changeImageCarousel(newIndex, divContainerCarousels, tileId) {
     currentImageIndex = newIndex;
     var imgBg = arrayInfos[currentImageIndex]['imageBg'];
     var name = arrayInfos[currentImageIndex]['name'];
-    divContainerCarousels.querySelector('.carousel-image').style.backgroundImage = "url('" + imgBg + "')";
-    divContainerCarousels.querySelector('.box-name').textContent = name ? name : 'Objet sans nom';
-    updateDots(divContainerCarousels, tileId);
+    var specificDiv = divContainerCarousels.querySelector(`#${tileId}`);
+    specificDiv.querySelector('.carousel-image').style.backgroundImage = "url('" + imgBg + "')";
+    specificDiv.querySelector('.box-name').textContent = name ? name : 'Objet sans nom';
+
+    updateDots(specificDiv, tileId);
 }
 
-function changeImage2(newIndex) {
+function changeImageCarousel2(newIndex) {
     currentImageIndex2 = newIndex;
     var imgBg = arrayObjects[currentImageIndex2]['imageBg'];
     var name = arrayObjects[currentImageIndex2]['name'];
-    var bellaHtml = arrayObjects[currentImageIndex2]['bellaHtml'];
+   // var bellaHtml = arrayObjects[currentImageIndex2]['bellaHtml'];
     // document.getElementById('carousel2-image').style.backgroundImage = "url('" + imgBg + "')";
     // document.getElementById('box-name2').textContent = name ? name : 'Objet sans nom';
    // updateDots2();
 }
 
 
-function updateDots(divContainerCarousels, tileId) {
+function updateDots(specificDiv, tileId) {
    
-    var dotsContainer = divContainerCarousels.querySelector('.carousel-dots');
+    var dotsContainer = specificDiv.querySelector('.carousel-dots');
+    var divContainerCarousels = document.getElementById('containerCarousels');
     dotsContainer.innerHTML = '';
     for (var i = 0; i < arrayInfos.length; i++) {
         var dot = document.createElement('span');
         dot.className = 'carousel-dot' + (i === currentImageIndex ? ' active' : '');
         dot.addEventListener('click', (function(index) {
             return function() {
-                changeImage(index, divContainerCarousels, tileId);
+              changeImageCarousel(index, divContainerCarousels, tileId);
             };
         })(i));
         dotsContainer.appendChild(dot);
@@ -147,7 +143,7 @@ function updateDots2() {
         dot.className = 'carousel-dot' + (i === currentImageIndex2 ? ' active' : '');
         dot.addEventListener('click', (function(index) {
             return function() {
-                changeImage2(index);
+              changeImageCarousel2(index);
             };
         })(i));
         dotsContainer2.appendChild(dot);
@@ -386,20 +382,46 @@ tiles.forEach(function(tile) {
             }
         });
         tile.classList.add('selected');
-        if (carousels) {
-          let carouselClone = carousels.cloneNode(true);
-          let existingClone = divContainerCarousels.querySelector('#' + carouselClone.id);
+        // if (carousels) {
+        //   let carouselClone = carousels.cloneNode(true);
+        //   let existingClone = divContainerCarousels.querySelector('#' + carouselClone.id);
 
-          if (!existingClone) {
-              let carouselClone = carousels.cloneNode(true);
-              carouselClone.style.display = "flex";
-              divContainerCarousels.appendChild(carouselClone);
-              changeImage(0, divContainerCarousels, carouselClone.id) 
-              // updateDots(divContainerCarousels, carouselClone.id);
-          }else{
-            existingClone.style.display = "flex";
+
+        //   if (!existingClone) {
+        //       let carouselClone = carousels.cloneNode(true);
+        //       carouselClone.style.display = "flex";
+        //       divContainerCarousels.appendChild(carouselClone);
+        //       changeImage(0, divContainerCarousels, carouselClone.id) 
+        //       // updateDots(divContainerCarousels, carouselClone.id);
+        //   }else{
+        //     existingClone.style.display = "flex";
+        //   }
+
+        // }
+
+        if (carousels) {
+              let existingClone = divContainerCarousels.querySelector('#' + carousels.id);
+
+              if (existingClone) {
+                  existingClone.classList.remove('fade-out');
+                  setTimeout(() => {
+                      existingClone.style.display = "flex";
+                      existingClone.classList.add('fade-in');
+                  }, 20);
+              } else {
+                  let carouselClone = carousels.cloneNode(true);
+                  carouselClone.style.display = "none"; 
+                  divContainerCarousels.appendChild(carouselClone);
+                  changeImageCarousel(0, divContainerCarousels, carouselClone.id) 
+                  // updateDots(divContainerCarousels, carouselClone.id);
+
+                  setTimeout(() => {
+                      carouselClone.style.display = "flex";
+                      carouselClone.classList.add('fade-in');
+                  }, 20);
+              }
           }
-        }
+
     }
 });
 

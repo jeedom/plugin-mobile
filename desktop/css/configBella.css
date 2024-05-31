@@ -10,6 +10,17 @@
     }
 }
 
+.fade-in {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.fade-out {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
 
 .carousels{
   height:30vh;
@@ -39,11 +50,13 @@
   flex-direction:column;
   justify-content:center !important;
   z-index: 2;;
+
 }
 
 
 .selected {
-  border-color: #94CA02; 
+  /* border-color: #94CA02;  */
+  border-color: #F09F28; 
   border-width: 4px;
   border-style: solid;
   /* scale: 1.1; */

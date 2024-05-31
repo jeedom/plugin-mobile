@@ -580,7 +580,7 @@ class mobile extends eqLogic
 
 	public static function jsonPublish($os, $titre, $message, $type, $idNotif, $answer, $timeout, $token, $photo, $version, $optionsNotif = [], $critical = false, $Iq = null)
 	{
-		log::add('mobile', 'debug', '| TEST IQ ' . $Iq);
+		log::add('mobile', 'debug', '| TEST IQ > ' . $Iq);
 		$dateNotif = date("Y-m-d H:i:s");
 		$badge = 0;
 		if ($timeout != 'nok') {
@@ -798,7 +798,7 @@ class mobile extends eqLogic
 				file_put_contents($filePath, json_encode($notifications));
 			}
 		}
-		log::add('mobile', 'debug', '| JSON publish >  : ' . json_encode($publish));
+		log::add('mobile', 'debug', '| JSON publish > ' . json_encode($publish));
 
 
 		return $publish;
@@ -808,7 +808,7 @@ class mobile extends eqLogic
 	{
 		log::add('mobile', 'debug', '| Notification en cours !');
 		$publish = mobile::jsonPublish($os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version, $optionsNotif, $critical, $Iq);
-		log::add('mobile', 'debug', '| JSON publish >  : ' . json_encode($publish));
+		log::add('mobile', 'debug', '| JSON publish > ' . json_encode($publish));
 		if ($token != null) {
 			if ($token == 'notifsBGDisabled') {
 				log::add('mobile', 'debug', '| NOTIFICATION NON ENVOYEE : LE SERVICE NOTIF EST DESACTIVE SUR LE TELEPHONE');
@@ -829,7 +829,7 @@ class mobile extends eqLogic
 			];
 
 			$post = ['message' => $publish, 'options' => $options];
-			log::add('mobile', 'debug', '| JSON envoyé en mode FCM : ' . json_encode($post));
+			log::add('mobile', 'debug', '| JSON envoyé en mode FCM > ' . json_encode($post));
 		} elseif ($token == null && $version == 2) {
 			log::add('mobile', 'debug', '| NOTIFICATION NON ENVOYEE : PAS DE TOKEN ENREGISTRE SUR LE TELEPHONE :  ');
 			//message::removeAll(__CLASS__, 'noValidToken');
@@ -859,7 +859,7 @@ class mobile extends eqLogic
 	public function SaveGeoloc($geoloc)
 	{
 		log::add('mobile', 'debug', '|-----------------------------------');
-		log::add('mobile', 'debug', '|--debut de la fonction SaveGeoLoc--');
+		log::add('mobile', 'debug', '|-- Début de la fonction SaveGeoLoc --');
 		log::add('mobile', 'debug', '|-----------------------------------');
 		log::add('mobile', 'debug', '|');
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
@@ -1410,7 +1410,7 @@ class mobileCmd extends cmd
 			}
 		}
 		$result['message'] = $dataArray[0];
-		log::add('mobile', 'debug', '| file Parse > ' . json_encode($result));
+		log::add('mobile', 'debug', '| File Parse > ' . json_encode($result));
 		if (array_key_exists('file', $result)) {
 			log::add('mobile', 'debug', '| file > ' . $result['file']);
 			return $result;

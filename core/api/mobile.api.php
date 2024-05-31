@@ -114,7 +114,7 @@ function saveMenuFromAppV2($menu, $mobile)
 
 $params = $jsonrpc->getParams();
 log::add('mobile', 'debug', '|------------------------------------------------------------------------------------------------------|');
-log::add('mobile', 'debug', '|                                   Appel API Mobile > ' . $jsonrpc->getMethod());
+log::add('mobile', 'debug', '| Appel API Mobile > ' . $jsonrpc->getMethod());
 log::add('mobile', 'debug', '| Paramètres passés > ' . json_encode($params));
 if ($params['Iq']) {
 	log::add('mobile', 'debug', '| Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));
@@ -166,8 +166,8 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 
 if ($jsonrpc->getMethod() == 'getJson') {
 
-	log::add('mobile', 'debug', 'Demande du RDK to get Json');
-	log::add('mobile', 'debug', 'Demande du RDK');
+	log::add('mobile', 'debug', '| Demande du RDK to get Json');
+	log::add('mobile', 'debug', '| Demande du RDK');
 	$registerDevice = $_USER_GLOBAL->getOptions('registerDevice', array());
 	if (!is_array($registerDevice)) {
 		$registerDevice = array();
@@ -179,12 +179,12 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	$registerDevice[sha512($rdk)]['session_id'] = session_id();
 	$_USER_GLOBAL->setOptions('registerDevice', $registerDevice);
 	$_USER_GLOBAL->save();
-	log::add('mobile', 'debug', 'RDK :' . $rdk);
-	log::add('mobile', 'debug', 'Demande du GetJson');
+	log::add('mobile', 'debug', '| RDK :' . $rdk);
+	log::add('mobile', 'debug', '| Demande du GetJson');
 	$idBox = jeedom::getHardwareKey();
 	$return = array();
 	/* -------- MOBILE FIRST ------- */
-	log::add('mobile', 'debug', 'Creation du retour de base pour l app');
+	log::add('mobile', 'debug', '| Creation du retour de base pour l\'APP');
 	$objectsDashboard = [];
 	foreach (jeeObject::all() as $object) {
 		$obArray = utils::o2a($object);
@@ -282,14 +282,14 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	$return[$idBox]['jeedom_version'] = jeedom::version();
 	$return[$idBox]['rdk'] = $rdk;
 	$return[$idBox]['name'] = config::byKey('name') == '' ? 'Jeedom' : config::byKey('name');
-	log::add('mobile', 'debug', 'retour de base > ' . json_encode($return));
+	log::add('mobile', 'debug', '| Retour de base > ' . json_encode($return));
 
-	log::add('mobile', 'debug', '| Recherche du mobile via sont Iq >' . $params['Iq']);
+	log::add('mobile', 'debug', '| Recherche du mobile via sont Iq > ' . $params['Iq']);
 	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	log::add('mobile', 'debug', '| Mobile object');
 	$return[$idBox]['configs'] = array();
 	if (is_object($mobile)) {
-		log::add('mobile', 'debug', '| mobile bien trouvé > ' . $mobile->getName());
+		log::add('mobile', 'debug', '| Mobile bien trouvé > ' . $mobile->getName());
 		$return[$idBox]['configs']['menu'] = mobile::configMenuCustom($mobile->getId(), jeedom::version());
 	} else {
 		if (jeedom::version() < '4.4.0') {
@@ -565,9 +565,9 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 	log::add('mobile', 'debug', '| -- GeoLocV2 geofencing --');
 
 	if (isset($params['transmition']) && isset($params['transmition']['event']) && $params['transmition']['event'] == 'geofence') {
-		log::add('mobile', 'debug', '| event > ' . $params['transmition']['event']);
+		log::add('mobile', 'debug', '| Event > ' . $params['transmition']['event']);
 		$geofence = $params['transmition']['geofence'];
-		log::add('mobile', 'debug', '| event > ' . json_encode($geofence));
+		log::add('mobile', 'debug', '| Event > ' . json_encode($geofence));
 		$eqLogicMobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 		if ($eqLogicMobile) {
 			log::add('mobile', 'debug', '| Mobile trouvé : ' . $params['Iq']);
@@ -594,13 +594,13 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 			if ($transmition['event'] == 'geofence') {
 				log::add('mobile', 'debug', '| Transmition :' . json_encode($params['transmition']));
 				$geofence = $transmition['geofence'];
-				log::add('mobile', 'debug', '| event > ' . json_encode($geofence));
+				log::add('mobile', 'debug', '| Event > ' . json_encode($geofence));
 				$eqLogicMobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 				if ($eqLogicMobile) {
 					log::add('mobile', 'debug', '| Mobile trouvé');
 					$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geofence['identifier']);
 					if (is_object($cmdgeoloc)) {
-						log::add('mobile', 'debug', '| commande trouvé');
+						log::add('mobile', 'debug', '| Commande trouvé');
 						if ($geofence['action'] == 'ENTER') {
 							log::add('mobile', 'debug', '| Commande passé à 1');
 							$cmdgeoloc->event(1);
@@ -657,7 +657,7 @@ if ($jsonrpc->getMethod() == "syncBella") {
 }
 
 if ($jsonrpc->getMethod() == 'getNotificationsFromFile') {
-	log::add('mobile', 'debug', 'Get notifications from file');
+	log::add('mobile', 'debug', '| Get notifications from file');
 	$Iq = $params['Iq'];
 	$pathNotification = __DIR__ . '/../data/notifications';
 	//$return = array();

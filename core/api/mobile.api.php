@@ -154,15 +154,15 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 	$geolocs = $params['geolocs'];
 	log::add('mobile', 'debug', '| Geolocs > ' . json_encode($geolocs));
 	if ($geolocs) {
-		if ($geolocs != [] && !(is_object($geolocs) && empty((array)$geolocs)) && !(is_string($geolocs) && $geolocs == "{}")){
+		if ($geolocs != [] && !(is_object($geolocs) && empty((array)$geolocs)) && !(is_string($geolocs) && $geolocs == "{}")) {
 			mobile::createCmdGeoLocV2($params['Iq'], $params['geolocs']);
-		}else{
+		} else {
 			log::add('mobile', 'debug', '| Geolocs vide, suppression des commandes précédentes');
-		    $mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
-			if(is_object($mobile)){
+			$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
+			if (is_object($mobile)) {
 				$cmds = $mobile->getCmd();
-				foreach($cmds as $cmd){
-					if(strpos($cmd->getLogicalId(), 'geoloc_') !== false){
+				foreach ($cmds as $cmd) {
+					if (strpos($cmd->getLogicalId(), 'geoloc_') !== false) {
 						$cmd->remove();
 					}
 				}
@@ -178,8 +178,8 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 
 if ($jsonrpc->getMethod() == 'getJson') {
 
-	log::add('mobile', 'debug', '| Demande du RDK to get Json');
-	log::add('mobile', 'debug', '| Demande du RDK');
+	//log::add('mobile', 'debug', '| Demande du RDK to get Json');
+	//log::add('mobile', 'debug', '| Demande du RDK');
 	$registerDevice = $_USER_GLOBAL->getOptions('registerDevice', array());
 	if (!is_array($registerDevice)) {
 		$registerDevice = array();
@@ -506,24 +506,22 @@ if ($jsonrpc->getMethod() == 'event') {
 }
 
 if ($jsonrpc->getMethod() == 'askText') {
-	log::add('mobile', 'debug', 'TESTAPIASK');
-	log::add('mobile', 'debug', 'Arrivée reponse ask Textuel depuis le mobile > ' . $params['Iq']);
+	log::add('mobile', 'debug', '|-----------------------------------');
+	log::add('mobile', 'debug', '| -- ASK --');
 	/*$configs = $params['configs'];
   	$menu = $configs['menu'];
   	$notification = $configs['notification'];*/
 	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
-	log::add('mobile', 'debug', 'mobile >' . json_encode($mobile));
 	if (is_object($mobile)) {
 		$askCasse = config::byKey('askCasse', 'mobile', false);
 		$textCasse = $params['text'];
 		if ($askCasse == false) {
 			$textCasse = strtolower($params['text']);
 		}
-		log::add('mobile', 'debug', 'Mobile bien trouvé casse -> ' . $askCasse . ' text : ' . $textCasse);
 		$cmd = $mobile->getCmd(null, 'notif');
-		log::add('mobile', 'debug', 'IQ > ' . $params['Iq'] . ' demande cmd > ' . $cmd->getId());
+		log::add('mobile', 'debug', '| Réponse : ' . $textCasse . ' - IQ > ' . $params['Iq'] . ' -- Demande cmd > ' . $cmd->getId());
 		if ($cmd->askResponse($textCasse)) {
-			log::add('mobile', 'debug', 'ask bien trouvé : Réponse validée');
+			log::add('mobile', 'debug', '| ASK bien trouvé : Réponse validée');
 			$jsonrpc->makeSuccess();
 		} else {
 			$ch = curl_init();
@@ -669,7 +667,7 @@ if ($jsonrpc->getMethod() == "syncBella") {
 }
 
 if ($jsonrpc->getMethod() == 'getNotificationsFromFile') {
-	log::add('mobile', 'debug', '| Get notifications from file');
+	//log::add('mobile', 'debug', '| Get notifications from file');
 	$Iq = $params['Iq'];
 	$pathNotification = __DIR__ . '/../data/notifications';
 	//$return = array();
@@ -718,14 +716,14 @@ if ($jsonrpc->getMethod() == 'deleteNotificationInJsonFile') {
 	}
 }
 
-if($jsonrpc->getMethod() == 'deleteGeolocCommand'){
+if ($jsonrpc->getMethod() == 'deleteGeolocCommand') {
 	log::add('mobile', 'debug', 'Delete geoloc command');
-	log::add('mobile', 'debug', 'Params > '.json_encode($params));
+	log::add('mobile', 'debug', 'Params > ' . json_encode($params));
 	$geolocId = $params['geoloc_id'];
 	$eqLogic = eqLogic::byLogicalId($params['Iq'], 'mobile');
-	if(is_object($eqLogic)){
-		$cmd = cmd::byEqLogicIdAndLogicalId($eqLogic->getId(), 'geoloc_'.$geolocId);
-		if(is_object($cmd)){
+	if (is_object($eqLogic)) {
+		$cmd = cmd::byEqLogicIdAndLogicalId($eqLogic->getId(), 'geoloc_' . $geolocId);
+		if (is_object($cmd)) {
 			$cmd->remove();
 		}
 		$jsonrpc->makeSuccess('ok');
@@ -733,11 +731,10 @@ if($jsonrpc->getMethod() == 'deleteGeolocCommand'){
 }
 
 if ($jsonrpc->getMethod() == 'getAskResponse') {
-	log::add('mobile', 'debug', 'Get ask response');
 	$Iq = $params['Iq'];
 	$idNotif = $params['idNotif'];
 	$choiceAsk = $params['choiceAsk'];
-	log::add('mobile', 'debug', 'Get ask response > ' . $Iq . ' > ' . $idNotif . ' > ' . $choiceAsk);
+	log::add('mobile', 'debug', '| Réponse ASK > ' . $Iq . ' > ' . $idNotif . ' > ' . $choiceAsk);
 	$pathNotification = __DIR__ . '/../data/notifications';
 	if (file_exists($pathNotification)) {
 		$notifications = file_get_contents($pathNotification . '/' . $Iq . '.json');

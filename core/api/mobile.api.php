@@ -80,7 +80,7 @@ function checkDateMenu($menu, $mobile)
 
 function saveMenuFromAppV2($menu, $mobile)
 {
-	log::add('mobile', 'debug', '| Menu sazvegarde  FRM / APPV2 ' . json_encode($menu));
+	log::add('mobile', 'debug', '| Menu sauvegarde  FRM / APPV2 ' . json_encode($menu));
 	if (is_object($mobile)) {
 		$menuCustomArray = [];
 		$count = 0;

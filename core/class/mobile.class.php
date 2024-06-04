@@ -808,7 +808,6 @@ class mobile extends eqLogic
 	{
 		log::add('mobile', 'debug', '| Notification en cours !');
 		$publish = mobile::jsonPublish($os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version, $optionsNotif, $critical, $Iq);
-		log::add('mobile', 'debug', '| JSON publish > ' . json_encode($publish));
 		if ($token != null) {
 			if ($token == 'notifsBGDisabled') {
 				log::add('mobile', 'debug', '| NOTIFICATION NON ENVOYEE : LE SERVICE NOTIF EST DESACTIVE SUR LE TELEPHONE');

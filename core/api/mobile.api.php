@@ -152,9 +152,21 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 	// TEMPORAIREMENT DESACTIVE
 	checkDateMenu($menu, $mobile);
 	$geolocs = $params['geolocs'];
+	log::add('mobile', 'debug', '| Geolocs > ' . json_encode($geolocs));
 	if ($geolocs) {
-		if ($geolocs != []) {
+		if ($geolocs != [] && !(is_object($geolocs) && empty((array)$geolocs)) && !(is_string($geolocs) && $geolocs == "{}")){
 			mobile::createCmdGeoLocV2($params['Iq'], $params['geolocs']);
+		}else{
+			log::add('mobile', 'debug', '| Geolocs vide, suppression des commandes précédentes');
+		    $mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
+			if(is_object($mobile)){
+				$cmds = $mobile->getCmd();
+				foreach($cmds as $cmd){
+					if(strpos($cmd->getLogicalId(), 'geoloc_') !== false){
+						$cmd->remove();
+					}
+				}
+			}
 		}
 	}
 	// mobile::createCmdGeoLocV2($params);
@@ -702,6 +714,20 @@ if ($jsonrpc->getMethod() == 'deleteNotificationInJsonFile') {
 		$notifications = json_encode($notificationsArray);
 		file_put_contents($pathNotification . '/' . $Iq . '.json', $notifications);
 
+		$jsonrpc->makeSuccess('ok');
+	}
+}
+
+if($jsonrpc->getMethod() == 'deleteGeolocCommand'){
+	log::add('mobile', 'debug', 'Delete geoloc command');
+	log::add('mobile', 'debug', 'Params > '.json_encode($params));
+	$geolocId = $params['geoloc_id'];
+	$eqLogic = eqLogic::byLogicalId($params['Iq'], 'mobile');
+	if(is_object($eqLogic)){
+		$cmd = cmd::byEqLogicIdAndLogicalId($eqLogic->getId(), 'geoloc_'.$geolocId);
+		if(is_object($cmd)){
+			$cmd->remove();
+		}
 		$jsonrpc->makeSuccess('ok');
 	}
 }

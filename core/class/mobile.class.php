@@ -900,8 +900,10 @@ class mobile extends eqLogic
 			$noExistCmd = 0;
 			$decodedGeolocs = json_decode($geolocs, true);
 			foreach ($decodedGeolocs as $index => $geoloc) {
+				if(!isset($geoloc['name'])) continue;
 				log::add('mobile', 'debug', '| index > ' . $index . ' / ' . $geoloc['name']);
 				$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $index);
+
 				if (!is_object($cmdgeoloc)) {
 					$noExistCmd = 1;
 					$cmdgeoloc = new mobileCmd();

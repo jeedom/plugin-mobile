@@ -580,7 +580,7 @@ class mobile extends eqLogic
 
 	public static function jsonPublish($os, $titre, $message, $type, $idNotif, $answer, $timeout, $token, $photo, $version, $optionsNotif = [], $critical = false, $Iq = null)
 	{
-		log::add('mobile', 'debug', '| TEST IQ > ' . $Iq);
+		log::add('mobile', 'debug', '| IQ > ' . $Iq);
 		$dateNotif = date("Y-m-d H:i:s");
 		$badge = 0;
 		if ($timeout != 'nok') {
@@ -786,7 +786,7 @@ class mobile extends eqLogic
 					if (isset($notification['data']['askParams'])) {
 						$askParams = json_decode($notification['data']['askParams'], true);
 						if ($askParams !== null && isset($askParams['timeout'])) {
-							log::add('mobile', 'debug', 'Timeout Ask remis à zero');
+							//log::add('mobile', 'debug', 'Timeout Ask remis à zero');
 							$askParams['timeout'] = 0;
 							$notification['data']['askParams'] = json_encode($askParams);
 						}
@@ -900,7 +900,7 @@ class mobile extends eqLogic
 			$noExistCmd = 0;
 			$decodedGeolocs = json_decode($geolocs, true);
 			foreach ($decodedGeolocs as $index => $geoloc) {
-				if(!isset($geoloc['name'])) continue;
+				if (!isset($geoloc['name'])) continue;
 				log::add('mobile', 'debug', '| index > ' . $index . ' / ' . $geoloc['name']);
 				$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $index);
 

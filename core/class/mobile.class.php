@@ -852,6 +852,10 @@ class mobile extends eqLogic
 		$request_http->setPost(json_encode($post));
 		$result = json_decode($request_http->exec(3, 5), true);
 		if (!isset($result['state']) || $result['state'] != 'ok') {
+			sleep(3);
+			$result = json_decode($request_http->exec(3, 5), true);
+		}
+		if (!isset($result['state']) || $result['state'] != 'ok') {
 			throw new Exception(__('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));
 		}
 	}

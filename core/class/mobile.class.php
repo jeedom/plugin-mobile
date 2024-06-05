@@ -852,7 +852,7 @@ class mobile extends eqLogic
 			'Autorization: ' . sha512(strtolower(config::byKey('market::username')) . ':' . config::byKey('market::password'))
 		));
 		$request_http->setPost(json_encode($post));
-		$result = json_decode($request_http->exec(3, 5), true);
+		$result = json_decode($request_http->exec(5, 5), true);
 		if (!isset($result['state']) || $result['state'] != 'ok') {
 			sleep(3);
 			$result = json_decode($request_http->exec(3, 5), true);

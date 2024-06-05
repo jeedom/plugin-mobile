@@ -852,12 +852,12 @@ class mobile extends eqLogic
 			'Autorization: ' . sha512(strtolower(config::byKey('market::username')) . ':' . config::byKey('market::password'))
 		));
 		$request_http->setPost(json_encode($post));
-		$result = json_decode($request_http->exec(5, 5), true);
+		$result = json_decode($request_http->exec(30,3), true);
 		if (!isset($result['state']) || $result['state'] != 'ok') {
 			log::add('mobile', 'info', '| Echec Première Tentative d\'envoi de la notification : ');
 			log::add('mobile', 'info', '| Nouvelle tentative ....');
 			sleep(3);
-			$result = json_decode($request_http->exec(3, 5), true);
+			$result = json_decode($request_http->exec(30,3), true);
 		}
 		if (!isset($result['state']) || $result['state'] != 'ok') {
 			throw new Exception(__('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));

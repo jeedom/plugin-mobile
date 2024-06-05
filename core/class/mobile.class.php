@@ -868,7 +868,7 @@ class mobile extends eqLogic
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
 		log::add('mobile', 'debug', '| Iq = ' . $geoloc['Iq']);
 		if (is_object($eqLogicMobile)) {
-			log::add('mobile', 'debug', '| Mobile bien trouvé dans cette Jeedom');
+			log::add('mobile', 'debug', '| Mobile bien trouvé dans cette Box');
 			log::add('mobile', 'debug', '| Objet > ' . $eqLogicMobile->getId());
 			$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
 			if (!is_object($cmdgeoloc)) {
@@ -904,7 +904,7 @@ class mobile extends eqLogic
 			$decodedGeolocs = json_decode($geolocs, true);
 			foreach ($decodedGeolocs as $index => $geoloc) {
 				if (!isset($geoloc['name'])) continue;
-				log::add('mobile', 'debug', '| index > ' . $index . ' / ' . $geoloc['name']);
+				log::add('mobile', 'debug', '| Index > ' . $index . ' / ' . $geoloc['name']);
 				$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $index);
 
 				if (!is_object($cmdgeoloc)) {
@@ -925,7 +925,7 @@ class mobile extends eqLogic
 				$cmdgeoloc->save();
 				if ($noExistCmd == 1) {
 					$cmdgeoloc->event($geoloc['value']);
-					log::add('mobile', 'debug', '| valeur enregistrée > ' . $geoloc['value']);
+					log::add('mobile', 'debug', '| Valeur enregistrée > ' . $geoloc['value']);
 				}
 				$noExistCmd = 0;
 			}
@@ -937,7 +937,7 @@ class mobile extends eqLogic
 
 	public function delGeoloc($geoloc)
 	{
-		log::add('mobile', 'debug', 'Geoloc lancement DEL du mobile > ' . $geoloc['Iq'] . ' pour ' . $geoloc['id']);
+		log::add('mobile', 'debug', '| Geoloc lancement DEL du mobile > ' . $geoloc['Iq'] . ' pour ' . $geoloc['id']);
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
 		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
 		if (isset($cmdgeoloc)) {
@@ -954,19 +954,19 @@ class mobile extends eqLogic
 		if (is_object($cmdgeoloc)) {
 			log::add('mobile', 'debug', '| Commande trouvé');
 			if ($geoloc['value'] !== $cmdgeoloc->execCmd()) {
-				log::add('mobile', 'debug', 'Valeur non pareille.');
+				log::add('mobile', 'debug', 'Valeur non identique');
 				$cmdgeoloc->event($geoloc['value']);
 			} else {
-				log::add('mobile', 'debug', '| Valeur pareille >' . $geoloc['value'] . ' / ' . $cmdgeoloc->execCmd());
+				log::add('mobile', 'debug', '| Valeur identique >' . $geoloc['value'] . ' / ' . $cmdgeoloc->execCmd());
 			}
 		}
 		if (is_object($cmdgeolocv2)) {
 			log::add('mobile', 'debug', '| Commande trouvé');
 			if ($geoloc['value'] !== $cmdgeolocv2->execCmd()) {
-				log::add('mobile', 'debug', 'Valeur non pareille.');
+				log::add('mobile', 'debug', 'Valeur non identique');
 				$cmdgeolocv2->event($geoloc['value']);
 			} else {
-				log::add('mobile', 'debug', '| Valeur pareille >' . $geoloc['value'] . ' / ' . $cmdgeolocv2->execCmd());
+				log::add('mobile', 'debug', '| Valeur identique >' . $geoloc['value'] . ' / ' . $cmdgeolocv2->execCmd());
 			}
 		}
 	}
@@ -1523,7 +1523,7 @@ class mobileCmd extends cmd
 
 				log::add('mobile', 'debug', '| Action : Envoi d\'une configuration ', 'config');
 			} else {
-				log::add('mobile', 'debug', 'ARN non configuré ', 'config');
+				log::add('mobile', 'debug', '| ARN non configuré ', 'config');
 			}
 			log::add('mobile', 'debug', '|-----------------------------------');
 		}

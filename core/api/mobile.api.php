@@ -69,7 +69,7 @@ function checkDateMenu($menu, $mobile)
 	$dateMobile = $mobile->getConfiguration('DateMenu', 'pasdedate');
 	if (isset($dateMobile) && isset($menu['date'])) {
 		if ($dateMobile < $menu['date']) {
-			log::add('mobile', 'debug', 'SAVE MENU DEPUIS L APP');
+			log::add('mobile', 'debug', '| Sauvegarde Menu depuis L APP');
 			saveMenuFromAppV2($menu, $mobile);
 		}
 	} else {
@@ -80,7 +80,7 @@ function checkDateMenu($menu, $mobile)
 
 function saveMenuFromAppV2($menu, $mobile)
 {
-	log::add('mobile', 'debug', 'MENU_SAVE_FRM_APPV2 ' . json_encode($menu));
+	log::add('mobile', 'debug', '| Menu sauvegarde  FRM / APPV2 ' . json_encode($menu));
 	if (is_object($mobile)) {
 		$menuCustomArray = [];
 		$count = 0;
@@ -717,8 +717,8 @@ if ($jsonrpc->getMethod() == 'deleteNotificationInJsonFile') {
 }
 
 if ($jsonrpc->getMethod() == 'deleteGeolocCommand') {
-	log::add('mobile', 'debug', 'Delete geoloc command');
-	log::add('mobile', 'debug', 'Params > ' . json_encode($params));
+	log::add('mobile', 'debug', '| -- Commande suppression GeoLoc --');
+	log::add('mobile', 'debug', '| Paramètres > ' . json_encode($params));
 	$geolocId = $params['geoloc_id'];
 	$eqLogic = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	if (is_object($eqLogic)) {

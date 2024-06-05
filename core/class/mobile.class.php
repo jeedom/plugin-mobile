@@ -856,7 +856,7 @@ class mobile extends eqLogic
 		if (!isset($result['state']) || $result['state'] != 'ok') {
 			log::add('mobile', 'info', '| Echec Première Tentative d\'envoi de la notification : ');
 			log::add('mobile', 'info', '| Nouvelle tentative ....');
-			sleep(3);
+			sleep(rand(1,10));
 			$result = json_decode($request_http->exec(30,3), true);
 		}
 		if (!isset($result['state']) || $result['state'] != 'ok') {

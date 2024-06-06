@@ -111,7 +111,7 @@
         "Nom de la Commande": "Name der Bestellung",
         "Type Générique": "Typ Gattung",
         "Icône": "Symbol",
-        "Aucun": "Ohne",
+        "Aucun": "Keiner",
         " . $info['family'] . ": "$ info ['Familie']",
         "Plugins compatibles": "Kompatible Plugins",
         "Modifications sauvegardées avec succès": "Änderungen erfolgreich gespeichert",
@@ -137,7 +137,7 @@
         "Nom de la Commande": "Name der Bestellung",
         "Type Générique": "Typ Gattung",
         "Icône": "Symbol",
-        "Aucun": "Ohne",
+        "Aucun": "Keiner",
         " . $info['family'] . ": "$ info ['Familie']",
         "Objets \/ Pièces": "Objekte \/ Stücke",
         "Modifications sauvegardées avec succès": "Änderungen erfolgreich gespeichert",
@@ -217,7 +217,7 @@
         "Paramètres généraux": "Allgemeine Einstellungen",
         "Nom de l'équipement": "Ausrüstungsname",
         "Objet parent": "Übergeordnetes Objekt",
-        "Aucun": "Ohne",
+        "Aucun": "Keiner",
         "Catégorie": "Kategorie",
         "Options": "Optionen",
         "Activer": "Aktivieren",
@@ -315,7 +315,8 @@
         "Cmd inconnu : ": "Unbekannter Befehl:",
         "pas d\\'id : ": "keine ID:",
         "pas de parametre de geofencing : ": "kein Geofencing-Parameter:",
-        "Aucune demande": "Keine Anfrage"
+        "Aucune demande": "Keine Anfrage",
+        "Aucun": "Keiner"
     },
     "info.json": {
         "Attzltion l'app v1 n'est pas compatible avec le dernier Android. L'application officielle Jeedom permet le pilotage de votre système domotique Jeedom, que ce soit en Wifi local, ou sur le réseau 3G\/4G de votre opérateur.<br\/><br\/>L'app se connecte automatiquement à votre Jeedom avec une initialisation automatique par QRcode, aucune configuration n'est nécessaire. (possibilité de le faire manuellement)<br\/>Vous retrouverez sur votre mobile toutes les fonctionnalités de votre Jeedom.<br\/>Vous pourrez personnaliser votre application avec des raccourcis et plus encore...<br\/><br\/>Fonctionnalités actuelles:<br\/>- Gestion de vos scénarios.<br\/>- Gestion de votre domotique en fonction de vos pièces et équipements.<br\/>- Maj et retour d'état automatique<br\/>- Compatibilité aves les plugins, tel que thermostat, alarme, caméra etc...<br\/>- Interface personnalisable avec les raccourcis.<br\/>- Résumé domotique général et par pièce<br\/>- Notifications (avec prise en charge du ASK)<br\/>- Affichage des Designs <br\/><br\/>D'autres fonctionnalités et compatibilités sont à venir dans les prochaines mises à jour !<br\/><br\/>Respect de la vie privée.<br\/>Aucune donnée (domotique ou personnelle) n'est stockée ou conservée sur nos serveurs.": "Achtung: Die v1-App ist nicht mit dem neuesten Android kompatibel. Mit der offiziellen Jeedom-Anwendung können Sie Ihr Jeedom-Hausautomationssystem steuern, sei es im lokalen WLAN oder im 3G\/4G-Netzwerk Ihres Betreibers.<br\/><br\/> Die App verbindet sich automatisch mit Ihrem Jeedom mit automatischer Initialisierung per QR-Code, eine Konfiguration ist nicht erforderlich. (Möglichkeit, dies manuell zu tun)<br\/> Auf Ihrem Handy finden Sie alle Funktionen Ihres Jeedom.<br\/> Sie können Ihre Anwendung mit Verknüpfungen und mehr anpassen ...<br\/><br\/> Aktuelle Funktionen:<br\/> - Verwaltung Ihrer Szenarien.<br\/> - Verwaltung Ihrer Hausautomation entsprechend Ihren Räumen und Ihrer Ausstattung.<br\/> - Umschalten und automatische Statusrückgabe<br\/> - Kompatibilität mit Plugins wie Thermostat, Alarm, Kamera usw.<br\/> - Anpassbare Benutzeroberfläche mit Verknüpfungen.<br\/> - Allgemeine Zusammenfassung der Hausautomation und nach Raum<br\/> - Benachrichtigungen (mit ASK-Unterstützung)<br\/> - Anzeige von Designs<br\/><br\/> Weitere Funktionen und Kompatibilitäten folgen in zukünftigen Updates!<br\/><br\/> Privatsphäre.<br\/> Auf unseren Servern werden keine Daten (hausautomatische oder persönliche) gespeichert oder gespeichert"

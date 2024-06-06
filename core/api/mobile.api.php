@@ -752,6 +752,48 @@ if ($jsonrpc->getMethod() == 'getAskResponse') {
 	$jsonrpc->makeSuccess('ok');
 }
 
+if($jsonrpc->getMethod() == 'getScenarios'){
+	log::add('mobile', 'debug', '|Gest Scenarios');
+	$scenarios = array();
+	$hasScenario = false;
+
+	$scenarioListGroup = scenario::listGroup();
+	if(empty($scenarioListGroup)){
+		log::add('mobile', 'debug', '|Scenarios > Aucun groupe de scénario');
+		$emptyListGroup = true;
+	}
+	if (is_array($scenarioListGroup)) {
+		foreach ($scenarioListGroup as $group) {
+			$scenarios[$group['group']] = scenario::all($group['group']);
+		}
+		$hasScenario = true;
+	}
+	$scenarioNoGroup = scenario::all(null);
+	if (count($scenarioNoGroup) > 0) {
+		$scenarios['{{Aucun}}'] = $scenarioNoGroup;
+		$hasScenario = true;
+	}else{
+		log::add('mobile', 'debug', '|Scenarios > Aucun sans groupe de scénario');
+		$emptyNoGroup = true;
+	}
+
+	log::add('mobile', 'debug', '|Scenarios > ' . json_encode($scenarios));
+	$scenarioTemp = array();
+	foreach($scenarios as $key => $scenario){
+		$scenarioTemp[$key][] = utils::o2a($scenario);
+	}
+	log::add('mobile', 'debug', '|ScenariosTemp > ' . json_encode($scenarioTemp));
+
+   if($emptyListGroup && $emptyNoGroup){
+		$jsonrpc->makeSuccess('noScenarios');
+		return;
+	}else{
+		$scenarios = json_encode($scenarioTemp);
+		$jsonrpc->makeSuccess($scenarios);
+	}
+
+}
+
 
 // if($jsonrpc->getMethod() == 'modifyNotifInJsonFile'){
 //     log::add('mobile', 'debug', 'modifyNotifInJsonFile');

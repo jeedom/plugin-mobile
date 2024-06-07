@@ -795,6 +795,46 @@ if($jsonrpc->getMethod() == 'getScenarios'){
 }
 
 
+if($jsonrpc->getMethod() == 'handleScenario'){
+   $scenarioId = $params['scenario_id'];
+   $action = $params['action'];
+
+   switch($action){
+	    case 'start':  if(is_object($scenario = scenario::byId($scenarioId))){
+		 		   			$scenario->launch();
+	   						$jsonrpc->makeSuccess('ok');
+	   					}else{
+	   						$jsonrpc->makeSuccess('ko');			
+	   					}
+	   				    break;
+		case 'stop':    if(is_object($scenario = scenario::byId($scenarioId))){
+							$scenario->stop();
+							$jsonrpc->makeSuccess('ok');
+						}else{
+							$jsonrpc->makeSuccess('ko');			
+						}
+						break;
+		case 'activate':  if(is_object($scenario = scenario::byId($scenarioId))){
+							$scenario->setIsActive(1);
+							$scenario->save();
+							$jsonrpc->makeSuccess('ok');
+							}else{
+								$jsonrpc->makeSuccess('ko');			
+							}
+							break;
+	    case 'desactivate':  if(is_object($scenario = scenario::byId($scenarioId))){
+								$scenario->setIsActive(0);
+								$scenario->save();
+								$jsonrpc->makeSuccess('ok');
+						}else{
+							$jsonrpc->makeSuccess('ko');			
+						}
+						break;
+	}
+
+}
+
+
 // if($jsonrpc->getMethod() == 'modifyNotifInJsonFile'){
 //     log::add('mobile', 'debug', 'modifyNotifInJsonFile');
 //     $Iq = $params['Iq'];

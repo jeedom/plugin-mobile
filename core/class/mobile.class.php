@@ -1086,6 +1086,7 @@ class mobile extends eqLogic
 		}
 		log::add('mobile', 'info', '| -- CONFIGMENU CUSTOM JEEDOM 4.4.0 --');
 		$defaultMenuArray = self::getDefaultMenuArray();
+		$pluginPanelMobile = config::byKey('pluginPanelMobile', 'mobile');
 
 		if (is_object($eqLogic = eqLogic::byId($eqId))) {
 			$eqLogics = eqLogic::byType('mobile');
@@ -1234,7 +1235,7 @@ class mobile extends eqLogic
 						$tabUrl = "/index.php?v={$webviewUrl}&p=plan&plan_id={$objectId}";
 						break;
 					case 'panel':
-						$tabUrl = ($pluginPanelMobile[$objectId] == $objectId) ? "/index.php?v=m&p={$objectId}" : "/index.php?v=m&p={$objectId}&app_mode=1";
+						$tabUrl = (isset($pluginPanelMobile[$objectId]) && $pluginPanelMobile[$objectId] == $objectId) ? "/index.php?v=m&p={$objectId}" : "/index.php?v=m&p={$objectId}&app_mode=1";
 						break;
 					default:
 						break;

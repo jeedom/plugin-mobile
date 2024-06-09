@@ -18,7 +18,7 @@
 
 /* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
-
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 include_file('core', 'bellaMobile', 'class', 'mobile');
 
 class mobile extends eqLogic
@@ -580,7 +580,8 @@ class mobile extends eqLogic
 
 	public static function jsonPublish($os, $titre, $message, $type, $idNotif, $answer, $timeout, $token, $photo, $version, $optionsNotif = [], $critical = false, $Iq = null)
 	{
-		if(isset($Iq)) log::add('mobile', 'debug', '| IQ for jsonPublish > ' . $Iq);
+		log::add('mobile', 'debug', '||┌──:fg-success: jsonPublish :/fg:──');
+		if(isset($Iq)) log::add('mobile', 'debug', '||| IQ for jsonPublish > ' . $Iq);
 
 		$dateNotif = date("Y-m-d H:i:s");
 		$badge = 0;
@@ -795,30 +796,29 @@ class mobile extends eqLogic
 						}
 
 						$notifications[$idNotif] = $publishJson;
-						log::add('mobile', 'debug', '| Notification enregistrée : ' . json_encode($notifications));
+						log::add('mobile', 'debug', '||| [INFO] Notification enregistrée : ' . json_encode($notifications));
 						file_put_contents($filePath, json_encode($notifications));
 				}
 			
 			}
 		}
-		log::add('mobile', 'debug', '| JSON publish > ' . json_encode($publish));
-
-
+		log::add('mobile', 'debug', '||| [INFO] JSON publish > ' . json_encode($publish));
+		log::add('mobile', 'debug', '||└────────────────────');
 		return $publish;
 	}
 
 	public static function notification($arn, $os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version = 1, $optionsNotif = [], $critical = false, $Iq = null)
 	{
-		log::add('mobile', 'debug', '| Notification en cours !');
+		log::add('mobile', 'debug', '|┌──:fg-success: Notification en cours ! :/fg:──');
 		$publish = mobile::jsonPublish($os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version, $optionsNotif, $critical, $Iq);
 		if ($token != null) {
 			if ($token == 'notifsBGDisabled') {
-				log::add('mobile', 'debug', '| NOTIFICATION NON ENVOYEE : LE SERVICE NOTIF EST DESACTIVE SUR LE TELEPHONE');
+				log::add('mobile', 'debug', '|| [ERROR] NOTIFICATION NON ENVOYEE : LE SERVICE NOTIF EST DESACTIVE SUR LE TELEPHONE');
 				message::add(__CLASS__, 'Échec de l\'envoie de notification : le service est désactivé dans les paramètres du téléphone', 'notifsbgSend', 'alertNotifsSend');
 				return;
 			}
 			if ($token == 'desactivate') {
-				log::add('mobile', 'debug', '| NOTIFICATION NON ENVOYEE : LES NOTIFICATIONS SONT DESACTIVEES DANS L\'APP : ');
+				log::add('mobile', 'debug', '|| [ERROR] NOTIFICATION NON ENVOYEE : LES NOTIFICATIONS SONT DESACTIVEES DANS L\'APP : ');
 				message::add(__CLASS__, 'Échec de l\'envoie de notification : le service est désactivé dans les paramètres de l\'application', 'notifsbgSend', 'alertNotifsSend');
 				return;
 			}
@@ -831,14 +831,14 @@ class mobile extends eqLogic
 			];
 
 			$post = ['message' => $publish, 'options' => $options];
-			log::add('mobile', 'debug', '| JSON envoyé en mode FCM > ' . json_encode($post));
+			log::add('mobile', 'debug', '|| [INFO] JSON envoyé en mode FCM > ' . json_encode($post));
 		} elseif ($token == null && $version == 2) {
-			log::add('mobile', 'debug', '| NOTIFICATION NON ENVOYEE : PAS DE TOKEN ENREGISTRE SUR LE TELEPHONE :  ');
+			log::add('mobile', 'debug', '|| [ERROR] NOTIFICATION NON ENVOYEE : PAS DE TOKEN ENREGISTRE SUR LE TELEPHONE :  ');
 			//message::removeAll(__CLASS__, 'noValidToken');
 			message::add(__CLASS__, '| NOTIFICATION NON ENVOYÉE : PAS DE TOKEN ENREGISTRE SUR LE TÉLÉPHONE :', 'noValidTok', 'noValidToken');
 			return;
 		} else {
-			log::add('mobile', 'debug', 'JSON envoyé : APN' . $publish);
+			log::add('mobile', 'debug', '|| [INFO] JSON envoyé : APN' . $publish);
 			$post = [
 				'arn' => $arn,
 				'text' => $publish,
@@ -851,14 +851,16 @@ class mobile extends eqLogic
 			'Content-Type: application/json',
 			'Autorization: ' . sha512(strtolower(config::byKey('market::username')) . ':' . config::byKey('market::password'))
 		));
+		//$request_http->setLogError(true);
 		$request_http->setPost(json_encode($post));
 		$result = json_decode($request_http->exec(30,3), true);
 		if (!isset($result['state']) || $result['state'] != 'ok') {
-			log::add('mobile', 'info', '| Echec Première Tentative d\'envoi de la notification : ');
-			log::add('mobile', 'info', '| Nouvelle tentative ....');
+			log::add('mobile', 'info', '|| [WARNING] Echec Première Tentative d\'envoi de la notification');
+			log::add('mobile', 'info', '|| Nouvelle tentative ....');
 			sleep(rand(1,10));
 			$result = json_decode($request_http->exec(30,3), true);
 		}
+		log::add('mobile', 'debug', '|└────────────────────');
 		if (!isset($result['state']) || $result['state'] != 'ok') {
 			throw new Exception(__('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));
 		}
@@ -898,18 +900,17 @@ class mobile extends eqLogic
 
 	public static function createCmdGeoLocV2($Iq, $geolocs)
 	{
-		log::add('mobile', 'debug', '|-----------------------------------');
-		log::add('mobile', 'debug', '| -- GeoLocV2 --');
+		log::add('mobile', 'debug', '|┌──:fg-success: GeoLocV2 :/fg:──');
 		$mobile = eqLogic::byLogicalId($Iq, 'mobile');
 		if (is_object($mobile)) {
-			log::add('mobile', 'debug', '| Mobile existant');
-			log::add('mobile', 'debug', '| GEOLOCS > ' . $geolocs);
+			log::add('mobile', 'debug', '||  OK  Mobile existant > ' . $mobile->getName());
+			log::add('mobile', 'debug', '|| [INFO] GEOLOCS > ' . $geolocs);
 
 			$noExistCmd = 0;
 			$decodedGeolocs = json_decode($geolocs, true);
 			foreach ($decodedGeolocs as $index => $geoloc) {
 				if (!isset($geoloc['name'])) continue;
-				log::add('mobile', 'debug', '| Index > ' . $index . ' / ' . $geoloc['name']);
+				log::add('mobile', 'debug', '|| geoloc_' . $index . ' > ' . $geoloc['name']);
 				$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $index);
 
 				if (!is_object($cmdgeoloc)) {
@@ -922,6 +923,7 @@ class mobile extends eqLogic
 					$cmdgeoloc->setIsVisible(1);
 					$cmdgeoloc->setGeneric_type('PRESENCE');
 					$cmdgeoloc->setIsHistorized(1);
+					log::add('mobile', 'debug', '|| Ajout geofencing > ' . $geoloc['name']);
 				}
 				$cmdgeoloc->setName($geoloc['name']);
 				$cmdgeoloc->setConfiguration('latitude', $geoloc['latitude']);
@@ -930,14 +932,14 @@ class mobile extends eqLogic
 				$cmdgeoloc->save();
 				if ($noExistCmd == 1) {
 					$cmdgeoloc->event($geoloc['value']);
-					log::add('mobile', 'debug', '| Valeur enregistrée > ' . $geoloc['value']);
+					log::add('mobile', 'debug', '|| Valeur enregistrée > ' . $geoloc['value']);
 				}
 				$noExistCmd = 0;
 			}
-			log::add('mobile', 'debug', '|-----------------------------------');
 		} else {
-			log::add('mobile', 'debug', 'Mobile inexistant');
+			log::add('mobile', 'debug', '| [ERROR] Mobile inexistant !');
 		}
+		log::add('mobile', 'debug', '|└────────────────────');
 	}
 
 	public function delGeoloc($geoloc)
@@ -1079,12 +1081,10 @@ class mobile extends eqLogic
 
 	public static function configMenuCustom($eqId, $jeedomVersion)
 	{
-
+		log::add('mobile', 'debug', '|┌──:fg-success: CONFIGMENU CUSTOM JEEDOM ' . $jeedomVersion . ' :/fg:──');
 		if ($jeedomVersion < '4.4.0') {
-			log::add('mobile', 'info', '| -- CONFIGMENU CUSTOM JEEDOM 4.3.0 --');
 			return $defaultMenuArray = self::getDefaultMenuArray();
 		}
-		log::add('mobile', 'info', '| -- CONFIGMENU CUSTOM JEEDOM 4.4.0 --');
 		$defaultMenuArray = self::getDefaultMenuArray();
 		$pluginPanelMobile = config::byKey('pluginPanelMobile', 'mobile');
 
@@ -1118,13 +1118,12 @@ class mobile extends eqLogic
 				$tabIconName = $resultTabIcon['tabIconName'];
 				$tabLibName = $resultTabIcon['tabLibName'];
 				$tabRenameInput = $resultTabIcon['tabRenameInput'];
-
-
-				$objectId = $menuCustomArray[$i]['selectNameMenu'];
+				//$objectId = $menuCustomArray[$i]['selectNameMenu'];
+				$objectId = isset($menuCustomArray[$i]['selectNameMenu']) ? $menuCustomArray[$i]['selectNameMenu'] : '';
 				$isActive = true;
 				$webviewUrl = 'd';
 
-				log::add('mobile', 'debug', '| - objectId > ' . $objectId);
+				log::add('mobile', 'debug', '|| - objectId > ' . $objectId);
 
 				// GENERATE URLS FOR MENU CUSTOM 
 				$result = self::generateTypeObject($objectId, $i, $webviewUrl, $pluginPanelMobile);
@@ -1136,7 +1135,7 @@ class mobile extends eqLogic
 				if ($count > intval($nbIcones)) {
 					$isActive = false;
 				}
-				log::add('mobile', 'debug', '| - Construction jsonTemplate');
+				//log::add('mobile', 'debug', '| - Construction jsonTemplate');
 				$jsonTemplate = array(
 					'active' => $isActive,
 					'icon' => [
@@ -1156,9 +1155,8 @@ class mobile extends eqLogic
 				$j++;
 				$count++;
 			}
-
-			log::add('mobile', 'info', '| - Function MobileconfigMenuCustom : ' . json_encode($arrayElements));
-			log::add('mobile', 'debug', '|-----------------------------------');
+			log::add('mobile', 'debug', '|| [INFO] arrayElements > ' . json_encode($arrayElements));
+			log::add('mobile', 'debug', '|└────────────────────');
 			if (count($arrayElements) == 4) {
 				$j = 0;
 				for ($i = 0; $i < 4; $i++) {
@@ -1409,8 +1407,7 @@ class mobileCmd extends cmd
 
 	public static function fileInMessage($data)
 	{
-		log::add('mobile', 'debug', '|-----------------------------------');
-		log::add('mobile', 'debug', '| -- FileInMessage --');
+		log::add('mobile', 'debug', '|┌──:fg-success: fileInMessage :/fg:──');
 		$dataArray = explode('|', $data);
 		$result = array();
 		foreach ($dataArray as $item) {
@@ -1421,15 +1418,16 @@ class mobileCmd extends cmd
 			}
 		}
 		$result['message'] = $dataArray[0];
-		log::add('mobile', 'debug', '| File Parse > ' . json_encode($result));
+		log::add('mobile', 'debug', '|| [INFO] File Parse > ' . json_encode($result));
 		if (array_key_exists('file', $result)) {
-			log::add('mobile', 'debug', '| file > ' . $result['file']);
+			log::add('mobile', 'debug', '|| file > ' . $result['file']);
+			log::add('mobile', 'debug', '|└────────────────────');
 			return $result;
 		} else {
+			log::add('mobile', 'debug', '|└────────────────────');
 			//log::add('mobile', 'debug', '| null');
 			return null;
 		}
-		log::add('mobile', 'debug', '|-----------------------------------');
 	}
 
 	public function execute($_options = array())
@@ -1437,6 +1435,7 @@ class mobileCmd extends cmd
 		if ($this->getType() != 'action') {
 			return;
 		}
+		log::add('mobile', 'debug', '┌──:fg-success: execute :/fg:──');
 		$optionsNotif = [];
 		$eqLogic = $this->getEqLogic();
 
@@ -1457,7 +1456,7 @@ class mobileCmd extends cmd
 				$_options['files'] = array();
 				array_push($_options['files'], $file['file']);
 				$_options['message'] = $file['message'];
-				log::add('mobile', 'debug', 'file detected ' . json_encode($file));
+				log::add('mobile', 'debug', '| file detected ' . json_encode($file));
 			}
 
 			$answer = ($_options['answer']) ? join(';', $_options['answer']) : null;
@@ -1465,32 +1464,32 @@ class mobileCmd extends cmd
 			$askType = ($_options['answer']) ? 'ask_Text' : 'notif';
 			$timeout = ($_options['timeout']) ? $_options['timeout'] : 'nok';
 			$optionsNotif['askVariable'] = $askVariable;
-			log::add('mobile', 'debug', '|-----------------------------------');
-			log::add('mobile', 'debug', '| Commande de notification : ' . $askType, 'config');
+			//log::add('mobile', 'debug', '|-----------------------------------');
+			log::add('mobile', 'debug', '| Commande de notification : ' . $askType);
 			if (($eqLogic->getConfiguration('notificationArn', null) != null || $eqLogic->getConfiguration('notificationRegistrationToken', null) != null) && $eqLogic->getConfiguration('type_mobile', null) != null) {
 				$idNotif = $eqLogic->getConfiguration('idNotif', 0);
 				$idNotif = $idNotif + 1;
 				$eqLogic->setConfiguration('idNotif', $idNotif);
 				$eqLogic->save();
 
-				log::add('mobile', 'debug', '| Notif > ' . json_encode($_options) . ' / ' . $eqLogic->getId() . ' / ' . $this->getLogicalId() . ' / idNotif =' . $idNotif, 'config');
+				log::add('mobile', 'debug', '| [INFO] Notif > ' . json_encode($_options));
+				log::add('mobile', 'debug', '| eqLogic > ' . $eqLogic->getId() . ' | LogicalId > ' . $this->getLogicalId() . ' | idNotif > ' . $idNotif);
 				if (isset($options['file'])) {
-					log::add('mobile', 'debug', 'FILE');
-					unset($data['file']);
+					//log::add('mobile', 'debug', '| [NOTICE] FILE');
+					//unset($data['file']);
 					$_options['files'] = explode(',', $options['file']);
 				}
 				if (isset($_options['files']) && is_array($_options['files'])) {
-					log::add('mobile', 'debug', 'FILES');
+					log::add('mobile', 'debug', '| [NOTICE] FILE');
 					foreach ($_options['files'] as $file) {
-						log::add('mobile', 'debug', 'FILES as FILE');
+						log::add('mobile', 'debug', '| FILES as FILE');
 						if (trim($file) == '') {
 							continue;
 						}
-						log::add('mobile', 'debug', 'Continue');
 						$ext = pathinfo($file, PATHINFO_EXTENSION);
-						log::add('mobile', 'debug', $ext . ' pour > ' . $file);
+						log::add('mobile', 'debug', '| ' . $ext . ' pour > ' . $file);
 						if (in_array($ext, array('gif', 'jpeg', 'jpg', 'png'))) {
-							log::add('mobile', 'debug', 'type photo !');
+							log::add('mobile', 'debug', '| type photo !');
 							if ($ext == "gif") {
 								$typeHint = "com.compuserve.gif";
 							} else if ($ext == "jpeg") {
@@ -1508,7 +1507,7 @@ class mobileCmd extends cmd
 							$nameFile = base64_encode($file) . '.' . $ext;
 							$path = dirname(__FILE__) . '/../../data/images';
 							$newfile = $path . '/' . $nameFile;
-							log::add('mobile', 'debug', 'copie sur > ' . $newfile);
+							log::add('mobile', 'debug', '| copie sur > ' . $newfile);
 							if (!file_exists($path)) {
 								mkdir($path);
 							}
@@ -1517,7 +1516,7 @@ class mobileCmd extends cmd
 							}
 							$keyFile = md5_file($newfile);
 							$url .= 'key=' . $keyFile . '&name=' . $nameFile;
-							log::add('mobile', 'debug', 'url > ' . $url);
+							log::add('mobile', 'debug', '| url > ' . $url);
 							mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], $askType, $idNotif, $answer, $timeout, $eqLogic->getConfiguration('notificationRegistrationToken', null), $url, $eqLogic->getConfiguration('appVersion', 1), $optionsNotif, $critical, $eqLogic->getLogicalId());
 						} else {
 							mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], $askType, $idNotif, $answer, $timeout, $eqLogic->getConfiguration('notificationRegistrationToken', null), null, $eqLogic->getConfiguration('appVersion', 1), $optionsNotif, $critical, $eqLogic->getLogicalId());
@@ -1526,12 +1525,10 @@ class mobileCmd extends cmd
 				} else {
 					mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], $askType, $idNotif, $answer,  $timeout, $eqLogic->getConfiguration('notificationRegistrationToken', null), null, $eqLogic->getConfiguration('appVersion', 1), $optionsNotif, $critical, $eqLogic->getLogicalId());
 				}
-
-				log::add('mobile', 'debug', '| Action : Envoi d\'une configuration ', 'config');
 			} else {
-				log::add('mobile', 'debug', '| ARN non configuré ', 'config');
+				log::add('mobile', 'debug', '| [ERROR] ARN non configuré ');
 			}
-			log::add('mobile', 'debug', '|-----------------------------------');
+			log::add('mobile', 'debug', '└────────────────────');
 		}
 	}
 

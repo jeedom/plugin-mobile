@@ -575,7 +575,7 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 		log::add('mobile', 'debug', '| Event > ' . json_encode($geofence));
 		$eqLogicMobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 		if ($eqLogicMobile) {
-			log::add('mobile', 'debug', '|  OK  Mobile trouvé -> ' . $eqLogicMobile->getName() . ' (' . $params['Iq'] . ')'); //PR
+			log::add('mobile', 'debug', '|  OK  Mobile trouvé -> ' . $eqLogicMobile->getName() . ' (' . $params['Iq'] . ')');
 			$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geofence['identifier']);
 			if (is_object($cmdgeoloc)) {
 				if ($geofence['action'] == 'ENTER') {
@@ -604,7 +604,7 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 				log::add('mobile', 'debug', '| Event > ' . json_encode($geofence));
 				$eqLogicMobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 				if ($eqLogicMobile) {
-					log::add('mobile', 'debug', '|  OK  Mobile trouvé -> ' . $eqLogicMobile->getName() . ' (' . $params['Iq'] . ')'); //PR
+					log::add('mobile', 'debug', '|  OK  Mobile trouvé -> ' . $eqLogicMobile->getName() . ' (' . $params['Iq'] . ')');
 					$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geofence['identifier']);
 					if (is_object($cmdgeoloc)) {
 						if ($geofence['action'] == 'ENTER') {
@@ -614,7 +614,7 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 							log::add('mobile', 'debug', '|  OK  Commande "'. $cmdgeoloc->getName() . '" passée à 0');
 							$cmdgeoloc->event(0);
 						} else {
-							log::add('mobile', 'debug', '| [INFO] Event -> ' . $geofence['action']); //PR
+							log::add('mobile', 'debug', '| [INFO] Event -> ' . $geofence['action']);
 						}
 					} else {
 						log::add('mobile', 'debug', '| [ERROR] Commande geoloc_' . $geofence['identifier'] . ' inexistante.');
@@ -627,7 +627,7 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 			}
 		}
 		if ($errorCount > 0) {
-			log::add('mobile', 'error', __('| Pas de paramètre de geofencing', __FILE__));
+			log::add('mobile', 'debug', __('| Pas de paramètre de geofencing', __FILE__));
 		}
 	}
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');
@@ -686,7 +686,7 @@ if ($jsonrpc->getMethod() == 'getNotificationsFromFile') {
 		}
 	}
 	log::add('mobile', 'debug', '| [INFO] Notifications > ' . $notifications);
-	log::add('mobile', 'debug', '└───────────────────────────────────────────'); //PR
+	log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	$jsonrpc->makeSuccess($notifications);
 }
 
@@ -708,7 +708,7 @@ if ($jsonrpc->getMethod() == 'deleteNotificationInJsonFile') {
 			$notifications = json_encode($notificationsArray);
 			file_put_contents($filePath, $notifications);
 		}
-		log::add('mobile', 'debug', '└───────────────────────────────────────────'); //PR
+		log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	}
 	$jsonrpc->makeSuccess('ok');
 }

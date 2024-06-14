@@ -313,8 +313,10 @@
         "JSONRPC object not defined": "Objeto JSONRPC não definido",
         "EqLogic inconnu : ": "EqLogic desconhecido:",
         "Cmd inconnu : ": "Cmd desconhecido:",
+        "| [ERROR] EqLogic inconnu : ": "| [ERRO] EqLogic desconhecido:",
         "pas d\\'id : ": "no id:",
-        "pas de parametre de geofencing : ": "nenhum parâmetro de geofencing:",
+        "| [ERROR] Paramètre Iq inexistant !": "| [ERRO] O parâmetro Iq não existe!",
+        "| Pas de paramètre de geofencing": "| Sem configurações de cerca geográfica",
         "Aucune demande": "Nenhum pedido",
         "Aucun": "Nenhum"
     },

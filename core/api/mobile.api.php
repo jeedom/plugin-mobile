@@ -598,7 +598,7 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 		$transmitions = $params['transmition'];
 		$errorCount = 0;
 		foreach ($transmitions as $transmition) {
-			if ($transmition['event'] == 'geofence') {
+			if (isset($transmition['event']) && $transmition['event'] == 'geofence') {
 				log::add('mobile', 'debug', '| Transmition :' . json_encode($params['transmition']));
 				$geofence = $transmition['geofence'];
 				log::add('mobile', 'debug', '| Event > ' . json_encode($geofence));

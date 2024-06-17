@@ -540,13 +540,8 @@ function addCmdToTable(_cmd) {
   tr += "</td>";
   tr += "<td>";
   tr += '<div class="input-group">';
-  if (init(_cmd.logicalId).includes("geoloc_")){
-    tr +=
-    '<input disabled class="cmdAttr form-control input-sm roundedLeft" data-l1key="name" placeholder="{{Nom de la commande}}">';
-  }else{
-    tr +=
-    '<input class="cmdAttr form-control input-sm roundedLeft" data-l1key="name" placeholder="{{Nom de la commande}}">';
-  }
+  var isGeoloc = init(_cmd.logicalId).includes("geoloc_");
+  tr += `<input ${isGeoloc ? 'disabled' : ''} class="cmdAttr form-control input-sm roundedLeft" data-l1key="name" placeholder="{{Nom de la commande}}">`;
 
   tr +=
     '<span class="input-group-btn"><a class="cmdAction btn btn-sm btn-default" data-l1key="chooseIcon" title="{{Choisir une icône}}"><i class="fas fa-icons"></i></a></span>';

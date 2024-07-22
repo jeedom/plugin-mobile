@@ -669,25 +669,46 @@ if ($jsonrpc->getMethod() == "syncBella") {
 if ($jsonrpc->getMethod() == 'getNotificationsFromFile') {
 	log::add('mobile', 'debug', '┌────◀︎ getNotificationsFromFile ──────────');
 	$Iq = $params['Iq'];
+	$retentionTime = $params['notifsTime'];
+	log::add('mobile', 'debug', '| Durée de retention actuelle : '. $retentionTime . ' jours');
+	$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60; 
+	$currentTime = time();
+	
 	$filePath = dirname(__FILE__) . '/../data/notifications/' . $Iq . '.json';
 	$notifications = 'noNotifications';
 	if (file_exists($filePath)) {
 		$notifications = file_get_contents($filePath);
 		if ($notifications) {
 			$notifications = json_decode($notifications, true);
+			$notificationsModified = false;
+
 			foreach ($notifications as $id => $value) {
-				$dateNew = substr($value['data']['date'], 0, 10);
-				$horaire = substr($value['data']['date'], -8);
-				$horaireFormat = substr($horaire, 0, 5);
-				$notifications[$id]['data']['newDate'] = $dateNew;
-				$notifications[$id]['data']['horaireFormat'] = $horaireFormat;
+				$notificationDate = strtotime($value['data']['date']); 
+				if (($currentTime - $notificationDate) > $retentionSeconds) {
+					unset($notifications[$id]); 
+					$notificationsModified = true;
+				} else {
+					$dateNew = substr($value['data']['date'], 0, 10);
+					$horaire = substr($value['data']['date'], -8);
+					$horaireFormat = substr($horaire, 0, 5);
+					$notifications[$id]['data']['newDate'] = $dateNew;
+					$notifications[$id]['data']['horaireFormat'] = $horaireFormat;
+				}
 			}
+			if ($notificationsModified) {
+				file_put_contents($filePath, $notifications);
+			}
+
 			$notifications = json_encode($notifications);
+			$jsonrpc->makeSuccess($notifications);
+			log::add('mobile', 'debug', '| [INFO] Notifications > ' . $notifications);
+			log::add('mobile', 'debug', '└───────────────────────────────────────────');
 		}
+
 	}
-	log::add('mobile', 'debug', '| [INFO] Notifications > ' . $notifications);
-	log::add('mobile', 'debug', '└───────────────────────────────────────────');
-	$jsonrpc->makeSuccess($notifications);
+
+	//$jsonrpc->makeSuccess($notifications);
+	
 }
 
 

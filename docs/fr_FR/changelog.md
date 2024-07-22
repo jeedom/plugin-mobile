@@ -5,6 +5,10 @@
 > Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte
 
 
+# 22/07/2024
+Prise en compte retention des notifications
+Target Sdk 34 pour Android
+
 # 28/05/2024
 Modification Géolocalisation pour prochaine version App
 Stockage Notifications dans le plugin

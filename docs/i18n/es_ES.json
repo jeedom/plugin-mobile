@@ -2,6 +2,9 @@
     "changelog.md": {
         "Changelog App Mobile": "Changelog Mobile App",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Como recordatorio si no hay información sobre la actualización, significa que solo se refiere a la actualización de documentación, traducción o texto",
+        "22\/07\/2024": "22\/07\/2024",
+        "Prise en compte retention des notifications": "Teniendo en cuenta la retención de notificaciones",
+        "Target Sdk 34 pour Android": "Objetivo SDK 34 para Android",
         "28\/05\/2024": "28\/05\/2024",
         "Modification Géolocalisation pour prochaine version App": "Modificación de geolocalización para la próxima versión de la aplicación",
         "Stockage Notifications dans le plugin": "Notificaciones de almacenamiento en el complemento",

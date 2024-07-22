@@ -5,6 +5,10 @@
 > Como lembrete, se não houver informações sobre a atualização, isso significa que se trata apenas da atualização da documentação, tradução ou texto
 
 
+# 22/07/2024
+Tendo em conta a retenção de notificações
+Destino SDK 34 para Android
+
 # 28/05/2024
 Modificação de geolocalização para próxima versão do aplicativo
 Notificações de armazenamento no plugin

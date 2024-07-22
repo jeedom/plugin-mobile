@@ -670,9 +670,12 @@ if ($jsonrpc->getMethod() == 'getNotificationsFromFile') {
 	log::add('mobile', 'debug', '┌────◀︎ getNotificationsFromFile ──────────');
 	$Iq = $params['Iq'];
 	$retentionTime = $params['notifsTime'];
-	log::add('mobile', 'debug', '| Durée de retention actuelle : '. $retentionTime . ' jours');
-	$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60; 
-	$currentTime = time();
+	if(isset($retentionTime)){
+		log::add('mobile', 'debug', '| Durée de retention actuelle : '. $retentionTime . ' jours');
+		$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60; 
+		$currentTime = time();
+	}
+
 	
 	$filePath = dirname(__FILE__) . '/../data/notifications/' . $Iq . '.json';
 	$notifications = 'noNotifications';
@@ -684,16 +687,34 @@ if ($jsonrpc->getMethod() == 'getNotificationsFromFile') {
 
 			foreach ($notifications as $id => $value) {
 				$notificationDate = strtotime($value['data']['date']); 
-				if (($currentTime - $notificationDate) > $retentionSeconds) {
-					unset($notifications[$id]); 
-					$notificationsModified = true;
-				} else {
+				if(isset($retentionSeconds)){
+					if (($currentTime - $notificationDate) > $retentionSeconds) {
+						unset($notifications[$id]); 
+						$notificationsModified = true;
+					} else {
+						$dateNew = substr($value['data']['date'], 0, 10);
+						$horaire = substr($value['data']['date'], -8);
+						$horaireFormat = substr($horaire, 0, 5);
+						$notifications[$id]['data']['newDate'] = $dateNew;
+						$notifications[$id]['data']['horaireFormat'] = $horaireFormat;
+					}
+				}else{
 					$dateNew = substr($value['data']['date'], 0, 10);
 					$horaire = substr($value['data']['date'], -8);
 					$horaireFormat = substr($horaire, 0, 5);
 					$notifications[$id]['data']['newDate'] = $dateNew;
 					$notifications[$id]['data']['horaireFormat'] = $horaireFormat;
 				}
+				// if (($currentTime - $notificationDate) > $retentionSeconds) {
+				// 	unset($notifications[$id]); 
+				// 	$notificationsModified = true;
+				// } else {
+				// 	$dateNew = substr($value['data']['date'], 0, 10);
+				// 	$horaire = substr($value['data']['date'], -8);
+				// 	$horaireFormat = substr($horaire, 0, 5);
+				// 	$notifications[$id]['data']['newDate'] = $dateNew;
+				// 	$notifications[$id]['data']['horaireFormat'] = $horaireFormat;
+				// }
 			}
 			if ($notificationsModified) {
 				file_put_contents($filePath, $notifications);

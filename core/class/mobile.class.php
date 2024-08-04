@@ -1459,10 +1459,10 @@ class mobileCmd extends cmd
 				log::add('mobile', 'debug', '| file detected ' . json_encode($file));
 			}
 
-			$answer = ($_options['answer']) ? join(';', $_options['answer']) : null;
-			$askVariable = $_options['variable'];
-			$askType = ($_options['answer']) ? 'ask_Text' : 'notif';
-			$timeout = ($_options['timeout']) ? $_options['timeout'] : 'nok';
+			$answer = (isset($_options['answer']) && $_options['answer']) ? join(';', $_options['answer']) : null;
+			$askVariable = isset($_options['variable']) ? $_options['variable'] : null;
+			$askType = isset($_options['answer']) && $_options['answer'] ? 'ask_Text' : 'notif';
+			$timeout = isset($_options['timeout']) && $_options['timeout'] ? $_options['timeout'] : 'nok';
 			$optionsNotif['askVariable'] = $askVariable;
 			//log::add('mobile', 'debug', '|-----------------------------------');
 			log::add('mobile', 'debug', '| Commande de notification : ' . $askType);

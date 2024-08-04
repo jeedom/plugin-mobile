@@ -5,6 +5,10 @@
 > Como lembrete, se não houver informações sobre a atualização, isso significa que se trata apenas da atualização da documentação, tradução ou texto
 
 
+# 08/04/2024
+Levando em consideração a retenção de notificações para exclusão de imagens
+
+
 # 22/07/2024
 Tendo em conta a retenção de notificações
 Destino SDK 34 para Android

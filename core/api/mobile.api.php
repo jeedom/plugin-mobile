@@ -670,11 +670,25 @@ if ($jsonrpc->getMethod() == 'getNotificationsFromFile') {
 	log::add('mobile', 'debug', '┌────◀︎ getNotificationsFromFile ──────────');
 	$Iq = $params['Iq'];
 	$retentionTime = $params['notifsTime'];
+	
 	if(isset($retentionTime)){
 		log::add('mobile', 'debug', '| Durée de retention actuelle : '. $retentionTime . ' jours');
 		$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60; 
 		$currentTime = time();
+
+		$pathImages = dirname(__FILE__) . '/../data/images/';
+		if(is_dir($pathImages)){
+			$images = glob($pathImages . '*.jpg');
+
+			foreach ($images as $image) {
+				$fileCreationTime = filemtime($image);
+				if ($fileCreationTime < ($currentTime - $retentionSeconds)) {
+					unlink($file); 
+				}
+			}
+		}
 	}
+
 
 	
 	$filePath = dirname(__FILE__) . '/../data/notifications/' . $Iq . '.json';

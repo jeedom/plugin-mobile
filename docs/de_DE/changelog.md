@@ -5,6 +5,10 @@
 > Zur Erinnerung: Wenn keine Informationen zum Update vorhanden sind, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt
 
 
+# 08.04.2024
+Berücksichtigung der Aufbewahrung von Benachrichtigungen zum Löschen von Bildern
+
+
 # 22.07.2024
 Berücksichtigung der Aufbewahrung von Benachrichtigungen
 Target Sdk 34 für Android

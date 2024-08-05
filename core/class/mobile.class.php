@@ -323,24 +323,33 @@ class mobile extends eqLogic
 			return array('cmds' => $_cmds, 'eqLogics' => $eqLogics);
 		}
 		$eqLogic_array = array();
+		$eqLogic_name = '';
+		$i = 0;
 		foreach ($plage_cmds as $plage_cmd) {
-			$eqLogic_id = $_cmds[$plage_cmd]['eqLogic_id'];
-			$name_cmd = $_cmds[$plage_cmd]['name'];
-			foreach ($eqLogics as $eqLogic) {
-				if ($eqLogic['id'] == $eqLogic_id) {
-					$eqLogic_name = $eqLogic['name'] . ' / ' . $name_cmd;
+			if (isset($_cmds[$plage_cmd])) { 
+				$cmd = $_cmds[$plage_cmd];
+				$eqLogic_id = $cmd['eqLogic_id'] ?? null; 
+				$name_cmd = $cmd['name'] ?? '';
+		
+				foreach ($eqLogics as $eqLogic) {
+					if ($eqLogic['id'] == $eqLogic_id) {
+						$eqLogic_name = $eqLogic['name'] . ' / ' . $name_cmd;
+					}
 				}
-			}
-			$id = $_cmds[$plage_cmd]['id'];
-			$new_eqLogic_id = '999' . $eqLogic_id . '' . $id;
-			$_cmds[$plage_cmd]['eqLogic_id'] = $new_eqLogic_id;
-			$keys = array_keys(array_column($_cmds, 'eqLogic_id'), $eqLogic_id);
-			foreach ($keys as $key) {
-				if ($_cmds[$key]['value'] == $_cmds[$plage_cmd]['id'] && $_cmds[$key]['type'] == 'action') {
-					$_cmds[$key]['eqLogic_id'] = $new_eqLogic_id;
+		
+				$id = $cmd['id'] ?? null;
+				$new_eqLogic_id = '999' . $eqLogic_id . $id;
+				$_cmds[$plage_cmd]['eqLogic_id'] = $new_eqLogic_id;
+		
+				$keys = array_keys(array_column($_cmds, 'eqLogic_id'), $eqLogic_id);
+				foreach ($keys as $key) {
+					if (isset($_cmds[$key]) && $_cmds[$key]['value'] == $id && $_cmds[$key]['type'] == 'action') {
+						$_cmds[$key]['eqLogic_id'] = $new_eqLogic_id;
+					}
 				}
+		
+				$eqLogic_array[] = [$eqLogic_id, $new_eqLogic_id, $eqLogic_name];
 			}
-			$eqLogic_array[] = array($eqLogic_id, $new_eqLogic_id, $eqLogic_name);
 			$i++;
 		}
 		$column_eqlogic = array_column($eqLogics, 'id');

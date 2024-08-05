@@ -307,7 +307,7 @@ class mobile extends eqLogic
 
 
 	public static function getNotificationsWithRetentioNTime($Iq, $retentionTime){
-		log::add('mobile', 'debug', '┌────◀︎ getNotificationsFromFile ──────────');
+		log::add('mobile', 'debug', '┌──────────▶︎ fg-warning: Nettoyage des Notifications et Images :/fg: ──────────');
 
 		log::add('mobile', 'debug', '| Durée de retention actuelle : '. $retentionTime . ' jours');
 		$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60; 
@@ -316,11 +316,10 @@ class mobile extends eqLogic
 		$pathImages = dirname(__FILE__) . '/../data/images/';
 		if(is_dir($pathImages)){
 			$images = glob($pathImages . '*.jpg');
-
 			foreach ($images as $image) {
 				$fileCreationTime = filemtime($image);
 				if ($fileCreationTime < ($currentTime - $retentionSeconds)) {
-					unlink($file); 
+					unlink($image); 
 				}
 			}
 		}	
@@ -335,34 +334,17 @@ class mobile extends eqLogic
 	
 				foreach ($notifications as $id => $value) {
 					$notificationDate = strtotime($value['data']['date']); 
-					if(isset($retentionSeconds)){
-						if (($currentTime - $notificationDate) > $retentionSeconds) {
-							unset($notifications[$id]); 
-							$notificationsModified = true;
-						} else {
-							$dateNew = substr($value['data']['date'], 0, 10);
-							$horaire = substr($value['data']['date'], -8);
-							$horaireFormat = substr($horaire, 0, 5);
-							$notifications[$id]['data']['newDate'] = $dateNew;
-							$notifications[$id]['data']['horaireFormat'] = $horaireFormat;
-						}
-					}else{
-						$dateNew = substr($value['data']['date'], 0, 10);
-						$horaire = substr($value['data']['date'], -8);
-						$horaireFormat = substr($horaire, 0, 5);
-						$notifications[$id]['data']['newDate'] = $dateNew;
-						$notifications[$id]['data']['horaireFormat'] = $horaireFormat;
-					}
+					if (($currentTime - $notificationDate) > $retentionSeconds) {
+						unset($notifications[$id]); 
+						$notificationsModified = true;
+					} 
 				}
-				if ($notificationsModified) {
-					file_put_contents($filePath, $notifications);
-				}	
-				$notifications = json_encode($notifications);
-				log::add('mobile', 'debug', '| [INFO] Notifications > ' . $notifications);
-				log::add('mobile', 'debug', '└───────────────────────────────────────────');
+			
 			}
 	
 		}
+		log::add('mobile', 'debug', '| Fin du nettoyage des Notifications et Images');
+		log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	}
 
 	public static function change_cmdAndeqLogic($_cmds, $_eqLogics)

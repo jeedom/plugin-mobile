@@ -307,7 +307,7 @@ class mobile extends eqLogic
 
 
 	public static function getNotificationsWithRetentioNTime($Iq, $retentionTime){
-		log::add('mobile', 'debug', '┌──────────▶︎ fg-warning: Nettoyage des Notifications et Images :/fg: ──────────');
+		log::add('mobile', 'debug', '┌──────────▶︎ :fg-warning: Nettoyage des Notifications et Images :/fg: ──────────');
 
 		log::add('mobile', 'debug', '| Durée de retention actuelle : '. $retentionTime . ' jours');
 		$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60; 

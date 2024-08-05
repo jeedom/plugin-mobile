@@ -339,6 +339,13 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	log::add('mobile', 'debug', '| [INFO] CustomENVOICONFIGSAPI GETJSON > ' . json_encode($return[$idBox]['configs']));
 	log::add('mobile', 'debug', '| [INFO] Retour vers App > ' . json_encode($return));
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');
+
+	$retentionTime = config::byKey('retentionTime', 'mobile', null);
+	if(isset($retentionTime) && $retentionTime != null) {
+		log::add('mobile', 'debug', '| [INFO] Nettoyage des notifs et images > ');
+		mobile::getNotificationsWithRetentioNTime($params['Iq'], $retentionTime);
+	}
+
 	$jsonrpc->makeSuccess($return);
 }
 
@@ -672,6 +679,7 @@ if ($jsonrpc->getMethod() == 'getNotificationsFromFile') {
 	$retentionTime = $params['notifsTime'];
 	
 	if(isset($retentionTime)){
+		config::save('retentionTime', $retentionTime, 'mobile');
 		log::add('mobile', 'debug', '| Durée de retention actuelle : '. $retentionTime . ' jours');
 		$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60; 
 		$currentTime = time();

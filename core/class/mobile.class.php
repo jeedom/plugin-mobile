@@ -385,7 +385,7 @@ class mobile extends eqLogic
 		
 				$keys = array_keys(array_column($_cmds, 'eqLogic_id'), $eqLogic_id);
 				foreach ($keys as $key) {
-					if (isset($_cmds[$key]) && $_cmds[$key]['value'] == $id && $_cmds[$key]['type'] == 'action') {
+					if (isset($_cmds[$key]) && isset($_cmds[$key]['value']) && $_cmds[$key]['value'] === $id && isset($_cmds[$key]['type']) && $_cmds[$key]['type'] === 'action') {
 						$_cmds[$key]['eqLogic_id'] = $new_eqLogic_id;
 					}
 				}
@@ -629,234 +629,196 @@ class mobile extends eqLogic
 	}
 
 
-	public static function jsonPublish($os, $titre, $message, $type, $idNotif, $answer, $timeout, $token, $photo, $version, $optionsNotif = [], $critical = false, $Iq = null)
-	{
-		log::add('mobile', 'debug', '||┌──:fg-success: jsonPublish :/fg:──');
-		if(isset($Iq)) log::add('mobile', 'debug', '||| IQ for jsonPublish > ' . $Iq);
+public static function jsonPublish($os, $titre, $message, $type, $idNotif, $answer, $timeout, $token, $photo, $version, $optionsNotif = [], $critical = false, $Iq = null)
+{
+    log::add('mobile', 'debug', '||┌──:fg-success: jsonPublish :/fg:──');
+    if (isset($Iq)) log::add('mobile', 'debug', '||| IQ for jsonPublish > ' . $Iq);
 
-		$dateNotif = date("Y-m-d H:i:s");
-		$badge = 0;
-		if ($timeout != 'nok') {
-			$timeout = date('Y-m-d H:i:s', strtotime("$dateNotif + $timeout SECONDS"));
-		}
-		$addAsk = '';
-		if ($type == 'ask_Text') {
-			$addAsk = '\"category\":\"TEXT_CATEGORY\",\"answer\":\"' . $answer . '\",\"timeout\":\"' . $timeout . '\",';
-		}
+    $dateNotif = date("Y-m-d H:i:s");
+    $badge = 0;
+    if ($timeout != 'nok') {
+        $timeout = date('Y-m-d H:i:s', strtotime("$dateNotif + $timeout SECONDS"));
+    }
+    $addAsk = '';
+    if ($type == 'ask_Text') {
+        $addAsk = '\"category\":\"TEXT_CATEGORY\",\"answer\":\"' . $answer . '\",\"timeout\":\"' . $timeout . '\",';
+    }
 
-		if ($token == null) {
-			$message = preg_replace("# {2,}#", " ", preg_replace("#(\r\n|\n\r|\n|\r)#", "\\\\\\n", $message));
-			if ($os == 'ios') {
-				if ($badge == 'null') {
-					$publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",' . $addAsk . '\"alert\": {\"title\":\"' . $titre . '\",\"body\":\"' . $message . '\"},\"badge\":\"0\",\"sound\":\"silence.caf\",\"date\":\"' . $dateNotif . '\",\"idNotif\":\"' . $idNotif . '\"}}"}';
-				} else {
-					$publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",' . $addAsk . '\"alert\": {\"title\":\"' . $titre . '\",\"body\":\"' . $message . '\"},\"badge\":\"' . $badge . '\",\"sound\":\"silence.caf\",\"date\":\"' . $dateNotif . '\",\"idNotif\":\"' . $idNotif . '\"}}"}';
-				}
-			} else if ($os == 'android') {
-				$publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"notification\": {\"e\":0,\"title\":\"test\",\"body\":\"NotficationTEST\"},\"data\":{\"ticker\":\"test\",\"android_channel_id\":\"JEEDOM_CHANNEL\",\"notificationId\":\"' . $idNotif . '\",\"title\":\"' . $titre . '\",\"text\":\"' . $message . '\",' . $addAsk . '\"sound\":\"default\",\"idNotif\":\"' . $idNotif . '\",\"date\":\"' . $dateNotif . '\",\"smallIcon\":\"notificon\",\"largeIcon\":\"appicon.png\"}}"}';
-			} else if ($os == 'microsoft') {
-			}
-		} else {
-			if ($os == 'android' && $version == 1) {
-				$android = [
-					'notification' => [
-						'title' => $titre,
-						'body' => $message,
-						'channel_id' => 'default',
-						'color' => '#0000FF'
-					]
-				];
+    if ($token === null) {
+        $message = preg_replace("# {2,}#", " ", preg_replace("#(\r\n|\n\r|\n|\r)#", "\\\\\\n", $message));
+        if ($os == 'ios') {
+            $publish = '{"default": "test", "APNS": "{\"aps\":{\"content-available\":\"1\",' . $addAsk . '\"alert\": {\"title\":\"' . $titre . '\",\"body\":\"' . $message . '\"},\"badge\":\"' . $badge . '\",\"sound\":\"silence.caf\",\"date\":\"' . $dateNotif . '\",\"idNotif\":\"' . $idNotif . '\"}}"}';
+        } else if ($os == 'android') {
+            $publish = '{"default": "Erreur de texte de notification", "GCM": "{ \"notification\": {\"e\":0,\"title\":\"test\",\"body\":\"NotficationTEST\"},\"data\":{\"ticker\":\"test\",\"android_channel_id\":\"JEEDOM_CHANNEL\",\"notificationId\":\"' . $idNotif . '\",\"title\":\"' . $titre . '\",\"text\":\"' . $message . '\",' . $addAsk . '\"sound\":\"default\",\"idNotif\":\"' . $idNotif . '\",\"date\":\"' . $dateNotif . '\",\"smallIcon\":\"notificon\",\"largeIcon\":\"appicon.png\"}}"}';
+        }
+    } else {
+        if ($os == 'android' && $version == 1) {
+            $android = [
+                'notification' => [
+                    'title' => $titre,
+                    'body' => $message,
+                    'channel_id' => 'default',
+                    'color' => '#0000FF'
+                ]
+            ];
 
-				$data = [
-					'title' => $titre,
-					'text' => $message,
-					'idNotif' => strval($idNotif),
-					'channelId' => 'default',
-					'date' => $dateNotif
+            $data = [
+                'title' => $titre,
+                'text' => $message,
+                'idNotif' => strval($idNotif),
+                'channelId' => 'default',
+                'date' => $dateNotif
+            ];
 
-				];
+            $notification = [
+                'title' => $titre,
+                'body' => $message
+            ];
 
-				if ($photo != null) {
-					$notification = [
-						'title' => $titre,
-						'body' => $message,
-						'image' => $photo
-					];
-				} else {
-					$notification = [
-						'title' => $titre,
-						'body' => $message
-					];
-				}
+            if ($photo !== null) {
+                $notification['image'] = $photo;
+            }
 
-				$publish = [
-					'token' => $token,
-					'notification' => $notification,
-					'android' => $android,
-					'data' => $data
-				];
-			}
-			if ($version == 2) {
+            $publish = [
+                'token' => $token,
+                'notification' => $notification,
+                'android' => $android,
+                'data' => $data
+            ];
+        }
 
-				if ($addAsk != '') {
-					$askParams = [
-						'choices' => $answer,
-						'idVariable' => $optionsNotif['askVariable'],
-						'boxName' => config::byKey('name'),
-						'hwKey' => jeedom::getHardwareKey(),
-						'timeout' => (strtotime($timeout) - time()) * 1000,
-						'isBack' => false
-					];
-					$askParams = json_encode($askParams);
-				} else {
+        if ($version == 2) {
+            $askParams = $addAsk !== '' ? json_encode([
+                'choices' => $answer,
+                'idVariable' => $optionsNotif['askVariable'],
+                'boxName' => config::byKey('name'),
+                'hwKey' => jeedom::getHardwareKey(),
+                'timeout' => (strtotime($timeout) - time()) * 1000,
+                'isBack' => false
+            ]) : 'noAsk';
 
-					$askParams = 'noAsk';
-					$optionsNotif['askVariable'] = 'rien';
-				}
+            $optionsNotif['askParams'] = $askParams;
+            $channelId = $os == 'android' && $critical ? "critical" : "default";
+            $criticalString = $critical ? 'true' : 'false';
 
-				$optionsNotif['askParams'] = $askParams;
+            $customData = [
+                'title' => $titre,
+                'body' => $message,
+                'idNotif' => strval($idNotif),
+                'channelId' => $channelId,
+                'date' => $dateNotif,
+                'critical' => $criticalString,
+                'boxName' => config::byKey('name'),
+                'boxApiKey' => jeedom::getHardwareKey(),
+                'askParams' => $askParams,
+                'textToDisplay' => 'none'
+            ];
 
-				$channelId = "default";
-				if ($os == 'android' && $critical == true) {
-					$channelId = "critical";
-				}
-				if ($critical == true) {
-					$criticalString = 'true';
-				} else {
-					$criticalString = 'false';
-				}
-				$customData = [
-					'title' => $titre,
-					'body' => $message,
-					'idNotif' => strval($idNotif),
-					'channelId' => $channelId,
-					'date' => $dateNotif,
-					'critical' => $criticalString,
-					'boxName' => config::byKey('name'),
-					'boxApiKey' => jeedom::getHardwareKey(),
-					"askParams" => $askParams,
-					'textToDisplay' => 'none'
-				];
+            $notification = [
+                'title' => $titre,
+                'body' => $message
+            ];
 
-				$notification = [
-					'title' => $titre,
-					'body' => $message,
-				];
+            $data = array_merge($customData, $optionsNotif);
 
-				$data = array_merge($customData, $optionsNotif);
+            $android = [
+                'data' => $data,
+                'priority' => 'high'
+            ];
 
-				$android = [
-					'data' => $data,
-					'priority' => 'high'
-				];
+            $apns = [
+                'headers' => [
+                    'apns-priority' => '5',
+                    'apns-collapse-id' => strval($idNotif),
+                    'apns-push-type' => 'alert',
+                    'apns-topic' => 'com.jeedom.jeedomobile'
+                ],
+                'payload' => [
+                    'aps' => [
+                        'content-available' => true,
+                        'sound' => [
+                            'name' => 'default',
+                            'critical' => $critical
+                        ],
+                        'alert' => [
+                            'subtitle' => config::byKey('name'),
+                            'title' => $titre,
+                            'body' => $message
+                        ]
+                    ],
+                    'notifee_options' => [
+                        'ios' => [
+                            'sound' => 'default',
+                            'critical' => $critical,
+                            'foregroundPresentationOptions' => [
+                                'alert' => true,
+                                'badge' => true,
+                                'sound' => true
+                            ]
+                        ]
+                    ]
+                ]
+            ];
 
-				$apns = [
-					'headers' => [
-						'apns-priority' => '5',
-						'apns-collapse-id' => strval($idNotif),
-						'apns-push-type' => 'alert',
-						'apns-topic' => 'com.jeedom.jeedomobile'
-					],
-					'payload' => [
-						'aps' => [
-							'content-available' => true,
-							'sound' => [
-								'name' => 'default',
-								'critical' => $critical
-							],
-							'alert' => [
-								'subtitle' => config::byKey('name'),
-								'title' => $titre,
-								'body' => $message
-							]
-						],
-						'notifee_options' => [
-							'ios' => [
-								'sound' => 'default',
-								'critical' => $critical,
-								'foregroundPresentationOptions' => [
-									'alert' => true,
-									'badge' => true,
-									'sound' => true
-								]
-							]
-						]
-					]
+            if ($photo !== null) {
+                $data['image'] = $photo;
+                $apns['payload']['notifee_options']['image'] = $photo;
+                $apns['payload']['notifee_options']['ios']['attachments'] = [
+                    [
+                        'url' => $photo,
+                        'typeHint' => $optionsNotif['typeHint']
+                    ]
+                ];
+            }
 
-				];
+            $publish = $os == 'android' ? [
+                'token' => $token,
+                'android' => $android,
+                'data' => $data,
+            ] : [
+                'token' => $token,
+                'data' => $data,
+                'apns' => $apns
+            ];
 
+            $publishJson = [
+                'token' => $token,
+                'data' => $data,
+            ];
 
-				if ($photo != null) {
-					$data['image'] = $photo;
-					$apns['payload']['notifee_options']['image'] = $photo;
-					$apns['payload']['notifee_options']['ios']['attachments'] = [
-						[
-							'url' => $photo,
-							'typeHint' => $optionsNotif['typeHint']
-						]
-					];
-				}
+            if (isset($Iq)) {
+                $pathNotificationData = '/../data/notifications';
+                if (!is_dir(dirname(__FILE__) . $pathNotificationData)) {
+                    mkdir(dirname(__FILE__) . $pathNotificationData, 0775, true);
+                }
+                $filePath = dirname(__FILE__) . $pathNotificationData . '/' . $Iq . '.json';
 
-				if ($os == 'android') {
-					$publish = [
-						'token' => $token,
-						'android' => $android,
-						'data' => $data,
-					];
-				} else {
-					$publish = [
-						'token' => $token,
-						'data' => $data,
-						'apns' => $apns
-					];
-				}
+                if (!file_exists($filePath)) {
+                    file_put_contents($filePath, '');
+                }
+                $notificationsContent = file_get_contents($filePath);
+                $notifications = json_decode($notificationsContent, true) ?? [];
 
-				$publishJson = [
-					'token' => $token,
-					'data' => $data,
-				];
+                foreach ($notifications as &$notification) {
+                    if (isset($notification['data']['askParams'])) {
+                        $askParams = json_decode($notification['data']['askParams'], true);
+                        if ($askParams !== null && isset($askParams['timeout'])) {
+                            $askParams['timeout'] = 0;
+                            $notification['data']['askParams'] = json_encode($askParams);
+                        }
+                    }
+                }
 
-
-				if(isset($Iq)){
-						// SAVE NOTIFS IN JSON
-						$pathNotificationData = '/../data/notifications';
-						if (!is_dir(dirname(__FILE__) . $pathNotificationData)) {
-							mkdir(dirname(__FILE__) . $pathNotificationData, 0775, true);
-						}
-						$filePath = dirname(__FILE__) . $pathNotificationData . '/' . $Iq . '.json';
-
-						if (!file_exists($filePath)) {
-							file_put_contents($filePath, '');
-						}
-						$notificationsContent = file_get_contents($filePath);
-						$notifications = json_decode($notificationsContent, true);
-
-						if ($notifications === null) {
-							$notifications = array();
-						}
-
-						foreach ($notifications as &$notification) {
-							if (isset($notification['data']['askParams'])) {
-								$askParams = json_decode($notification['data']['askParams'], true);
-								if ($askParams !== null && isset($askParams['timeout'])) {
-									//log::add('mobile', 'debug', 'Timeout Ask remis à zero');
-									$askParams['timeout'] = 0;
-									$notification['data']['askParams'] = json_encode($askParams);
-								}
-							}
-						}
-
-						$notifications[$idNotif] = $publishJson;
-						log::add('mobile', 'debug', '||| [INFO] Notification enregistrée : ' . json_encode($notifications));
-						file_put_contents($filePath, json_encode($notifications));
-				}
-			
-			}
-		}
-		log::add('mobile', 'debug', '||| [INFO] JSON publish > ' . json_encode($publish));
-		log::add('mobile', 'debug', '||└────────────────────');
-		return $publish;
-	}
+                $notifications[$idNotif] = $publishJson;
+                log::add('mobile', 'debug', '||| [INFO] Notification enregistrée : ' . json_encode($notifications));
+                file_put_contents($filePath, json_encode($notifications));
+            }
+        }
+    }
+    log::add('mobile', 'debug', '||| [INFO] JSON publish > ' . json_encode($publish));
+    log::add('mobile', 'debug', '||└────────────────────');
+    return $publish;
+}
 
 	public static function notification($arn, $os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version = 1, $optionsNotif = [], $critical = false, $Iq = null)
 	{

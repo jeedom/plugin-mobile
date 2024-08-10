@@ -676,9 +676,9 @@ if ($jsonrpc->getMethod() == "syncBella") {
 if ($jsonrpc->getMethod() == 'getNotificationsFromFile') {
 	log::add('mobile', 'debug', '┌──────────▶︎ :fg-warning: Recuperation des Notifications :/fg: ──────────');
 	$Iq = $params['Iq'];
-	$retentionTime = $params['notifsTime'];
 	
-	if(isset($retentionTime)){
+	if(isset($params['notifsTime'])){
+		$retentionTime = $params['notifsTime'];
 		config::save('retentionTime', $retentionTime, 'mobile');
 		log::add('mobile', 'debug', '| Durée de retention actuelle : '. $retentionTime . ' jours');
 		$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60; 

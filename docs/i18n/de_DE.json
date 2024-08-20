@@ -2,6 +2,11 @@
     "changelog.md": {
         "Changelog App Mobile": "Changelog Mobile App",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Zur Erinnerung: Wenn keine Informationen zum Update vorhanden sind, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "04\/08\/2024": "08.04.2024",
+        "Prise en compte retention des notifications pour suppression des images": "Berücksichtigung der Aufbewahrung von Benachrichtigungen zum Löschen von Bildern",
+        "22\/07\/2024": "22.07.2024",
+        "Prise en compte retention des notifications": "Berücksichtigung der Aufbewahrung von Benachrichtigungen",
+        "Target Sdk 34 pour Android": "Target Sdk 34 für Android",
         "28\/05\/2024": "28.05.2024",
         "Modification Géolocalisation pour prochaine version App": "Geolokalisierungsänderung für die nächste App-Version",
         "Stockage Notifications dans le plugin": "Speicherbenachrichtigungen im Plugin",

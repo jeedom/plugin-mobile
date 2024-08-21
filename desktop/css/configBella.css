@@ -57,18 +57,23 @@
   height:100px;
   background-color:#ffffff;
   display:flex;
+  align-items: center;
+  align-content:center;
   border-radius:10px !important;
 }
 
 
-.firstSection {
+.firstSection, .secondSection {
   width:20% !important;
   display:flex;
   flex-direction:column;
   justify-content:center !important;
   z-index: 2;;
+  margin-left: 2px;
 
 }
+
+
 
 
 .selected {

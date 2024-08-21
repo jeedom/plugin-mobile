@@ -19,8 +19,6 @@ function initializeData(arrayInfosData, arrayObjectsData, carouselHtmlData) {
     }
     carouselHtml = carouselHtmlData;
 
-    console.log(arrayInfos, arrayObjects, carouselHtml);
-
     window.arrayInfos = arrayInfos;
     window.arrayObjects = arrayObjects;
     window.carouselHtml = carouselHtml;
@@ -254,15 +252,39 @@ function mainScript() {
         var splitIdTile = idTile.split('_');
         var numberTile = splitIdTile[0];
         configTileDiv.style.order = numberTile;
+
+        // Premier Select
         let firstSection = document.createElement('div');
         let label = document.createElement('label');
-        label.innerHTML = 'Choisir le type de template à appliquer';
+        label.innerHTML = 'Type de template à appliquer';
         firstSection.appendChild(label);
         firstSection.classList.add('firstSection');
         let firstSelect = document.createElement('select');
         firstSelect.setAttribute('id', 'firstSelect');
         firstSelect.setAttribute('style', 'margin-bottom: 10px;');
         configTileDiv.appendChild(firstSection);
+
+
+        // Second Select
+        let secondSection = document.createElement('div');
+        let labelSecondSection = document.createElement('label');
+        labelSecondSection.innerHTML = 'Icone';
+        secondSection.appendChild(labelSecondSection);
+        secondSection.classList.add('secondSection');
+
+        let chooseIconButton = document.createElement('a');
+        chooseIconButton.classList.add('btn', 'btn-default', 'btn-sm');
+        chooseIconButton.setAttribute('id', 'bt_chooseIcon');
+
+        let icon = document.createElement('i');
+        icon.classList.add('fas', 'fa-flag');
+        chooseIconButton.appendChild(icon);
+
+        let buttonText = document.createTextNode(' Choisir');
+        chooseIconButton.appendChild(buttonText);
+    
+        secondSection.appendChild(chooseIconButton);
+        configTileDiv.appendChild(secondSection);
       
         // ADD ANIMATIONS HOVER
         configTileDiv.addEventListener('mouseover', function() {
@@ -320,15 +342,57 @@ function mainScript() {
         firstSelect.addEventListener('change', function() {
           saveTileState(tileElement, idTile);
         });
+        // SecondSelect.addEventListener('change', function() {
+        //     saveTileState(tileElement, idTile);
+        //   });
       
         firstSection.appendChild(firstSelect);
+        // secondSection.appendChild(SecondSelect);
         document.getElementById('rightContent').appendChild(configTileDiv);
       
         // On restaure la tuile si il y a des infos sauvegardées
         if (tileStates[idTile]) {
           restoreTileState(tileElement, tileStates[idTile]);
         }
+
+        // Remplacer l'icone dans la tuile en cours 
+        document.getElementById('bt_chooseIcon')?.addEventListener('click', function() {
+            jeedomUtils.chooseIcon(function(_icon) {
+                let iconClassMatch = _icon.match(/class='([^']+)'/);
+                if (iconClassMatch && iconClassMatch[1]) {
+                    let iconClass = iconClassMatch[1];
+                    
+                    let upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`);    
+                    let iconElement = upLeftDiv.querySelector('i');
+                    iconElement.className = 'iconTile ' + iconClass;
+                }
+            });
+        });
+
       };
+
+
+    function saveTileState(tileElement, idTile) {
+    let configTileDiv = document.getElementById('configTileDiv' + idTile);
+    let selects = configTileDiv.getElementsByTagName('select');
+    let state = {};
+    for (let select of selects) {
+        state[select.id] = select.value;
+    }
+    tileStates[idTile] = state;
+    }
+    
+    function restoreTileState(tileElement, state) {
+    let configTileDiv = document.getElementById('configTileDiv' + tileElement.id);
+    for (let key in state) {
+        let select = configTileDiv.querySelector(`#${key}`);
+        if (select) {
+        select.value = state[key];
+        }
+    }
+    }
+
+
 
 //     const createConfigTile = (tileElement, idTile, randomColor, MODELS_CHOICE) => {
 //         // Création de la configTile
@@ -424,25 +488,6 @@ function mainScript() {
 
 
 
-  function saveTileState(tileElement, idTile) {
-    let configTileDiv = document.getElementById('configTileDiv' + idTile);
-    let selects = configTileDiv.getElementsByTagName('select');
-    let state = {};
-    for (let select of selects) {
-      state[select.id] = select.value;
-    }
-    tileStates[idTile] = state;
-  }
-  
-  function restoreTileState(tileElement, state) {
-    let configTileDiv = document.getElementById('configTileDiv' + tileElement.id);
-    for (let key in state) {
-      let select = configTileDiv.querySelector(`#${key}`);
-      if (select) {
-        select.value = state[key];
-      }
-    }
-  }
 
 
 

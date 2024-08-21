@@ -238,8 +238,10 @@ function mainScript() {
     }
 
 
+    let tileStates = {};
 
     const createConfigTile = (tileElement, idTile, randomColor, MODELS_CHOICE) => {
+        // Création de la configTile
         let configTileDiv = document.createElement('div');
         let bgDiv = document.createElement('div');
         bgDiv.classList.add('bgDiv');
@@ -247,88 +249,203 @@ function mainScript() {
         bgDiv.setAttribute('style', 'background-color:' + randomColor + ';');
         configTileDiv.appendChild(bgDiv);
         configTileDiv.classList.add('configTileDiv');
-        //configTileDiv.setAttribute('style', 'position: relative;overflow: hidden;padding-left:10px;margin-bottom:10px;width:100% !important;height:100px;background-color:#ffffff;display:flex;border-radius:10px !important;');
-        configTileDiv.setAttribute('id', 'configTileDiv'+idTile);
+        configTileDiv.setAttribute('id', 'configTileDiv' + idTile);
         configTileDiv.setAttribute('data-id', idTile);
         var splitIdTile = idTile.split('_');
         var numberTile = splitIdTile[0];
-        configTileDiv.style.order = numberTile; 
+        configTileDiv.style.order = numberTile;
         let firstSection = document.createElement('div');
         let label = document.createElement('label');
         label.innerHTML = 'Choisir le type de template à appliquer';
         firstSection.appendChild(label);
-        firstSection.classList.add('firstSection')
-       // firstSection.setAttribute('style', 'width:20% !important;display:flex;flex-direction:column;justify-content:center !important;');
+        firstSection.classList.add('firstSection');
         let firstSelect = document.createElement('select');
         firstSelect.setAttribute('id', 'firstSelect');
         firstSelect.setAttribute('style', 'margin-bottom: 10px;');
         configTileDiv.appendChild(firstSection);
-
+      
         // ADD ANIMATIONS HOVER
         configTileDiv.addEventListener('mouseover', function() {
-            var associatedTile = configTileDiv.getAttribute('data-id')
-            if (associatedTile) {
-              var associatedElement = document.getElementById(associatedTile);
-              associatedElement.style.zIndex = '10'; 
-              associatedElement.classList.add('bounceAndScale');
-              associatedElement.addEventListener('animationend', function() {
-                  this.classList.remove('bounceAndScale');
-              });
-              let bgDiv = document.querySelector(`.bgDiv[data-id="${associatedTile}"]`);
+          var associatedTile = configTileDiv.getAttribute('data-id');
+          if (associatedTile) {
+            var associatedElement = document.getElementById(associatedTile);
+            associatedElement.style.zIndex = '10';
+            associatedElement.classList.add('bounceAndScale');
+            associatedElement.addEventListener('animationend', function() {
+              this.classList.remove('bounceAndScale');
+            });
+            let bgDiv = document.querySelector(`.bgDiv[data-id="${associatedTile}"]`);
             bgDiv.style.transform = 'scale(20)';
-            }
+          }
         });
-      // REMOVE ANIMATIONS OUT HOVER
+      
+        // REMOVE ANIMATIONS OUT HOVER
         configTileDiv.addEventListener('mouseout', function() {
-          var associatedTile = configTileDiv.getAttribute('data-id')
+          var associatedTile = configTileDiv.getAttribute('data-id');
           if (associatedTile) {
             var associatedElement = document.getElementById(associatedTile);
             associatedElement.style.transform = 'scale(1.0)';
-            associatedElement.style.zIndex = '1'; 
+            associatedElement.style.zIndex = '1';
             let bgDiv = document.querySelector(`.bgDiv[data-id="${associatedTile}"]`);
             bgDiv.style.transform = 'scale(1)';
           }
-      });
-
-
-      tileElement.addEventListener('mouseover', function() {
-        let tileId = tileElement.getAttribute('id');
-        let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);     
-        if (bgDiv) { 
-          bgDiv.style.transform = 'scale(20)';
+        });
+      
+        tileElement.addEventListener('mouseover', function() {
+          let tileId = tileElement.getAttribute('id');
+          let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
+          if (bgDiv) {
+            bgDiv.style.transform = 'scale(20)';
+          }
+          tileElement.style.transform = 'scale(1.1)';
+        });
+      
+        tileElement.addEventListener('mouseout', function() {
+          let tileId = tileElement.getAttribute('id');
+          let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
+          if (bgDiv) {
+            bgDiv.style.transform = 'scale(1)';
+          }
+          tileElement.style.transform = 'scale(1.0)';
+        });
+      
+        MODELS_CHOICE.forEach(function(model) {
+          let option = document.createElement('option');
+          option.value = model.value;
+          option.text = model.text;
+          firstSelect.appendChild(option);
+        });
+      
+        // On sauvegarde les infos du select
+        firstSelect.addEventListener('change', function() {
+          saveTileState(tileElement, idTile);
+        });
+      
+        firstSection.appendChild(firstSelect);
+        document.getElementById('rightContent').appendChild(configTileDiv);
+      
+        // On restaure la tuile si il y a des infos sauvegardées
+        if (tileStates[idTile]) {
+          restoreTileState(tileElement, tileStates[idTile]);
         }
+      };
 
-        tileElement.style.transform = 'scale(1.1)';
-      });
+//     const createConfigTile = (tileElement, idTile, randomColor, MODELS_CHOICE) => {
+//         // Création de la configTile
+//         let configTileDiv = document.createElement('div');
+//         let bgDiv = document.createElement('div');
+//         bgDiv.classList.add('bgDiv');
+//         bgDiv.setAttribute('data-id', idTile);
+//         bgDiv.setAttribute('style', 'background-color:' + randomColor + ';');
+//         configTileDiv.appendChild(bgDiv);
+//         configTileDiv.classList.add('configTileDiv');
+//         //configTileDiv.setAttribute('style', 'position: relative;overflow: hidden;padding-left:10px;margin-bottom:10px;width:100% !important;height:100px;background-color:#ffffff;display:flex;border-radius:10px !important;');
+//         configTileDiv.setAttribute('id', 'configTileDiv'+idTile);
+//         configTileDiv.setAttribute('data-id', idTile);
+//         var splitIdTile = idTile.split('_');
+//         var numberTile = splitIdTile[0];
+//         configTileDiv.style.order = numberTile; 
+//         let firstSection = document.createElement('div');
+//         let label = document.createElement('label');
+//         label.innerHTML = 'Choisir le type de template à appliquer';
+//         firstSection.appendChild(label);
+//         firstSection.classList.add('firstSection')
+//        // firstSection.setAttribute('style', 'width:20% !important;display:flex;flex-direction:column;justify-content:center !important;');
+//         let firstSelect = document.createElement('select');
+//         firstSelect.setAttribute('id', 'firstSelect');
+//         firstSelect.setAttribute('style', 'margin-bottom: 10px;');
+//         configTileDiv.appendChild(firstSection);
 
-      tileElement.addEventListener('mouseout', function() {
-        let tileId = tileElement.getAttribute('id');
-        let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);     
-        if (bgDiv) { 
-          bgDiv.style.transform = 'scale(1)';
-        }
+//         // ADD ANIMATIONS HOVER
+//         configTileDiv.addEventListener('mouseover', function() {
+//             var associatedTile = configTileDiv.getAttribute('data-id')
+//             if (associatedTile) {
+//               var associatedElement = document.getElementById(associatedTile);
+//               associatedElement.style.zIndex = '10'; 
+//               associatedElement.classList.add('bounceAndScale');
+//               associatedElement.addEventListener('animationend', function() {
+//                   this.classList.remove('bounceAndScale');
+//               });
+//               let bgDiv = document.querySelector(`.bgDiv[data-id="${associatedTile}"]`);
+//             bgDiv.style.transform = 'scale(20)';
+//             }
+//         });
+//       // REMOVE ANIMATIONS OUT HOVER
+//         configTileDiv.addEventListener('mouseout', function() {
+//           var associatedTile = configTileDiv.getAttribute('data-id')
+//           if (associatedTile) {
+//             var associatedElement = document.getElementById(associatedTile);
+//             associatedElement.style.transform = 'scale(1.0)';
+//             associatedElement.style.zIndex = '1'; 
+//             let bgDiv = document.querySelector(`.bgDiv[data-id="${associatedTile}"]`);
+//             bgDiv.style.transform = 'scale(1)';
+//           }
+//       });
 
-        tileElement.style.transform = 'scale(1.0)';
-      });
 
-    //   tileElement.addEventListener('mouseout', function() {
-    //       let tileId = tileElement.getAttribute('id');
-    //       let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
-    //       bgDiv.style.transform = 'scale(1)';
-    //       tileElement.style.transform = 'scale(1.0)';
-    //   });
+//       tileElement.addEventListener('mouseover', function() {
+//         let tileId = tileElement.getAttribute('id');
+//         let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);     
+//         if (bgDiv) { 
+//           bgDiv.style.transform = 'scale(20)';
+//         }
+
+//         tileElement.style.transform = 'scale(1.1)';
+//       });
+
+//       tileElement.addEventListener('mouseout', function() {
+//         let tileId = tileElement.getAttribute('id');
+//         let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);     
+//         if (bgDiv) { 
+//           bgDiv.style.transform = 'scale(1)';
+//         }
+
+//         tileElement.style.transform = 'scale(1.0)';
+//       });
+
+//     //   tileElement.addEventListener('mouseout', function() {
+//     //       let tileId = tileElement.getAttribute('id');
+//     //       let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
+//     //       bgDiv.style.transform = 'scale(1)';
+//     //       tileElement.style.transform = 'scale(1.0)';
+//     //   });
 
                 
-      MODELS_CHOICE.forEach(function(model) {
-        let option = document.createElement('option');
-        option.value = model.value;
-        option.text = model.text;
-        firstSelect.appendChild(option);
-      });
-      firstSection.appendChild(firstSelect);
-      document.getElementById('rightContent').appendChild(configTileDiv);
+//       MODELS_CHOICE.forEach(function(model) {
+//         let option = document.createElement('option');
+//         option.value = model.value;
+//         option.text = model.text;
+//         firstSelect.appendChild(option);
+//       });
+//       firstSection.appendChild(firstSelect);
+//       document.getElementById('rightContent').appendChild(configTileDiv);
 
+//   }
+
+
+
+  function saveTileState(tileElement, idTile) {
+    let configTileDiv = document.getElementById('configTileDiv' + idTile);
+    let selects = configTileDiv.getElementsByTagName('select');
+    let state = {};
+    for (let select of selects) {
+      state[select.id] = select.value;
+    }
+    tileStates[idTile] = state;
   }
+  
+  function restoreTileState(tileElement, state) {
+    let configTileDiv = document.getElementById('configTileDiv' + tileElement.id);
+    for (let key in state) {
+      let select = configTileDiv.querySelector(`#${key}`);
+      if (select) {
+        select.value = state[key];
+      }
+    }
+  }
+
+
+
 
 tiles.forEach(function(tile) {
 
@@ -345,13 +462,12 @@ tiles.forEach(function(tile) {
       tiles.forEach(function(t) {
         t.classList.remove('activeTile');
         t.classList.add('on')
-        //tile.classList.add('desactivedTile');
       });
       tile.classList.add('activeTile');
-      //tile.classList.remove('desactivedTile');
-      if (tile.classList.contains('on')) {
-        tile.classList.remove('on');
-      }
+      tile.classList.remove('on');
+    //   if (tile.classList.contains('on')) {
+    //     tile.classList.remove('on');
+    //   }
     longClickOccurred = false;
      let idTile = tile.id;
      let tileElement = this;
@@ -365,15 +481,16 @@ tiles.forEach(function(tile) {
           return;
         }  
 
-       
- 
-        let randomColor = getRandomColor();
+        //let randomColor = getRandomColor();
         //tileElement.style.setProperty("background-color", randomColor, "important");
         var MODELS_CHOICE = [ {text :'Info', value:'Info'}, 
                               {text :'Meteo', value:'Meteo'}, 
                               {text :'Lumière', value:'OnOff'}
                             ];
             createConfigTile(tileElement, idTile, '#A9D534', MODELS_CHOICE);
+            if (tileStates[idTile]) {
+                restoreTileState(tileElement, tileStates[idTile]);
+              }
             return;
 
           bootbox.prompt({

@@ -3,6 +3,17 @@
 	display: none;
 }
 
+#modalDisplay{
+  background-color: rgb(var(--bg-color));
+}
+
+.activeTile{
+  background-color: #A9D534 !important;
+}
+
+.desactivedTile{
+  background-color: #FFFFFF !important;
+}
 
 @keyframes bounceAndScale {
     0%, 20%, 50%, 80%, 100% {

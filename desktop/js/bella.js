@@ -2,7 +2,7 @@
 var arrayInfos;
 var arrayObjects;
 var carouselHtml;
-
+var AJAX_URL = 'plugins/mobile/core/ajax/mobile.ajax.php';
 
 
 function initializeData(arrayInfosData, arrayObjectsData, carouselHtmlData) {
@@ -134,9 +134,9 @@ function updateDots2(specificDiv, tileId) {
 // updateDots();
 // updateDots2();
 
-if (typeof AJAX_URL === 'undefined') {
-    const AJAX_URL = 'plugins/mobile/core/ajax/mobile.ajax.php';
-}
+// if (typeof AJAX_URL === 'undefined') {
+//     const AJAX_URL = 'plugins/mobile/core/ajax/mobile.ajax.php';
+// }
 
 document.getElementById('validView').addEventListener('click', function(event) {
     event.preventDefault();
@@ -213,6 +213,12 @@ document.getElementById('validView').addEventListener('click', function(event) {
 
 function mainScript() {
 
+    // var btnClose = jeeDialog.get('#configBella', 'title').querySelector('button.btClose')
+    //   btnClose.addEventListener('click', function() {
+    //     location.reload()
+    // });
+
+
   if (typeof longClickOccurred === 'undefined') {
         var longClickOccurred = false;
     }
@@ -220,15 +226,11 @@ function mainScript() {
         var timer;
     }
 
-    // var btnClose = jeeDialog.get('#configBella', 'title').querySelector('button.btClose')
-    //   btnClose.addEventListener('click', function() {
-    //     location.reload()
-    // });
-
 
     var tiles = document.querySelectorAll('.tile');
 
     var colors = ["#94ca02", "#9fcf1b", "#a9d535", "#b4da4e", "#bfdf67", "#cae581", "#d4ea9a", "#dfefb3", "#eaf4cc", "#f4fae6"];
+    //#A9D534
 
     function getRandomColor() {
         var randomIndex = Math.floor(Math.random() * colors.length);
@@ -238,7 +240,6 @@ function mainScript() {
 
 
     const createConfigTile = (tileElement, idTile, randomColor, MODELS_CHOICE) => {
-        let carousels = tileElement.querySelector('.carousels');
         let configTileDiv = document.createElement('div');
         let bgDiv = document.createElement('div');
         bgDiv.classList.add('bgDiv');
@@ -290,20 +291,32 @@ function mainScript() {
       });
 
 
-
       tileElement.addEventListener('mouseover', function() {
-          let tileId = tileElement.getAttribute('id');
-          let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
+        let tileId = tileElement.getAttribute('id');
+        let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);     
+        if (bgDiv) { 
           bgDiv.style.transform = 'scale(20)';
-          tileElement.style.transform = 'scale(1.1)';
+        }
+
+        tileElement.style.transform = 'scale(1.1)';
       });
 
       tileElement.addEventListener('mouseout', function() {
-          let tileId = tileElement.getAttribute('id');
-          let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
+        let tileId = tileElement.getAttribute('id');
+        let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);     
+        if (bgDiv) { 
           bgDiv.style.transform = 'scale(1)';
-          tileElement.style.transform = 'scale(1.0)';
+        }
+
+        tileElement.style.transform = 'scale(1.0)';
       });
+
+    //   tileElement.addEventListener('mouseout', function() {
+    //       let tileId = tileElement.getAttribute('id');
+    //       let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
+    //       bgDiv.style.transform = 'scale(1)';
+    //       tileElement.style.transform = 'scale(1.0)';
+    //   });
 
                 
       MODELS_CHOICE.forEach(function(model) {
@@ -321,114 +334,46 @@ tiles.forEach(function(tile) {
 
   tile.dataset.state = null;
 
-  tile.addEventListener('mouseup', function(event) {
-
-    clearTimeout(timer); 
-    let carousels = tile.querySelector('.carousels');
-    //carousels.style.display = "flex";
-    let carouselFirstConfigElement = tile.querySelector('.carouselFirstConfig');
-    let carouselObjectsElement = tile.querySelector('.carouselObjects');
-    carouselFirstConfigElement.classList.toggle('hiddenElement');
-    carouselFirstConfigElement.classList.toggle('visibleElement');
-
-    carouselObjectsElement.classList.toggle('hiddenElement');
-    carouselObjectsElement.classList.toggle('visibleElement');
-    let divContainerCarousels = document.getElementById('containerCarousels');
-
-    if (!longClickOccurred && tile.classList.contains('selected')){
-        tile.classList.remove('1', 'dual', 'quadral');
-
-        if (tile.dataset.state === '1') {
-            tile.dataset.state = 'dual';
-        } else if (tile.dataset.state === 'dual') {
-            tile.dataset.state = 'quadral';
-        } else {
-            tile.dataset.state = '1';
+  tile.addEventListener('click', function() {
+    let rightContent = document.getElementById('rightContent');
+    let containerCarousels = document.getElementById('containerCarousels');
+    Array.from(rightContent.children).forEach(child => {
+        if (child !== containerCarousels) {
+          rightContent.removeChild(child);
         }
-
-        tile.classList.add(tile.dataset.state);
-    }else if (!tile.classList.contains('selected')) {
-        tiles.forEach(function(otherTile) {
-            if (otherTile !== tile) {
-              let idClone = otherTile.getAttribute('id');
-              let carouselsClone = divContainerCarousels.querySelector(`#carousels${idClone}`);
-              if(carouselsClone){
-                carouselsClone.style.display = "none";
-              }
-                otherTile.classList.remove('selected');
-                otherTile.dataset.state = null;
-            }
-        });
-        tile.classList.add('selected');
-        // if (carousels) {
-        //   let carouselClone = carousels.cloneNode(true);
-        //   let existingClone = divContainerCarousels.querySelector('#' + carouselClone.id);
-
-
-        //   if (!existingClone) {
-        //       let carouselClone = carousels.cloneNode(true);
-        //       carouselClone.style.display = "flex";
-        //       divContainerCarousels.appendChild(carouselClone);
-        //       changeImage(0, divContainerCarousels, carouselClone.id) 
-        //       // updateDots(divContainerCarousels, carouselClone.id);
-        //   }else{
-        //     existingClone.style.display = "flex";
-        //   }
-
-        // }
-
-        if (carousels) {
-              let existingClone = divContainerCarousels.querySelector('#' + carousels.id);
-
-              if (existingClone) {
-                  existingClone.classList.remove('fade-out');
-                  setTimeout(() => {
-                      existingClone.style.display = "flex";
-                      existingClone.classList.add('fade-in');
-                  }, 20);
-              } else {
-                  let carouselClone = carousels.cloneNode(true);
-                  carouselClone.style.display = "none"; 
-                  divContainerCarousels.appendChild(carouselClone);
-                  changeImageCarousel(0, divContainerCarousels, carouselClone.id) 
-                 // changeImageCarousel2(0, divContainerCarousels, carouselClone.id)
-                  // updateDots(divContainerCarousels, carouselClone.id);
-
-                  setTimeout(() => {
-                      carouselClone.style.display = "flex";
-                      carouselClone.classList.add('fade-in');
-                  }, 20);
-              }
-          }
-
-    }
-});
-
-
-  tile.addEventListener('mousedown', function(event) {
+      });
+      tiles.forEach(function(t) {
+        t.classList.remove('activeTile');
+        t.classList.add('on')
+        //tile.classList.add('desactivedTile');
+      });
+      tile.classList.add('activeTile');
+      //tile.classList.remove('desactivedTile');
+      if (tile.classList.contains('on')) {
+        tile.classList.remove('on');
+      }
     longClickOccurred = false;
      let idTile = tile.id;
      let tileElement = this;
 
      if (tile.classList.contains('selected')) {
-      timer = setTimeout(function() {
         longClickOccurred = true; 
         let existingConfigTileDiv = document.getElementById('configTileDiv' + idTile);
         if (existingConfigTileDiv){
           existingConfigTileDiv.remove();
-          tileElement.style.setProperty("background-color", 'white', "important");
+         // tileElement.style.setProperty("background-color", 'white', "important");
           return;
         }  
 
        
  
         let randomColor = getRandomColor();
-        tileElement.style.setProperty("background-color", randomColor, "important");
+        //tileElement.style.setProperty("background-color", randomColor, "important");
         var MODELS_CHOICE = [ {text :'Info', value:'Info'}, 
                               {text :'Meteo', value:'Meteo'}, 
                               {text :'Lumière', value:'OnOff'}
                             ];
-            createConfigTile(tileElement, idTile, randomColor, MODELS_CHOICE);
+            createConfigTile(tileElement, idTile, '#A9D534', MODELS_CHOICE);
             return;
 
           bootbox.prompt({
@@ -471,12 +416,149 @@ tiles.forEach(function(tile) {
 
             }
           })
-      }, 1000);
     } 
-      // tile.addEventListener('mouseup', function() {
-      //   clearTimeout(timer); 
-      // });
-    });
+  });
+
+  tile.addEventListener('mouseup', function(event) {
+
+    clearTimeout(timer); 
+    let carousels = tile.querySelector('.carousels');
+    //carousels.style.display = "flex";
+    let carouselFirstConfigElement = tile.querySelector('.carouselFirstConfig');
+    let carouselObjectsElement = tile.querySelector('.carouselObjects');
+    carouselFirstConfigElement.classList.toggle('hiddenElement');
+    carouselFirstConfigElement.classList.toggle('visibleElement');
+
+    carouselObjectsElement.classList.toggle('hiddenElement');
+    carouselObjectsElement.classList.toggle('visibleElement');
+    let divContainerCarousels = document.getElementById('containerCarousels');
+
+    if (!longClickOccurred && tile.classList.contains('selected')){
+        tile.classList.remove('1', 'dual', 'quadral');
+
+        if (tile.dataset.state === '1') {
+            tile.dataset.state = 'dual';
+        } else if (tile.dataset.state === 'dual') {
+            tile.dataset.state = 'quadral';
+        } else {
+            tile.dataset.state = '1';
+        }
+
+        tile.classList.add(tile.dataset.state);
+    }else if (!tile.classList.contains('selected')) {
+        tiles.forEach(function(otherTile) {
+            if (otherTile !== tile) {
+              let idClone = otherTile.getAttribute('id');
+              let carouselsClone = divContainerCarousels.querySelector(`#carousels${idClone}`);
+              if(carouselsClone){
+                carouselsClone.style.display = "none";
+              }
+                otherTile.classList.remove('selected');
+                otherTile.dataset.state = null;
+            }
+        });
+        tile.classList.add('selected');
+
+        if (carousels) {
+              let existingClone = divContainerCarousels.querySelector('#' + carousels.id);
+
+              if (existingClone) {
+                  existingClone.classList.remove('fade-out');
+                  setTimeout(() => {
+                      existingClone.style.display = "flex";
+                      existingClone.classList.add('fade-in');
+                  }, 20);
+              } else {
+                  let carouselClone = carousels.cloneNode(true);
+                  carouselClone.style.display = "none"; 
+                  divContainerCarousels.appendChild(carouselClone);
+                  changeImageCarousel(0, divContainerCarousels, carouselClone.id) 
+                 // changeImageCarousel2(0, divContainerCarousels, carouselClone.id)
+                  // updateDots(divContainerCarousels, carouselClone.id);
+
+                  setTimeout(() => {
+                      carouselClone.style.display = "flex";
+                      carouselClone.classList.add('fade-in');
+                  }, 20);
+              }
+          }
+
+    }
+});
+
+
+//   tile.addEventListener('mousedown', function() {
+//     longClickOccurred = false;
+//      let idTile = tile.id;
+//      let tileElement = this;
+
+//      if (tile.classList.contains('selected')) {
+//       timer = setTimeout(function() {
+//         longClickOccurred = true; 
+//         let existingConfigTileDiv = document.getElementById('configTileDiv' + idTile);
+//         if (existingConfigTileDiv){
+//           existingConfigTileDiv.remove();
+//           tileElement.style.setProperty("background-color", 'white', "important");
+//           return;
+//         }  
+
+       
+ 
+//         let randomColor = getRandomColor();
+//         tileElement.style.setProperty("background-color", randomColor, "important");
+//         var MODELS_CHOICE = [ {text :'Info', value:'Info'}, 
+//                               {text :'Meteo', value:'Meteo'}, 
+//                               {text :'Lumière', value:'OnOff'}
+//                             ];
+//             createConfigTile(tileElement, idTile, randomColor, MODELS_CHOICE);
+//             return;
+
+//           bootbox.prompt({
+//             title: "{{Choisir le type de template à appliquer}}",
+//             inputType: 'select',
+//             inputOptions: MODELS_CHOICE,
+//             className: 'slideInUp animated',
+//             // className: 'bootBoxClass',
+            
+//             callback: function(model) {
+//               if (model == null) {
+//                 return
+//               }
+//               var CHOICE_TYPECMD_TOSEARCH = [ {text :'Manuellement', value:'manualSearch'}, {text :'Generic Type', value:'genericType'}];
+
+//               bootbox.prompt({
+//                 title: "{{Choisir une commande manuellement ou via les generics types ? }}",
+//                 inputType: 'select',
+//                 inputOptions: CHOICE_TYPECMD_TOSEARCH,
+//                 className: 'slideInDown animated',
+//                 callback: function(choiceCmd) {
+//                   if (choiceCmd == null) {
+//                     return
+//                   }
+//                   if(choiceCmd == 'genericType'){
+//                     if(model == 'OnOff'){
+//                       bootBoxGenericTypeFunction(model, choiceCmd, tileElement).then(returnBootBox => {
+//                             console.log('returnBootBox', returnBootBox);
+//                         }).catch(error => {
+//                             console.error('Une erreur est survenue :', error);
+//                         });                
+//                     }
+
+//                   }else{
+//                     bootBoxAllCmds(model, choiceCmd, tileElement)
+//                   }
+//                 }})
+
+
+
+//             }
+//           })
+//       }, 1000);
+//     } 
+//       // tile.addEventListener('mouseup', function() {
+//       //   clearTimeout(timer); 
+//       // });
+//     });
 
 
    

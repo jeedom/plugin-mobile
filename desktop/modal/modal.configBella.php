@@ -46,19 +46,22 @@ foreach(jeeObject::all() as $object){
 
 ?>
 
-
+<body id="bodyBella">
 <div class="resumeBtn" style="display:flex;justify-content:flex-end;">
      <button class="btn btn-success" id="validView" style="border-radius:20px !important;padding-left:5px !important;padding-right:5px !important;margin-bottom:10px;">Valider la vue</button>
 </div>
 
-<div id="containerCarousels" style="height:30vh;width:100%;"><!-- INJECTION CAROUSELS --></div>
+
 
 <div id="main" style="display:flex;flex-direction:row;">
     <!-- INJECTION OF BELLA HTML -->
     <div style="display:flex;flex-direction:column;" id="bella-container"></div>
-    <div id="rightContent" style="width:100%;height;100vh;display:flex;flex-direction:column;align-items:center;"></div>
-</div>
+    <div id="rightContent" style="width:100%;height;100vh;display:flex;flex-direction:column;align-items:center;">
+        <div id="containerCarousels" style="height:30vh;width:100%;"><!-- INJECTION CAROUSELS --></div>
 
+    </div>
+</div>
+</body>
 <?php include_file('desktop', 'bella', 'js', 'mobile'); ?>
 
 <script>

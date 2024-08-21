@@ -166,7 +166,6 @@ $plugin_widget = mobile::$_pluginWidget;
 		<ul class="nav nav-tabs" role="tablist">
 			<li role="presentation"><a class="eqLogicAction cursor" aria-controls="home" role="tab" data-action="returnToThumbnailDisplay"><i class="fas fa-arrow-circle-left"></i></a></li>
 			<li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Mobile}}</a></li>
-			<li role="presentation"><a href="#notificationtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-mobile-alt"></i> {{Notifications}}</a></li>
 			<li role="presentation" class="saveTab"><a href="#sauvegardetab" aria-controls="sauvegarde" role="tab" data-toggle="tab"><i class="fas fa-check-circle"></i> {{Sauvegarde Mobile}}</a></li>
 			<li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list"></i> {{Commandes}}</a></li>
 		</ul>
@@ -251,38 +250,37 @@ $plugin_widget = mobile::$_pluginWidget;
 							<center>
 								<div class="qrCodeImg"></div>
 							</center>
-						</div>
-					</fieldset>
-				</form>
-			</div>
-			<div role="tabpanel" class="tab-pane" id="notificationtab">
-				<form class="form-horizontal">
-					<fieldset>
-						<div class="col-lg-6">
 							<legend><i class="fas fa-mobile-alt"></i> {{Notifications}}</legend>
 							<div class="form-group">
-								<label class="col-sm-4 control-label">{{Id Mobile}}</label>
+								<label class="col-sm-3 control-label">{{Id Mobile}}
+									<sup><i class="fas fa-question-circle" title="{{Id Mobile}}"></i></sup>
+								</label>
 								<div class="col-sm-8">
-									<input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="{{Iq}}" disabled />
-								</div>
-							</div>
-							<div class="form-group monitoringToDisable">
-								<label class="col-sm-4 control-label">{{ARN Mobile}}</label>
-								<div class="col-sm-8">
-									<input type="text" id="arnComplet" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notificationArn" placeholder="{{ARN}}" disabled />
+									<span type="text" class="eqLogicAttr label label-primary" data-l1key="logicalId" placeholder="{{Iq}}"></span>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-4 control-label">{{TOKEN Mobile}}</label>
+								<label class="col-sm-3 control-label">{{TOKEN Mobile}}
+									<sup><i class="fas fa-question-circle" title="{{TOKEN Mobile}}"></i></sup>
+								</label>
 								<div class="col-sm-8">
-									<input type="text" id="arnComplet" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notificationRegistrationToken" placeholder="{{TOKEN}}" disabled />
+									<span type="text" id="arnComplet" class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="notificationRegistrationToken" placeholder="{{TOKEN}}"></span>
 								</div>
 							</div>
 							<div class="form-group monitoringToDisable">
-								<label class="col-sm-4 control-label">{{ARN pour Monitoring}}</label>
+								<label class="col-sm-3 control-label">{{ARN Mobile}}
+									<sup><i class="fas fa-question-circle" title="{{ARN Mobile}}"></i></sup>
+								</label>
 								<div class="col-sm-8">
-									<input type="text" id="to-copy-monitoring" class="eqLogicAttr form-control" placeholder="{{ARN pour Monitoring}}" disabled />
-									<button class="btn btn-info eqLogicAction pull-right" id="copy-monitoring" type="button">{{Copier pour Monitoring}}</button>
+									<span type="text" id="arnComplet" class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="notificationArn" placeholder="{{ARN}}"></span>
+								</div>
+							</div>
+							<div class="form-group monitoringToDisable">
+								<label class="col-sm-3 control-label">{{ARN pour Monitoring}}
+									<sup><i class="fas fa-question-circle" title="{{ARN pour Monitoring}}"></i></sup>
+								</label>
+								<div class="col-sm-8">
+									<span type="text" id="to-copy-monitoring" class="eqLogicAttr label label-primary" placeholder="{{ARN pour Monitoring}}"></span>
 								</div>
 							</div>
 						</div>

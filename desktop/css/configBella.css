@@ -1,3 +1,9 @@
+
+#jeedomMenuBar, #modalTitle {
+	display: none;
+}
+
+
 @keyframes bounceAndScale {
     0%, 20%, 50%, 80%, 100% {
         transform: scale(1.0);

@@ -17,20 +17,17 @@
 if (typeof jeeDialog !== "undefined") {
 
 
-  document
-    .querySelector('#bt_bellaConfig')
-    ?.addEventListener("click", function (event) {
-      jeeDialog.dialog({
-        id: "configBella",
-        title: "{{Configuration WebView}}",
-        contentUrl: "index.php?v=d&plugin=mobile&modal=modal.configBella",
-        fullScreen: true
-      });
+  document.querySelector('#bt_bellaConfig')?.addEventListener("click", function () {
+    jeedomUtils.loadPage('index.php?v=d&p=modaldisplay&plugin=mobile&loadmodal=modal.configBella')
+      // jeeDialog.dialog({
+      //   id: "configBella",
+      //   title: "{{Configuration WebView}}",
+      //   contentUrl: "index.php?v=d&plugin=mobile&modal=modal.configBella",
+      //   fullScreen: true
+      // });
     });
   
-  document
-    .querySelector("#bt_pluguinmobile")
-    ?.addEventListener("click", function (event) {
+  document.querySelector("#bt_pluguinmobile")?.addEventListener("click", function () {
       jeeDialog.dialog({
         id: "pluginsCompatibles",
         title: "{{Plugins compatibles - Application V1}}",
@@ -38,9 +35,7 @@ if (typeof jeeDialog !== "undefined") {
       });
     });
 
-  document
-    .querySelector("#bt_piecemobile")
-    ?.addEventListener("click", function (event) {
+  document.querySelector("#bt_piecemobile")?.addEventListener("click", function () {
       jeeDialog.dialog({
         id: "objectsModal",
         title: "{{Objets / Pièces - Application V1}}",

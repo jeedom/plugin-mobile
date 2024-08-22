@@ -1370,102 +1370,97 @@ class mobile extends eqLogic
 		}
 	}
 
-	// FONCTIONS FOR BELLA
-	// public static function createSubArray($size, $type, $title, $icons, $iconBlur, $idTile) {
-	// 	return array( $idTile => array(
-	// 		'size' => $size,
-	// 		'type' => $type,
-	// 		'options' => array(
-	// 			'on' => 0,
-	// 			'title' => $title,
-	// 			'value' => null,
-	// 			'icons' => $icons,
-	// 			'iconBlur' => $iconBlur
-	// 		)
-	// 		)
-	// 	);
-	// }
+	// FONCTIONS FOR WEBVIEW BELLA
+	public static function jsonTransformForBella($configArray){
+		log::add('mobile', 'debug', 'jsonTransformForBella > ' . json_encode($configArray));
+		$data = json_decode($configArray, true);
+		$arrayBella = array();
 
-	public static function createSubArray($size, $type, $title, $icons, $iconBlur, $idTile, $idEvent = null, $actions = null) {
-		$subArray = array(
-			'size' => $size,
-			'type' => $type,
-			'idEvent' => $idEvent,
-			'options' => array(
-				'on' => 0,
-				'title' => $title,
-				'value' => null,
-				'icons' => $icons,
-				'iconBlur' => $iconBlur
-			)
-		);
-	
-		if ($idEvent !== null) {
-			$subArray['idEvent'] = $idEvent;
-		}
-	
-		if ($actions !== null) {
-			$subArray['options']['actions'] = $actions;
-		}
-	
-		return $subArray;
-	}
-	
-	public static function createMainArray($subArrays) {
-		log::add('mobile', 'debug', 'createMainArray > ' . json_encode($subArrays));
-		$mainArray = array();
-		$tempArray = array();
-		$sizeSum = 0;
-		$index = 0;
-	
-		foreach ($subArrays as $subArray) {
-			$sizeSum += $subArray['size'];
-			$tempArray[] = $subArray;
-			if ($sizeSum >= 4) {
-				$mainArray[$index] = $tempArray;
-				$tempArray = array();
-				$sizeSum = 0;
-				$index++;
+		foreach ($configArray as $key => $group) {
+			$arrayBella[$key] = array();
+			foreach ($group as $index => $tile) {
+				$arrayBella[$key][$index] = array(
+					'size' => intval($tile['size']),
+					'type' => $tile['type'],
+					'idEvent' => isset($tile['idEvent']) ? $tile['idEvent'] : null,
+					'options' => array(
+						'on' => $tile['options']['on'],
+						'title' => $tile['options']['title'],
+						'value' => $tile['options']['value'],
+						'icons' => array(
+							'on' => array(
+								'type' => $tile['options']['icons']['on']['type'],
+								'name' => $tile['options']['icons']['on']['name'],
+								'color' => $tile['options']['icons']['on']['color']
+							),
+							'off' => array(
+								'type' => $tile['options']['icons']['off']['type'],
+								'name' => $tile['options']['icons']['off']['name'],
+								'color' => $tile['options']['icons']['off']['color']
+							)
+						),
+						'actions' => array(
+							'on' => array(
+								'id' => $tile['options']['actions']['on']['id']
+							),
+							'off' => array(
+								'id' => $tile['options']['actions']['off']['id']
+							)
+						),
+						'iconBlur' => $tile['options']['iconBlur']
+					)
+				);
 			}
 		}
-	
-		if (!empty($tempArray)) {
-			$mainArray[$index] = $tempArray;
+
+
+
+		foreach ($arrayBella as $key => &$group) {
+			$group = array_values($group);
 		}
 
-		$formattedData = [];
-		foreach ($mainArray as $section) {
-			$formattedSection = [];
-			foreach ($section as $item) {
-				foreach ($item as $key => $value) {
-				$formattedSection[$key] = $value;
+
+		function encodeArrayBella($array) {
+			$result = '[';
+			$firstGroup = true;
+			$globalIndex = 0; 
+			foreach ($array as $group) {
+				if (!$firstGroup) {
+					$result .= ',';
 				}
-			}
-			$formattedData[] = $formattedSection;
-		}
-		//return $formattedData;
-
-	
-		return $mainArray;
-	}
-
-	function transformJson($mainArray) {
-		$result = [];
-	
-		foreach ($mainArray as $subArray) {
-			$formattedSection = new stdClass();
-			$index = 0;
-			foreach ($subArray as $item) {
-				foreach ($item as $key => $value) {
-					$formattedSection->$index = $value;
-					$index++;
+				$firstGroup = false;
+				$result .= '{';
+				$firstItem = true;
+				foreach ($group as $value) {
+					if (!$firstItem) {
+						$result .= ',';
+					}
+					$firstItem = false;
+					$result .= '"' . $globalIndex . '":' . json_encode($value);
+					$globalIndex++; 
 				}
+				$result .= '}';
 			}
-			$result[] = $formattedSection;
+			$result .= ']';
+			return $result;
 		}
-	
-		return json_encode($result);
-	}
+
+
+		$jsonToSave = encodeArrayBella($arrayBella);
+
+		log::add('mobile', 'debug', 'JSONSAVED ' . $jsonToSave);
+		$pathJsonBella = __DIR__ . '/../../data/jsonBella/';
+		if (!is_dir($pathJsonBella)) {
+			mkdir($pathJsonBella, 0777, true);
+		}
+		$pathJsonBella .= 'testBella.json';
+		file_put_contents($pathJsonBella, $jsonToSave);
+		$test = file_get_contents($pathJsonBella);
+		log::add('mobile', 'debug', 'JSONSAVED ' . $test);
+		return true;
+
+
+}
 	
 
 	/*	public function postRemove() {

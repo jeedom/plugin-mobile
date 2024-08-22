@@ -42,6 +42,13 @@ class bellaMobile extends eqLogic
     }
 
 
+    public static function getFinaljsonBella(){
+        $jsonBella = file_get_contents(__DIR__ . '/../../data/jsonBella/testBella.json');
+        log::add('mobile','debug','FINALJSONJSONBELLA ' . $jsonBella);
+        return $jsonBella;
+    }
+
+
 
     public static function jsonBella(){
         $arrayBella = array(

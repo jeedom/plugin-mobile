@@ -97,91 +97,16 @@ try {
 	// }
 
 	if (init('action') == 'createJsonBellaMobile') {
-	
-    log::add('mobile', 'debug', 'CONFIGARRAYENTER ' . json_encode($configArray));
+		
 
-	$configArray = init('config');
-	$data = json_decode($configArray, true);
-
-	$arrayBella = array();
-	foreach ($configArray as $key => $group) {
-		log::add('mobile', 'debug', 'GROUP ' . $key . ' CONTENT: ' . json_encode($group));
-		$arrayBella[$key] = array();
-		foreach ($group as $index => $tile) {
-			$arrayBella[$key][$index] = array(
-				'size' => intval($tile['size']),
-				'type' => $tile['type'],
-				'idEvent' => isset($tile['idEvent']) ? $tile['idEvent'] : null,
-				'options' => array(
-					'on' => $tile['options']['on'],
-					'title' => $tile['options']['title'],
-					'value' => $tile['options']['value'],
-					'icons' => array(
-						'on' => array(
-							'type' => $tile['options']['icons']['on']['type'],
-							'name' => $tile['options']['icons']['on']['name'],
-							'color' => $tile['options']['icons']['on']['color']
-						),
-						'off' => array(
-							'type' => $tile['options']['icons']['off']['type'],
-							'name' => $tile['options']['icons']['off']['name'],
-							'color' => $tile['options']['icons']['off']['color']
-						)
-					),
-					'actions' => array(
-						'on' => array(
-							'id' => $tile['options']['actions']['on']['id']
-						),
-						'off' => array(
-							'id' => $tile['options']['actions']['off']['id']
-						)
-					),
-					'iconBlur' => $tile['options']['iconBlur']
-				)
-			);
+		$configArray = init('config');
+		log::add('mobile', 'debug', 'CONFIGARRAYENTER ' . json_encode($configArray));
+		$return = mobile::jsonTransformForBella($configArray);
+		if($return){
+			ajax::success();
+		}else{
+			ajax::error();
 		}
-	}
-
-	foreach ($arrayBella as $key => &$group) {
-		$group = array_values($group);
-	}
-
-
-	function encodeArrayBella($array) {
-		$result = '[';
-		$firstGroup = true;
-		$globalIndex = 0; 
-		foreach ($array as $group) {
-			if (!$firstGroup) {
-				$result .= ',';
-			}
-			$firstGroup = false;
-			$result .= '{';
-			$firstItem = true;
-			foreach ($group as $value) {
-				if (!$firstItem) {
-					$result .= ',';
-				}
-				$firstItem = false;
-				$result .= '"' . $globalIndex . '":' . json_encode($value);
-				$globalIndex++; 
-			}
-			$result .= '}';
-		}
-		$result .= ']';
-		return $result;
-	}
-
-	$jsonToSave = encodeArrayBella($arrayBella);
-
-	log::add('mobile', 'debug', 'JSONSAVED ' . $jsonToSave);
-	$pathJsonBella = __DIR__ . '/../../data/jsonBella/';
-	if (!is_dir($pathJsonBella)) {
-		mkdir($pathJsonBella, 0777, true);
-	}
-	$pathJsonBella .= 'testBella.json';
-	file_put_contents($pathJsonBella, $jsonToSave);
-	ajax::success();
 	}
 
 

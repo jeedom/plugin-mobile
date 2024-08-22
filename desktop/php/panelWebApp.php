@@ -4,11 +4,12 @@ if (!isConnect()) {
   throw new Exception('{{401 - Accès non autorisé}}');
 }
 
-$jsonBella = file_get_contents(__DIR__ . '/../../data/jsonBella/testBella.json');
-log::add('mobile','debug','JSONBELLA ' . $jsonBella);
+
 $bellaOriginal = bellaMobile::jsonBella();
 log::add('mobile','debug','BELLAORIGINAL ' . $bellaOriginal);
-sendVarToJS('jsonBella', $jsonBella);
+$final = bellaMobile::getFinaljsonBella();
+log::add('mobile','debug','FINAL ' . $final);
+
 ?>
 
 
@@ -402,7 +403,7 @@ sendVarToJS('jsonBella', $jsonBella);
     //JEEDOM APP ENVOI BELLA : 
 
   // jeedom.appMobile.postToApp('createBella', <?php echo bellaMobile::jsonBella(); ?>);
-  jeedom.appMobile.postToApp('createBella',  <?php echo file_get_contents(__DIR__ . '/../../data/jsonBella/testBella.json'); ?>);
+  jeedom.appMobile.postToApp('createBella',  <?= bellaMobile::getFinaljsonBella(); ?>);
     
       jeedom.cmd.addUpdateFunction('11140', function(_options) {
         console.log('updateFUNCTION', _options);
@@ -427,51 +428,54 @@ sendVarToJS('jsonBella', $jsonBella);
   //     }}
   //   );
   // }, 1000);
-setTimeout(() => {
-  jeedom.appMobile.postToApp("updateBella",
-    {1: {
-        options: {
-          on: 1, 
-          value : "30% Allumée",
-          title:"Lumière de ta mere"
-      }}}
-  );
-}, 4000);
 
-setTimeout(() => {
-  jeedom.appMobile.postToApp("updateBella",
-    {2: {
-          options: {
-            on: 1, 
-            value : "22,5°C",
-          }
-      }}
-  );
-}, 2000);
 
-setTimeout(() => {
-  jeedom.appMobile.postToApp("updateBella",
-    {4: {
-        options: {
-          on: 1, 
-          value : "1 Personne",
-        }
-      }}
-  );
-}, 1000);
+  // WORK FOR UPDATE
+// setTimeout(() => {
+//   jeedom.appMobile.postToApp("updateBella",
+//     {1: {
+//         options: {
+//           on: 1, 
+//           value : "30% Allumée",
+//           title:"Lumière de ta mere"
+//       }}}
+//   );
+// }, 4000);
 
-setTimeout(() => {
-  jeedom.appMobile.postToApp("updateBella",
-    {
-      5: {
-        options: {
-          on: 1, 
-          value : "Il Pleut !",
-        }
-      }
-    }
-  );
-}, 1000);
+// setTimeout(() => {
+//   jeedom.appMobile.postToApp("updateBella",
+//     {2: {
+//           options: {
+//             on: 1, 
+//             value : "22,5°C",
+//           }
+//       }}
+//   );
+// }, 2000);
+
+// setTimeout(() => {
+//   jeedom.appMobile.postToApp("updateBella",
+//     {4: {
+//         options: {
+//           on: 1, 
+//           value : "1 Personne",
+//         }
+//       }}
+//   );
+// }, 1000);
+
+// setTimeout(() => {
+//   jeedom.appMobile.postToApp("updateBella",
+//     {
+//       5: {
+//         options: {
+//           on: 1, 
+//           value : "Il Pleut !",
+//         }
+//       }
+//     }
+//   );
+// }, 1000);
 
 document.addEventListener("DOMContentLoaded", function() {
     var cmdId = 7;

@@ -617,13 +617,12 @@ document.getElementById('validView').addEventListener('click', function(event) {
                 sizeAttribute = 1;
             }
         }
-        console.log('sizeAttribute', sizeAttribute)
         sizeAttribute = parseInt(sizeAttribute);
         var tileConfig;
         if (tile.hasAttribute('data-array')) {
             tileConfig = {
                 size: sizeAttribute,
-                type: 'info',
+                type: 'onOff',
                 idEvent: [5],
                 options: {
                     on: 0,
@@ -631,13 +630,13 @@ document.getElementById('validView').addEventListener('click', function(event) {
                     value: null,
                     icons: {
                         on: {
-                            type: "jeedomapp",
-                            name: tile.getAttribute('data-icon-on'),
+                            type: tile.getAttribute('data-library'),
+                            name: tile.getAttribute('data-icon'),
                             color: "#00ff00"
                         },
                         off: {
-                            type: "jeedomapp",
-                            name: tile.getAttribute('data-icon-off'),
+                            type: tile.getAttribute('data-library'),
+                            name: tile.getAttribute('data-icon'),
                             color: "#a4a4a3"
                         }
                     },
@@ -651,7 +650,7 @@ document.getElementById('validView').addEventListener('click', function(event) {
         } else {
             tileConfig = {
                 size: sizeAttribute,
-                type: 'info',
+                type: 'onOff',
                 idEvent: [5],
                 options: {
                     on: 0,
@@ -659,13 +658,14 @@ document.getElementById('validView').addEventListener('click', function(event) {
                     value: null,
                     icons: {
                         on: {
-                            type: "jeedomapp",
-                            name: tile.getAttribute('data-icon-on'),
+                            type: tile.getAttribute('data-library'),
+                            //type: "jeedomapp",
+                            name: tile.getAttribute('data-icon'),
                             color: "#00ff00"
                         },
                         off: {
-                            type: "jeedomapp",
-                            name: tile.getAttribute('data-icon-off'),
+                            type: tile.getAttribute('data-library'),
+                            name:  tile.getAttribute('data-icon'),
                             color: "#a4a4a3"
                         }
                     },
@@ -866,13 +866,18 @@ function mainScript() {
         // Remplacer l'icone dans la tuile en cours 
         document.getElementById('bt_chooseIcon')?.addEventListener('click', function() {
             jeedomUtils.chooseIcon(function(_icon) {
-                let iconClassMatch = _icon.match(/class='([^']+)'/);
-                if (iconClassMatch && iconClassMatch[1]) {
-                    let iconClass = iconClassMatch[1];
+                let iconClassMatch = _icon.match(/class='icon ([^-]+)-([^']+)'/);
+                if (iconClassMatch && iconClassMatch[1] && iconClassMatch[2]) {
+                    let libraryName = iconClassMatch[1];
+                    let iconClass = iconClassMatch[2];
                     
-                    let upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`);    
+                    let upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`); 
+                    let tile = document.querySelector(`.tile[id="${idTile}"]`);  
+                    tile.setAttribute('data-icon', iconClass);
+                    tile.setAttribute('data-library', libraryName);
                     let iconElement = upLeftDiv.querySelector('i');
-                    iconElement.className = 'iconTile ' + iconClass;
+                    iconElement.className = `iconTile ${libraryName}-${iconClass}`;
+                    
                 }
             });
         });

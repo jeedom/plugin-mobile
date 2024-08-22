@@ -661,12 +661,14 @@ document.getElementById('validView').addEventListener('click', function(event) {
                             type: tile.getAttribute('data-library'),
                             //type: "jeedomapp",
                             name: tile.getAttribute('data-icon'),
-                            color: "#00ff00"
+                            color:tile.getAttribute('data-color'),
+                            // color: "#00ff00"
                         },
                         off: {
                             type: tile.getAttribute('data-library'),
                             name:  tile.getAttribute('data-icon'),
-                            color: "#a4a4a3"
+                            color:tile.getAttribute('data-color'),
+                            //color: "#a4a4a3"
                         }
                     },
                     actions: {
@@ -864,23 +866,26 @@ function mainScript() {
         }
 
         // Remplacer l'icone dans la tuile en cours 
-        document.getElementById('bt_chooseIcon')?.addEventListener('click', function() {
-            jeedomUtils.chooseIcon(function(_icon) {
-                let iconClassMatch = _icon.match(/class='icon ([^-]+)-([^']+)'/);
-                if (iconClassMatch && iconClassMatch[1] && iconClassMatch[2]) {
-                    let libraryName = iconClassMatch[1];
-                    let iconClass = iconClassMatch[2];
-                    
-                    let upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`); 
-                    let tile = document.querySelector(`.tile[id="${idTile}"]`);  
-                    tile.setAttribute('data-icon', iconClass);
-                    tile.setAttribute('data-library', libraryName);
-                    let iconElement = upLeftDiv.querySelector('i');
-                    iconElement.className = `iconTile ${libraryName}-${iconClass}`;
-                    
-                }
-            });
+
+      document.getElementById('bt_chooseIcon')?.addEventListener('click', function() {
+        jeedomUtils.chooseIcon(function(_icon) {
+            let iconClassMatch = _icon.match(/class='icon ([^-]+)-([^ ]+)(?: (icon_[^']+))?'/);
+            if (iconClassMatch && iconClassMatch[1] && iconClassMatch[2]) {
+                let libraryName = iconClassMatch[1];
+                let iconClass = iconClassMatch[2];
+                let iconColor = iconClassMatch[3] ? iconClassMatch[3].replace('icon_', '') : '';
+    
+                let upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`);    
+                let tile = document.querySelector(`.tile[id="${idTile}"]`);  
+                tile.setAttribute('data-icon', iconClass);
+                tile.setAttribute('data-library', libraryName);
+                tile.setAttribute('data-color', iconColor);
+                
+                let iconElement = upLeftDiv.querySelector('i');
+                iconElement.className = `iconTile ${libraryName}-${iconClass} ${iconClassMatch[3] || ''}`.trim();
+            }
         });
+    });
 
       };
 

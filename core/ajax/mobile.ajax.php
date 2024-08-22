@@ -26,50 +26,162 @@ try {
 		throw new Exception(__('401 - Accès non autorisé', __FILE__));
 	}
 
-	if(init('action') == 'createJsonBellaMobile'){
-		$configArray = init('config');
-		$subArrays = array();
-		$currentIndex = 0;
-		$currentSizeSum = 0;
-		// foreach ($configArray as $idTile => $tileConfigs) {
-		// 	log::add('mobile','debug','TILECONFIGS ' . json_encode($tileConfigs));
-		// 	log::add('mobile','debug','IDTILE ' . $idTile);
-		// 	foreach ($tileConfigs as $tileConfig) {
-		// 		$size = $tileConfig['size'];
-		// 		$type = $tileConfig['type'];
-		// 		$title = $tileConfig['options']['title'];
-		// 		$icons = $tileConfig['options']['icons'];
-		// 		$iconBlur = $tileConfig['options']['iconBlur'];
-		// 		$subArrays[$currentIndex][] = mobile::createSubArray($size, $type, $title, $icons, $iconBlur, $idTile);
-		// 		$currentSizeSum += $size;
-		// 		if ($currentSizeSum >= 4) {
-		// 			$currentIndex++;
-		// 			$currentSizeSum = 0;
-		// 		}
-		// 	}
-		// }
-		foreach ($configArray as $idTile => $tileConfigs) {
-			log::add('mobile','debug','TILECONFIGS ' . json_encode($tileConfigs));
-			log::add('mobile','debug','IDTILE ' . $idTile);
-			foreach ($tileConfigs as $tileConfig) {
-				$size = $tileConfig['size'];
-				$type = $tileConfig['type'];
-				$title = $tileConfig['options']['title'];
-				$icons = $tileConfig['options']['icons'];
-				$iconBlur = $tileConfig['options']['iconBlur'];
-		
-				if ($currentSizeSum + $size > 4) {
-					$currentIndex++;
-					$currentSizeSum = 0;
-				}
-		
-				$subArrays[$currentIndex][] = mobile::createSubArray($size, $type, $title, $icons, $iconBlur, $idTile);
-				$currentSizeSum += $size;
-			}
+	// if(init('action') == 'createJsonBellaMobile'){
+	// 	$configArray = init('config');
+	// 	log::add('mobile','debug','CONFIGARRAYENTER ' . json_encode($configArray));
+	// 	$subArrays = array();
+	// 	$currentIndex = 0;
+	// 	$currentSizeSum = 0;
+	// 	foreach ($configArray as $idTile => $tileConfigs) {
+    //         log::add('mobile', 'debug', 'TILECONFIGS ' . json_encode($tileConfigs));
+    //         log::add('mobile', 'debug', 'IDTILE ' . $idTile);
+    //         // foreach ($tileConfigs as $tileConfig) {
+    //         //     $size = $tileConfig['size'];
+    //         //     $type = $tileConfig['type'];
+    //         //     $title = $tileConfig['options']['title'];
+    //         //     $icons = $tileConfig['options']['icons'];
+    //         //     $iconBlur = $tileConfig['options']['iconBlur'];
+    //         //     $subArrays[$currentIndex][] = mobile::createSubArray($size, $type, $title, $icons, $iconBlur, $idTile);
+    //         //     $currentSizeSum += $size;
+    //         //     if ($currentSizeSum >= 4) {
+    //         //         $currentIndex++;
+    //         //         $currentSizeSum = 0;
+    //         //     }
+    //         // }
+	// 		foreach ($tileConfigs as $tileConfig) {
+	// 			$size = $tileConfig['size'];
+	// 			$type = $tileConfig['type'];
+	// 			$title = $tileConfig['options']['title'];
+	// 			$icons = $tileConfig['options']['icons'];
+	// 			$iconBlur = $tileConfig['options']['iconBlur'];
+	// 			$idEvent = isset($tileConfig['idEvent']) ? $tileConfig['idEvent'] : null;
+	// 			$actions = isset($tileConfig['options']['actions']) ? $tileConfig['options']['actions'] : null;
+	// 			$subArrays[$currentIndex][$currentSizeSum] = mobile::createSubArray($size, $type, $title, $icons, $iconBlur, $idTile, $idEvent, $actions);
+	// 			$currentSizeSum++;
+	// 			if ($currentSizeSum >= 4) {
+	// 				$currentIndex++;
+	// 				$currentSizeSum = 0;
+					
+	// 			}
+	// 		}
+    //     }
+	// 	$structuredArray = [];
+	// 	foreach ($subArrays as $index => $subArray) {
+	// 		$structuredObject = [];
+	// 		foreach ($subArray as $key => $value) {
+	// 			$structuredObject[$key] = $value;
+	// 		}
+	// 		$structuredArray[] = $structuredObject;
+	// 	}
+
+	// 	// $structuredArray = [];
+	// 	// foreach ($subArrays as $index => $subArray) {
+	// 	// 	$structuredObject = [];
+	// 	// 	foreach ($subArray as $key => $value) {
+	// 	// 		$structuredObject[$key] = $value;
+	// 	// 	}
+	// 	// 	$structuredArray[] = $structuredObject;
+	// 	// }
+	
+
+    //     // $jsonToSave = mobile::transformJson($subArrays);
+	// 	$jsonToSave = json_encode($structuredArray);
+	// 	log::add('mobile','debug','JSONSAVED ' . $jsonToSave);
+	// 	$pathJsonBella = __DIR__ . '/../../data/jsonBella/';
+	// 	if(!is_dir($pathJsonBella)){
+	// 		mkdir($pathJsonBella, 0777, true);
+	// 	}
+	// 	$pathJsonBella .= 'testBella.json';
+	// 	file_put_contents($pathJsonBella, $jsonToSave);
+	// 	ajax::success();
+	// }
+
+	if (init('action') == 'createJsonBellaMobile') {
+	
+    log::add('mobile', 'debug', 'CONFIGARRAYENTER ' . json_encode($configArray));
+
+	$configArray = init('config');
+	$data = json_decode($configArray, true);
+
+	$arrayBella = array();
+	foreach ($configArray as $key => $group) {
+		log::add('mobile', 'debug', 'GROUP ' . $key . ' CONTENT: ' . json_encode($group));
+		$arrayBella[$key] = array();
+		foreach ($group as $index => $tile) {
+			$arrayBella[$key][$index] = array(
+				'size' => intval($tile['size']),
+				'type' => $tile['type'],
+				'idEvent' => isset($tile['idEvent']) ? $tile['idEvent'] : null,
+				'options' => array(
+					'on' => $tile['options']['on'],
+					'title' => $tile['options']['title'],
+					'value' => $tile['options']['value'],
+					'icons' => array(
+						'on' => array(
+							'type' => $tile['options']['icons']['on']['type'],
+							'name' => $tile['options']['icons']['on']['name'],
+							'color' => $tile['options']['icons']['on']['color']
+						),
+						'off' => array(
+							'type' => $tile['options']['icons']['off']['type'],
+							'name' => $tile['options']['icons']['off']['name'],
+							'color' => $tile['options']['icons']['off']['color']
+						)
+					),
+					'actions' => array(
+						'on' => array(
+							'id' => $tile['options']['actions']['on']['id']
+						),
+						'off' => array(
+							'id' => $tile['options']['actions']['off']['id']
+						)
+					),
+					'iconBlur' => $tile['options']['iconBlur']
+				)
+			);
 		}
-		$mainArray = mobile::createMainArray($subArrays);
-		log::add('mobile','debug','RETURNAJAX ' . json_encode($mainArray));
-		ajax::success();
+	}
+
+	foreach ($arrayBella as $key => &$group) {
+		$group = array_values($group);
+	}
+
+
+	function encodeArrayBella($array) {
+		$result = '[';
+		$firstGroup = true;
+		$globalIndex = 0; 
+		foreach ($array as $group) {
+			if (!$firstGroup) {
+				$result .= ',';
+			}
+			$firstGroup = false;
+			$result .= '{';
+			$firstItem = true;
+			foreach ($group as $value) {
+				if (!$firstItem) {
+					$result .= ',';
+				}
+				$firstItem = false;
+				$result .= '"' . $globalIndex . '":' . json_encode($value);
+				$globalIndex++; 
+			}
+			$result .= '}';
+		}
+		$result .= ']';
+		return $result;
+	}
+
+	$jsonToSave = encodeArrayBella($arrayBella);
+
+	log::add('mobile', 'debug', 'JSONSAVED ' . $jsonToSave);
+	$pathJsonBella = __DIR__ . '/../../data/jsonBella/';
+	if (!is_dir($pathJsonBella)) {
+		mkdir($pathJsonBella, 0777, true);
+	}
+	$pathJsonBella .= 'testBella.json';
+	file_put_contents($pathJsonBella, $jsonToSave);
+	ajax::success();
 	}
 
 

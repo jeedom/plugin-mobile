@@ -1371,10 +1371,26 @@ class mobile extends eqLogic
 	}
 
 	// FONCTIONS FOR BELLA
-	public static function createSubArray($size, $type, $title, $icons, $iconBlur, $idTile) {
-		return array( $idTile => array(
+	// public static function createSubArray($size, $type, $title, $icons, $iconBlur, $idTile) {
+	// 	return array( $idTile => array(
+	// 		'size' => $size,
+	// 		'type' => $type,
+	// 		'options' => array(
+	// 			'on' => 0,
+	// 			'title' => $title,
+	// 			'value' => null,
+	// 			'icons' => $icons,
+	// 			'iconBlur' => $iconBlur
+	// 		)
+	// 		)
+	// 	);
+	// }
+
+	public static function createSubArray($size, $type, $title, $icons, $iconBlur, $idTile, $idEvent = null, $actions = null) {
+		$subArray = array(
 			'size' => $size,
 			'type' => $type,
+			'idEvent' => $idEvent,
 			'options' => array(
 				'on' => 0,
 				'title' => $title,
@@ -1382,8 +1398,17 @@ class mobile extends eqLogic
 				'icons' => $icons,
 				'iconBlur' => $iconBlur
 			)
-			)
 		);
+	
+		if ($idEvent !== null) {
+			$subArray['idEvent'] = $idEvent;
+		}
+	
+		if ($actions !== null) {
+			$subArray['options']['actions'] = $actions;
+		}
+	
+		return $subArray;
 	}
 	
 	public static function createMainArray($subArrays) {
@@ -1407,12 +1432,41 @@ class mobile extends eqLogic
 		if (!empty($tempArray)) {
 			$mainArray[$index] = $tempArray;
 		}
+
+		$formattedData = [];
+		foreach ($mainArray as $section) {
+			$formattedSection = [];
+			foreach ($section as $item) {
+				foreach ($item as $key => $value) {
+				$formattedSection[$key] = $value;
+				}
+			}
+			$formattedData[] = $formattedSection;
+		}
+		//return $formattedData;
+
 	
 		return $mainArray;
 	}
 
+	function transformJson($mainArray) {
+		$result = [];
 	
-
+		foreach ($mainArray as $subArray) {
+			$formattedSection = new stdClass();
+			$index = 0;
+			foreach ($subArray as $item) {
+				foreach ($item as $key => $value) {
+					$formattedSection->$index = $value;
+					$index++;
+				}
+			}
+			$result[] = $formattedSection;
+		}
+	
+		return json_encode($result);
+	}
+	
 
 	/*	public function postRemove() {
 		$eqId = $this->getId();

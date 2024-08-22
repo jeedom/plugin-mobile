@@ -136,77 +136,588 @@ function updateDots2(specificDiv, tileId) {
 //     const AJAX_URL = 'plugins/mobile/core/ajax/mobile.ajax.php';
 // }
 
+// document.getElementById('validView').addEventListener('click', function(event) {
+//     event.preventDefault();
+//     var tiles = document.querySelectorAll('.tile');
+//     var config = [];
+//     tiles.forEach(function(tile) {
+//       let idTile = tile.id;
+//       let sizeAttribute = tile.getAttribute('data-state');
+//       if (!sizeAttribute || sizeAttribute == undefined || sizeAttribute == "null") {
+//           if (tile.classList.contains('dual')) {
+//               sizeAttribute = 2;
+//           } else if (tile.classList.contains('quadral')) {
+//               sizeAttribute = 4;
+//           } else {
+//               sizeAttribute = 1;
+//           }
+//       }
+//       console.log('sizeAttribute', sizeAttribute)
+//       var tileConfig;
+//       if (tile.hasAttribute('data-array')) {
+//         // tileConfig = JSON.parse(tile.getAttribute('data-array'));
+//         tileConfig = {
+//             size: sizeAttribute ,
+//             type: 'info',
+//             idEvent: tile.getAttribute('data-id'),
+//             options: {
+//               on: 0,
+//               title: tile.getAttribute('data-title'),
+//               value: null,
+//               icons: {
+//                 on: {
+//                   type: "jeedomapp",
+//                   name: tile.getAttribute('data-icon-on'),
+//                   color: "#00ff00"
+//                 },
+//                 off: {
+//                   type: "jeedomapp",
+//                   name: tile.getAttribute('data-icon-off'),
+//                   color: "#a4a4a3"
+//                 }
+//               },
+//               actions:{
+//                 on:{id:8},
+//                 off:{id:9}
+//               },
+//               iconBlur: false
+//             }
+//           };
+//       } else {
+//         tileConfig = {
+//             size: sizeAttribute ,
+//             type: 'info',
+//             idEvent: tile.getAttribute('data-id'),
+//             options: {
+//               on: 0,
+//               title: tile.getAttribute('data-title'),
+//               value: null,
+//               icons: {
+//                 on: {
+//                   type: "jeedomapp",
+//                   name: tile.getAttribute('data-icon-on'),
+//                   color: "#00ff00"
+//                 },
+//                 off: {
+//                   type: "jeedomapp",
+//                   name: tile.getAttribute('data-icon-off'),
+//                   color: "#a4a4a3"
+//                 }
+//               },
+//               actions:{
+//                 on:{id:8},
+//                 off:{id:9}
+//               },
+//               iconBlur: false
+//             }
+//           };
+//     }
+//       if (!config[idTile]) {
+//         config[idTile] = [];
+//       }
+//       config[idTile].push(tileConfig);
+//     });
+ 
+
+//     $.ajax({
+//       type: 'POST',
+//       url: 'plugins/mobile/core/ajax/mobile.ajax.php',
+//       data: {
+//         action: 'createJsonBellaMobile',
+//         config: config 
+//       },
+//       dataType: 'json',
+//       error: function(request, status, error) {
+//         handleAjaxError(request, status, error);
+//       },
+//       success: function(data) {
+//         if (data.state != 'ok') {
+//           $('#div_alert').showAlert({message: data.result, level: 'danger'});
+//           return;
+//         }
+//         $('#div_alert').showAlert({message: '{{Configuration sauvegardée}}', level: 'success'});
+//       }
+//     });
+  
+// });
+
+
+// TEST
+// document.getElementById('validView').addEventListener('click', function(event) {
+//     event.preventDefault();
+//     var tiles = document.querySelectorAll('.tile');
+//     var config = [];
+//     var currentObject = {};
+//     var currentSize = 0;
+
+//     tiles.forEach(function(tile) {
+//         let idTile = tile.id;
+//         let sizeAttribute = tile.getAttribute('data-state');
+//         if (!sizeAttribute || sizeAttribute == undefined || sizeAttribute == "null") {
+//             if (tile.classList.contains('dual')) {
+//                 sizeAttribute = 2;
+//             } else if (tile.classList.contains('quadral')) {
+//                 sizeAttribute = 4;
+//             } else {
+//                 sizeAttribute = 1;
+//             }
+//         }
+//         console.log('sizeAttribute', sizeAttribute)
+//         var tileConfig;
+//         if (tile.hasAttribute('data-array')) {
+//             tileConfig = {
+//                 size: sizeAttribute,
+//                 type: 'info',
+//                 idEvent: tile.getAttribute('data-id'),
+//                 options: {
+//                     on: 0,
+//                     title: tile.getAttribute('data-title'),
+//                     value: null,
+//                     icons: {
+//                         on: {
+//                             type: "jeedomapp",
+//                             name: tile.getAttribute('data-icon-on'),
+//                             color: "#00ff00"
+//                         },
+//                         off: {
+//                             type: "jeedomapp",
+//                             name: tile.getAttribute('data-icon-off'),
+//                             color: "#a4a4a3"
+//                         }
+//                     },
+//                     actions: {
+//                         on: { id: 8 },
+//                         off: { id: 9 }
+//                     },
+//                     iconBlur: false
+//                 }
+//             };
+//         } else {
+//             tileConfig = {
+//                 size: sizeAttribute,
+//                 type: 'info',
+//                 idEvent: tile.getAttribute('data-id'),
+//                 options: {
+//                     on: 0,
+//                     title: tile.getAttribute('data-title'),
+//                     value: null,
+//                     icons: {
+//                         on: {
+//                             type: "jeedomapp",
+//                             name: tile.getAttribute('data-icon-on'),
+//                             color: "#00ff00"
+//                         },
+//                         off: {
+//                             type: "jeedomapp",
+//                             name: tile.getAttribute('data-icon-off'),
+//                             color: "#a4a4a3"
+//                         }
+//                     },
+//                     actions: {
+//                         on: { id: 8 },
+//                         off: { id: 9 }
+//                     },
+//                     iconBlur: false
+//                 }
+//             };
+//         }
+
+//         if (currentSize + parseInt(sizeAttribute) >= 4) {
+//             config.push(currentObject);
+//             currentObject = {};
+//             currentSize = 0;
+//         }
+
+//         currentObject[idTile] = tileConfig;
+//         currentSize += parseInt(sizeAttribute);
+//     });
+
+//     if (Object.keys(currentObject).length > 0) {
+//         config.push(currentObject);
+//     }
+
+//     $.ajax({
+//         type: 'POST',
+//         url: 'plugins/mobile/core/ajax/mobile.ajax.php',
+//         data: {
+//             action: 'createJsonBellaMobile',
+//             config: config
+//         },
+//         dataType: 'json',
+//         error: function(request, status, error) {
+//             handleAjaxError(request, status, error);
+//         },
+//         success: function(data) {
+//             if (data.state != 'ok') {
+//                 $('#div_alert').showAlert({ message: data.result, level: 'danger' });
+//                 return;
+//             }
+//             $('#div_alert').showAlert({ message: '{{Configuration sauvegardée}}', level: 'success' });
+//         }
+//     });
+
+// });
+
+// document.getElementById('validView').addEventListener('click', function(event) {
+//     event.preventDefault();
+//     var tiles = document.querySelectorAll('.tile');
+//     var config = [];
+//     var currentObject = {};
+//     var currentSize = 0;
+//     var currentIndex = 0;
+
+//     tiles.forEach(function(tile) {
+//         let idTile = tile.id;
+//         let sizeAttribute = tile.getAttribute('data-state');
+//         if (!sizeAttribute || sizeAttribute == undefined || sizeAttribute == "null") {
+//             if (tile.classList.contains('dual')) {
+//                 sizeAttribute = 2;
+//             } else if (tile.classList.contains('quadral')) {
+//                 sizeAttribute = 4;
+//             } else {
+//                 sizeAttribute = 1;
+//             }
+//         }
+//         console.log('sizeAttribute', sizeAttribute)
+//         var tileConfig;
+//         if (tile.hasAttribute('data-array')) {
+//             tileConfig = {
+//                 size: sizeAttribute,
+//                 type: 'info',
+//                 idEvent: tile.getAttribute('data-id'),
+//                 options: {
+//                     on: 0,
+//                     title: tile.getAttribute('data-title'),
+//                     value: null,
+//                     icons: {
+//                         on: {
+//                             type: "jeedomapp",
+//                             name: tile.getAttribute('data-icon-on'),
+//                             color: "#00ff00"
+//                         },
+//                         off: {
+//                             type: "jeedomapp",
+//                             name: tile.getAttribute('data-icon-off'),
+//                             color: "#a4a4a3"
+//                         }
+//                     },
+//                     actions: {
+//                         on: { id: 8 },
+//                         off: { id: 9 }
+//                     },
+//                     iconBlur: false
+//                 }
+//             };
+//         } else {
+//             tileConfig = {
+//                 size: sizeAttribute,
+//                 type: 'info',
+//                 idEvent: tile.getAttribute('data-id'),
+//                 options: {
+//                     on: 0,
+//                     title: tile.getAttribute('data-title'),
+//                     value: null,
+//                     icons: {
+//                         on: {
+//                             type: "jeedomapp",
+//                             name: tile.getAttribute('data-icon-on'),
+//                             color: "#00ff00"
+//                         },
+//                         off: {
+//                             type: "jeedomapp",
+//                             name: tile.getAttribute('data-icon-off'),
+//                             color: "#a4a4a3"
+//                         }
+//                     },
+//                     actions: {
+//                         on: { id: 8 },
+//                         off: { id: 9 }
+//                     },
+//                     iconBlur: false
+//                 }
+//             };
+//         }
+
+//         if (currentSize + parseInt(sizeAttribute) >= 4) {
+//             config.push(currentObject);
+//             currentObject = {};
+//             currentSize = 0;
+//             currentIndex++;
+//         }
+
+//         currentObject[currentIndex] = tileConfig;
+//         currentSize += parseInt(sizeAttribute);
+//         currentIndex++;
+//     });
+
+//     if (Object.keys(currentObject).length > 0) {
+//         config.push(currentObject);
+//     }
+
+//     $.ajax({
+//         type: 'POST',
+//         url: 'plugins/mobile/core/ajax/mobile.ajax.php',
+//         data: {
+//             action: 'createJsonBellaMobile',
+//             config: config
+//         },
+//         dataType: 'json',
+//         error: function(request, status, error) {
+//             handleAjaxError(request, status, error);
+//         },
+//         success: function(data) {
+//             if (data.state != 'ok') {
+//                 $('#div_alert').showAlert({ message: data.result, level: 'danger' });
+//                 return;
+//             }
+//             $('#div_alert').showAlert({ message: '{{Configuration sauvegardée}}', level: 'success' });
+//         }
+//     });
+
+// });
+
+// document.getElementById('validView').addEventListener('click', function(event) {
+//     event.preventDefault();
+//     var tiles = document.querySelectorAll('.tile');
+//     var config = [];
+//     var currentObject = {};
+//     var currentSize = 0;
+//     var globalIndex = 0;
+
+//     tiles.forEach(function(tile) {
+//         let idTile = tile.id;
+//         let sizeAttribute = tile.getAttribute('data-state');
+//         if (!sizeAttribute || sizeAttribute == undefined || sizeAttribute == "null") {
+//             if (tile.classList.contains('dual')) {
+//                 sizeAttribute = 2;
+//             } else if (tile.classList.contains('quadral')) {
+//                 sizeAttribute = 4;
+//             } else {
+//                 sizeAttribute = 1;
+//             }
+//         }
+//         console.log('sizeAttribute', sizeAttribute)
+//         var tileConfig;
+//         if (tile.hasAttribute('data-array')) {
+//             tileConfig = {
+//                 size: sizeAttribute,
+//                 type: 'info',
+//                 idEvent: 5,
+//                 options: {
+//                     on: 0,
+//                     title: tile.getAttribute('data-title'),
+//                     value: null,
+//                     icons: {
+//                         on: {
+//                             type: "jeedomapp",
+//                             name: tile.getAttribute('data-icon-on'),
+//                             color: "#00ff00"
+//                         },
+//                         off: {
+//                             type: "jeedomapp",
+//                             name: tile.getAttribute('data-icon-off'),
+//                             color: "#a4a4a3"
+//                         }
+//                     },
+//                     actions: {
+//                         on: { id: 8 },
+//                         off: { id: 9 }
+//                     },
+//                     iconBlur: false
+//                 }
+//             };
+//         } else {
+//             tileConfig = {
+//                 size: sizeAttribute,
+//                 type: 'info',
+//                 idEvent: 5,
+//                 options: {
+//                     on: 0,
+//                     title: tile.getAttribute('data-title'),
+//                     value: null,
+//                     icons: {
+//                         on: {
+//                             type: "jeedomapp",
+//                             name: tile.getAttribute('data-icon-on'),
+//                             color: "#00ff00"
+//                         },
+//                         off: {
+//                             type: "jeedomapp",
+//                             name: tile.getAttribute('data-icon-off'),
+//                             color: "#a4a4a3"
+//                         }
+//                     },
+//                     actions: {
+//                         on: { id: 8 },
+//                         off: { id: 9 }
+//                     },
+//                     iconBlur: false
+//                 }
+//             };
+//         }
+
+//         if (currentSize + parseInt(sizeAttribute) >= 4) {
+//             config.push(currentObject);
+//             currentObject = {};
+//             currentSize = 0;
+//         }
+
+//         currentObject[globalIndex] = tileConfig;
+//         currentSize += parseInt(sizeAttribute);
+//         globalIndex++;
+//     });
+//     if (currentObject.length > 0) {
+//         config.push(currentObject);
+//     }
+
+//     var finalConfig = {};
+//     config.forEach(function(obj, index) {
+//         finalConfig[index.toString()] = obj;
+//     });
+
+//    console.log('finalConfig', finalConfig);
+//     $.ajax({
+//         type: 'POST',
+//         url: 'plugins/mobile/core/ajax/mobile.ajax.php',
+//         data: {
+//             action: 'createJsonBellaMobile',
+//             config: finalConfig
+//         },
+//         dataType: 'json',
+//         error: function(request, status, error) {
+//             handleAjaxError(request, status, error);
+//         },
+//         success: function(data) {
+//             if (data.state != 'ok') {
+//                 $('#div_alert').showAlert({ message: data.result, level: 'danger' });
+//                 return;
+//             }
+//             $('#div_alert').showAlert({ message: '{{Configuration sauvegardée}}', level: 'success' });
+//         }
+//     });
+
+// });
+
 document.getElementById('validView').addEventListener('click', function(event) {
     event.preventDefault();
     var tiles = document.querySelectorAll('.tile');
     var config = [];
-    tiles.forEach(function(tile) {
-      let idTile = tile.id;
-      let sizeAttribute = tile.getAttribute('data-state');
-      if (!sizeAttribute || sizeAttribute == undefined || sizeAttribute == "null") {
-          if (tile.classList.contains('dual')) {
-              sizeAttribute = 2;
-          } else if (tile.classList.contains('quadral')) {
-              sizeAttribute = 4;
-          } else {
-              sizeAttribute = 1;
-          }
-      }
-      console.log('sizeAttribute', sizeAttribute)
-      var tileConfig;
-      if (tile.hasAttribute('data-array')) {
-        tileConfig = JSON.parse(tile.getAttribute('data-array'));
-      } else {
-         tileConfig = {
-          size: sizeAttribute ,
-          type: 'info',
-          options: {
-            on: 0,
-            title: tile.getAttribute('data-title'),
-            value: null,
-            icons: {
-              on: {
-                type: "jeedomapp",
-                name: tile.getAttribute('data-icon-on'),
-                color: "#00ff00"
-              },
-              off: {
-                type: "jeedomapp",
-                name: tile.getAttribute('data-icon-off'),
-                color: "#a4a4a3"
-              }
-            },
-            iconBlur: false
-          }
-        };
-    }
-      if (!config[idTile]) {
-        config[idTile] = [];
-      }
-      config[idTile].push(tileConfig);
-    });
- 
+    var currentObject = [];
+    var currentSize = 0;
 
-    $.ajax({
-      type: 'POST',
-      url: 'plugins/mobile/core/ajax/mobile.ajax.php',
-      data: {
-        action: 'createJsonBellaMobile',
-        config: config
-      },
-      dataType: 'json',
-      error: function(request, status, error) {
-        handleAjaxError(request, status, error);
-      },
-      success: function(data) {
-        if (data.state != 'ok') {
-          $('#div_alert').showAlert({message: data.result, level: 'danger'});
-          return;
+    tiles.forEach(function(tile) {
+        let idTile = tile.id;
+        let sizeAttribute = tile.getAttribute('data-state');
+        if (!sizeAttribute || sizeAttribute == undefined || sizeAttribute == "null") {
+            if (tile.classList.contains('dual')) {
+                sizeAttribute = 2;
+            } else if (tile.classList.contains('quadral')) {
+                sizeAttribute = 4;
+            } else {
+                sizeAttribute = 1;
+            }
         }
-        $('#div_alert').showAlert({message: '{{Configuration sauvegardée}}', level: 'success'});
-      }
+        console.log('sizeAttribute', sizeAttribute)
+        sizeAttribute = parseInt(sizeAttribute);
+        var tileConfig;
+        if (tile.hasAttribute('data-array')) {
+            tileConfig = {
+                size: sizeAttribute,
+                type: 'info',
+                idEvent: [5],
+                options: {
+                    on: 0,
+                    title: tile.getAttribute('data-title'),
+                    value: null,
+                    icons: {
+                        on: {
+                            type: "jeedomapp",
+                            name: tile.getAttribute('data-icon-on'),
+                            color: "#00ff00"
+                        },
+                        off: {
+                            type: "jeedomapp",
+                            name: tile.getAttribute('data-icon-off'),
+                            color: "#a4a4a3"
+                        }
+                    },
+                    actions: {
+                        on: { id: 8 },
+                        off: { id: 9 }
+                    },
+                    iconBlur: false
+                }
+            };
+        } else {
+            tileConfig = {
+                size: sizeAttribute,
+                type: 'info',
+                idEvent: [5],
+                options: {
+                    on: 0,
+                    title: tile.getAttribute('data-title'),
+                    value: null,
+                    icons: {
+                        on: {
+                            type: "jeedomapp",
+                            name: tile.getAttribute('data-icon-on'),
+                            color: "#00ff00"
+                        },
+                        off: {
+                            type: "jeedomapp",
+                            name: tile.getAttribute('data-icon-off'),
+                            color: "#a4a4a3"
+                        }
+                    },
+                    actions: {
+                        on: { id: 8 },
+                        off: { id: 9 }
+                    },
+                    iconBlur: false
+                }
+            };
+        }
+
+        currentObject.push(tileConfig);
+        currentSize += parseInt(sizeAttribute);
+
+        if (currentSize >= 4) {
+            config.push(currentObject);
+            currentObject = [];
+            currentSize = 0;
+        }
     });
-  
+
+    if (currentObject.length > 0) {
+        config.push(currentObject);
+    }
+
+    var finalConfig = {};
+    config.forEach(function(obj, index) {
+        finalConfig[index.toString()] = obj;
+    });
+
+    console.log('finalConfig', finalConfig);
+    $.ajax({
+        type: 'POST',
+        url: 'plugins/mobile/core/ajax/mobile.ajax.php',
+        data: {
+            action: 'createJsonBellaMobile',
+            config: finalConfig
+        },
+        dataType: 'json',
+        error: function(request, status, error) {
+            handleAjaxError(request, status, error);
+        },
+        success: function(data) {
+            if (data.state != 'ok') {
+                $('#div_alert').showAlert({ message: data.result, level: 'danger' });
+                return;
+            }
+            $('#div_alert').showAlert({ message: '{{Configuration sauvegardée}}', level: 'success' });
+        }
+    });
+
 });
 
 function mainScript() {
@@ -342,12 +853,9 @@ function mainScript() {
         firstSelect.addEventListener('change', function() {
           saveTileState(tileElement, idTile);
         });
-        // SecondSelect.addEventListener('change', function() {
-        //     saveTileState(tileElement, idTile);
-        //   });
+
       
         firstSection.appendChild(firstSelect);
-        // secondSection.appendChild(SecondSelect);
         document.getElementById('rightContent').appendChild(configTileDiv);
       
         // On restaure la tuile si il y a des infos sauvegardées

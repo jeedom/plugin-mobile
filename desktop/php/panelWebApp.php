@@ -4,8 +4,15 @@ if (!isConnect()) {
   throw new Exception('{{401 - Accès non autorisé}}');
 }
 
+$jsonBella = file_get_contents(__DIR__ . '/../../data/jsonBella/testBella.json');
+log::add('mobile','debug','JSONBELLA ' . $jsonBella);
+$bellaOriginal = bellaMobile::jsonBella();
+log::add('mobile','debug','BELLAORIGINAL ' . $bellaOriginal);
+sendVarToJS('jsonBella', $jsonBella);
 ?>
-<div class="resume">
+
+
+<!-- <div class="resume">
   <div class="resumeTile">
     <div class="resumeValue">
       <div class="single-chart">
@@ -100,8 +107,8 @@ if (!isConnect()) {
       <div class="title mini">Tous Fermés</div>
     </div>
   </div>
-</div>
-<div class="gridPage">
+</div> -->
+<!-- <div class="gridPage">
   <div class="tile  tileConfig">
     <div class="TileUp">
       <div class="UpLeft">
@@ -127,7 +134,7 @@ if (!isConnect()) {
         </div>
       </div>
       <div class="TileDown">
-        <div class="title on bold">Lumière Cuisine</div>
+        <div class="title on bold">Lumière de ta mere</div>
         <div class="title on">Allumée à 30%</div>
       </div>
   </div>
@@ -168,7 +175,7 @@ if (!isConnect()) {
   <div class="tile">
 
   </div>
-<div>
+<div> -->
 
 <style>
 
@@ -394,8 +401,9 @@ if (!isConnect()) {
 
     //JEEDOM APP ENVOI BELLA : 
 
-  jeedom.appMobile.postToApp('createBella', <?php echo bellaMobile::jsonBella(); ?>);
-
+  // jeedom.appMobile.postToApp('createBella', <?php echo bellaMobile::jsonBella(); ?>);
+  jeedom.appMobile.postToApp('createBella',  <?php echo file_get_contents(__DIR__ . '/../../data/jsonBella/testBella.json'); ?>);
+    
       jeedom.cmd.addUpdateFunction('11140', function(_options) {
         console.log('updateFUNCTION', _options);
         jeedom.appMobile.postToApp("updateBella",
@@ -425,6 +433,7 @@ setTimeout(() => {
         options: {
           on: 1, 
           value : "30% Allumée",
+          title:"Lumière de ta mere"
       }}}
   );
 }, 4000);

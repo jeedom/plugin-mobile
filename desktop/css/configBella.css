@@ -18,7 +18,6 @@
 
 /* SWITCH TEMPLATE */
 
-
 .toggle-switch, .toggle-switch .toggle-knob {
   -moz-transition: all 0.2s ease-in;
   -webkit-transition: all 0.2s ease-in;
@@ -103,6 +102,10 @@
 
 }
 
+
+
+/* CONFIG TILE */
+
 .configTileDiv {
   position: relative;
   overflow: hidden;
@@ -143,9 +146,19 @@
 }
 
 
+.cmdSection {
+  width:40% !important;
+  display:flex;
+  justify-content:center !important;
+  z-index: 2;;
+  margin-left: 2px;
+  margin-bottom: 10px;
+}
 
-.secondSection, .cmdSection, .firstSection {
-  width:20% !important;
+
+
+.secondSection, .firstSection {
+  width:40% !important;
   display:flex;
   flex-direction:column;
   justify-content:center !important;

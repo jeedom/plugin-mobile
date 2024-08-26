@@ -795,9 +795,6 @@ function mainScript() {
         let cmdSection = document.createElement('div');
         cmdSection.setAttribute('id', 'cmdSection');
         cmdSection.classList.add('cmdSection');
-        // cmdSection.style.display = 'flex';
-        // cmdSection.style.flexDirection = 'column';
-        // cmdSection.style.alignContent = 'center';
         let labelCmdSection = document.createElement('label');
         let chooseCmdBtn = document.createElement('a');
         chooseCmdBtn.classList.add('btn', 'btn-info', 'btn-sm');
@@ -814,11 +811,8 @@ function mainScript() {
         // cmdSection.style.zIndex = '1000';
 
 
-        // Second Select
+        // Choose Icon
         let secondSection = document.createElement('div');
-        // let labelSecondSection = document.createElement('label');
-        // labelSecondSection.innerHTML = 'Icone';
-        // secondSection.appendChild(labelSecondSection);
         secondSection.classList.add('secondSection');
 
         let chooseIconButton = document.createElement('a');
@@ -925,45 +919,77 @@ function mainScript() {
 
      // Choix de la commande a associer
      document.getElementById('bt_chooseCmdBtn')?.addEventListener('click', function() {
-      jeedom.cmd.getSelectModal({ cmd: { type: 'info' } }, function(result) {
-            console.log('result', result);
-            let cmdId = result.cmd.id
-            let humanName = result.human
-            let divSelectedCmd = document.createElement('div');
-            divSelectedCmd.classList.add('selectedCmd');
-            divSelectedCmd.setAttribute('id', 'selectedCmd'+cmdId);
-            divSelectedCmd.setAttribute('data-id', cmdId);
-            divSelectedCmd.setAttribute('data-human', humanName);
-            divSelectedCmd.innerHTML = humanName;
-            // divSelectedCmd.style.marginTop = '10px';
-            let cmdSection = document.querySelector(`#configTileDiv${idTile} #cmdSection`);
-            if (cmdSection && divSelectedCmd) {
-                if (!document.getElementById('selectedCmd' + cmdId)) {
-                    cmdSection.appendChild(divSelectedCmd);
+          jeedom.cmd.getSelectModal({ cmd: { type: 'info' } }, function(result) {
+                console.log('result', result);
+                let cmdId = result.cmd.id
+                let humanName = result.human
+                let divSelectedCmd = document.createElement('div');
+                divSelectedCmd.classList.add('selectedCmd');
+                divSelectedCmd.setAttribute('id', 'selectedCmd'+cmdId);
+                divSelectedCmd.setAttribute('data-id', cmdId);
+                divSelectedCmd.setAttribute('data-human', humanName);
+                divSelectedCmd.innerHTML = humanName;
+                // divSelectedCmd.style.marginTop = '10px';
+                let cmdSection = document.querySelector(`#configTileDiv${idTile} #cmdSection`);
+                if (cmdSection && divSelectedCmd) {
+                    if (!document.getElementById('selectedCmd' + cmdId)) {
+                        cmdSection.appendChild(divSelectedCmd);
+                       // let inputDivRename = document.createElement('div');
+                        let inputRenameTile = document.createElement('input');
+                        inputRenameTile.classList.add('inputRenameTile');
+                        inputRenameTile.setAttribute('type', 'text');
+                        inputRenameTile.setAttribute('id', 'inputRenameTile'+idTile);
+                        let tile = document.querySelector(`.tile[id="${idTile}"]`);
+                        let titleOn =  tile.querySelector('.title.on.bold');
+                       
+                        //inputRenameTile.setAttribute('placeholder', titleOn.textContent);
+                        inputRenameTile.value = titleOn.textContent;
+                       // inputRenameTile.setAttribute('placeholder', titleOn.textContent);
+                        inputRenameTile.setAttribute('data-cmdId', cmdId);
+                       // inputDivRename.appendChild(inputRenameTile);
+                        cmdSection.appendChild(inputRenameTile);
+
+                       // RENAME TITLE
+                        inputRenameTile?.addEventListener('input', function(event) {
+                          let newName = event.target.value;
+                          titleOn.textContent = newName;
+                          tile.setAttribute('data-title', newName); 
+                        });
+                    } else {
+                        console.error("divSelectedCmd existe déjà dans le DOM.");
+                    }
                 } else {
-                    console.error("divSelectedCmd existe déjà dans le DOM.");
+                    console.error("cmdSection ou divSelectedCmd est introuvable ou invalide.");
                 }
-            } else {
-                console.error("cmdSection ou divSelectedCmd est introuvable ou invalide.");
-            }
-      })
+          });
      })
+
+     let originalContent = '';
+
+
+
 
      document.getElementById('templateSelect')?.addEventListener('change', function() {
       let valueChoose = this.value;
-      console.log('valueChoose', valueChoose);
-      let switchContainerSpan = document.createElement('span');
-      switchContainerSpan.classList.add('toggle-switch');
-      let swithInsideSpan = document.createElement('span');
-      swithInsideSpan.classList.add('toggle-knob');
-      switchContainerSpan.appendChild(swithInsideSpan);
-      let upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`);   
-       
+      let upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`);
+    
+      if (upLeftDiv && originalContent === '') {
+        originalContent = upLeftDiv.innerHTML;
+      }
+    
+      switch(valueChoose) {
+        case 'OnOff':
+          let switchContainerSpan = document.createElement('span');
+          switchContainerSpan.classList.add('toggle-switch');
+          let swithInsideSpan = document.createElement('span');
+          swithInsideSpan.classList.add('toggle-knob');
+          switchContainerSpan.appendChild(swithInsideSpan);
+    
           if (upLeftDiv) {
             upLeftDiv.innerHTML = '';
             upLeftDiv.appendChild(switchContainerSpan);
             var toggler = document.querySelector('.toggle-switch');
-
+    
             if (toggler) {
               toggler.onclick = function() {
                 toggler.classList.toggle('active');
@@ -974,29 +1000,36 @@ function mainScript() {
           } else {
             console.error('UpTitle non trouve');
           }
-        });
+          break;
+        default:
+          if (upLeftDiv) {
+            upLeftDiv.innerHTML = originalContent;
+          }
+          break;
+      }
+    });
 
-      };
+ };
 
 
     function saveTileState(tileElement, idTile) {
-    let configTileDiv = document.getElementById('configTileDiv' + idTile);
-    let selects = configTileDiv.getElementsByTagName('select');
-    let state = {};
-    for (let select of selects) {
-        state[select.id] = select.value;
-    }
-    tileStates[idTile] = state;
+      let configTileDiv = document.getElementById('configTileDiv' + idTile);
+      let selects = configTileDiv.getElementsByTagName('select');
+      let state = {};
+      for (let select of selects) {
+          state[select.id] = select.value;
+      }
+      tileStates[idTile] = state;
     }
     
     function restoreTileState(tileElement, state) {
-    let configTileDiv = document.getElementById('configTileDiv' + tileElement.id);
-    for (let key in state) {
-        let select = configTileDiv.querySelector(`#${key}`);
-        if (select) {
-        select.value = state[key];
-        }
-    }
+      let configTileDiv = document.getElementById('configTileDiv' + tileElement.id);
+      for (let key in state) {
+          let select = configTileDiv.querySelector(`#${key}`);
+          if (select) {
+          select.value = state[key];
+          }
+      }
     }
 
 

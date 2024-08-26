@@ -633,130 +633,232 @@ function getIconForTile(tile){
 }
 
 
+// document.getElementById('validView').addEventListener('click', function(event) {
+//     event.preventDefault();
+//     var tiles = document.querySelectorAll('.tile');
+//     var config = [];
+//     var currentObject = [];
+//     var currentSize = 0;
+
+//     tiles.forEach(function(tile) {
+//         let idTile = tile.id;
+//         let sizeAttribute = tile.getAttribute('data-state');
+//         if (!sizeAttribute || sizeAttribute == undefined || sizeAttribute == "null") {
+//             if (tile.classList.contains('dual')) {
+//                 sizeAttribute = 2;
+//             } else if (tile.classList.contains('quadral')) {
+//                 sizeAttribute = 4;
+//             } else {
+//                 sizeAttribute = 1;
+//             }
+//         }
+//         getIconForTile(tile);
+//         sizeAttribute = parseInt(sizeAttribute);
+//         var tileConfig;
+//         if (tile.hasAttribute('data-array')) {
+//             tileConfig = {
+//                 size: sizeAttribute,
+//                 type: 'onOff',
+//                 idEvent: [5],
+//                 options: {
+//                     on: 0,
+//                     title: tile.getAttribute('data-title'),
+//                     value: null,
+//                     icons: {
+//                         on: {
+//                             type: tile.getAttribute('data-library'),
+//                             name: tile.getAttribute('data-icon'),
+//                             color: "#00ff00"
+//                         },
+//                         off: {
+//                             type: tile.getAttribute('data-library'),
+//                             name: tile.getAttribute('data-icon'),
+//                             color: "#a4a4a3"
+//                         }
+//                     },
+//                     actions: {
+//                         on: { id: 8 },
+//                         off: { id: 9 }
+//                     },
+//                     iconBlur: false
+//                 }
+//             };
+//         } else {
+//             tileConfig = {
+//                 size: sizeAttribute,
+//                 type: 'onOff',
+//                 idEvent: [5],
+//                 options: {
+//                     on: 0,
+//                     title: tile.getAttribute('data-title'),
+//                     value: null,
+//                     icons: {
+//                         on: {
+//                             type: tile.getAttribute('data-library'),
+//                             //type: "jeedomapp",
+//                             name: tile.getAttribute('data-icon'),
+//                             color:tile.getAttribute('data-color'),
+//                             // color: "#00ff00"
+//                         },
+//                         off: {
+//                             type: tile.getAttribute('data-library'),
+//                             name:  tile.getAttribute('data-icon'),
+//                             color:tile.getAttribute('data-color'),
+//                             //color: "#a4a4a3"
+//                         }
+//                     },
+//                     actions: {
+//                         on: { id: 8 },
+//                         off: { id: 9 }
+//                     },
+//                     iconBlur: false
+//                 }
+//             };
+//         }
+
+//         currentObject.push(tileConfig);
+//         currentSize += parseInt(sizeAttribute);
+
+//         if (currentSize >= 4) {
+//             config.push(currentObject);
+//             currentObject = [];
+//             currentSize = 0;
+//         }
+//     });
+
+//     if (currentObject.length > 0) {
+//         config.push(currentObject);
+//     }
+
+//     var finalConfig = {};
+//     config.forEach(function(obj, index) {
+//         finalConfig[index.toString()] = obj;
+//     });
+
+//     console.log('finalConfig', finalConfig);
+//     $.ajax({
+//         type: 'POST',
+//         url: 'plugins/mobile/core/ajax/mobile.ajax.php',
+//         data: {
+//             action: 'createJsonBellaMobile',
+//             config: finalConfig
+//         },
+//         dataType: 'json',
+//         error: function(request, status, error) {
+//             handleAjaxError(request, status, error);
+//         },
+//         success: function(data) {
+//             if (data.state != 'ok') {
+//                 $('#div_alert').showAlert({ message: data.result, level: 'danger' });
+//                 return;
+//             }
+//             $('#div_alert').showAlert({ message: '{{Configuration sauvegardée}}', level: 'success' });
+//         }
+//     });
+
+// });
+
+
+
 document.getElementById('validView').addEventListener('click', function(event) {
-    event.preventDefault();
-    var tiles = document.querySelectorAll('.tile');
-    var config = [];
-    var currentObject = [];
-    var currentSize = 0;
+  event.preventDefault();
+  var tiles = document.querySelectorAll('.tile');
+  var config = [];
+  var currentObject = [];
+  var currentSize = 0;
 
-    tiles.forEach(function(tile) {
-        let idTile = tile.id;
-        let sizeAttribute = tile.getAttribute('data-state');
-        if (!sizeAttribute || sizeAttribute == undefined || sizeAttribute == "null") {
-            if (tile.classList.contains('dual')) {
-                sizeAttribute = 2;
-            } else if (tile.classList.contains('quadral')) {
-                sizeAttribute = 4;
-            } else {
-                sizeAttribute = 1;
-            }
-        }
-        getIconForTile(tile);
-        sizeAttribute = parseInt(sizeAttribute);
-        var tileConfig;
-        if (tile.hasAttribute('data-array')) {
-            tileConfig = {
-                size: sizeAttribute,
-                type: 'onOff',
-                idEvent: [5],
-                options: {
-                    on: 0,
-                    title: tile.getAttribute('data-title'),
-                    value: null,
-                    icons: {
-                        on: {
-                            type: tile.getAttribute('data-library'),
-                            name: tile.getAttribute('data-icon'),
-                            color: "#00ff00"
-                        },
-                        off: {
-                            type: tile.getAttribute('data-library'),
-                            name: tile.getAttribute('data-icon'),
-                            color: "#a4a4a3"
-                        }
-                    },
-                    actions: {
-                        on: { id: 8 },
-                        off: { id: 9 }
-                    },
-                    iconBlur: false
-                }
-            };
-        } else {
-            tileConfig = {
-                size: sizeAttribute,
-                type: 'onOff',
-                idEvent: [5],
-                options: {
-                    on: 0,
-                    title: tile.getAttribute('data-title'),
-                    value: null,
-                    icons: {
-                        on: {
-                            type: tile.getAttribute('data-library'),
-                            //type: "jeedomapp",
-                            name: tile.getAttribute('data-icon'),
-                            color:tile.getAttribute('data-color'),
-                            // color: "#00ff00"
-                        },
-                        off: {
-                            type: tile.getAttribute('data-library'),
-                            name:  tile.getAttribute('data-icon'),
-                            color:tile.getAttribute('data-color'),
-                            //color: "#a4a4a3"
-                        }
-                    },
-                    actions: {
-                        on: { id: 8 },
-                        off: { id: 9 }
-                    },
-                    iconBlur: false
-                }
-            };
-        }
+  tiles.forEach(function(tile) {
+      let idTile = tile.id;
+      let sizeAttribute;
+      if (tile.classList.contains('dual')) {
+          sizeAttribute = 2;
+      } else if (tile.classList.contains('quadral')) {
+          sizeAttribute = 4;
+      } else {
+          sizeAttribute = 1;
+      }
+      getIconForTile(tile);
+      sizeAttribute = parseInt(sizeAttribute);
 
-        currentObject.push(tileConfig);
-        currentSize += parseInt(sizeAttribute);
+      var tileConfig = {
+          size: sizeAttribute,
+          type: 'onOff',
+          idEvent: [5],
+          options: {
+              on: 0,
+              title: tile.getAttribute('data-title'),
+              value: null,
+              icons: {
+                  on: {
+                      type: tile.getAttribute('data-library'),
+                      name: tile.getAttribute('data-icon'),
+                      color: tile.getAttribute('data-color') || "#00ff00"
+                  },
+                  off: {
+                      type: tile.getAttribute('data-library'),
+                      name: tile.getAttribute('data-icon'),
+                      color: tile.getAttribute('data-color') || "#a4a4a3"
+                  }
+              },
+              actions: {
+                  on: { id: 8 },
+                  off: { id: 9 }
+              },
+              iconBlur: false
+          }
+      };
 
-        if (currentSize >= 4) {
-            config.push(currentObject);
-            currentObject = [];
-            currentSize = 0;
-        }
-    });
+      // Vérifier si l'ajout de cette tuile dépasse la taille maximale de 4
+      if (currentSize + sizeAttribute > 4) {
+          config.push(currentObject);
+          currentObject = [];
+          currentSize = 0;
+      }
 
-    if (currentObject.length > 0) {
-        config.push(currentObject);
-    }
+      currentObject.push(tileConfig);
+      currentSize += sizeAttribute;
 
-    var finalConfig = {};
-    config.forEach(function(obj, index) {
-        finalConfig[index.toString()] = obj;
-    });
+      // Si la taille cumulée atteint exactement 4, on pousse l'objet actuel et réinitialise
+      if (currentSize === 4) {
+          config.push(currentObject);
+          currentObject = [];
+          currentSize = 0;
+      }
+  });
 
-    console.log('finalConfig', finalConfig);
-    $.ajax({
-        type: 'POST',
-        url: 'plugins/mobile/core/ajax/mobile.ajax.php',
-        data: {
-            action: 'createJsonBellaMobile',
-            config: finalConfig
-        },
-        dataType: 'json',
-        error: function(request, status, error) {
-            handleAjaxError(request, status, error);
-        },
-        success: function(data) {
-            if (data.state != 'ok') {
-                $('#div_alert').showAlert({ message: data.result, level: 'danger' });
-                return;
-            }
-            $('#div_alert').showAlert({ message: '{{Configuration sauvegardée}}', level: 'success' });
-        }
-    });
+  // Ajouter le dernier objet s'il n'est pas vide
+  if (currentObject.length > 0) {
+      config.push(currentObject);
+  }
+
+  var finalConfig = {};
+  config.forEach(function(obj, index) {
+      finalConfig[index.toString()] = obj;
+  });
+
+  console.log('finalConfig', finalConfig);
+  $.ajax({
+      type: 'POST',
+      url: 'plugins/mobile/core/ajax/mobile.ajax.php',
+      data: {
+          action: 'createJsonBellaMobile',
+          config: finalConfig
+      },
+      dataType: 'json',
+      error: function(request, status, error) {
+          handleAjaxError(request, status, error);
+      },
+      success: function(data) {
+          if (data.state != 'ok') {
+              $('#div_alert').showAlert({ message: data.result, level: 'danger' });
+              return;
+          }
+          $('#div_alert').showAlert({ message: '{{Configuration sauvegardée}}', level: 'success' });
+      }
+  });
 
 });
+
 
 function mainScript() {
 
@@ -998,43 +1100,43 @@ function mainScript() {
 
 
      document.getElementById('templateSelect')?.addEventListener('change', function() {
-      let valueChoose = this.value;
-      let upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`);
-    
-      if (upLeftDiv && originalContent === '') {
-        originalContent = upLeftDiv.innerHTML;
-      }
-    
-      switch(valueChoose) {
-        case 'OnOff':
-          let switchContainerSpan = document.createElement('span');
-          switchContainerSpan.classList.add('toggle-switch');
-          let swithInsideSpan = document.createElement('span');
-          swithInsideSpan.classList.add('toggle-knob');
-          switchContainerSpan.appendChild(swithInsideSpan);
-    
-          if (upLeftDiv) {
-            upLeftDiv.innerHTML = '';
-            upLeftDiv.appendChild(switchContainerSpan);
-            var toggler = document.querySelector('.toggle-switch');
-    
-            if (toggler) {
-              toggler.onclick = function() {
-                toggler.classList.toggle('active');
+          let valueChoose = this.value;
+          let upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`);
+        
+          if (upLeftDiv && originalContent === '') {
+            originalContent = upLeftDiv.innerHTML;
+          }
+        
+          switch(valueChoose) {
+            case 'OnOff':
+              let switchContainerSpan = document.createElement('span');
+              switchContainerSpan.classList.add('toggle-switch');
+              let swithInsideSpan = document.createElement('span');
+              swithInsideSpan.classList.add('toggle-knob');
+              switchContainerSpan.appendChild(swithInsideSpan);
+        
+              if (upLeftDiv) {
+                upLeftDiv.innerHTML = '';
+                upLeftDiv.appendChild(switchContainerSpan);
+                var toggler = document.querySelector('.toggle-switch');
+        
+                if (toggler) {
+                  toggler.onclick = function() {
+                    toggler.classList.toggle('active');
+                  }
+                } else {
+                  console.error('Toggle switch non trouvé');
+                }
+              } else {
+                console.error('UpTitle non trouve');
               }
-            } else {
-              console.error('Toggle switch non trouvé');
-            }
-          } else {
-            console.error('UpTitle non trouve');
+              break;
+            default:
+              if (upLeftDiv) {
+                upLeftDiv.innerHTML = originalContent;
+              }
+              break;
           }
-          break;
-        default:
-          if (upLeftDiv) {
-            upLeftDiv.innerHTML = originalContent;
-          }
-          break;
-      }
     });
 
  };
@@ -1249,7 +1351,7 @@ tiles.forEach(function(tile) {
   });
 
   tile.addEventListener('mouseup', function(event) {
-
+    console.log('mouseUPPPPP')
     clearTimeout(timer); 
     let carousels = tile.querySelector('.carousels');
     //carousels.style.display = "flex";
@@ -1262,7 +1364,7 @@ tiles.forEach(function(tile) {
     carouselObjectsElement.classList.toggle('visibleElement');
     let divContainerCarousels = document.getElementById('containerCarousels');
 
-    if (!longClickOccurred && tile.classList.contains('selected')){
+    if (tile.classList.contains('selected')){
         tile.classList.remove('1', 'dual', 'quadral');
 
         if (tile.dataset.state === '1') {

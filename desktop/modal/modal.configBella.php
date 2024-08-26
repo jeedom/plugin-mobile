@@ -49,6 +49,7 @@ foreach(jeeObject::all() as $object){
 <body id="bodyBella">
 <div class="resumeBtn" style="display:flex;justify-content:flex-end;">
      <button class="btn btn-success" id="validView" style="border-radius:20px !important;padding-left:5px !important;padding-right:5px !important;margin-bottom:10px;">Valider la vue</button>
+     <button class="btn btn-warning" id="quitView" style="border-radius:20px !important;padding-left:5px !important;padding-right:5px !important;margin-bottom:10px;">Quitter</button>
 </div>
 
 

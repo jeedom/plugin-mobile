@@ -598,6 +598,18 @@ function updateDots2(specificDiv, tileId) {
 
 // });
 
+
+document.getElementById('quitView').addEventListener('click', function(event) {
+    let confirm = "{{Voulez-vous vraiment annuler la configuration de la WebView?}}"
+    confirm += '<br><br>'
+    confirm += '<div class="alert alert-danger text-center">{{Vos changements ne seront pas conservés!}}</div>'
+    bootbox.confirm(confirm, function(result) {
+      if (result) {
+        loadPage('index.php?v=d&m=mobile&p=mobile')
+      }
+    })
+});
+
 document.getElementById('validView').addEventListener('click', function(event) {
     event.preventDefault();
     var tiles = document.querySelectorAll('.tile');
@@ -778,6 +790,25 @@ function mainScript() {
         configTileDiv.appendChild(firstSection);
 
 
+        // Choose Cmd
+        let cmdSection = document.createElement('div');
+        cmdSection.setAttribute('id', 'cmdSection');
+        cmdSection.style.display = 'flex';
+        cmdSection.style.flexDirection = 'column';
+        cmdSection.style.alignContent = 'center';
+        let labelCmdSection = document.createElement('label');
+        let chooseCmdBtn = document.createElement('a');
+        chooseCmdBtn.classList.add('btn', 'btn-default', 'btn-sm');
+        chooseCmdBtn.setAttribute('id', 'bt_chooseCmdBtn');
+        let cmdBtnText = document.createElement('span');
+        cmdBtnText.textContent = ' Choisir Commande';
+        chooseCmdBtn.appendChild(cmdBtnText);
+        cmdSection.appendChild(labelCmdSection);
+        cmdSection.appendChild(chooseCmdBtn);
+        configTileDiv.appendChild(cmdSection);
+        cmdSection.style.zIndex = '1000';
+
+
         // Second Select
         let secondSection = document.createElement('div');
         let labelSecondSection = document.createElement('label');
@@ -798,6 +829,7 @@ function mainScript() {
     
         secondSection.appendChild(chooseIconButton);
         configTileDiv.appendChild(secondSection);
+        
       
         // ADD ANIMATIONS HOVER
         configTileDiv.addEventListener('mouseover', function() {
@@ -885,7 +917,33 @@ function mainScript() {
                 iconElement.className = `iconTile ${libraryName}-${iconClass} ${iconClassMatch[3] || ''}`.trim();
             }
         });
-    });
+     });
+
+     document.getElementById('bt_chooseCmdBtn')?.addEventListener('click', function() {
+      jeedom.cmd.getSelectModal({ cmd: { type: 'info' } }, function(result) {
+            console.log('result', result);
+            let cmdId = result.cmd.id
+            let humanName = result.human
+            let divSelectedCmd = document.createElement('div');
+            divSelectedCmd.setAttribute('id', 'selectedCmd'+cmdId);
+            divSelectedCmd.setAttribute('data-id', cmdId);
+            divSelectedCmd.setAttribute('data-human', humanName);
+            divSelectedCmd.innerHTML = humanName;
+            divSelectedCmd.style.marginTop = '10px';
+            let cmdSection = document.querySelector(`#configTileDiv${idTile} #cmdSection`);
+            if (cmdSection && divSelectedCmd) {
+                if (!document.getElementById('selectedCmd' + cmdId)) {
+                    cmdSection.appendChild(divSelectedCmd);
+                } else {
+                    console.error("divSelectedCmd existe déjà dans le DOM.");
+                }
+            } else {
+                console.error("cmdSection ou divSelectedCmd est introuvable ou invalide.");
+            }
+      })
+
+
+     })
 
       };
 

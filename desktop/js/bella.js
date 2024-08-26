@@ -610,6 +610,29 @@ document.getElementById('quitView').addEventListener('click', function(event) {
     })
 });
 
+
+function getIconForTile(tile){
+  let iconElement = tile.querySelector('i');
+  if(iconElement){
+    let iconClass = iconElement.className;
+    let iconClassMatch = iconClass.match(/icon ([^-]+)-([^ ]+)(?: (icon_[^ ]+))?/);
+      if (iconClassMatch) {
+        iconClassMatch[1] ? tile.setAttribute('data-library',  iconClassMatch[1]) : null;
+        iconClassMatch[2] ? tile.setAttribute('data-icon',  iconClassMatch[2]) : null;
+        iconClassMatch[3] ? tile.setAttribute('data-color',  iconClassMatch[3]) : null;
+
+        let computedStyle = window.getComputedStyle(iconElement);
+        let color = computedStyle.color;
+        if(color){
+          tile.setAttribute('data-color', color);
+        }
+      } else {
+        console.error('Aucune correspondance trouvée pour l\'expression régulière');
+      }
+  }
+}
+
+
 document.getElementById('validView').addEventListener('click', function(event) {
     event.preventDefault();
     var tiles = document.querySelectorAll('.tile');
@@ -629,6 +652,7 @@ document.getElementById('validView').addEventListener('click', function(event) {
                 sizeAttribute = 1;
             }
         }
+        getIconForTile(tile);
         sizeAttribute = parseInt(sizeAttribute);
         var tileConfig;
         if (tile.hasAttribute('data-array')) {
@@ -759,6 +783,10 @@ function mainScript() {
         var randomIndex = Math.floor(Math.random() * colors.length);
         return colors[randomIndex];
     }
+
+
+
+
 
 
     let tileStates = {};
@@ -1125,8 +1153,6 @@ function mainScript() {
 //       document.getElementById('rightContent').appendChild(configTileDiv);
 
 //   }
-
-
 
 
 

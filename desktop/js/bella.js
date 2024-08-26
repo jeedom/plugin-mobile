@@ -785,20 +785,25 @@ function mainScript() {
         firstSection.appendChild(label);
         firstSection.classList.add('firstSection');
         let firstSelect = document.createElement('select');
-        firstSelect.setAttribute('id', 'firstSelect');
-        firstSelect.setAttribute('style', 'margin-bottom: 10px;');
+        firstSelect.setAttribute('id', 'templateSelect');
+        firstSelect.classList.add('templateSelect');
+        // firstSelect.setAttribute('style', 'margin-bottom: 10px;');
         configTileDiv.appendChild(firstSection);
 
 
         // Choose Cmd
         let cmdSection = document.createElement('div');
         cmdSection.setAttribute('id', 'cmdSection');
-        cmdSection.style.display = 'flex';
-        cmdSection.style.flexDirection = 'column';
-        cmdSection.style.alignContent = 'center';
+        cmdSection.classList.add('cmdSection');
+        // cmdSection.style.display = 'flex';
+        // cmdSection.style.flexDirection = 'column';
+        // cmdSection.style.alignContent = 'center';
         let labelCmdSection = document.createElement('label');
         let chooseCmdBtn = document.createElement('a');
-        chooseCmdBtn.classList.add('btn', 'btn-default', 'btn-sm');
+        chooseCmdBtn.classList.add('btn', 'btn-info', 'btn-sm');
+        let iconChooseCmd = document.createElement('i');
+        iconChooseCmd.classList.add('kiko-several-gears');
+        chooseCmdBtn.appendChild(iconChooseCmd);
         chooseCmdBtn.setAttribute('id', 'bt_chooseCmdBtn');
         let cmdBtnText = document.createElement('span');
         cmdBtnText.textContent = ' Choisir Commande';
@@ -806,25 +811,25 @@ function mainScript() {
         cmdSection.appendChild(labelCmdSection);
         cmdSection.appendChild(chooseCmdBtn);
         configTileDiv.appendChild(cmdSection);
-        cmdSection.style.zIndex = '1000';
+        // cmdSection.style.zIndex = '1000';
 
 
         // Second Select
         let secondSection = document.createElement('div');
-        let labelSecondSection = document.createElement('label');
-        labelSecondSection.innerHTML = 'Icone';
-        secondSection.appendChild(labelSecondSection);
+        // let labelSecondSection = document.createElement('label');
+        // labelSecondSection.innerHTML = 'Icone';
+        // secondSection.appendChild(labelSecondSection);
         secondSection.classList.add('secondSection');
 
         let chooseIconButton = document.createElement('a');
-        chooseIconButton.classList.add('btn', 'btn-default', 'btn-sm');
+        chooseIconButton.classList.add('btn', 'btn-info', 'btn-sm');
         chooseIconButton.setAttribute('id', 'bt_chooseIcon');
 
         let icon = document.createElement('i');
         icon.classList.add('fas', 'fa-flag');
         chooseIconButton.appendChild(icon);
 
-        let buttonText = document.createTextNode(' Choisir');
+        let buttonText = document.createTextNode(' Choisir Icone');
         chooseIconButton.appendChild(buttonText);
     
         secondSection.appendChild(chooseIconButton);
@@ -898,7 +903,6 @@ function mainScript() {
         }
 
         // Remplacer l'icone dans la tuile en cours 
-
       document.getElementById('bt_chooseIcon')?.addEventListener('click', function() {
         jeedomUtils.chooseIcon(function(_icon) {
             let iconClassMatch = _icon.match(/class='icon ([^-]+)-([^ ]+)(?: (icon_[^']+))?'/);
@@ -919,17 +923,19 @@ function mainScript() {
         });
      });
 
+     // Choix de la commande a associer
      document.getElementById('bt_chooseCmdBtn')?.addEventListener('click', function() {
       jeedom.cmd.getSelectModal({ cmd: { type: 'info' } }, function(result) {
             console.log('result', result);
             let cmdId = result.cmd.id
             let humanName = result.human
             let divSelectedCmd = document.createElement('div');
+            divSelectedCmd.classList.add('selectedCmd');
             divSelectedCmd.setAttribute('id', 'selectedCmd'+cmdId);
             divSelectedCmd.setAttribute('data-id', cmdId);
             divSelectedCmd.setAttribute('data-human', humanName);
             divSelectedCmd.innerHTML = humanName;
-            divSelectedCmd.style.marginTop = '10px';
+            // divSelectedCmd.style.marginTop = '10px';
             let cmdSection = document.querySelector(`#configTileDiv${idTile} #cmdSection`);
             if (cmdSection && divSelectedCmd) {
                 if (!document.getElementById('selectedCmd' + cmdId)) {
@@ -941,9 +947,34 @@ function mainScript() {
                 console.error("cmdSection ou divSelectedCmd est introuvable ou invalide.");
             }
       })
-
-
      })
+
+     document.getElementById('templateSelect')?.addEventListener('change', function() {
+      let valueChoose = this.value;
+      console.log('valueChoose', valueChoose);
+      let switchContainerSpan = document.createElement('span');
+      switchContainerSpan.classList.add('toggle-switch');
+      let swithInsideSpan = document.createElement('span');
+      swithInsideSpan.classList.add('toggle-knob');
+      switchContainerSpan.appendChild(swithInsideSpan);
+      let upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`);   
+       
+          if (upLeftDiv) {
+            upLeftDiv.innerHTML = '';
+            upLeftDiv.appendChild(switchContainerSpan);
+            var toggler = document.querySelector('.toggle-switch');
+
+            if (toggler) {
+              toggler.onclick = function() {
+                toggler.classList.toggle('active');
+              }
+            } else {
+              console.error('Toggle switch non trouvé');
+            }
+          } else {
+            console.error('UpTitle non trouve');
+          }
+        });
 
       };
 
@@ -1106,7 +1137,8 @@ tiles.forEach(function(tile) {
         //tileElement.style.setProperty("background-color", randomColor, "important");
         var MODELS_CHOICE = [ {text :'Info', value:'Info'}, 
                               {text :'Meteo', value:'Meteo'}, 
-                              {text :'Lumière', value:'OnOff'}
+                              {text :'Lumière', value:'Light'},
+                              {text :'Switch', value:'OnOff'}, 
                             ];
             createConfigTile(tileElement, idTile, '#A9D534', MODELS_CHOICE);
             if (tileStates[idTile]) {

@@ -16,7 +16,11 @@
 }
 
 
-/* SWITCH TEMPLATE */
+/*********** TEMPLATES *************/
+
+
+
+            /* SWITCH */
 
 .toggle-switch, .toggle-switch .toggle-knob {
   -moz-transition: all 0.2s ease-in;
@@ -60,13 +64,129 @@
 
 
 
+            /* MULTISTATE */
+/*
+.wrapper {
+ display:flex;
+
+}
+.toggle_radio {
+  position: relative;
+  background: rgba(255, 255, 255, .1);
+  margin: 4px auto;
+  overflow: hidden;
+  padding: 0 !important;
+  border-radius: 50px;
+  height: 26px;
+  width: 140px; 
+}
+.toggle_radio > * {
+  float: left;
+}
+.toggle_radio input[type=radio] {
+  display: none;
+}
+.toggle_radio label {
+  font: 90%/1.618 "Source Sans Pro";
+  color: rgba(255, 255, 255, .9);
+  z-index: 0;
+  display: block;
+  width: 46px; 
+  height: 20px;
+  margin: 3px 3px;
+  border-radius: 50px;
+  cursor: pointer;
+  z-index: 1;
+  text-align: center;
+}
+.toggle_option_slider {
+  width: 46px;
+  height: 20px;
+  position: absolute;
+  top: 3px;
+  border-radius: 50px;
+  transition: all .4s ease;
+}
+
+#first_toggle:checked ~ .toggle_option_slider {
+  background: rgba(255, 255, 255, .3);
+  left: 3px;
+}
+#second_toggle:checked ~ .toggle_option_slider {
+  background: rgba(255, 255, 255, .3);
+  left: 49px;
+}
+#third_toggle:checked ~ .toggle_option_slider {
+  background: rgba(255, 255, 255, .3);
+  left: 95px;
+}
+
+*/
 
 
+.containerMultiState {
+  /* width: 140px; */
+  width: 100%;
+  /* margin: 50px auto; */
+}
 
+.toggle_radio {
+  position: relative;
+  background: rgba(255, 255, 255, .1);
+  margin: 4px auto;
+  overflow: hidden;
+  padding: 0 !important;
+  border-radius: 50px;
+  height: 26px;
+  width: 100%; 
+  display:flex;
+  justify-content: space-around;
+}
 
+.toggle_radio > * {
+  float: left;
+}
 
+.toggle_radio input[type=radio] {
+  display: none;
+}
+.toggle_radio label {
+  font: 90%/1.618 "Source Sans Pro";
+  color: rgba(255, 255, 255, .9);
+  z-index: 0;
+  display: block;
+  width: 33.33%; /* Largeur des labels en pourcentage */
+  height: 20px;
+  margin: 3px 0;
+  border-radius: 50px;
+  cursor: pointer;
+  z-index: 1;
+  text-align: center;
+}
 
+.toggle_option_slider {
+  width: 33.33%; /* Largeur du slider en pourcentage */
+  height: 20px;
+  position: absolute;
+  top: 3px;
+  border-radius: 50px;
+  transition: all .4s ease;
+}
 
+#first_toggle:checked ~ .toggle_option_slider {
+  background: rgba(255, 255, 255, .3);
+  left: 0; /* Position du slider pour le premier bouton */
+}
+
+#second_toggle:checked ~ .toggle_option_slider {
+  background: rgba(255, 255, 255, .3);
+  left: 33.33%; /* Position du slider pour le deuxième bouton */
+}
+
+#third_toggle:checked ~ .toggle_option_slider {
+  background: rgba(255, 255, 255, .3);
+  left: 66.66%; /* Position du slider pour le troisième bouton */
+}
 
 
 @keyframes bounceAndScale {
@@ -412,7 +532,7 @@
 
 .TileUp{
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   justify-content: center;
   height: 65%;
   width: 100%;

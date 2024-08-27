@@ -3,7 +3,33 @@ var arrayInfos;
 var arrayObjects;
 var carouselHtml;
 var AJAX_URL = 'plugins/mobile/core/ajax/mobile.ajax.php';
+var MODELS_CHOICE = [ 
+  {text :'Info', value:'Info'}, 
+  {text :'Meteo', value:'Meteo'}, 
+  {text :'Lumière', value:'Light'},
+  {text :'Switch', value:'OnOff'}, 
+  {text :'Thermostat', value:'Thermostat'},
+  {text :'MultiState', value:'multistate'},
+];
 
+
+
+function createMultiStateTemplate() {
+  return `
+
+      <div class="containerMultiState">
+    <div class="toggle_radio">
+      <input type="radio" class="toggle_option" id="first_toggle" name="toggle_option">
+      <input type="radio" class="toggle_option" id="second_toggle" name="toggle_option" checked>
+      <input type="radio" class="toggle_option" id="third_toggle" name="toggle_option">
+      <label for="first_toggle"><p>First</p></label>
+      <label for="second_toggle"><p>Second</p></label>
+      <label for="third_toggle"><p>Third</p></label>
+      <div class="toggle_option_slider"></div>
+    </div>
+  </div>
+  `;
+}
 
 function initializeData(arrayInfosData, arrayObjectsData, carouselHtmlData) {
 
@@ -1102,6 +1128,7 @@ function mainScript() {
      document.getElementById('templateSelect')?.addEventListener('change', function() {
           let valueChoose = this.value;
           let upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`);
+          let tileUp = document.querySelector(`.tile[id="${idTile}"] .TileUp`);
         
           if (upLeftDiv && originalContent === '') {
             originalContent = upLeftDiv.innerHTML;
@@ -1131,6 +1158,18 @@ function mainScript() {
                 console.error('UpTitle non trouve');
               }
               break;
+              case 'multistate':
+                let multiStateHtml = createMultiStateTemplate();
+                console.log('multiStateHtml', multiStateHtml);
+                if (tileUp) {
+                  tileUp.innerHTML = '';
+                  let tempDiv = document.createElement('div');
+                  tempDiv.innerHTML = multiStateHtml;
+                  tileUp.appendChild(tempDiv.firstElementChild);
+                } else {
+                  console.error('UpTitle non trouve');
+                }
+                break;
             default:
               if (upLeftDiv) {
                 upLeftDiv.innerHTML = originalContent;
@@ -1296,11 +1335,11 @@ tiles.forEach(function(tile) {
 
         //let randomColor = getRandomColor();
         //tileElement.style.setProperty("background-color", randomColor, "important");
-        var MODELS_CHOICE = [ {text :'Info', value:'Info'}, 
-                              {text :'Meteo', value:'Meteo'}, 
-                              {text :'Lumière', value:'Light'},
-                              {text :'Switch', value:'OnOff'}, 
-                            ];
+        // var MODELS_CHOICE = [ {text :'Info', value:'Info'}, 
+        //                       {text :'Meteo', value:'Meteo'}, 
+        //                       {text :'Lumière', value:'Light'},
+        //                       {text :'Switch', value:'OnOff'}, 
+        //                     ];
             createConfigTile(tileElement, idTile, '#A9D534', MODELS_CHOICE);
             if (tileStates[idTile]) {
                 restoreTileState(tileElement, tileStates[idTile]);
@@ -1350,8 +1389,13 @@ tiles.forEach(function(tile) {
     } 
   });
 
+
+  // REDIMENSIONNEMENT DES TUILES AU CLIC 
   tile.addEventListener('mouseup', function(event) {
     console.log('mouseUPPPPP')
+    if (event.target.closest('.toggle_radio')) {
+      return; // Ne pas exécuter le reste du code si l'événement provient de la div toggle_radio ou ses enfants
+    }
     clearTimeout(timer); 
     let carousels = tile.querySelector('.carousels');
     //carousels.style.display = "flex";
@@ -1390,6 +1434,12 @@ tiles.forEach(function(tile) {
         });
         tile.classList.add('selected');
 
+        let containerMultiState = document.querySelector('.containerMultiState');
+        if(containerMultiState){
+          containerMultiState.style.height = tile.offsetHeight + 'px';
+        }
+       
+
         if (carousels) {
               let existingClone = divContainerCarousels.querySelector('#' + carousels.id);
 
@@ -1417,6 +1467,13 @@ tiles.forEach(function(tile) {
     }
 });
 
+
+document.querySelectorAll('.toggle_radio').forEach(function(toggleRadio) {
+  toggleRadio.addEventListener('mouseup', function(event) {
+    console.log('clicRADIO')
+    event.stopPropagation();
+  });
+});
 
 //   tile.addEventListener('mousedown', function() {
 //     longClickOccurred = false;

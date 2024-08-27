@@ -216,6 +216,7 @@ const addTemplateSelectChangeEvent = (firstSelect, tileElement, idTile) => {
     firstSelect.addEventListener('change', function() {
         let valueChoose = this.value;
         let upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`);
+        let upRight = document.querySelector(`.tile[id="${idTile}"] .UpRight`);
         let tileUp = document.querySelector(`.tile[id="${idTile}"] .TileUp`);  
         let containerMultiState = document.querySelector(`.tile[id="${idTile}"] .containerMultiState`); 
 
@@ -248,25 +249,31 @@ const addTemplateSelectChangeEvent = (firstSelect, tileElement, idTile) => {
                     console.error('UpTitle non trouvé');
                 }
                 break;
-            case 'multistate':
-                const multiStateHtml = createMultiStateTemplate();
-                if (tileUp) {
-                    if (upLeftDiv) {
-                        upLeftDiv.style.display = 'none';
-                    }
-                    let existingMultiStateContainer = tileUp.querySelector('.containerMultiState');
-                    if (!existingMultiStateContainer) {
-                        const tempDiv = document.createElement('div');
-                        tempDiv.innerHTML = multiStateHtml;
-                        tileUp.appendChild(tempDiv.firstElementChild);
-                        saveTileState(idTile, { multiState: true });
+                case 'multistate':
+                    const multiStateHtml = createMultiStateTemplate();
+                    if (tileUp) {
+                        if (upLeftDiv) {
+                            upLeftDiv.style.display = 'none';
+                        }
+                        if (upRight) {
+                            upRight.style.display = 'none';
+                        }
+                        let existingMultiStateContainer = tileUp.querySelector('.containerMultiState');
+                        if (!existingMultiStateContainer) {
+                            const tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = multiStateHtml;
+                            const newMultiStateContainer = tempDiv.firstElementChild;
+                            newMultiStateContainer.style.width = '100%'; 
+                            tileUp.appendChild(newMultiStateContainer);
+                            saveTileState(idTile, { multiState: true });
+                        } else {
+                            existingMultiStateContainer.style.display = 'flex';
+                            existingMultiStateContainer.style.width = '100%'; 
+                        }
                     } else {
-                        existingMultiStateContainer.style.display = 'block';
+                        console.error('TileUp non trouvé');
                     }
-                } else {
-                    console.error('TileUp non trouvé');
-                }
-                break;
+                    break;
             default:
                 if (upLeftDiv) {
                     upLeftDiv.innerHTML = originalContent;

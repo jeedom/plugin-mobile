@@ -63,7 +63,14 @@ foreach(jeeObject::all() as $object){
     </div>
 </div>
 </body>
-<?php include_file('desktop', 'bella', 'js', 'mobile'); ?>
+
+<?php 
+
+include_file('desktop', 'modelsChoice', 'js', 'mobile');
+include_file('desktop', 'createTemplates', 'js', 'mobile');
+include_file('desktop', 'bella', 'js', 'mobile'); 
+
+?>
 
 <script>
         var arrayInfos = <?php echo json_encode($arrayInfos); ?>;

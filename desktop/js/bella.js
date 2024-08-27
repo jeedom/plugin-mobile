@@ -1,35 +1,9 @@
 
+
 var arrayInfos;
 var arrayObjects;
 var carouselHtml;
 var AJAX_URL = 'plugins/mobile/core/ajax/mobile.ajax.php';
-var MODELS_CHOICE = [ 
-  {text :'Info', value:'Info'}, 
-  {text :'Meteo', value:'Meteo'}, 
-  {text :'Lumière', value:'Light'},
-  {text :'Switch', value:'OnOff'}, 
-  {text :'Thermostat', value:'Thermostat'},
-  {text :'MultiState', value:'multistate'},
-];
-
-
-
-function createMultiStateTemplate() {
-  return `
-
-      <div class="containerMultiState">
-    <div class="toggle_radio">
-      <input type="radio" class="toggle_option" id="first_toggle" name="toggle_option">
-      <input type="radio" class="toggle_option" id="second_toggle" name="toggle_option" checked>
-      <input type="radio" class="toggle_option" id="third_toggle" name="toggle_option">
-      <label for="first_toggle"><p>First</p></label>
-      <label for="second_toggle"><p>Second</p></label>
-      <label for="third_toggle"><p>Third</p></label>
-      <div class="toggle_option_slider"></div>
-    </div>
-  </div>
-  `;
-}
 
 function initializeData(arrayInfosData, arrayObjectsData, carouselHtmlData) {
 
@@ -1136,17 +1110,13 @@ function mainScript() {
         
           switch(valueChoose) {
             case 'OnOff':
-              let switchContainerSpan = document.createElement('span');
-              switchContainerSpan.classList.add('toggle-switch');
-              let swithInsideSpan = document.createElement('span');
-              swithInsideSpan.classList.add('toggle-knob');
-              switchContainerSpan.appendChild(swithInsideSpan);
-        
+              let switchContainerSpanHtml = createSwitchemplate()
               if (upLeftDiv) {
+                let tempDiv = document.createElement('div');
+                tempDiv.innerHTML = switchContainerSpanHtml;
                 upLeftDiv.innerHTML = '';
-                upLeftDiv.appendChild(switchContainerSpan);
+                upLeftDiv.appendChild(tempDiv.firstElementChild);
                 var toggler = document.querySelector('.toggle-switch');
-        
                 if (toggler) {
                   toggler.onclick = function() {
                     toggler.classList.toggle('active');
@@ -1200,101 +1170,6 @@ function mainScript() {
           }
       }
     }
-
-
-
-//     const createConfigTile = (tileElement, idTile, randomColor, MODELS_CHOICE) => {
-//         // Création de la configTile
-//         let configTileDiv = document.createElement('div');
-//         let bgDiv = document.createElement('div');
-//         bgDiv.classList.add('bgDiv');
-//         bgDiv.setAttribute('data-id', idTile);
-//         bgDiv.setAttribute('style', 'background-color:' + randomColor + ';');
-//         configTileDiv.appendChild(bgDiv);
-//         configTileDiv.classList.add('configTileDiv');
-//         //configTileDiv.setAttribute('style', 'position: relative;overflow: hidden;padding-left:10px;margin-bottom:10px;width:100% !important;height:100px;background-color:#ffffff;display:flex;border-radius:10px !important;');
-//         configTileDiv.setAttribute('id', 'configTileDiv'+idTile);
-//         configTileDiv.setAttribute('data-id', idTile);
-//         var splitIdTile = idTile.split('_');
-//         var numberTile = splitIdTile[0];
-//         configTileDiv.style.order = numberTile; 
-//         let firstSection = document.createElement('div');
-//         let label = document.createElement('label');
-//         label.innerHTML = 'Choisir le type de template à appliquer';
-//         firstSection.appendChild(label);
-//         firstSection.classList.add('firstSection')
-//        // firstSection.setAttribute('style', 'width:20% !important;display:flex;flex-direction:column;justify-content:center !important;');
-//         let firstSelect = document.createElement('select');
-//         firstSelect.setAttribute('id', 'firstSelect');
-//         firstSelect.setAttribute('style', 'margin-bottom: 10px;');
-//         configTileDiv.appendChild(firstSection);
-
-//         // ADD ANIMATIONS HOVER
-//         configTileDiv.addEventListener('mouseover', function() {
-//             var associatedTile = configTileDiv.getAttribute('data-id')
-//             if (associatedTile) {
-//               var associatedElement = document.getElementById(associatedTile);
-//               associatedElement.style.zIndex = '10'; 
-//               associatedElement.classList.add('bounceAndScale');
-//               associatedElement.addEventListener('animationend', function() {
-//                   this.classList.remove('bounceAndScale');
-//               });
-//               let bgDiv = document.querySelector(`.bgDiv[data-id="${associatedTile}"]`);
-//             bgDiv.style.transform = 'scale(20)';
-//             }
-//         });
-//       // REMOVE ANIMATIONS OUT HOVER
-//         configTileDiv.addEventListener('mouseout', function() {
-//           var associatedTile = configTileDiv.getAttribute('data-id')
-//           if (associatedTile) {
-//             var associatedElement = document.getElementById(associatedTile);
-//             associatedElement.style.transform = 'scale(1.0)';
-//             associatedElement.style.zIndex = '1'; 
-//             let bgDiv = document.querySelector(`.bgDiv[data-id="${associatedTile}"]`);
-//             bgDiv.style.transform = 'scale(1)';
-//           }
-//       });
-
-
-//       tileElement.addEventListener('mouseover', function() {
-//         let tileId = tileElement.getAttribute('id');
-//         let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);     
-//         if (bgDiv) { 
-//           bgDiv.style.transform = 'scale(20)';
-//         }
-
-//         tileElement.style.transform = 'scale(1.1)';
-//       });
-
-//       tileElement.addEventListener('mouseout', function() {
-//         let tileId = tileElement.getAttribute('id');
-//         let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);     
-//         if (bgDiv) { 
-//           bgDiv.style.transform = 'scale(1)';
-//         }
-
-//         tileElement.style.transform = 'scale(1.0)';
-//       });
-
-//     //   tileElement.addEventListener('mouseout', function() {
-//     //       let tileId = tileElement.getAttribute('id');
-//     //       let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
-//     //       bgDiv.style.transform = 'scale(1)';
-//     //       tileElement.style.transform = 'scale(1.0)';
-//     //   });
-
-                
-//       MODELS_CHOICE.forEach(function(model) {
-//         let option = document.createElement('option');
-//         option.value = model.value;
-//         option.text = model.text;
-//         firstSelect.appendChild(option);
-//       });
-//       firstSection.appendChild(firstSelect);
-//       document.getElementById('rightContent').appendChild(configTileDiv);
-
-//   }
-
 
 
 
@@ -1392,10 +1267,12 @@ tiles.forEach(function(tile) {
 
   // REDIMENSIONNEMENT DES TUILES AU CLIC 
   tile.addEventListener('mouseup', function(event) {
-    console.log('mouseUPPPPP')
-    if (event.target.closest('.toggle_radio')) {
-      return; // Ne pas exécuter le reste du code si l'événement provient de la div toggle_radio ou ses enfants
+
+    // IGNORE TEMPLATE ON CLICK
+    if (ignoreClickOnTemplateTile(event)) {
+      return;
     }
+
     clearTimeout(timer); 
     let carousels = tile.querySelector('.carousels');
     //carousels.style.display = "flex";

@@ -67,7 +67,9 @@ foreach(jeeObject::all() as $object){
 <?php 
 
 include_file('desktop', 'modelsChoice', 'js', 'mobile');
+include_file('desktop', 'createConfigTile', 'js', 'mobile');
 include_file('desktop', 'createTemplates', 'js', 'mobile');
+include_file('desktop', 'tileStateManager', 'js', 'mobile');
 include_file('desktop', 'bella', 'js', 'mobile'); 
 
 ?>

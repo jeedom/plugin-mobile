@@ -14,7 +14,7 @@ function createMultiStateTemplate() {
     `;
   }
   
-  function createSwitchemplate() {
+function createSwitchemplate() {
     return `
         <span class="toggle-switch">
            <span class="toggle-knob"></span>
@@ -23,7 +23,7 @@ function createMultiStateTemplate() {
   }
   
   
-  function ignoreClickOnTemplateTile(event) {
+function ignoreClickOnTemplateTile(event) {
     if (event.target.closest('.toggle_radio')) {
       return true; 
     }

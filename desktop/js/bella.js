@@ -1,9 +1,22 @@
 
-
 var arrayInfos;
 var arrayObjects;
 var carouselHtml;
 var AJAX_URL = 'plugins/mobile/core/ajax/mobile.ajax.php';
+
+
+var ajaxConfig = (action, data) => ({
+  type: 'POST',
+  url: AJAX_URL,
+  data: {
+    action,
+    ...data
+  },
+  dataType: 'json',
+  error: (request, status, error) => handleAjaxError(request, status, error)
+});
+
+
 
 function initializeData(arrayInfosData, arrayObjectsData, carouselHtmlData) {
 
@@ -136,467 +149,6 @@ function updateDots2(specificDiv, tileId) {
 //     const AJAX_URL = 'plugins/mobile/core/ajax/mobile.ajax.php';
 // }
 
-// document.getElementById('validView').addEventListener('click', function(event) {
-//     event.preventDefault();
-//     var tiles = document.querySelectorAll('.tile');
-//     var config = [];
-//     tiles.forEach(function(tile) {
-//       let idTile = tile.id;
-//       let sizeAttribute = tile.getAttribute('data-state');
-//       if (!sizeAttribute || sizeAttribute == undefined || sizeAttribute == "null") {
-//           if (tile.classList.contains('dual')) {
-//               sizeAttribute = 2;
-//           } else if (tile.classList.contains('quadral')) {
-//               sizeAttribute = 4;
-//           } else {
-//               sizeAttribute = 1;
-//           }
-//       }
-//       console.log('sizeAttribute', sizeAttribute)
-//       var tileConfig;
-//       if (tile.hasAttribute('data-array')) {
-//         // tileConfig = JSON.parse(tile.getAttribute('data-array'));
-//         tileConfig = {
-//             size: sizeAttribute ,
-//             type: 'info',
-//             idEvent: tile.getAttribute('data-id'),
-//             options: {
-//               on: 0,
-//               title: tile.getAttribute('data-title'),
-//               value: null,
-//               icons: {
-//                 on: {
-//                   type: "jeedomapp",
-//                   name: tile.getAttribute('data-icon-on'),
-//                   color: "#00ff00"
-//                 },
-//                 off: {
-//                   type: "jeedomapp",
-//                   name: tile.getAttribute('data-icon-off'),
-//                   color: "#a4a4a3"
-//                 }
-//               },
-//               actions:{
-//                 on:{id:8},
-//                 off:{id:9}
-//               },
-//               iconBlur: false
-//             }
-//           };
-//       } else {
-//         tileConfig = {
-//             size: sizeAttribute ,
-//             type: 'info',
-//             idEvent: tile.getAttribute('data-id'),
-//             options: {
-//               on: 0,
-//               title: tile.getAttribute('data-title'),
-//               value: null,
-//               icons: {
-//                 on: {
-//                   type: "jeedomapp",
-//                   name: tile.getAttribute('data-icon-on'),
-//                   color: "#00ff00"
-//                 },
-//                 off: {
-//                   type: "jeedomapp",
-//                   name: tile.getAttribute('data-icon-off'),
-//                   color: "#a4a4a3"
-//                 }
-//               },
-//               actions:{
-//                 on:{id:8},
-//                 off:{id:9}
-//               },
-//               iconBlur: false
-//             }
-//           };
-//     }
-//       if (!config[idTile]) {
-//         config[idTile] = [];
-//       }
-//       config[idTile].push(tileConfig);
-//     });
- 
-
-//     $.ajax({
-//       type: 'POST',
-//       url: 'plugins/mobile/core/ajax/mobile.ajax.php',
-//       data: {
-//         action: 'createJsonBellaMobile',
-//         config: config 
-//       },
-//       dataType: 'json',
-//       error: function(request, status, error) {
-//         handleAjaxError(request, status, error);
-//       },
-//       success: function(data) {
-//         if (data.state != 'ok') {
-//           $('#div_alert').showAlert({message: data.result, level: 'danger'});
-//           return;
-//         }
-//         $('#div_alert').showAlert({message: '{{Configuration sauvegardée}}', level: 'success'});
-//       }
-//     });
-  
-// });
-
-
-// TEST
-// document.getElementById('validView').addEventListener('click', function(event) {
-//     event.preventDefault();
-//     var tiles = document.querySelectorAll('.tile');
-//     var config = [];
-//     var currentObject = {};
-//     var currentSize = 0;
-
-//     tiles.forEach(function(tile) {
-//         let idTile = tile.id;
-//         let sizeAttribute = tile.getAttribute('data-state');
-//         if (!sizeAttribute || sizeAttribute == undefined || sizeAttribute == "null") {
-//             if (tile.classList.contains('dual')) {
-//                 sizeAttribute = 2;
-//             } else if (tile.classList.contains('quadral')) {
-//                 sizeAttribute = 4;
-//             } else {
-//                 sizeAttribute = 1;
-//             }
-//         }
-//         console.log('sizeAttribute', sizeAttribute)
-//         var tileConfig;
-//         if (tile.hasAttribute('data-array')) {
-//             tileConfig = {
-//                 size: sizeAttribute,
-//                 type: 'info',
-//                 idEvent: tile.getAttribute('data-id'),
-//                 options: {
-//                     on: 0,
-//                     title: tile.getAttribute('data-title'),
-//                     value: null,
-//                     icons: {
-//                         on: {
-//                             type: "jeedomapp",
-//                             name: tile.getAttribute('data-icon-on'),
-//                             color: "#00ff00"
-//                         },
-//                         off: {
-//                             type: "jeedomapp",
-//                             name: tile.getAttribute('data-icon-off'),
-//                             color: "#a4a4a3"
-//                         }
-//                     },
-//                     actions: {
-//                         on: { id: 8 },
-//                         off: { id: 9 }
-//                     },
-//                     iconBlur: false
-//                 }
-//             };
-//         } else {
-//             tileConfig = {
-//                 size: sizeAttribute,
-//                 type: 'info',
-//                 idEvent: tile.getAttribute('data-id'),
-//                 options: {
-//                     on: 0,
-//                     title: tile.getAttribute('data-title'),
-//                     value: null,
-//                     icons: {
-//                         on: {
-//                             type: "jeedomapp",
-//                             name: tile.getAttribute('data-icon-on'),
-//                             color: "#00ff00"
-//                         },
-//                         off: {
-//                             type: "jeedomapp",
-//                             name: tile.getAttribute('data-icon-off'),
-//                             color: "#a4a4a3"
-//                         }
-//                     },
-//                     actions: {
-//                         on: { id: 8 },
-//                         off: { id: 9 }
-//                     },
-//                     iconBlur: false
-//                 }
-//             };
-//         }
-
-//         if (currentSize + parseInt(sizeAttribute) >= 4) {
-//             config.push(currentObject);
-//             currentObject = {};
-//             currentSize = 0;
-//         }
-
-//         currentObject[idTile] = tileConfig;
-//         currentSize += parseInt(sizeAttribute);
-//     });
-
-//     if (Object.keys(currentObject).length > 0) {
-//         config.push(currentObject);
-//     }
-
-//     $.ajax({
-//         type: 'POST',
-//         url: 'plugins/mobile/core/ajax/mobile.ajax.php',
-//         data: {
-//             action: 'createJsonBellaMobile',
-//             config: config
-//         },
-//         dataType: 'json',
-//         error: function(request, status, error) {
-//             handleAjaxError(request, status, error);
-//         },
-//         success: function(data) {
-//             if (data.state != 'ok') {
-//                 $('#div_alert').showAlert({ message: data.result, level: 'danger' });
-//                 return;
-//             }
-//             $('#div_alert').showAlert({ message: '{{Configuration sauvegardée}}', level: 'success' });
-//         }
-//     });
-
-// });
-
-// document.getElementById('validView').addEventListener('click', function(event) {
-//     event.preventDefault();
-//     var tiles = document.querySelectorAll('.tile');
-//     var config = [];
-//     var currentObject = {};
-//     var currentSize = 0;
-//     var currentIndex = 0;
-
-//     tiles.forEach(function(tile) {
-//         let idTile = tile.id;
-//         let sizeAttribute = tile.getAttribute('data-state');
-//         if (!sizeAttribute || sizeAttribute == undefined || sizeAttribute == "null") {
-//             if (tile.classList.contains('dual')) {
-//                 sizeAttribute = 2;
-//             } else if (tile.classList.contains('quadral')) {
-//                 sizeAttribute = 4;
-//             } else {
-//                 sizeAttribute = 1;
-//             }
-//         }
-//         console.log('sizeAttribute', sizeAttribute)
-//         var tileConfig;
-//         if (tile.hasAttribute('data-array')) {
-//             tileConfig = {
-//                 size: sizeAttribute,
-//                 type: 'info',
-//                 idEvent: tile.getAttribute('data-id'),
-//                 options: {
-//                     on: 0,
-//                     title: tile.getAttribute('data-title'),
-//                     value: null,
-//                     icons: {
-//                         on: {
-//                             type: "jeedomapp",
-//                             name: tile.getAttribute('data-icon-on'),
-//                             color: "#00ff00"
-//                         },
-//                         off: {
-//                             type: "jeedomapp",
-//                             name: tile.getAttribute('data-icon-off'),
-//                             color: "#a4a4a3"
-//                         }
-//                     },
-//                     actions: {
-//                         on: { id: 8 },
-//                         off: { id: 9 }
-//                     },
-//                     iconBlur: false
-//                 }
-//             };
-//         } else {
-//             tileConfig = {
-//                 size: sizeAttribute,
-//                 type: 'info',
-//                 idEvent: tile.getAttribute('data-id'),
-//                 options: {
-//                     on: 0,
-//                     title: tile.getAttribute('data-title'),
-//                     value: null,
-//                     icons: {
-//                         on: {
-//                             type: "jeedomapp",
-//                             name: tile.getAttribute('data-icon-on'),
-//                             color: "#00ff00"
-//                         },
-//                         off: {
-//                             type: "jeedomapp",
-//                             name: tile.getAttribute('data-icon-off'),
-//                             color: "#a4a4a3"
-//                         }
-//                     },
-//                     actions: {
-//                         on: { id: 8 },
-//                         off: { id: 9 }
-//                     },
-//                     iconBlur: false
-//                 }
-//             };
-//         }
-
-//         if (currentSize + parseInt(sizeAttribute) >= 4) {
-//             config.push(currentObject);
-//             currentObject = {};
-//             currentSize = 0;
-//             currentIndex++;
-//         }
-
-//         currentObject[currentIndex] = tileConfig;
-//         currentSize += parseInt(sizeAttribute);
-//         currentIndex++;
-//     });
-
-//     if (Object.keys(currentObject).length > 0) {
-//         config.push(currentObject);
-//     }
-
-//     $.ajax({
-//         type: 'POST',
-//         url: 'plugins/mobile/core/ajax/mobile.ajax.php',
-//         data: {
-//             action: 'createJsonBellaMobile',
-//             config: config
-//         },
-//         dataType: 'json',
-//         error: function(request, status, error) {
-//             handleAjaxError(request, status, error);
-//         },
-//         success: function(data) {
-//             if (data.state != 'ok') {
-//                 $('#div_alert').showAlert({ message: data.result, level: 'danger' });
-//                 return;
-//             }
-//             $('#div_alert').showAlert({ message: '{{Configuration sauvegardée}}', level: 'success' });
-//         }
-//     });
-
-// });
-
-// document.getElementById('validView').addEventListener('click', function(event) {
-//     event.preventDefault();
-//     var tiles = document.querySelectorAll('.tile');
-//     var config = [];
-//     var currentObject = {};
-//     var currentSize = 0;
-//     var globalIndex = 0;
-
-//     tiles.forEach(function(tile) {
-//         let idTile = tile.id;
-//         let sizeAttribute = tile.getAttribute('data-state');
-//         if (!sizeAttribute || sizeAttribute == undefined || sizeAttribute == "null") {
-//             if (tile.classList.contains('dual')) {
-//                 sizeAttribute = 2;
-//             } else if (tile.classList.contains('quadral')) {
-//                 sizeAttribute = 4;
-//             } else {
-//                 sizeAttribute = 1;
-//             }
-//         }
-//         console.log('sizeAttribute', sizeAttribute)
-//         var tileConfig;
-//         if (tile.hasAttribute('data-array')) {
-//             tileConfig = {
-//                 size: sizeAttribute,
-//                 type: 'info',
-//                 idEvent: 5,
-//                 options: {
-//                     on: 0,
-//                     title: tile.getAttribute('data-title'),
-//                     value: null,
-//                     icons: {
-//                         on: {
-//                             type: "jeedomapp",
-//                             name: tile.getAttribute('data-icon-on'),
-//                             color: "#00ff00"
-//                         },
-//                         off: {
-//                             type: "jeedomapp",
-//                             name: tile.getAttribute('data-icon-off'),
-//                             color: "#a4a4a3"
-//                         }
-//                     },
-//                     actions: {
-//                         on: { id: 8 },
-//                         off: { id: 9 }
-//                     },
-//                     iconBlur: false
-//                 }
-//             };
-//         } else {
-//             tileConfig = {
-//                 size: sizeAttribute,
-//                 type: 'info',
-//                 idEvent: 5,
-//                 options: {
-//                     on: 0,
-//                     title: tile.getAttribute('data-title'),
-//                     value: null,
-//                     icons: {
-//                         on: {
-//                             type: "jeedomapp",
-//                             name: tile.getAttribute('data-icon-on'),
-//                             color: "#00ff00"
-//                         },
-//                         off: {
-//                             type: "jeedomapp",
-//                             name: tile.getAttribute('data-icon-off'),
-//                             color: "#a4a4a3"
-//                         }
-//                     },
-//                     actions: {
-//                         on: { id: 8 },
-//                         off: { id: 9 }
-//                     },
-//                     iconBlur: false
-//                 }
-//             };
-//         }
-
-//         if (currentSize + parseInt(sizeAttribute) >= 4) {
-//             config.push(currentObject);
-//             currentObject = {};
-//             currentSize = 0;
-//         }
-
-//         currentObject[globalIndex] = tileConfig;
-//         currentSize += parseInt(sizeAttribute);
-//         globalIndex++;
-//     });
-//     if (currentObject.length > 0) {
-//         config.push(currentObject);
-//     }
-
-//     var finalConfig = {};
-//     config.forEach(function(obj, index) {
-//         finalConfig[index.toString()] = obj;
-//     });
-
-//    console.log('finalConfig', finalConfig);
-//     $.ajax({
-//         type: 'POST',
-//         url: 'plugins/mobile/core/ajax/mobile.ajax.php',
-//         data: {
-//             action: 'createJsonBellaMobile',
-//             config: finalConfig
-//         },
-//         dataType: 'json',
-//         error: function(request, status, error) {
-//             handleAjaxError(request, status, error);
-//         },
-//         success: function(data) {
-//             if (data.state != 'ok') {
-//                 $('#div_alert').showAlert({ message: data.result, level: 'danger' });
-//                 return;
-//             }
-//             $('#div_alert').showAlert({ message: '{{Configuration sauvegardée}}', level: 'success' });
-//         }
-//     });
-
-// });
 
 
 document.getElementById('quitView').addEventListener('click', function(event) {
@@ -631,132 +183,6 @@ function getIconForTile(tile){
       }
   }
 }
-
-
-// document.getElementById('validView').addEventListener('click', function(event) {
-//     event.preventDefault();
-//     var tiles = document.querySelectorAll('.tile');
-//     var config = [];
-//     var currentObject = [];
-//     var currentSize = 0;
-
-//     tiles.forEach(function(tile) {
-//         let idTile = tile.id;
-//         let sizeAttribute = tile.getAttribute('data-state');
-//         if (!sizeAttribute || sizeAttribute == undefined || sizeAttribute == "null") {
-//             if (tile.classList.contains('dual')) {
-//                 sizeAttribute = 2;
-//             } else if (tile.classList.contains('quadral')) {
-//                 sizeAttribute = 4;
-//             } else {
-//                 sizeAttribute = 1;
-//             }
-//         }
-//         getIconForTile(tile);
-//         sizeAttribute = parseInt(sizeAttribute);
-//         var tileConfig;
-//         if (tile.hasAttribute('data-array')) {
-//             tileConfig = {
-//                 size: sizeAttribute,
-//                 type: 'onOff',
-//                 idEvent: [5],
-//                 options: {
-//                     on: 0,
-//                     title: tile.getAttribute('data-title'),
-//                     value: null,
-//                     icons: {
-//                         on: {
-//                             type: tile.getAttribute('data-library'),
-//                             name: tile.getAttribute('data-icon'),
-//                             color: "#00ff00"
-//                         },
-//                         off: {
-//                             type: tile.getAttribute('data-library'),
-//                             name: tile.getAttribute('data-icon'),
-//                             color: "#a4a4a3"
-//                         }
-//                     },
-//                     actions: {
-//                         on: { id: 8 },
-//                         off: { id: 9 }
-//                     },
-//                     iconBlur: false
-//                 }
-//             };
-//         } else {
-//             tileConfig = {
-//                 size: sizeAttribute,
-//                 type: 'onOff',
-//                 idEvent: [5],
-//                 options: {
-//                     on: 0,
-//                     title: tile.getAttribute('data-title'),
-//                     value: null,
-//                     icons: {
-//                         on: {
-//                             type: tile.getAttribute('data-library'),
-//                             //type: "jeedomapp",
-//                             name: tile.getAttribute('data-icon'),
-//                             color:tile.getAttribute('data-color'),
-//                             // color: "#00ff00"
-//                         },
-//                         off: {
-//                             type: tile.getAttribute('data-library'),
-//                             name:  tile.getAttribute('data-icon'),
-//                             color:tile.getAttribute('data-color'),
-//                             //color: "#a4a4a3"
-//                         }
-//                     },
-//                     actions: {
-//                         on: { id: 8 },
-//                         off: { id: 9 }
-//                     },
-//                     iconBlur: false
-//                 }
-//             };
-//         }
-
-//         currentObject.push(tileConfig);
-//         currentSize += parseInt(sizeAttribute);
-
-//         if (currentSize >= 4) {
-//             config.push(currentObject);
-//             currentObject = [];
-//             currentSize = 0;
-//         }
-//     });
-
-//     if (currentObject.length > 0) {
-//         config.push(currentObject);
-//     }
-
-//     var finalConfig = {};
-//     config.forEach(function(obj, index) {
-//         finalConfig[index.toString()] = obj;
-//     });
-
-//     console.log('finalConfig', finalConfig);
-//     $.ajax({
-//         type: 'POST',
-//         url: 'plugins/mobile/core/ajax/mobile.ajax.php',
-//         data: {
-//             action: 'createJsonBellaMobile',
-//             config: finalConfig
-//         },
-//         dataType: 'json',
-//         error: function(request, status, error) {
-//             handleAjaxError(request, status, error);
-//         },
-//         success: function(data) {
-//             if (data.state != 'ok') {
-//                 $('#div_alert').showAlert({ message: data.result, level: 'danger' });
-//                 return;
-//             }
-//             $('#div_alert').showAlert({ message: '{{Configuration sauvegardée}}', level: 'success' });
-//         }
-//     });
-
-// });
 
 
 
@@ -862,12 +288,6 @@ document.getElementById('validView').addEventListener('click', function(event) {
 
 function mainScript() {
 
-    // var btnClose = jeeDialog.get('#configBella', 'title').querySelector('button.btClose')
-    //   btnClose.addEventListener('click', function() {
-    //     location.reload()
-    // });
-
-
   if (typeof longClickOccurred === 'undefined') {
         var longClickOccurred = false;
     }
@@ -875,301 +295,300 @@ function mainScript() {
         var timer;
     }
 
-
     var tiles = document.querySelectorAll('.tile');
 
     var colors = ["#94ca02", "#9fcf1b", "#a9d535", "#b4da4e", "#bfdf67", "#cae581", "#d4ea9a", "#dfefb3", "#eaf4cc", "#f4fae6"];
     //#A9D534
 
-    function getRandomColor() {
-        var randomIndex = Math.floor(Math.random() * colors.length);
-        return colors[randomIndex];
-    }
+    // let tileStates = {};
+
+//     const createConfigTile = (tileElement, idTile, randomColor, MODELS_CHOICE) => {
+//         // Création de la configTile
+//         let configTileDiv = document.createElement('div');
+//         let bgDiv = document.createElement('div');
+//         bgDiv.classList.add('bgDiv');
+//         bgDiv.setAttribute('data-id', idTile);
+//         bgDiv.setAttribute('style', 'background-color:' + randomColor + ';');
+//         configTileDiv.appendChild(bgDiv);
+//         configTileDiv.classList.add('configTileDiv');
+//         configTileDiv.setAttribute('id', 'configTileDiv' + idTile);
+//         configTileDiv.setAttribute('data-id', idTile);
+//         var splitIdTile = idTile.split('_');
+//         var numberTile = splitIdTile[0];
+//         configTileDiv.style.order = numberTile;
+
+//         // Premier Select
+//         let firstSection = document.createElement('div');
+//         let label = document.createElement('label');
+//         label.innerHTML = 'Type de template à appliquer';
+//         firstSection.appendChild(label);
+//         firstSection.classList.add('firstSection');
+//         let firstSelect = document.createElement('select');
+//         firstSelect.setAttribute('id', 'templateSelect');
+//         firstSelect.classList.add('templateSelect');
+//         // firstSelect.setAttribute('style', 'margin-bottom: 10px;');
+//         configTileDiv.appendChild(firstSection);
+
+
+//         // Choose Cmd
+//         let cmdSection = document.createElement('div');
+//         cmdSection.setAttribute('id', 'cmdSection');
+//         cmdSection.classList.add('cmdSection');
+//         let labelCmdSection = document.createElement('label');
+//         let chooseCmdBtn = document.createElement('a');
+//         chooseCmdBtn.classList.add('btn', 'btn-info', 'btn-sm');
+//         let iconChooseCmd = document.createElement('i');
+//         iconChooseCmd.classList.add('kiko-several-gears');
+//         chooseCmdBtn.appendChild(iconChooseCmd);
+//         chooseCmdBtn.setAttribute('id', 'bt_chooseCmdBtn');
+//         let cmdBtnText = document.createElement('span');
+//         cmdBtnText.textContent = ' Choisir Commande';
+//         chooseCmdBtn.appendChild(cmdBtnText);
+//         cmdSection.appendChild(labelCmdSection);
+//         cmdSection.appendChild(chooseCmdBtn);
+//         configTileDiv.appendChild(cmdSection);
+//         // cmdSection.style.zIndex = '1000';
+
+
+//         // Choose Icon
+//         let secondSection = document.createElement('div');
+//         secondSection.classList.add('secondSection');
+
+//         let chooseIconButton = document.createElement('a');
+//         chooseIconButton.classList.add('btn', 'btn-info', 'btn-sm');
+//         chooseIconButton.setAttribute('id', 'bt_chooseIcon');
+
+//         let icon = document.createElement('i');
+//         icon.classList.add('fas', 'fa-flag');
+//         chooseIconButton.appendChild(icon);
+
+//         let buttonText = document.createTextNode(' Choisir Icone');
+//         chooseIconButton.appendChild(buttonText);
+    
+//         secondSection.appendChild(chooseIconButton);
+//         configTileDiv.appendChild(secondSection);
+        
+      
+//         // ADD ANIMATIONS HOVER
+//         configTileDiv.addEventListener('mouseover', function() {
+//           var associatedTile = configTileDiv.getAttribute('data-id');
+//           if (associatedTile) {
+//             var associatedElement = document.getElementById(associatedTile);
+//             associatedElement.style.zIndex = '10';
+//             associatedElement.classList.add('bounceAndScale');
+//             associatedElement.addEventListener('animationend', function() {
+//               this.classList.remove('bounceAndScale');
+//             });
+//             let bgDiv = document.querySelector(`.bgDiv[data-id="${associatedTile}"]`);
+//             bgDiv.style.transform = 'scale(20)';
+//           }
+//         });
+      
+//         // REMOVE ANIMATIONS OUT HOVER
+//         configTileDiv.addEventListener('mouseout', function() {
+//           var associatedTile = configTileDiv.getAttribute('data-id');
+//           if (associatedTile) {
+//             var associatedElement = document.getElementById(associatedTile);
+//             associatedElement.style.transform = 'scale(1.0)';
+//             associatedElement.style.zIndex = '1';
+//             let bgDiv = document.querySelector(`.bgDiv[data-id="${associatedTile}"]`);
+//             bgDiv.style.transform = 'scale(1)';
+//           }
+//         });
+      
+//         tileElement.addEventListener('mouseover', function() {
+//           let tileId = tileElement.getAttribute('id');
+//           let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
+//           if (bgDiv) {
+//             bgDiv.style.transform = 'scale(20)';
+//           }
+//           tileElement.style.transform = 'scale(1.1)';
+//         });
+      
+//         tileElement.addEventListener('mouseout', function() {
+//           let tileId = tileElement.getAttribute('id');
+//           let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
+//           if (bgDiv) {
+//             bgDiv.style.transform = 'scale(1)';
+//           }
+//           tileElement.style.transform = 'scale(1.0)';
+//         });
+      
+//         MODELS_CHOICE.forEach(function(model) {
+//           let option = document.createElement('option');
+//           option.value = model.value;
+//           option.text = model.text;
+//           firstSelect.appendChild(option);
+//         });
+      
+//         // On sauvegarde les infos du select
+//         firstSelect.addEventListener('change', function() {
+//           saveTileState(tileElement, idTile);
+//         });
+
+      
+//         firstSection.appendChild(firstSelect);
+//         document.getElementById('rightContent').appendChild(configTileDiv);
+      
+//         // On restaure la tuile si il y a des infos sauvegardées
+//         if (tileStates[idTile]) {
+//           restoreTileState(tileElement, tileStates[idTile]);
+//         }
+
+//         // Remplacer l'icone dans la tuile en cours 
+//       document.getElementById('bt_chooseIcon')?.addEventListener('click', function() {
+//         jeedomUtils.chooseIcon(function(_icon) {
+//             let iconClassMatch = _icon.match(/class='icon ([^-]+)-([^ ]+)(?: (icon_[^']+))?'/);
+//             if (iconClassMatch && iconClassMatch[1] && iconClassMatch[2]) {
+//                 let libraryName = iconClassMatch[1];
+//                 let iconClass = iconClassMatch[2];
+//                 let iconColor = iconClassMatch[3] ? iconClassMatch[3].replace('icon_', '') : '';
+    
+//                 let upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`);    
+//                 let tile = document.querySelector(`.tile[id="${idTile}"]`);  
+//                 tile.setAttribute('data-icon', iconClass);
+//                 tile.setAttribute('data-library', libraryName);
+//                 tile.setAttribute('data-color', iconColor);
+                
+//                 let iconElement = upLeftDiv.querySelector('i');
+//                 iconElement.className = `iconTile ${libraryName}-${iconClass} ${iconClassMatch[3] || ''}`.trim();
+//             }
+//         });
+//      });
+
+//      // Choix de la commande a associer
+//      document.getElementById('bt_chooseCmdBtn')?.addEventListener('click', function() {
+//           jeedom.cmd.getSelectModal({ cmd: { type: 'info' } }, function(result) {
+//                 console.log('result', result);
+//                 let cmdId = result.cmd.id
+//                 let humanName = result.human
+//                 let divSelectedCmd = document.createElement('div');
+//                 divSelectedCmd.classList.add('selectedCmd');
+//                 divSelectedCmd.setAttribute('id', 'selectedCmd'+cmdId);
+//                 divSelectedCmd.setAttribute('data-id', cmdId);
+//                 divSelectedCmd.setAttribute('data-human', humanName);
+//                 divSelectedCmd.innerHTML = humanName;
+//                 // divSelectedCmd.style.marginTop = '10px';
+//                 let cmdSection = document.querySelector(`#configTileDiv${idTile} #cmdSection`);
+//                 if (cmdSection && divSelectedCmd) {
+//                     if (!document.getElementById('selectedCmd' + cmdId)) {
+//                         cmdSection.appendChild(divSelectedCmd);
+//                        // let inputDivRename = document.createElement('div');
+//                         let inputRenameTile = document.createElement('input');
+//                         inputRenameTile.classList.add('inputRenameTile');
+//                         inputRenameTile.setAttribute('type', 'text');
+//                         inputRenameTile.setAttribute('id', 'inputRenameTile'+idTile);
+//                         let tile = document.querySelector(`.tile[id="${idTile}"]`);
+//                         let titleOn =  tile.querySelector('.title.on.bold');
+                       
+//                         //inputRenameTile.setAttribute('placeholder', titleOn.textContent);
+//                         inputRenameTile.value = titleOn.textContent;
+//                        // inputRenameTile.setAttribute('placeholder', titleOn.textContent);
+//                         inputRenameTile.setAttribute('data-cmdId', cmdId);
+//                        // inputDivRename.appendChild(inputRenameTile);
+//                         cmdSection.appendChild(inputRenameTile);
+
+//                        // RENAME TITLE
+//                         inputRenameTile?.addEventListener('input', function(event) {
+//                           let newName = event.target.value;
+//                           titleOn.textContent = newName;
+//                           tile.setAttribute('data-title', newName); 
+//                         });
+//                     } else {
+//                         console.error("divSelectedCmd existe déjà dans le DOM.");
+//                     }
+//                 } else {
+//                     console.error("cmdSection ou divSelectedCmd est introuvable ou invalide.");
+//                 }
+//           });
+//      })
+
+//      let originalContent = '';
 
 
 
 
+//      document.getElementById('templateSelect')?.addEventListener('change', function() {
+//           let valueChoose = this.value;
+//           let upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`);
+//           let tileUp = document.querySelector(`.tile[id="${idTile}"] .TileUp`);
+        
+//           if (upLeftDiv && originalContent === '') {
+//             originalContent = upLeftDiv.innerHTML;
+//           }
+        
+//           switch(valueChoose) {
+//             case 'OnOff':
+//               let switchContainerSpanHtml = createSwitchemplate()
+//               if (upLeftDiv) {
+//                 let tempDiv = document.createElement('div');
+//                 tempDiv.innerHTML = switchContainerSpanHtml;
+//                 upLeftDiv.innerHTML = '';
+//                 upLeftDiv.appendChild(tempDiv.firstElementChild);
+//                 var toggler = document.querySelector('.toggle-switch');
+//                 if (toggler) {
+//                   toggler.onclick = function() {
+//                     toggler.classList.toggle('active');
+//                   }
+//                 } else {
+//                   console.error('Toggle switch non trouvé');
+//                 }
+//               } else {
+//                 console.error('UpTitle non trouve');
+//               }
+//               break;
+//               case 'multistate':
+//                 let multiStateHtml = createMultiStateTemplate();
+//                 console.log('multiStateHtml', multiStateHtml);
+//                 if (tileUp) {
+//                   tileUp.innerHTML = '';
+//                   let tempDiv = document.createElement('div');
+//                   tempDiv.innerHTML = multiStateHtml;
+//                   tileUp.appendChild(tempDiv.firstElementChild);
+//                 } else {
+//                   console.error('UpTitle non trouve');
+//                 }
+//                 break;
+//             default:
+//               if (upLeftDiv) {
+//                 upLeftDiv.innerHTML = originalContent;
+//               }
+//               break;
+//           }
+//     });
 
-
-    let tileStates = {};
+//  };
 
     const createConfigTile = (tileElement, idTile, randomColor, MODELS_CHOICE) => {
-        // Création de la configTile
-        let configTileDiv = document.createElement('div');
-        let bgDiv = document.createElement('div');
-        bgDiv.classList.add('bgDiv');
-        bgDiv.setAttribute('data-id', idTile);
-        bgDiv.setAttribute('style', 'background-color:' + randomColor + ';');
-        configTileDiv.appendChild(bgDiv);
-        configTileDiv.classList.add('configTileDiv');
-        configTileDiv.setAttribute('id', 'configTileDiv' + idTile);
-        configTileDiv.setAttribute('data-id', idTile);
-        var splitIdTile = idTile.split('_');
-        var numberTile = splitIdTile[0];
-        configTileDiv.style.order = numberTile;
+          const configTileDiv = document.createElement('div');
+          configTileDiv.classList.add('configTileDiv');
+          configTileDiv.setAttribute('id', 'configTileDiv' + idTile);
+          configTileDiv.setAttribute('data-id', idTile);
+          configTileDiv.style.order = idTile.split('_')[0];
 
-        // Premier Select
-        let firstSection = document.createElement('div');
-        let label = document.createElement('label');
-        label.innerHTML = 'Type de template à appliquer';
-        firstSection.appendChild(label);
-        firstSection.classList.add('firstSection');
-        let firstSelect = document.createElement('select');
-        firstSelect.setAttribute('id', 'templateSelect');
-        firstSelect.classList.add('templateSelect');
-        // firstSelect.setAttribute('style', 'margin-bottom: 10px;');
-        configTileDiv.appendChild(firstSection);
+          const bgDiv = createBgDiv(idTile, randomColor);
+          configTileDiv.appendChild(bgDiv);
 
+          const firstSection = createFirstSection(MODELS_CHOICE);
+          configTileDiv.appendChild(firstSection);
 
-        // Choose Cmd
-        let cmdSection = document.createElement('div');
-        cmdSection.setAttribute('id', 'cmdSection');
-        cmdSection.classList.add('cmdSection');
-        let labelCmdSection = document.createElement('label');
-        let chooseCmdBtn = document.createElement('a');
-        chooseCmdBtn.classList.add('btn', 'btn-info', 'btn-sm');
-        let iconChooseCmd = document.createElement('i');
-        iconChooseCmd.classList.add('kiko-several-gears');
-        chooseCmdBtn.appendChild(iconChooseCmd);
-        chooseCmdBtn.setAttribute('id', 'bt_chooseCmdBtn');
-        let cmdBtnText = document.createElement('span');
-        cmdBtnText.textContent = ' Choisir Commande';
-        chooseCmdBtn.appendChild(cmdBtnText);
-        cmdSection.appendChild(labelCmdSection);
-        cmdSection.appendChild(chooseCmdBtn);
-        configTileDiv.appendChild(cmdSection);
-        // cmdSection.style.zIndex = '1000';
+          const cmdSection = createCmdSection(idTile);
+          configTileDiv.appendChild(cmdSection);
 
+          const secondSection = createSecondSection();
+          configTileDiv.appendChild(secondSection);
 
-        // Choose Icon
-        let secondSection = document.createElement('div');
-        secondSection.classList.add('secondSection');
+          addHoverAnimations(configTileDiv, tileElement);
+          addMouseOutAnimations(configTileDiv, tileElement);
+          addTemplateSelectChangeEvent(firstSection.querySelector('select'), tileElement, idTile);
 
-        let chooseIconButton = document.createElement('a');
-        chooseIconButton.classList.add('btn', 'btn-info', 'btn-sm');
-        chooseIconButton.setAttribute('id', 'bt_chooseIcon');
+          document.getElementById('rightContent').appendChild(configTileDiv);
 
-        let icon = document.createElement('i');
-        icon.classList.add('fas', 'fa-flag');
-        chooseIconButton.appendChild(icon);
-
-        let buttonText = document.createTextNode(' Choisir Icone');
-        chooseIconButton.appendChild(buttonText);
-    
-        secondSection.appendChild(chooseIconButton);
-        configTileDiv.appendChild(secondSection);
-        
-      
-        // ADD ANIMATIONS HOVER
-        configTileDiv.addEventListener('mouseover', function() {
-          var associatedTile = configTileDiv.getAttribute('data-id');
-          if (associatedTile) {
-            var associatedElement = document.getElementById(associatedTile);
-            associatedElement.style.zIndex = '10';
-            associatedElement.classList.add('bounceAndScale');
-            associatedElement.addEventListener('animationend', function() {
-              this.classList.remove('bounceAndScale');
-            });
-            let bgDiv = document.querySelector(`.bgDiv[data-id="${associatedTile}"]`);
-            bgDiv.style.transform = 'scale(20)';
+          if (tileStates[idTile]) {
+              restoreTileState(tileElement, tileStates[idTile]);
           }
-        });
-      
-        // REMOVE ANIMATIONS OUT HOVER
-        configTileDiv.addEventListener('mouseout', function() {
-          var associatedTile = configTileDiv.getAttribute('data-id');
-          if (associatedTile) {
-            var associatedElement = document.getElementById(associatedTile);
-            associatedElement.style.transform = 'scale(1.0)';
-            associatedElement.style.zIndex = '1';
-            let bgDiv = document.querySelector(`.bgDiv[data-id="${associatedTile}"]`);
-            bgDiv.style.transform = 'scale(1)';
-          }
-        });
-      
-        tileElement.addEventListener('mouseover', function() {
-          let tileId = tileElement.getAttribute('id');
-          let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
-          if (bgDiv) {
-            bgDiv.style.transform = 'scale(20)';
-          }
-          tileElement.style.transform = 'scale(1.1)';
-        });
-      
-        tileElement.addEventListener('mouseout', function() {
-          let tileId = tileElement.getAttribute('id');
-          let bgDiv = document.querySelector(`.bgDiv[data-id="${tileId}"]`);
-          if (bgDiv) {
-            bgDiv.style.transform = 'scale(1)';
-          }
-          tileElement.style.transform = 'scale(1.0)';
-        });
-      
-        MODELS_CHOICE.forEach(function(model) {
-          let option = document.createElement('option');
-          option.value = model.value;
-          option.text = model.text;
-          firstSelect.appendChild(option);
-        });
-      
-        // On sauvegarde les infos du select
-        firstSelect.addEventListener('change', function() {
-          saveTileState(tileElement, idTile);
-        });
+    };
 
-      
-        firstSection.appendChild(firstSelect);
-        document.getElementById('rightContent').appendChild(configTileDiv);
-      
-        // On restaure la tuile si il y a des infos sauvegardées
-        if (tileStates[idTile]) {
-          restoreTileState(tileElement, tileStates[idTile]);
-        }
-
-        // Remplacer l'icone dans la tuile en cours 
-      document.getElementById('bt_chooseIcon')?.addEventListener('click', function() {
-        jeedomUtils.chooseIcon(function(_icon) {
-            let iconClassMatch = _icon.match(/class='icon ([^-]+)-([^ ]+)(?: (icon_[^']+))?'/);
-            if (iconClassMatch && iconClassMatch[1] && iconClassMatch[2]) {
-                let libraryName = iconClassMatch[1];
-                let iconClass = iconClassMatch[2];
-                let iconColor = iconClassMatch[3] ? iconClassMatch[3].replace('icon_', '') : '';
-    
-                let upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`);    
-                let tile = document.querySelector(`.tile[id="${idTile}"]`);  
-                tile.setAttribute('data-icon', iconClass);
-                tile.setAttribute('data-library', libraryName);
-                tile.setAttribute('data-color', iconColor);
-                
-                let iconElement = upLeftDiv.querySelector('i');
-                iconElement.className = `iconTile ${libraryName}-${iconClass} ${iconClassMatch[3] || ''}`.trim();
-            }
-        });
-     });
-
-     // Choix de la commande a associer
-     document.getElementById('bt_chooseCmdBtn')?.addEventListener('click', function() {
-          jeedom.cmd.getSelectModal({ cmd: { type: 'info' } }, function(result) {
-                console.log('result', result);
-                let cmdId = result.cmd.id
-                let humanName = result.human
-                let divSelectedCmd = document.createElement('div');
-                divSelectedCmd.classList.add('selectedCmd');
-                divSelectedCmd.setAttribute('id', 'selectedCmd'+cmdId);
-                divSelectedCmd.setAttribute('data-id', cmdId);
-                divSelectedCmd.setAttribute('data-human', humanName);
-                divSelectedCmd.innerHTML = humanName;
-                // divSelectedCmd.style.marginTop = '10px';
-                let cmdSection = document.querySelector(`#configTileDiv${idTile} #cmdSection`);
-                if (cmdSection && divSelectedCmd) {
-                    if (!document.getElementById('selectedCmd' + cmdId)) {
-                        cmdSection.appendChild(divSelectedCmd);
-                       // let inputDivRename = document.createElement('div');
-                        let inputRenameTile = document.createElement('input');
-                        inputRenameTile.classList.add('inputRenameTile');
-                        inputRenameTile.setAttribute('type', 'text');
-                        inputRenameTile.setAttribute('id', 'inputRenameTile'+idTile);
-                        let tile = document.querySelector(`.tile[id="${idTile}"]`);
-                        let titleOn =  tile.querySelector('.title.on.bold');
-                       
-                        //inputRenameTile.setAttribute('placeholder', titleOn.textContent);
-                        inputRenameTile.value = titleOn.textContent;
-                       // inputRenameTile.setAttribute('placeholder', titleOn.textContent);
-                        inputRenameTile.setAttribute('data-cmdId', cmdId);
-                       // inputDivRename.appendChild(inputRenameTile);
-                        cmdSection.appendChild(inputRenameTile);
-
-                       // RENAME TITLE
-                        inputRenameTile?.addEventListener('input', function(event) {
-                          let newName = event.target.value;
-                          titleOn.textContent = newName;
-                          tile.setAttribute('data-title', newName); 
-                        });
-                    } else {
-                        console.error("divSelectedCmd existe déjà dans le DOM.");
-                    }
-                } else {
-                    console.error("cmdSection ou divSelectedCmd est introuvable ou invalide.");
-                }
-          });
-     })
-
-     let originalContent = '';
-
-
-
-
-     document.getElementById('templateSelect')?.addEventListener('change', function() {
-          let valueChoose = this.value;
-          let upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`);
-          let tileUp = document.querySelector(`.tile[id="${idTile}"] .TileUp`);
-        
-          if (upLeftDiv && originalContent === '') {
-            originalContent = upLeftDiv.innerHTML;
-          }
-        
-          switch(valueChoose) {
-            case 'OnOff':
-              let switchContainerSpanHtml = createSwitchemplate()
-              if (upLeftDiv) {
-                let tempDiv = document.createElement('div');
-                tempDiv.innerHTML = switchContainerSpanHtml;
-                upLeftDiv.innerHTML = '';
-                upLeftDiv.appendChild(tempDiv.firstElementChild);
-                var toggler = document.querySelector('.toggle-switch');
-                if (toggler) {
-                  toggler.onclick = function() {
-                    toggler.classList.toggle('active');
-                  }
-                } else {
-                  console.error('Toggle switch non trouvé');
-                }
-              } else {
-                console.error('UpTitle non trouve');
-              }
-              break;
-              case 'multistate':
-                let multiStateHtml = createMultiStateTemplate();
-                console.log('multiStateHtml', multiStateHtml);
-                if (tileUp) {
-                  tileUp.innerHTML = '';
-                  let tempDiv = document.createElement('div');
-                  tempDiv.innerHTML = multiStateHtml;
-                  tileUp.appendChild(tempDiv.firstElementChild);
-                } else {
-                  console.error('UpTitle non trouve');
-                }
-                break;
-            default:
-              if (upLeftDiv) {
-                upLeftDiv.innerHTML = originalContent;
-              }
-              break;
-          }
-    });
-
- };
-
-
-    function saveTileState(tileElement, idTile) {
-      let configTileDiv = document.getElementById('configTileDiv' + idTile);
-      let selects = configTileDiv.getElementsByTagName('select');
-      let state = {};
-      for (let select of selects) {
-          state[select.id] = select.value;
-      }
-      tileStates[idTile] = state;
-    }
-    
-    function restoreTileState(tileElement, state) {
-      let configTileDiv = document.getElementById('configTileDiv' + tileElement.id);
-      for (let key in state) {
-          let select = configTileDiv.querySelector(`#${key}`);
-          if (select) {
-          select.value = state[key];
-          }
-      }
-    }
 
 
 
@@ -1208,59 +627,12 @@ tiles.forEach(function(tile) {
           return;
         }  
 
-        //let randomColor = getRandomColor();
-        //tileElement.style.setProperty("background-color", randomColor, "important");
-        // var MODELS_CHOICE = [ {text :'Info', value:'Info'}, 
-        //                       {text :'Meteo', value:'Meteo'}, 
-        //                       {text :'Lumière', value:'Light'},
-        //                       {text :'Switch', value:'OnOff'}, 
-        //                     ];
-            createConfigTile(tileElement, idTile, '#A9D534', MODELS_CHOICE);
-            if (tileStates[idTile]) {
-                restoreTileState(tileElement, tileStates[idTile]);
-              }
-            return;
-
-          bootbox.prompt({
-            title: "{{Choisir le type de template à appliquer}}",
-            inputType: 'select',
-            inputOptions: MODELS_CHOICE,
-            className: 'slideInUp animated',
-            // className: 'bootBoxClass',
-            
-            callback: function(model) {
-              if (model == null) {
-                return
-              }
-              var CHOICE_TYPECMD_TOSEARCH = [ {text :'Manuellement', value:'manualSearch'}, {text :'Generic Type', value:'genericType'}];
-
-              bootbox.prompt({
-                title: "{{Choisir une commande manuellement ou via les generics types ? }}",
-                inputType: 'select',
-                inputOptions: CHOICE_TYPECMD_TOSEARCH,
-                className: 'slideInDown animated',
-                callback: function(choiceCmd) {
-                  if (choiceCmd == null) {
-                    return
-                  }
-                  if(choiceCmd == 'genericType'){
-                    if(model == 'OnOff'){
-                      bootBoxGenericTypeFunction(model, choiceCmd, tileElement).then(returnBootBox => {
-                            console.log('returnBootBox', returnBootBox);
-                        }).catch(error => {
-                            console.error('Une erreur est survenue :', error);
-                        });                
-                    }
-
-                  }else{
-                    bootBoxAllCmds(model, choiceCmd, tileElement)
-                  }
-                }})
-
-
-
-            }
-          })
+        // CREATION DE LA SECTION DE PARAMETRAGE
+        createConfigTile(tileElement, idTile, '#A9D534', MODELS_CHOICE);
+        if (tileStates[idTile]) {
+            restoreTileState(tileElement, tileStates[idTile]);
+          }
+        return;
     } 
   });
 
@@ -1351,93 +723,6 @@ document.querySelectorAll('.toggle_radio').forEach(function(toggleRadio) {
     event.stopPropagation();
   });
 });
-
-//   tile.addEventListener('mousedown', function() {
-//     longClickOccurred = false;
-//      let idTile = tile.id;
-//      let tileElement = this;
-
-//      if (tile.classList.contains('selected')) {
-//       timer = setTimeout(function() {
-//         longClickOccurred = true; 
-//         let existingConfigTileDiv = document.getElementById('configTileDiv' + idTile);
-//         if (existingConfigTileDiv){
-//           existingConfigTileDiv.remove();
-//           tileElement.style.setProperty("background-color", 'white', "important");
-//           return;
-//         }  
-
-       
- 
-//         let randomColor = getRandomColor();
-//         tileElement.style.setProperty("background-color", randomColor, "important");
-//         var MODELS_CHOICE = [ {text :'Info', value:'Info'}, 
-//                               {text :'Meteo', value:'Meteo'}, 
-//                               {text :'Lumière', value:'OnOff'}
-//                             ];
-//             createConfigTile(tileElement, idTile, randomColor, MODELS_CHOICE);
-//             return;
-
-//           bootbox.prompt({
-//             title: "{{Choisir le type de template à appliquer}}",
-//             inputType: 'select',
-//             inputOptions: MODELS_CHOICE,
-//             className: 'slideInUp animated',
-//             // className: 'bootBoxClass',
-            
-//             callback: function(model) {
-//               if (model == null) {
-//                 return
-//               }
-//               var CHOICE_TYPECMD_TOSEARCH = [ {text :'Manuellement', value:'manualSearch'}, {text :'Generic Type', value:'genericType'}];
-
-//               bootbox.prompt({
-//                 title: "{{Choisir une commande manuellement ou via les generics types ? }}",
-//                 inputType: 'select',
-//                 inputOptions: CHOICE_TYPECMD_TOSEARCH,
-//                 className: 'slideInDown animated',
-//                 callback: function(choiceCmd) {
-//                   if (choiceCmd == null) {
-//                     return
-//                   }
-//                   if(choiceCmd == 'genericType'){
-//                     if(model == 'OnOff'){
-//                       bootBoxGenericTypeFunction(model, choiceCmd, tileElement).then(returnBootBox => {
-//                             console.log('returnBootBox', returnBootBox);
-//                         }).catch(error => {
-//                             console.error('Une erreur est survenue :', error);
-//                         });                
-//                     }
-
-//                   }else{
-//                     bootBoxAllCmds(model, choiceCmd, tileElement)
-//                   }
-//                 }})
-
-
-
-//             }
-//           })
-//       }, 1000);
-//     } 
-//       // tile.addEventListener('mouseup', function() {
-//       //   clearTimeout(timer); 
-//       // });
-//     });
-
-
-   
-
-    const ajaxConfig = (action, data) => ({
-      type: 'POST',
-      url: AJAX_URL,
-      data: {
-        action,
-        ...data
-      },
-      dataType: 'json',
-      error: (request, status, error) => handleAjaxError(request, status, error)
-    });
 
 
   const bootBoxAllCmds = (tmodel, choiceCmd, tileElement) => {

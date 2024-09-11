@@ -343,7 +343,7 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	$retentionTime = config::byKey('retentionTime', 'mobile', null);
 	if(isset($retentionTime) && $retentionTime != null) {
 		log::add('mobile', 'debug', '| [INFO] Nettoyage des notifs et images > ');
-		mobile::getNotificationsWithRetentioNTime($params['Iq'], $retentionTime);
+		mobile::cleaningNotifications($params['Iq'], $retentionTime);
 	}
 
 	$jsonrpc->makeSuccess($return);
@@ -676,84 +676,15 @@ if ($jsonrpc->getMethod() == "syncBella") {
 if ($jsonrpc->getMethod() == 'getNotificationsFromFile') {
 	log::add('mobile', 'debug', '┌──────────▶︎ :fg-warning: Recuperation des Notifications :/fg: ──────────');
 	$Iq = $params['Iq'];
-	
-	if(isset($params['notifsTime'])){
-		$retentionTime = $params['notifsTime'];
-		config::save('retentionTime', $retentionTime, 'mobile');
-		log::add('mobile', 'debug', '| Durée de retention actuelle : '. $retentionTime . ' jours');
-		$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60; 
-		$currentTime = time();
-
-		$pathImages = dirname(__FILE__) . '/../data/images/';
-		if(is_dir($pathImages)){
-			$images = glob($pathImages . '*.jpg');
-
-			foreach ($images as $image) {
-				$fileCreationTime = filemtime($image);
-				if ($fileCreationTime < ($currentTime - $retentionSeconds)) {
-					unlink($file); 
-				}
-			}
-		}
-	}
-
-
-	
 	$filePath = dirname(__FILE__) . '/../data/notifications/' . $Iq . '.json';
 	$notifications = 'noNotifications';
 	if (file_exists($filePath)) {
 		$notifications = file_get_contents($filePath);
-		if ($notifications) {
-			$notifications = json_decode($notifications, true);
-			$notificationsModified = false;
-
-			foreach ($notifications as $id => $value) {
-				$notificationDate = strtotime($value['data']['date']); 
-				if(isset($retentionSeconds)){
-					if (($currentTime - $notificationDate) > $retentionSeconds) {
-						unset($notifications[$id]); 
-						$notificationsModified = true;
-					} else {
-						$dateNew = substr($value['data']['date'], 0, 10);
-						$horaire = substr($value['data']['date'], -8);
-						$horaireFormat = substr($horaire, 0, 5);
-						$notifications[$id]['data']['newDate'] = $dateNew;
-						$notifications[$id]['data']['horaireFormat'] = $horaireFormat;
-					}
-				}else{
-					$dateNew = substr($value['data']['date'], 0, 10);
-					$horaire = substr($value['data']['date'], -8);
-					$horaireFormat = substr($horaire, 0, 5);
-					$notifications[$id]['data']['newDate'] = $dateNew;
-					$notifications[$id]['data']['horaireFormat'] = $horaireFormat;
-				}
-				// if (($currentTime - $notificationDate) > $retentionSeconds) {
-				// 	unset($notifications[$id]); 
-				// 	$notificationsModified = true;
-				// } else {
-				// 	$dateNew = substr($value['data']['date'], 0, 10);
-				// 	$horaire = substr($value['data']['date'], -8);
-				// 	$horaireFormat = substr($horaire, 0, 5);
-				// 	$notifications[$id]['data']['newDate'] = $dateNew;
-				// 	$notifications[$id]['data']['horaireFormat'] = $horaireFormat;
-				// }
-			}
-			if ($notificationsModified) {
-				file_put_contents($filePath, $notifications);
-			}
-
-			$notifications = json_encode($notifications);
-			$jsonrpc->makeSuccess($notifications);
-			log::add('mobile', 'debug', '| [INFO] Notifications > ' . $notifications);
-			log::add('mobile', 'debug', '└───────────────────────────────────────────');
-		}
-
 	}
-
-	//$jsonrpc->makeSuccess($notifications);
-	
+	log::add('mobile', 'debug', '| [INFO] Notifications > ' . $notifications);
+	log::add('mobile', 'debug', '└───────────────────────────────────────────');
+	$jsonrpc->makeSuccess($notifications);	
 }
-
 
 if ($jsonrpc->getMethod() == 'deleteNotificationInJsonFile') {
 	log::add('mobile', 'debug', '┌────▶︎ deleteNotificationInJsonFile ──────');
@@ -772,8 +703,8 @@ if ($jsonrpc->getMethod() == 'deleteNotificationInJsonFile') {
 			$notifications = json_encode($notificationsArray);
 			file_put_contents($filePath, $notifications);
 		}
-		log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	}
+	log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	$jsonrpc->makeSuccess('ok');
 }
 

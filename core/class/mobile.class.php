@@ -313,7 +313,7 @@ class mobile extends eqLogic
 		$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60; 
 		$currentTime = time();
 
-		$pathImages = dirname(__FILE__) . '/../data/images/';
+		$pathImages = dirname(__FILE__) . '/../../data/images/';
 		if(is_dir($pathImages)){
 			$images = glob($pathImages . '*.jpg');
 			foreach ($images as $image) {
@@ -339,9 +339,11 @@ class mobile extends eqLogic
 						$notificationsModified = true;
 					} 
 				}
-			
+				$notifications = json_encode($notifications);
+				if ($notificationsModified) { 
+					file_put_contents($filePath, $notifications);
+				}		
 			}
-	
 		}
 		log::add('mobile', 'debug', '| Fin du nettoyage des Notifications et Images');
 		log::add('mobile', 'debug', '└───────────────────────────────────────────');

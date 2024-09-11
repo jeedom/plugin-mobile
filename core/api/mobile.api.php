@@ -684,7 +684,7 @@ if ($jsonrpc->getMethod() == 'getNotificationsFromFile') {
 		$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60; 
 		$currentTime = time();
 
-		$pathImages = dirname(__FILE__) . '/../data/images/';
+		$pathImages = dirname(__FILE__) . '/../../data/images/';
 		if(is_dir($pathImages)){
 			$images = glob($pathImages . '*.jpg');
 
@@ -738,11 +738,11 @@ if ($jsonrpc->getMethod() == 'getNotificationsFromFile') {
 				// 	$notifications[$id]['data']['horaireFormat'] = $horaireFormat;
 				// }
 			}
+
+			$notifications = json_encode($notifications);
 			if ($notificationsModified) {
 				file_put_contents($filePath, $notifications);
 			}
-
-			$notifications = json_encode($notifications);
 			$jsonrpc->makeSuccess($notifications);
 			log::add('mobile', 'debug', '| [INFO] Notifications > ' . $notifications);
 			log::add('mobile', 'debug', '└───────────────────────────────────────────');

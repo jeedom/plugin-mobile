@@ -306,14 +306,14 @@ class mobile extends eqLogic
 	}
 
 
-	public static function getNotificationsWithRetentioNTime($Iq, $retentionTime){
+	public static function cleaningNotifications($Iq, $retentionTime){
 		log::add('mobile', 'debug', '┌──────────▶︎ :fg-warning: Nettoyage des Notifications et Images :/fg: ──────────');
-
 		log::add('mobile', 'debug', '| Durée de retention actuelle : '. $retentionTime . ' jours');
+
 		$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60; 
 		$currentTime = time();
 
-		$pathImages = dirname(__FILE__) . '/../data/images/';
+		$pathImages = dirname(__FILE__) . '/../../data/images/';
 		if(is_dir($pathImages)){
 			$images = glob($pathImages . '*.jpg');
 			foreach ($images as $image) {
@@ -322,8 +322,8 @@ class mobile extends eqLogic
 					unlink($image); 
 				}
 			}
-		}	
-		
+		}
+
 		$filePath = dirname(__FILE__) . '/../data/notifications/' . $Iq . '.json';
 		$notifications = 'noNotifications';
 		if (file_exists($filePath)) {
@@ -339,9 +339,11 @@ class mobile extends eqLogic
 						$notificationsModified = true;
 					} 
 				}
-			
+				$notifications = json_encode($notifications);
+				if ($notificationsModified) { 
+					file_put_contents($filePath, $notifications);
+				}
 			}
-	
 		}
 		log::add('mobile', 'debug', '| Fin du nettoyage des Notifications et Images');
 		log::add('mobile', 'debug', '└───────────────────────────────────────────');
@@ -636,6 +638,8 @@ class mobile extends eqLogic
 		if(isset($Iq)) log::add('mobile', 'debug', '||| IQ for jsonPublish > ' . $Iq);
 
 		$dateNotif = date("Y-m-d H:i:s");
+		$newDate = date("Y-m-d");
+		$horaireFormat = date("H:i");
 		$badge = 0;
 		if ($timeout != 'nok') {
 			$timeout = date('Y-m-d H:i:s', strtotime("$dateNotif + $timeout SECONDS"));
@@ -736,7 +740,9 @@ class mobile extends eqLogic
 					'boxName' => config::byKey('name'),
 					'boxApiKey' => jeedom::getHardwareKey(),
 					"askParams" => $askParams,
-					'textToDisplay' => 'none'
+					'textToDisplay' => 'none',
+					'newDate' => $newDate,
+					'horaireFormat' => $horaireFormat
 				];
 
 				$notification = [

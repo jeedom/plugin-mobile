@@ -918,10 +918,15 @@ class mobile extends eqLogic
 			sleep(rand(1,10));
 			$result = json_decode($request_http->exec(30,3), true);
 		}
-		log::add('mobile', 'debug', '|└────────────────────');
 		if (!isset($result['state']) || $result['state'] != 'ok') {
-			throw new Exception(__('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));
+			if (isset($result['error']) && strpos($result['error'], 'Quotas exceeded') !== false) {
+				log::add('mobile', 'error', __("Les quotas pour fcm sont dépassés. Le maximum autorisé est de 5 requêtes par minute.", __FILE__));
+				log::add('mobile', 'debug', __('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));
+			} else {
+				throw new Exception(__('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));
+			}
 		}
+		log::add('mobile', 'debug', '|└────────────────────');
 	}
 
 	public function SaveGeoloc($geoloc)

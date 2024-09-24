@@ -295,6 +295,7 @@
         "Aucune methode correspondante à : ": "Nessun metodo corrispondente a:"
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {
+        "Les quotas pour fcm sont dépassés. Le maximum autorisé est de 5 requêtes par minute.": "Les quotas pour fcm sont dépassés. Le maximum autorisé est de 5 requêtes par minute",
         "Echec de l\\'envoi de la notification :": "Echec de l\\'envoi de la notification :",
         "$geoloc['id'] . '-' . $geoloc['name']": "$geoloc['id'] . '-' . $geoloc['name']",
         "Notification": "Notification",

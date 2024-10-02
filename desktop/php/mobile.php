@@ -5,10 +5,6 @@ if (!isConnect('admin')) {
 }
 sendVarToJS('eqType', 'mobile');
 $eqLogics = eqLogic::byType('mobile');
-$plugins = plugin::listPlugin(true);
-$plugin_compatible = mobile::$_pluginSuported;
-$plugin_widget = mobile::$_pluginWidget;
-//$pathImgMenu = 'plugins/mobile/core/img/imgMenuPerso.jpg';
 ?>
 
 <div class="row row-overflow">
@@ -19,35 +15,14 @@ $plugin_widget = mobile::$_pluginWidget;
 				<i class="fas fa-wrench"></i><br>
 				<span>{{Configuration}}</span>
 			</div>
-			<?php
-			$jeedomVersion  = jeedom::version() ?? '0';
-			$displayInfo = version_compare($jeedomVersion, '4.4.0', '>=');
-			if ($displayInfo) {
-				echo '<div class="cursor eqLogicAction logoSecondary" data-action="bt_handlePhones" id="bt_handlePhones">';
-				echo '<i class="fas icon kiko-old-phone"></i><br>';
-				echo '<span >{{Gestion Mobiles}}</span>';
-				echo '</div>';
-			} else {
-				echo '<div style="color:orange;" class="cursor eqLogicAction logoSecondary" data-action="bt_handlePhones" id="bt_handlePhones">';
-				echo '<i class="fas icon jeedomapp-plugin"></i><br>';
-				echo '<span style="color:orange;">{{Gestion Mobiles}}</span>';
-				echo '</div>';
-			}
-			?>
+			<div class="cursor eqLogicAction logoSecondary" data-action="bt_handlePhones" id="bt_handlePhones">
+				<i class="fas icon kiko-old-phone"></i><br>
+				<span>{{Gestion Mobiles}}</span>
+			</div>
 			<div class="cursor eqLogicAction logoSecondary" data-action="bt_qrCodev2" id="bt_qrCodev2">
 				<i class="fas fa-qrcode"></i><br>
 				<span>{{QR Code}}</span>
 			</div>
-			<!-- A VENIR -->
-			<!-- <div class="cursor eqLogicAction logoSecondary"  id="bt_previousMenu">
-			  <i class="icon kiko-hamburger-menu"></i><br>
-				<span>{{Sauvegardes Menu Custom Mobile}}</span>
-			</div> -->
-			<!--
-			<div style="color:#94CA02;" class="cursor eqLogicAction logoSecondary" data-action="bt_qrCodev2" id="bt_startTuto">
-				<i class="fas fa-book"></i><br>
-				<span>{{Documentation APP}}</span>
-			</div> -->
 		</div>
 		<legend><i class="fas fa-mobile"></i> {{Mes Téléphones Mobiles}}</legend>
 		<div class="input-group" style="margin:5px;">
@@ -59,80 +34,23 @@ $plugin_widget = mobile::$_pluginWidget;
 		</div>
 		<div class="eqLogicThumbnailContainer">
 			<?php
-			if (file_exists('plugins/mobile/core/img/v2app.png')) $path = 'plugins/mobile/core/img/v2app.png';
-			else $path = 'plugins/mobile/core/img/mobile_icon.png';
+			if (file_exists('plugins/mobile/core/img/v2app.png')) $fileDefaut = 'plugins/mobile/core/img/v2app.png';
+			else $fileDefaut = 'plugins/mobile/core/img/mobile_icon.png';
 			foreach ($eqLogics as $eqLogic) {
 				if ($eqLogic->getConfiguration('appVersion', '1') == '2') {
 					$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 					echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
-					echo '<img src="' . $path . '"/>';
+					$file = 'plugins/mobile/plugin_info/' . $eqLogic->getConfiguration('icon') . '.png';
+					if (file_exists(__DIR__ . '/../../../../' . $file)) {
+						echo '<img src="' . $file . '" height="105" width="95">';
+					} else {
+						echo '<img src="' . $fileDefaut . '" height="105" width="95">';
+					}
 					echo '<a style="width: 30px;height: 30px;border-radius: 15px;background-color: #94CA02;position: absolute;bottom: 65px;right: 7px;">';
 					if ($eqLogic->getConfiguration('type_mobile') == 'android') {
 						echo '<i class="fab fa-android" style="margin: 8px;color: #FFFFFF;"></i>';
 					} else {
 						echo '<i class="fab fa-apple" style="margin: 8px;color: #FFFFFF;"></i>';
-					}
-					echo '</a>';
-					echo '<br>';
-					echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
-					echo '<span class="hiddenAsCard displayTableRight hidden">';
-					echo '<span class="label">' . $eqLogic->getConfiguration('type_mobile')  .  '</span>';
-					$user = $eqLogic->getConfiguration('affect_user');
-					$username = user::byId($user);
-					if (is_object($username)) {
-						$user = $username->getLogin();
-					}
-					echo '<span class="label">' . $user  .  '</span>';
-					echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Équipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Équipement non visible}}"></i>';
-					echo '</span>';
-					echo '</div>';
-				}
-			}
-			?>
-		</div>
-	</div>
-	<div class="col-xs-12 eqLogicThumbnailDisplay">
-		<legend><i class="fas fa-mobile-alt"></i> {{App V1}}</legend>
-		<div class="eqLogicThumbnailContainer">
-			<div class="cursor eqLogicAction logoPrimary" data-action="add">
-				<i class="fas fa-plus-circle"></i><br>
-				<span>{{Ajouter}}</span>
-			</div>
-			<div class="cursor eqLogicAction logoSecondary" data-action="bt_pluguinmobile" id="bt_pluguinmobile">
-				<i class="fas jeedomapp-plugin"></i><br>
-				<span>{{Plugins}}</span>
-			</div>
-			<div class="cursor eqLogicAction logoSecondary" data-action="bt_piecemobile" id="bt_piecemobile">
-				<i class="fas icon jeedomapp-piece-jeedom"></i><br>
-				<span>{{Objets/Pièces}}</span>
-			</div>
-			<div class="cursor eqLogicAction logoSecondary" data-action="bt_piecemobile" id="bt_scenariomobile">
-				<i class="fas icon jeedomapp-scenario-jeedom"></i><br>
-				<span>{{Scénarios}}</span>
-			</div>
-			<div class="cursor eqLogicAction logoSecondary" data-action="bt_regenConfig" id="bt_regenConfig">
-				<i class="fas fa-cogs"></i><br>
-				<span>{{Régénérer la configuration}}</span>
-			</div>
-		</div>
-		<legend><i class="fas fa-mobile"></i> {{Mes Téléphones Mobiles}}</legend>
-		<div class="eqLogicThumbnailContainer">
-			<?php
-			$path = 'plugins/mobile/core/img/mobile_icon.png';
-			foreach ($eqLogics as $eqLogic) {
-				if ($eqLogic->getConfiguration('appVersion', '1') != '2') {
-					$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-					echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
-					echo '<img src="' . $path . '"/>';
-					echo '<a style="width: 30px;height: 30px;border-radius: 15px;background-color: #94CA02;position: absolute;bottom: 65px;right: 7px;">';
-					if ($eqLogic->getConfiguration('type_mobile') == 'android') {
-						echo '<i class="fab fa-android" style="margin: 8px;color: #FFFFFF;"></i>';
-					} else if ($eqLogic->getConfiguration('type_mobile') == 'windows') {
-						echo '<i class="fab fa-windows" style="margin: 8px;color: #FFFFFF;"></i>';
-					} else if ($eqLogic->getConfiguration('type_mobile') == 'ios') {
-						echo '<i class="fab fa-apple" style="margin: 8px;color: #FFFFFF;"></i>';
-					} else {
-						echo '<i class="far fa-question-circle" style="margin: 8px;color: #FFFFFF;"></i>';
 					}
 					echo '</a>';
 					echo '<br>';
@@ -166,7 +84,6 @@ $plugin_widget = mobile::$_pluginWidget;
 		<ul class="nav nav-tabs" role="tablist">
 			<li role="presentation"><a class="eqLogicAction cursor" aria-controls="home" role="tab" data-action="returnToThumbnailDisplay"><i class="fas fa-arrow-circle-left"></i></a></li>
 			<li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Mobile}}</a></li>
-			<li role="presentation" class="saveTab"><a href="#sauvegardetab" aria-controls="sauvegarde" role="tab" data-toggle="tab"><i class="fas fa-check-circle"></i> {{Sauvegarde Mobile}}</a></li>
 			<li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list"></i> {{Commandes}}</a></li>
 		</ul>
 		<div class="tab-content">
@@ -267,50 +184,11 @@ $plugin_widget = mobile::$_pluginWidget;
 									<span type="text" id="arnComplet" class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="notificationRegistrationToken" placeholder="{{TOKEN}}"></span>
 								</div>
 							</div>
-							<div class="form-group monitoringToDisable">
-								<label class="col-sm-3 control-label">{{ARN Mobile}}
-									<sup><i class="fas fa-question-circle" title="{{ARN Mobile}}"></i></sup>
-								</label>
-								<div class="col-sm-8">
-									<span type="text" id="arnComplet" class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="notificationArn" placeholder="{{ARN}}"></span>
-								</div>
-							</div>
-							<div class="form-group monitoringToDisable">
-								<label class="col-sm-3 control-label">{{ARN pour Monitoring}}
-									<sup><i class="fas fa-question-circle" title="{{ARN pour Monitoring}}"></i></sup>
-								</label>
-								<div class="col-sm-8">
-									<span type="text" id="to-copy-monitoring" class="eqLogicAttr label label-primary" placeholder="{{ARN pour Monitoring}}"></span>
-								</div>
-							</div>
-						</div>
-					</fieldset>
-				</form>
-			</div>
-			<div role="tabpanel" class="tab-pane" id="sauvegardetab">
-				<form class="form-horizontal">
-					<fieldset>
-						<div class="col-lg-6">
-							<legend><i class="fas fa-save"></i> {{Sauvegarde}}</legend>
-							<div class="form-group">
-								<label class="col-sm-4 control-label">{{Sauvegarde Dashboard}}</label>
-								<div class="col-sm-7">
-									<span id="SaveDash" class="badge">{{Vérification en Cours}}</span>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-4 control-label">{{Sauvegarde Favoris}}</label>
-								<div class="col-sm-7">
-									<span id="SaveFav" class="badge">{{Vérification en Cours}}</span>
-								</div>
-							</div>
-
 						</div>
 					</fieldset>
 				</form>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="commandtab">
-
 				<br><br>
 				<div class="table-responsive">
 					<table id="table_cmd" class="table table-bordered table-condensed">

@@ -20,111 +20,23 @@ header('Content-Type: application/json');
 try {
 	require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 	include_file('core', 'authentification', 'php');
-	// require_once dirname(__FILE__) . '../class/bellaMobile.class.php';  
 
 	if (!isConnect('admin')) {
 		throw new Exception(__('401 - Accès non autorisé', __FILE__));
 	}
 
-	// if(init('action') == 'createJsonBellaMobile'){
-	// 	$configArray = init('config');
-	// 	log::add('mobile','debug','CONFIGARRAYENTER ' . json_encode($configArray));
-	// 	$subArrays = array();
-	// 	$currentIndex = 0;
-	// 	$currentSizeSum = 0;
-	// 	foreach ($configArray as $idTile => $tileConfigs) {
-    //         log::add('mobile', 'debug', 'TILECONFIGS ' . json_encode($tileConfigs));
-    //         log::add('mobile', 'debug', 'IDTILE ' . $idTile);
-    //         // foreach ($tileConfigs as $tileConfig) {
-    //         //     $size = $tileConfig['size'];
-    //         //     $type = $tileConfig['type'];
-    //         //     $title = $tileConfig['options']['title'];
-    //         //     $icons = $tileConfig['options']['icons'];
-    //         //     $iconBlur = $tileConfig['options']['iconBlur'];
-    //         //     $subArrays[$currentIndex][] = mobile::createSubArray($size, $type, $title, $icons, $iconBlur, $idTile);
-    //         //     $currentSizeSum += $size;
-    //         //     if ($currentSizeSum >= 4) {
-    //         //         $currentIndex++;
-    //         //         $currentSizeSum = 0;
-    //         //     }
-    //         // }
-	// 		foreach ($tileConfigs as $tileConfig) {
-	// 			$size = $tileConfig['size'];
-	// 			$type = $tileConfig['type'];
-	// 			$title = $tileConfig['options']['title'];
-	// 			$icons = $tileConfig['options']['icons'];
-	// 			$iconBlur = $tileConfig['options']['iconBlur'];
-	// 			$idEvent = isset($tileConfig['idEvent']) ? $tileConfig['idEvent'] : null;
-	// 			$actions = isset($tileConfig['options']['actions']) ? $tileConfig['options']['actions'] : null;
-	// 			$subArrays[$currentIndex][$currentSizeSum] = mobile::createSubArray($size, $type, $title, $icons, $iconBlur, $idTile, $idEvent, $actions);
-	// 			$currentSizeSum++;
-	// 			if ($currentSizeSum >= 4) {
-	// 				$currentIndex++;
-	// 				$currentSizeSum = 0;
-					
-	// 			}
-	// 		}
-    //     }
-	// 	$structuredArray = [];
-	// 	foreach ($subArrays as $index => $subArray) {
-	// 		$structuredObject = [];
-	// 		foreach ($subArray as $key => $value) {
-	// 			$structuredObject[$key] = $value;
-	// 		}
-	// 		$structuredArray[] = $structuredObject;
-	// 	}
-
-	// 	// $structuredArray = [];
-	// 	// foreach ($subArrays as $index => $subArray) {
-	// 	// 	$structuredObject = [];
-	// 	// 	foreach ($subArray as $key => $value) {
-	// 	// 		$structuredObject[$key] = $value;
-	// 	// 	}
-	// 	// 	$structuredArray[] = $structuredObject;
-	// 	// }
-	
-
-    //     // $jsonToSave = mobile::transformJson($subArrays);
-	// 	$jsonToSave = json_encode($structuredArray);
-	// 	log::add('mobile','debug','JSONSAVED ' . $jsonToSave);
-	// 	$pathJsonBella = __DIR__ . '/../../data/jsonBella/';
-	// 	if(!is_dir($pathJsonBella)){
-	// 		mkdir($pathJsonBella, 0777, true);
-	// 	}
-	// 	$pathJsonBella .= 'testBella.json';
-	// 	file_put_contents($pathJsonBella, $jsonToSave);
-	// 	ajax::success();
-	// }
 
 	if (init('action') == 'createJsonBellaMobile') {
-		
+        $configArray = init('config');
+        log::add('mobile', 'debug', 'CONFIGARRAYENTER ' . json_encode($configArray));
+        $return = mobile::jsonTransformForBella($configArray);
+        if($return){
+            ajax::success();
+        }else{
+            ajax::error();
+        }
+    }
 
-		$configArray = init('config');
-		log::add('mobile', 'debug', 'CONFIGARRAYENTER ' . json_encode($configArray));
-		$return = mobile::jsonTransformForBella($configArray);
-		if($return){
-			ajax::success();
-		}else{
-			ajax::error();
-		}
-	}
-
-
-	if(init('action') == 'getEqlogicByGenericType'){
-		$cmds = cmd::byGenericType(init('model'));
-		$cmds = array_map(function($cmd){
-			return utils::o2a($cmd);
-		}, $cmds);
-		ajax::success($cmds);
-	}
-
-	if(init('action') == 'getCmdsByValues'){
-		$cmds = cmd::byValue(init('id'));
-		$cmds = array_map(function($cmd){
-			return utils::o2a($cmd);
-		}, $cmds);
-		ajax::success($cmds);
-	}
 
 	if (init('action') == 'updatemobile') {
 		mobile::updatemobile();
@@ -132,34 +44,34 @@ try {
 	}
 
 	if (init('action') == 'constructMenu') {
-      $reponse = mobile::constructMenu(init('eqId'));
-      ajax::success($reponse);
-      }
-
-
-if (init('action') == 'getEqLogicConfigs') {
-
-	$eqLogic = eqLogic::byId(intval(init('eqId')));
-	if(is_object($eqLogic)){
-		$j = 0;
-		$arrayMenuConfig = array();
-		 for($i=1;$i < 5;$i++){
-				 $arrayTemp = [];
-				 ${ 'spanIcon' . $i} = $eqLogic->getConfiguration('spanIcon'.$i ,'pasencorela');
-				 ${ 'renameIcon' . $i} = $eqLogic->getConfiguration('renameIcon'.$i ,'pasencorela');
-				 ${ 'selectNameMenu' . $i} = $eqLogic->getConfiguration('selectNameMenu'.$i, 'pasencorela');
-					array_push($arrayMenuConfig, [${ 'spanIcon' . $i}, ${ 'renameIcon' . $i}, ${ 'selectNameMenu' . $i}]);
-				$j++;
-		 }
-		log::add('mobile','debug','RETURNAJAXGETCONFIG ' . json_encode($arrayMenuConfig));
+		$reponse = mobile::constructMenu(init('eqId'));
+		ajax::success($reponse);
 	}
-ajax::success($arrayMenuConfig);
-}
 
-if(init('action') == 'menuDefault'){
-	mobile::handleMenuDefaultBySelect(init('eqId'), init('eqIdDefault'));
-	ajax::success();
-}
+
+	if (init('action') == 'getEqLogicConfigs') {
+
+		$eqLogic = eqLogic::byId(intval(init('eqId')));
+		if (is_object($eqLogic)) {
+			$j = 0;
+			$arrayMenuConfig = array();
+			for ($i = 1; $i < 5; $i++) {
+				$arrayTemp = [];
+				${'spanIcon' . $i} = $eqLogic->getConfiguration('spanIcon' . $i, 'pasencorela');
+				${'renameIcon' . $i} = $eqLogic->getConfiguration('renameIcon' . $i, 'pasencorela');
+				${'selectNameMenu' . $i} = $eqLogic->getConfiguration('selectNameMenu' . $i, 'pasencorela');
+				array_push($arrayMenuConfig, [${'spanIcon' . $i}, ${'renameIcon' . $i}, ${'selectNameMenu' . $i}]);
+				$j++;
+			}
+			log::add('mobile', 'debug', 'RETURNAJAXGETCONFIG ' . json_encode($arrayMenuConfig));
+		}
+		ajax::success($arrayMenuConfig);
+	}
+
+	if (init('action') == 'menuDefault') {
+		mobile::handleMenuDefaultBySelect(init('eqId'), init('eqIdDefault'));
+		ajax::success();
+	}
 
 
 	if (init('action') == 'getQrCode') {
@@ -171,7 +83,7 @@ if(init('action') == 'menuDefault'){
 		}
 	}
 
-  	if (init('action') == 'getQrCodeV2') {
+	if (init('action') == 'getQrCodeV2') {
 		$user = user::byId(init('chooseUser'));
 		if (!is_object($user)) {
 			throw new Exception(__('User inexistant : ', __FILE__));
@@ -189,43 +101,41 @@ if(init('action') == 'menuDefault'){
 	}
 
 
-	if (init('action') == 'getSaveDashboard'){
+	if (init('action') == 'getSaveDashboard') {
 		$iq = init('iq');
 		$jsonDashboard = mobile::getSaveJson($iq, 'dashboard');
-		if ($jsonDashboard == ""){
+		if ($jsonDashboard == "") {
 			$reponse = false;
-		}else{
+		} else {
 			$reponse = true;
 		}
 		ajax::success($reponse);
-	    }
+	}
 
-	  if (init('action') == 'getSaveFavDash'){
+	if (init('action') == 'getSaveFavDash') {
 		$iq = init('iq');
 		$jsonFavDash = mobile::getSaveJson($iq, 'favdash');
-		if ($jsonFavDash == ""){
+		if ($jsonFavDash == "") {
 			$reponse = false;
-		}else{
+		} else {
 			$reponse = true;
 		}
 		ajax::success($reponse);
-	    }
+	}
 
-  if (init('action') == 'savescenario'){
-    $id = init('id');
-    $sendApp = init('valueSend');
-    $scenario = scenario::byId($id);
-    if(!is_object($scenario)){
-      throw new Exception(__('scenario non trouvé', __FILE__));
-    }
-    $scenario->setDisplay("sendToApp",$sendApp);
-    $scenario->save();
-    ajax::success();
-  }
+	if (init('action') == 'savescenario') {
+		$id = init('id');
+		$sendApp = init('valueSend');
+		$scenario = scenario::byId($id);
+		if (!is_object($scenario)) {
+			throw new Exception(__('scenario non trouvé', __FILE__));
+		}
+		$scenario->setDisplay("sendToApp", $sendApp);
+		$scenario->save();
+		ajax::success();
+	}
 
 	throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
-
 } catch (Exception $e) {
 	ajax::error(displayException($e), $e->getCode());
 }
-?>

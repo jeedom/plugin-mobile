@@ -6,3 +6,4 @@ plugins
 .project
 .DS_Store
 .vscode
+.history

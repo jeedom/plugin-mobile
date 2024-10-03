@@ -1,34 +1,35 @@
 
-const createConfigTile = (tileElement, idTile, randomColor, MODELS_CHOICE) => {
-    const configTileDiv = document.createElement('div');
-    configTileDiv.classList.add('configTileDiv');
-    configTileDiv.setAttribute('id', 'configTileDiv' + idTile);
-    configTileDiv.setAttribute('data-id', idTile);
-    configTileDiv.style.order = idTile.split('_')[0];
+// const createConfigTile = (tileElement, idTile, randomColor, MODELS_CHOICE) => {
+//     const configTileDiv = document.createElement('div');
+//     console.log('idTileAFTER CREATING CONFIG TILE', idTile)
+//     configTileDiv.classList.add('configTileDiv');
+//     configTileDiv.setAttribute('id', 'configTileDiv' + idTile);
+//     configTileDiv.setAttribute('data-id', idTile);
+//     configTileDiv.style.order = idTile.split('_')[0];
 
-    const bgDiv = createBgDiv(idTile, randomColor);
-    configTileDiv.appendChild(bgDiv);
+//     const bgDiv = createBgDiv(idTile, randomColor);
+//     configTileDiv.appendChild(bgDiv);
 
-    const firstSection = createFirstSection(MODELS_CHOICE);
-    configTileDiv.appendChild(firstSection);
+//     const firstSection = createFirstSection(MODELS_CHOICE);
+//     configTileDiv.appendChild(firstSection);
 
-    const cmdSection = createCmdSection(idTile);
-    configTileDiv.appendChild(cmdSection);
+//     const cmdSection = createCmdSection(idTile);
+//     configTileDiv.appendChild(cmdSection);
+//     console.log('idTileAFTER CREATING CONFIG TILE', idTile)
+//     const secondSection = createSecondSection(idTile);
+//     configTileDiv.appendChild(secondSection);
 
-    const secondSection = createSecondSection(idTile);
-    configTileDiv.appendChild(secondSection);
+//     addHoverAnimations(configTileDiv, tileElement);
+//     addMouseOutAnimations(configTileDiv, tileElement);
+//     addTemplateSelectChangeEvent(firstSection.querySelector('select'), tileElement, idTile);
 
-    addHoverAnimations(configTileDiv, tileElement);
-    addMouseOutAnimations(configTileDiv, tileElement);
-    addTemplateSelectChangeEvent(firstSection.querySelector('select'), tileElement, idTile);
-
-    document.getElementById('rightContent').appendChild(configTileDiv);
+//     document.getElementById('rightContent').appendChild(configTileDiv);
 
     
-    if (tileStates[idTile]) {
-        restoreTileState(tileElement, tileStates[idTile]);
-    }
-};
+//     if (tileStates[idTile]) {
+//         restoreTileState(tileElement, tileStates[idTile]);
+//     }
+// };
 
 const createBgDiv = (idTile, randomColor) => {
     const bgDiv = document.createElement('div');
@@ -39,6 +40,7 @@ const createBgDiv = (idTile, randomColor) => {
 };
 
 const createFirstSection = (MODELS_CHOICE) => {
+    console.log('-- FIRST SECTION --')
     const firstSection = document.createElement('div');
     firstSection.classList.add('firstSection');
 
@@ -111,27 +113,29 @@ const createCmdSection = (idTile) => {
 };
 
 const createSecondSection = (idTile) => {
-    const secondSection = document.createElement('div');
+    console.log('-- SECOND SECTION --')
+    let secondSection = document.createElement('div');
     secondSection.classList.add('secondSection');
 
-    const chooseIconButton = createButton(' Choisir Icone', 'btn btn-info btn-sm', 'bt_chooseIcon', 'fas fa-flag');
+    let chooseIconButton = createButton(' Choisir Icone', 'btn btn-info btn-sm', 'bt_chooseIcon', 'fas fa-flag');
     secondSection.appendChild(chooseIconButton);
 
     chooseIconButton.addEventListener('click', () => {
         jeedomUtils.chooseIcon(_icon => {
-            const iconClassMatch = _icon.match(/class='icon ([^-]+)-([^ ]+)(?: (icon_[^']+))?'/);
+            let iconClassMatch = _icon.match(/class='icon ([^-]+)-([^ ]+)(?: (icon_[^']+))?'/);
             if (iconClassMatch && iconClassMatch[1] && iconClassMatch[2]) {
-                const libraryName = iconClassMatch[1];
-                const iconClass = iconClassMatch[2];
-                const iconColor = iconClassMatch[3] ? iconClassMatch[3].replace('icon_', '') : '';
+                let libraryName = iconClassMatch[1];
+                let iconClass = iconClassMatch[2];
+                let iconColor = iconClassMatch[3] ? iconClassMatch[3].replace('icon_', '') : '';
 
-                const upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`);
-                const tile = document.querySelector(`.tile[id="${idTile}"]`);
+                let upLeftDiv = document.querySelector(`.tile[id="${idTile}"] .UpLeft`);
+                let tile = document.querySelector(`.tile[id="${idTile}"]`);
+                console.log('tileTEST', tile)
                 tile.setAttribute('data-icon', iconClass);
                 tile.setAttribute('data-library', libraryName);
                 tile.setAttribute('data-color', iconColor);
 
-                const iconElement = upLeftDiv.querySelector('i');
+                let iconElement = upLeftDiv.querySelector('i');
                 iconElement.className = `iconTile ${libraryName}-${iconClass} ${iconClassMatch[3] || ''}`.trim();
 
                 saveTileState(idTile, { icon: iconClass, library: libraryName, color: iconColor });

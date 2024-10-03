@@ -575,7 +575,7 @@ function mainScript() {
           const cmdSection = createCmdSection(idTile);
           configTileDiv.appendChild(cmdSection);
 
-          const secondSection = createSecondSection();
+          const secondSection = createSecondSection(idTile);
           configTileDiv.appendChild(secondSection);
 
           addHoverAnimations(configTileDiv, tileElement);
@@ -628,6 +628,8 @@ tiles.forEach(function(tile) {
         }  
 
         // CREATION DE LA SECTION DE PARAMETRAGE
+        console.log('sectionParametrage')
+        console.log('idTileParam', idTile)
         createConfigTile(tileElement, idTile, '#A9D534', MODELS_CHOICE);
         if (tileStates[idTile]) {
             restoreTileState(tileElement, tileStates[idTile]);

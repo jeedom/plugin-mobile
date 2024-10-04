@@ -14,6 +14,13 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
+document.querySelector("#info_app")?.addEventListener("click", function (event) {
+  jeeDialog.dialog({
+    id: "infosApp",
+    title: "{{Informations envoyées à l'app}}",
+    contentUrl: "index.php?v=d&plugin=mobile&modal=info_app.mobile"
+  })
+})
 
 document.querySelector("#bt_handlePhones")?.addEventListener("click", function (event) {
   jeeDialog.dialog({

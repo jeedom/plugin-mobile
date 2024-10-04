@@ -71,11 +71,57 @@ $eqLogics = eqLogic::byType('mobile');
 			?>
 		</div>
 	</div>
+
+	<!-- V1 -->
+	<div class="col-xs-12 eqLogicThumbnailDisplay">
+		<legend><i class="fas fa-mobile-alt"></i> {{App V1}}</legend>
+		<div class="eqLogicThumbnailContainer">
+<div class="alert alert-danger" style="background-color: var(--al-danger-color) !important; font-size:1.2em;font-weight:bold;">{{Attention, en beta il n'est plus possible d'utiliser l'APP V1}}</div>
+		</div>
+		<legend><i class="fas fa-mobile"></i> {{Mes Téléphones Mobiles}}</legend>
+		<div class="eqLogicThumbnailContainer">
+			<?php
+			$path = 'plugins/mobile/core/img/mobile_icon.png';
+			foreach ($eqLogics as $eqLogic) {
+				if ($eqLogic->getConfiguration('appVersion', '1') != '2') {
+					$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+					echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
+					echo '<img src="' . $path . '"/>';
+					echo '<a style="width: 30px;height: 30px;border-radius: 15px;background-color: #94CA02;position: absolute;bottom: 65px;right: 7px;">';
+					if ($eqLogic->getConfiguration('type_mobile') == 'android') {
+						echo '<i class="fab fa-android" style="margin: 8px;color: #FFFFFF;"></i>';
+					} else if ($eqLogic->getConfiguration('type_mobile') == 'windows') {
+						echo '<i class="fab fa-windows" style="margin: 8px;color: #FFFFFF;"></i>';
+					} else if ($eqLogic->getConfiguration('type_mobile') == 'ios') {
+						echo '<i class="fab fa-apple" style="margin: 8px;color: #FFFFFF;"></i>';
+					} else {
+						echo '<i class="far fa-question-circle" style="margin: 8px;color: #FFFFFF;"></i>';
+					}
+					echo '</a>';
+					echo '<br>';
+					echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+					echo '<span class="hiddenAsCard displayTableRight hidden">';
+					echo '<span class="label">' . $eqLogic->getConfiguration('type_mobile')  .  '</span>';
+					$user = $eqLogic->getConfiguration('affect_user');
+					$username = user::byId($user);
+					if (is_object($username)) {
+						$user = $username->getLogin();
+					}
+					echo '<span class="label">' . $user  .  '</span>';
+					echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Équipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Équipement non visible}}"></i>';
+					echo '</span>';
+					echo '</div>';
+				}
+			}
+			?>
+		</div>
+	</div>
+	<!-- -->
+
 	<div id="div_editSmartphone" class="col-xs-12 eqLogic" style="display: none;">
 		<div class="input-group pull-right" style="display:inline-flex">
 			<span class="input-group-btn">
 				<a class="btn btn-sm btn-default eqLogicAction roundedLeft" data-action="configure"><i class="fas fa-cogs"></i> {{Configuration avancée}}
-				</a><a class="btn btn-sm btn-info" id="info_app"><i class="fas fa-question-circle"></i> {{Infos envoyées à l'app}}
 				</a><a class="btn btn-sm btn-success eqLogicAction" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}
 				</a><a class="btn btn-sm btn-danger eqLogicAction roundedRight" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}
 				</a>

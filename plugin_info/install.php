@@ -125,5 +125,6 @@ function mobile_update()
   
 	/* Make template in json format */
 	/* V1 ?
-    mobile::makeTemplateJson();
+	mobile::makeTemplateJson();
+	*/
 }

@@ -60,6 +60,7 @@ function mobile_install()
 	/* Delete old files of plugin */
 	$oldFiles = [dirname(__FILE__) . '/../desktop/css/panel.css', 
 		dirname(__FILE__) . '/../desktop/php/panelMenuCustom.php',
+		dirname(__FILE__) . '/../desktop/php/modalConfigPlugin.php',
 		dirname(__FILE__) . '/../desktop/js/panelMenuCustom.js',
 		dirname(__FILE__) . '/../desktop/modal/health.php',
 		dirname(__FILE__) . '/../desktop/modal/modal.previousMenus.php',
@@ -137,6 +138,7 @@ function mobile_update()
 	/* Delete old files of plugin */
 	$oldFiles = [dirname(__FILE__) . '/../desktop/css/panel.css', 
 		dirname(__FILE__) . '/../desktop/php/panelMenuCustom.php',
+		dirname(__FILE__) . '/../desktop/php/modalConfigPlugin.php',
 		dirname(__FILE__) . '/../desktop/js/panelMenuCustom.js',
 		dirname(__FILE__) . '/../desktop/modal/health.php',
 		dirname(__FILE__) . '/../desktop/modal/modal.previousMenus.php',

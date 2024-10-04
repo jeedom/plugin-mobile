@@ -115,8 +115,3 @@ $eqLogics = mobile::byType('mobile');
     })
   })
 </script>
-
-<?php
-include_file('desktop', 'mobile', 'js', 'mobile');
-include_file('core', 'plugin.template', 'js');
-?>

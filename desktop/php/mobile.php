@@ -274,7 +274,6 @@ foreach ($eqLogics as $eqLogic) {
 			</div>
 		</div>
 	</div>
-	<?php
-	include_file('desktop', 'mobile', 'js', 'mobile');
-	include_file('core', 'plugin.template', 'js');
-	?>
+</div>
+<?php include_file('desktop', 'mobile', 'js', 'mobile'); ?>
+<?php include_file('core', 'plugin.template', 'js'); ?>

@@ -18,6 +18,7 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 function mobile_install()
 {
+	log::add('mobile', 'debug', 'Lancement mobile_install()');
 	//config::save('displayMobilePanel',1, 'mobile');
   
 	/* Create folder for notifications */  
@@ -89,6 +90,7 @@ function mobile_install()
 
 function mobile_update()
 {
+	log::add('mobile', 'debug', 'Lancement mobile_update()');
 	//	config::save('displayMobilePanel',1, 'mobile');
   
 	/* Create folder for notifications */

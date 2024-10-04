@@ -52,9 +52,10 @@ function mobile_install()
 		config::remove($iconNoCut['key'], 'mobile');
 	}
   
-	/* Delete old "previousMenus" save into config of plugin */
+	/* Delete old infos save into config of plugin */
 	config::remove('previousMenus', 'mobile');
 	config::remove('pluginPanelOutMobile', 'mobile');
+  	config::remove('checkdefaultID', 'mobile');
   
 	/* Delete old files of plugin */
 	$oldFiles = [dirname(__FILE__) . '/../desktop/css/panel.css', 
@@ -69,7 +70,15 @@ function mobile_install()
 		dirname(__FILE__) . '/../desktop/modal/plugin.mobile.php',
 		dirname(__FILE__) . '/../desktop/modal/object.mobile.php',
 		dirname(__FILE__) . '/../desktop/modal/scenario.mobile.php',
-		dirname(__FILE__) . '/../desktop/modal/update.mobile.php'];
+		dirname(__FILE__) . '/../desktop/modal/update.mobile.php',
+		dirname(__FILE__) . '/../desktop/modal/firstPage.php',
+		dirname(__FILE__) . '/../desktop/modal/secPage.php',
+		dirname(__FILE__) . '/../desktop/modal/thirdPage.php',
+		dirname(__FILE__) . '/../desktop/modal/fourPage.php',
+		dirname(__FILE__) . '/../desktop/modal/fivePage.php',
+		dirname(__FILE__) . '/../desktop/modal/fiveModal.php',
+		dirname(__FILE__) . '/../desktop/modal/sixPage.php',
+		dirname(__FILE__) . '/../desktop/modal/wizard.php'];
 	foreach ($oldFiles as $oldFile) {
 		if (file_exists($oldFile)) {
 			shell_exec('rm ' . $oldFile);
@@ -120,9 +129,10 @@ function mobile_update()
 		config::remove($iconNoCut['key'], 'mobile');
 	}
   
-	/* Delete old "previousMenus" save into config of plugin */
+	/* Delete old infos save into config of plugin */
 	config::remove('previousMenus', 'mobile');
 	config::remove('pluginPanelOutMobile', 'mobile');
+  	config::remove('checkdefaultID', 'mobile');
   
 	/* Delete old files of plugin */
 	$oldFiles = [dirname(__FILE__) . '/../desktop/css/panel.css', 
@@ -137,7 +147,15 @@ function mobile_update()
 		dirname(__FILE__) . '/../desktop/modal/plugin.mobile.php',
 		dirname(__FILE__) . '/../desktop/modal/object.mobile.php',
 		dirname(__FILE__) . '/../desktop/modal/scenario.mobile.php',
-		dirname(__FILE__) . '/../desktop/modal/update.mobile.php'];
+		dirname(__FILE__) . '/../desktop/modal/update.mobile.php',
+		dirname(__FILE__) . '/../desktop/modal/firstPage.php',
+		dirname(__FILE__) . '/../desktop/modal/secPage.php',
+		dirname(__FILE__) . '/../desktop/modal/thirdPage.php',
+		dirname(__FILE__) . '/../desktop/modal/fourPage.php',
+		dirname(__FILE__) . '/../desktop/modal/fivePage.php',
+		dirname(__FILE__) . '/../desktop/modal/fiveModal.php',
+		dirname(__FILE__) . '/../desktop/modal/sixPage.php',
+		dirname(__FILE__) . '/../desktop/modal/wizard.php'];
 	foreach ($oldFiles as $oldFile) {
 		if (file_exists($oldFile)) {
 			shell_exec('rm ' . $oldFile);

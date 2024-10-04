@@ -18,7 +18,6 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 function mobile_install()
 {
-	log::add('mobile', 'debug', 'Lancement mobile_install()');
 	//config::save('displayMobilePanel',1, 'mobile');
   
 	/* Create folder for notifications */  
@@ -58,11 +57,10 @@ function mobile_install()
 	config::remove('pluginPanelOutMobile', 'mobile');
   
 	/* Delete old files of plugin */
-	$oldFiles = [
-		dirname(__FILE__) . '/../desktop/css/panel.css', 
+	$oldFiles = [dirname(__FILE__) . '/../desktop/css/panel.css', 
 		dirname(__FILE__) . '/../desktop/php/panelMenuCustom.php',
 		dirname(__FILE__) . '/../desktop/js/panelMenuCustom.js',
-		dirname(__FILE__) . '/../desktop/modal/health.php'
+		dirname(__FILE__) . '/../desktop/modal/health.php',
 		dirname(__FILE__) . '/../desktop/modal/modal.previousMenus.php',
 		dirname(__FILE__) . '/../desktop/modal/plugin.php',
 		dirname(__FILE__) . '/../desktop/modal/piece.php',
@@ -72,8 +70,7 @@ function mobile_install()
 		dirname(__FILE__) . '/../desktop/modal/object.mobile.php',
 		dirname(__FILE__) . '/../desktop/modal/scenario.mobile.php',
 		dirname(__FILE__) . '/../desktop/modal/menuCustom.php',
-		dirname(__FILE__) . '/../desktop/modal/update.mobile.php'
-	];
+		dirname(__FILE__) . '/../desktop/modal/update.mobile.php'];
 	foreach ($oldFiles as $oldFile) {
 		if (file_exists($oldFile)) {
 			shell_exec('rm ' . $oldFile);
@@ -90,7 +87,6 @@ function mobile_install()
 
 function mobile_update()
 {
-	log::add('mobile', 'debug', 'Lancement mobile_update()');
 	//	config::save('displayMobilePanel',1, 'mobile');
   
 	/* Create folder for notifications */
@@ -130,11 +126,10 @@ function mobile_update()
 	config::remove('pluginPanelOutMobile', 'mobile');
   
 	/* Delete old files of plugin */
-	$oldFiles = [
-		dirname(__FILE__) . '/../desktop/css/panel.css', 
+	$oldFiles = [dirname(__FILE__) . '/../desktop/css/panel.css', 
 		dirname(__FILE__) . '/../desktop/php/panelMenuCustom.php',
 		dirname(__FILE__) . '/../desktop/js/panelMenuCustom.js',
-		dirname(__FILE__) . '/../desktop/modal/health.php'
+		dirname(__FILE__) . '/../desktop/modal/health.php',
 		dirname(__FILE__) . '/../desktop/modal/modal.previousMenus.php',
 		dirname(__FILE__) . '/../desktop/modal/plugin.php',
 		dirname(__FILE__) . '/../desktop/modal/piece.php',
@@ -144,8 +139,7 @@ function mobile_update()
 		dirname(__FILE__) . '/../desktop/modal/object.mobile.php',
 		dirname(__FILE__) . '/../desktop/modal/scenario.mobile.php',
 		dirname(__FILE__) . '/../desktop/modal/menuCustom.php',
-		dirname(__FILE__) . '/../desktop/modal/update.mobile.php'
-	];
+		dirname(__FILE__) . '/../desktop/modal/update.mobile.php'];
 	foreach ($oldFiles as $oldFile) {
 		if (file_exists($oldFile)) {
 			shell_exec('rm ' . $oldFile);

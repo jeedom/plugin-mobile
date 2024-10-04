@@ -69,7 +69,6 @@ function mobile_install()
 		dirname(__FILE__) . '/../desktop/modal/plugin.mobile.php',
 		dirname(__FILE__) . '/../desktop/modal/object.mobile.php',
 		dirname(__FILE__) . '/../desktop/modal/scenario.mobile.php',
-		dirname(__FILE__) . '/../desktop/modal/menuCustom.php',
 		dirname(__FILE__) . '/../desktop/modal/update.mobile.php'];
 	foreach ($oldFiles as $oldFile) {
 		if (file_exists($oldFile)) {
@@ -138,7 +137,6 @@ function mobile_update()
 		dirname(__FILE__) . '/../desktop/modal/plugin.mobile.php',
 		dirname(__FILE__) . '/../desktop/modal/object.mobile.php',
 		dirname(__FILE__) . '/../desktop/modal/scenario.mobile.php',
-		dirname(__FILE__) . '/../desktop/modal/menuCustom.php',
 		dirname(__FILE__) . '/../desktop/modal/update.mobile.php'];
 	foreach ($oldFiles as $oldFile) {
 		if (file_exists($oldFile)) {

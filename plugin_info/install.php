@@ -22,9 +22,39 @@ function mobile_install()
   
 	/* Create folder for notifications */  
 	$pathNotifications = dirname(__FILE__) . '/../core/data/notifications/';
-    if(!is_dir($pathNotifications)){
-        mkdir($pathNotifications, 0775, true);
-    }
+	if(!is_dir($pathNotifications)){
+		mkdir($pathNotifications, 0775, true);
+	}
+
+	$mobiles = eqLogic::byType('mobile');
+	foreach($mobiles as $mobile){
+		/* Delete mobile with bad logicalId */
+		if ($mobile->getLogicalId() == null || $mobile->getLogicalId() == "") {
+			$mobile->remove();
+			continue;
+		}     
+		/* Set menu by defaut if no exist */
+		$customMenu  = $mobile->getConfiguration('menuCustomArray');
+		if(empty($customMenu)){
+			$menuCustomArray = mobile::getMenuDefaultV2();
+			$mobile->setConfiguration('nbIcones', count($menuCustomArray));
+			$mobile->setConfiguration('defaultIdMobile', $mobile->getId());
+			$mobile->setConfiguration('menuCustomArray', $menuCustomArray);
+			$mobile->save();
+		}
+	}
+
+	/* Delete old "menuCustom_" and "NoCut" save into config of plugin */
+	foreach(config::searchKey('menuCustom_', 'mobile') as $configMenuCustom) {
+		config::remove($configMenuCustom['key'], 'mobile');
+	}
+	foreach(config::searchKey('NoCut', 'mobile') as $iconNoCut) {
+		config::remove($iconNoCut['key'], 'mobile');
+	}
+  
+	/* Delete old "previousMenus" save into config of plugin */
+	config::remove('previousMenus', 'mobile');
+	config::remove('pluginPanelOutMobile', 'mobile');
   
 	/* Delete old files of plugin */
 	$oldFiles = [
@@ -32,15 +62,15 @@ function mobile_install()
 		dirname(__FILE__) . '/../desktop/php/panelMenuCustom.php',
 		dirname(__FILE__) . '/../desktop/js/panelMenuCustom.js',
 		dirname(__FILE__) . '/../desktop/modal/health.php'
-		dirname(__FILE__) . '/../desktop/modal/modal.previousMenus.php'
-		dirname(__FILE__) . '/../desktop/modal/plugin.php'
-		dirname(__FILE__) . '/../desktop/modal/piece.php'
-		dirname(__FILE__) . '/../desktop/modal/scenario.php'
-		dirname(__FILE__) . '/../desktop/modal/info_app.mobile.php'
-		dirname(__FILE__) . '/../desktop/modal/plugin.mobile.php'
-		dirname(__FILE__) . '/../desktop/modal/object.mobile.php'
-		dirname(__FILE__) . '/../desktop/modal/scenario.mobile.php'
-		dirname(__FILE__) . '/../desktop/modal/menuCustom.php'
+		dirname(__FILE__) . '/../desktop/modal/modal.previousMenus.php',
+		dirname(__FILE__) . '/../desktop/modal/plugin.php',
+		dirname(__FILE__) . '/../desktop/modal/piece.php',
+		dirname(__FILE__) . '/../desktop/modal/scenario.php',
+		dirname(__FILE__) . '/../desktop/modal/info_app.mobile.php',
+		dirname(__FILE__) . '/../desktop/modal/plugin.mobile.php',
+		dirname(__FILE__) . '/../desktop/modal/object.mobile.php',
+		dirname(__FILE__) . '/../desktop/modal/scenario.mobile.php',
+		dirname(__FILE__) . '/../desktop/modal/menuCustom.php',
 		dirname(__FILE__) . '/../desktop/modal/update.mobile.php'
 	];
 	foreach ($oldFiles as $oldFile) {
@@ -63,9 +93,9 @@ function mobile_update()
   
 	/* Create folder for notifications */
 	$pathNotifications = dirname(__FILE__) . '/../core/data/notifications/';
-    if(!is_dir($pathNotifications)){
-        mkdir($pathNotifications, 0775, true);
-    }
+	if(!is_dir($pathNotifications)){
+		mkdir($pathNotifications, 0775, true);
+	}
 	
 	$mobiles = eqLogic::byType('mobile');
 	foreach($mobiles as $mobile){
@@ -103,15 +133,15 @@ function mobile_update()
 		dirname(__FILE__) . '/../desktop/php/panelMenuCustom.php',
 		dirname(__FILE__) . '/../desktop/js/panelMenuCustom.js',
 		dirname(__FILE__) . '/../desktop/modal/health.php'
-		dirname(__FILE__) . '/../desktop/modal/modal.previousMenus.php'
-		dirname(__FILE__) . '/../desktop/modal/plugin.php'
-		dirname(__FILE__) . '/../desktop/modal/piece.php'
-		dirname(__FILE__) . '/../desktop/modal/scenario.php'
-		dirname(__FILE__) . '/../desktop/modal/info_app.mobile.php'
-		dirname(__FILE__) . '/../desktop/modal/plugin.mobile.php'
-		dirname(__FILE__) . '/../desktop/modal/object.mobile.php'
-		dirname(__FILE__) . '/../desktop/modal/scenario.mobile.php'
-		dirname(__FILE__) . '/../desktop/modal/menuCustom.php'
+		dirname(__FILE__) . '/../desktop/modal/modal.previousMenus.php',
+		dirname(__FILE__) . '/../desktop/modal/plugin.php',
+		dirname(__FILE__) . '/../desktop/modal/piece.php',
+		dirname(__FILE__) . '/../desktop/modal/scenario.php',
+		dirname(__FILE__) . '/../desktop/modal/info_app.mobile.php',
+		dirname(__FILE__) . '/../desktop/modal/plugin.mobile.php',
+		dirname(__FILE__) . '/../desktop/modal/object.mobile.php',
+		dirname(__FILE__) . '/../desktop/modal/scenario.mobile.php',
+		dirname(__FILE__) . '/../desktop/modal/menuCustom.php',
 		dirname(__FILE__) . '/../desktop/modal/update.mobile.php'
 	];
 	foreach ($oldFiles as $oldFile) {

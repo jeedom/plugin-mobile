@@ -441,6 +441,8 @@ class mobile extends eqLogic
 					$cmdgeoloc->setSubType('binary');
 					$cmdgeoloc->setIsVisible(1);
 					$cmdgeoloc->setGeneric_type('PRESENCE');
+					$cmdgeoloc->setTemplate('dashboard', 'core::presence');
+					$cmdgeoloc->setTemplate('mobile', 'core::presence');
 					$cmdgeoloc->setIsHistorized(1);
 					log::add('mobile', 'debug', '|| Ajout geofencing > ' . $geoloc['name']);
 				}

@@ -855,9 +855,29 @@ class mobile extends eqLogic
 
 	public function preRemove()
 	{
-		/* TODO
-          Remise en défaut des mobiles utilisant le menu custom du mobile supprimé.
-        */
+		log::add('mobile', 'debug', '┌──:fg-success: preRemove() :/fg:──');
+		$Iq = $this->getId();
+		/* App V2 */
+		foreach (eqLogic::byType('mobile') as $mobile) {
+			if ($Iq == $mobile->getId()) continue;
+			if ($mobile->getConfiguration('defaultIdMobile', 'none') == $Iq) {
+				$mobile->setConfiguration('defaultIdMobile', $mobile->getId());
+				$mobile->save();
+				log::add('mobile', 'debug', '| Modification du defaultIdMobile pour le mobile ' . $mobile->getHumanName(false) . ' ( ' . $mobile->getId() . ' ) ');
+			}
+		}
+		$fileNotif = dirname(__FILE__) . '/../data/notifications/' . $this->getLogicalId() . '.json';
+		if (file_exists($fileNotif)) {
+			log::add('mobile', 'debug', '| Suppression du fichier des notifications : ' . $fileNotif);
+			shell_exec('rm ' . $fileNotif);
+		}
+		/* App V1 */
+		$path = dirname(__FILE__) . '/../../data/' . $this->getLogicalId();
+		if (file_exists($path)) {
+			log::add('mobile', 'debug', '| Suppression du dossier : ' . $path);
+			shell_exec('rm -rf ' . $path);
+		}
+		log::add('mobile', 'debug', '└────────────────────');
 	}
 
 	/*	public function postRemove() {

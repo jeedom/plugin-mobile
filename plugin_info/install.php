@@ -185,14 +185,14 @@ function mobile_update()
 		'v2app.png', 'v2ConnectBox.jpeg', 'v2FullMenu.jpeg',
 		'v2MenuBoxs.jpeg', 'v2ModalMenuCustom.png', 'v2ModifyLittleRadius.jpeg',
 		'v2ZoneInactive.jpeg'];
-        
+    /*    
 	foreach ($oldDocsImgs as $oldDocsImg) {
 		if (file_exists(dirname(__FILE__) . '/../docs/images/' . $oldDocsImg)) {
 			log::add('mobile', 'debug', '| Removing old doc image : ' . dirname(__FILE__) . '/../core/img/' . $oldDocsImg);
 			shell_exec('rm ' . dirname(__FILE__) . '/../docs/images/' . str_replace(' ', '\\ ', $oldDocsImg));
 		} 	
 	}
-
+*/
 	/* Generate ApiKey if no exist */
 	jeedom::getApiKey('mobile');
 

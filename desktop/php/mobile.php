@@ -43,10 +43,6 @@ foreach ($eqLogics as $eqLogic) {
 		</div>
 		<div class="eqLogicThumbnailContainer">
 			<?php
-			/* getImage : 
-				core 4.4 - returns plugin image
-				core 4.5 - returns the custom image if exist or else the plugin image 
-			*/
 			if ($eqLogic->getImage() != 'plugins/mobile/plugin_info/mobile_icon.png') $logoV2 = $eqLogic->getImage();
 			else if (file_exists('plugins/mobile/plugin_info/mobileV2_icon.png')) $logoV2 = 'plugins/mobile/plugin_info/mobileV2_icon.png';
 			else $logoV2 = $eqLogic->getImage();
@@ -56,6 +52,13 @@ foreach ($eqLogics as $eqLogic) {
 					if ($eqLogic->getConfiguration('appVersion', '1') == '2') {
 						$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 						echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
+						/* getImage : 
+							core 4.4 - returns plugin image
+							core 4.5 - returns the custom image if exist or else the plugin image 
+						*/
+						if ($eqLogic->getImage() != 'plugins/mobile/plugin_info/mobile_icon.png') $logoV2 = $eqLogic->getImage();
+						else if (file_exists('plugins/mobile/plugin_info/mobileV2_icon.png')) $logoV2 = 'plugins/mobile/plugin_info/mobileV2_icon.png';
+						else $logoV2 = $eqLogic->getImage();
 						echo '<img src="' . $logoV2 . '" height="105" width="95">';
 						echo '<a style="width: 30px;height: 30px;border-radius: 15px;background-color: #94CA02;position: absolute;bottom: 65px;right: 7px;">';
 						if ($eqLogic->getConfiguration('type_mobile') == 'android') {

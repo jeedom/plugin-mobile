@@ -10,8 +10,7 @@ $eqLogicsV2 = [];
 foreach ($eqLogics as $eqLogic) {
 	if ($eqLogic->getConfiguration('appVersion', '1') == '2') {
 		array_push($eqLogicsV2, $eqLogic);
-	}
-	else {
+	} else {
 		array_push($eqLogicsV1, $eqLogic);
 	}
 }

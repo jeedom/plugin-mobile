@@ -45,56 +45,6 @@ function mobile_install()
 		}
 	}
 
-	/* Delete old "menuCustom_" and "NoCut" save into config of plugin */
-	foreach(config::searchKey('menuCustom_', 'mobile') as $configMenuCustom) {
-		config::remove($configMenuCustom['key'], 'mobile');
-	}
-	foreach(config::searchKey('NoCut', 'mobile') as $iconNoCut) {
-		config::remove($iconNoCut['key'], 'mobile');
-	}
-  
-	/* Delete old infos save into config of plugin */
-	config::remove('previousMenus', 'mobile');
-	config::remove('pluginPanelOutMobile', 'mobile');
-  	config::remove('checkdefaultID', 'mobile');
-  
-	/* Delete the old files of plugin */
-	$oldFiles = ['/../desktop/css/panel.css', '/../desktop/php/panelMenuCustom.php',
-		'/../desktop/php/modalConfigPlugin.php', '/../desktop/js/panelMenuCustom.js',
-		'/../desktop/modal/health.php', '/../desktop/modal/modal.previousMenus.php',
-		'/../desktop/modal/plugin.php', '/../desktop/modal/piece.php',
-		'/../desktop/modal/scenario.php', '/../desktop/modal/info_app.mobile.php',
-		'/../desktop/modal/plugin.mobile.php', '/../desktop/modal/object.mobile.php',
-		'/../desktop/modal/scenario.mobile.php', '/../desktop/modal/update.mobile.php',
-		'/../desktop/modal/firstPage.php', '/../desktop/modal/secPage.php',
-		'/../desktop/modal/thirdPage.php', '/../desktop/modal/fourPage.php',
-		'/../desktop/modal/fivePage.php', '/../desktop/modal/fiveModal.php',
-		'/../desktop/modal/sixPage.php', '/../desktop/modal/wizard.php'];
-	foreach ($oldFiles as $oldFile) {
-		if (file_exists(dirname(__FILE__) . $oldFile)) {
-			shell_exec('rm ' . dirname(__FILE__) . $oldFile);
-		} 		
-	}
-
-	/* Delete the old images in "core" folder */
-	$oldCoreImgs = ['Button_Dashboard_icon@3x.png',
-		'Button_Design_icon@3x.png', 'Button_Synthese_icon@3x.png',
-		'Button_URL_icon@3x.png', 'IMG_0738.PNG',
-		'android.png', 'ios.png', 'v22methods.jpeg',
-		'v2ActualBoxFlouted.jpeg', 'v2AddZone.jpeg',
-		'v2ConnectBox.jpeg', 'v2FullMenu.jpeg',
-		'v2MenuBoxs.PNG', 'v2MenuBoxs.jpeg',
-		'v2ModalMenuCustom.png', 'v2ModalQrCode.png',
-		'v2ModifyBigRadius.jpeg', 'v2ModifyLittleRadius.jpeg',
-		'v2QRCodeConnect.PNG', 'v2ZoneInactive.jpeg',
-		'v2connectMarket.jpeg', 'v2firstConnect.jpeg',
-		'v2floutedBoxs.png', 'v2greenBtnAdd.PNG'];  
-	foreach ($oldCoreImgs as $oldCoreImg) {
-		if (file_exists(dirname(__FILE__) . '/../core/img/' . $oldCoreImg)) {
-			shell_exec('rm ' . dirname(__FILE__) . '/../core/img/' . $oldCoreImg);
-		} 	
-	}
-
 	/* Generate ApiKey if no exist */
 	jeedom::getApiKey('mobile');
 }

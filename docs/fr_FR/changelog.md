@@ -4,6 +4,17 @@
 >
 > Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte
 
+# xx/08/2024
+
+> **App V1**
+>
+> Attention, a partir de cette version, l'appV1 n'est plus prise en charge.
+> Il sera toujours possible d'accèder a votre équipement, pour éventuellement, remplacer vos commandes de géoloc et notification.
+
+Suppression des fichiers concernant l'AppV1.
+Nettoyage des infos stockées en BDD (config).
+
+
 # 20/08/2024
 Déplacement des infos notifications dans l'onglet "Mobile"
 

@@ -21,7 +21,6 @@
     "hasOwnDeamon": false,
     "maxDependancyInstallTime": 0,
     "category": "communication",
-    "version": "0.4",
     "changelog": "https:\/\/doc.jeedom.com\/#language#\/plugins\/communication\/mobile\/changelog",
     "documentation": "https:\/\/doc.jeedom.com\/#language#\/plugins\/communication\/mobile\/",
     "language": [

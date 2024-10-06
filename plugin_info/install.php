@@ -18,7 +18,8 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 function mobile_install()
 {
-	//config::save('displayMobilePanel',1, 'mobile');
+	/* function launched when activating the plugin or when installing the plugin */
+	log::add('mobile', 'debug', ':fg-warning:Launch function mobile_install() :/fg:');
   
 	/* Create folder for notifications */  
 	$pathNotifications = dirname(__FILE__) . '/../core/data/notifications/';
@@ -57,46 +58,51 @@ function mobile_install()
 	config::remove('pluginPanelOutMobile', 'mobile');
   	config::remove('checkdefaultID', 'mobile');
   
-	/* Delete old files of plugin */
-	$oldFiles = [dirname(__FILE__) . '/../desktop/css/panel.css', 
-		dirname(__FILE__) . '/../desktop/php/panelMenuCustom.php',
-		dirname(__FILE__) . '/../desktop/php/modalConfigPlugin.php',
-		dirname(__FILE__) . '/../desktop/js/panelMenuCustom.js',
-		dirname(__FILE__) . '/../desktop/modal/health.php',
-		dirname(__FILE__) . '/../desktop/modal/modal.previousMenus.php',
-		dirname(__FILE__) . '/../desktop/modal/plugin.php',
-		dirname(__FILE__) . '/../desktop/modal/piece.php',
-		dirname(__FILE__) . '/../desktop/modal/scenario.php',
-		dirname(__FILE__) . '/../desktop/modal/info_app.mobile.php',
-		dirname(__FILE__) . '/../desktop/modal/plugin.mobile.php',
-		dirname(__FILE__) . '/../desktop/modal/object.mobile.php',
-		dirname(__FILE__) . '/../desktop/modal/scenario.mobile.php',
-		dirname(__FILE__) . '/../desktop/modal/update.mobile.php',
-		dirname(__FILE__) . '/../desktop/modal/firstPage.php',
-		dirname(__FILE__) . '/../desktop/modal/secPage.php',
-		dirname(__FILE__) . '/../desktop/modal/thirdPage.php',
-		dirname(__FILE__) . '/../desktop/modal/fourPage.php',
-		dirname(__FILE__) . '/../desktop/modal/fivePage.php',
-		dirname(__FILE__) . '/../desktop/modal/fiveModal.php',
-		dirname(__FILE__) . '/../desktop/modal/sixPage.php',
-		dirname(__FILE__) . '/../desktop/modal/wizard.php'];
+	/* Delete the old files of plugin */
+	$oldFiles = ['/../desktop/css/panel.css', '/../desktop/php/panelMenuCustom.php',
+		'/../desktop/php/modalConfigPlugin.php', '/../desktop/js/panelMenuCustom.js',
+		'/../desktop/modal/health.php', '/../desktop/modal/modal.previousMenus.php',
+		'/../desktop/modal/plugin.php', '/../desktop/modal/piece.php',
+		'/../desktop/modal/scenario.php', '/../desktop/modal/info_app.mobile.php',
+		'/../desktop/modal/plugin.mobile.php', '/../desktop/modal/object.mobile.php',
+		'/../desktop/modal/scenario.mobile.php', '/../desktop/modal/update.mobile.php',
+		'/../desktop/modal/firstPage.php', '/../desktop/modal/secPage.php',
+		'/../desktop/modal/thirdPage.php', '/../desktop/modal/fourPage.php',
+		'/../desktop/modal/fivePage.php', '/../desktop/modal/fiveModal.php',
+		'/../desktop/modal/sixPage.php', '/../desktop/modal/wizard.php'];
 	foreach ($oldFiles as $oldFile) {
-		if (file_exists($oldFile)) {
-			shell_exec('rm ' . $oldFile);
+		if (file_exists(dirname(__FILE__) . $oldFile)) {
+			shell_exec('rm ' . dirname(__FILE__) . $oldFile);
 		} 		
+	}
+
+	/* Delete the old images in "core" folder */
+	$oldCoreImgs = ['Button_Dashboard_icon@3x.png',
+		'Button_Design_icon@3x.png', 'Button_Synthese_icon@3x.png',
+		'Button_URL_icon@3x.png', 'IMG_0738.PNG',
+		'android.png', 'ios.png', 'v22methods.jpeg',
+		'v2ActualBoxFlouted.jpeg', 'v2AddZone.jpeg',
+		'v2ConnectBox.jpeg', 'v2FullMenu.jpeg',
+		'v2MenuBoxs.PNG', 'v2MenuBoxs.jpeg',
+		'v2ModalMenuCustom.png', 'v2ModalQrCode.png',
+		'v2ModifyBigRadius.jpeg', 'v2ModifyLittleRadius.jpeg',
+		'v2QRCodeConnect.PNG', 'v2ZoneInactive.jpeg',
+		'v2connectMarket.jpeg', 'v2firstConnect.jpeg',
+		'v2floutedBoxs.png', 'v2greenBtnAdd.PNG'];  
+	foreach ($oldCoreImgs as $oldCoreImg) {
+		if (file_exists(dirname(__FILE__) . '/../core/img/' . $oldCoreImg)) {
+			shell_exec('rm ' . dirname(__FILE__) . '/../core/img/' . $oldCoreImg);
+		} 	
 	}
 
 	/* Generate ApiKey if no exist */
 	jeedom::getApiKey('mobile');
-  
-	
 }
-
-
 
 function mobile_update()
 {
-	//	config::save('displayMobilePanel',1, 'mobile');
+	/* function launched when updating plugin */
+	log::add('mobile', 'debug', ':fg-warning:Launch function mobile_update() :/fg: ──────────');
   
 	/* Create folder for notifications */
 	$pathNotifications = dirname(__FILE__) . '/../core/data/notifications/';
@@ -136,39 +142,43 @@ function mobile_update()
   	config::remove('checkdefaultID', 'mobile');
   
 	/* Delete old files of plugin */
-	$oldFiles = [dirname(__FILE__) . '/../desktop/css/panel.css', 
-		dirname(__FILE__) . '/../desktop/php/panelMenuCustom.php',
-		dirname(__FILE__) . '/../desktop/php/modalConfigPlugin.php',
-		dirname(__FILE__) . '/../desktop/js/panelMenuCustom.js',
-		dirname(__FILE__) . '/../desktop/modal/health.php',
-		dirname(__FILE__) . '/../desktop/modal/modal.previousMenus.php',
-		dirname(__FILE__) . '/../desktop/modal/plugin.php',
-		dirname(__FILE__) . '/../desktop/modal/piece.php',
-		dirname(__FILE__) . '/../desktop/modal/scenario.php',
-		dirname(__FILE__) . '/../desktop/modal/info_app.mobile.php',
-		dirname(__FILE__) . '/../desktop/modal/plugin.mobile.php',
-		dirname(__FILE__) . '/../desktop/modal/object.mobile.php',
-		dirname(__FILE__) . '/../desktop/modal/scenario.mobile.php',
-		dirname(__FILE__) . '/../desktop/modal/update.mobile.php',
-		dirname(__FILE__) . '/../desktop/modal/firstPage.php',
-		dirname(__FILE__) . '/../desktop/modal/secPage.php',
-		dirname(__FILE__) . '/../desktop/modal/thirdPage.php',
-		dirname(__FILE__) . '/../desktop/modal/fourPage.php',
-		dirname(__FILE__) . '/../desktop/modal/fivePage.php',
-		dirname(__FILE__) . '/../desktop/modal/fiveModal.php',
-		dirname(__FILE__) . '/../desktop/modal/sixPage.php',
-		dirname(__FILE__) . '/../desktop/modal/wizard.php'];
+	$oldFiles = ['/../desktop/css/panel.css', '/../desktop/php/panelMenuCustom.php',
+		'/../desktop/php/modalConfigPlugin.php', '/../desktop/js/panelMenuCustom.js',
+		'/../desktop/modal/health.php', '/../desktop/modal/modal.previousMenus.php',
+		'/../desktop/modal/plugin.php', '/../desktop/modal/piece.php',
+		'/../desktop/modal/scenario.php', '/../desktop/modal/info_app.mobile.php',
+		'/../desktop/modal/plugin.mobile.php', '/../desktop/modal/object.mobile.php',
+		'/../desktop/modal/scenario.mobile.php', '/../desktop/modal/update.mobile.php',
+		'/../desktop/modal/firstPage.php', '/../desktop/modal/secPage.php',
+		'/../desktop/modal/thirdPage.php', '/../desktop/modal/fourPage.php',
+		'/../desktop/modal/fivePage.php', '/../desktop/modal/fiveModal.php',
+		'/../desktop/modal/sixPage.php', '/../desktop/modal/wizard.php'];
 	foreach ($oldFiles as $oldFile) {
-		if (file_exists($oldFile)) {
-			shell_exec('rm ' . $oldFile);
+		if (file_exists(dirname(__FILE__) . $oldFile)) {
+			shell_exec('rm ' . dirname(__FILE__) . $oldFile);
 		} 		
+	}
+
+	/* Delete the old images in "core" folder */
+	$oldCoreImgs = ['Button_Dashboard_icon@3x.png',
+		'Button_Design_icon@3x.png', 'Button_Synthese_icon@3x.png',
+		'Button_URL_icon@3x.png', 'IMG_0738.PNG',
+		'android.png', 'ios.png', 'v22methods.jpeg',
+		'v2ActualBoxFlouted.jpeg', 'v2AddZone.jpeg',
+		'v2ConnectBox.jpeg', 'v2FullMenu.jpeg',
+		'v2MenuBoxs.PNG', 'v2MenuBoxs.jpeg',
+		'v2ModalMenuCustom.png', 'v2ModalQrCode.png',
+		'v2ModifyBigRadius.jpeg', 'v2ModifyLittleRadius.jpeg',
+		'v2QRCodeConnect.PNG', 'v2ZoneInactive.jpeg',
+		'v2connectMarket.jpeg', 'v2firstConnect.jpeg',
+		'v2floutedBoxs.png', 'v2greenBtnAdd.PNG'];
+  
+	foreach ($oldCoreImgs as $oldCoreImg) {
+		if (file_exists(dirname(__FILE__) . '/../core/img/' . $oldCoreImg)) {
+			shell_exec('rm ' . dirname(__FILE__) . '/../core/img/' . $oldCoreImg);
+		} 	
 	}
   
 	/* Generate ApiKey if no exist */
 	jeedom::getApiKey('mobile');
-  
-	/* Make template in json format */
-	/* V1 ?
-	mobile::makeTemplateJson();
-	*/
 }

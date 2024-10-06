@@ -24,39 +24,21 @@ function mobile_install()
 	/* Create folder for notifications */  
 	$pathNotifications = dirname(__FILE__) . '/../core/data/notifications/';
 	if(!is_dir($pathNotifications)){
+		log::add('mobile', 'debug', '| creating folder for the notifications');
 		mkdir($pathNotifications, 0775, true);
 	}
-
-	$mobiles = eqLogic::byType('mobile');
-	foreach($mobiles as $mobile){
-		/* Delete mobile with bad logicalId */
-		if ($mobile->getLogicalId() == null || $mobile->getLogicalId() == "") {
-			$mobile->remove();
-			continue;
-		}     
-		/* Set menu by defaut if no exist */
-		$customMenu  = $mobile->getConfiguration('menuCustomArray');
-		if(empty($customMenu)){
-			$menuCustomArray = mobile::getMenuDefaultV2();
-			$mobile->setConfiguration('nbIcones', count($menuCustomArray));
-			$mobile->setConfiguration('defaultIdMobile', $mobile->getId());
-			$mobile->setConfiguration('menuCustomArray', $menuCustomArray);
-			$mobile->save();
-		}
-	}
-
-	/* Generate ApiKey if no exist */
-	jeedom::getApiKey('mobile');
+	log::add('mobile', 'debug', '└───────────────────────────────────────────');
 }
 
 function mobile_update()
 {
 	/* function launched when updating plugin */
-	log::add('mobile', 'debug', ':fg-warning:Launch function mobile_update() :/fg: ──────────');
+	log::add('mobile', 'debug', '┌────────── :fg-warning: Launch function mobile_update() :/fg: ──────────');
   
 	/* Create folder for notifications */
 	$pathNotifications = dirname(__FILE__) . '/../core/data/notifications/';
 	if(!is_dir($pathNotifications)){
+		log::add('mobile', 'debug', '| creating folder for the notifications');
 		mkdir($pathNotifications, 0775, true);
 	}
 	
@@ -64,12 +46,14 @@ function mobile_update()
 	foreach($mobiles as $mobile){
 		/* Delete mobile with bad logicalId */
 		if ($mobile->getLogicalId() == null || $mobile->getLogicalId() == "") {
+			log::add('mobile', 'debug', '| Removing equipment ' . $mobile->getId() . ' because it does not contain a logicalId');
 			$mobile->remove();
 			continue;
 		}     
 		/* Set menu by defaut if no exist */
 		$customMenu  = $mobile->getConfiguration('menuCustomArray');
 		if(empty($customMenu)){
+			log::add('mobile', 'debug', '| Assigning a default menu to the equipment ' . $mobile->getId());
 			$menuCustomArray = mobile::getMenuDefaultV2();
 			$mobile->setConfiguration('nbIcones', count($menuCustomArray));
 			$mobile->setConfiguration('defaultIdMobile', $mobile->getId());
@@ -105,6 +89,7 @@ function mobile_update()
 		'/../desktop/modal/sixPage.php', '/../desktop/modal/wizard.php'];
 	foreach ($oldFiles as $oldFile) {
 		if (file_exists(dirname(__FILE__) . $oldFile)) {
+			log::add('mobile', 'debug', '| Removing old file : ' . dirname(__FILE__) . $oldFile);
 			shell_exec('rm ' . dirname(__FILE__) . $oldFile);
 		} 		
 	}
@@ -125,10 +110,18 @@ function mobile_update()
   
 	foreach ($oldCoreImgs as $oldCoreImg) {
 		if (file_exists(dirname(__FILE__) . '/../core/img/' . $oldCoreImg)) {
+			log::add('mobile', 'debug', '| Removing old image : ' . dirname(__FILE__) . '/../core/img/' . $oldCoreImg);
 			shell_exec('rm ' . dirname(__FILE__) . '/../core/img/' . $oldCoreImg);
 		} 	
+	}
+	if(!glob(dirname(__FILE__) . '/../core/img/' . '*'))
+	{
+		log::add('mobile', 'debug', '| Deleting empty core/img folder');
+		shell_exec('rm -rf ' . dirname(__FILE__) . '/../core/img');
 	}
   
 	/* Generate ApiKey if no exist */
 	jeedom::getApiKey('mobile');
+
+	log::add('mobile', 'debug', '└───────────────────────────────────────────');
 }

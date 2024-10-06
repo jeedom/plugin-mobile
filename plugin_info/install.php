@@ -106,7 +106,8 @@ function mobile_update()
 		'v2ModifyBigRadius.jpeg', 'v2ModifyLittleRadius.jpeg',
 		'v2QRCodeConnect.PNG', 'v2ZoneInactive.jpeg',
 		'v2connectMarket.jpeg', 'v2firstConnect.jpeg',
-		'v2floutedBoxs.png', 'v2greenBtnAdd.PNG'];
+		'v2floutedBoxs.png', 'v2greenBtnAdd.PNG',
+		'mobile_icon.png', 'v2app.png'];
   
 	foreach ($oldCoreImgs as $oldCoreImg) {
 		if (file_exists(dirname(__FILE__) . '/../core/img/' . $oldCoreImg)) {

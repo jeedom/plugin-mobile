@@ -44,20 +44,20 @@ foreach ($eqLogics as $eqLogic) {
 		</div>
 		<div class="eqLogicThumbnailContainer">
 			<?php
-			if (file_exists('plugins/mobile/core/img/v2app.png')) $fileDefaut = 'plugins/mobile/core/img/v2app.png';
-			else $fileDefaut = 'plugins/mobile/core/img/mobile_icon.png';
+			/* getImage : 
+				core 4.4 - returns plugin image
+				core 4.5 - returns the custom image if exist or else the plugin image 
+			*/
+			if ($eqLogic->getImage() != 'plugins/mobile/plugin_info/mobile_icon.png') $logoV2 = $eqLogic->getImage();
+			else if (file_exists('plugins/mobile/core/img/v2app.png')) $logoV2 = 'plugins/mobile/core/img/v2app.png';
+			else $logoV2 = $eqLogic->getImage();
 
-			if (count($eqLogicsV2) >=1) {  // AppV1
+			if (count($eqLogicsV2) >= 1) {  // AppV2
 				foreach ($eqLogicsV2 as $eqLogic) {
 					if ($eqLogic->getConfiguration('appVersion', '1') == '2') {
 						$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 						echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
-						$file = 'plugins/mobile/plugin_info/' . $eqLogic->getConfiguration('icon') . '.png';
-						if (file_exists(__DIR__ . '/../../../../' . $file)) {
-							echo '<img src="' . $file . '" height="105" width="95">';
-						} else {
-							echo '<img src="' . $fileDefaut . '" height="105" width="95">';
-						}
+						echo '<img src="' . $logoV2 . '" height="105" width="95">';
 						echo '<a style="width: 30px;height: 30px;border-radius: 15px;background-color: #94CA02;position: absolute;bottom: 65px;right: 7px;">';
 						if ($eqLogic->getConfiguration('type_mobile') == 'android') {
 							echo '<i class="fab fa-android" style="margin: 8px;color: #FFFFFF;"></i>';
@@ -89,7 +89,7 @@ foreach ($eqLogics as $eqLogic) {
 		</div>
 	</div>
 
-    <?php if (count($eqLogicsV1) >=1) {  // AppV1
+    <?php if (count($eqLogicsV1) >= 1) {  // AppV1
       ?>
 		<div class="col-xs-12 eqLogicThumbnailDisplay">
 			<legend><i class="fas fa-mobile-alt"></i> {{App V1}}</legend>
@@ -100,12 +100,11 @@ foreach ($eqLogics as $eqLogic) {
 				<legend><i class="fas fa-mobile"></i> {{Mes Téléphones Mobiles}}</legend>
 				<div class="eqLogicThumbnailContainer">
 				<?php
-				$path = 'plugins/mobile/core/img/mobile_icon.png';
 				foreach ($eqLogicsV1 as $eqLogic) {
 					if ($eqLogic->getConfiguration('appVersion', '1') != '2') {
 						$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 						echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
-						echo '<img src="' . $path . '"/>';
+						echo '<img src="' . $eqLogic->getImage() . '"/>';
 						echo '<a style="width: 30px;height: 30px;border-radius: 15px;background-color: #94CA02;position: absolute;bottom: 65px;right: 7px;">';
 						if ($eqLogic->getConfiguration('type_mobile') == 'android') {
 							echo '<i class="fab fa-android" style="margin: 8px;color: #FFFFFF;"></i>';

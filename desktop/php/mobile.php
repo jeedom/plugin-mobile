@@ -48,7 +48,7 @@ foreach ($eqLogics as $eqLogic) {
 				core 4.5 - returns the custom image if exist or else the plugin image 
 			*/
 			if ($eqLogic->getImage() != 'plugins/mobile/plugin_info/mobile_icon.png') $logoV2 = $eqLogic->getImage();
-			else if (file_exists('plugins/mobile/core/img/v2app.png')) $logoV2 = 'plugins/mobile/core/img/v2app.png';
+			else if (file_exists('plugins/mobile/plugin_info/mobileV2_icon.png')) $logoV2 = 'plugins/mobile/plugin_info/mobileV2_icon.png';
 			else $logoV2 = $eqLogic->getImage();
 
 			if (count($eqLogicsV2) >= 1) {  // AppV2

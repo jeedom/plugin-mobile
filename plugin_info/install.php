@@ -87,7 +87,7 @@ function mobile_update()
 		'/../desktop/modal/thirdPage.php', '/../desktop/modal/fourPage.php',
 		'/../desktop/modal/fivePage.php', '/../desktop/modal/fiveModal.php',
 		'/../desktop/modal/sixPage.php', '/../desktop/modal/wizard.php',
-		'/../core/data/wizard.json'];
+		'/../core/data/wizard.json', '/../data/mobile.json'];
 	foreach ($oldFiles as $oldFile) {
 		if (file_exists(dirname(__FILE__) . $oldFile)) {
 			log::add('mobile', 'debug', '| Removing old file : ' . dirname(__FILE__) . $oldFile);

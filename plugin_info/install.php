@@ -130,7 +130,30 @@ function mobile_update()
 			shell_exec('rm -rf ' . dirname(__FILE__) . '/../3rdparty/' . $old3rdpartyFolder);
 		}
 	}
-  
+
+  	/* cleaning data folder */
+	$path = dirname(__FILE__) . '/../data/';
+	foreach(scandir($path) as $file){
+		if ($file != "." && $file != ".." && $file != ".htaccess" && $file != "images") {
+			if (is_dir($path . '/' . $file)) {
+				/* delete dashboard.json and favdash.json if exists */
+				if (file_exists($path . $file . '/dashboard.json')) {
+					log::add('mobile', 'debug', '| Deleting ' . $path . $file . '/dashboard.json');
+					shell_exec('rm ' . $path . $file . '/dashboard.json');
+				}
+				if (file_exists($path . $file . '/favdash.json')) {
+					log::add('mobile', 'debug', '| Deleting ' . $path . $file .  '/favdash.json');
+					shell_exec('rm ' . $path . $file . '/favdash.json');
+				}
+				/* delete folder if empty */
+				if(!glob($path . $file . '/*'))
+				{
+					log::add('mobile', 'debug', '| Deleting empty folder : ' . $path . $file);
+					shell_exec('rm -rf ' . $path . $file);
+				}
+			}
+		}
+	} 
 	/* Generate ApiKey if no exist */
 	jeedom::getApiKey('mobile');
 

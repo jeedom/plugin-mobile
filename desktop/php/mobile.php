@@ -43,10 +43,6 @@ foreach ($eqLogics as $eqLogic) {
 		</div>
 		<div class="eqLogicThumbnailContainer">
 			<?php
-			if ($eqLogic->getImage() != 'plugins/mobile/plugin_info/mobile_icon.png') $logoV2 = $eqLogic->getImage();
-			else if (file_exists('plugins/mobile/plugin_info/mobileV2_icon.png')) $logoV2 = 'plugins/mobile/plugin_info/mobileV2_icon.png';
-			else $logoV2 = $eqLogic->getImage();
-
 			if (count($eqLogicsV2) >= 1) {  // AppV2
 				foreach ($eqLogicsV2 as $eqLogic) {
 					if ($eqLogic->getConfiguration('appVersion', '1') == '2') {

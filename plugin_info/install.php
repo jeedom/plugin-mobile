@@ -19,7 +19,7 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 function mobile_install()
 {
 	/* function launched when activating the plugin or when installing the plugin */
-	log::add('mobile', 'debug', ':fg-warning:Launch function mobile_install() :/fg:');
+	log::add('mobile', 'debug', '┌────────── :fg-warning: Launch function mobile_install() :/fg: ──────────');
   
 	/* Create folder for notifications */  
 	$pathNotifications = dirname(__FILE__) . '/../core/data/notifications/';
@@ -119,6 +119,15 @@ function mobile_update()
 	{
 		log::add('mobile', 'debug', '| Deleting empty core/img folder');
 		shell_exec('rm -rf ' . dirname(__FILE__) . '/../core/img');
+	}
+
+	/* cleaning 3rdparty folder  */
+	$old3rdpartyFolders = ['animate', 'css', 'js'];
+	foreach ($old3rdpartyFolders as $old3rdpartyFolder) {
+		if (file_exists(dirname(__FILE__) . '/../3rdparty/' . $old3rdpartyFolder)) {
+			log::add('mobile', 'debug', '| Deleting folder ' . dirname(__FILE__) . '/../3rdparty/' . $old3rdpartyFolder);
+			shell_exec('rm -rf ' . dirname(__FILE__) . '/../3rdparty/' . $old3rdpartyFolder);
+		}
 	}
   
 	/* Generate ApiKey if no exist */

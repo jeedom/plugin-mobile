@@ -507,6 +507,7 @@ class mobile extends eqLogic
 		log::add('mobile', 'debug', '┌──:fg-success: handleMenuDefaultBySelect( ' . $eqId . ', ' . $eqDefault . ') :/fg:──');
 		// ATTRIBUTION D'UN MENU AU MOBILE
 		if ($eqDefault == 'default') { //reset menuCustom
+			log::add('mobile', 'debug', '| menu souce : default');
 			$menuCustomArray = mobile::getMenuDefaultV2();
 			$mobile->setConfiguration('menuCustomArray', $menuCustomArray);
 			$mobile->setConfiguration('nbIcones', 3);
@@ -518,8 +519,8 @@ class mobile extends eqLogic
 			$mobile->setConfiguration('defaultIdMobile', $eqDefault);
 			if ($mobile->getId() == $mobileDefault->getId()) {
 				log::add('mobile', 'debug', '| souce et cible identique ');
-				$mobile->save();
-				return;
+				//$mobile->save();
+				//return;
 			}
 			$nbIcones = $mobileDefault->getConfiguration('nbIcones', 3);
 			$menuCustomArray = $mobileDefault->getConfiguration('menuCustomArray');
@@ -527,6 +528,7 @@ class mobile extends eqLogic
 			$mobile->setConfiguration('menuCustomArray', $menuCustomArray);
 			$mobile->save();
         }
+		log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	}
 
 	public static function generateTabIcon($menuCustomArray, $i)

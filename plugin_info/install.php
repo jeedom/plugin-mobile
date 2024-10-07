@@ -155,44 +155,6 @@ function mobile_update()
 		}
 	} 
 
-	/* Delete the old images in "docs" folder */
-	$oldDocsImgs = ['ACTION.jpg', 'android copy.png', 'android.png',
-		'appareil-ios.png', 'attention.jpg', 'Button_Dashboard_icon@3x.png',
-		'Button_Design_icon@3x.png', 'Button_Synthese_icon@3x.png', 'Button_URL_icon@3x.png',
-		'config-piece.png', 'config-plugin-1.png', 'config-plugin.png',
-		'config-pluginhb.png', 'cuisine-homekit.jpg', 'démon-homebridge.png',
-		'demonHB.png', 'dépendances-homebridge.png', 'ENERGY_1.jpg',
-		'ENERGY_2.jpg', 'ENERGY_3.jpg', 'FLAP_1.jpg',
-		'FLAP_2.jpg', 'FLOOD.jpg' , 'garage-homekit.png',
-		'generic_type_in_plugin.jpg', 'home-1.jpg', 'home-2.jpg',
-		'home-3.jpg', 'home-4.jpg', 'home-5.jpg',
-		'home-6.jpg', 'home-7.jpg', 'homekit-logo.jpg',
-		'IMG_0738.PNG', 'INFO.jpg', 'ios copy.png',
-		'ios.png', 'LIGHT_1.jpg', 'LIGHT_2.jpg',
-		'LIGHT_3.jpg', 'LIGHT_4.jpg', 'LOCK.jpg',
-		'mobile_dashboard_1.PNG', 'mobile_dashboard_2.PNG', 'mobile_dashboard_3.PNG',
-		'mobile_dashboard_4.PNG', 'mobile_dashboard_5.PNG', 'mobile_dashboard_6.PNG',
-		'mobile_dashboard_7.PNG', 'mobile_dashboard_8.PNG', 'mobile_icon copy.png',
-		'mobile_icon.png', 'mobile2.png', 'mobile3.png',
-		'mobile4.png', 'mobile5.png', 'mobile6.jpg',
-		'mobile7.jpg', 'mobile8.jpg', 'mobile9.jpg',
-		'mobile10.png', 'mobile11.png', 'mobile12.png',
-		'OPENING.jpg', 'piece-homekit.jpg', 'PRESENCE.jpg',
-		'reference-etat.png', 'sans-reponse.jpg', 'SIREN.jpg',
-		'siri-01.jpg', 'siri-02.jpg', 'SMOKE.jpg',
-		'TEMPERATURE.jpg', 'typegen-1.png', 'typeginfo.png',
-		'windows.png', 'ypegeaction.png', 'ypegelumi.png',
-		'v2app.png', 'v2ConnectBox.jpeg', 'v2FullMenu.jpeg',
-		'v2MenuBoxs.jpeg', 'v2ModalMenuCustom.png', 'v2ModifyLittleRadius.jpeg',
-		'v2ZoneInactive.jpeg'];
-    /*    
-	foreach ($oldDocsImgs as $oldDocsImg) {
-		if (file_exists(dirname(__FILE__) . '/../docs/images/' . $oldDocsImg)) {
-			log::add('mobile', 'debug', '| Removing old doc image : ' . dirname(__FILE__) . '/../core/img/' . $oldDocsImg);
-			shell_exec('rm ' . dirname(__FILE__) . '/../docs/images/' . str_replace(' ', '\\ ', $oldDocsImg));
-		} 	
-	}
-*/
 	/* Generate ApiKey if no exist */
 	jeedom::getApiKey('mobile');
 

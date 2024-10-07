@@ -504,20 +504,22 @@ class mobile extends eqLogic
 	public static function handleMenuDefaultBySelect($eqId, $eqDefault)
 	{
 		if (!is_object($mobile = eqLogic::byId($eqId, 'mobile'))) return;
-
-		// ATTRIBUTION DUN MENU PAR DEFAULT AU MOBILE
-		if ($eqDefault == 'default') {
+		log::add('mobile', 'debug', '┌──:fg-success: handleMenuDefaultBySelect( ' . $eqId . ', ' . $eqDefault . ') :/fg:──');
+		// ATTRIBUTION D'UN MENU AU MOBILE
+		if ($eqDefault == 'default') { //reset menuCustom
 			$menuCustomArray = mobile::getMenuDefaultV2();
 			$mobile->setConfiguration('menuCustomArray', $menuCustomArray);
 			$mobile->setConfiguration('nbIcones', 3);
 			$mobile->setConfiguration('defaultIdMobile', 'default');
 			$mobile->save();
 		} else if (is_object($mobileDefault = eqLogic::byId($eqDefault, 'mobile'))) {
-		// ATTRIBUTION DU MENU DUN AUTRE MOBILE
+			log::add('mobile', 'debug', '| menu souce : ' . $mobileDefault->getHumanName());
+			// ATTRIBUTION DU MENU DUN AUTRE MOBILE
 			$mobile->setConfiguration('defaultIdMobile', $eqDefault);
 			if ($mobile->getId() == $mobileDefault->getId()) {
-              $mobile->save();
-              return;
+				log::add('mobile', 'debug', '| souce et cible identique ');
+				$mobile->save();
+				return;
 			}
 			$nbIcones = $mobileDefault->getConfiguration('nbIcones', 3);
 			$menuCustomArray = $mobileDefault->getConfiguration('menuCustomArray');
@@ -525,103 +527,6 @@ class mobile extends eqLogic
 			$mobile->setConfiguration('menuCustomArray', $menuCustomArray);
 			$mobile->save();
         }
-	}
-
-	public static function configMenuCustom($eqId, $jeedomVersion)
-	{
-		log::add('mobile', 'debug', '|┌──:fg-success: CONFIGMENU CUSTOM JEEDOM ' . $jeedomVersion . ' :/fg:──');
-		//if ($jeedomVersion < '4.4.0') {
-			//return $defaultMenuArray = self::getDefaultMenuArray();
-		//}
-		$defaultMenuArray = self::getDefaultMenuArray();
-		$pluginPanelMobile = config::byKey('pluginPanelMobile', 'mobile');
-
-		if (is_object($eqLogic = eqLogic::byId($eqId))) {
-			$eqLogics = eqLogic::byType('mobile');
-			$menuCustomArray = $eqLogic->getConfiguration('menuCustomArray');
-
-			// ATTRIBUTION MOBILE PAR DEFAUT A TOUS LES MOBILES
-			foreach ($eqLogics as $mobile) {
-				if ($mobile->getConfiguration('defaultIdMobile') == $eqId) {
-					$countFor = intval($eqLogic->getConfiguration('nbIcones', 3)) + 1;
-					$menuArrayTemp = [];
-					for ($i = 1; $i < $countFor; $i++) {
-						$menuArrayTemp[$i]['selectNameMenu'] = isset($menuCustomArray[$i]['selectNameMenu']) ? $menuCustomArray[$i]['selectNameMenu'] : 'none';
-						$menuArrayTemp[$i]['renameIcon'] = isset($menuCustomArray[$i]['renameIcon']) ? $menuCustomArray[$i]['renameIcon'] : '';
-						$menuArrayTemp[$i]['spanIcon'] = isset($menuCustomArray[$i]['spanIcon']) ? $menuCustomArray[$i]['spanIcon'] : 'none';
-						$menuArrayTemp[$i]['urlUser'] = isset($menuCustomArray[$i]['urlUser']) ? $menuCustomArray[$i]['urlUser'] : 'none';
-					}
-					$mobile->setConfiguration('menuCustomArray', $menuArrayTemp);
-					$mobile->save();
-				};
-			}
-			$nbIcones = $eqLogic->getConfiguration('nbIcones', 3);
-			$arrayElements = array();
-			$j = 0;
-			$count = 1;
-			for ($i = 1; $i < 5; $i++) {
-
-				// GENERATE TAB ICON LIBRARY AND RENAME BY USER
-				$resultTabIcon = self::generateTabIcon($menuCustomArray, $i);
-				$tabIconName = $resultTabIcon['tabIconName'];
-				$tabLibName = $resultTabIcon['tabLibName'];
-				$tabRenameInput = $resultTabIcon['tabRenameInput'];
-				//$objectId = $menuCustomArray[$i]['selectNameMenu'];
-				$objectId = isset($menuCustomArray[$i]['selectNameMenu']) ? $menuCustomArray[$i]['selectNameMenu'] : '';
-				$isActive = true;
-				$webviewUrl = 'd';
-
-				log::add('mobile', 'debug', '|| - objectId > ' . $objectId);
-
-				// GENERATE URLS FOR MENU CUSTOM 
-				$result = self::generateTypeObject($objectId, $i, $webviewUrl, $pluginPanelMobile);
-				$typeObject = $result['typeObject'];
-				$typewebviewurl = $result['typewebviewurl'];
-				$typeobjectId = $result['typeobjectId'];
-				$tabUrl = $result['tabUrl'];
-
-				if ($count > intval($nbIcones)) {
-					$isActive = false;
-				}
-				//log::add('mobile', 'debug', '| - Construction jsonTemplate');
-				$jsonTemplate = array(
-					'active' => $isActive,
-					'icon' => [
-						'name' => $tabIconName,
-						'type' => $tabLibName
-					],
-					'name' => $tabRenameInput,
-					'options' => [
-						'uri' => $tabUrl,
-						'objectType' => $typeObject,
-						'mobile' => $typewebviewurl,
-						'objectId' => $typeobjectId
-					],
-					'type' =>  strpos($tabUrl, 'www') !== false ? 'urlwww' : 'WebviewApp'
-				);
-				$arrayElements['tab' . $j] =  $jsonTemplate;
-				$j++;
-				$count++;
-			}
-			log::add('mobile', 'debug', '|| [INFO] arrayElements > ' . json_encode($arrayElements));
-			log::add('mobile', 'debug', '|└────────────────────');
-			if (count($arrayElements) == 4) {
-				$j = 0;
-				for ($i = 0; $i < 4; $i++) {
-					$isBool = is_bool($arrayElements['tab' . $i]['active']);
-					if ($isBool) {
-						if ($arrayElements['tab' . $i]['active'] == true) {
-							$j++;
-						}
-					} else {
-						return $defaultMenuArray;
-					}
-				}
-				return ($j == 0) ? $defaultMenuArray : $arrayElements;
-			}
-			return $defaultMenuArray;
-		}
-		return $defaultMenuArray;
 	}
 
 	public static function generateTabIcon($menuCustomArray, $i)
@@ -769,6 +674,89 @@ class mobile extends eqLogic
 
 	/*     * *********************Méthodes d'instance************************* */
 
+	public function configMenuCustom()
+	{
+		log::add('mobile', 'debug', '|┌──:fg-success: CONFIGMENU CUSTOM JEEDOM ' . jeedom::version() . ' :/fg:──');
+		$menuCustomArray = mobile::getMenuDefaultV2();
+		$pluginPanelMobile = config::byKey('pluginPanelMobile', 'mobile');
+		$defaultIdMobile = $this->getConfiguration('defaultIdMobile');
+
+		if ($defaultIdMobile == 'default') {
+			log::add('mobile', 'debug', '|| [WARNING] Envoi menu par défaut');
+			$this->setConfiguration('menuCustomArray', $menuCustomArray);
+			$this->save();
+		} else if (is_object($eqDefault = eqLogic::byId($defaultIdMobile)) && $this->getId() != $defaultIdMobile) {
+			log::add('mobile', 'debug', '|| [WARNING] Envoi menu de ' . $eqDefault->getHumanName());
+			$menuCustomArray = $eqDefault->getConfiguration('menuCustomArray');
+			$this->setConfiguration('menuCustomArray', $menuCustomArray);
+			$this->save();
+		} else {
+			log::add('mobile', 'debug', '|| [INFO] Envoi menu de ' . $this->getHumanName());
+			$menuCustomArray = $this->getConfiguration('menuCustomArray');
+		}
+		$nbIcones = count($menuCustomArray);
+
+		// ATTRIBUTION MOBILE PAR DEFAUT A TOUS LES MOBILES
+		$eqLogics = eqLogic::byType('mobile');
+		foreach ($eqLogics as $mobile) {
+			if ($mobile->getConfiguration('defaultIdMobile') == $this->getId()) {
+				$mobile->setConfiguration('menuCustomArray', $menuCustomArray);
+				$mobile->setConfiguration('nbIcones', $nbIcones);
+				$mobile->save();
+			};
+		}
+
+		$arrayElements = array();
+		$j = 0;
+		$count = 1;
+		for ($i = 1; $i < 5; $i++) {
+
+			// GENERATE TAB ICON LIBRARY AND RENAME BY USER
+			$resultTabIcon = self::generateTabIcon($menuCustomArray, $i);
+			$tabIconName = $resultTabIcon['tabIconName'];
+			$tabLibName = $resultTabIcon['tabLibName'];
+			$tabRenameInput = $resultTabIcon['tabRenameInput'];
+			//$objectId = $menuCustomArray[$i]['selectNameMenu'];
+			$objectId = isset($menuCustomArray[$i]['selectNameMenu']) ? $menuCustomArray[$i]['selectNameMenu'] : '';
+			$isActive = true;
+			$webviewUrl = 'd';
+			if (!empty($objectId)) log::add('mobile', 'debug', '|| - objectId > ' . $objectId);
+
+			// GENERATE URLS FOR MENU CUSTOM 
+			$result = self::generateTypeObject($objectId, $i, $webviewUrl, $pluginPanelMobile);
+			$typeObject = $result['typeObject'];
+			$typewebviewurl = $result['typewebviewurl'];
+			$typeobjectId = $result['typeobjectId'];
+			$tabUrl = $result['tabUrl'];
+
+			if ($count > intval($nbIcones)) {
+				$isActive = false;
+			}
+
+			$jsonTemplate = array(
+				'active' => $isActive,
+				'icon' => [
+					'name' => $tabIconName,
+					'type' => $tabLibName
+				],
+				'name' => $tabRenameInput,
+				'options' => [
+					'uri' => $tabUrl,
+					'objectType' => $typeObject,
+					'mobile' => $typewebviewurl,
+					'objectId' => $typeobjectId
+				],
+				'type' =>  strpos($tabUrl, 'www') !== false ? 'urlwww' : 'WebviewApp'
+			);
+			$arrayElements['tab' . $j] =  $jsonTemplate;
+			$j++;
+			$count++;
+		}
+		log::add('mobile', 'debug', '|| [INFO] arrayElements > ' . json_encode($arrayElements));
+		log::add('mobile', 'debug', '|└────────────────────');
+		return $arrayElements;
+	}
+
 	public function getQrCode()
 	{
 		require_once dirname(__FILE__) . '/../../3rdparty/phpqrcode/qrlib.php';
@@ -809,8 +797,9 @@ class mobile extends eqLogic
 		if ($this->getLogicalId() == '') {
 			$key = config::genKey(32);
 			$this->setLogicalId($key);
-			$this->save();
 		}
+		$this->setConfiguration('defaultIdMobile', $this->getId());
+		$this->save();
 	}
 
 	public function postSave()

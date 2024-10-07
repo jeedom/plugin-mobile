@@ -53,7 +53,7 @@ function createMobile($params, $nbIcones = 3)
 	}
 	$mobile->setConfiguration('menuCustomArray', $menuCustomArray);
 	$mobile->setConfiguration('nbIcones', intval($nbIcones));
-	$mobile->setConfiguration('defaultIdMobile', 'default');
+	//$mobile->setConfiguration('defaultIdMobile', 'default'); moved to postInsert
 	$mobile->setConfiguration('type_mobile', $notification['platform']);
 	$mobile->setConfiguration('affect_user', $userId);
 	$mobile->setConfiguration('validate', 'no');
@@ -66,6 +66,7 @@ function createMobile($params, $nbIcones = 3)
 
 function saveMenuFromAppV2($menu, $mobile)
 {
+	/* Call by setCustomMenu */
 	log::add('mobile', 'debug', '||┌── :fg-success:saveMenuFromAppV2:/fg: ──');
 	log::add('mobile', 'debug', '||| [INFO] Menu > ' . json_encode($menu));
 	if (is_object($mobile)) {
@@ -122,7 +123,7 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 	$notification = $configs['notification'];
 	log::add('mobile', 'debug', '| [INFO] Configs > ' . json_encode($configs));
 	log::add('mobile', 'debug', '| [INFO] Geolocs > ' . json_encode($geolocs));
-	log::add('mobile', 'debug', '| [INFO] Menu > ' . json_encode($menu));
+	//log::add('mobile', 'debug', '| [INFO] Menu > ' . json_encode($menu));
 	log::add('mobile', 'debug', '| [INFO] Notification > ' . json_encode($notification));
 	$mobile = null;
 	if (isset($params['Iq'])) {
@@ -144,9 +145,12 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
         }
 	}
 	$mobile->save();
-	
-	/* save menu from app */
-	saveMenuFromAppV2($menu, $mobile);
+
+	/* moved to new method setCustomMenu
+// save menu from app
+saveMenuFromAppV2($menu, $mobile);
+	}
+	*/
 
 	if ($geolocs) {
 		if ($geolocs != [] && !(is_object($geolocs) && empty((array)$geolocs)) && !(is_string($geolocs) && $geolocs == "{}")) {
@@ -163,6 +167,22 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 				}
 			}
 		}
+	}
+	log::add('mobile', 'debug', '└───────────────────────────────────────────');
+	$jsonrpc->makeSuccess('ok');
+}
+
+if ($jsonrpc->getMethod() == 'setCustomMenu') {
+	log::add('mobile', 'debug', '┌─────▶︎ AppV2 setCustomMenu ─────────────────');
+	$configs = $params['configs'];
+	$menu = $configs['menu'];
+	log::add('mobile', 'debug', '| [INFO] Configs > ' . json_encode($configs));
+	log::add('mobile', 'debug', '| [INFO] Menu > ' . json_encode($menu));
+	$mobile = null;
+	if (isset($params['Iq']) && is_object($mobile = eqLogic::byLogicalId($params['Iq'], 'mobile'))) {
+		saveMenuFromAppV2($menu, $mobile);
+	} else {
+		log::add('mobile', 'debug', '| [WARNING] Paramètre Iq manquant ou équipement inexistant !');
 	}
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	$jsonrpc->makeSuccess('ok');
@@ -291,42 +311,19 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	if (is_object($mobile)) {
 		log::add('mobile', 'debug', '|  OK  Mobile trouvé > ' . $mobile->getName());
 		$return[$idBox]['configs']['menu'] = mobile::configMenuCustom($mobile->getId(), jeedom::version());
+		/* Hide some menus by configuration */
+		$return[$idBox]['configs']['hideMenuCustom'] = intval($mobile->getConfiguration('hideMenuCustom', 0));
+		$return[$idBox]['configs']['hideMenuGeoloc'] = intval($mobile->getConfiguration('hideMenuGeoloc', 0));
 	} else {
-		if (jeedom::version() < '4.4.0') {
-			log::add('mobile', 'debug', '| [WARNING] Version du core > ' . jeedom::version());
-			$return[$idBox]['configs']['menu'] = mobile::configMenuCustom($mobile->getId(), jeedom::version());
-		} else {
-			$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
-								"tab1":{"active":true,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
-								"tab2":{"active":true,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
-								"tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}}';
-			$defaultMenuArray = json_decode($defaultMenuJson, true);
-			$return[$idBox]['configs']['menu'] = $defaultMenuArray;
-		}
+		$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
+							"tab1":{"active":true,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
+							"tab2":{"active":true,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
+							"tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}}';
+		$defaultMenuArray = json_decode($defaultMenuJson, true);
+		$return[$idBox]['configs']['menu'] = $defaultMenuArray;
+		$return[$idBox]['configs']['hideMenuCustom'] = 0;
+		$return[$idBox]['configs']['hideMenuGeoloc'] = 0;
 	}
-  /*
-	// ENREGISTRER LES 5 DERNIERS MENUS DU TELEPHONE :
-	// Récupérer les enregistrements précédents pour ce téléphone
-	$previousMenus = config::byKey('previousMenus', 'mobile');
-	if (empty($previousMenus)) {
-		$previousMenus = [];
-	}
-
-	$phoneMenus = isset($previousMenus[$params['Iq']]) ? $previousMenus[$params['Iq']] : [];
-
-	$newMenu = $return[$idBox]['configs']['menu'];
-
-
-	if (empty($phoneMenus) || $newMenu != $phoneMenus[0]) {
-		array_unshift($phoneMenus, $newMenu);
-		$phoneMenus = array_slice($phoneMenus, 0, 5);
-		$previousMenus[$params['Iq']] = $phoneMenus;
-
-		// 5 DERNIERS
-		config::save('previousMenus', $previousMenus, 'mobile');
-	}
-	config::save('menuCustom_' . $params['Iq'], $newMenu, 'mobile');
-*/
 	log::add('mobile', 'debug', '| [INFO] CustomENVOICONFIGSAPI GETJSON > ' . json_encode($return[$idBox]['configs']));
 	log::add('mobile', 'debug', '| [INFO] Retour vers App > ' . json_encode($return));
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');

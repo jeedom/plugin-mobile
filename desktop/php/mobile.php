@@ -223,6 +223,20 @@ foreach ($eqLogics as $eqLogic) {
 									</select>
 								</div>
 							</div>
+							<!-- to be uncommented when the app is ready for this new feature -->
+							<!-- <div class="form-group">
+								<label class="col-sm-4 control-label">{{Masquer le menu géolocalisation}} <sup><i class="fa fa-question-circle tooltips" title="Si activé, l'application masquera le menu qui permet de paramètrer le geofencing."></i></sup></label>
+								<div class="col-sm-6">
+									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="hideMenuGeoloc">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">{{Masquer le menu custom}}  <sup><i class="fa fa-question-circle tooltips" title="Si activé, l'application masquera le menu qui permet de modifier le menu custom."></i></sup></label>
+								<div class="col-sm-6">
+									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="hideMenuCustom">
+								</div>
+							</div>
+							-->
 						</div>
 						<div class="col-lg-6">
 							<legend><i class="fas fa-qrcode"></i> {{QRCode}}</legend>

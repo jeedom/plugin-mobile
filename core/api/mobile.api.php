@@ -310,7 +310,7 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	$return[$idBox]['configs'] = array();
 	if (is_object($mobile)) {
 		log::add('mobile', 'debug', '|  OK  Mobile trouvé > ' . $mobile->getName());
-		$return[$idBox]['configs']['menu'] = mobile::configMenuCustom($mobile->getId(), jeedom::version());
+		$return[$idBox]['configs']['menu'] = $mobile->configMenuCustom();
 		/* Hide some menus by configuration */
 		$return[$idBox]['configs']['hideMenuCustom'] = intval($mobile->getConfiguration('hideMenuCustom', 0));
 		$return[$idBox]['configs']['hideMenuGeoloc'] = intval($mobile->getConfiguration('hideMenuGeoloc', 0));

@@ -337,6 +337,26 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	$jsonrpc->makeSuccess($return);
 }
 
+if ($jsonrpc->getMethod() == 'getCustomMenu') {
+	log::add('mobile', 'debug', '┌─────◀︎ AppV2 getCustomMenu ────────────────────');
+	log::add('mobile', 'debug', '| Recherche du mobile via sont Iq > ' . $params['Iq']);
+	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
+	if (is_object($mobile)) {
+		log::add('mobile', 'debug', '|  OK  Mobile trouvé > ' . $mobile->getName());
+		$menu = $mobile->configMenuCustom();
+	} else {
+		$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
+							"tab1":{"active":true,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
+							"tab2":{"active":true,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
+							"tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}}';
+		$defaultMenuArray = json_decode($defaultMenuJson, true);
+		$menu = $defaultMenuArray;
+	}
+	log::add('mobile', 'debug', '| [INFO] Retour vers App > ' . json_encode($menu));
+	log::add('mobile', 'debug', '└───────────────────────────────────────────');
+	$jsonrpc->makeSuccess($menu);
+}
+
 if ($jsonrpc->getMethod() == 'deleteMessage') {
 	$message = message::byId($params['appInfos']['idmessage']);
 	if (is_object($message)) {

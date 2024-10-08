@@ -94,6 +94,11 @@ class mobile extends eqLogic
 		log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	}
 
+	/**
+	 * get json for notification
+	 * Call by class notification
+	 * @return array
+	 */
 	public static function jsonPublish($os, $titre, $message, $type, $idNotif, $answer, $timeout, $token, $photo, $version, $optionsNotif = [], $critical = false, $Iq = null)
 	{
 		log::add('mobile', 'debug', '||┌──:fg-success: jsonPublish :/fg:──');
@@ -846,11 +851,6 @@ class mobile extends eqLogic
 		return $imageString;
 	}
 
-	/**
-	 * get json for notification
-	 * Call by class notification
-	 * @return array
-	 */
 	/**
 	 * Call by core after insert into bdd
 	 */

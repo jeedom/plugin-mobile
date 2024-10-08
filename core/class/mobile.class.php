@@ -31,12 +31,11 @@ class mobile extends eqLogic
 		mobile::deleteFileImg();
 	}
 
-	/*public static function backupExclude()
-	{
-		// returns the directory not to be saved in the Jeedom backup
-		return ['data'];
-	}*/
-
+	/**
+	 * find eq based on iq
+	 *
+	 * @return string
+	 */
 	public static function whoIsIq($iq)
 	{
 		$search = eqLogic::byLogicalId($iq, 'mobile');
@@ -47,6 +46,10 @@ class mobile extends eqLogic
 		}
 	}
 
+	/**
+	 * cleaning notifications based on time retention
+	 * Call by api : getJson
+	 */
 	public static function cleaningNotifications($Iq, $retentionTime)
 	{
 		log::add('mobile', 'debug', '┌──────────▶︎ :fg-warning: Nettoyage des Notifications et Images :/fg: ──────────');
@@ -89,8 +92,14 @@ class mobile extends eqLogic
 		}
 		log::add('mobile', 'debug', '| Fin du nettoyage des Notifications et Images');
 		log::add('mobile', 'debug', '└───────────────────────────────────────────');
-	}	
+	}
 
+	/**
+	 * get QrCode base64 for a user
+	 * use lib phpqrcode
+	 * Call by ajax getQrCodeV2 for modal.qrcodev2
+	 * @return string
+	 */
 	public static function getQrCodeV2($userId)
 	{
 		require_once dirname(__FILE__) . '/../../3rdparty/phpqrcode/qrlib.php';
@@ -120,6 +129,11 @@ class mobile extends eqLogic
 		return $imageString;
 	}
 
+	/**
+	 * get json for notification
+	 * Call by class notification
+	 * @return array
+	 */
 	public static function jsonPublish($os, $titre, $message, $type, $idNotif, $answer, $timeout, $token, $photo, $version, $optionsNotif = [], $critical = false, $Iq = null)
 	{
 		log::add('mobile', 'debug', '||┌──:fg-success: jsonPublish :/fg:──');
@@ -353,6 +367,11 @@ class mobile extends eqLogic
 		return $publish;
 	}
 
+	/**
+	 * send notification to app
+	 * Call by class execute
+	 * @return array
+	 */
 	public static function notification($arn, $os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version = 1, $optionsNotif = [], $critical = false, $Iq = null)
 	{
 		log::add('mobile', 'debug', '|┌──:fg-success: Notification en cours ! :/fg:──');
@@ -417,6 +436,10 @@ class mobile extends eqLogic
 		log::add('mobile', 'debug', '|└────────────────────');
 	}
 
+	 /**
+	 * Create and update cmd geoloc
+	 * Call By api : setConfigs
+	 */
 	public static function createCmdGeoLocV2($Iq, $geolocs)
 	{
 		log::add('mobile', 'debug', '|┌──:fg-success: GeoLocV2 :/fg:──');
@@ -463,6 +486,10 @@ class mobile extends eqLogic
 		log::add('mobile', 'debug', '|└────────────────────');
 	}
 
+	 /**
+	 * Delete images older than 30 days
+	 * Call by cronDaily
+	 */
 	public static function deleteFileImg()
 	{
 		$directory = dirname(__FILE__) . '/../../data/images'; // Chemin vers le répertoire contenant les fichiers
@@ -483,6 +510,10 @@ class mobile extends eqLogic
 		}
 	}
 
+	 /**
+	 * Get menu default whitout "tab"
+	 * @return array
+	 */
 	public static function getMenuDefaultV2($nbIcones = 3)
 	{
 		$namesMenus =  ['home', 'overview', 'health', 'home'];
@@ -501,6 +532,23 @@ class mobile extends eqLogic
 		return $menuCustomArray;
 	}
 
+	 /**
+	 * Get menu default with "tab"
+	 * @return array
+     */
+	private static function getMenuDefaultTab()
+	{
+		$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
+                        "tab1":{"active":false,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
+                        "tab2":{"active":false,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
+                        "tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"}}';
+		return json_decode($defaultMenuJson, true);
+	}
+
+ 	/**
+	 * menu assignment
+	 * Call by ajax menuDefault for modal.menuCustom
+     */
 	public static function handleMenuDefaultBySelect($eqId, $eqDefault)
 	{
 		if (!is_object($mobile = eqLogic::byId($eqId, 'mobile'))) return;
@@ -531,6 +579,10 @@ class mobile extends eqLogic
 		log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	}
 
+ 	/**
+	 * Call by configMenuCustom()
+	 * @return array
+     */
 	public static function generateTabIcon($menuCustomArray, $i)
 	{
 		$result = array();
@@ -558,6 +610,10 @@ class mobile extends eqLogic
 		return $result;
 	}
 
+ 	/**
+	 * Call by configMenuCustom()
+	 * @return array
+     */
 	public static function generateTypeObject($objectId, $i, $webviewUrl, $pluginPanelMobile)
 	{
 		$result = array();
@@ -634,20 +690,10 @@ class mobile extends eqLogic
 		return $result;
 	}
 
-	private static function getDefaultMenuArray()
-	{
-		$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
-                        "tab1":{"active":false,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
-                        "tab2":{"active":false,"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
-                        "tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"}}';
-		return json_decode($defaultMenuJson, true);
-	}
-
-  /*
-  * Call by
-    - jsonrpc -> nfc
-    - jsonrpc -> qrcodemethod
-  */
+	/**
+	 * Create and update cmd
+	 * Call by Api : nfc && qrcodemethod
+     */
 	public static function cmdForApi($Iq, $logicalId, $value, $name = "", $subtype = "string")
 	{
 		$mobile = eqLogic::byLogicalId($Iq, 'mobile');
@@ -676,6 +722,11 @@ class mobile extends eqLogic
 
 	/*     * *********************Méthodes d'instance************************* */
 
+	/**
+	 * Call by Api : getJson && getCustomMenu
+	 *
+	 * @return array
+     */
 	public function configMenuCustom()
 	{
 		log::add('mobile', 'debug', '|┌──:fg-success: CONFIGMENU CUSTOM JEEDOM ' . jeedom::version() . ' :/fg:──');
@@ -759,6 +810,12 @@ class mobile extends eqLogic
 		return $arrayElements;
 	}
 
+	/**
+	 * get QrCode base64 for a user
+	 * use lib phpqrcode
+	 * Call by ajax getQrCode for printEqLogic
+	 * @return string
+	 */
 	public function getQrCode()
 	{
 		require_once dirname(__FILE__) . '/../../3rdparty/phpqrcode/qrlib.php';
@@ -794,6 +851,9 @@ class mobile extends eqLogic
 		return $imageString;
 	}
 
+	/**
+	 * Call by core after insert into bdd
+	 */
 	public function postInsert()
 	{
 		if ($this->getLogicalId() == '') {
@@ -804,6 +864,9 @@ class mobile extends eqLogic
 		$this->save();
 	}
 
+	/**
+	 * Call by core after save into bdd
+	 */
 	public function postSave()
 	{
 		$cmdNotif = $this->getCmd(null, 'notif');
@@ -846,6 +909,9 @@ class mobile extends eqLogic
 		}
 	}
 
+	/**
+	 * Call by core before remove eqLogic
+	 */
 	public function preRemove()
 	{
 		log::add('mobile', 'debug', '┌──:fg-success: preRemove() :/fg:──');
@@ -873,9 +939,14 @@ class mobile extends eqLogic
 		log::add('mobile', 'debug', '└────────────────────');
 	}
 
-	/*	public function postRemove() {
+	/**
+	 * Call by core after remove eqLogic
+	*/
+	/*
+	public function postRemove() {
 
-	}*/
+	}
+	*/
 
 	/*     * **********************Getteur Setteur*************************** */
 

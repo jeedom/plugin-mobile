@@ -142,6 +142,10 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 			log::add('mobile', 'debug', '| [NOTICE] Token vide ');
         }
 	}
+	if (is_object($user = user::byHash($params['apikey']))) {
+		log::add('mobile', 'debug', '| [INFO] affect_user > ' . $user->getLogin() . ' (' . $user->getId() . ')');
+		$mobile->setConfiguration('affect_user', $user->getId());
+	}
 	$mobile->save();
 
 	/* moved to new method setCustomMenu

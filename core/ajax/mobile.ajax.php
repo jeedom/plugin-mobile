@@ -49,6 +49,17 @@ try {
 		}
 	}
 
+	if (init('action') == 'getAffectUserByEqlogic') {
+		$eqLogic = mobile::byId(init('id'));
+		$return = '';
+		if (is_object($eqLogic)) {
+			if (is_object($user = user::byId($eqLogic->getConfiguration('affect_user')))) {
+				$return = $user->getLogin();
+			}
+		}
+		ajax::success($return);
+	}
+
 	throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
   
 } catch (Exception $e) {

@@ -44,7 +44,7 @@ function printEqLogic(_eqLogic) {
     type: "POST",
     url: "plugins/mobile/core/ajax/mobile.ajax.php",
     data: {
-      action: "getQrCode",
+      action: "getAffectUserByEqlogic",
       id: _eqLogic.id,
     },
     dataType: "json",
@@ -57,16 +57,9 @@ function printEqLogic(_eqLogic) {
         jeedomUtils.showAlert({ message: data.result, level: "danger" })
         return
       }
-      let el = document.querySelector(".qrCodeImg")
-      el.innerHTML = ""
-      if (data.result == "internalError") {
-        el.innerHTML = "{{Erreur pas d'adresse interne (voir configuration de votre Jeedom !)}}"
-      } else if (data.result == "externalError") {
-        el.innerHTML = "{{Erreur pas d'adresse externe (voir configuration de votre Jeedom !)}}"
-      } else if (data.result == "UserError") {
-        el.innerHTML = "{{Erreur pas d'utilisateur selectionné}}"
-      } else {
-        el.innerHTML = '<img src="data:image/png;base64, ' + data.result + '" />'
+      let el = document.querySelector(".affect_user")
+      if (el != null) {
+        el.value = data.result
       }
     }
   })

@@ -211,16 +211,7 @@ foreach ($eqLogics as $eqLogic) {
 							<div class="form-group">
 								<label class="col-sm-4 control-label">{{Utilisateur}}</label>
 								<div class="col-sm-6">
-									<select class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="affect_user">
-										<option value="">{{Aucun}}</option>
-										<?php
-										$hidden_user = array('jeedom_support', 'internal_report');
-										foreach (user::all() as $user) {
-											if (in_array($user->getLogin(), $hidden_user) || $user->getEnable() != 1) continue;
-											echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
-										}
-										?>
-									</select>
+									<input type="text" class="affect_user" disabled>
 								</div>
 							</div>
 							<!-- to be uncommented when the app is ready for this new feature -->
@@ -239,10 +230,6 @@ foreach ($eqLogics as $eqLogic) {
 							-->
 						</div>
 						<div class="col-lg-6">
-							<legend><i class="fas fa-qrcode"></i> {{QRCode}}</legend>
-							<center>
-								<div class="qrCodeImg"></div>
-							</center>
 							<legend><i class="fas fa-mobile-alt"></i> {{Notifications}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Id Mobile}}

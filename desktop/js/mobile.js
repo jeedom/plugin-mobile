@@ -59,7 +59,7 @@ function printEqLogic(_eqLogic) {
       }
       let el = document.querySelector(".affect_user")
       if (el != null) {
-        el.value = data.result
+        el.innerHTML = data.result
       }
     }
   })

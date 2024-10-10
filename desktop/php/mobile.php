@@ -198,20 +198,8 @@ foreach ($eqLogics as $eqLogic) {
 							</div>
 
 							<legend><i class="fas fa-cogs"></i> {{Paramètres spécifiques}}</legend>
+							<!-- to be uncommented when the app is ready for this new feature
 							<div class="form-group">
-								<label class="col-sm-4 control-label">{{Type de Mobile}}</label>
-								<div class="col-sm-6">
-									<input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="type_mobile" disabled></input>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-4 control-label">{{Utilisateur}}</label>
-								<div class="col-sm-6">
-									<input type="text" class="affect_user" disabled>
-								</div>
-							</div>
-							<!-- to be uncommented when the app is ready for this new feature -->
-							<!-- <div class="form-group">
 								<label class="col-sm-4 control-label">{{Masquer le menu géolocalisation}} <sup><i class="fa fa-question-circle tooltips" title="Si activé, l'application masquera le menu qui permet de paramètrer le geofencing."></i></sup></label>
 								<div class="col-sm-6">
 									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="hideMenuGeoloc">
@@ -226,21 +214,29 @@ foreach ($eqLogics as $eqLogic) {
 							-->
 						</div>
 						<div class="col-lg-6">
-							<legend><i class="fas fa-mobile-alt"></i> {{Notifications}}</legend>
+							<legend><i class="fas fa-mobile-alt"></i> {{Informations}}</legend>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Id Mobile}}
-									<sup><i class="fas fa-question-circle" title="{{Id Mobile}}"></i></sup>
-								</label>
+								<label class="col-sm-3 control-label">{{Type de Mobile}}</label>
 								<div class="col-sm-8">
-									<span type="text" class="eqLogicAttr label label-primary" data-l1key="logicalId" placeholder="{{Iq}}"></span>
+									<span class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="type_mobile"></span>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">{{TOKEN Mobile}}
-									<sup><i class="fas fa-question-circle" title="{{TOKEN Mobile}}"></i></sup>
-								</label>
+								<label class="col-sm-3 control-label">{{Utilisateur}}</label>
 								<div class="col-sm-8">
-									<span type="text" id="arnComplet" class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="notificationRegistrationToken" placeholder="{{TOKEN}}"></span>
+									<span class="label label-primary affect_user"></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{{Iq Mobile}}</label>
+								<div class="col-sm-8">
+									<span class="eqLogicAttr label label-primary" data-l1key="logicalId"></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{{TOKEN Mobile}}</label>
+								<div class="col-sm-8">
+									<span id="arnComplet" class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="notificationRegistrationToken"></span>
 								</div>
 							</div>
 						</div>

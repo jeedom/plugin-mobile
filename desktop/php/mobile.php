@@ -201,11 +201,7 @@ foreach ($eqLogics as $eqLogic) {
 							<div class="form-group">
 								<label class="col-sm-4 control-label">{{Type de Mobile}}</label>
 								<div class="col-sm-6">
-									<select class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="type_mobile">
-										<option value="ios">{{iPhone}}</option>
-										<option value="android">{{Android}}</option>
-										<option value="windows">{{Windows (non officiel)}}</option>
-									</select>
+									<input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="type_mobile" disabled></input>
 								</div>
 							</div>
 							<div class="form-group">

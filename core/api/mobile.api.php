@@ -731,44 +731,44 @@ if ($jsonrpc->getMethod() == 'getScenarios'){
 	$jsonrpc->makeSuccess($return);
 }
 
-/**
- * command scenarios by id
- * 
- * @return array
- */
-if ($jsonrpc->getMethod() == 'handleScenario'){
-	log::add('mobile', 'debug', '┌────▶︎ handleScenario ────────────────────');
-	$scenarioId = $params['scenario_id'];
-	$action = $params['action'];
-	$result = 'ko';
-	log::add('mobile', 'debug', '| Scénario > ' . $scenarioId);
-	log::add('mobile', 'debug', '| Action > ' . $action);
-	if (is_object($scenario = scenario::byId($scenarioId))) {
-		switch($action) {
-			case 'start':
-				$scenario->launch();
-				$result = 'ok';
-			break;
-			case 'stop':
-				$scenario->stop();
-				$result = 'ok';
-			break;
-			case 'activate':
-				$scenario->setIsActive(1);
-				$scenario->save();
-				$result = 'ok';
-			break;
-	    	case 'desactivate':
-				$scenario->setIsActive(0);
-				$scenario->save();
-				$result = 'ok';
-			break;
-		}
-	} else {
-		log::add('mobile', 'debug', '| [ERROR] Scénario > ' . $scenarioId . ' inexistant !');
-	}
-	log::add('mobile', 'debug', '└───────────────────────────────────────────');
-	$jsonrpc->makeSuccess($result);
-}
+// /**
+//  * command scenarios by id
+//  * 
+//  * @return array
+//  */
+// if ($jsonrpc->getMethod() == 'handleScenario'){
+// 	log::add('mobile', 'debug', '┌────▶︎ handleScenario ────────────────────');
+// 	$scenarioId = $params['scenario_id'];
+// 	$action = $params['action'];
+// 	$result = 'ko';
+// 	log::add('mobile', 'debug', '| Scénario > ' . $scenarioId);
+// 	log::add('mobile', 'debug', '| Action > ' . $action);
+// 	if (is_object($scenario = scenario::byId($scenarioId))) {
+// 		switch($action) {
+// 			case 'start':
+// 				$scenario->launch();
+// 				$result = 'ok';
+// 			break;
+// 			case 'stop':
+// 				$scenario->stop();
+// 				$result = 'ok';
+// 			break;
+// 			case 'activate':
+// 				$scenario->setIsActive(1);
+// 				$scenario->save();
+// 				$result = 'ok';
+// 			break;
+// 	    	case 'desactivate':
+// 				$scenario->setIsActive(0);
+// 				$scenario->save();
+// 				$result = 'ok';
+// 			break;
+// 		}
+// 	} else {
+// 		log::add('mobile', 'debug', '| [ERROR] Scénario > ' . $scenarioId . ' inexistant !');
+// 	}
+// 	log::add('mobile', 'debug', '└───────────────────────────────────────────');
+// 	$jsonrpc->makeSuccess($result);
+// }
 
 throw new Exception(__('Aucune demande', __FILE__));

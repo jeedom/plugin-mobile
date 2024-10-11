@@ -999,17 +999,12 @@ class mobileCmd extends cmd
 		$eqLogic = $this->getEqLogic();
 
 		if ($this->getLogicalId() == 'notif' || $this->getLogicalId() == 'notifCritical') {
-
-			if ($_options['title'] == '' || $_options['title'] == $_options['message'] || $_options['title'] == ' ') {
-				$_options['title'] = config::byKey('product_name');
-			}
-
 			$critical = false;
 
 			if ($this->getLogicalId() == 'notifCritical') {
 				$critical = true;
 			}
-
+			if (trim($_options['title']) == '') $_options['title'] = (!empty(config::byKey('name'))) ? config::byKey('name') : config::byKey('product_name');
 			$file = mobileCmd::fileInMessage($_options['message']);
 			if (!isset($_options['files']) && $file != null) {
 				$_options['files'] = array();
@@ -1017,7 +1012,7 @@ class mobileCmd extends cmd
 				$_options['message'] = $file['message'];
 				log::add('mobile', 'debug', '| file detected ' . json_encode($file));
 			}
-
+			if ($eqLogic->getConfiguration('type_mobile') == 'android') $_options['message'] = nl2br($_options['message']);
 			$answer = (isset($_options['answer']) && $_options['answer']) ? join(';', $_options['answer']) : null;
 			$askVariable = isset($_options['variable']) ? $_options['variable'] : null;
 			$askType = isset($_options['answer']) && $_options['answer'] ? 'ask_Text' : 'notif';

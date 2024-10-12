@@ -53,18 +53,18 @@ class mobile extends eqLogic
 	public static function cleaningNotifications($Iq, $retentionTime)
 	{
 		log::add('mobile', 'debug', '┌──────────▶︎ :fg-warning: Nettoyage des Notifications et Images :/fg: ──────────');
-		log::add('mobile', 'debug', '| Durée de retention actuelle : '. $retentionTime . ' jours');
+		log::add('mobile', 'debug', '| Durée de retention actuelle : ' . $retentionTime . ' jours');
 
-		$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60; 
+		$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60;
 		$currentTime = time();
 
 		$pathImages = dirname(__FILE__) . '/../../data/images/';
-		if(is_dir($pathImages)){
+		if (is_dir($pathImages)) {
 			$images = glob($pathImages . '*.jpg');
 			foreach ($images as $image) {
 				$fileCreationTime = filemtime($image);
 				if ($fileCreationTime < ($currentTime - $retentionSeconds)) {
-					unlink($image); 
+					unlink($image);
 				}
 			}
 		}
@@ -76,16 +76,16 @@ class mobile extends eqLogic
 			if ($notifications) {
 				$notifications = json_decode($notifications, true);
 				$notificationsModified = false;
-	
+
 				foreach ($notifications as $id => $value) {
-					$notificationDate = strtotime($value['data']['date']); 
+					$notificationDate = strtotime($value['data']['date']);
 					if (($currentTime - $notificationDate) > $retentionSeconds) {
-						unset($notifications[$id]); 
+						unset($notifications[$id]);
 						$notificationsModified = true;
-					} 
+					}
 				}
 				$notifications = json_encode($notifications);
-				if ($notificationsModified) { 
+				if ($notificationsModified) {
 					file_put_contents($filePath, $notifications);
 				}
 			}
@@ -102,7 +102,7 @@ class mobile extends eqLogic
 	public static function jsonPublish($os, $titre, $message, $type, $idNotif, $answer, $timeout, $token, $photo, $version, $optionsNotif = [], $critical = false, $Iq = null)
 	{
 		log::add('mobile', 'debug', '||┌──:fg-success: jsonPublish :/fg:──');
-		if(isset($Iq)) log::add('mobile', 'debug', '||| IQ for jsonPublish > ' . $Iq);
+		if (isset($Iq)) log::add('mobile', 'debug', '||| IQ for jsonPublish > ' . $Iq);
 
 		$dateNotif = date("Y-m-d H:i:s");
 		$newDate = date("Y-m-d");
@@ -291,40 +291,39 @@ class mobile extends eqLogic
 				];
 
 
-				if(isset($Iq)){
-						// SAVE NOTIFS IN JSON
-						$pathNotificationData = '/../data/notifications';
-						if (!is_dir(dirname(__FILE__) . $pathNotificationData)) {
-							mkdir(dirname(__FILE__) . $pathNotificationData, 0775, true);
-						}
-						$filePath = dirname(__FILE__) . $pathNotificationData . '/' . $Iq . '.json';
+				if (isset($Iq)) {
+					// SAVE NOTIFS IN JSON
+					$pathNotificationData = '/../data/notifications';
+					if (!is_dir(dirname(__FILE__) . $pathNotificationData)) {
+						mkdir(dirname(__FILE__) . $pathNotificationData, 0775, true);
+					}
+					$filePath = dirname(__FILE__) . $pathNotificationData . '/' . $Iq . '.json';
 
-						if (!file_exists($filePath)) {
-							file_put_contents($filePath, '');
-						}
-						$notificationsContent = file_get_contents($filePath);
-						$notifications = json_decode($notificationsContent, true);
+					if (!file_exists($filePath)) {
+						file_put_contents($filePath, '');
+					}
+					$notificationsContent = file_get_contents($filePath);
+					$notifications = json_decode($notificationsContent, true);
 
-						if ($notifications === null) {
-							$notifications = array();
-						}
+					if ($notifications === null) {
+						$notifications = array();
+					}
 
-						foreach ($notifications as &$notification) {
-							if (isset($notification['data']['askParams'])) {
-								$askParams = json_decode($notification['data']['askParams'], true);
-								if ($askParams !== null && isset($askParams['timeout'])) {
-									//log::add('mobile', 'debug', 'Timeout Ask remis à zero');
-									$askParams['timeout'] = 0;
-									$notification['data']['askParams'] = json_encode($askParams);
-								}
+					foreach ($notifications as &$notification) {
+						if (isset($notification['data']['askParams'])) {
+							$askParams = json_decode($notification['data']['askParams'], true);
+							if ($askParams !== null && isset($askParams['timeout'])) {
+								//log::add('mobile', 'debug', 'Timeout Ask remis à zero');
+								$askParams['timeout'] = 0;
+								$notification['data']['askParams'] = json_encode($askParams);
 							}
 						}
+					}
 
-						$notifications[$idNotif] = $publishJson;
-						log::add('mobile', 'debug', '||| [INFO] Notification enregistrée : ' . json_encode($notifications));
-						file_put_contents($filePath, json_encode($notifications));
+					$notifications[$idNotif] = $publishJson;
+					log::add('mobile', 'debug', '||| [INFO] Notification enregistrée : ' . json_encode($notifications));
+					file_put_contents($filePath, json_encode($notifications));
 				}
-
 			}
 		}
 		log::add('mobile', 'debug', '||| [INFO] JSON publish > ' . json_encode($publish));
@@ -383,12 +382,12 @@ class mobile extends eqLogic
 		));
 		//$request_http->setLogError(true);
 		$request_http->setPost(json_encode($post));
-		$result = json_decode($request_http->exec(30,3), true);
+		$result = json_decode($request_http->exec(30, 3), true);
 		if (!isset($result['state']) || $result['state'] != 'ok') {
 			log::add('mobile', 'info', '|| [WARNING] Echec Première Tentative d\'envoi de la notification');
 			log::add('mobile', 'info', '|| Nouvelle tentative ....');
-			sleep(rand(1,10));
-			$result = json_decode($request_http->exec(30,3), true);
+			sleep(rand(1, 10));
+			$result = json_decode($request_http->exec(30, 3), true);
 		}
 		if (!isset($result['state']) || $result['state'] != 'ok') {
 			if (isset($result['error']) && strpos($result['error'], 'Quotas exceeded') !== false) {
@@ -401,7 +400,7 @@ class mobile extends eqLogic
 		log::add('mobile', 'debug', '|└────────────────────');
 	}
 
-	 /**
+	/**
 	 * Create and update cmd geoloc
 	 * Call By api : setConfigs
 	 */
@@ -451,7 +450,7 @@ class mobile extends eqLogic
 		log::add('mobile', 'debug', '|└────────────────────');
 	}
 
-	 /**
+	/**
 	 * Delete images older than 30 days
 	 * Call by cronDaily
 	 */
@@ -475,7 +474,7 @@ class mobile extends eqLogic
 		}
 	}
 
-	 /**
+	/**
 	 * Get menu default whitout "tab"
 	 * @return array
 	 */
@@ -497,10 +496,10 @@ class mobile extends eqLogic
 		return $menuCustomArray;
 	}
 
-	 /**
+	/**
 	 * Get menu default with "tab"
 	 * @return array
-     */
+	 */
 	private static function getMenuDefaultTab()
 	{
 		$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
@@ -510,10 +509,10 @@ class mobile extends eqLogic
 		return json_decode($defaultMenuJson, true);
 	}
 
- 	/**
+	/**
 	 * menu assignment
 	 * Call by ajax menuDefault for modal.menuCustom
-     */
+	 */
 	public static function handleMenuDefaultBySelect($eqId, $eqDefault)
 	{
 		if (!is_object($mobile = eqLogic::byId($eqId, 'mobile'))) return;
@@ -540,14 +539,14 @@ class mobile extends eqLogic
 			$mobile->setConfiguration('nbIcones', $nbIcones);
 			$mobile->setConfiguration('menuCustomArray', $menuCustomArray);
 			$mobile->save();
-        }
+		}
 		log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	}
 
- 	/**
+	/**
 	 * Call by configMenuCustom()
 	 * @return array
-     */
+	 */
 	public static function generateTabIcon($menuCustomArray, $i)
 	{
 		$result = array();
@@ -575,10 +574,10 @@ class mobile extends eqLogic
 		return $result;
 	}
 
- 	/**
+	/**
 	 * Call by configMenuCustom()
 	 * @return array
-     */
+	 */
 	public static function generateTypeObject($objectId, $i, $webviewUrl, $pluginPanelMobile)
 	{
 		$result = array();
@@ -658,7 +657,7 @@ class mobile extends eqLogic
 	/**
 	 * Create and update cmd
 	 * Call by Api : nfc && qrcodemethod
-     */
+	 */
 	public static function cmdForApi($Iq, $logicalId, $value, $name = "", $subtype = "string")
 	{
 		$mobile = eqLogic::byLogicalId($Iq, 'mobile');
@@ -691,7 +690,7 @@ class mobile extends eqLogic
 	 * Call by Api : getJson && getCustomMenu
 	 *
 	 * @return array
-     */
+	 */
 	public function configMenuCustom()
 	{
 		log::add('mobile', 'debug', '|┌──:fg-success: CONFIGMENU CUSTOM JEEDOM ' . jeedom::version() . ' :/fg:──');
@@ -941,7 +940,7 @@ class mobile extends eqLogic
 
 	/**
 	 * Call by core after remove eqLogic
-	*/
+	 */
 	/*
 	public function postRemove() {
 
@@ -949,7 +948,6 @@ class mobile extends eqLogic
 	*/
 
 	/*     * **********************Getteur Setteur*************************** */
-
 }
 
 class mobileCmd extends cmd
@@ -977,7 +975,12 @@ class mobileCmd extends cmd
 			}
 		}
 		$result['message'] = $dataArray[0];
-		log::add('mobile', 'debug', '|| [INFO] File Parse > ' . json_encode($result));
+		$decodedMessage = json_decode($result['message']);
+		if (json_last_error() === JSON_ERROR_NONE) {
+			log::add('mobile', 'DEBUG', '|| [INFO] Message : ' . $decodedMessage);
+		} else {
+			log::add('mobile', 'DEBUG', '|| [INFO] Message : ' . $result['message']);
+		}
 		if (array_key_exists('file', $result)) {
 			log::add('mobile', 'debug', '|| file > ' . $result['file']);
 			log::add('mobile', 'debug', '|└────────────────────');

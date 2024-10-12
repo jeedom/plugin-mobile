@@ -61,7 +61,6 @@ try {
 	}
 
 	throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
-  
 } catch (Exception $e) {
 	ajax::error(displayException($e), $e->getCode());
 }

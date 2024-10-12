@@ -1003,11 +1003,12 @@ class mobileCmd extends cmd
 
 		if ($this->getLogicalId() == 'notif' || $this->getLogicalId() == 'notifCritical') {
 			$critical = false;
+			$defaultName = empty(config::byKey('name')) ? config::byKey('product_name') : config::byKey('name');
 
 			if ($this->getLogicalId() == 'notifCritical') {
 				$critical = true;
 			}
-			if (trim($_options['title']) == '') $_options['title'] = (!empty(config::byKey('name'))) ? config::byKey('name') : config::byKey('product_name');
+			if (trim($_options['title']) == '') $_options['title'] = $defaultName;
 			$file = mobileCmd::fileInMessage($_options['message']);
 			if (!isset($_options['files']) && $file != null) {
 				$_options['files'] = array();
@@ -1019,6 +1020,7 @@ class mobileCmd extends cmd
 			$answer = (isset($_options['answer']) && $_options['answer']) ? join(';', $_options['answer']) : null;
 			$askVariable = isset($_options['variable']) ? $_options['variable'] : null;
 			$askType = isset($_options['answer']) && $_options['answer'] ? 'ask_Text' : 'notif';
+			if ($askType == 'ask_Text') $_options['title'] = $defaultName;
 			$timeout = isset($_options['timeout']) && $_options['timeout'] ? $_options['timeout'] : 'nok';
 			$optionsNotif['askVariable'] = $askVariable;
 			//log::add('mobile', 'debug', '|-----------------------------------');

@@ -319,8 +319,6 @@ class mobile extends eqLogic
 							}
 						}
 					}
-					// $publishJson = str_replace(['<br>', '<br />'], '', $publishJson);
-					// $publishJson = json_decode($publishJson, true);
 					$notifications[$idNotif] = $publishJson;
 					log::add('mobile', 'debug', '||| [INFO] Notification enregistrée : ' . json_encode($notifications));
 					file_put_contents($filePath, json_encode($notifications));

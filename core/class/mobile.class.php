@@ -896,6 +896,21 @@ class mobile extends eqLogic
 			$cmdNotif->setType('action');
 			$cmdNotif->setSubType('message');
 			$cmdNotif->save();
+
+			$cmdRemoveNotifs = $this->getCmd(null, 'removeNotifs');
+			if (!is_object($cmdRemoveNotifs)) {
+				$cmdRemoveNotifs = new mobileCmd();
+				$cmdRemoveNotifs->setIsVisible(1);
+				$cmdRemoveNotifs->setName(__('Supprimer les notifications', __FILE__));
+				$cmdRemoveNotifs->setOrder(0);
+			}
+			$cmdRemoveNotifs->setLogicalId('removeNotifs');
+			$cmdRemoveNotifs->setEqLogic_id($this->getId());
+			$cmdRemoveNotifs->setDisplay('generic_type', 'GENERIC_ACTION');
+			$cmdRemoveNotifs->setType('action');
+			$cmdRemoveNotifs->setSubType('other');
+			$cmdRemoveNotifs->save();
+
 		}
 
 		$cmdaskText = $this->getCmd(null, 'ask_Text');
@@ -1000,6 +1015,18 @@ class mobileCmd extends cmd
 		log::add('mobile', 'debug', '┌──:fg-success: execute :/fg:──');
 		$optionsNotif = [];
 		$eqLogic = $this->getEqLogic();
+
+
+		if($this->getLogicalId() == 'removeNotifs') {
+			$Iq = $eqLogic->getId();
+			$filePath = dirname(__FILE__) . '/../../data/notifications/' . $Iq . '.json';
+			if (file_exists($filePath)) {
+				file_put_contents($filePath, ''); 
+				log::add('mobile', 'info', '| Suppression des notifications effectuée: ');
+			} else {
+				log::add('mobile', 'info', '| Fichier de notifications non trouvé: ' . $filePath);
+			}
+		}
 
 		if ($this->getLogicalId() == 'notif' || $this->getLogicalId() == 'notifCritical') {
 			$critical = false;

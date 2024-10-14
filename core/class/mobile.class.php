@@ -319,7 +319,8 @@ class mobile extends eqLogic
 							}
 						}
 					}
-
+					// $publishJson = str_replace(['<br>', '<br />'], '', $publishJson);
+					// $publishJson = json_decode($publishJson, true);
 					$notifications[$idNotif] = $publishJson;
 					log::add('mobile', 'debug', '||| [INFO] Notification enregistrée : ' . json_encode($notifications));
 					file_put_contents($filePath, json_encode($notifications));
@@ -1018,8 +1019,8 @@ class mobileCmd extends cmd
 
 
 		if($this->getLogicalId() == 'removeNotifs') {
-			$Iq = $eqLogic->getId();
-			$filePath = dirname(__FILE__) . '/../../data/notifications/' . $Iq . '.json';
+			$Iq = $eqLogic->getLogicalId();
+			$filePath = dirname(__FILE__) . '/../data/notifications/' . $Iq . '.json';
 			if (file_exists($filePath)) {
 				file_put_contents($filePath, ''); 
 				log::add('mobile', 'info', '| Suppression des notifications effectuée: ');

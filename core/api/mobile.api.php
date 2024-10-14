@@ -134,6 +134,7 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 	if (!is_object($mobile)) {
 		$mobile = createMobile($params, 3);
 	}
+	$mobile->setConfiguration('type_mobile', $notification['platform']);
 	if (isset($notification['token'])) {
 		if ($notification['token'] != '') {
 			log::add('mobile', 'debug', '| Token à ajouter > ' . $notification['token']);

@@ -203,6 +203,7 @@ if ($jsonrpc->getMethod() == 'setCustomMenu') {
  * 
  * @return array makeSuccess
  */
+
 if ($jsonrpc->getMethod() == 'getJson') {
 	log::add('mobile', 'debug', '┌─────◀︎ AppV2 getJson ────────────────────');
 	$registerDevice = $_USER_GLOBAL->getOptions('registerDevice', array());
@@ -323,16 +324,16 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	log::add('mobile', 'debug', '| Recherche du mobile via sont Iq > ' . $params['Iq']);
 	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	$return[$idBox]['configs'] = array();
+	$return[$idBox]['miscellanousParams'] = array();
 	if (is_object($mobile)) {
 		log::add('mobile', 'debug', '|  OK  Mobile trouvé > ' . $mobile->getName());
 		$return[$idBox]['configs']['menu'] = $mobile->configMenuCustom();
-		/* Hide some menus by configuration */
-		$return[$idBox]['configs']['miscellanousParams']['hideMenuCustom'] = intval($mobile->getConfiguration('hideMenuCustom', 0));
-		$return[$idBox]['configs']['miscellanousParams']['hideMenuGeoloc'] = intval($mobile->getConfiguration('hideMenuGeoloc', 0));
+		$return[$idBox]['miscellanousParams']['hideMenuCustom'] = intval($mobile->getConfiguration('hideMenuCustom', 0));
+		$return[$idBox]['miscellanousParams']['hideMenuGeoloc'] = intval($mobile->getConfiguration('hideMenuGeoloc', 0));
 	} else {
 		$return[$idBox]['configs']['menu'] = mobile::getMenuDefaultTab();
-		$return[$idBox]['configs']['miscellanousParams']['hideMenuCustom'] = 0;
-		$return[$idBox]['configs']['miscellanousParams']['hideMenuGeoloc'] = 0;
+		$return[$idBox]['miscellanousParams']['hideMenuCustom'] = 0;
+		$return[$idBox]['miscellanousParams']['hideMenuGeoloc'] = 0;
 	}
 	log::add('mobile', 'debug', '| [INFO] CustomENVOICONFIGSAPI GETJSON > ' . json_encode($return[$idBox]['configs']));
 	log::add('mobile', 'debug', '| [INFO] Retour vers App > ' . json_encode($return));

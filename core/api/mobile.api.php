@@ -36,7 +36,7 @@ if ($params['Iq']) {
 		log::add('mobile', 'debug', '| Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));
 	}
 } else {
-  	log::add('mobile', 'debug', '| [WARNING] Paramètre Iq inexistant !');
+	log::add('mobile', 'debug', '| [WARNING] Paramètre Iq inexistant !');
 }
 log::add('mobile', 'debug', '└───────────────────────────────────────────');
 
@@ -74,7 +74,8 @@ function createMobile($params, $nbIcones = 3)
  * Call by setCustomMenu
  * @param array
  */
-function saveMenuFromAppV2($menu, $mobile) {
+function saveMenuFromAppV2($menu, $mobile)
+{
 	log::add('mobile', 'debug', '||┌── :fg-success:saveMenuFromAppV2:/fg: ──');
 	log::add('mobile', 'debug', '||| [INFO] Menu > ' . json_encode($menu));
 	if (is_object($mobile)) {
@@ -145,7 +146,7 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 			}
 		} else {
 			log::add('mobile', 'debug', '| [NOTICE] Token vide ');
-        }
+		}
 	}
 	if (is_object($user = user::byHash($params['apikey']))) {
 		log::add('mobile', 'debug', '| [INFO] affect_user > ' . $user->getLogin() . ' (' . $user->getId() . ')');
@@ -260,7 +261,7 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	$return[$idBox]['informations']['language'] = config::byKey('language');
 	$return[$idBox]['informations']['nbMessage'] = message::nbMessage();
 	$userConnected = user::byHash($_USER_GLOBAL->getHash());
-	if(is_object($userConnected)){
+	if (is_object($userConnected)) {
 		$return[$idBox]['informations']['userConnected'] = $userConnected->getLogin();
 	}
 	$arrayObjectMessages = message::all();
@@ -340,7 +341,7 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');
 
 	$retentionTime = config::byKey('retentionTime', 'mobile', null);
-	if(isset($retentionTime) && $retentionTime != null) {
+	if (isset($retentionTime) && $retentionTime != null) {
 		log::add('mobile', 'debug', '| [INFO] Nettoyage des notifs et images > ');
 		mobile::cleaningNotifications($params['Iq'], $retentionTime);
 	}
@@ -524,13 +525,12 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 			$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geofence['identifier']);
 			if (is_object($cmdgeoloc)) {
 				if ($geofence['action'] == 'ENTER') {
-					log::add('mobile', 'debug', '|  OK  Commande "'. $cmdgeoloc->getName() . '" passée à 1');
+					log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 1');
 					$cmdgeoloc->event(1);
 				} elseif ($geofence['action'] == 'EXIT') {
-					log::add('mobile', 'debug', '|  OK  Commande "'. $cmdgeoloc->getName() . '" passée à 0');
+					log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 0');
 					$cmdgeoloc->event(0);
-				}
-				else {
+				} else {
 					log::add('mobile', 'debug', '| Event -> ' . $geofence['action']);
 				}
 			}
@@ -538,7 +538,7 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 			log::add('mobile', 'debug', __('| [ERROR] EqLogic inconnu : ', __FILE__) . $params['Iq']);
 		} else {
 			log::add('mobile', 'debug', __('| [ERROR] Paramètre Iq inexistant !', __FILE__));
-        }
+		}
 	} else {
 		$transmitions = $params['transmition'];
 		$errorCount = 0;
@@ -553,10 +553,10 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 					$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geofence['identifier']);
 					if (is_object($cmdgeoloc)) {
 						if ($geofence['action'] == 'ENTER') {
-							log::add('mobile', 'debug', '|  OK  Commande "'. $cmdgeoloc->getName() . '" passée à 1');
+							log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 1');
 							$cmdgeoloc->event(1);
 						} elseif ($geofence['action'] == 'EXIT') {
-							log::add('mobile', 'debug', '|  OK  Commande "'. $cmdgeoloc->getName() . '" passée à 0');
+							log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 0');
 							$cmdgeoloc->event(0);
 						} else {
 							log::add('mobile', 'debug', '| [INFO] Event -> ' . $geofence['action']);
@@ -657,7 +657,7 @@ if ($jsonrpc->getMethod() == 'getNotificationsFromFile') {
 	}
 	log::add('mobile', 'debug', '| [INFO] Notifications > ' . $notifications);
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');
-	$jsonrpc->makeSuccess($notifications);	
+	$jsonrpc->makeSuccess($notifications);
 }
 
 /**
@@ -676,8 +676,7 @@ if ($jsonrpc->getMethod() == 'deleteNotificationInJsonFile') {
 		$notificationsArray = json_decode($notifications, true);
 		if ($idNotif == 'allNotifs') {
 			file_put_contents($filePath, '');
-		}
-		elseif (isset($notificationsArray[$idNotif])) {
+		} elseif (isset($notificationsArray[$idNotif])) {
 			unset($notificationsArray[$idNotif]);
 			$notifications = json_encode($notificationsArray);
 			file_put_contents($filePath, $notifications);
@@ -715,12 +714,12 @@ if ($jsonrpc->getMethod() == 'deleteGeolocCommand') {
  * 
  * @return array
  */
-if ($jsonrpc->getMethod() == 'getScenarios'){
+if ($jsonrpc->getMethod() == 'getScenarios') {
 	log::add('mobile', 'debug', '┌────◀︎ Get Scénarios ─────────────────────');
 	$scenarios = array();
 	$hasScenario = false;
 	$scenarioListGroup = scenario::listGroup();
-	if (empty($scenarioListGroup)){
+	if (empty($scenarioListGroup)) {
 		log::add('mobile', 'debug', '| Scénarios > Aucun groupe de scénario');
 		$emptyListGroup = true;
 	}
@@ -740,11 +739,11 @@ if ($jsonrpc->getMethod() == 'getScenarios'){
 	}
 	log::add('mobile', 'debug', '| Scénarios > ' . json_encode($scenarios));
 	$scenarioTemp = array();
-	foreach ($scenarios as $key => $scenario){
+	foreach ($scenarios as $key => $scenario) {
 		$scenarioTemp[$key][] = utils::o2a($scenario);
 	}
 	log::add('mobile', 'debug', '| $scenarioTemp > ' . json_encode($scenarioTemp));
-	if ($emptyListGroup && $emptyNoGroup){
+	if ($emptyListGroup && $emptyNoGroup) {
 		$return = 'noScenarios';
 	} else {
 		$return = json_encode($scenarioTemp);

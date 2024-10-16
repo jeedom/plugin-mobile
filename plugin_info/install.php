@@ -58,8 +58,8 @@ function mobile_update()
 			$mobile->setConfiguration('nbIcones', count($menuCustomArray));
 			$mobile->setConfiguration('defaultIdMobile', $mobile->getId());
 			$mobile->setConfiguration('menuCustomArray', $menuCustomArray);
-			$mobile->save();
 		}
+		$mobile->save();
 	}
 
 	/* Delete old "menuCustom_" and "NoCut" save into config of plugin */

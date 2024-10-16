@@ -867,38 +867,39 @@ class mobile extends eqLogic
 	 */
 	public function postSave()
 	{
-		$cmd = $this->getCmd(null, 'notifSpecific');
-		if (!is_object($cmd)) {
-			$cmd = new mobileCmd();
-			$cmd->setIsVisible(0);
-			$cmd->setOrder(6);
-		}
-		$cmd->setName(__('Récupérer les informations du téléphone', __FILE__));
-		$cmd->setLogicalId('notifSpecific');
-		$cmd->setEqLogic_id($this->getId());
-		$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
-		$cmd->setType('action');
-		$cmd->setSubType('message');
-		$cmd->save();
-
-		// Commande notification
-		$cmd = $this->getCmd(null, 'notif');
-		if (!is_object($cmd)) {
-			$cmd = new mobileCmd();
-			$cmd->setIsVisible(1);
-			$cmd->setName(__('Notification', __FILE__));
-			$cmd->setdisplay('icon', '<i class="icon fa-regular fa-message"></i>');
-			$cmd->setOrder(1);
-		}
-		$cmd->setLogicalId('notif');
-		$cmd->setEqLogic_id($this->getId());
-		$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
-		$cmd->setType('action');
-		$cmd->setSubType('message');
-		$cmd->save();
-
-		// Commande notification Critique
 		if ($this->getConfiguration('appVersion', 1) == 2) {
+			// Commande récupération info du téléphone
+			$cmd = $this->getCmd(null, 'notifSpecific');
+			if (!is_object($cmd)) {
+				$cmd = new mobileCmd();
+				$cmd->setIsVisible(0);
+				$cmd->setOrder(6);
+			}
+			$cmd->setName(__('Récupérer les informations du téléphone', __FILE__));
+			$cmd->setLogicalId('notifSpecific');
+			$cmd->setEqLogic_id($this->getId());
+			$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
+			$cmd->setType('action');
+			$cmd->setSubType('message');
+			$cmd->save();
+
+			// Commande notification
+			$cmd = $this->getCmd(null, 'notif');
+			if (!is_object($cmd)) {
+				$cmd = new mobileCmd();
+				$cmd->setIsVisible(1);
+				$cmd->setName(__('Notification', __FILE__));
+				$cmd->setdisplay('icon', '<i class="icon fa-regular fa-message"></i>');
+				$cmd->setOrder(1);
+			}
+			$cmd->setLogicalId('notif');
+			$cmd->setEqLogic_id($this->getId());
+			$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
+			$cmd->setType('action');
+			$cmd->setSubType('message');
+			$cmd->save();
+
+			// Commande notification Critique
 			$cmd = $this->getCmd(null, 'notifCritical');
 			if (!is_object($cmd)) {
 				$cmd = new mobileCmd();
@@ -914,6 +915,7 @@ class mobile extends eqLogic
 			$cmd->setSubType('message');
 			$cmd->save();
 
+			// Commande suppression des nodifications
 			$cmd = $this->getCmd(null, 'removeNotifs');
 			if (!is_object($cmd)) {
 				$cmd = new mobileCmd();

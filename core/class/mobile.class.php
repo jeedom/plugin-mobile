@@ -1052,7 +1052,7 @@ class mobileCmd extends cmd
 			} else {
 				log::add('mobile', 'info', '| Fichier de notifications non trouvé : ' . $filePath);
 			}
-			log::add('mobile', 'debug', '|└────────────────────');
+			log::add('mobile', 'debug', '└────────────────────');
 		}
 
 		if ($this->getLogicalId() == 'notif' || $this->getLogicalId() == 'notifCritical' || $this->getLogicalId() == 'notifSpecific') {

@@ -411,6 +411,7 @@ class mobile extends eqLogic
 			log::add('mobile', 'debug', '||  OK  Mobile existant > ' . $mobile->getName());
 			log::add('mobile', 'debug', '|| [INFO] GEOLOCS > ' . $geolocs);
 
+			$order = count($mobile->getCmd());
 			$noExistCmd = 0;
 			$decodedGeolocs = json_decode($geolocs, true);
 			foreach ($decodedGeolocs as $index => $geoloc) {
@@ -430,6 +431,8 @@ class mobile extends eqLogic
 					$cmdgeoloc->setTemplate('dashboard', 'core::presence');
 					$cmdgeoloc->setTemplate('mobile', 'core::presence');
 					$cmdgeoloc->setIsHistorized(1);
+					$cmdgeoloc->setOrder($order);
+					$order++;
 					log::add('mobile', 'debug', '|| Ajout geofencing > ' . $geoloc['name']);
 				}
 				$cmdgeoloc->setName($geoloc['name']);
@@ -661,6 +664,7 @@ class mobile extends eqLogic
 	{
 		$mobile = eqLogic::byLogicalId($Iq, 'mobile');
 		if (is_object($mobile)) {
+			$order = count($mobile->getCmd());
 			$cmd = $mobile->getCmd(null, $logicalId);
 			if (!is_object($cmd)) {
 				if ($name == "") {
@@ -669,7 +673,7 @@ class mobile extends eqLogic
 				$cmd = new mobileCmd();
 				$cmd->setLogicalId($logicalId);
 				$cmd->setName($name);
-				$cmd->setOrder(4);
+				$cmd->setOrder($order);
 				$cmd->setEqLogic_id($mobile->getId());
 				$cmd->setType('info');
 				$cmd->setSubType($subtype);
@@ -868,20 +872,6 @@ class mobile extends eqLogic
 	public function postSave()
 	{
 		if ($this->getConfiguration('appVersion', 1) == 2) {
-			// Commande récupération info du téléphone
-			$cmd = $this->getCmd(null, 'notifSpecific');
-			if (!is_object($cmd)) {
-				$cmd = new mobileCmd();
-				$cmd->setIsVisible(0);
-				$cmd->setOrder(6);
-			}
-			$cmd->setName(__('Récupérer les informations du téléphone', __FILE__));
-			$cmd->setLogicalId('notifSpecific');
-			$cmd->setEqLogic_id($this->getId());
-			$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
-			$cmd->setType('action');
-			$cmd->setSubType('message');
-			$cmd->save();
 
 			// Commande notification
 			$cmd = $this->getCmd(null, 'notif');
@@ -890,7 +880,7 @@ class mobile extends eqLogic
 				$cmd->setIsVisible(1);
 				$cmd->setName(__('Notification', __FILE__));
 				$cmd->setdisplay('icon', '<i class="icon fa-regular fa-message"></i>');
-				$cmd->setOrder(1);
+				$cmd->setOrder(0);
 			}
 			$cmd->setLogicalId('notif');
 			$cmd->setEqLogic_id($this->getId());
@@ -906,9 +896,24 @@ class mobile extends eqLogic
 				$cmd->setIsVisible(1);
 				$cmd->setName(__('Notification Critique', __FILE__));
 				$cmd->setdisplay('icon', '<i class="icon fa-regular fa-message icon_red"></i>');
-				$cmd->setOrder(2);
+				$cmd->setOrder(1);
 			}
 			$cmd->setLogicalId('notifCritical');
+			$cmd->setEqLogic_id($this->getId());
+			$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
+			$cmd->setType('action');
+			$cmd->setSubType('message');
+			$cmd->save();
+
+			// Commande récupération infos du téléphone
+			$cmd = $this->getCmd(null, 'notifSpecific');
+			if (!is_object($cmd)) {
+				$cmd = new mobileCmd();
+				$cmd->setIsVisible(0);
+				$cmd->setOrder(2);
+			}
+			$cmd->setName(__('Récupérer les informations du téléphone', __FILE__));
+			$cmd->setLogicalId('notifSpecific');
 			$cmd->setEqLogic_id($this->getId());
 			$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
 			$cmd->setType('action');
@@ -922,7 +927,7 @@ class mobile extends eqLogic
 				$cmd->setIsVisible(0);
 				$cmd->setName(__('Supprimer les notifications', __FILE__));
 				$cmd->setdisplay('icon', '<i class="icon far fa-trash-alt icon_red"></i>');
-				$cmd->setOrder(5);
+				$cmd->setOrder(3);
 			}
 			$cmd->setLogicalId('removeNotifs');
 			$cmd->setEqLogic_id($this->getId());
@@ -930,6 +935,7 @@ class mobile extends eqLogic
 			$cmd->setType('action');
 			$cmd->setSubType('other');
 			$cmd->save();
+			
 		}
 
 		$cmdaskText = $this->getCmd(null, 'ask_Text');

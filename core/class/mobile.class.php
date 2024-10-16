@@ -669,7 +669,7 @@ class mobile extends eqLogic
 				$cmd = new mobileCmd();
 				$cmd->setLogicalId($logicalId);
 				$cmd->setName($name);
-				$cmd->setOrder(0);
+				$cmd->setOrder(4);
 				$cmd->setEqLogic_id($mobile->getId());
 				$cmd->setType('info');
 				$cmd->setSubType($subtype);
@@ -867,64 +867,67 @@ class mobile extends eqLogic
 	 */
 	public function postSave()
 	{
-		$cmdSpecificNotif = $this->getCmd(null, 'notifSpecific');
-		if (!is_object($cmdSpecificNotif)) {
-			$cmdSpecificNotif = new mobileCmd();
-			$cmdSpecificNotif->setIsVisible(1);		
-			$cmdSpecificNotif->setOrder(0);
+		$cmd = $this->getCmd(null, 'notifSpecific');
+		if (!is_object($cmd)) {
+			$cmd = new mobileCmd();
+			$cmd->setIsVisible(0);
+			$cmd->setOrder(6);
 		}
-		$cmdSpecificNotif->setName(__('Récupérer les informations du téléphone', __FILE__));
-		$cmdSpecificNotif->setLogicalId('notifSpecific');
-		$cmdSpecificNotif->setEqLogic_id($this->getId());
-		$cmdSpecificNotif->setDisplay('generic_type', 'GENERIC_ACTION');
-		$cmdSpecificNotif->setType('action');
-		$cmdSpecificNotif->setSubType('message');
-		$cmdSpecificNotif->save();
+		$cmd->setName(__('Récupérer les informations du téléphone', __FILE__));
+		$cmd->setLogicalId('notifSpecific');
+		$cmd->setEqLogic_id($this->getId());
+		$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
+		$cmd->setType('action');
+		$cmd->setSubType('message');
+		$cmd->save();
 
-
-		$cmdNotif = $this->getCmd(null, 'notif');
-		if (!is_object($cmdNotif)) {
-			$cmdNotif = new mobileCmd();
-			$cmdNotif->setIsVisible(1);
-			$cmdNotif->setName(__('Notification', __FILE__));
-			$cmdNotif->setOrder(0);
+		// Commande notification
+		$cmd = $this->getCmd(null, 'notif');
+		if (!is_object($cmd)) {
+			$cmd = new mobileCmd();
+			$cmd->setIsVisible(1);
+			$cmd->setName(__('Notification', __FILE__));
+			$cmd->setdisplay('icon', '<i class="icon fa-regular fa-message"></i>');
+			$cmd->setOrder(1);
 		}
-		$cmdNotif->setLogicalId('notif');
-		$cmdNotif->setEqLogic_id($this->getId());
-		$cmdNotif->setDisplay('generic_type', 'GENERIC_ACTION');
-		$cmdNotif->setType('action');
-		$cmdNotif->setSubType('message');
-		$cmdNotif->save();
+		$cmd->setLogicalId('notif');
+		$cmd->setEqLogic_id($this->getId());
+		$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
+		$cmd->setType('action');
+		$cmd->setSubType('message');
+		$cmd->save();
 
+		// Commande notification Critique
 		if ($this->getConfiguration('appVersion', 1) == 2) {
-			$cmdNotif = $this->getCmd(null, 'notifCritical');
-			if (!is_object($cmdNotif)) {
-				$cmdNotif = new mobileCmd();
-				$cmdNotif->setIsVisible(1);
-				$cmdNotif->setName(__('Notification Critique', __FILE__));
-				$cmdNotif->setOrder(0);
+			$cmd = $this->getCmd(null, 'notifCritical');
+			if (!is_object($cmd)) {
+				$cmd = new mobileCmd();
+				$cmd->setIsVisible(1);
+				$cmd->setName(__('Notification Critique', __FILE__));
+				$cmd->setdisplay('icon', '<i class="icon fa-regular fa-message icon_red"></i>');
+				$cmd->setOrder(2);
 			}
-			$cmdNotif->setLogicalId('notifCritical');
-			$cmdNotif->setEqLogic_id($this->getId());
-			$cmdNotif->setDisplay('generic_type', 'GENERIC_ACTION');
-			$cmdNotif->setType('action');
-			$cmdNotif->setSubType('message');
-			$cmdNotif->save();
+			$cmd->setLogicalId('notifCritical');
+			$cmd->setEqLogic_id($this->getId());
+			$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
+			$cmd->setType('action');
+			$cmd->setSubType('message');
+			$cmd->save();
 
-			$cmdRemoveNotifs = $this->getCmd(null, 'removeNotifs');
-			if (!is_object($cmdRemoveNotifs)) {
-				$cmdRemoveNotifs = new mobileCmd();
-				$cmdRemoveNotifs->setIsVisible(1);
-				$cmdRemoveNotifs->setName(__('Supprimer les notifications', __FILE__));
-				$cmdRemoveNotifs->setOrder(0);
+			$cmd = $this->getCmd(null, 'removeNotifs');
+			if (!is_object($cmd)) {
+				$cmd = new mobileCmd();
+				$cmd->setIsVisible(0);
+				$cmd->setName(__('Supprimer les notifications', __FILE__));
+				$cmd->setdisplay('icon', '<i class="icon far fa-trash-alt icon_red"></i>');
+				$cmd->setOrder(5);
 			}
-			$cmdRemoveNotifs->setLogicalId('removeNotifs');
-			$cmdRemoveNotifs->setEqLogic_id($this->getId());
-			$cmdRemoveNotifs->setDisplay('generic_type', 'GENERIC_ACTION');
-			$cmdRemoveNotifs->setType('action');
-			$cmdRemoveNotifs->setSubType('other');
-			$cmdRemoveNotifs->save();
-
+			$cmd->setLogicalId('removeNotifs');
+			$cmd->setEqLogic_id($this->getId());
+			$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
+			$cmd->setType('action');
+			$cmd->setSubType('other');
+			$cmd->save();
 		}
 
 		$cmdaskText = $this->getCmd(null, 'ask_Text');
@@ -1031,25 +1034,26 @@ class mobileCmd extends cmd
 		$eqLogic = $this->getEqLogic();
 
 
-		if($this->getLogicalId() == 'removeNotifs') {
+		if ($this->getLogicalId() == 'removeNotifs') {
 			$Iq = $eqLogic->getLogicalId();
 			$filePath = dirname(__FILE__) . '/../data/notifications/' . $Iq . '.json';
 			if (file_exists($filePath)) {
-				file_put_contents($filePath, ''); 
-				log::add('mobile', 'info', '| Suppression des notifications effectuée: ');
+				file_put_contents($filePath, '');
+				log::add('mobile', 'info', '| Suppression des notifications effectuées');
 			} else {
-				log::add('mobile', 'info', '| Fichier de notifications non trouvé: ' . $filePath);
+				log::add('mobile', 'info', '| Fichier de notifications non trouvé : ' . $filePath);
 			}
+			log::add('mobile', 'debug', '|└────────────────────');
 		}
 
 		if ($this->getLogicalId() == 'notif' || $this->getLogicalId() == 'notifCritical' || $this->getLogicalId() == 'notifSpecific') {
 			$critical = false;
 			$specific = false;
-			$defaultName = empty(config::byKey('name')) ? config::byKey('product_name') : config::byKey('name');			
+			$defaultName = empty(config::byKey('name')) ? config::byKey('product_name') : config::byKey('name');
 			if ($this->getLogicalId() == 'notifCritical') {
 				$critical = true;
 			}
-			if($this->getLogicalId() == 'notifSpecific') {
+			if ($this->getLogicalId() == 'notifSpecific') {
 				$specific = true;
 			}
 			if (trim($_options['title']) == '') $_options['title'] = $defaultName;

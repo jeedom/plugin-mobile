@@ -870,10 +870,10 @@ class mobile extends eqLogic
 		$cmdSpecificNotif = $this->getCmd(null, 'notifSpecific');
 		if (!is_object($cmdSpecificNotif)) {
 			$cmdSpecificNotif = new mobileCmd();
-			$cmdSpecificNotif->setIsVisible(1);
-			$cmdSpecificNotif->setName(__('Notification Specifique', __FILE__));
+			$cmdSpecificNotif->setIsVisible(1);		
 			$cmdSpecificNotif->setOrder(0);
 		}
+		$cmdSpecificNotif->setName(__('Récupérer les informations du téléphone', __FILE__));
 		$cmdSpecificNotif->setLogicalId('notifSpecific');
 		$cmdSpecificNotif->setEqLogic_id($this->getId());
 		$cmdSpecificNotif->setDisplay('generic_type', 'GENERIC_ACTION');

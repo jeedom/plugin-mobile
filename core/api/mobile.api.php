@@ -651,6 +651,9 @@ if ($jsonrpc->getMethod() == 'getNotificationsFromFile') {
 	$notifications = 'noNotifications';
 	if (file_exists($filePath)) {
 		$notifications = file_get_contents($filePath);
+		if(empty($notifications)) {
+			$notifications = 'noNotifications';
+		}
 	}
 	log::add('mobile', 'debug', '| [INFO] Notifications > ' . $notifications);
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');

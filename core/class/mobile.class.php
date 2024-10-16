@@ -1039,7 +1039,7 @@ class mobileCmd extends cmd
 			$filePath = dirname(__FILE__) . '/../data/notifications/' . $Iq . '.json';
 			if (file_exists($filePath)) {
 				file_put_contents($filePath, '');
-				log::add('mobile', 'info', '| Suppression des notifications effectuées');
+				log::add('mobile', 'info', '| Suppression des notifications effectuée');
 			} else {
 				log::add('mobile', 'info', '| Fichier de notifications non trouvé : ' . $filePath);
 			}

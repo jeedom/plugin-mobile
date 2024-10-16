@@ -598,6 +598,19 @@ if ($jsonrpc->getMethod() == "qrcodemethod") {
 	$jsonrpc->makeSuccess();
 }
 
+
+/**
+ * save event qrcode scan from app
+ * 
+ * @return makeSuccess
+ */
+if ($jsonrpc->getMethod() == "methodeForSpecificChannel") {
+	log::add('mobile', 'debug', '┌─────▶︎ methodeForSpecificChannel ──────────────────────');
+	log::add('mobile', 'debug', '┌─────▶︎ params ── ' . json_encode($params));
+	$jsonrpc->makeSuccess();
+}
+
+
 /**
  * save event nfc scan from app
  * 

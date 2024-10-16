@@ -291,7 +291,7 @@ class mobile extends eqLogic
 				];
 
 
-				if (isset($Iq)) {
+				if (isset($Iq) && !$specific) {
 					// SAVE NOTIFS IN JSON
 					$pathNotificationData = '/../data/notifications';
 					if (!is_dir(dirname(__FILE__) . $pathNotificationData)) {

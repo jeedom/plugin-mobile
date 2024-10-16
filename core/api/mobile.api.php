@@ -30,7 +30,11 @@ log::add('mobile', 'debug', '┌──────────▶︎ :fg-warning
 log::add('mobile', 'debug', '| Method > ' . $jsonrpc->getMethod());
 log::add('mobile', 'debug', '| Paramètres passés > ' . json_encode($params));
 if ($params['Iq']) {
-	log::add('mobile', 'debug', '| Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));
+	if(mobile::whoIsIq($params['Iq']) == 'mobile non detecte'){
+		createMobile($params, 3);
+	}else{
+		log::add('mobile', 'debug', '| Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));
+	}
 } else {
 	log::add('mobile', 'debug', '| [WARNING] Paramètre Iq inexistant !');
 }
@@ -131,6 +135,7 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 	if (!is_object($mobile)) {
 		$mobile = createMobile($params, 3);
 	}
+	$mobile->setConfiguration('type_mobile', $notification['platform']);
 	if (isset($notification['token'])) {
 		if ($notification['token'] != '') {
 			log::add('mobile', 'debug', '| Token à ajouter > ' . $notification['token']);
@@ -199,6 +204,7 @@ if ($jsonrpc->getMethod() == 'setCustomMenu') {
  * 
  * @return array makeSuccess
  */
+
 if ($jsonrpc->getMethod() == 'getJson') {
 	log::add('mobile', 'debug', '┌─────◀︎ AppV2 getJson ────────────────────');
 	$registerDevice = $_USER_GLOBAL->getOptions('registerDevice', array());
@@ -319,16 +325,16 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	log::add('mobile', 'debug', '| Recherche du mobile via sont Iq > ' . $params['Iq']);
 	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	$return[$idBox]['configs'] = array();
+	$return[$idBox]['miscellanousParams'] = array();
 	if (is_object($mobile)) {
 		log::add('mobile', 'debug', '|  OK  Mobile trouvé > ' . $mobile->getName());
 		$return[$idBox]['configs']['menu'] = $mobile->configMenuCustom();
-		/* Hide some menus by configuration */
-		$return[$idBox]['configs']['miscellanousParams']['hideMenuCustom'] = intval($mobile->getConfiguration('hideMenuCustom', 0));
-		$return[$idBox]['configs']['miscellanousParams']['hideMenuGeoloc'] = intval($mobile->getConfiguration('hideMenuGeoloc', 0));
+		$return[$idBox]['miscellanousParams']['hideMenuCustom'] = intval($mobile->getConfiguration('hideMenuCustom', 0));
+		$return[$idBox]['miscellanousParams']['hideMenuGeoloc'] = intval($mobile->getConfiguration('hideMenuGeoloc', 0));
 	} else {
 		$return[$idBox]['configs']['menu'] = mobile::getMenuDefaultTab();
-		$return[$idBox]['configs']['miscellanousParams']['hideMenuCustom'] = 0;
-		$return[$idBox]['configs']['miscellanousParams']['hideMenuGeoloc'] = 0;
+		$return[$idBox]['miscellanousParams']['hideMenuCustom'] = 0;
+		$return[$idBox]['miscellanousParams']['hideMenuGeoloc'] = 0;
 	}
 	log::add('mobile', 'debug', '| [INFO] CustomENVOICONFIGSAPI GETJSON > ' . json_encode($return[$idBox]['configs']));
 	log::add('mobile', 'debug', '| [INFO] Retour vers App > ' . json_encode($return));
@@ -592,6 +598,19 @@ if ($jsonrpc->getMethod() == "qrcodemethod") {
 	$jsonrpc->makeSuccess();
 }
 
+
+/**
+ * save event qrcode scan from app
+ * 
+ * @return makeSuccess
+ */
+if ($jsonrpc->getMethod() == "methodeForSpecificChannel") {
+	log::add('mobile', 'debug', '┌─────▶︎ methodeForSpecificChannel ──────────────────────');
+	log::add('mobile', 'debug', '┌─────▶︎ params ── ' . json_encode($params));
+	$jsonrpc->makeSuccess();
+}
+
+
 /**
  * save event nfc scan from app
  * 
@@ -632,6 +651,9 @@ if ($jsonrpc->getMethod() == 'getNotificationsFromFile') {
 	$notifications = 'noNotifications';
 	if (file_exists($filePath)) {
 		$notifications = file_get_contents($filePath);
+		if(empty($notifications)) {
+			$notifications = 'noNotifications';
+		}
 	}
 	log::add('mobile', 'debug', '| [INFO] Notifications > ' . $notifications);
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');

@@ -198,7 +198,6 @@ foreach ($eqLogics as $eqLogic) {
 							</div>
 
 							<legend><i class="fas fa-cogs"></i> {{Paramètres spécifiques}}</legend>
-							<!-- to be uncommented when the app is ready for this new feature
 							<div class="form-group">
 								<label class="col-sm-4 control-label">{{Masquer le menu géolocalisation}} <sup><i class="fa fa-question-circle tooltips" title="Si activé, l'application masquera le menu qui permet de paramètrer le geofencing."></i></sup></label>
 								<div class="col-sm-6">
@@ -211,7 +210,6 @@ foreach ($eqLogics as $eqLogic) {
 									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="hideMenuCustom">
 								</div>
 							</div>
-							-->
 						</div>
 						<div class="col-lg-6">
 							<legend><i class="fas fa-mobile-alt"></i> {{Informations}}</legend>

@@ -879,12 +879,12 @@ class mobile extends eqLogic
 				$cmd = new mobileCmd();
 				$cmd->setIsVisible(1);
 				$cmd->setName(__('Notification', __FILE__));
-				$cmd->setdisplay('icon', '<i class="icon fa-regular fa-message"></i>');
+				$cmd->setDisplay('icon', '<i class="icon fas fa-comment-alt"></i>');
 				$cmd->setOrder(0);
 			}
 			$cmd->setLogicalId('notif');
 			$cmd->setEqLogic_id($this->getId());
-			$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
+			$cmd->setGeneric_type('GENERIC_ACTION');
 			$cmd->setType('action');
 			$cmd->setSubType('message');
 			$cmd->save();
@@ -895,12 +895,12 @@ class mobile extends eqLogic
 				$cmd = new mobileCmd();
 				$cmd->setIsVisible(1);
 				$cmd->setName(__('Notification Critique', __FILE__));
-				$cmd->setdisplay('icon', '<i class="icon fa-regular fa-message icon_red"></i>');
+				$cmd->setDisplay('icon', '<i class="icon fas fa-comment-alt"></i>');
 				$cmd->setOrder(1);
 			}
 			$cmd->setLogicalId('notifCritical');
 			$cmd->setEqLogic_id($this->getId());
-			$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
+			$cmd->setGeneric_type('GENERIC_ACTION');
 			$cmd->setType('action');
 			$cmd->setSubType('message');
 			$cmd->save();
@@ -910,12 +910,13 @@ class mobile extends eqLogic
 			if (!is_object($cmd)) {
 				$cmd = new mobileCmd();
 				$cmd->setIsVisible(0);
+				$cmd->setName(__('Récupérer les informations du téléphone', __FILE__));
+				$cmd->setDisplay('icon', '<i class="icon fas fa-comment-alt"></i>');
 				$cmd->setOrder(2);
 			}
-			$cmd->setName(__('Récupérer les informations du téléphone', __FILE__));
 			$cmd->setLogicalId('notifSpecific');
 			$cmd->setEqLogic_id($this->getId());
-			$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
+			$cmd->setGeneric_type('GENERIC_ACTION');
 			$cmd->setType('action');
 			$cmd->setSubType('message');
 			$cmd->save();
@@ -926,12 +927,12 @@ class mobile extends eqLogic
 				$cmd = new mobileCmd();
 				$cmd->setIsVisible(0);
 				$cmd->setName(__('Supprimer les notifications', __FILE__));
-				$cmd->setdisplay('icon', '<i class="icon far fa-trash-alt icon_red"></i>');
+				$cmd->setDisplay('icon', '<i class="icon fas fa-trash icon_red"></i>');
 				$cmd->setOrder(3);
 			}
 			$cmd->setLogicalId('removeNotifs');
 			$cmd->setEqLogic_id($this->getId());
-			$cmd->setDisplay('generic_type', 'GENERIC_ACTION');
+			$cmd->setGeneric_type('GENERIC_ACTION');
 			$cmd->setType('action');
 			$cmd->setSubType('other');
 			$cmd->save();

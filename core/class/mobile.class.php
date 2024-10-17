@@ -911,14 +911,14 @@ class mobile extends eqLogic
 				$cmd = new mobileCmd();
 				$cmd->setIsVisible(0);
 				$cmd->setName(__('Récupérer les informations du téléphone', __FILE__));
-				$cmd->setDisplay('icon', '<i class="icon fas fa-comment-alt"></i>');
+				$cmd->setDisplay('icon', '<i class="icon jeedomapp-reload"></i>');
 				$cmd->setOrder(2);
 			}
 			$cmd->setLogicalId('notifSpecific');
 			$cmd->setEqLogic_id($this->getId());
 			$cmd->setGeneric_type('GENERIC_ACTION');
 			$cmd->setType('action');
-			$cmd->setSubType('message');
+			$cmd->setSubType('other');
 			$cmd->save();
 
 			// Commande suppression des nodifications

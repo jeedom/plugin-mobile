@@ -887,7 +887,7 @@ class mobile extends eqLogic
 			$cmd->setGeneric_type('GENERIC_ACTION');
 			$cmd->setType('action');
 			$cmd->setSubType('message');
-			$cmd->save();
+			if ($cmd->getChanged() === true) $cmd->save();
 
 			// Commande notification Critique
 			$cmd = $this->getCmd(null, 'notifCritical');
@@ -903,7 +903,7 @@ class mobile extends eqLogic
 			$cmd->setGeneric_type('GENERIC_ACTION');
 			$cmd->setType('action');
 			$cmd->setSubType('message');
-			$cmd->save();
+			if ($cmd->getChanged() === true) $cmd->save();
 
 			// Commande récupération infos du téléphone
 			$cmd = $this->getCmd(null, 'notifSpecific');
@@ -919,7 +919,7 @@ class mobile extends eqLogic
 			$cmd->setGeneric_type('GENERIC_ACTION');
 			$cmd->setType('action');
 			$cmd->setSubType('other');
-			$cmd->save();
+			if ($cmd->getChanged() === true) $cmd->save();
 
 			// Commande suppression des nodifications
 			$cmd = $this->getCmd(null, 'removeNotifs');
@@ -935,7 +935,7 @@ class mobile extends eqLogic
 			$cmd->setGeneric_type('GENERIC_ACTION');
 			$cmd->setType('action');
 			$cmd->setSubType('other');
-			$cmd->save();
+			if ($cmd->getChanged() === true) $cmd->save();
 			
 		}
 

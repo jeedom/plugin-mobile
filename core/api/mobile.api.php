@@ -265,6 +265,7 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	if (is_object($userConnected)) {
 		$return[$idBox]['informations']['userConnected'] = $userConnected->getLogin();
 	}
+	// A SUPPRIMER SUR PROCHAIN VERSION APP
 	$arrayObjectMessages = message::all();
 	$arrayMessages = [];
 	foreach ($arrayObjectMessages as $message) {
@@ -272,6 +273,8 @@ if ($jsonrpc->getMethod() == 'getJson') {
 		array_push($arrayMessages, $messageArray);
 	}
 	$return[$idBox]['informations']['messages'] = $arrayMessages;
+	// FIN A SUPPRIMER SUR PROCHAIN VERSION APP
+
 	$arrayPlugins = [];
 	$changeLogs = [];
 	$healthPlugins = [];

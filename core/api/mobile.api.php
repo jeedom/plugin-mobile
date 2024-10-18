@@ -260,7 +260,7 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	$return[$idBox]['informations']['userRights'] = $_USER_GLOBAL->getProfils();
 	$return[$idBox]['informations']['hardware'] = jeedom::getHardwareName();
 	$return[$idBox]['informations']['language'] = config::byKey('language');
-	$return[$idBox]['informations']['nbMessage'] = message::nbMessage();
+	//$return[$idBox]['informations']['nbMessage'] = message::nbMessage();
 	$userConnected = user::byHash($_USER_GLOBAL->getHash());
 	if (is_object($userConnected)) {
 		$return[$idBox]['informations']['userConnected'] = $userConnected->getLogin();

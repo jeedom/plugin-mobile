@@ -31,7 +31,8 @@ log::add('mobile', 'debug', '| Method > ' . $jsonrpc->getMethod());
 log::add('mobile', 'debug', '| Paramètres passés > ' . json_encode($params));
 if ($params['Iq']) {
 	if(mobile::whoIsIq($params['Iq']) == 'mobile non detecte'){
-		createMobile($params, 3);
+		//createMobile($params, 3);
+		log::add('mobile', 'debug', '| [WARNING] mobile non detecté !');
 	}else{
 		log::add('mobile', 'debug', '| Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));
 	}

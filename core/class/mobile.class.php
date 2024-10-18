@@ -714,8 +714,10 @@ class mobile extends eqLogic
 			log::add('mobile', 'debug', '|| [INFO] Envoi menu de ' . $this->getHumanName());
 			$menuCustomArray = $this->getConfiguration('menuCustomArray');
 		}
+		if(empty($menuCustomArray)){
+			$menuCustomArray = mobile::getMenuDefaultV2();
+		}
 		$nbIcones = count($menuCustomArray);
-
 		// ATTRIBUTION MOBILE PAR DEFAUT A TOUS LES MOBILES
 		$eqLogics = eqLogic::byType('mobile');
 		foreach ($eqLogics as $mobile) {

@@ -129,45 +129,6 @@ class mobile extends eqLogic
 			} else if ($os == 'microsoft') {
 			}
 		} else {
-			if ($os == 'android' && $version == 1) {
-				$android = [
-					'notification' => [
-						'title' => $titre,
-						'body' => $message,
-						'channel_id' => 'default',
-						'color' => '#0000FF'
-					]
-				];
-
-				$data = [
-					'title' => $titre,
-					'text' => $message,
-					'idNotif' => strval($idNotif),
-					'channelId' => 'default',
-					'date' => $dateNotif
-
-				];
-
-				if ($photo != null) {
-					$notification = [
-						'title' => $titre,
-						'body' => $message,
-						'image' => $photo
-					];
-				} else {
-					$notification = [
-						'title' => $titre,
-						'body' => $message
-					];
-				}
-
-				$publish = [
-					'token' => $token,
-					'notification' => $notification,
-					'android' => $android,
-					'data' => $data
-				];
-			}
 			if ($version == 2) {
 
 				if ($addAsk != '') {
@@ -338,63 +299,67 @@ class mobile extends eqLogic
 	public static function notification($arn, $os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version = 1, $optionsNotif = [], $critical = false, $Iq = null, $specific = false)
 	{
 		log::add('mobile', 'debug', '|┌──:fg-success: Notification en cours ! :/fg:──');
-		$publish = mobile::jsonPublish($os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version, $optionsNotif, $critical, $Iq, $specific);
-		if ($token != null) {
-			if ($token == 'notifsBGDisabled') {
-				log::add('mobile', 'debug', '|| [ERROR] NOTIFICATION NON ENVOYEE : LE SERVICE NOTIF EST DESACTIVE SUR LE TELEPHONE');
-				message::add(__CLASS__, 'Échec de l\'envoie de notification : le service est désactivé dans les paramètres du téléphone', 'notifsbgSend', 'alertNotifsSend');
-				return;
-			}
-			if ($token == 'desactivate') {
-				log::add('mobile', 'debug', '|| [ERROR] NOTIFICATION NON ENVOYEE : LES NOTIFICATIONS SONT DESACTIVEES DANS L\'APP : ');
-				message::add(__CLASS__, 'Échec de l\'envoie de notification : le service est désactivé dans les paramètres de l\'application', 'notifsbgSend', 'alertNotifsSend');
-				return;
-			}
-			$url = config::byKey('service::cloud::url', 'core', 'https://cloud.jeedom.com') . '/service/fcm';
-			$options = [
-				'contentAvailable' => true,
-				'mutableContent' => true,
-				'priority' => 'high',
-				'collapseKey' => strval($publish['data']['idNotif'])
-			];
+		if ($version == 2) {
+			$publish = mobile::jsonPublish($os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version, $optionsNotif, $critical, $Iq, $specific);
+			if ($token != null) {
+				if ($token == 'notifsBGDisabled') {
+					log::add('mobile', 'debug', '|| [ERROR] NOTIFICATION NON ENVOYEE : LE SERVICE NOTIF EST DESACTIVE SUR LE TELEPHONE');
+					message::add(__CLASS__, 'Échec de l\'envoie de notification : le service est désactivé dans les paramètres du téléphone', 'notifsbgSend', 'alertNotifsSend');
+					return;
+				}
+				if ($token == 'desactivate') {
+					log::add('mobile', 'debug', '|| [ERROR] NOTIFICATION NON ENVOYEE : LES NOTIFICATIONS SONT DESACTIVEES DANS L\'APP : ');
+					message::add(__CLASS__, 'Échec de l\'envoie de notification : le service est désactivé dans les paramètres de l\'application', 'notifsbgSend', 'alertNotifsSend');
+					return;
+				}
+				$url = config::byKey('service::cloud::url', 'core', 'https://cloud.jeedom.com') . '/service/fcm';
+				$options = [
+					'contentAvailable' => true,
+					'mutableContent' => true,
+					'priority' => 'high',
+					'collapseKey' => strval($publish['data']['idNotif'])
+				];
 
-			$post = ['message' => $publish, 'options' => $options];
-			log::add('mobile', 'debug', '|| [INFO] JSON envoyé en mode FCM > ' . json_encode($post));
-		} elseif ($token == null && $version == 2) {
-			log::add('mobile', 'debug', '|| [ERROR] NOTIFICATION NON ENVOYEE : PAS DE TOKEN ENREGISTRE SUR LE TELEPHONE :  ');
-			//message::removeAll(__CLASS__, 'noValidToken');
-			message::add(__CLASS__, '| NOTIFICATION NON ENVOYÉE : PAS DE TOKEN ENREGISTRE SUR LE TÉLÉPHONE :', 'noValidTok', 'noValidToken');
-			return;
-		} else {
-			log::add('mobile', 'debug', '|| [INFO] JSON envoyé : APN' . $publish);
-			$post = [
-				'arn' => $arn,
-				'text' => $publish,
-			];
-			$url = config::byKey('service::cloud::url', 'core', 'https://cloud.jeedom.com') . '/service/notif';
-		}
-
-		$request_http = new com_http($url);
-		$request_http->setHeader(array(
-			'Content-Type: application/json',
-			'Autorization: ' . sha512(strtolower(config::byKey('market::username')) . ':' . config::byKey('market::password'))
-		));
-		//$request_http->setLogError(true);
-		$request_http->setPost(json_encode($post));
-		$result = json_decode($request_http->exec(30, 3), true);
-		if (!isset($result['state']) || $result['state'] != 'ok') {
-			log::add('mobile', 'info', '|| [WARNING] Echec Première Tentative d\'envoi de la notification');
-			log::add('mobile', 'info', '|| Nouvelle tentative ....');
-			sleep(rand(1, 10));
-			$result = json_decode($request_http->exec(30, 3), true);
-		}
-		if (!isset($result['state']) || $result['state'] != 'ok') {
-			if (isset($result['error']) && strpos($result['error'], 'Quotas exceeded') !== false) {
-				log::add('mobile', 'error', __("Les quotas pour fcm sont dépassés. Le maximum autorisé est de 5 requêtes par minute.", __FILE__));
-				log::add('mobile', 'debug', __('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));
+				$post = ['message' => $publish, 'options' => $options];
+				log::add('mobile', 'debug', '|| [INFO] JSON envoyé en mode FCM > ' . json_encode($post));
+			} elseif ($token == null && $version == 2) {
+				log::add('mobile', 'debug', '|| [ERROR] NOTIFICATION NON ENVOYEE : PAS DE TOKEN ENREGISTRE SUR LE TELEPHONE :  ');
+				//message::removeAll(__CLASS__, 'noValidToken');
+				message::add(__CLASS__, '| NOTIFICATION NON ENVOYÉE : PAS DE TOKEN ENREGISTRE SUR LE TÉLÉPHONE :', 'noValidTok', 'noValidToken');
+				return;
 			} else {
-				throw new Exception(__('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));
+				log::add('mobile', 'debug', '|| [INFO] JSON envoyé : APN' . $publish);
+				$post = [
+					'arn' => $arn,
+					'text' => $publish,
+				];
+				$url = config::byKey('service::cloud::url', 'core', 'https://cloud.jeedom.com') . '/service/notif';
 			}
+
+			$request_http = new com_http($url);
+			$request_http->setHeader(array(
+				'Content-Type: application/json',
+				'Autorization: ' . sha512(strtolower(config::byKey('market::username')) . ':' . config::byKey('market::password'))
+			));
+			//$request_http->setLogError(true);
+			$request_http->setPost(json_encode($post));
+			$result = json_decode($request_http->exec(30, 3), true);
+			if (!isset($result['state']) || $result['state'] != 'ok') {
+				log::add('mobile', 'info', '|| [WARNING] Echec Première Tentative d\'envoi de la notification');
+				log::add('mobile', 'info', '|| Nouvelle tentative ....');
+				sleep(rand(1, 10));
+				$result = json_decode($request_http->exec(30, 3), true);
+			}
+			if (!isset($result['state']) || $result['state'] != 'ok') {
+				if (isset($result['error']) && strpos($result['error'], 'Quotas exceeded') !== false) {
+					log::add('mobile', 'error', __("Les quotas pour fcm sont dépassés. Le maximum autorisé est de 5 requêtes par minute.", __FILE__));
+					log::add('mobile', 'debug', __('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));
+				} else {
+					throw new Exception(__('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));
+				}
+			}
+		} else {
+			log::add('mobile', 'error', __("Échec de l'envoie de notification : la version 1 de l'app n'est plus prise en charge !", __FILE__));
 		}
 		log::add('mobile', 'debug', '|└────────────────────');
 	}

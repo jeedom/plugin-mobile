@@ -108,6 +108,7 @@ class mobile extends eqLogic
 		$newDate = date("Y-m-d");
 		$horaireFormat = date("H:i");
 		$badge = 0;
+		$defaultName = empty(config::byKey('name')) ? config::byKey('product_name') : config::byKey('name'); //PR
 		if ($timeout != 'nok') {
 			$timeout = date('Y-m-d H:i:s', strtotime("$dateNotif + $timeout SECONDS"));
 		}
@@ -135,7 +136,7 @@ class mobile extends eqLogic
 					$askParams = [
 						'choices' => $answer,
 						'idVariable' => $optionsNotif['askVariable'],
-						'boxName' => config::byKey('name'),
+						'boxName' => $defaultName,
 						'hwKey' => jeedom::getHardwareKey(),
 						'timeout' => (strtotime($timeout) - time()) * 1000,
 						'isBack' => false
@@ -165,7 +166,7 @@ class mobile extends eqLogic
 					'channelId' => $channelId,
 					'date' => $dateNotif,
 					'critical' => $criticalString,
-					'boxName' => config::byKey('name'),
+					'boxName' => $defaultName,
 					'boxApiKey' => jeedom::getHardwareKey(),
 					"askParams" => $askParams,
 					'textToDisplay' => 'none',

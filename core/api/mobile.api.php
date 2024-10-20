@@ -31,7 +31,8 @@ log::add('mobile', 'debug', '| Method > ' . $jsonrpc->getMethod());
 log::add('mobile', 'debug', '| Paramètres passés > ' . json_encode($params));
 if ($params['Iq']) {
 	if(mobile::whoIsIq($params['Iq']) == 'mobile non detecte'){
-		createMobile($params, 3);
+		//createMobile($params, 3);
+		log::add('mobile', 'debug', '| [WARNING] mobile non detecté !');
 	}else{
 		log::add('mobile', 'debug', '| Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));
 	}
@@ -199,6 +200,57 @@ if ($jsonrpc->getMethod() == 'setCustomMenu') {
 	$jsonrpc->makeSuccess('ok');
 }
 
+
+/**
+ * getPlugins
+ * 
+ * @return array makeSuccess
+ */
+if($jsonrpc->getMethod() == 'getPlugins') {
+	log::add('mobile', 'debug', '┌─────◀︎ AppV2 getPlugins Infos ────────────────────');
+	$idBox = jeedom::getHardwareKey();
+	$return = [];
+	$arrayPlugins = [];
+	$changeLogs = [];
+	$deamons_infos = [];
+	$objectsPanel = [];
+	$pluginPanelMobile = [];
+	foreach ((plugin::listPlugin(true)) as $plugin) {
+		$obArray = utils::o2a($plugin);
+		$obArray['displayMobilePanel'] = config::byKey('displayMobilePanel', $plugin->getId(), 0);
+		$objectId = $obArray['id'];
+		$objectName = $obArray['name'];
+		if ($plugin->getMobile() != '' && $obArray['displayMobilePanel'] != 0) {
+			$objectsPanel[$objectId] =  $objectName;
+			$pluginPanelMobile[$objectId] = $plugin->getMobile();
+		}
+		$update = $plugin->getUpdate();
+		if (is_object($update)) {
+			$pluginUpdateArray = utils::o2a($update);
+			$arrayDataPlugins = utils::o2a($plugin);
+			if ($plugin->getHasOwnDeamon() == 1) {
+				$deamons_infos[$plugin->getId()] = $plugin->deamon_info();
+			} else {
+				$deamons_infos[$plugin->getId()] = array('launchable_message' => 'nodemon', 'launchable' => 'nodemon', 'state' => 'nodemon', 'log' => 'nodemon', 'auto' => 0);
+			}
+			$changeLogs[$arrayDataPlugins['id']]['changelog'] = $arrayDataPlugins['changelog'];
+			$changeLogs[$arrayDataPlugins['id']]['changelog_beta'] = $arrayDataPlugins['changelog_beta'];
+			array_push($arrayPlugins, $pluginUpdateArray);
+		}
+	}
+	config::save('pluginPanelMobile', $pluginPanelMobile, 'mobile');
+	$return[$idBox]['informations']['objects']['panel'] = $objectsPanel;
+	$return[$idBox]['informations']['coreBranch'] = config::byKey('core::branch');
+	$return[$idBox]['informations']['coreData'] = $coreData;
+	$return[$idBox]['informations']['plugins'] = $arrayPlugins;
+	$return[$idBox]['informations']['changelog'] = $changeLogs;
+	$return[$idBox]['informations']['infosDemon'] = $deamons_infos;
+	log::add('mobile', 'debug', '| [INFO] Retour vers App > ' . json_encode($return));
+	log::add('mobile', 'debug', '└───────────────────────────────────────────');
+	$jsonrpc->makeSuccess($return);
+
+}
+
 /**
  * getJson
  * 
@@ -259,11 +311,12 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	$return[$idBox]['informations']['userRights'] = $_USER_GLOBAL->getProfils();
 	$return[$idBox]['informations']['hardware'] = jeedom::getHardwareName();
 	$return[$idBox]['informations']['language'] = config::byKey('language');
-	$return[$idBox]['informations']['nbMessage'] = message::nbMessage();
+	//$return[$idBox]['informations']['nbMessage'] = message::nbMessage();
 	$userConnected = user::byHash($_USER_GLOBAL->getHash());
 	if (is_object($userConnected)) {
 		$return[$idBox]['informations']['userConnected'] = $userConnected->getLogin();
 	}
+	// A SUPPRIMER SUR PROCHAINE VERSION APP METHOD API GetMessages Core
 	$arrayObjectMessages = message::all();
 	$arrayMessages = [];
 	foreach ($arrayObjectMessages as $message) {
@@ -271,9 +324,12 @@ if ($jsonrpc->getMethod() == 'getJson') {
 		array_push($arrayMessages, $messageArray);
 	}
 	$return[$idBox]['informations']['messages'] = $arrayMessages;
+	// FIN A SUPPRIMER SUR PROCHAINE VERSION APP
+
+
+	// A SUPPRIMER SUR PROCHAINE VERSION APP METHOD API GetPlugins
 	$arrayPlugins = [];
 	$changeLogs = [];
-	$healthPlugins = [];
 	$deamons_infos = [];
 	$objectsPanel = [];
 	$pluginPanelMobile = [];
@@ -302,6 +358,9 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	}
 	config::save('pluginPanelMobile', $pluginPanelMobile, 'mobile');
 	$return[$idBox]['informations']['objects']['panel'] = $objectsPanel;
+	  // FIN A SUPPRIMER SUR PROCHAIN VERSION APP
+
+
 	$categories = [];
 	foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 		$categories[$value['icon']] =  $value['name'];
@@ -311,11 +370,13 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	$coreData = [];
 	$resultCore = utils::o2a(update::byLogicalId('jeedom'));
 	array_push($coreData, $resultCore);
+	// A SUPPRIMER SUR PROCHAINE VERSION APP METHOD API GetPlugins
 	$return[$idBox]['informations']['coreBranch'] = config::byKey('core::branch');
 	$return[$idBox]['informations']['coreData'] = $coreData;
 	$return[$idBox]['informations']['plugins'] = $arrayPlugins;
 	$return[$idBox]['informations']['changelog'] = $changeLogs;
 	$return[$idBox]['informations']['infosDemon'] = $deamons_infos;
+	// FIN A SUPPRIMER SUR PROCHAINE VERSION APP
 	$return[$idBox]['informations']['nbUpdate'] = update::nbNeedUpdate();
 	$return[$idBox]['informations']['uname'] = system::getDistrib() . ' ' . method_exists('system', 'getOsVersion') ? system::getOsVersion() : 'UnknownVersion';
 	$return[$idBox]['jeedom_version'] = jeedom::version();

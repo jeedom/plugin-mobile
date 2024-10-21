@@ -30,10 +30,10 @@ log::add('mobile', 'debug', '┌──────────▶︎ :fg-warning
 log::add('mobile', 'debug', '| Method > ' . $jsonrpc->getMethod());
 log::add('mobile', 'debug', '| Paramètres passés > ' . json_encode($params));
 if ($params['Iq']) {
-	if(mobile::whoIsIq($params['Iq']) == 'mobile non detecte'){
+	if (mobile::whoIsIq($params['Iq']) == 'mobile non detecte') {
 		//createMobile($params, 3);
 		log::add('mobile', 'debug', '| [WARNING] mobile non detecté !');
-	}else{
+	} else {
 		log::add('mobile', 'debug', '| Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));
 	}
 } else {
@@ -206,7 +206,7 @@ if ($jsonrpc->getMethod() == 'setCustomMenu') {
  * 
  * @return array makeSuccess
  */
-if($jsonrpc->getMethod() == 'getPlugins') {
+if ($jsonrpc->getMethod() == 'getPlugins') {
 	log::add('mobile', 'debug', '┌─────◀︎ AppV2 getPlugins Infos ────────────────────');
 	$idBox = jeedom::getHardwareKey();
 	$return = [];
@@ -248,7 +248,6 @@ if($jsonrpc->getMethod() == 'getPlugins') {
 	log::add('mobile', 'debug', '| [INFO] Retour vers App > ' . json_encode($return));
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	$jsonrpc->makeSuccess($return);
-
 }
 
 /**
@@ -358,7 +357,7 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	}
 	config::save('pluginPanelMobile', $pluginPanelMobile, 'mobile');
 	$return[$idBox]['informations']['objects']['panel'] = $objectsPanel;
-	  // FIN A SUPPRIMER SUR PROCHAIN VERSION APP
+	// FIN A SUPPRIMER SUR PROCHAIN VERSION APP
 
 
 	$categories = [];
@@ -712,7 +711,7 @@ if ($jsonrpc->getMethod() == 'getNotificationsFromFile') {
 	$notifications = 'noNotifications';
 	if (file_exists($filePath)) {
 		$notifications = file_get_contents($filePath);
-		if(empty($notifications)) {
+		if (empty($notifications)) {
 			$notifications = 'noNotifications';
 		}
 	}

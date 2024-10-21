@@ -383,31 +383,33 @@ class mobile extends eqLogic
 			foreach ($decodedGeolocs as $index => $geoloc) {
 				if (!isset($geoloc['name'])) continue;
 				log::add('mobile', 'debug', '|| geoloc_' . $index . ' > ' . $geoloc['name']);
-				$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $index);
+				$cmd = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $index);
 
-				if (!is_object($cmdgeoloc)) {
+				if (!is_object($cmd)) {
 					$noExistCmd = 1;
-					$cmdgeoloc = new mobileCmd();
-					$cmdgeoloc->setLogicalId('geoloc_' . $index);
-					$cmdgeoloc->setEqLogic_id($mobile->getId());
-					$cmdgeoloc->setType('info');
-					$cmdgeoloc->setSubType('binary');
-					$cmdgeoloc->setIsVisible(1);
-					$cmdgeoloc->setGeneric_type('PRESENCE');
-					$cmdgeoloc->setTemplate('dashboard', 'core::presence');
-					$cmdgeoloc->setTemplate('mobile', 'core::presence');
-					$cmdgeoloc->setIsHistorized(1);
-					$cmdgeoloc->setOrder($order);
+					$cmd = new mobileCmd();
+					$cmd->setLogicalId('geoloc_' . $index);
+					$cmd->setEqLogic_id($mobile->getId());
+					$cmd->setType('info');
+					$cmd->setSubType('binary');
+					$cmd->setIsVisible(1);
+					$cmd->setGeneric_type('PRESENCE');
+					$cmd->setTemplate('dashboard', 'core::presence');
+					$cmd->setTemplate('mobile', 'core::presence');
+					$cmd->setDisplay('icon', '<i class="icon fas fa-location-arrow"></i>');
+					$cmd->setdisplay('showIconAndNamedashboard', 1);
+					$cmd->setIsHistorized(1);
+					$cmd->setOrder($order);
 					$order++;
 					log::add('mobile', 'debug', '|| Ajout geofencing > ' . $geoloc['name']);
 				}
-				$cmdgeoloc->setName($geoloc['name']);
-				$cmdgeoloc->setConfiguration('latitude', $geoloc['latitude']);
-				$cmdgeoloc->setConfiguration('longitude', $geoloc['longitude']);
-				$cmdgeoloc->setConfiguration('radius', $geoloc['radius']);
-				$cmdgeoloc->save();
+				$cmd->setName($geoloc['name']);
+				$cmd->setConfiguration('latitude', $geoloc['latitude']);
+				$cmd->setConfiguration('longitude', $geoloc['longitude']);
+				$cmd->setConfiguration('radius', $geoloc['radius']);
+				$cmd->save();
 				if ($noExistCmd == 1) {
-					$cmdgeoloc->event($geoloc['value']);
+					$cmd->event($geoloc['value']);
 					log::add('mobile', 'debug', '|| Valeur enregistrée > ' . $geoloc['value']);
 				}
 				$noExistCmd = 0;
@@ -680,7 +682,7 @@ class mobile extends eqLogic
 			log::add('mobile', 'debug', '|| [INFO] Envoi menu de ' . $this->getHumanName());
 			$menuCustomArray = $this->getConfiguration('menuCustomArray');
 		}
-		if(empty($menuCustomArray)){
+		if (empty($menuCustomArray)) {
 			$menuCustomArray = mobile::getMenuDefaultV2();
 		}
 		$nbIcones = count($menuCustomArray);
@@ -847,12 +849,15 @@ class mobile extends eqLogic
 				$cmd = new mobileCmd();
 				$cmd->setIsVisible(1);
 				$cmd->setName(__('Notification', __FILE__));
-				$cmd->setDisplay('icon', '<i class="icon fas fa-comment-alt"></i>');
+				$cmd->setDisplay('icon', '<i class="icon far fa-comment"></i>');
 				$cmd->setOrder(0);
 			}
 			$cmd->setLogicalId('notif');
 			$cmd->setEqLogic_id($this->getId());
 			$cmd->setGeneric_type('GENERIC_ACTION');
+			$cmd->setdisplay('forceReturnLineAfter', 1);
+			$cmd->setdisplay('showIconAndNamedashboard', 1);
+			$cmd->setdisplay('showIconAndNamemobile', 1);
 			$cmd->setType('action');
 			$cmd->setSubType('message');
 			if ($cmd->getChanged() === true) $cmd->save();
@@ -863,12 +868,15 @@ class mobile extends eqLogic
 				$cmd = new mobileCmd();
 				$cmd->setIsVisible(1);
 				$cmd->setName(__('Notification Critique', __FILE__));
-				$cmd->setDisplay('icon', '<i class="icon fas fa-comment-alt"></i>');
+				$cmd->setDisplay('icon', '<i class="icon far fa-comment"></i>');
 				$cmd->setOrder(1);
 			}
 			$cmd->setLogicalId('notifCritical');
 			$cmd->setEqLogic_id($this->getId());
 			$cmd->setGeneric_type('GENERIC_ACTION');
+			$cmd->setdisplay('forceReturnLineAfter', 1);
+			$cmd->setdisplay('showIconAndNamedashboard', 1);
+			$cmd->setdisplay('showIconAndNamemobile', 1);
 			$cmd->setType('action');
 			$cmd->setSubType('message');
 			if ($cmd->getChanged() === true) $cmd->save();
@@ -885,6 +893,9 @@ class mobile extends eqLogic
 			$cmd->setLogicalId('notifSpecific');
 			$cmd->setEqLogic_id($this->getId());
 			$cmd->setGeneric_type('GENERIC_ACTION');
+			$cmd->setdisplay('forceReturnLineAfter', 1);
+			$cmd->setdisplay('showIconAndNamedashboard', 1);
+			$cmd->setdisplay('showIconAndNamemobile', 1);
 			$cmd->setType('action');
 			$cmd->setSubType('other');
 			if ($cmd->getChanged() === true) $cmd->save();
@@ -901,10 +912,12 @@ class mobile extends eqLogic
 			$cmd->setLogicalId('removeNotifs');
 			$cmd->setEqLogic_id($this->getId());
 			$cmd->setGeneric_type('GENERIC_ACTION');
+			$cmd->setdisplay('forceReturnLineAfter', 1);
+			$cmd->setdisplay('showIconAndNamedashboard', 1);
+			$cmd->setdisplay('showIconAndNamemobile', 1);
 			$cmd->setType('action');
 			$cmd->setSubType('other');
 			if ($cmd->getChanged() === true) $cmd->save();
-			
 		}
 
 		$cmdaskText = $this->getCmd(null, 'ask_Text');

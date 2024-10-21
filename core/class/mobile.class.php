@@ -390,24 +390,24 @@ class mobile extends eqLogic
 					$cmd = new mobileCmd();
 					$cmd->setLogicalId('geoloc_' . $index);
 					$cmd->setEqLogic_id($mobile->getId());
-					$cmd->setType('info');
-					$cmd->setSubType('binary');
 					$cmd->setIsVisible(1);
 					$cmd->setGeneric_type('PRESENCE');
 					$cmd->setTemplate('dashboard', 'core::presence');
 					$cmd->setTemplate('mobile', 'core::presence');
 					$cmd->setDisplay('icon', '<i class="icon fas fa-location-arrow"></i>');
-					$cmd->setdisplay('showIconAndNamedashboard', 1);
+					$cmd->setDisplay('showIconAndNamedashboard', 1);
 					$cmd->setIsHistorized(1);
 					$cmd->setOrder($order);
 					$order++;
 					log::add('mobile', 'debug', '|| Ajout geofencing > ' . $geoloc['name']);
 				}
 				$cmd->setName($geoloc['name']);
+				$cmd->setType('info');
+				$cmd->setSubType('binary');
 				$cmd->setConfiguration('latitude', $geoloc['latitude']);
 				$cmd->setConfiguration('longitude', $geoloc['longitude']);
 				$cmd->setConfiguration('radius', $geoloc['radius']);
-				$cmd->save();
+				if ($cmd->getChanged() === true) $cmd->save();
 				if ($noExistCmd == 1) {
 					$cmd->event($geoloc['value']);
 					log::add('mobile', 'debug', '|| Valeur enregistrée > ' . $geoloc['value']);
@@ -628,7 +628,7 @@ class mobile extends eqLogic
 	 * Create and update cmd
 	 * Call by Api : nfc && qrcodemethod
 	 */
-	public static function cmdForApi($Iq, $logicalId, $value, $name = "", $subtype = "string")
+	public static function cmdForApi($Iq, $logicalId, $value, $name = "", $subtype = "string", $_visible = 0)
 	{
 		$mobile = eqLogic::byLogicalId($Iq, 'mobile');
 		if (is_object($mobile)) {
@@ -642,16 +642,16 @@ class mobile extends eqLogic
 				$cmd->setLogicalId($logicalId);
 				$cmd->setName($name);
 				$cmd->setOrder($order);
-				$cmd->setEqLogic_id($mobile->getId());
-				$cmd->setType('info');
-				$cmd->setSubType($subtype);
 				$cmd->setDisplay('icon', '<i class="icon  fas fa-qrcode"></i>');
-				$cmd->setIsVisible(0);
+				$cmd->setIsVisible($_visible);
 				if (in_array($logicalId, array('barrecodemethod', 'nfcPayload', 'nfcId'))) {
 					$cmd->setConfiguration('repeatEventManagement', 'always');
 				}
-				$cmd->save();
 			}
+			$cmd->setEqLogic_id($mobile->getId());
+			$cmd->setType('info');
+			$cmd->setSubType($subtype);
+			if ($cmd->getChanged() === true) $cmd->save();
 			$cmd->event($value);
 		}
 	}
@@ -850,15 +850,15 @@ class mobile extends eqLogic
 				$cmd = new mobileCmd();
 				$cmd->setIsVisible(1);
 				$cmd->setName(__('Notification', __FILE__));
+				$cmd->setLogicalId('notif');
+				$cmd->setGeneric_type('GENERIC_ACTION');
 				$cmd->setDisplay('icon', '<i class="icon far fa-comment"></i>');
+				$cmd->setDisplay('forceReturnLineAfter', 1);
+				$cmd->setDisplay('showIconAndNamedashboard', 1);
+				$cmd->setDisplay('showIconAndNamemobile', 1);
 				$cmd->setOrder(0);
-			}
-			$cmd->setLogicalId('notif');
+			}			
 			$cmd->setEqLogic_id($this->getId());
-			$cmd->setGeneric_type('GENERIC_ACTION');
-			$cmd->setdisplay('forceReturnLineAfter', 1);
-			$cmd->setdisplay('showIconAndNamedashboard', 1);
-			$cmd->setdisplay('showIconAndNamemobile', 1);
 			$cmd->setType('action');
 			$cmd->setSubType('message');
 			if ($cmd->getChanged() === true) $cmd->save();
@@ -869,15 +869,15 @@ class mobile extends eqLogic
 				$cmd = new mobileCmd();
 				$cmd->setIsVisible(1);
 				$cmd->setName(__('Notification Critique', __FILE__));
+				$cmd->setLogicalId('notifCritical');
+				$cmd->setGeneric_type('GENERIC_ACTION');
 				$cmd->setDisplay('icon', '<i class="icon far fa-comment"></i>');
+				$cmd->setDisplay('forceReturnLineAfter', 1);
+				$cmd->setDisplay('showIconAndNamedashboard', 1);
+				$cmd->setDisplay('showIconAndNamemobile', 1);
 				$cmd->setOrder(1);
 			}
-			$cmd->setLogicalId('notifCritical');
 			$cmd->setEqLogic_id($this->getId());
-			$cmd->setGeneric_type('GENERIC_ACTION');
-			$cmd->setdisplay('forceReturnLineAfter', 1);
-			$cmd->setdisplay('showIconAndNamedashboard', 1);
-			$cmd->setdisplay('showIconAndNamemobile', 1);
 			$cmd->setType('action');
 			$cmd->setSubType('message');
 			if ($cmd->getChanged() === true) $cmd->save();
@@ -888,15 +888,15 @@ class mobile extends eqLogic
 				$cmd = new mobileCmd();
 				$cmd->setIsVisible(0);
 				$cmd->setName(__('Récupérer les informations du téléphone', __FILE__));
+				$cmd->setLogicalId('notifSpecific');
+				$cmd->setGeneric_type('GENERIC_ACTION');
 				$cmd->setDisplay('icon', '<i class="icon jeedomapp-reload"></i>');
+				$cmd->setDisplay('forceReturnLineAfter', 1);
+				$cmd->setDisplay('showIconAndNamedashboard', 1);
+				$cmd->setDisplay('showIconAndNamemobile', 1);
 				$cmd->setOrder(2);
 			}
-			$cmd->setLogicalId('notifSpecific');
 			$cmd->setEqLogic_id($this->getId());
-			$cmd->setGeneric_type('GENERIC_ACTION');
-			$cmd->setdisplay('forceReturnLineAfter', 1);
-			$cmd->setdisplay('showIconAndNamedashboard', 1);
-			$cmd->setdisplay('showIconAndNamemobile', 1);
 			$cmd->setType('action');
 			$cmd->setSubType('other');
 			if ($cmd->getChanged() === true) $cmd->save();
@@ -907,15 +907,15 @@ class mobile extends eqLogic
 				$cmd = new mobileCmd();
 				$cmd->setIsVisible(0);
 				$cmd->setName(__('Supprimer les notifications', __FILE__));
+				$cmd->setLogicalId('removeNotifs');
+				$cmd->setGeneric_type('GENERIC_ACTION');
 				$cmd->setDisplay('icon', '<i class="icon fas fa-trash icon_red"></i>');
+				$cmd->setDisplay('forceReturnLineAfter', 1);
+				$cmd->setDisplay('showIconAndNamedashboard', 1);
+				$cmd->setDisplay('showIconAndNamemobile', 1);
 				$cmd->setOrder(3);
 			}
-			$cmd->setLogicalId('removeNotifs');
 			$cmd->setEqLogic_id($this->getId());
-			$cmd->setGeneric_type('GENERIC_ACTION');
-			$cmd->setdisplay('forceReturnLineAfter', 1);
-			$cmd->setdisplay('showIconAndNamedashboard', 1);
-			$cmd->setdisplay('showIconAndNamemobile', 1);
 			$cmd->setType('action');
 			$cmd->setSubType('other');
 			if ($cmd->getChanged() === true) $cmd->save();

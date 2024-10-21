@@ -645,7 +645,8 @@ class mobile extends eqLogic
 				$cmd->setEqLogic_id($mobile->getId());
 				$cmd->setType('info');
 				$cmd->setSubType($subtype);
-				$cmd->setIsVisible(1);
+				$cmd->setDisplay('icon', '<i class="icon  fas fa-qrcode"></i>');
+				$cmd->setIsVisible(0);
 				if (in_array($logicalId, array('barrecodemethod', 'nfcPayload', 'nfcId'))) {
 					$cmd->setConfiguration('repeatEventManagement', 'always');
 				}

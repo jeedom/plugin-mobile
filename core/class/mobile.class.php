@@ -108,7 +108,7 @@ class mobile extends eqLogic
 		$newDate = date("Y-m-d");
 		$horaireFormat = date("H:i");
 		$badge = 0;
-		$defaultName = empty(config::byKey('name')) ? config::byKey('product_name') : config::byKey('name'); //PR
+		$defaultName = empty(config::byKey('name')) ? config::byKey('product_name') : config::byKey('name');
 		if ($timeout != 'nok') {
 			$timeout = date('Y-m-d H:i:s', strtotime("$dateNotif + $timeout SECONDS"));
 		}
@@ -131,7 +131,6 @@ class mobile extends eqLogic
 			}
 		} else {
 			if ($version == 2) {
-
 				if ($addAsk != '') {
 					$askParams = [
 						'choices' => $answer,
@@ -143,7 +142,6 @@ class mobile extends eqLogic
 					];
 					$askParams = json_encode($askParams);
 				} else {
-
 					$askParams = 'noAsk';
 					$optionsNotif['askVariable'] = 'rien';
 				}

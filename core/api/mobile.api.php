@@ -667,7 +667,32 @@ if ($jsonrpc->getMethod() == "qrcodemethod") {
 if ($jsonrpc->getMethod() == "methodeForSpecificChannel") {
 	log::add('mobile', 'debug', '┌─────▶︎ methodeForSpecificChannel ──────────────────────');
 	log::add('mobile', 'debug', '┌─────▶︎ params ── ' . json_encode($params));
-	$jsonrpc->makeSuccess();
+	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
+	if(is_object($mobile)){
+			$batteryPhone = $mobile->getCmd(null, 'phoneBattery');
+			if (!is_object($batteryPhone)) {
+				$batteryPhone = new mobileCmd();
+				$batteryPhone->setIsVisible(1);
+				$batteryPhone->setName(__('Batterie du téléphone', __FILE__));
+				$batteryPhone->setDisplay('icon', '<i class="icon fas fa-battery-three-quarters"></i>');
+				$batteryPhone->setOrder(1);
+			}
+			$batteryPhone->setLogicalId('phoneBattery');
+			$batteryPhone->setEqLogic_id($mobile->getId());
+			$batteryPhone->setdisplay('showIconAndNamedashboard', 1);
+			$batteryPhone->setdisplay('showIconAndNamemobile', 1);
+			$batteryPhone->setType('info');
+			$batteryPhone->setSubType('numeric');
+			$batteryPhone->setUnite('%');
+			$batteryPhone->save();
+			$batteryPhone->event(($params['location']['battery']['level']) * 100);
+				
+			
+			$jsonrpc->makeSuccess();
+	}else{
+		log::add('mobile', 'debug', __('| [ERROR] EqLogic inconnu : ', __FILE__) . $params['Iq']);
+		$jsonrpc->makeError('EqLogic inconnu');
+	}
 }
 
 

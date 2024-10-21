@@ -360,7 +360,7 @@ class mobile extends eqLogic
 				}
 			}
 		} else {
-			log::add('mobile', 'error', __("Échec de l'envoie de notification : la version 1 de l'app n'est plus prise en charge !", __FILE__));
+			log::add('mobile', 'error', __("Échec de l'envoi de notification : la version 1 de l'app n'est plus prise en charge !", __FILE__));
 		}
 		log::add('mobile', 'debug', '|└────────────────────');
 	}
@@ -1036,6 +1036,7 @@ class mobileCmd extends cmd
 			log::add('mobile', 'debug', '└────────────────────');
 		}
 
+
 		if ($this->getLogicalId() == 'notif' || $this->getLogicalId() == 'notifCritical' || $this->getLogicalId() == 'notifSpecific') {
 			$critical = false;
 			$specific = false;
@@ -1045,6 +1046,8 @@ class mobileCmd extends cmd
 			}
 			if ($this->getLogicalId() == 'notifSpecific') {
 				$specific = true;
+				$_options['title'] = 'getDeviceInformations';
+				$_options['message'] = 'getDeviceInformations';
 			}
 			if (trim($_options['title']) == '') $_options['title'] = $defaultName;
 			$file = mobileCmd::fileInMessage($_options['message']);

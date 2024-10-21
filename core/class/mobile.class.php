@@ -190,7 +190,7 @@ class mobile extends eqLogic
 					'headers' => [
 						'apns-priority' => '5',
 						'apns-collapse-id' => strval($idNotif),
-						'apns-push-type' => 'alert',
+						'apns-push-type' => $channelId == 'specificChannel' ? 'background' : 'alert',
 						'apns-topic' => 'com.jeedom.jeedomobile'
 					],
 					'payload' => [
@@ -236,7 +236,7 @@ class mobile extends eqLogic
 				if ($os == 'android') {
 					$publish = [
 						'token' => $token,
-						'android' => $android,
+						'android' => $channelId == 'specificChannel' ? ['priority' => 'high'] : $android,
 						'data' => $data,
 					];
 				} else {

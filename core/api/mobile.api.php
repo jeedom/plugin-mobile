@@ -669,27 +669,27 @@ if ($jsonrpc->getMethod() == "methodeForSpecificChannel") {
 	log::add('mobile', 'debug', '┌─────▶︎ params ── ' . json_encode($params));
 	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	if (is_object($mobile)) {
-		$batteryPhone = $mobile->getCmd(null, 'phoneBattery');
+		$cmd = $mobile->getCmd(null, 'phoneBattery');
 		$order = count($mobile->getCmd());
-		if (!is_object($batteryPhone)) {
-			$batteryPhone = new mobileCmd();
-			$batteryPhone->setName(__('Batterie du téléphone', __FILE__));
-			$batteryPhone->setDisplay('icon', '<i class="icon fas fa-battery-three-quarters"></i>');
-			$batteryPhone->setConfiguration('historizeRound', 2);
-			$batteryPhone->setConfiguration('minValue', 0);
-			$batteryPhone->setConfiguration('maxValue', 100);
-			$batteryPhone->setisVisible(0);
-			$batteryPhone->setOrder($order);
+		if (!is_object($cmd)) {
+			$cmd = new mobileCmd();
+			$cmd->setName(__('Batterie du téléphone', __FILE__));
+			$cmd->setDisplay('icon', '<i class="icon fas fa-battery-three-quarters"></i>');
+			$cmd->setConfiguration('historizeRound', 2);
+			$cmd->setConfiguration('minValue', 0);
+			$cmd->setConfiguration('maxValue', 100);
+			$cmd->setisVisible(0);
+			$cmd->setOrder($order);
 		}
-		$batteryPhone->setLogicalId('phoneBattery');
-		$batteryPhone->setEqLogic_id($mobile->getId());
-		$batteryPhone->setdisplay('showIconAndNamedashboard', 1);
-		$batteryPhone->setdisplay('showIconAndNamemobile', 1);
-		$batteryPhone->setType('info');
-		$batteryPhone->setSubType('numeric');
-		$batteryPhone->setUnite('%');
-		$batteryPhone->save();
-		$batteryPhone->event(($params['location']['battery']['level']) * 100);
+		$cmd->setLogicalId('phoneBattery');
+		$cmd->setEqLogic_id($mobile->getId());
+		$cmd->setdisplay('showIconAndNamedashboard', 1);
+		$cmd->setdisplay('showIconAndNamemobile', 1);
+		$cmd->setType('info');
+		$cmd->setSubType('numeric');
+		$cmd->setUnite('%');
+		$cmd->save();
+		$cmd->event(($params['location']['battery']['level']) * 100);
 		$jsonrpc->makeSuccess();
 	} else {
 		log::add('mobile', 'debug', __('| [ERROR] EqLogic inconnu : ', __FILE__) . $params['Iq']);

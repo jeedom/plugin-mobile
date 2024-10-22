@@ -145,7 +145,7 @@ function mobile_update()
 			shell_exec('rm ' . dirname(__FILE__) . '/../core/img/' . $oldCoreImg);
 		}
 	}
-	if (!glob(dirname(__FILE__) . '/../core/img/' . '*')) {
+	if (file_exists(dirname(__FILE__) . '/../core/img') && !glob(dirname(__FILE__) . '/../core/img/' . '*')) {
 		log::add('mobile', 'debug', '| Deleting empty core/img folder');
 		shell_exec('rm -rf ' . dirname(__FILE__) . '/../core/img');
 	}

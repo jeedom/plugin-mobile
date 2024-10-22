@@ -215,6 +215,7 @@ if ($jsonrpc->getMethod() == 'getPlugins') {
 	$deamons_infos = [];
 	$objectsPanel = [];
 	$pluginPanelMobile = [];
+	$coreData = [];
 	foreach ((plugin::listPlugin(true)) as $plugin) {
 		$obArray = utils::o2a($plugin);
 		$obArray['displayMobilePanel'] = config::byKey('displayMobilePanel', $plugin->getId(), 0);
@@ -239,6 +240,8 @@ if ($jsonrpc->getMethod() == 'getPlugins') {
 		}
 	}
 	config::save('pluginPanelMobile', $pluginPanelMobile, 'mobile');
+	$resultCore = utils::o2a(update::byLogicalId('jeedom'));
+	array_push($coreData, $resultCore);
 	$return[$idBox]['informations']['objects']['panel'] = $objectsPanel;
 	$return[$idBox]['informations']['coreBranch'] = config::byKey('core::branch');
 	$return[$idBox]['informations']['coreData'] = $coreData;

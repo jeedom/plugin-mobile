@@ -28,7 +28,9 @@ if (!is_object($jsonrpc)) {
 $params = $jsonrpc->getParams();
 log::add('mobile', 'debug', '┌──────────▶︎ :fg-warning: Appel API Mobile :/fg: ◀︎───────────');
 log::add('mobile', 'debug', '| Method > ' . $jsonrpc->getMethod());
-log::add('mobile', 'debug', '| Paramètres passés > ' . json_encode($params));
+$secureApikeyLog = $params;
+if (isset($secureApikeyLog['apikey'])) $secureApikeyLog['apikey'] = substr($secureApikeyLog['apikey'], 0, 10) . '...';
+log::add('mobile', 'debug', '| Paramètres passés > ' . json_encode($secureApikeyLog));
 if ($params['Iq']) {
 	if (mobile::whoIsIq($params['Iq']) == 'mobile non detecte') {
 		//createMobile($params, 3);

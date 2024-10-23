@@ -823,6 +823,56 @@ class mobile extends eqLogic
 	}
 
 	/**
+	 * Create and update cmd for SpecificChannel
+	 * Call by Api : mobile::geoloc && methodeForSpecificChannel
+	 */
+	public function cmdForSpecificChannel($params = array(), $_trigger = 'location')
+	{
+		if (isset($params['Iq'])) {
+			if (isset($params[$_trigger])) {
+				// Battery
+				if (isset($params[$_trigger]['battery'])) {
+					// level
+					if (isset($params[$_trigger]['battery']['level'])) {
+						$cmd = $this->getCmd(null, 'phoneBattery');
+						if (!is_object($cmd)) {
+							$order = count($this->getCmd());
+							$cmd = new mobileCmd();
+							$cmd->setLogicalId('phoneBattery');
+							$cmd->setName(__('Batterie du téléphone', __FILE__));
+							$cmd->setDisplay('icon', '<i class="icon fas fa-battery-three-quarters"></i>');
+							$cmd->setDisplay('showIconAndNamedashboard', 1);
+							$cmd->setDisplay('showIconAndNamemobile', 1);
+							$cmd->setConfiguration('historizeRound', 2);
+							$cmd->setConfiguration('minValue', 0);
+							$cmd->setConfiguration('maxValue', 100);
+							$cmd->setUnite('%');
+							$cmd->setIsVisible(0);
+							$cmd->setOrder($order);
+							log::add('mobile', 'debug', 'Create cmd for phoneBattery');
+						}
+						$cmd->setEqLogic_id($this->getId());
+						$cmd->setType('info');
+						$cmd->setSubType('numeric');
+						if ($cmd->getChanged() === true) $cmd->save();
+						$cmd->event(($params[$_trigger]['battery']['level']) * 100);
+					}
+					// charging
+                    if (isset($params[$_trigger]['battery']['is_charging'])) {
+                      	// TODO Add cmd for is_charging
+                    }
+				}
+				// coords
+				if (isset($params[$_trigger]['coords'])) {
+					if (isset($params[$_trigger]['coords']['latitude']) && isset($params[$_trigger]['coords']['longitude'])) {
+						// TODO Add cmd for géoloc
+					}
+				}
+			}
+		}
+	}
+
+	/**
 	 * Call by core after insert into bdd
 	 */
 	public function postInsert()

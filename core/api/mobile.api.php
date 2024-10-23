@@ -574,89 +574,52 @@ if ($jsonrpc->getMethod() == 'saveMobile') {
 }
 
 /**
- * save event coming from geofencing
+ * save event coming from geofencing and methodeForSpecificChannel
  * 
  * @return makeSuccess
  */
 if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 	log::add('mobile', 'debug', '┌─────▶︎ GeoLocV2 geofencing ───────────────');
-	if(isset($params['transmition']['extras'])){
-		if($params['transmition']['extras']['method'] == 'getDeviceInformations'){
-			log::add('mobile', 'debug', '┌─────▶︎ methodeForSpecificChannel in Background ──────────────────────');
-			log::add('mobile', 'debug', '| [INFO] params > ' . json_encode($params));
-			$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
-			if (is_object($mobile)) {
-				$cmd = $mobile->getCmd(null, 'phoneBattery');
-				if (!is_object($cmd)) {
-					$order = count($mobile->getCmd());
-					$cmd = new mobileCmd();
-					$cmd->setLogicalId('phoneBattery');
-					$cmd->setName(__('Batterie du téléphone', __FILE__));
-					$cmd->setDisplay('icon', '<i class="icon fas fa-battery-three-quarters"></i>');
-					$cmd->setDisplay('showIconAndNamedashboard', 1);
-					$cmd->setDisplay('showIconAndNamemobile', 1);
-					$cmd->setConfiguration('historizeRound', 2);
-					$cmd->setConfiguration('minValue', 0);
-					$cmd->setConfiguration('maxValue', 100);
-					$cmd->setUnite('%');
-					$cmd->setIsVisible(0);
-					$cmd->setOrder($order);
-				}
-				$cmd->setEqLogic_id($mobile->getId());
-				$cmd->setType('info');
-				$cmd->setSubType('numeric');
-				if ($cmd->getChanged() === true) $cmd->save();
-				$cmd->event(($params['transmition']['battery']['level']) * 100);
-				$jsonrpc->makeSuccess();
-			} else {
-				log::add('mobile', 'debug', __('| [ERROR] EqLogic inconnu : ', __FILE__) . $params['Iq']);
-				$jsonrpc->makeError('EqLogic inconnu');
+	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
+	if (is_object($mobile)) {
+		if (isset($params['transmition']) && isset($params['transmition']['extras']) && isset($params['transmition']['extras']['method'])) {
+			if($params['transmition']['extras']['method'] == 'getDeviceInformations') {
+				log::add('mobile', 'debug', '|┌─────▶︎ methodeForSpecificChannel in Background ──────────────────────');
+				$mobile->cmdForSpecificChannel($params, 'transmition');
+				log::add('mobile', 'debug', '|└───────────────────────────────────────────');
 			}
-			log::add('mobile', 'debug', '└───────────────────────────────────────────');
-		}
-		return;
-	}
-	if (isset($params['transmition']) && isset($params['transmition']['event']) && $params['transmition']['event'] == 'geofence') {
-		log::add('mobile', 'debug', '| Event > ' . $params['transmition']['event']);
-		$geofence = $params['transmition']['geofence'];
-		log::add('mobile', 'debug', '| Event > ' . json_encode($geofence));
-		$eqLogicMobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
-		if ($eqLogicMobile) {
-			log::add('mobile', 'debug', '|  OK  Mobile trouvé -> ' . $eqLogicMobile->getName() . ' (' . $params['Iq'] . ')');
-			$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geofence['identifier']);
+		} else if (isset($params['transmition']) && isset($params['transmition']['event']) && $params['transmition']['event'] == 'geofence') {
+			log::add('mobile', 'debug', '| Event > ' . $params['transmition']['event']);
+			$geofence = $params['transmition']['geofence'];
+			log::add('mobile', 'debug', '| Event > ' . json_encode($geofence));
+			log::add('mobile', 'debug', '|  OK  Mobile trouvé -> ' . $mobile->getName() . ' (' . $params['Iq'] . ')');
+			$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $geofence['identifier']);
 			if (is_object($cmdgeoloc)) {
 				if ($geofence['action'] == 'ENTER') {
 					log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 1');
 					$cmdgeoloc->event(1);
-				} elseif ($geofence['action'] == 'EXIT') {
+				} else if ($geofence['action'] == 'EXIT') {
 					log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 0');
 					$cmdgeoloc->event(0);
 				} else {
 					log::add('mobile', 'debug', '| Event -> ' . $geofence['action']);
 				}
 			}
-		} elseif (isset($params['Iq'])) {
-			log::add('mobile', 'debug', __('| [ERROR] EqLogic inconnu : ', __FILE__) . $params['Iq']);
 		} else {
-			log::add('mobile', 'debug', __('| [ERROR] Paramètre Iq inexistant !', __FILE__));
-		}
-	} else {
-		$transmitions = $params['transmition'];
-		$errorCount = 0;
-		foreach ($transmitions as $transmition) {
-			if (isset($transmition['event']) && $transmition['event'] == 'geofence') {
-				log::add('mobile', 'debug', '| Transmition :' . json_encode($params['transmition']));
-				$geofence = $transmition['geofence'];
-				log::add('mobile', 'debug', '| Event > ' . json_encode($geofence));
-				$eqLogicMobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
-				if ($eqLogicMobile) {
-					log::add('mobile', 'debug', '|  OK  Mobile trouvé -> ' . $eqLogicMobile->getName() . ' (' . $params['Iq'] . ')');
-					$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geofence['identifier']);
+			$transmitions = $params['transmition'];
+			$errorCount = 0;
+			foreach ($transmitions as $transmition) {
+				if (isset($transmition['event']) && $transmition['event'] == 'geofence') {
+					log::add('mobile', 'debug', '| Transmition :' . json_encode($params['transmition']));
+					$geofence = $transmition['geofence'];
+					log::add('mobile', 'debug', '| Event > ' . json_encode($geofence));
+					log::add('mobile', 'debug', '|  OK  Mobile trouvé -> ' . $mobile->getName() . ' (' . $params['Iq'] . ')');
+					$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $geofence['identifier']);
 					if (is_object($cmdgeoloc)) {
 						if ($geofence['action'] == 'ENTER') {
 							log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 1');
 							$cmdgeoloc->event(1);
-						} elseif ($geofence['action'] == 'EXIT') {
+						} else if ($geofence['action'] == 'EXIT') {
 							log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 0');
 							$cmdgeoloc->event(0);
 						} else {
@@ -666,15 +629,16 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 						log::add('mobile', 'debug', '| [ERROR] Commande geoloc_' . $geofence['identifier'] . ' inexistante.');
 					}
 				} else {
-					log::add('mobile', 'debug', __('| [ERROR] EqLogic inconnu : ', __FILE__) . $params['Iq']);
+					$errorCount++;
 				}
-			} else {
-				$errorCount++;
+			}
+			if ($errorCount > 0) {
+				log::add('mobile', 'debug', __('| Pas de paramètre de geofencing', __FILE__));
 			}
 		}
-		if ($errorCount > 0) {
-			log::add('mobile', 'debug', __('| Pas de paramètre de geofencing', __FILE__));
-		}
+	} else {
+		if (isset($params['Iq'])) log::add('mobile', 'debug', __('| [ERROR] EqLogic inconnu : ', __FILE__) . $params['Iq']);
+		else log::add('mobile', 'debug', __('| [ERROR] Paramètre Iq inexistant !', __FILE__));
 	}
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	$jsonrpc->makeSuccess();
@@ -699,46 +663,30 @@ if ($jsonrpc->getMethod() == "qrcodemethod") {
 	$jsonrpc->makeSuccess();
 }
 
-
 /**
- * save event qrcode scan from app
+ * save and create cmd for methodeForSpecificChannel
  * 
- * @return makeSuccess
+ * @return makeSuccess || makeError
  */
 if ($jsonrpc->getMethod() == "methodeForSpecificChannel") {
 	log::add('mobile', 'debug', '┌─────▶︎ methodeForSpecificChannel ──────────────────────');
 	log::add('mobile', 'debug', '| [INFO] params > ' . json_encode($params));
 	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	if (is_object($mobile)) {
-		$cmd = $mobile->getCmd(null, 'phoneBattery');
-		if (!is_object($cmd)) {
-			$order = count($mobile->getCmd());
-			$cmd = new mobileCmd();
-			$cmd->setLogicalId('phoneBattery');
-			$cmd->setName(__('Batterie du téléphone', __FILE__));
-			$cmd->setDisplay('icon', '<i class="icon fas fa-battery-three-quarters"></i>');
-			$cmd->setDisplay('showIconAndNamedashboard', 1);
-			$cmd->setDisplay('showIconAndNamemobile', 1);
-			$cmd->setConfiguration('historizeRound', 2);
-			$cmd->setConfiguration('minValue', 0);
-			$cmd->setConfiguration('maxValue', 100);
-			$cmd->setUnite('%');
-			$cmd->setIsVisible(0);
-			$cmd->setOrder($order);
-		}
-		$cmd->setEqLogic_id($mobile->getId());
-		$cmd->setType('info');
-		$cmd->setSubType('numeric');
-		if ($cmd->getChanged() === true) $cmd->save();
-		$cmd->event(($params['location']['battery']['level']) * 100);
-		$jsonrpc->makeSuccess();
+		$mobile->cmdForSpecificChannel($params, 'location');
 	} else {
-		log::add('mobile', 'debug', __('| [ERROR] EqLogic inconnu : ', __FILE__) . $params['Iq']);
-		$jsonrpc->makeError('EqLogic inconnu');
+		if (isset($params['Iq'])) {
+			log::add('mobile', 'debug', __('| [ERROR] EqLogic inconnu : ', __FILE__) . $params['Iq']);
+			$jsonrpc->makeError('EqLogic inconnu');
+		}
+		else {
+			log::add('mobile', 'debug', __('| [ERROR] Paramètre Iq inexistant !', __FILE__));
+			$jsonrpc->makeError('Paramètre Iq inexistant');
+		}
 	}
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');
+	$jsonrpc->makeSuccess();
 }
-
 
 /**
  * save event nfc scan from app

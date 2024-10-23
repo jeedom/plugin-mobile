@@ -199,13 +199,13 @@ foreach ($eqLogics as $eqLogic) {
 
 							<legend><i class="fas fa-cogs"></i> {{Paramètres spécifiques}}</legend>
 							<div class="form-group">
-								<label class="col-sm-4 control-label">{{Masquer le menu géolocalisation}} <sup><i class="fa fa-question-circle tooltips" title="Si activé, l'application masquera le menu qui permet de paramètrer le geofencing."></i></sup></label>
+								<label class="col-sm-4 control-label">{{Verrouiller le menu géolocalisation}} <sup><i class="fa fa-question-circle tooltips" title="Si activé, l'application verrouillera la modification des points de geofencing."></i></sup></label>
 								<div class="col-sm-6">
 									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="hideMenuGeoloc">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-4 control-label">{{Masquer le menu custom}}  <sup><i class="fa fa-question-circle tooltips" title="Si activé, l'application masquera le menu qui permet de modifier le menu custom."></i></sup></label>
+								<label class="col-sm-4 control-label">{{Verrouiller le menu custom}}  <sup><i class="fa fa-question-circle tooltips" title="Si activé, l'application verrouillera la modification du menu custom."></i></sup></label>
 								<div class="col-sm-6">
 									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="hideMenuCustom">
 								</div>

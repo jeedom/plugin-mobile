@@ -28,7 +28,9 @@ if (!is_object($jsonrpc)) {
 $params = $jsonrpc->getParams();
 log::add('mobile', 'debug', '┌──────────▶︎ :fg-warning: Appel API Mobile :/fg: ◀︎───────────');
 log::add('mobile', 'debug', '| Method > ' . $jsonrpc->getMethod());
-log::add('mobile', 'debug', '| Paramètres passés > ' . json_encode($params));
+$secureApikeyLog = $params;
+if (isset($secureApikeyLog['apikey'])) $secureApikeyLog['apikey'] = substr($secureApikeyLog['apikey'], 0, 10) . '...';
+log::add('mobile', 'debug', '| Paramètres passés > ' . json_encode($secureApikeyLog));
 if ($params['Iq']) {
 	if (mobile::whoIsIq($params['Iq']) == 'mobile non detecte') {
 		//createMobile($params, 3);
@@ -215,6 +217,7 @@ if ($jsonrpc->getMethod() == 'getPlugins') {
 	$deamons_infos = [];
 	$objectsPanel = [];
 	$pluginPanelMobile = [];
+	$coreData = [];
 	foreach ((plugin::listPlugin(true)) as $plugin) {
 		$obArray = utils::o2a($plugin);
 		$obArray['displayMobilePanel'] = config::byKey('displayMobilePanel', $plugin->getId(), 0);
@@ -239,6 +242,8 @@ if ($jsonrpc->getMethod() == 'getPlugins') {
 		}
 	}
 	config::save('pluginPanelMobile', $pluginPanelMobile, 'mobile');
+	$resultCore = utils::o2a(update::byLogicalId('jeedom'));
+	array_push($coreData, $resultCore);
 	$return[$idBox]['informations']['objects']['panel'] = $objectsPanel;
 	$return[$idBox]['informations']['coreBranch'] = config::byKey('core::branch');
 	$return[$idBox]['informations']['coreData'] = $coreData;
@@ -666,35 +671,36 @@ if ($jsonrpc->getMethod() == "qrcodemethod") {
  */
 if ($jsonrpc->getMethod() == "methodeForSpecificChannel") {
 	log::add('mobile', 'debug', '┌─────▶︎ methodeForSpecificChannel ──────────────────────');
-	log::add('mobile', 'debug', '┌─────▶︎ params ── ' . json_encode($params));
+	log::add('mobile', 'debug', '| [INFO] params > ' . json_encode($params));
 	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	if (is_object($mobile)) {
 		$cmd = $mobile->getCmd(null, 'phoneBattery');
-		$order = count($mobile->getCmd());
 		if (!is_object($cmd)) {
+			$order = count($mobile->getCmd());
 			$cmd = new mobileCmd();
+			$cmd->setLogicalId('phoneBattery');
 			$cmd->setName(__('Batterie du téléphone', __FILE__));
 			$cmd->setDisplay('icon', '<i class="icon fas fa-battery-three-quarters"></i>');
+			$cmd->setDisplay('showIconAndNamedashboard', 1);
+			$cmd->setDisplay('showIconAndNamemobile', 1);
 			$cmd->setConfiguration('historizeRound', 2);
 			$cmd->setConfiguration('minValue', 0);
 			$cmd->setConfiguration('maxValue', 100);
-			$cmd->setisVisible(0);
+			$cmd->setUnite('%');
+			$cmd->setIsVisible(0);
 			$cmd->setOrder($order);
 		}
-		$cmd->setLogicalId('phoneBattery');
 		$cmd->setEqLogic_id($mobile->getId());
-		$cmd->setdisplay('showIconAndNamedashboard', 1);
-		$cmd->setdisplay('showIconAndNamemobile', 1);
 		$cmd->setType('info');
 		$cmd->setSubType('numeric');
-		$cmd->setUnite('%');
-		$cmd->save();
+		if ($cmd->getChanged() === true) $cmd->save();
 		$cmd->event(($params['location']['battery']['level']) * 100);
 		$jsonrpc->makeSuccess();
 	} else {
 		log::add('mobile', 'debug', __('| [ERROR] EqLogic inconnu : ', __FILE__) . $params['Iq']);
 		$jsonrpc->makeError('EqLogic inconnu');
 	}
+	log::add('mobile', 'debug', '└───────────────────────────────────────────');
 }
 
 

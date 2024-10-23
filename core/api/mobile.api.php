@@ -580,6 +580,42 @@ if ($jsonrpc->getMethod() == 'saveMobile') {
  */
 if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 	log::add('mobile', 'debug', '┌─────▶︎ GeoLocV2 geofencing ───────────────');
+	if(isset($params['transmition']['extras'])){
+		if($params['transmition']['extras']['method'] == 'getDeviceInformations'){
+			log::add('mobile', 'debug', '┌─────▶︎ methodeForSpecificChannel in Background ──────────────────────');
+			log::add('mobile', 'debug', '| [INFO] params > ' . json_encode($params));
+			$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
+			if (is_object($mobile)) {
+				$cmd = $mobile->getCmd(null, 'phoneBattery');
+				if (!is_object($cmd)) {
+					$order = count($mobile->getCmd());
+					$cmd = new mobileCmd();
+					$cmd->setLogicalId('phoneBattery');
+					$cmd->setName(__('Batterie du téléphone', __FILE__));
+					$cmd->setDisplay('icon', '<i class="icon fas fa-battery-three-quarters"></i>');
+					$cmd->setDisplay('showIconAndNamedashboard', 1);
+					$cmd->setDisplay('showIconAndNamemobile', 1);
+					$cmd->setConfiguration('historizeRound', 2);
+					$cmd->setConfiguration('minValue', 0);
+					$cmd->setConfiguration('maxValue', 100);
+					$cmd->setUnite('%');
+					$cmd->setIsVisible(0);
+					$cmd->setOrder($order);
+				}
+				$cmd->setEqLogic_id($mobile->getId());
+				$cmd->setType('info');
+				$cmd->setSubType('numeric');
+				if ($cmd->getChanged() === true) $cmd->save();
+				$cmd->event(($params['transmition']['battery']['level']) * 100);
+				$jsonrpc->makeSuccess();
+			} else {
+				log::add('mobile', 'debug', __('| [ERROR] EqLogic inconnu : ', __FILE__) . $params['Iq']);
+				$jsonrpc->makeError('EqLogic inconnu');
+			}
+			log::add('mobile', 'debug', '└───────────────────────────────────────────');
+		}
+		return;
+	}
 	if (isset($params['transmition']) && isset($params['transmition']['event']) && $params['transmition']['event'] == 'geofence') {
 		log::add('mobile', 'debug', '| Event > ' . $params['transmition']['event']);
 		$geofence = $params['transmition']['geofence'];

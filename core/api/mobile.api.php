@@ -770,7 +770,6 @@ if ($jsonrpc->getMethod() == 'deleteNotificationInJsonFile') {
  */
 if ($jsonrpc->getMethod() == 'deleteGeolocCommand') {
 	log::add('mobile', 'debug', '┌────▶︎ Commande suppression GeoLoc ───────');
-	log::add('mobile', 'debug', '| Paramètres > ' . json_encode($params));
 	$geolocId = $params['geoloc_id'];
 	$eqLogic = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	if (is_object($eqLogic)) {

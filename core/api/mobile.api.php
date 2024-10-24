@@ -350,12 +350,6 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	log::add('mobile', 'debug', '| [INFO] Retour vers App > ' . json_encode($return));
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');
 
-	$retentionTime = config::byKey('retentionTime', 'mobile', null);
-	if (isset($retentionTime) && $retentionTime != null) {
-		log::add('mobile', 'debug', '| [INFO] Nettoyage des notifs et images > ');
-		mobile::cleaningNotifications($params['Iq'], $retentionTime);
-	}
-
 	$jsonrpc->makeSuccess($return);
 }
 

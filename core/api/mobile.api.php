@@ -151,15 +151,19 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 			log::add('mobile', 'debug', '| [NOTICE] Token vide ');
 		}
 	}
+	if (isset($notification['retentionTime'])) {
+		$retentionTime = intval($notification['retentionTime']);
+		if ($mobile->getConfiguration('retentionTime', 30) != $retentionTime) {
+			$mobile->setConfiguration('retentionTime', $retentionTime);
+			log::add('mobile', 'debug', '| [INFO] New retentionTime > ' . intval($notification['retentionTime']));
+			$mobile->cleaningNotifications();
+		}
+	}
 	if (is_object($user = user::byHash($params['apikey']))) {
 		log::add('mobile', 'debug', '| [INFO] affect_user > ' . $user->getLogin() . ' (' . $user->getId() . ')');
 		$mobile->setConfiguration('affect_user', $user->getId());
 	}
 	$mobile->save();
-
-	/* moved to new method setCustomMenu
-	saveMenuFromAppV2($menu, $mobile);
-	*/
 
 	if ($geolocs) {
 		if ($geolocs != [] && !(is_object($geolocs) && empty((array)$geolocs)) && !(is_string($geolocs) && $geolocs == "{}")) {

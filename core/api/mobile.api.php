@@ -526,7 +526,7 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	if (is_object($mobile)) {
 		if (isset($params['transmition']) && isset($params['transmition']['extras']) && isset($params['transmition']['extras']['method'])) {
-			if($params['transmition']['extras']['method'] == 'getDeviceInformations') {
+			if ($params['transmition']['extras']['method'] == 'getDeviceInformations') {
 				log::add('mobile', 'debug', '|┌─────▶︎ methodeForSpecificChannel in Background ──────────────────────');
 				$mobile->cmdForSpecificChannel($params, 'transmition');
 				log::add('mobile', 'debug', '|└───────────────────────────────────────────');
@@ -621,8 +621,7 @@ if ($jsonrpc->getMethod() == "methodeForSpecificChannel") {
 		if (isset($params['Iq'])) {
 			log::add('mobile', 'debug', __('| [ERROR] EqLogic inconnu : ', __FILE__) . $params['Iq']);
 			$jsonrpc->makeError('EqLogic inconnu');
-		}
-		else {
+		} else {
 			log::add('mobile', 'debug', __('| [ERROR] Paramètre Iq inexistant !', __FILE__));
 			$jsonrpc->makeError('Paramètre Iq inexistant');
 		}

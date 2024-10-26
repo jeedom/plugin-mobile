@@ -37,14 +37,16 @@ class mobile extends eqLogic
 	 * Core callback to provide additional information for a new Community post
 	 *
 	 * @return string
-	*/
-	public static function getConfigForCommunity() {
+	 */
+	public static function getConfigForCommunity()
+	{
 		$hw = jeedom::getHardwareName();
 		if ($hw == 'diy') $hw = trim(shell_exec('systemd-detect-virt'));
 		if ($hw == 'none') $hw = 'diy';
 		$distrib = trim(shell_exec('. /etc/*-release && echo $ID $VERSION_ID'));
-		$res = 'OS: ' . $distrib . ' on ' . $hw;
-		$res .= ' ; PHP: ' . phpversion() . '<br/>';
+		$res = '<br>```<br>';
+		$res .= 'OS : ' . $distrib . ' on ' . $hw;
+		$res .= ' - PHP : ' . phpversion() . '<br>```';
 		$res .= '<br/><br/>';
 		$res .= '[details="Equipement(s)"]<br/>';
 		$res .= '|Id | LogicalId | Type | App | defaultIdMobile | Profil | hideMenuGeoloc | hideMenuCustom|<br>';
@@ -56,7 +58,7 @@ class mobile extends eqLogic
 			if (is_object($userType)) {
 				$profil = $userType->getProfils();
 			}
-			$res .= '|' . $mobile->getId() . ' | ' . $mobile->getLogicalId() . ' | ' . $mobile->getConfiguration('type_mobile') . ' | v' . $mobile->getConfiguration('appVersion', 1) . ' | ' . $mobile->getConfiguration('defaultIdMobile', 'none') . ' | ' . $profil . ' | ' . $mobile->getConfiguration('hideMenuGeoloc', 0) . ' | ' . $mobile->getConfiguration('hideMenuCustom', 0) .'|<br>';
+			$res .= '|' . $mobile->getId() . ' | ' . $mobile->getLogicalId() . ' | ' . $mobile->getConfiguration('type_mobile') . ' | v' . $mobile->getConfiguration('appVersion', 1) . ' | ' . $mobile->getConfiguration('defaultIdMobile', 'none') . ' | ' . $profil . ' | ' . $mobile->getConfiguration('hideMenuGeoloc', 0) . ' | ' . $mobile->getConfiguration('hideMenuCustom', 0) . '|<br>';
 		}
 		$res .= '[/details]';
 		return $res;
@@ -817,9 +819,9 @@ class mobile extends eqLogic
 						$cmd->event(($params[$_trigger]['battery']['level']) * 100);
 					}
 					// charging
-                    if (isset($params[$_trigger]['battery']['is_charging'])) {
-                      	// TODO Add cmd for is_charging
-                    }
+					if (isset($params[$_trigger]['battery']['is_charging'])) {
+						// TODO Add cmd for is_charging
+					}
 				}
 				// coords
 				if (isset($params[$_trigger]['coords'])) {
@@ -868,7 +870,7 @@ class mobile extends eqLogic
 				foreach ($notifications as $id => $value) {
 					$notificationDate = strtotime($value['data']['date']);
 					if (($currentTime - $notificationDate) > $retentionSeconds) {
-                      log::add('mobile', 'debug', '| -> suppression notification > N°' . $id);
+						log::add('mobile', 'debug', '| -> suppression notification > N°' . $id);
 						unset($notifications[$id]);
 						$notificationsModified = true;
 					}
@@ -915,7 +917,7 @@ class mobile extends eqLogic
 				$cmd->setDisplay('showIconAndNamedashboard', 1);
 				$cmd->setDisplay('showIconAndNamemobile', 1);
 				$cmd->setOrder(0);
-			}			
+			}
 			$cmd->setEqLogic_id($this->getId());
 			$cmd->setType('action');
 			$cmd->setSubType('message');

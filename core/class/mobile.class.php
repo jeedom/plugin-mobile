@@ -28,7 +28,9 @@ class mobile extends eqLogic
 
 	public static function cronDaily()
 	{
-		mobile::deleteFileImg();
+		foreach (eqLogic::byType('mobile') as $mobile) {
+			$mobile->cleaningNotifications();
+		}
 	}
 
 	/**
@@ -44,54 +46,6 @@ class mobile extends eqLogic
 		} else {
 			return 'mobile non detecte';
 		}
-	}
-
-	/**
-	 * cleaning notifications based on time retention
-	 * Call by api : getJson
-	 */
-	public static function cleaningNotifications($Iq, $retentionTime)
-	{
-		log::add('mobile', 'debug', '┌──────────▶︎ :fg-warning: Nettoyage des Notifications et Images :/fg: ──────────');
-		log::add('mobile', 'debug', '| Durée de retention actuelle : ' . $retentionTime . ' jours');
-
-		$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60;
-		$currentTime = time();
-
-		$pathImages = dirname(__FILE__) . '/../../data/images/';
-		if (is_dir($pathImages)) {
-			$images = glob($pathImages . '*.jpg');
-			foreach ($images as $image) {
-				$fileCreationTime = filemtime($image);
-				if ($fileCreationTime < ($currentTime - $retentionSeconds)) {
-					unlink($image);
-				}
-			}
-		}
-
-		$filePath = dirname(__FILE__) . '/../data/notifications/' . $Iq . '.json';
-		$notifications = 'noNotifications';
-		if (file_exists($filePath)) {
-			$notifications = file_get_contents($filePath);
-			if ($notifications) {
-				$notifications = json_decode($notifications, true);
-				$notificationsModified = false;
-
-				foreach ($notifications as $id => $value) {
-					$notificationDate = strtotime($value['data']['date']);
-					if (($currentTime - $notificationDate) > $retentionSeconds) {
-						unset($notifications[$id]);
-						$notificationsModified = true;
-					}
-				}
-				$notifications = json_encode($notifications);
-				if ($notificationsModified) {
-					file_put_contents($filePath, $notifications);
-				}
-			}
-		}
-		log::add('mobile', 'debug', '| Fin du nettoyage des Notifications et Images');
-		log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	}
 
 	/**
@@ -416,30 +370,6 @@ class mobile extends eqLogic
 			log::add('mobile', 'debug', '| [ERROR] Mobile inexistant !');
 		}
 		log::add('mobile', 'debug', '|└────────────────────');
-	}
-
-	/**
-	 * Delete images older than 30 days
-	 * Call by cronDaily
-	 */
-	public static function deleteFileImg()
-	{
-		$directory = dirname(__FILE__) . '/../../data/images'; // Chemin vers le répertoire contenant les fichiers
-		// Récupérer la liste des fichiers dans le répertoire
-		$files = glob($directory . '/*');
-		// Date actuelle
-		$currentDate = time();
-		// Parcourir tous les fichiers
-		foreach ($files as $file) {
-			// Vérifier la date de modification du fichier
-			$modifiedDate = filemtime($file);
-			$differenceInDays = floor(($currentDate - $modifiedDate) / (60 * 60 * 24));
-			// Vérifier si le fichier a plus de 30 jours
-			if ($differenceInDays > 30) {
-				// Supprimer le fichier
-				unlink($file);
-			}
-		}
 	}
 
 	/**
@@ -823,6 +753,107 @@ class mobile extends eqLogic
 	}
 
 	/**
+	 * Create and update cmd for SpecificChannel
+	 * Call by Api : mobile::geoloc && methodeForSpecificChannel
+	 */
+	public function cmdForSpecificChannel($params = array(), $_trigger = 'location')
+	{
+		if (isset($params['Iq'])) {
+			if (isset($params[$_trigger])) {
+				// Battery
+				if (isset($params[$_trigger]['battery'])) {
+					// level
+					if (isset($params[$_trigger]['battery']['level'])) {
+						$cmd = $this->getCmd(null, 'phoneBattery');
+						if (!is_object($cmd)) {
+							$order = count($this->getCmd());
+							$cmd = new mobileCmd();
+							$cmd->setLogicalId('phoneBattery');
+							$cmd->setName(__('Batterie du téléphone', __FILE__));
+							$cmd->setDisplay('icon', '<i class="icon fas fa-battery-three-quarters"></i>');
+							$cmd->setDisplay('showIconAndNamedashboard', 1);
+							$cmd->setDisplay('showIconAndNamemobile', 1);
+							$cmd->setConfiguration('historizeRound', 2);
+							$cmd->setConfiguration('minValue', 0);
+							$cmd->setConfiguration('maxValue', 100);
+							$cmd->setUnite('%');
+							$cmd->setIsVisible(0);
+							$cmd->setOrder($order);
+							log::add('mobile', 'debug', 'Create cmd for phoneBattery');
+						}
+						$cmd->setEqLogic_id($this->getId());
+						$cmd->setType('info');
+						$cmd->setSubType('numeric');
+						if ($cmd->getChanged() === true) $cmd->save();
+						$cmd->event(($params[$_trigger]['battery']['level']) * 100);
+					}
+					// charging
+                    if (isset($params[$_trigger]['battery']['is_charging'])) {
+                      	// TODO Add cmd for is_charging
+                    }
+				}
+				// coords
+				if (isset($params[$_trigger]['coords'])) {
+					if (isset($params[$_trigger]['coords']['latitude']) && isset($params[$_trigger]['coords']['longitude'])) {
+						// TODO Add cmd for géoloc
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * cleaning notifications based on time retention
+	 * Call by cronDaily
+	 */
+	public function cleaningNotifications()
+	{
+		$retentionTime = $this->getConfiguration('retentionTime', 30);
+		log::add('mobile', 'debug', '┌──────────▶︎ :fg-warning: Nettoyage des Notifications et Images :/fg: ──────────');
+		log::add('mobile', 'debug', '| Durée de retention actuelle : ' . $retentionTime . ' jours');
+		// Images
+		$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60;
+		$currentTime = time();
+		$pathImages = dirname(__FILE__) . '/../../data/images/';
+		if (is_dir($pathImages)) {
+			$images = glob($pathImages . '*.jpg');
+			foreach ($images as $image) {
+				if (strpos($image, $this->getLogicalId()) !== false) {
+					$fileCreationTime = filemtime($image);
+					if ($fileCreationTime < ($currentTime - $retentionSeconds)) {
+						unlink($image);
+						log::add('mobile', 'debug', '| -> suppression image > ' . $image);
+					}
+				}
+			}
+		}
+		// Notifications
+		$filePath = dirname(__FILE__) . '/../data/notifications/' . $this->getLogicalId() . '.json';
+		$notifications = 'noNotifications';
+		if (file_exists($filePath)) {
+			$notifications = file_get_contents($filePath);
+			if ($notifications) {
+				$notifications = json_decode($notifications, true);
+				$notificationsModified = false;
+
+				foreach ($notifications as $id => $value) {
+					$notificationDate = strtotime($value['data']['date']);
+					if (($currentTime - $notificationDate) > $retentionSeconds) {
+                      log::add('mobile', 'debug', '| -> suppression notification > N°' . $id);
+						unset($notifications[$id]);
+						$notificationsModified = true;
+					}
+				}
+				$notifications = json_encode($notifications);
+				if ($notificationsModified) {
+					file_put_contents($filePath, $notifications);
+				}
+			}
+		}
+		log::add('mobile', 'debug', '└───────────────────────────────────────────');
+	}
+
+	/**
 	 * Call by core after insert into bdd
 	 */
 	public function postInsert()
@@ -1021,10 +1052,9 @@ class mobileCmd extends cmd
 		log::add('mobile', 'debug', '┌──:fg-success: execute :/fg:──');
 		$optionsNotif = [];
 		$eqLogic = $this->getEqLogic();
-
+		$Iq = $eqLogic->getLogicalId();
 
 		if ($this->getLogicalId() == 'removeNotifs') {
-			$Iq = $eqLogic->getLogicalId();
 			$filePath = dirname(__FILE__) . '/../data/notifications/' . $Iq . '.json';
 			if (file_exists($filePath)) {
 				file_put_contents($filePath, '');
@@ -1056,6 +1086,8 @@ class mobileCmd extends cmd
 				$_options['message'] = $file['message'];
 				log::add('mobile', 'debug', '| file detected ' . json_encode($file));
 			}
+			log::add('mobile', 'DEBUG', '| [INFO] Title : ' . $_options['title']);
+			log::add('mobile', 'DEBUG', '| [INFO] Message : ' . $_options['message']);
 			if ($eqLogic->getConfiguration('type_mobile') == 'android') $_options['message'] = nl2br($_options['message']);
 			$answer = (isset($_options['answer']) && $_options['answer']) ? join(';', $_options['answer']) : null;
 			$askVariable = isset($_options['variable']) ? $_options['variable'] : null;
@@ -1103,7 +1135,7 @@ class mobileCmd extends cmd
 							$optionsNotif['typeHint'] = $typeHint;
 							$url = network::getNetworkAccess('external');
 							$url .= '/plugins/mobile/core/php/image.php?';
-							$nameFile = base64_encode($file) . '.' . $ext;
+							$nameFile = $Iq . '__' . base64_encode($file) . '.' . $ext;
 							$path = dirname(__FILE__) . '/../../data/images';
 							$newfile = $path . '/' . $nameFile;
 							log::add('mobile', 'debug', '| copie sur > ' . $newfile);

@@ -34,6 +34,35 @@ class mobile extends eqLogic
 	}
 
 	/**
+	 * Core callback to provide additional information for a new Community post
+	 *
+	 * @return string
+	*/
+	public static function getConfigForCommunity() {
+		$hw = jeedom::getHardwareName();
+		if ($hw == 'diy') $hw = trim(shell_exec('systemd-detect-virt'));
+		if ($hw == 'none') $hw = 'diy';
+		$distrib = trim(shell_exec('. /etc/*-release && echo $ID $VERSION_ID'));
+		$res = 'OS: ' . $distrib . ' on ' . $hw;
+		$res .= ' ; PHP: ' . phpversion() . '<br/>';
+		$res .= '<br/><br/>';
+		$res .= '[details="Equipement(s)"]<br/>';
+		$res .= '|Id | LogicalId | Type | App | defaultIdMobile | Profil | hideMenuGeoloc | hideMenuCustom|<br>';
+		$res .= '|--- | --- | --- | --- | --- | --- | --- | ---|<br>';
+		foreach (eqLogic::byType('mobile') as $mobile) {
+			$userId = $mobile->getConfiguration('affect_user');
+			$userType = user::byId($userId);
+			$profil = 'Inconnu';
+			if (is_object($userType)) {
+				$profil = $userType->getProfils();
+			}
+			$res .= '|' . $mobile->getId() . ' | ' . $mobile->getLogicalId() . ' | ' . $mobile->getConfiguration('type_mobile') . ' | v' . $mobile->getConfiguration('appVersion', 1) . ' | ' . $mobile->getConfiguration('defaultIdMobile', 'none') . ' | ' . $profil . ' | ' . $mobile->getConfiguration('hideMenuGeoloc', 0) . ' | ' . $mobile->getConfiguration('hideMenuCustom', 0) .'|<br>';
+		}
+		$res .= '[/details]';
+		return $res;
+	}
+
+	/**
 	 * find eq based on iq
 	 *
 	 * @return string

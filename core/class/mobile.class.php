@@ -43,7 +43,7 @@ class mobile extends eqLogic
 		$hw = jeedom::getHardwareName();
 		if ($hw == 'diy') $hw = trim(shell_exec('systemd-detect-virt'));
 		if ($hw == 'none') $hw = 'diy';
-		$distrib = trim(shell_exec('. /etc/*-release && echo $ID $VERSION_ID'));
+		$distrib = system::getDistrib() . ' ' . system::getOsVersion();
 		$res = '<br>```<br>';
 		$res .= 'OS : ' . $distrib . ' on ' . $hw;
 		$res .= ' - PHP : ' . phpversion() . '<br>```';

@@ -1086,6 +1086,8 @@ class mobileCmd extends cmd
 				$_options['message'] = $file['message'];
 				log::add('mobile', 'debug', '| file detected ' . json_encode($file));
 			}
+			log::add('mobile', 'DEBUG', '| [INFO] Title : ' . $_options['title']);
+			log::add('mobile', 'DEBUG', '| [INFO] Message : ' . $_options['message']);
 			if ($eqLogic->getConfiguration('type_mobile') == 'android') $_options['message'] = nl2br($_options['message']);
 			$answer = (isset($_options['answer']) && $_options['answer']) ? join(';', $_options['answer']) : null;
 			$askVariable = isset($_options['variable']) ? $_options['variable'] : null;

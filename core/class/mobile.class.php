@@ -367,11 +367,11 @@ class mobile extends eqLogic
 				if (!isset($geoloc['name'])) continue;
 				log::add('mobile', 'debug', '|| geoloc_' . $index . ' > ' . $geoloc['name']);
 				$cmd = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $index);
-
+				$logicalId = 'geoloc_' . $index;
 				if (!is_object($cmd)) {
 					$noExistCmd = 1;
 					$cmd = new mobileCmd();
-					$cmd->setLogicalId('geoloc_' . $index);
+					$cmd->setLogicalId($logicalId);
 					$cmd->setEqLogic_id($mobile->getId());
 					$cmd->setIsVisible(1);
 					$cmd->setGeneric_type('PRESENCE');
@@ -392,7 +392,7 @@ class mobile extends eqLogic
 				$cmd->setConfiguration('radius', $geoloc['radius']);
 				if ($cmd->getChanged() === true) $cmd->save();
 				if ($noExistCmd == 1) {
-					$cmd->event($geoloc['value']);
+					$mobile->checkAndUpdateCmd($logicalId, $geoloc['value']);
 					log::add('mobile', 'debug', '|| Valeur enregistrée > ' . $geoloc['value']);
 				}
 				$noExistCmd = 0;
@@ -611,7 +611,7 @@ class mobile extends eqLogic
 			$cmd->setType('info');
 			$cmd->setSubType($subtype);
 			if ($cmd->getChanged() === true) $cmd->save();
-			$cmd->event($value);
+			$mobile->checkAndUpdateCmd($logicalId, $value);
 		}
 	}
 

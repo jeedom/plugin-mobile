@@ -821,7 +821,27 @@ class mobile extends eqLogic
 					}
 					// charging
 					if (isset($params[$_trigger]['battery']['is_charging'])) {
-						// TODO Add cmd for is_charging
+						$cmd = $this->getCmd(null, 'phoneCharging');
+						if (!is_object($cmd)) {
+							$order = count($this->getCmd());
+							$cmd = new mobileCmd();
+							$cmd->setLogicalId('phoneCharging');
+							$cmd->setName(__('En charge', __FILE__));
+							$cmd->setDisplay('icon', '<i class="icon techno-charging"></i>');
+							$cmd->setDisplay('showIconAndNamedashboard', 1);
+							$cmd->setDisplay('showIconAndNamemobile', 1);
+							$cmd->setDisplay('forceReturnLineAfter', 1);
+							$cmd->setTemplate('dashboard', 'core::line');
+							$cmd->setTemplate('mobile', 'core::line');
+							$cmd->setIsVisible(0);
+							$cmd->setOrder($order);
+							log::add('mobile', 'debug', 'Create cmd for phoneCharging');
+						}
+						$cmd->setEqLogic_id($this->getId());
+						$cmd->setType('info');
+						$cmd->setSubType('binary');
+						if ($cmd->getChanged() === true) $cmd->save();
+						$this->checkAndUpdateCmd('phoneCharging', intval($params[$_trigger]['battery']['is_charging']));
 					}
 				}
 				// coords

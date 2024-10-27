@@ -804,6 +804,7 @@ class mobile extends eqLogic
 							$cmd->setDisplay('icon', '<i class="icon fas fa-battery-three-quarters"></i>');
 							$cmd->setDisplay('showIconAndNamedashboard', 1);
 							$cmd->setDisplay('showIconAndNamemobile', 1);
+							$cmd->setDisplay('forceReturnLineAfter', 1);
 							$cmd->setConfiguration('historizeRound', 2);
 							$cmd->setConfiguration('minValue', 0);
 							$cmd->setConfiguration('maxValue', 100);
@@ -816,7 +817,7 @@ class mobile extends eqLogic
 						$cmd->setType('info');
 						$cmd->setSubType('numeric');
 						if ($cmd->getChanged() === true) $cmd->save();
-						$cmd->event(($params[$_trigger]['battery']['level']) * 100);
+						$this->checkAndUpdateCmd('phoneBattery', $params[$_trigger]['battery']['level'] * 100);
 					}
 					// charging
 					if (isset($params[$_trigger]['battery']['is_charging'])) {

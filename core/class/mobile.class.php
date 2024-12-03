@@ -860,11 +860,11 @@ class mobile extends eqLogic
 	 */
 	public function cleaningNotifications()
 	{
-		$retentionTime = $this->getConfiguration('retentionTime', 30);
+		$notifsTime = $this->getConfiguration('notifsTime', 30);
 		log::add('mobile', 'debug', '┌──────────▶︎ :fg-warning: Nettoyage des Notifications et Images :/fg: ──────────');
-		log::add('mobile', 'debug', '| Durée de retention actuelle : ' . $retentionTime . ' jours');
+		log::add('mobile', 'debug', '| Durée de retention actuelle : ' . $notifsTime . ' jours');
 		// Images
-		$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60;
+		$retentionSeconds = intVal($notifsTime) * 24 * 60 * 60;
 		$currentTime = time();
 		$pathImages = dirname(__FILE__) . '/../../data/images/';
 		if (is_dir($pathImages)) {
@@ -873,8 +873,11 @@ class mobile extends eqLogic
 				if (strpos($image, $this->getLogicalId()) !== false) {
 					$fileCreationTime = filemtime($image);
 					if ($fileCreationTime < ($currentTime - $retentionSeconds)) {
-						unlink($image);
-						log::add('mobile', 'debug', '| -> suppression image > ' . $image);
+						if (!unlink($image)) {
+							log::add('mobile', 'error', 'Erreur lors de la suppression de: ' . $image);
+						} else {
+							log::add('mobile', 'debug', '| -> suppression image > ' . $image);
+						}
 					}
 				}
 			}
@@ -886,6 +889,10 @@ class mobile extends eqLogic
 			$notifications = file_get_contents($filePath);
 			if ($notifications) {
 				$notifications = json_decode($notifications, true);
+				if (json_last_error() !== JSON_ERROR_NONE) {
+					log::add('mobile', 'error', 'Erreur decodage du JSON : ' . json_last_error_msg());
+					return;
+				}
 				$notificationsModified = false;
 
 				foreach ($notifications as $id => $value) {
@@ -924,7 +931,6 @@ class mobile extends eqLogic
 	public function postSave()
 	{
 		if ($this->getConfiguration('appVersion', 1) == 2) {
-
 			// Commande notification
 			$cmd = $this->getCmd(null, 'notif');
 			if (!is_object($cmd)) {
@@ -986,8 +992,8 @@ class mobile extends eqLogic
 			$cmd = $this->getCmd(null, 'removeNotifs');
 			if (!is_object($cmd)) {
 				$cmd = new mobileCmd();
-				$cmd->setIsVisible(0);
-				$cmd->setName(__('Supprimer les notifications', __FILE__));
+				$cmd->setIsVisible(1);
+				$cmd->setName(__('Supprimer les Notifications', __FILE__));
 				$cmd->setLogicalId('removeNotifs');
 				$cmd->setGeneric_type('GENERIC_ACTION');
 				$cmd->setDisplay('icon', '<i class="icon fas fa-trash icon_red"></i>');
@@ -998,9 +1004,13 @@ class mobile extends eqLogic
 			}
 			$cmd->setEqLogic_id($this->getId());
 			$cmd->setType('action');
-			$cmd->setSubType('other');
+			$cmd->setSubType('select');
+			$listValue = "1|Supprimer tous les Notifications;2|Supprimer les Asks expirés;3|Supprimer les Asks répondus";
+			$cmd->setConfiguration('listValue', $listValue);
 			if ($cmd->getChanged() === true) $cmd->save();
 		}
+
+
 
 		$cmdaskText = $this->getCmd(null, 'ask_Text');
 		if (is_object($cmdaskText)) {
@@ -1108,12 +1118,33 @@ class mobileCmd extends cmd
 
 		if ($this->getLogicalId() == 'removeNotifs') {
 			$filePath = dirname(__FILE__) . '/../data/notifications/' . $Iq . '.json';
-			if (file_exists($filePath)) {
-				file_put_contents($filePath, '');
-				log::add('mobile', 'info', '| Suppression des notifications effectuée');
-			} else {
-				log::add('mobile', 'info', '| Fichier de notifications non trouvé : ' . $filePath);
+			if (!file_exists($filePath)) log::add('mobile', 'info', '| Fichier de notifications non trouvé : ' . $filePath);
+			$valueUser = $_options['select'];
+			switch($valueUser){
+				case 1:  file_put_contents($filePath, '');
+					     log::add('mobile', 'info', '| Suppression des notifications effectuée');
+						 break;
+				case 2:  
+				$notifs = json_decode(file_get_contents($filePath), true);
+				$notifs = array_filter($notifs, function($notif) {
+					$askParams = json_decode($notif['data']['askParams'], true);
+					$notifTime = strtotime($notif['data']['date']);
+					$currentTime = time();
+					$timeout = $askParams['timeout'] / 1000;
+					return $notif['data']['askVariable'] == 'rien' || ($currentTime - $notifTime) < $timeout;
+				});
+				file_put_contents($filePath, json_encode($notifs));
+				log::add('mobile', 'info', '| Suppression des asks expirés effectuée');
+				break;
+				case 3: $notifs = json_decode(file_get_contents($filePath), true);
+						$notifs = array_filter($notifs, function($notif) {
+							return $notif['data']['choiceAsk'] == '';
+						});
+						file_put_contents($filePath, json_encode($notifs));
+						log::add('mobile', 'info', '| Suppression des asks répondus effectuée');
+						break;
 			}
+
 			log::add('mobile', 'debug', '└────────────────────');
 		}
 

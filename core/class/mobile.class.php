@@ -934,6 +934,7 @@ class mobile extends eqLogic
 			// Commande notification
 			$cmd = $this->getCmd(null, 'notif');
 			if (!is_object($cmd)) {
+				$order = count($this->getCmd());
 				$cmd = new mobileCmd();
 				$cmd->setIsVisible(1);
 				$cmd->setName(__('Notification', __FILE__));
@@ -943,7 +944,7 @@ class mobile extends eqLogic
 				$cmd->setDisplay('forceReturnLineAfter', 1);
 				$cmd->setDisplay('showIconAndNamedashboard', 1);
 				$cmd->setDisplay('showIconAndNamemobile', 1);
-				$cmd->setOrder(0);
+				$cmd->setOrder($order);
 			}
 			$cmd->setEqLogic_id($this->getId());
 			$cmd->setType('action');
@@ -953,6 +954,7 @@ class mobile extends eqLogic
 			// Commande notification Critique
 			$cmd = $this->getCmd(null, 'notifCritical');
 			if (!is_object($cmd)) {
+				$order = count($this->getCmd());
 				$cmd = new mobileCmd();
 				$cmd->setIsVisible(1);
 				$cmd->setName(__('Notification Critique', __FILE__));
@@ -962,7 +964,7 @@ class mobile extends eqLogic
 				$cmd->setDisplay('forceReturnLineAfter', 1);
 				$cmd->setDisplay('showIconAndNamedashboard', 1);
 				$cmd->setDisplay('showIconAndNamemobile', 1);
-				$cmd->setOrder(1);
+				$cmd->setOrder($order);
 			}
 			$cmd->setEqLogic_id($this->getId());
 			$cmd->setType('action');
@@ -972,6 +974,7 @@ class mobile extends eqLogic
 			// Commande récupération infos du téléphone
 			$cmd = $this->getCmd(null, 'notifSpecific');
 			if (!is_object($cmd)) {
+				$order = count($this->getCmd());
 				$cmd = new mobileCmd();
 				$cmd->setIsVisible(0);
 				$cmd->setName(__('Récupérer les informations du téléphone', __FILE__));
@@ -981,7 +984,7 @@ class mobile extends eqLogic
 				$cmd->setDisplay('forceReturnLineAfter', 1);
 				$cmd->setDisplay('showIconAndNamedashboard', 1);
 				$cmd->setDisplay('showIconAndNamemobile', 1);
-				$cmd->setOrder(2);
+				$cmd->setOrder($order);
 			}
 			$cmd->setEqLogic_id($this->getId());
 			$cmd->setType('action');
@@ -991,6 +994,7 @@ class mobile extends eqLogic
 			// Commande suppression des nodifications
 			$cmd = $this->getCmd(null, 'removeNotifs');
 			if (!is_object($cmd)) {
+				$order = count($this->getCmd());
 				$cmd = new mobileCmd();
 				$cmd->setIsVisible(1);
 				$cmd->setName(__('Supprimer les Notifications', __FILE__));
@@ -1000,7 +1004,7 @@ class mobile extends eqLogic
 				$cmd->setDisplay('forceReturnLineAfter', 1);
 				$cmd->setDisplay('showIconAndNamedashboard', 1);
 				$cmd->setDisplay('showIconAndNamemobile', 1);
-				$cmd->setOrder(3);
+				$cmd->setOrder($order);
 			}
 			$cmd->setEqLogic_id($this->getId());
 			$cmd->setType('action');

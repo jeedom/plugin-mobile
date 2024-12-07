@@ -151,11 +151,11 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 			log::add('mobile', 'debug', '| [NOTICE] Token vide ');
 		}
 	}
-	if (isset($notification['retentionTime'])) {
-		$retentionTime = intval($notification['retentionTime']);
-		if ($mobile->getConfiguration('retentionTime', 30) != $retentionTime) {
-			$mobile->setConfiguration('retentionTime', $retentionTime);
-			log::add('mobile', 'debug', '| [INFO] New retentionTime > ' . intval($notification['retentionTime']));
+	if (isset($notification['notifsTime'])) {
+		$notifsTime = intval($notification['notifsTime']);
+		if ($mobile->getConfiguration('notifsTime', 30) != $notifsTime) {
+			$mobile->setConfiguration('notifsTime', $notifsTime);
+			log::add('mobile', 'debug', '| [INFO] New notifsTime > ' . intval($notification['notifsTime']));
 			$mobile->cleaningNotifications();
 		}
 	}

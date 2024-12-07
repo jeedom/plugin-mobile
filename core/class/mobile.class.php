@@ -367,11 +367,11 @@ class mobile extends eqLogic
 				if (!isset($geoloc['name'])) continue;
 				log::add('mobile', 'debug', '|| geoloc_' . $index . ' > ' . $geoloc['name']);
 				$cmd = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $index);
-
+				$logicalId = 'geoloc_' . $index;
 				if (!is_object($cmd)) {
 					$noExistCmd = 1;
 					$cmd = new mobileCmd();
-					$cmd->setLogicalId('geoloc_' . $index);
+					$cmd->setLogicalId($logicalId);
 					$cmd->setEqLogic_id($mobile->getId());
 					$cmd->setIsVisible(1);
 					$cmd->setGeneric_type('PRESENCE');
@@ -392,7 +392,7 @@ class mobile extends eqLogic
 				$cmd->setConfiguration('radius', $geoloc['radius']);
 				if ($cmd->getChanged() === true) $cmd->save();
 				if ($noExistCmd == 1) {
-					$cmd->event($geoloc['value']);
+					$mobile->checkAndUpdateCmd($logicalId, $geoloc['value']);
 					log::add('mobile', 'debug', '|| Valeur enregistrée > ' . $geoloc['value']);
 				}
 				$noExistCmd = 0;
@@ -611,7 +611,7 @@ class mobile extends eqLogic
 			$cmd->setType('info');
 			$cmd->setSubType($subtype);
 			if ($cmd->getChanged() === true) $cmd->save();
-			$cmd->event($value);
+			$mobile->checkAndUpdateCmd($logicalId, $value);
 		}
 	}
 
@@ -804,6 +804,7 @@ class mobile extends eqLogic
 							$cmd->setDisplay('icon', '<i class="icon fas fa-battery-three-quarters"></i>');
 							$cmd->setDisplay('showIconAndNamedashboard', 1);
 							$cmd->setDisplay('showIconAndNamemobile', 1);
+							$cmd->setDisplay('forceReturnLineAfter', 1);
 							$cmd->setConfiguration('historizeRound', 2);
 							$cmd->setConfiguration('minValue', 0);
 							$cmd->setConfiguration('maxValue', 100);
@@ -816,11 +817,31 @@ class mobile extends eqLogic
 						$cmd->setType('info');
 						$cmd->setSubType('numeric');
 						if ($cmd->getChanged() === true) $cmd->save();
-						$cmd->event(($params[$_trigger]['battery']['level']) * 100);
+						$this->checkAndUpdateCmd('phoneBattery', $params[$_trigger]['battery']['level'] * 100);
 					}
 					// charging
 					if (isset($params[$_trigger]['battery']['is_charging'])) {
-						// TODO Add cmd for is_charging
+						$cmd = $this->getCmd(null, 'phoneCharging');
+						if (!is_object($cmd)) {
+							$order = count($this->getCmd());
+							$cmd = new mobileCmd();
+							$cmd->setLogicalId('phoneCharging');
+							$cmd->setName(__('En charge', __FILE__));
+							$cmd->setDisplay('icon', '<i class="icon techno-charging"></i>');
+							$cmd->setDisplay('showIconAndNamedashboard', 1);
+							$cmd->setDisplay('showIconAndNamemobile', 1);
+							$cmd->setDisplay('forceReturnLineAfter', 1);
+							$cmd->setTemplate('dashboard', 'core::line');
+							$cmd->setTemplate('mobile', 'core::line');
+							$cmd->setIsVisible(0);
+							$cmd->setOrder($order);
+							log::add('mobile', 'debug', 'Create cmd for phoneCharging');
+						}
+						$cmd->setEqLogic_id($this->getId());
+						$cmd->setType('info');
+						$cmd->setSubType('binary');
+						if ($cmd->getChanged() === true) $cmd->save();
+						$this->checkAndUpdateCmd('phoneCharging', intval($params[$_trigger]['battery']['is_charging']));
 					}
 				}
 				// coords
@@ -839,11 +860,11 @@ class mobile extends eqLogic
 	 */
 	public function cleaningNotifications()
 	{
-		$retentionTime = $this->getConfiguration('retentionTime', 30);
+		$notifsTime = $this->getConfiguration('notifsTime', 30);
 		log::add('mobile', 'debug', '┌──────────▶︎ :fg-warning: Nettoyage des Notifications et Images :/fg: ──────────');
-		log::add('mobile', 'debug', '| Durée de retention actuelle : ' . $retentionTime . ' jours');
+		log::add('mobile', 'debug', '| Durée de retention actuelle : ' . $notifsTime . ' jours');
 		// Images
-		$retentionSeconds = intVal($retentionTime) * 24 * 60 * 60;
+		$retentionSeconds = intVal($notifsTime) * 24 * 60 * 60;
 		$currentTime = time();
 		$pathImages = dirname(__FILE__) . '/../../data/images/';
 		if (is_dir($pathImages)) {
@@ -852,8 +873,11 @@ class mobile extends eqLogic
 				if (strpos($image, $this->getLogicalId()) !== false) {
 					$fileCreationTime = filemtime($image);
 					if ($fileCreationTime < ($currentTime - $retentionSeconds)) {
-						unlink($image);
-						log::add('mobile', 'debug', '| -> suppression image > ' . $image);
+						if (!unlink($image)) {
+							log::add('mobile', 'error', 'Erreur lors de la suppression de: ' . $image);
+						} else {
+							log::add('mobile', 'debug', '| -> suppression image > ' . $image);
+						}
 					}
 				}
 			}
@@ -865,6 +889,10 @@ class mobile extends eqLogic
 			$notifications = file_get_contents($filePath);
 			if ($notifications) {
 				$notifications = json_decode($notifications, true);
+				if (json_last_error() !== JSON_ERROR_NONE) {
+					log::add('mobile', 'error', 'Erreur decodage du JSON : ' . json_last_error_msg());
+					return;
+				}
 				$notificationsModified = false;
 
 				foreach ($notifications as $id => $value) {
@@ -903,7 +931,6 @@ class mobile extends eqLogic
 	public function postSave()
 	{
 		if ($this->getConfiguration('appVersion', 1) == 2) {
-
 			// Commande notification
 			$cmd = $this->getCmd(null, 'notif');
 			if (!is_object($cmd)) {
@@ -965,8 +992,8 @@ class mobile extends eqLogic
 			$cmd = $this->getCmd(null, 'removeNotifs');
 			if (!is_object($cmd)) {
 				$cmd = new mobileCmd();
-				$cmd->setIsVisible(0);
-				$cmd->setName(__('Supprimer les notifications', __FILE__));
+				$cmd->setIsVisible(1);
+				$cmd->setName(__('Supprimer les Notifications', __FILE__));
 				$cmd->setLogicalId('removeNotifs');
 				$cmd->setGeneric_type('GENERIC_ACTION');
 				$cmd->setDisplay('icon', '<i class="icon fas fa-trash icon_red"></i>');
@@ -977,9 +1004,13 @@ class mobile extends eqLogic
 			}
 			$cmd->setEqLogic_id($this->getId());
 			$cmd->setType('action');
-			$cmd->setSubType('other');
+			$cmd->setSubType('select');
+			$listValue = "1|Supprimer tous les Notifications;2|Supprimer les Asks expirés;3|Supprimer les Asks répondus";
+			$cmd->setConfiguration('listValue', $listValue);
 			if ($cmd->getChanged() === true) $cmd->save();
 		}
+
+
 
 		$cmdaskText = $this->getCmd(null, 'ask_Text');
 		if (is_object($cmdaskText)) {
@@ -1087,12 +1118,33 @@ class mobileCmd extends cmd
 
 		if ($this->getLogicalId() == 'removeNotifs') {
 			$filePath = dirname(__FILE__) . '/../data/notifications/' . $Iq . '.json';
-			if (file_exists($filePath)) {
-				file_put_contents($filePath, '');
-				log::add('mobile', 'info', '| Suppression des notifications effectuée');
-			} else {
-				log::add('mobile', 'info', '| Fichier de notifications non trouvé : ' . $filePath);
+			if (!file_exists($filePath)) log::add('mobile', 'info', '| Fichier de notifications non trouvé : ' . $filePath);
+			$valueUser = $_options['select'];
+			switch($valueUser){
+				case 1:  file_put_contents($filePath, '');
+					     log::add('mobile', 'info', '| Suppression des notifications effectuée');
+						 break;
+				case 2:  
+				$notifs = json_decode(file_get_contents($filePath), true);
+				$notifs = array_filter($notifs, function($notif) {
+					$askParams = json_decode($notif['data']['askParams'], true);
+					$notifTime = strtotime($notif['data']['date']);
+					$currentTime = time();
+					$timeout = $askParams['timeout'] / 1000;
+					return $notif['data']['askVariable'] == 'rien' || ($currentTime - $notifTime) < $timeout;
+				});
+				file_put_contents($filePath, json_encode($notifs));
+				log::add('mobile', 'info', '| Suppression des asks expirés effectuée');
+				break;
+				case 3: $notifs = json_decode(file_get_contents($filePath), true);
+						$notifs = array_filter($notifs, function($notif) {
+							return $notif['data']['choiceAsk'] == '';
+						});
+						file_put_contents($filePath, json_encode($notifs));
+						log::add('mobile', 'info', '| Suppression des asks répondus effectuée');
+						break;
 			}
+
 			log::add('mobile', 'debug', '└────────────────────');
 		}
 

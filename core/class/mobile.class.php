@@ -1120,29 +1120,31 @@ class mobileCmd extends cmd
 			$filePath = dirname(__FILE__) . '/../data/notifications/' . $Iq . '.json';
 			if (!file_exists($filePath)) log::add('mobile', 'info', '| Fichier de notifications non trouvé : ' . $filePath);
 			$valueUser = $_options['select'];
-			switch($valueUser){
-				case 1:  file_put_contents($filePath, '');
-					     log::add('mobile', 'info', '| Suppression des notifications effectuée');
-						 break;
-				case 2:  
-				$notifs = json_decode(file_get_contents($filePath), true);
-				$notifs = array_filter($notifs, function($notif) {
-					$askParams = json_decode($notif['data']['askParams'], true);
-					$notifTime = strtotime($notif['data']['date']);
-					$currentTime = time();
-					$timeout = $askParams['timeout'] / 1000;
-					return $notif['data']['askVariable'] == 'rien' || ($currentTime - $notifTime) < $timeout;
-				});
-				file_put_contents($filePath, json_encode($notifs));
-				log::add('mobile', 'info', '| Suppression des asks expirés effectuée');
-				break;
-				case 3: $notifs = json_decode(file_get_contents($filePath), true);
-						$notifs = array_filter($notifs, function($notif) {
-							return $notif['data']['choiceAsk'] == '';
-						});
-						file_put_contents($filePath, json_encode($notifs));
-						log::add('mobile', 'info', '| Suppression des asks répondus effectuée');
-						break;
+			switch ($valueUser) {
+				case 1:
+					file_put_contents($filePath, '');
+					log::add('mobile', 'info', '| Suppression des notifications effectuée');
+					break;
+				case 2:
+					$notifs = json_decode(file_get_contents($filePath), true);
+					$notifs = array_filter($notifs, function ($notif) {
+						$askParams = json_decode($notif['data']['askParams'], true);
+						$notifTime = strtotime($notif['data']['date']);
+						$currentTime = time();
+						$timeout = $askParams['timeout'] / 1000;
+						return $notif['data']['askVariable'] == 'rien' || ($currentTime - $notifTime) < $timeout;
+					});
+					file_put_contents($filePath, json_encode($notifs));
+					log::add('mobile', 'info', '| Suppression des asks expirés effectuée');
+					break;
+				case 3:
+					$notifs = json_decode(file_get_contents($filePath), true);
+					$notifs = array_filter($notifs, function ($notif) {
+						return $notif['data']['choiceAsk'] == '';
+					});
+					file_put_contents($filePath, json_encode($notifs));
+					log::add('mobile', 'info', '| Suppression des asks répondus effectuée');
+					break;
 			}
 
 			log::add('mobile', 'debug', '└────────────────────');

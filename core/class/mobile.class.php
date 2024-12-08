@@ -791,13 +791,13 @@ class mobile extends eqLogic
 	{
 		if (isset($params['Iq'])) {
 			if (isset($params[$_trigger])) {
+				$order = count($this->getCmd());
 				// Battery
 				if (isset($params[$_trigger]['battery'])) {
 					// level
 					if (isset($params[$_trigger]['battery']['level'])) {
 						$cmd = $this->getCmd(null, 'phoneBattery');
 						if (!is_object($cmd)) {
-							$order = count($this->getCmd());
 							$cmd = new mobileCmd();
 							$cmd->setLogicalId('phoneBattery');
 							$cmd->setName(__('Batterie du téléphone', __FILE__));
@@ -811,6 +811,7 @@ class mobile extends eqLogic
 							$cmd->setUnite('%');
 							$cmd->setIsVisible(0);
 							$cmd->setOrder($order);
+							$order++;
 							log::add('mobile', 'debug', 'Create cmd for phoneBattery');
 						}
 						$cmd->setEqLogic_id($this->getId());
@@ -823,7 +824,6 @@ class mobile extends eqLogic
 					if (isset($params[$_trigger]['battery']['is_charging'])) {
 						$cmd = $this->getCmd(null, 'phoneCharging');
 						if (!is_object($cmd)) {
-							$order = count($this->getCmd());
 							$cmd = new mobileCmd();
 							$cmd->setLogicalId('phoneCharging');
 							$cmd->setName(__('En charge', __FILE__));
@@ -835,6 +835,7 @@ class mobile extends eqLogic
 							$cmd->setTemplate('mobile', 'core::line');
 							$cmd->setIsVisible(0);
 							$cmd->setOrder($order);
+							$order++;
 							log::add('mobile', 'debug', 'Create cmd for phoneCharging');
 						}
 						$cmd->setEqLogic_id($this->getId());

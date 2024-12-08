@@ -848,7 +848,27 @@ class mobile extends eqLogic
 				// coords
 				if (isset($params[$_trigger]['coords'])) {
 					if (isset($params[$_trigger]['coords']['latitude']) && isset($params[$_trigger]['coords']['longitude'])) {
-						// TODO Add cmd for géoloc
+						$cmd = $this->getCmd(null, 'coords');
+						if (!is_object($cmd)) {
+							$cmd = new mobileCmd();
+							$cmd->setLogicalId('coords');
+							$cmd->setName(__('Coordonnées', __FILE__));
+							$cmd->setDisplay('icon', '<i class="icon fas fa-map-marker-alt"></i>');
+							$cmd->setDisplay('showIconAndNamedashboard', 1);
+							$cmd->setDisplay('showIconAndNamemobile', 1);
+							$cmd->setDisplay('forceReturnLineAfter', 1);
+							$cmd->setTemplate('dashboard', 'core::line');
+							$cmd->setTemplate('mobile', 'core::line');
+							$cmd->setIsVisible(0);
+							$cmd->setOrder($order);
+							$order++;
+							log::add('mobile', 'debug', 'Create cmd for coords');
+						}
+						$cmd->setEqLogic_id($this->getId());
+						$cmd->setType('info');
+						$cmd->setSubType('string');
+						if ($cmd->getChanged() === true) $cmd->save();
+						$this->checkAndUpdateCmd('coords', $params[$_trigger]['coords']['latitude'] . ',' . $params[$_trigger]['coords']['longitude']);
 					}
 				}
 			}

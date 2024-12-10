@@ -3,28 +3,6 @@
         "Notifications de l'app": "App-Benachrichtigungen",
         "Réponse Ask sensible à la case : ": "Fragen Sie die Antwort, die für die Box empfindlich ist:"
     },
-    "plugins\/mobile\/desktop\/modal\/piece.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "Les Pièces - Application V1": "Teile - Anwendung V1"
-    },
-    "plugins\/mobile\/desktop\/modal\/health.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "Équipement": "Gerät",
-        "Type de Mobile": "Mobiler Typ",
-        "Utilisateur": "Benutzer",
-        "Dernière activité": "Letzte Aktivität",
-        "Date création": "Erstellungsdatum",
-        "Utilisateur non trouvé": "Benutzer nicht gefunden"
-    },
-    "plugins\/mobile\/desktop\/modal\/secPage.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "COMPTE MARKET": "MARKTKONTO",
-        "BOX ID": "BOX-ID",
-        "Il vous faut simplement rentrer votre identifiant Market ainsi que votre mot de passe.": "Sie müssen lediglich Ihre Markt-ID und Ihr Passwort eingeben",
-        "Plusieurs choix sur cet écran :": "Mehrere Auswahlmöglichkeiten auf diesem Bildschirm:",
-        "- Vous entrez l'url de votre Jeedom (interne ou externe), ainsi que les identifiants d'accès à celle-ci et vous confirmez avec le bouton CONNEXION": "- Sie geben die URL Ihres Jeedom (intern oder extern) sowie die Zugangskennungen dazu ein und bestätigen mit dem LOGIN-Button",
-        "- Vous cliquez sur QR Code : un nouvel écran apparait; vous pourrez scanner un QRCode depuis le plugin Mobile de la box que vous souhaitez ajoutée, via l'onglet QRCODE du plugin.": "- Sie klicken auf QR-Code: ein neuer Bildschirm erscheint; Sie können einen QRCode aus dem Mobile-Plugin der Box, die Sie hinzufügen möchten, über die Registerkarte QRCODE des Plugins scannen"
-    },
     "plugins\/mobile\/desktop\/modal\/menuCustom.php": {
         "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
         "Équipement": "Ausrüstung",
@@ -38,29 +16,6 @@
         "Utilisateur non trouvé": "Benutzer nicht gefunden",
         "Configuration Menu Enregistrée": "Gespeicherte Menükonfiguration"
     },
-    "plugins\/mobile\/desktop\/modal\/plugin.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "Plugins Spéciaux Compatibles": "Kompatible Spezial-Plugins",
-        "Disponibles dans la liste des plugins et intégrés au Dashboard de l’App Mobile.": "Verfügbar in der Liste der Plugins und in das Dashboard der Mobile App integriert",
-        "Plugins Validés Type générique": "Validierte Plugins Generischer Typ",
-        "Visibles dans l'app, peuvent nécessiter un type générique, peuvent être désactivés.": "In der App sichtbar, erfordert möglicherweise einen generischen Typ, ist möglicherweise deaktiviert",
-        "Plugins compatibles non transmis": "Kompatible Plugins werden nicht übertragen",
-        "Ne sont pas transmis à l’App Mobile.": "Werden nicht an die Mobile App übertragen",
-        "Plugins non testés transmis à l'application": "Nicht getestete Plugins werden an die Anwendung übertragen",
-        "Sont transmis à l’App Mobile en se basant sur les types génériques.": "Werden basierend auf generischen Typen an die Mobile App übertragen",
-        "Plugins non testés et non transmis": "Plugins nicht getestet und nicht übertragen",
-        "Ne sont pas transmis à l’App Mobile": "Werden nicht an die Mobile App übertragen"
-    },
-    "plugins\/mobile\/desktop\/modal\/fivePage.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "Fonctionnement de la Géolocalisation": "So funktioniert Geolokalisierung",
-        "On ajoute une zone de Géolocalisation": "Wir fügen eine Geolocation-Zone hinzu",
-        "On recherche l'adresse, on nomme la Zone, et on valide": "Wir suchen nach der Adresse, benennen die Zone und validieren",
-        "La zone apparaitra en rouge, signifiant que l'on se trouve pas dans la Zone": "Die Zone wird rot angezeigt, was bedeutet, dass Sie sich nicht in der Zone befinden",
-        "Si vous vous trouvé dans la zone à sa création, elle passera en vert apres quelques secondes": "Wenn Sie sich beim Erstellen in dem Bereich befinden, wird es nach einigen Sekunden grün",
-        "Modifier largueur de la zone": "Zonenbreite ändern",
-        "Ajouter une zone ajoutera dans votre équipement téléphone dans le plugin Mobile une commande binaire, qui pourra nous servir à programmer des actions en fonction de son état.": "Durch das Hinzufügen einer Zone wird Ihrer Telefonanlage im Mobile-Plugin ein binärer Befehl hinzugefügt, mit dem wir Aktionen basierend auf ihrem Zustand programmieren können"
-    },
     "plugins\/mobile\/desktop\/modal\/qrcodev2.php": {
         "AJOUT DE LA BOX SUR VOTRE APPLICATiON MOBILE ": "HINZUFÜGEN DER BOX ZU IHRER MOBILEN APP",
         "Vous pouvez choisir un utilisateur : un QRCode sera généré. Vous pourrez ensuite scanner le QRCode depuis la nouvelle application, et ainsi ajouter cette box à votre application": "Sie können einen Benutzer auswählen: Es wird ein QRCode generiert. Anschließend können Sie den QRCode aus der neuen Anwendung scannen und so dieses Feld zu Ihrer Anwendung hinzufügen",
@@ -71,120 +26,6 @@
         "Erreur Pas d\\'adresse externe (voir configuration de votre Jeedom !)": "Fehler Keine externe Adresse (siehe Konfiguration Ihres Jeedom!)",
         "Erreur Pas d\\'utilisateur selectionné": "Fehler Kein Benutzer ausgewählt"
     },
-    "plugins\/mobile\/desktop\/modal\/thirdPage.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff"
-    },
-    "plugins\/mobile\/desktop\/modal\/wizard.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff"
-    },
-    "plugins\/mobile\/desktop\/modal\/sixPage.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "Personnalisation du Menu": "Menüanpassung",
-        "Vous pouvez personnaliser le Menu de votre WebView via le plugin Mobile ou l'application": "Sie können das Menü Ihres WebView über das Mobile-Plugin oder die Anwendung anpassen",
-        "On clique sur Menu Custom": "Wir klicken auf Menü Benutzerdefiniert",
-        "Une modale s'ouvre et vous propose vos téléphones deja connectés": "Ein Modal öffnet sich und bietet Ihnen Ihre bereits verbundenen Telefone an",
-        "Cliquer sur Configurer Menu sur le téléphone choisi": "Klicken Sie auf dem ausgewählten Telefon auf Menü konfigurieren",
-        "Le nombre d'icônes peut aller de 1 à 4": "Die Anzahl der Symbole kann zwischen 1 und 4 liegen",
-        "En cochant Menu Default, le menu configuré sur ce téléphone devient celui par défaut sur tous vos téléphones": "Wenn Sie „Menüstandard“ aktivieren, wird das auf diesem Telefon konfigurierte Menü zum Standardmenü auf allen Ihren Telefonen",
-        "Via l'application Mobile : si vous avez configuré une box par défaut, alors le Menu Custom apparait dans le menu de l'application": "Über die mobile Anwendung: Wenn Sie ein Standardfeld konfiguriert haben, erscheint das benutzerdefinierte Menü im Anwendungsmenü",
-        "Même principe que via le plugin Mobile": "Gleiches Prinzip wie über das Mobile-Plugin"
-    },
-    "plugins\/mobile\/desktop\/modal\/firstPage.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "Pour connecter votre téléphone : il y a 2 méthodes possible": "So verbinden Sie Ihr Telefon: Es gibt 2 mögliche Methoden"
-    },
-    "plugins\/mobile\/desktop\/modal\/update.mobile.php": {
-        "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
-        "Pause": "Pause",
-        "Rechercher": "Suchen nach"
-    },
-    "plugins\/mobile\/desktop\/modal\/plugin.mobile.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "Envoi auprès de l'app mobile": "Senden an die mobile App",
-        "Ce Plugin est entièrement compatible, il ne nécessite aucune action de votre part": "Dieses Plugin ist voll kompatibel und erfordert keine Aktion von Ihrer Seite",
-        "Ce plugin est compatible, penser à vérifier les Types Génériques sur les commandes": "Dieses Plugin ist kompatibel. Denken Sie daran, die generischen Typen der Befehle zu überprüfen",
-        "Activer": "Aktivieren",
-        "Le Plugin n\\'est pas compatible, vous pouvez l\\'activer si vous le souhaitez": "Das Plugin ist nicht kompatibel, Sie können es bei Bedarf aktivieren",
-        "Type Générique du Plugin": "Generischer Plugin-Typ",
-        "Sauvegarder": "Speichern",
-        "Id Cmd": "Id Cmd",
-        "Nom de la Commande": "Name der Bestellung",
-        "Type Générique": "Typ Gattung",
-        "Icône": "Symbol",
-        "Aucun": "Ohne",
-        " . $info['family'] . ": "$ info ['Familie']",
-        "Plugins compatibles": "Kompatible Plugins",
-        "Modifications sauvegardées avec succès": "Änderungen erfolgreich gespeichert",
-        "Sauvegarde effectuée": "Sicherung abgeschlossen"
-    },
-    "plugins\/mobile\/desktop\/modal\/scenario.php": {
-        "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
-        "Scénarios": "Szenarien",
-        "Sauvegarder": "Speichern",
-        "ID": "Identifikation",
-        "Scénario": "Szenario",
-        "Transmis": "Übertragen",
-        "Actions": "Lager",
-        "Envoyer à l\\'application": "An Bewerbung senden"
-    },
-    "plugins\/mobile\/desktop\/modal\/object.mobile.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "Envoyer cette pièce vers l\\'application": "Senden Sie diesen Teil an die Anwendung",
-        "Activer": "Aktivieren",
-        "Type Générique de cet objet": "Generischer Typ dieses Objekts",
-        "Sauvegarder": "Speichern",
-        "Id Cmd": "Id Cmd",
-        "Nom de la Commande": "Name der Bestellung",
-        "Type Générique": "Typ Gattung",
-        "Icône": "Symbol",
-        "Aucun": "Ohne",
-        " . $info['family'] . ": "$ info ['Familie']",
-        "Objets \/ Pièces": "Objekte \/ Stücke",
-        "Modifications sauvegardées avec succès": "Änderungen erfolgreich gespeichert",
-        "Sauvegarde effectuée avec succès": "Speichern erfolgreich abgeschlossen"
-    },
-    "plugins\/mobile\/desktop\/modal\/info_app.mobile.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "JSON valide": "Gültiger json",
-        "Objets \/ Pièces": "Objekte \/ Stücke",
-        "Modules": "Module",
-        "Commandes": "Befehle",
-        "Scénarios": "Szenarien",
-        "Messages": "Nachricht",
-        "Designs": "Design",
-        "Configurations": "Konfigurationen"
-    },
-    "plugins\/mobile\/desktop\/modal\/fiveModal.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "Fonctionnement de la Géolocalisation": "So funktioniert Geolokalisierung",
-        "On ajoute une zone de Géolocalisation": "Wir fügen eine Geolocation-Zone hinzu",
-        "On recherche l'adresse, on nomme la Zone, et on valide": "Wir suchen nach der Adresse, benennen die Zone und validieren",
-        "La zone apparaitra en rouge, signifiant que l'on se trouve pas dans la Zone": "Die Zone wird rot angezeigt, was bedeutet, dass Sie sich nicht in der Zone befinden",
-        "Si vous vous trouvé dans la zone à sa création, elle passera en vert après quelques secondes": "Wenn Sie sich beim Erstellen in dem Bereich befinden, wird es nach einigen Sekunden grün",
-        "Modifier largueur de la zone": "Zonenbreite ändern",
-        "Ajouter une zone ajoutera dans votre équipement téléphone dans le plugin Mobile une commande binaire, qui pourra vous servir à programmer des actions en fonction de son état.": "Durch das Hinzufügen einer Zone wird Ihrer Telefonanlage im Mobile-Plugin ein binärer Befehl hinzugefügt, mit dem Sie Aktionen basierend auf ihrem Zustand programmieren können"
-    },
-    "plugins\/mobile\/desktop\/modal\/fourPage.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "Pour acceder aux fonctionnalités comme les Notifications, la Personnalisation du Menu ou la Géolocalisation, il faut au préalable avoir selectionné au moins une box 'actuelle": "Um auf Funktionen wie Benachrichtigungen, Menüpersonalisierung oder Geolokalisierung zugreifen zu können, müssen Sie zunächst mindestens ein aktuelles Feld ausgewählt haben",
-        "Pour cela, dans l'onglet Boxs, il faut selectionner une box, et s'identifier.": "Dazu müssen Sie im Reiter „Boxen“ eine Box auswählen und sich identifizieren",
-        "Une fois les identifiants entrés, la box passe en haut de liste.": "Sobald die Kennungen eingegeben wurden, wird das Feld an den Anfang der Liste verschoben",
-        "Si elle répond au ping, elle a un voyant vert": "Wenn es auf den Ping reagiert, zeigt es grünes Licht",
-        "On peut cliquer sur Synchroniser pour mettre à jour le statut des boxs": "Sie können auf „Synchronisieren“ klicken, um den Status der Boxen zu aktualisieren",
-        "Pour acceder a toutes les fonctionnalités, il faut cliquer sur la box configurée; cela permettra à l'application de recuperer ses informations, et donc autoriser les affichages du menu.": "Um auf alle Funktionen zuzugreifen, müssen Sie auf das konfigurierte Feld klicken. Dadurch kann die Anwendung ihre Informationen abrufen und somit die Menüanzeigen autorisieren",
-        "Menu Complet": "Volles Menü"
-    },
-    "plugins\/mobile\/desktop\/modal\/modal.previousMenus.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "Équipement": "Ausrüstung",
-        "Type de Mobile": "Mobiler Typ",
-        "Utilisateur": "Benutzer",
-        "Menu Enregistrés": "Menü gespeichert",
-        "Aucun menu enregistré": "Kein gespeichertes Menü",
-        "APPLICATION V2 NON INTALLÉE": "ANWENDUNG V2 NICHT INSTALLIERT",
-        "Utilisateur non trouvé": "Benutzer nicht gefunden",
-        "Configuration Menu Enregistrée": "Gespeicherte Menükonfiguration"
-    },
     "plugins\/mobile\/desktop\/php\/widgetLight.php": {
         "401 - Accès non autorisé": "401 – Unbefugter Zugriff"
     },
@@ -194,24 +35,18 @@
         "Configuration": "Konfiguration",
         "Gestion Mobiles": "Mobiles Management",
         "QR Code": "QR-Code",
-        "Sauvegardes Menu Custom Mobile": "Backups-Menü, benutzerdefiniert, mobil",
-        "Documentation APP": "APP-Dokumentation",
         "Mes Téléphones Mobiles": "Meine Handys",
         "Rechercher": "Suchen nach",
         "Équipement visible": "Sichtbare Ausrüstung",
         "Équipement non visible": "Ausrüstung nicht sichtbar",
+        "Pour ajouter un téléphone, il y a 2 méthodes possible :": "Um ein Telefon hinzuzufügen, gibt es zwei Möglichkeiten:",
+        "Sur le premier écran de l\\'application, il vous est proposé de connecter votre compte market, et ainsi de retrouver toutes les boxs associées à ce compte, ou bien simplement ajouter une box.": "Auf dem ersten Bildschirm der Anwendung werden Sie aufgefordert, Ihr Marktkonto zu verbinden und so alle mit diesem Konto verknüpften Boxen zu finden, oder einfach eine Box hinzuzufügen",
         "App V1": "Anwendung V1",
-        "Ajouter": "Hinzufügen",
-        "Plugins": "Plugins",
-        "Objets\/Pièces": "Artikel\/Teile",
-        "Scénarios": "Szenarien",
-        "Régénérer la configuration": "Konfiguration neu generieren",
+        "Attention, en beta il n'est plus possible d'utiliser l'APP V1": "Bitte beachten Sie, dass es in der Betaversion nicht mehr möglich ist, die APP V1 zu verwenden",
         "Configuration avancée": "Erweiterte Konfiguration",
-        "Infos envoyées à l'app": "Info an die App gesendet",
         "Sauvegarder": "Speichern",
         "Supprimer": "Löschen",
         "Mobile": "Handy",
-        "Sauvegarde Mobile": "Mobile Backup",
         "Commandes": "Befehle",
         "Paramètres généraux": "Allgemeine Einstellungen",
         "Nom de l'équipement": "Ausrüstungsname",
@@ -222,32 +57,17 @@
         "Activer": "Aktivieren",
         "Visible": "Sichtbar",
         "Paramètres spécifiques": "Spezifische Einstellungen",
+        "Verrouiller le menu géolocalisation": "Geolokalisierungsmenü sperren",
+        "Verrouiller le menu custom": "Benutzerdefiniertes Menü sperren",
+        "Informations": "Information",
         "Type de Mobile": "Mobiler Typ",
-        "iPhone": "iphone",
-        "Android": "Androide",
-        "Windows (non officiel)": "Windows (inoffiziell)",
         "Utilisateur": "Benutzer",
-        "QRCode": "QR-Code",
-        "Notifications": "Benachrichtigungen",
-        "Id Mobile": "IdMobile",
-        "Iq": "Iq",
+        "Iq Mobile": "Iq Mobile",
         "TOKEN Mobile": "TOKEN Mobil",
-        "TOKEN": "ZEICHEN",
-        "ARN Mobile": "ARN Mobile",
-        "ARN": "RNA",
-        "ARN pour Monitoring": "ARN zur Überwachung",
-        "Sauvegarde": "Sicherung",
-        "Sauvegarde Dashboard": "Dashboard-Sicherung",
-        "Vérification en Cours": "Überprüfung läuft",
-        "Sauvegarde Favoris": "Favoriten speichern",
         "Nom": "Name",
         "Type": "Typ",
         "Valeur": "Wert",
         "Actions": "Aktionen"
-    },
-    "plugins\/mobile\/desktop\/php\/modalConfigPlugin.php": {
-        "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
-        "Pas de configuration sur ce plugin": "Keine Konfiguration für dieses Plugin"
     },
     "plugins\/mobile\/desktop\/php\/widgetSlider.php": {
         "401 - Accès non autorisé": "401 – Unbefugter Zugriff",
@@ -261,21 +81,9 @@
         "Température": "Temperatur"
     },
     "plugins\/mobile\/desktop\/js\/mobile.js": {
-        "Plugins compatibles - Application V1": "Kompatible Plugins – Anwendung V1",
-        "Objets \/ Pièces - Application V1": "Objekte \/ Teile - Anwendung V1",
-        "Scénarios  - Application V1": "Szenarien – Anwendung V1",
         "Informations envoyées à l'app": "Informationen an die App gesendet",
         "Gestion des Mobiles": "Mobiles Management",
         "QrCode": "QR-Code",
-        "Bien demarrer": "Einen guten Start hinlegen",
-        "Scénarios - Application V1": "Szenarien – Anwendung V1",
-        "Menu Custom": "Benutzerdefiniertes Menü",
-        "Configuration Mobile de la Pièce - Application V1": "Mobile Raumkonfiguration – Anwendung V1",
-        "Menus enregistrés": "Gespeicherte Menüs",
-        "Erreur pas d'adresse interne (voir configuration de votre Jeedom !)": "Kein interner Adressfehler (siehe Konfiguration Ihres Jeedom!)",
-        "Erreur pas d'adresse externe (voir configuration de votre Jeedom !)": "Kein externer Adressfehler (siehe Konfiguration Ihres Jeedom!)",
-        "Erreur pas d'utilisateur selectionné": "Fehler: Kein Benutzer ausgewählt",
-        "Configuration mise à jour": "Aktualisierte Konfiguration",
         "Nom de la commande": "Befehlsname",
         "Choisir une icône": "Wählen Sie ein Symbol",
         "Afficher": "Anzeige",
@@ -291,15 +99,19 @@
         "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
         "Equipement non trouvé : ": "Ausrüstung nicht gefunden:",
         "User inexistant : ": "Nicht vorhandener Benutzer:",
-        "scenario non trouvé": "Szenario nicht gefunden",
         "Aucune methode correspondante à : ": "Keine Methode entsprechend:"
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {
         "Les quotas pour fcm sont dépassés. Le maximum autorisé est de 5 requêtes par minute.": "Die Kontingente für fcm sind überschritten. Es sind maximal 5 Anfragen pro Minute zulässig",
         "Echec de l\\'envoi de la notification :": "Benachrichtigung konnte nicht gesendet werden:",
-        "$geoloc['id'] . '-' . $geoloc['name']": "$geoloc['id'] . '-' . $geoloc['name']",
+        "Échec de l'envoi de notification : la version 1 de l'app n'est plus prise en charge !": "Benachrichtigung konnte nicht gesendet werden: Version 1 der App wird nicht mehr unterstützt!",
+        "Batterie du téléphone": "Telefonbatterie",
+        "En charge": "Verantwortlich",
+        "Coordonnées": "Kontaktdaten",
         "Notification": "Benachrichtigung",
-        "Notification Critique": "Kritische Benachrichtigung"
+        "Notification Critique": "Kritische Benachrichtigung",
+        "Récupérer les informations du téléphone": "Telefoninformationen wiederherstellen",
+        "Supprimer les Notifications": "Benachrichtigungen löschen"
     },
     "plugins\/mobile\/core\/template\/widgets.html": {
         "Couleur de l'indicateur de valeur": "Farbe des Wertindikators",
@@ -314,13 +126,12 @@
         "EqLogic inconnu : ": "Unbekanntes EqLogic:",
         "Cmd inconnu : ": "Unbekannter Befehl:",
         "| [ERROR] EqLogic inconnu : ": "| [FEHLER] Unbekannte EqLogic:",
-        "pas d\\'id : ": "keine ID:",
-        "| [ERROR] Paramètre Iq inexistant !": "| [FEHLER] Iq-Parameter existiert nicht!",
         "| Pas de paramètre de geofencing": "| Keine Geofencing-Einstellungen",
+        "| [ERROR] Paramètre Iq inexistant !": "| [FEHLER] Iq-Parameter existiert nicht!",
         "Aucune demande": "Keine Anfrage",
         "Aucun": "Keiner"
     },
     "info.json": {
-        "Attzltion l'app v1 n'est pas compatible avec le dernier Android. L'application officielle Jeedom permet le pilotage de votre système domotique Jeedom, que ce soit en Wifi local, ou sur le réseau 3G\/4G de votre opérateur.<br\/><br\/>L'app se connecte automatiquement à votre Jeedom avec une initialisation automatique par QRcode, aucune configuration n'est nécessaire. (possibilité de le faire manuellement)<br\/>Vous retrouverez sur votre mobile toutes les fonctionnalités de votre Jeedom.<br\/>Vous pourrez personnaliser votre application avec des raccourcis et plus encore...<br\/><br\/>Fonctionnalités actuelles:<br\/>- Gestion de vos scénarios.<br\/>- Gestion de votre domotique en fonction de vos pièces et équipements.<br\/>- Maj et retour d'état automatique<br\/>- Compatibilité aves les plugins, tel que thermostat, alarme, caméra etc...<br\/>- Interface personnalisable avec les raccourcis.<br\/>- Résumé domotique général et par pièce<br\/>- Notifications (avec prise en charge du ASK)<br\/>- Affichage des Designs <br\/><br\/>D'autres fonctionnalités et compatibilités sont à venir dans les prochaines mises à jour !<br\/><br\/>Respect de la vie privée.<br\/>Aucune donnée (domotique ou personnelle) n'est stockée ou conservée sur nos serveurs.": "Achtung: Die v1-App ist nicht mit dem neuesten Android kompatibel. Mit der offiziellen Jeedom-Anwendung können Sie Ihr Jeedom-Hausautomationssystem steuern, sei es im lokalen WLAN oder im 3G\/4G-Netzwerk Ihres Betreibers.<br\/><br\/> Die App verbindet sich automatisch mit Ihrem Jeedom mit automatischer Initialisierung per QR-Code, eine Konfiguration ist nicht erforderlich. (Möglichkeit, dies manuell zu tun)<br\/> Auf Ihrem Handy finden Sie alle Funktionen Ihres Jeedom.<br\/> Sie können Ihre Anwendung mit Verknüpfungen und mehr anpassen ...<br\/><br\/> Aktuelle Funktionen:<br\/> - Verwaltung Ihrer Szenarien.<br\/> - Verwaltung Ihrer Hausautomation entsprechend Ihren Räumen und Ihrer Ausstattung.<br\/> - Umschalten und automatische Statusrückgabe<br\/> - Kompatibilität mit Plugins wie Thermostat, Alarm, Kamera usw.<br\/> - Anpassbare Benutzeroberfläche mit Verknüpfungen.<br\/> - Allgemeine Zusammenfassung der Hausautomation und nach Raum<br\/> - Benachrichtigungen (mit ASK-Unterstützung)<br\/> - Anzeige von Designs<br\/><br\/> Weitere Funktionen und Kompatibilitäten folgen in zukünftigen Updates!<br\/><br\/> Privatsphäre.<br\/> Auf unseren Servern werden keine Daten (hausautomatische oder persönliche) gespeichert oder gespeichert"
+        "Attention : la version BETA ne supporte plus l'app V1, elle est réservée à la nouvelle app V2 (beta actuellement). Nécessite Android14 ou IOS 12.4 minimum.<br\/><br\/>Attention, l'app v1 n'est pas compatible avec le dernier Android. L'application officielle Jeedom permet le pilotage de votre système domotique Jeedom, que ce soit en Wifi local, ou sur le réseau 3G\/4G de votre opérateur.<br\/><br\/>L'app se connecte automatiquement à votre Jeedom avec une initialisation automatique par QRcode, aucune configuration n'est nécessaire. (possibilité de le faire manuellement)<br\/>Vous retrouverez sur votre mobile toutes les fonctionnalités de votre Jeedom.<br\/>Vous pourrez personnaliser votre application avec des raccourcis et plus encore...<br\/><br\/>Fonctionnalités actuelles:<br\/>- Gestion de vos scénarios.<br\/>- Gestion de votre domotique en fonction de vos pièces et équipements.<br\/>- Maj et retour d'état automatique<br\/>- Compatibilité aves les plugins, tel que thermostat, alarme, caméra etc...<br\/>- Interface personnalisable avec les raccourcis.<br\/>- Résumé domotique général et par pièce<br\/>- Notifications (avec prise en charge du ASK)<br\/>- Affichage des Designs <br\/><br\/>D'autres fonctionnalités et compatibilités sont à venir dans les prochaines mises à jour !<br\/><br\/>Respect de la vie privée.<br\/>Aucune donnée (domotique ou personnelle) n'est stockée ou conservée sur nos serveurs.": "Bitte beachten Sie: Die BETA-Version unterstützt die V1-App nicht mehr, sie ist für die neue V2-App (derzeit Beta) reserviert. Erfordert mindestens Android14 oder IOS 12.4.<br\/><br\/> Bitte beachten Sie, dass die v1-App nicht mit dem neuesten Android kompatibel ist. Mit der offiziellen Jeedom-Anwendung können Sie Ihr Jeedom-Hausautomationssystem steuern, sei es über lokales WLAN oder über das 3G\/4G-Netzwerk Ihres Betreibers.<br\/><br\/> Die App verbindet sich automatisch mit Ihrem Jeedom mit automatischer Initialisierung per QR-Code, eine Konfiguration ist nicht erforderlich. (Möglichkeit, dies manuell zu tun)<br\/> Sie finden alle Funktionen Ihres Jeedom auf Ihrem Handy.<br\/> Sie können Ihre Anwendung mit Verknüpfungen und mehr personalisieren ...<br\/><br\/> Aktuelle Funktionen:<br\/> - Verwaltung Ihrer Szenarien.<br\/> - Verwaltung Ihrer Hausautomation entsprechend Ihren Räumen und Ihrer Ausstattung.<br\/> - Automatische Statusverschiebung und -rückkehr<br\/> - Kompatibilität mit Plugins wie Thermostat, Alarm, Kamera usw.<br\/> - Anpassbare Benutzeroberfläche mit Verknüpfungen.<br\/> - Allgemeine Zusammenfassung der Hausautomation und nach Raum<br\/> - Benachrichtigungen (mit ASK-Unterstützung)<br\/> - Anzeige von Designs<br\/><br\/> Weitere Funktionen und Kompatibilität folgen in zukünftigen Updates!<br\/><br\/> Respekt vor der Privatsphäre.<br\/> Auf unseren Servern werden keine Daten (hausautomatische oder persönliche) gespeichert oder aufbewahrt"
     }
 }

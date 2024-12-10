@@ -20,7 +20,6 @@ if (!isConnect('admin')) {
 }
 
 $eqLogics = mobile::byType('mobile');
-
 ?>
 
 <table class="table table-condensed tablesorter" id="table_menuCustom">
@@ -35,8 +34,6 @@ $eqLogics = mobile::byType('mobile');
   </thead>
   <tbody>
     <?php
-    $idEqlogicMobile = intval(config::byKey('checkdefaultID', 'mobile'));
-
     foreach ($eqLogics as $eqLogic) {
       $activeMobileId = $eqLogic->getConfiguration('defaultIdMobile', 'none');
       $userId = $eqLogic->getConfiguration('affect_user');
@@ -60,7 +57,7 @@ $eqLogics = mobile::byType('mobile');
           echo '<option value="default" ' . ($activeMobileId === 'default' ? 'selected' : '') . '>{{Menu par défaut}}</option>';
           foreach ($eqLogics as $mobileToChoose) {
             if ($mobileToChoose->getConfiguration('appVersion') == 2) {
-              echo '<option value="' . $mobileToChoose->getId() . '" eqIdMobile="' . $eqLogic->getId() . '" ' . ($activeMobileId === $mobileToChoose->getId() ? 'selected' : '') . '>' . $mobileToChoose->getHumanName(true) . '</option>';
+              echo '<option value="' . $mobileToChoose->getId() . '" eqIdMobile="' . $eqLogic->getId() . '" ' . ($activeMobileId == $mobileToChoose->getId() ? 'selected' : '') . '>' . $mobileToChoose->getHumanName(false) . '</option>';
             }
           }
           echo '</select></td>';
@@ -86,21 +83,15 @@ $eqLogics = mobile::byType('mobile');
   </tbody>
 </table>
 
-<div class="warningV2" style="display:none;"></div>
-
-
-
 <script>
-  var selects = document.querySelectorAll('.menuDefault');
-
-
+  var selects = document.querySelectorAll('.menuDefault')
   selects.forEach(function(select) {
     select.addEventListener('change', function() {
-      var selectedValue = this.value;
-      var eqIdMobile = this.getAttribute("eqIdMobile");
-      console.log("Valeur sélectionnée : " + selectedValue);
-      console.log("eqIdMobile : " + eqIdMobile);
-      $.ajax({
+      var selectedValue = this.value
+      var eqIdMobile = this.getAttribute("eqIdMobile")
+      console.log("Valeur sélectionnée : " + selectedValue)
+      console.log("eqIdMobile : " + eqIdMobile)
+      domUtils.ajax({
         type: "POST",
         url: "plugins/mobile/core/ajax/mobile.ajax.php",
         data: {
@@ -111,127 +102,16 @@ $eqLogics = mobile::byType('mobile');
         dataType: 'json',
         global: false,
         error: function(request, status, error) {
-          handleAjaxError(request, status, error);
+          domUtils.handleAjaxError(request, status, error)
         },
         success: function(data) {
           if (data.state != 'ok') {
-            $('#div_alert').showAlert({
-              message: data.result,
-              level: 'danger'
-            });
-            return;
+            jeedomUtils.showAlert({ message: data.result, level: "danger"})
+            return
           }
-
-          $('#div_alert').showAlert({
-            message: '{{Configuration Menu Enregistrée}}',
-            level: 'success'
-          });
-
+          jeedomUtils.showAlert({ message: '{{Configuration Menu Enregistrée}}', level: "success"})
         }
-      });
-    });
-  });
+      })
+    })
+  })
 </script>
-
-
-<style>
-  .hiddenEl {
-    display: none;
-  }
-
-  .visibleEL {
-    display: block;
-  }
-
-
-  .nameIconNoActive {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .container {
-    display: flex;
-    height: 100%;
-    width: 75vw;
-  }
-
-  .panelContainer {
-    display: flex;
-    justify-content: center;
-  }
-
-  .panelCustomMenuMobile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 25%;
-    border: solid #93ca02;
-    !important;
-    border-width: 0 2px;
-    height: 40vh;
-    border-radius: 50px;
-    color: #fff;
-    cursor: pointer;
-    flex: 0.5;
-    margin: 10px;
-    position: relative;
-    -webkit-transition: all 400ms ease-in;
-  }
-
-  .panelCustomMenuMobile:hover {
-    background-color: #93ca02;
-    !important;
-
-  }
-
-  .panelCustomMenuMobile h3 {
-    font-size: 24px;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    margin: 0;
-    opacity: 0.5;
-  }
-
-  .panelCustomMenuMobile.active {
-    flex: 4;
-    background-color: #93ca02 !important;
-  }
-
-  .btnValidate.active {
-    display: block;
-  }
-
-  .btnValidate {
-    display: none;
-
-  }
-
-  .panelCustomMenuMobile.active h3 {
-    opacity: 1;
-    transition: opacity 0.3s ease-in 0.4s;
-  }
-
-  .panelCustomMenuMobile.active h6 {
-    display: none;
-  }
-
-  @media (max-width: 480px) {
-    .container {
-      width: 50vw;
-    }
-
-    .panelCustomMenuMobile:nth-of-type(4),
-    .panelCustomMenuMobile:nth-of-type(5) {
-      display: none;
-    }
-
-  }
-</style>
-
-<?php
-
-include_file('desktop', 'mobile', 'js', 'mobile');
-include_file('core', 'plugin.template', 'js');

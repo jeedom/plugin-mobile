@@ -38,9 +38,7 @@ class bellaMobile extends eqLogic
         }
     }
 
-    function syncBella()
-    {
-    }
+    function syncBella() {}
 
     public static function jsonBella()
     {

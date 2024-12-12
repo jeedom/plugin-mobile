@@ -1031,7 +1031,7 @@ class mobile extends eqLogic
 			$cmd->setEqLogic_id($this->getId());
 			$cmd->setType('action');
 			$cmd->setSubType('select');
-			$listValue = "1|Supprimer tous les Notifications;2|Supprimer les Asks expirés;3|Supprimer les Asks répondus";
+			$listValue = "1|" . __('Supprimer toutes les Notifications', __FILE__) . ";2|" . __('Supprimer les Asks expirés', __FILE__) . ";3|" . __('Supprimer les Asks répondus', __FILE__);
 			$cmd->setConfiguration('listValue', $listValue);
 			if ($cmd->getChanged() === true) $cmd->save();
 		}

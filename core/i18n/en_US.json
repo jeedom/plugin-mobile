@@ -111,7 +111,10 @@
         "Notification": "Notification",
         "Notification Critique": "Critical Notification",
         "Récupérer les informations du téléphone": "Retrieve phone information",
-        "Supprimer les Notifications": "Delete Notifications"
+        "Supprimer les Notifications": "Delete Notifications",
+        "Supprimer toutes les Notifications": "Delete All Notifications",
+        "Supprimer les Asks expirés": "Delete Expired Asks",
+        "Supprimer les Asks répondus": "Delete answered Asks"
     },
     "plugins\/mobile\/core\/template\/widgets.html": {
         "Couleur de l'indicateur de valeur": "Value indicator color",

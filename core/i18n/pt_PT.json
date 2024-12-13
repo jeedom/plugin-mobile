@@ -111,7 +111,10 @@
         "Notification": "Notificação",
         "Notification Critique": "Notificação Crítica",
         "Récupérer les informations du téléphone": "Recuperar informações do telefone",
-        "Supprimer les Notifications": "Excluir notificações"
+        "Supprimer les Notifications": "Excluir notificações",
+        "Supprimer toutes les Notifications": "Excluir todas as notificações",
+        "Supprimer les Asks expirés": "Excluir perguntas expiradas",
+        "Supprimer les Asks répondus": "Excluir perguntas respondidas"
     },
     "plugins\/mobile\/core\/template\/widgets.html": {
         "Couleur de l'indicateur de valeur": "Cor do indicador de valor",

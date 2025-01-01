@@ -519,7 +519,6 @@ class mobile extends eqLogic
 				$arrayObjects = explode('_', $objectId);
 				$objectId = $arrayObjects[0];
 				$typeObject = $arrayObjects[1];
-
 				$typewebviewurl = $webviewUrl;
 				$typeobjectId = $objectId;
 
@@ -821,6 +820,7 @@ class mobile extends eqLogic
 						$cmd->setType('info');
 						$cmd->setSubType('numeric');
 						if ($cmd->getChanged() === true) $cmd->save();
+						log::add('mobile', 'debug', '|  OK  phoneBattery = ' . $params[$_trigger]['battery']['level'] * 100);
 						$this->checkAndUpdateCmd('phoneBattery', $params[$_trigger]['battery']['level'] * 100);
 					}
 					// charging
@@ -845,6 +845,7 @@ class mobile extends eqLogic
 						$cmd->setType('info');
 						$cmd->setSubType('binary');
 						if ($cmd->getChanged() === true) $cmd->save();
+						log::add('mobile', 'debug', '|  OK  phoneCharging = ' . intval($params[$_trigger]['battery']['is_charging']));
 						$this->checkAndUpdateCmd('phoneCharging', intval($params[$_trigger]['battery']['is_charging']));
 					}
 				}
@@ -871,6 +872,7 @@ class mobile extends eqLogic
 						$cmd->setType('info');
 						$cmd->setSubType('string');
 						if ($cmd->getChanged() === true) $cmd->save();
+						log::add('mobile', 'debug', '|  OK  coords = ' . $params[$_trigger]['coords']['latitude'] . ',' . $params[$_trigger]['coords']['longitude']);
 						$this->checkAndUpdateCmd('coords', $params[$_trigger]['coords']['latitude'] . ',' . $params[$_trigger]['coords']['longitude']);
 					}
 				}

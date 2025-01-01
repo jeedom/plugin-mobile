@@ -527,9 +527,8 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 	if (is_object($mobile)) {
 		if (isset($params['transmition']) && isset($params['transmition']['extras']) && isset($params['transmition']['extras']['method'])) {
 			if ($params['transmition']['extras']['method'] == 'getDeviceInformations') {
-				log::add('mobile', 'debug', '|┌─────▶︎ methodeForSpecificChannel in Background ──────────────────────');
+				log::add('mobile', 'debug', '| ───:fg-success: methodeForSpecificChannel in Background :/fg: ───');
 				$mobile->cmdForSpecificChannel($params, 'transmition');
-				log::add('mobile', 'debug', '|└───────────────────────────────────────────');
 			}
 		} else if (isset($params['transmition']) && isset($params['transmition']['event']) && $params['transmition']['event'] == 'geofence') {
 			log::add('mobile', 'debug', '| Event > ' . $params['transmition']['event']);

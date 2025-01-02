@@ -507,8 +507,10 @@ class mobile extends eqLogic
 	 * Call by configMenuCustom()
 	 * @return array
 	 */
-	public static function generateTypeObject($objectId, $i, $webviewUrl, $pluginPanelMobile)
+	public static function generateTypeObject($pluginPanelMobile, $menuCustomArray)
 	{
+		$webviewUrl = 'd';
+		$objectId = isset($menuCustomArray['selectNameMenu']) ? $menuCustomArray['selectNameMenu'] : '';
 		$result = array();
 		if ($objectId && $objectId != -1 && $objectId != 'none' && $objectId != 'url') {
 			// SPECIFIC OBJETS FOR URL
@@ -517,7 +519,6 @@ class mobile extends eqLogic
 				$arrayObjects = explode('_', $objectId);
 				$objectId = $arrayObjects[0];
 				$typeObject = $arrayObjects[1];
-
 				$typewebviewurl = $webviewUrl;
 				$typeobjectId = $objectId;
 
@@ -567,7 +568,7 @@ class mobile extends eqLogic
 			$typeObject = $objectId;
 			$typewebviewurl = $webviewUrl;
 			$typeobjectId = 'url';
-			$tabUrl = $menuCustomArray[$i]['urlUser'];
+			$tabUrl = $menuCustomArray['urlUser'];
 		} else {
 			$typeObject = $objectId;
 			$typewebviewurl = 'm';
@@ -667,13 +668,14 @@ class mobile extends eqLogic
 			$tabLibName = $resultTabIcon['tabLibName'];
 			$tabRenameInput = $resultTabIcon['tabRenameInput'];
 			//$objectId = $menuCustomArray[$i]['selectNameMenu'];
-			$objectId = isset($menuCustomArray[$i]['selectNameMenu']) ? $menuCustomArray[$i]['selectNameMenu'] : '';
+			//$objectId = isset($menuCustomArray[$i]['selectNameMenu']) ? $menuCustomArray[$i]['selectNameMenu'] : '';
 			$isActive = true;
-			$webviewUrl = 'd';
-			if (!empty($objectId)) log::add('mobile', 'debug', '|| - objectId > ' . $objectId);
+			//$webviewUrl = 'd';
+			//if (!empty($objectId)) log::add('mobile', 'debug', '|| - objectId > ' . $objectId);
 
 			// GENERATE URLS FOR MENU CUSTOM 
-			$result = self::generateTypeObject($objectId, $i, $webviewUrl, $pluginPanelMobile);
+			//$result = self::generateTypeObject($objectId, $i, $webviewUrl, $pluginPanelMobile);
+			$result = self::generateTypeObject($pluginPanelMobile, $menuCustomArray[$i]);
 			$typeObject = $result['typeObject'];
 			$typewebviewurl = $result['typewebviewurl'];
 			$typeobjectId = $result['typeobjectId'];
@@ -818,6 +820,7 @@ class mobile extends eqLogic
 						$cmd->setType('info');
 						$cmd->setSubType('numeric');
 						if ($cmd->getChanged() === true) $cmd->save();
+						log::add('mobile', 'debug', '|  OK  phoneBattery = ' . $params[$_trigger]['battery']['level'] * 100);
 						$this->checkAndUpdateCmd('phoneBattery', $params[$_trigger]['battery']['level'] * 100);
 					}
 					// charging
@@ -842,6 +845,7 @@ class mobile extends eqLogic
 						$cmd->setType('info');
 						$cmd->setSubType('binary');
 						if ($cmd->getChanged() === true) $cmd->save();
+						log::add('mobile', 'debug', '|  OK  phoneCharging = ' . intval($params[$_trigger]['battery']['is_charging']));
 						$this->checkAndUpdateCmd('phoneCharging', intval($params[$_trigger]['battery']['is_charging']));
 					}
 				}
@@ -868,6 +872,7 @@ class mobile extends eqLogic
 						$cmd->setType('info');
 						$cmd->setSubType('string');
 						if ($cmd->getChanged() === true) $cmd->save();
+						log::add('mobile', 'debug', '|  OK  coords = ' . $params[$_trigger]['coords']['latitude'] . ',' . $params[$_trigger]['coords']['longitude']);
 						$this->checkAndUpdateCmd('coords', $params[$_trigger]['coords']['latitude'] . ',' . $params[$_trigger]['coords']['longitude']);
 					}
 				}

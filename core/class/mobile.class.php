@@ -675,7 +675,7 @@ class mobile extends eqLogic
 
 			// GENERATE URLS FOR MENU CUSTOM 
 			//$result = self::generateTypeObject($objectId, $i, $webviewUrl, $pluginPanelMobile);
-			$result = self::generateTypeObject($pluginPanelMobile, $menuCustomArray[$i]);
+			$result = self::generateTypeObject($pluginPanelMobile, isset($menuCustomArray[$i]) ? $menuCustomArray[$i] : '');
 			$typeObject = $result['typeObject'];
 			$typewebviewurl = $result['typewebviewurl'];
 			$typeobjectId = $result['typeobjectId'];
@@ -902,7 +902,7 @@ class mobile extends eqLogic
 						if (!unlink($image)) {
 							log::add('mobile', 'error', 'Erreur lors de la suppression de: ' . $image);
 						} else {
-							log::add('mobile', 'debug', '| -> suppression image > ' . $image);
+							log::add('mobile', 'debug', '| ─▶︎ :fg-danger:suppression image:/fg: > ' . $image);
 						}
 					}
 				}
@@ -924,7 +924,7 @@ class mobile extends eqLogic
 				foreach ($notifications as $id => $value) {
 					$notificationDate = strtotime($value['data']['date']);
 					if (($currentTime - $notificationDate) > $retentionSeconds) {
-						log::add('mobile', 'debug', '| -> suppression notification > N°' . $id);
+						log::add('mobile', 'debug', '| ─▶︎ :fg-danger:suppression notification:/fg: > N°' . $id);
 						unset($notifications[$id]);
 						$notificationsModified = true;
 					}

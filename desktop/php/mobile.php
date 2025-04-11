@@ -210,6 +210,15 @@ foreach ($eqLogics as $eqLogic) {
 									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="hideMenuCustom">
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">{{NFC : Envoi direct}}  <sup><i class="fa fa-question-circle tooltips" title="Envoyer directement les informations du Tag au plugin Mobile"></i></sup></label>
+								<div class="col-sm-2">
+									<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="sendNFCDirectly">
+										<option value="0">{{Non}}</option>
+										<option value="1">{{Oui}}</option>
+									</select>
+								</div>
+							</div>
 						</div>
 						<div class="col-lg-6">
 							<legend><i class="fas fa-mobile-alt"></i> {{Informations}}</legend>

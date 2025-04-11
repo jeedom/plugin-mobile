@@ -345,10 +345,12 @@ if ($jsonrpc->getMethod() == 'getJson') {
 		$return[$idBox]['configs']['menu'] = $mobile->configMenuCustom();
 		$return[$idBox]['miscellanousParams']['hideMenuCustom'] = intval($mobile->getConfiguration('hideMenuCustom', 0));
 		$return[$idBox]['miscellanousParams']['hideMenuGeoloc'] = intval($mobile->getConfiguration('hideMenuGeoloc', 0));
+		$return[$idBox]['miscellanousParams']['sendNFCDirectly'] = intval($mobile->getConfiguration('sendNFCDirectly', 1));
 	} else {
 		$return[$idBox]['configs']['menu'] = mobile::getMenuDefaultTab();
 		$return[$idBox]['miscellanousParams']['hideMenuCustom'] = 0;
 		$return[$idBox]['miscellanousParams']['hideMenuGeoloc'] = 0;
+		$return[$idBox]['miscellanousParams']['sendNFCDirectly'] = intval($mobile->getConfiguration('sendNFCDirectly', 1));
 	}
 	log::add('mobile', 'debug', '| [INFO] CustomENVOICONFIGSAPI GETJSON > ' . json_encode($return[$idBox]['configs']));
 	log::add('mobile', 'debug', '| [INFO] Retour vers App > ' . json_encode($return));

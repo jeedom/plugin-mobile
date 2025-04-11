@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog App Mobile": "Changelog Mobile App",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "As a reminder if there is no information on the update, it means that it only concerns the updating of documentation, translation or text",
+        "11\/04\/2025": "",
+        "Ajout paramètre Envoi NFC Direct au plugin après lecture": "",
         "App V1": "App V1",
         "Attention, à partir de cette version, l'appV1 n'est plus prise en charge": "Please note, from this version, appV1 is no longer supported",
         "Il sera toujours possible d'accéder à votre équipement, pour éventuellement, remplacer vos commandes de géolocalisation et de notification": "It will still be possible to access your equipment, to possibly replace your geolocation and notification controls",

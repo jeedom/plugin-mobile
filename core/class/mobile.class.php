@@ -423,11 +423,11 @@ class mobile extends eqLogic
 	 * Get menu default whitout "tab"
 	 * @return array
 	 */
-	public static function getMenuDefaultV2($nbIcones = 3)
+	public static function getMenuDefaultV2($nbIcones = 8)
 	{
-		$namesMenus =  ['home', 'overview', 'health', 'home'];
-		$renamesIcons =  ['Accueil', 'Synthese', 'Santé', 'Accueil'];
-		$spanIcons =  ['icon jeedomapp-in', 'fab fa-hubspot', 'fas fa-medkit', 'icon jeedomapp-in'];
+		$namesMenus =  ['home', 'overview', 'health', 'home', 'home', 'home', 'home', 'home'];
+		$renamesIcons =  ['Accueil', 'Synthese', 'Santé', 'Accueil', 'Accueil', 'Accueil', 'Accueil', 'Accueil'];
+		$spanIcons =  ['icon jeedomapp-in', 'fab fa-hubspot', 'fas fa-medkit', 'icon jeedomapp-in', 'icon jeedomapp-in', 'icon jeedomapp-in', 'icon jeedomapp-in', 'icon jeedomapp-in'];
 		$urlUsers =  ['none', 'none', 'none', 'none'];
 		$j = 0;
 		$menuCustomArray = [];
@@ -546,7 +546,7 @@ class mobile extends eqLogic
 						$tabUrl = "/index.php?v={$webviewUrl}&p=dashboard&object_id={$objectId}";
 						break;
 					case 'plan':
-						$tabUrl = "/index.php?v={$webviewUrl}&p=plan&plan_id={$objectId}";
+						$tabUrl = "/index.php?v={$webviewUrl}&p=plan&fullscreen=1&plan_id={$objectId}";
 						break;
 					case 'panel':
 						$tabUrl = (isset($pluginPanelMobile[$objectId]) && $pluginPanelMobile[$objectId] == $objectId) ? "/index.php?v=m&p={$objectId}" : "/index.php?v=m&p={$objectId}&app_mode=1";
@@ -676,7 +676,7 @@ class mobile extends eqLogic
 		$arrayElements = array();
 		$j = 0;
 		$count = 1;
-		for ($i = 1; $i < 5; $i++) {
+		for ($i = 1; $i < 9; $i++) {
 
 			// GENERATE TAB ICON LIBRARY AND RENAME BY USER
 			$resultTabIcon = self::generateTabIcon($menuCustomArray, $i);

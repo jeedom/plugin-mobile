@@ -35,7 +35,7 @@ if ($params['Iq']) {
 	if (mobile::whoIsIq($params['Iq']) == 'mobile non detecte') {
 		//createMobile($params, 3);
 		log::add('mobile', 'debug', '| [WARNING] mobile non detecté !');
-		createMobile($params, 3);
+		createMobile($params, 8);
 	} else {
 		log::add('mobile', 'debug', '| Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));
 	}
@@ -50,7 +50,7 @@ log::add('mobile', 'debug', '└────────────────
  * @param array 
  * @return new object
  */
-function createMobile($params, $nbIcones = 3)
+function createMobile($params, $nbIcones = 8)
 {
 	$configs = $params['configs'];
 	$notification = $configs['notification'];
@@ -137,7 +137,7 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 		$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	}
 	if (!is_object($mobile)) {
-		$mobile = createMobile($params, 3);
+		$mobile = createMobile($params,8);
 	}
 	$mobile->setConfiguration('type_mobile', $notification['platform']);
 	if (isset($notification['token'])) {

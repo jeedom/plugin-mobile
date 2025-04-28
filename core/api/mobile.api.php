@@ -35,7 +35,6 @@ if ($params['Iq']) {
 	if (mobile::whoIsIq($params['Iq']) == 'mobile non detecte') {
 		//createMobile($params, 3);
 		log::add('mobile', 'debug', '| [WARNING] mobile non detecté !');
-		createMobile($params, 3);
 	} else {
 		log::add('mobile', 'debug', '| Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));
 	}

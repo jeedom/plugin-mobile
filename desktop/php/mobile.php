@@ -32,6 +32,10 @@ foreach ($eqLogics as $eqLogic) {
 				<i class="fas fa-qrcode"></i><br>
 				<span>{{QR Code}}</span>
 			</div>
+			<div class="cursor eqLogicAction logoSecondary" data-action="gridstack" id="gridstack">
+				<i class="fas fa-qrcode"></i><br>
+				<span>{{GridStack}}</span>
+			</div>
 		</div>
 		<legend><i class="fas fa-mobile"></i> {{Mes Téléphones Mobiles}}</legend>
 		<div class="input-group" style="margin:5px;">

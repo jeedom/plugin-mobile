@@ -14,6 +14,16 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
+document.getElementById('gridstack')?.addEventListener('click', function () {
+  jeeDialog.dialog({
+    id: "Webview",
+    title: "{{Parametrage de le la webview}}",
+    fullScreen : true,
+    contentUrl: "index.php?v=d&plugin=mobile&modal=webview"
+  })
+
+})
+
 document.querySelector("#info_app")?.addEventListener("click", function (event) {
   jeeDialog.dialog({
     id: "infosApp",

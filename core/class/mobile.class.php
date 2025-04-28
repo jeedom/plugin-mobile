@@ -425,10 +425,10 @@ class mobile extends eqLogic
 	 */
 	public static function getMenuDefaultV2($nbIcones = 3)
 	{
-		$namesMenus =  ['home', 'overview', 'health', 'home'];
-		$renamesIcons =  ['Accueil', 'Synthese', 'Santé', 'Accueil'];
-		$spanIcons =  ['icon jeedomapp-in', 'fab fa-hubspot', 'fas fa-medkit', 'icon jeedomapp-in'];
-		$urlUsers =  ['none', 'none', 'none', 'none'];
+		$namesMenus =  ['home', 'overview', 'health', 'home', 'home', 'home', 'home', 'home'];
+		$renamesIcons =  ['Accueil', 'Synthese', 'Santé', 'Accueil', 'Accueil', 'Accueil', 'Accueil', 'Accueil'];
+		$spanIcons =  ['icon jeedomapp-in', 'fab fa-hubspot', 'fas fa-medkit', 'icon jeedomapp-in', 'icon jeedomapp-in', 'icon jeedomapp-in', 'icon jeedomapp-in', 'icon jeedomapp-in'];
+		$urlUsers =  ['none', 'none', 'none', 'none', 'none', 'none', 'none', 'none'];
 		$j = 0;
 		$menuCustomArray = [];
 		for ($i = 1; $i <= $nbIcones; $i++) {
@@ -450,7 +450,11 @@ class mobile extends eqLogic
 		$defaultMenuJson = '{"tab0":{"active":true,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&p=home"},"type":"WebviewApp"},
 						"tab1":{"active":true,"icon":{"name":"hubspot","type":"fa"},"name":"Synthese","options":{"uri":"\/index.php?v=m&p=overview"},"type":"WebviewApp"},
 						"tab2":{"active":true"icon":{"name":"medkit","type":"fa"},"name":"Sant\u00e9","options":{"uri":"\/index.php?v=m&p=health"},"type":"WebviewApp"},
-						"tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}}';
+						"tab3":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}},
+						"tab4":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}},
+						"tab5":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}},
+						"tab6":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}},
+						"tab7":{"active":false,"icon":{"name":"in","type":"jeedomapp"},"name":"Accueil","options":{"uri":"\/index.php?v=m&app_mode=1"},"type":"WebviewApp"}}';
 		return json_encode($defaultMenuJson);
 	}
 
@@ -546,7 +550,7 @@ class mobile extends eqLogic
 						$tabUrl = "/index.php?v={$webviewUrl}&p=dashboard&object_id={$objectId}";
 						break;
 					case 'plan':
-						$tabUrl = "/index.php?v={$webviewUrl}&p=plan&plan_id={$objectId}";
+						$tabUrl = "/index.php?v={$webviewUrl}&p=plan&fullscreen=1&plan_id={$objectId}";
 						break;
 					case 'panel':
 						$tabUrl = (isset($pluginPanelMobile[$objectId]) && $pluginPanelMobile[$objectId] == $objectId) ? "/index.php?v=m&p={$objectId}" : "/index.php?v=m&p={$objectId}&app_mode=1";
@@ -676,7 +680,7 @@ class mobile extends eqLogic
 		$arrayElements = array();
 		$j = 0;
 		$count = 1;
-		for ($i = 1; $i < 5; $i++) {
+		for ($i = 1; $i < 9; $i++) {
 
 			// GENERATE TAB ICON LIBRARY AND RENAME BY USER
 			$resultTabIcon = self::generateTabIcon($menuCustomArray, $i);

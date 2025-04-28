@@ -137,7 +137,7 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 		$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	}
 	if (!is_object($mobile)) {
-		$mobile = createMobile($params, 3);
+		$mobile = createMobile($params,3);
 	}
 	$mobile->setConfiguration('type_mobile', $notification['platform']);
 	if (isset($notification['token'])) {

@@ -14,6 +14,10 @@ foreach ($eqLogics as $eqLogic) {
 		array_push($eqLogicsV1, $eqLogic);
 	}
 }
+$isApi = config::byKey('api::mobile::mode');
+if($isApi == 'whiteip' || $isApi == 'disable'){
+	message::add('mobile', 'L\'API mobile est désactivée ou en mode whitelist IP');
+}
 ?>
 
 <div class="row row-overflow">

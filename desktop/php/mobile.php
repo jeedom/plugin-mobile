@@ -18,6 +18,10 @@ $isApi = config::byKey('api::mobile::mode');
 if($isApi == 'whiteip' || $isApi == 'disable'){
 	message::add('mobile', 'L\'API mobile est désactivée ou en mode whitelist IP');
 }
+$isCoreApi = config::byKey('api::core::mode');
+if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
+	message::add('mobile', 'L\'API core est désactivée ou en mode whitelist IP');
+}
 ?>
 
 <div class="row row-overflow">

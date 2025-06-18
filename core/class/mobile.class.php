@@ -47,8 +47,10 @@ class mobile extends eqLogic
 		$res = '<br>```<br>';
 		$res .= 'OS : ' . $distrib . ' on ' . $hw;
 		$res .= ' - PHP : ' . phpversion();
-        $res .= '<br/>';
-        $res .= 'Etat Clé Api : '.config::byKey('api::mobile::mode') . '<br>```';
+        $res .= '<br/>'; 
+		$res .= 'Etat Clé Api Core : ' . config::byKey('api::core::mode');
+        $res .= '<br/>';     
+        $res .= 'Etat Clé Api Mobile : ' . config::byKey('api::mobile::mode') . '<br>```';
         $res .= '<br/><br/>';
 		$res .= '[details="Equipement(s)"]<br/>';
 		$res .= '|Id | LogicalId | Type | App | defaultIdMobile | Profil | hideMenuGeoloc | hideMenuCustom|<br>';

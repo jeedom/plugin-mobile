@@ -565,40 +565,6 @@ class mobile extends eqLogic
 		return $return;
 	}
 
-	public function getQrCode()
-	{
-		require_once dirname(__FILE__) . '/../../3rdparty/phpqrcode/qrlib.php';
-		$interne = network::getNetworkAccess('internal');
-		$externe = network::getNetworkAccess('external');
-		if ($interne == null || $interne == 'http://:80' || $interne == 'https://:80') {
-			return 'internalError';
-		}
-		if ($externe == null || $externe == 'http://:80' || $externe == 'https://:80') {
-			return 'externalError';
-		}
-		if ($this->getConfiguration('affect_user') == '') {
-			return 'UserError';
-		}
-		$key = $this->getLogicalId();
-		$request_qrcode = array(
-			'eqLogic_id' => $this->getId(),
-			'url_internal' => $interne,
-			'url_external' => $externe,
-			'Iq' => $key,
-		);
-		if ($this->getConfiguration('affect_user') != '') {
-			$username = user::byId($this->getConfiguration('affect_user'));
-			if (is_object($username)) {
-				$request_qrcode['username'] = $username->getLogin();
-				$request_qrcode['apikey'] = $username->getHash();
-			}
-		}
-		ob_start();
-		QRcode::png(json_encode($request_qrcode));
-		$imageString = base64_encode(ob_get_contents());
-		ob_end_clean();
-		return $imageString;
-	}
 
 		public function SaveGeoloc($geoloc)
 	{

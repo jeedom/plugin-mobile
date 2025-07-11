@@ -40,6 +40,23 @@ document.querySelector("#bt_qrCodev2")?.addEventListener("click", function (even
 })
 
 function printEqLogic(_eqLogic) {
+  let appVersion = _eqLogic.configuration.appVersion;
+  if(appVersion != 2){
+    setTimeout(function() {
+      let formGroupIq = document.getElementById('formGroupIq');
+      if (formGroupIq) {
+        let qrDiv = document.createElement('div');
+        qrDiv.className = 'col-lg-6';
+        qrDiv.innerHTML = `
+          <legend><i class="fas fa-qrcode"></i> {{QRCode}}</legend>
+          <center>
+            <div class="qrCodeImg"></div>
+          </center>
+        `;
+        formGroupIq.parentNode.insertBefore(qrDiv, formGroupIq);
+      }
+    }, 300);
+  }
   domUtils.ajax({
     type: "POST",
     url: "plugins/mobile/core/ajax/mobile.ajax.php",

@@ -26,7 +26,7 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 
 <div class="row row-overflow">
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
-		<legend><i class="fas fa-mobile-alt"></i> {{App V2 - (VERSION BETA SEULEMENT)}}</legend>
+		<legend><i class="fas fa-mobile-alt"></i> {{App V2}}</legend>
 		<div class="eqLogicThumbnailContainer">
 			<div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
 				<i class="fas fa-wrench"></i><br>
@@ -95,14 +95,12 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 		</div>
 	</div>
 
-    <?php if (count($eqLogicsV1) >= 1) {  // AppV1
+    <?php if (count($eqLogicsV1) >= 0) {  // AppV1
       ?>
 		<div class="col-xs-12 eqLogicThumbnailDisplay">
 			<legend><i class="fas fa-mobile-alt"></i> {{App V1}}</legend>
+		</div>
 			<div class="eqLogicThumbnailContainer">
-				<div class="alert alert-danger" style="background-color: var(--al-danger-color) !important; font-size:1.2em;font-weight:bold;">
-					{{Attention, en beta il n'est plus possible d'utiliser l'APP V1}}</div>
-				</div>
 				<legend><i class="fas fa-mobile"></i> {{Mes Téléphones Mobiles}}</legend>
 				<div class="eqLogicThumbnailContainer">
 				<?php
@@ -236,13 +234,13 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 									<span class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="type_mobile"></span>
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="form-group" id="formGroupUser">
 								<label class="col-sm-3 control-label">{{Utilisateur}}</label>
 								<div class="col-sm-8">
 									<span class="label label-primary affect_user"></span>
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="form-group" id="formGroupIq"> 
 								<label class="col-sm-3 control-label">{{Iq Mobile}}</label>
 								<div class="col-sm-8">
 									<span class="eqLogicAttr label label-primary" data-l1key="logicalId"></span>

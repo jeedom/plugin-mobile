@@ -43,12 +43,6 @@ if ($params['Iq']) {
 }
 log::add('mobile', 'debug', '└───────────────────────────────────────────');
 
-
-
-
-
-
-
 // APP V2 //
 /**
  * Create a new equipment
@@ -515,17 +509,6 @@ if ($jsonrpc->getMethod() == 'getAskResponse') {
 }
 
 /**
- * saveMobile
- * 
- * @return makeSuccess
- */
-if ($jsonrpc->getMethod() == 'saveMobile') {
-	log::add('mobile', 'debug', 'Demande de sauvegarde ' . $params['type'] . ' > ' . $params['Iq'] . ' > ' . mobile::whoIsIq($params['Iq']));
-	mobile::makeSaveJson($params['Iq'], $params['Json'], $params['type']);
-	$jsonrpc->makeSuccess();
-}
-
-/**
  * save event coming from geofencing and methodeForSpecificChannel
  * 
  * @return makeSuccess
@@ -780,12 +763,7 @@ if ($jsonrpc->getMethod() == 'getScenarios') {
 	$jsonrpc->makeSuccess($return);
 }
 
-
-
-
-
 // APP V1 //
-
 
 if ($jsonrpc->getMethod() == 'sync') {
 	if (jeedom::version() >= '3.2.0') {
@@ -829,7 +807,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 		$mobile->save();
 		$params['Iq'] = $mobile->getLogicalId();
 	}
-	if (isset($params['notificationProvider']) || $params['notificationProvider'] != '' || isset($params['notificationRegistrationToken']) || $params['notificationRegistrationToken'] != 'nok') {
+	if (isset($params['notificationProvider']) && $params['notificationProvider'] != '' || isset($params['notificationRegistrationToken']) && $params['notificationRegistrationToken'] != 'nok') {
 		log::add('mobile', 'debug', 'notificationProvider Disponible');
 		log::add('mobile', 'debug', 'EqLogic dispo');
 		$arn = $mobile->getConfiguration('notificationArn', null);
@@ -847,11 +825,11 @@ if ($jsonrpc->getMethod() == 'sync') {
 				$mobile->save();
 			}
 		}
-      	if ($token == 'nok'){
-          log::add('mobile', 'debug', 'token null dans la configuration > ' . $token);
+      	if ($token == 'nok') {
+			log::add('mobile', 'debug', 'token null dans la configuration > ' . $token);
 			$mobile->setConfiguration('notificationRegistrationToken', $tokenMobile);
 			$mobile->save();
-        }else{
+        } else {
           log::add('mobile', 'debug', 'Token dans la configuration > ' . $token);
 			if ($token != $tokenMobile) {
 				$mobile->setConfiguration('notificationRegistrationToken', $tokenMobile);
@@ -947,7 +925,7 @@ if ($jsonrpc->getMethod() == 'askText') {
 }
 
 if ($jsonrpc->getMethod() == 'saveMobile'){
-	log::add('mobile', 'debug', 'Demande de sauvegarde '. $params['type'] .' > ' . $params['Iq'] .' > '. mobile::whoIsIq($params['Iq']));
+	log::add('mobile', 'debug', 'Demande de sauvegarde ' . $params['type'] .' > ' . $params['Iq'] . ' > ' . mobile::whoIsIq($params['Iq']));
 	mobile::makeSaveJson($params['Iq'],$params['Json'], $params['type']);
 	$jsonrpc->makeSuccess();
 }

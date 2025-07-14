@@ -14,6 +14,8 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
+//  AppV2  \\\
+
 document.querySelector("#info_app")?.addEventListener("click", function (event) {
   jeeDialog.dialog({
     id: "infosApp",
@@ -39,50 +41,204 @@ document.querySelector("#bt_qrCodev2")?.addEventListener("click", function (even
   })
 })
 
-function printEqLogic(_eqLogic) {
-  let appVersion = _eqLogic.configuration.appVersion;
-  if(appVersion != 2){
-    setTimeout(function() {
-      let formGroupIq = document.getElementById('formGroupIq');
-      if (formGroupIq) {
-        let qrDiv = document.createElement('div');
-        qrDiv.className = 'col-lg-6';
-        qrDiv.innerHTML = `
-          <legend><i class="fas fa-qrcode"></i> {{QRCode}}</legend>
-          <center>
-            <div class="qrCodeImg"></div>
-          </center>
-        `;
-        formGroupIq.parentNode.insertBefore(qrDiv, formGroupIq);
-      }
-    }, 300);
-  }
+//  AppV1  \\
+
+document.querySelector("#bt_pluginmobile")?.addEventListener("click", function (event) {
+  jeeDialog.dialog({
+    id: "pluginsCompatibles",
+    title: "{{Plugins compatibles - Application V1}}",
+    contentUrl: "index.php?v=d&plugin=mobile&modal=AppV1Plugin",
+  });
+});
+document.querySelector("#bt_piecemobile")?.addEventListener("click", function (event) {
+  jeeDialog.dialog({
+    id: "objectsModal",
+    title: "{{Objets / Pièces - Application V1}}",
+    contentUrl: "index.php?v=d&plugin=mobile&modal=AppV1Piece",
+  });
+});
+document.querySelector("#bt_scenariomobile")?.addEventListener("click", function (event) {
+  jeeDialog.dialog({
+    id: "scenariosModal",
+    title: "{{Scénarios  - Application V1}}",
+    contentUrl: "index.php?v=d&plugin=mobile&modal=AppV1Scenario",
+  });
+});
+document.querySelector("#bt_regenConfig")?.addEventListener("click", function (event) {
   domUtils.ajax({
     type: "POST",
     url: "plugins/mobile/core/ajax/mobile.ajax.php",
     data: {
-      action: "getAffectUserByEqlogic",
-      id: _eqLogic.id,
+      action: "AppV1RegenConfig",
     },
     dataType: "json",
-    global: false,
     error: function (request, status, error) {
-     domUtils.handleAjaxError(request, status, error)
+      domUtils.handleAjaxError(request, status, error)
     },
     success: function (data) {
       if (data.state != "ok") {
         jeedomUtils.showAlert({ message: data.result, level: "danger" })
         return
       }
-      let el = document.querySelector(".affect_user")
-      if (el != null) {
-        el.innerHTML = data.result
+      jeedomUtils.showAlert({ message: "{{Configuration mise à jour}}", level: "success"});
+    },
+  });
+});
+
+// Copie pour monitoring
+var toCopy = document.getElementById("to-copy-monitoring");
+var arnComplet = document.getElementById("arnComplet");
+document.getElementById("copy-monitoring")?.addEventListener("click", function () {
+  if (arnComplet.jeeValue() != '') {
+    var fichier = arnComplet.jeeValue();
+    var fichierCouper = fichier.substr(44);
+    toCopy.value = fichierCouper;
+    toCopy.select();
+    document.execCommand("copy");
+    return false;
+  }
+});
+
+/////////////////
+
+
+function printEqLogic(_eqLogic) {
+  let appVersion = _eqLogic.configuration.appVersion;
+  console.log(appVersion)
+  if (appVersion == 2) {
+    document.querySelectorAll(".paramV1").unseen()
+    document.querySelectorAll(".paramV2").seen()
+  } else {
+    document.querySelectorAll(".paramV2").unseen()
+    document.querySelectorAll(".paramV1").seen()
+    
+  }
+  
+  // AppV1
+  if (appVersion != 2) {
+    domUtils.ajax({
+      type: "POST",
+      url: "plugins/mobile/core/ajax/mobile.ajax.php",
+      data: {
+        action: "getQrCode",
+        id: _eqLogic.id,
+      },
+      dataType: "json",
+      global: false,
+      error: function (request, status, error) {
+        domUtils.handleAjaxError(request, status, error)
+      },
+      success: function (data) {
+        if (data.state != "ok") {
+          jeedomUtils.showAlert({ message: data.result, level: "danger" })
+          return
+        }
+        let el = document.querySelector(".qrCodeImg");
+        el.innerHTML = "";
+        if (data.result == "internalError") {
+          el.innerHTML = "{{Erreur pas d'adresse interne (voir configuration de votre Jeedom !)}}";
+        } else if (data.result == "externalError") {
+          el.innerHTML = "{{Erreur pas d'adresse externe (voir configuration de votre Jeedom !)}}";
+        } else if (data.result == "UserError") {
+          el.innerHTML = "{{Erreur pas d'utilisateur selectionné}}";
+        } else {
+          el.innerHTML = '<img src="data:image/png;base64, ' + data.result + '" />';
+        }
+      },
+    });
+    
+    domUtils.ajax({
+      type: "POST",
+      url: "plugins/mobile/core/ajax/mobile.ajax.php",
+      data: {
+        action: "AppV2GetSaveFavDash",
+        iq: _eqLogic.logicalId,
+      },
+      dataType: "json",
+      global: false,
+      error: function (request, status, error) {
+        domUtils.handleAjaxError(request, status, error)
+      },
+      success: function (data) {
+        if (data.state != "ok") {
+          jeedomUtils.showAlert({ message: data.result, level: "danger" })
+          return
+        }
+        let saveFav = document.querySelector("#SaveFav")
+        if (is_object(saveFav)) {
+          if (data.result == true) {
+            saveFav.removeClass('danger').addClass('success')
+            saveFav.innerHTML = "OK"
+          } else if (data.result == false) {
+            saveFav.removeClass('success').addClass('danger')
+            saveFav.innerHTML = "NOK"
+          }
+        }
       }
+    });
+
+    domUtils.ajax({
+      type: "POST",
+      url: "plugins/mobile/core/ajax/mobile.ajax.php",
+      data: {
+        action: "AppV2GetSaveDashboard",
+        iq: _eqLogic.logicalId,
+      },
+      dataType: "json",
+      global: false,
+      error: function (request, status, error) {
+        domUtils.handleAjaxError(request, status, error)
+      },
+      success: function (data) {
+        if (data.state != "ok") {
+          jeedomUtils.showAlert({ message: data.result, level: "danger" })
+          return
+        }
+        let savedash = document.querySelector("#SaveDash");
+        if (is_object(savedash)) {
+          if (data.result == true) {
+            savedash.removeClass('danger').addClass('success')
+            savedash.innerHTML = "OK";
+          } else if (data.result == false) {
+            savedash.removeClass('success').addClass('danger')
+            savedash.innerHTML = "NOK";
+          }
+        }
+      },
+    });
+
+    document.getElementById("copy-monitoring")?.click()
+  }
+  
+  /// if delete code appV1 in mobile.php into Paramètres spécifiques -> 
+  /// change <span class="label label-primary type_mobile"></span> by <span class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="type_mobile"></span> 
+  if (_eqLogic.configuration.type_mobile) {
+    let el = document.querySelector(".type_mobile")
+    if (is_object(el)) {
+      let select = document.querySelector('.eqLogicAttr[data-l1key="configuration"][data-l2key="type_mobile"]')
+      if (is_object(select)) el.innerHTML = select.options[select.selectedIndex].text
     }
-  })
+  }
+  /// if delete code appV1 in mobile.php into Paramètres spécifiques -> 
+  /// change <span class="label label-primary affect_user"></span> by <span class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="affect_user"></span> 
+  if (_eqLogic.configuration.affect_user) {
+    let el = document.querySelector(".affect_user")
+    if (is_object(el)) {
+      let select = document.querySelector('.eqLogicAttr[data-l1key="configuration"][data-l2key="affect_user"]')
+      if (is_object(select)) el.innerHTML = select.options[select.selectedIndex].text
+    }
+  }
+  // AppV1
+  if (_eqLogic.configuration.notificationRegistrationToken) {
+    let el = document.getElementById("notificationRegistrationToken")
+    if (is_object(el)) {
+      el.value = _eqLogic.configuration.notificationRegistrationToken
+    }
+  }
 }
 
 function addCmdToTable(_cmd) {
+  console.log('addCmdToTable')
   if (document.getElementById('table_cmd') == null) return
   if (!isset(_cmd)) {
     var _cmd = { configuration: {} }
@@ -123,7 +279,7 @@ function addCmdToTable(_cmd) {
   }
   tr += "</td>"
   tr += "<td>"
-  if (init(_cmd.logicalId) !== "notif" && init(_cmd.logicalId) !== "notifCritical") {
+  if (init(_cmd.logicalId) !== "notif" && init(_cmd.logicalId) !== "notifCritical" && init(_cmd.logicalId) !== "notifSilent") {
     tr += '<i class="fas fa-minus-circle pull-right cmdAction cursor" data-action="remove" title="{{Supprimer la commande}}"></i>'
   }
   tr += "</td>"

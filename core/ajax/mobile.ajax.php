@@ -60,6 +60,43 @@ try {
 		ajax::success($return);
 	}
 
+	// APP V1
+
+	if (init('action') == 'AppV1Savescenario'){
+		$id = init('id');
+		$sendApp = init('valueSend');
+		$scenario = scenario::byId($id);
+		if(!is_object($scenario)){
+			throw new Exception(__('scenario non trouvé', __FILE__));
+		}
+		$scenario->setDisplay("sendToApp",$sendApp);
+		$scenario->save();
+		ajax::success();
+	}
+	if (init('action') == 'AppV1RegenConfig') {
+		mobile::makeTemplateJson();
+		ajax::success();
+	}
+	if (init('action') == 'AppV2GetSaveFavDash'){
+		$iq = init('iq');
+		$jsonFavDash = mobile::getSaveJson($iq, 'favdash');
+		if ($jsonFavDash == "") {
+			$reponse = false;
+		} else {
+			$reponse = true;
+		}
+		ajax::success($reponse);
+	}
+	if (init('action') == 'AppV2GetSaveDashboard'){
+		$iq = init('iq');
+		$jsonDashboard = mobile::getSaveJson($iq, 'dashboard');
+		if ($jsonDashboard == "") {
+			$reponse = false;
+		} else {
+			$reponse = true;
+		}
+		ajax::success($reponse);
+	}
 	throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
 } catch (Exception $e) {
 	ajax::error(displayException($e), $e->getCode());

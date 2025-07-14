@@ -24,7 +24,6 @@ include_file('core', 'bellaMobile', 'class', 'mobile');
 class mobile extends eqLogic
 {
 
-
 	public static $_pluginSuported = array('mobile', 'openzwave', 'rfxcom', 'edisio', 'mpower', 'mySensors', 'Zibasedom', 'virtual', 'camera', 'weather', 'philipsHue', 'enocean', 'wifipower', 'alarm', 'mode', 'apcupsd', 'btsniffer', 'dsc', 'rflink', 'mysensors', 'relaynet', 'remora', 'unipi', 'eibd', 'thermostat', 'netatmoThermostat', 'espeasy', 'jeelink', 'teleinfo', 'tahoma', 'protexiom', 'boilerThermostat', 'lifx', 'wattlet', 'rfplayer', 'openenocean', 'netatmoWeather', 'Volets', 'vmczehnder', 'zigbee');
 
 	public static $_pluginWidget = array('alarm', 'camera', 'thermostat', 'netatmoThermostat', 'weather', 'mode', 'mobile');
@@ -43,6 +42,8 @@ class mobile extends eqLogic
 			}
 		
 		}
+		// App V1
+		mobile::makeTemplateJsonV1();
 	}
 
 	/**
@@ -389,12 +390,12 @@ class mobile extends eqLogic
 			$_cmds[$plage_cmd]['eqLogic_id'] = $new_eqLogic_id;
 			$keys = array_keys(array_column($_cmds, 'eqLogic_id'), $eqLogic_id);
 			foreach ($keys as $key) {
-				if ($_cmds[$key]['value'] == $_cmds[$plage_cmd]['id'] && $_cmds[$key]['type'] == 'action') {
+				if (isset($_cmds[$key]['value']) && $_cmds[$key]['value'] == $_cmds[$plage_cmd]['id'] && $_cmds[$key]['type'] == 'action') {
 					$_cmds[$key]['eqLogic_id'] = $new_eqLogic_id;
 				}
 			}
 			$eqLogic_array[] = array($eqLogic_id, $new_eqLogic_id, $eqLogic_name);
-			$i++;
+			//$i++;
 		}
 		$column_eqlogic = array_column($eqLogics, 'id');
 		foreach ($eqLogic_array as $eqlogic_array_one) {
@@ -566,7 +567,7 @@ class mobile extends eqLogic
 	}
 
 
-		public function SaveGeoloc($geoloc)
+	public function SaveGeoloc($geoloc)
 	{
 		log::add('mobile', 'debug', '|-----------------------------------');
 		log::add('mobile', 'debug', '|--debut de la fonction SaveGeoLoc--');
@@ -597,7 +598,7 @@ class mobile extends eqLogic
 		}
 	}
 
-		public function delGeoloc($geoloc)
+	public function delGeoloc($geoloc)
 	{
 		log::add('mobile', 'debug', 'Geoloc lancement DEL du mobile > ' . $geoloc['Iq'] . ' pour ' . $geoloc['id']);
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
@@ -608,7 +609,7 @@ class mobile extends eqLogic
 	}
 
 
-		public function EventGeoloc($geoloc)
+	public function EventGeoloc($geoloc)
 	{
 		log::add('mobile', 'debug', 'Geoloc Event du mobile > ' . $geoloc['Iq'] . ' pour ' . $geoloc['id']);
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
@@ -698,6 +699,7 @@ class mobile extends eqLogic
 			} else if ($os == 'microsoft') {
 			}
 		} else {
+			//App V2
 			if ($version == 2) {
 				if ($addAsk != '') {
 					$askParams = [
@@ -866,6 +868,46 @@ class mobile extends eqLogic
 					log::add('mobile', 'debug', '||| [INFO] Notification enregistrée : ' . json_encode($notifications));
 					file_put_contents($filePath, json_encode($notifications));
 				}
+			} else {
+			// APP V1
+				if ($os == 'android' && $version == 1) {
+					$android = [
+						'notification' => [
+							'title' => $titre,
+							'body' => $message,
+							'channel_id' => 'default',
+							'color' => '#0000FF'
+						]
+					];
+
+					$data = [
+						'title' => $titre,
+						'text' => $message,
+						'idNotif' => strval($idNotif),
+						'channelId' => 'default',
+						'date' => $dateNotif
+					];
+
+					if ($photo != null) {
+						$notification = [
+							'title' => $titre,
+							'body' => $message,
+							'image' => $photo
+						];
+					} else {
+						$notification = [
+							'title' => $titre,
+							'body' => $message
+						];
+					}
+
+					$publish = [
+						'token' => $token,
+						'notification' => $notification,
+						'android' => $android,
+						'data' => $data
+					];
+				}
 			}
 		}
 		log::add('mobile', 'debug', '||| [INFO] JSON publish > ' . json_encode($publish));
@@ -881,8 +923,8 @@ class mobile extends eqLogic
 	public static function notification($arn, $os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version = 1, $optionsNotif = [], $critical = false, $Iq = null, $specific = false, $silent = false)
 	{
 		log::add('mobile', 'debug', '|┌──:fg-success: Notification en cours ! :/fg:──');
-		if ($version == 2) {
-			$publish = mobile::jsonPublish($os, $titre, $message, $type, $idNotif, $answer,  $timeout, $token, $photo, $version, $optionsNotif, $critical, $Iq, $specific, $silent);
+		//if ($version == 2) {
+			$publish = mobile::jsonPublish($os, $titre, $message, $type, $idNotif, $answer, $timeout, $token, $photo, $version, $optionsNotif, $critical, $Iq, $specific, $silent);
 			if ($token != null) {
 				if ($token == 'notifsBGDisabled') {
 					log::add('mobile', 'debug', '|| [ERROR] NOTIFICATION NON ENVOYEE : LE SERVICE NOTIF EST DESACTIVE SUR LE TELEPHONE');
@@ -940,9 +982,9 @@ class mobile extends eqLogic
 					throw new Exception(__('Echec de l\'envoi de la notification :', __FILE__) . json_encode($result));
 				}
 			}
-		} else {
-			log::add('mobile', 'error', __("Échec de l'envoi de notification : la version 1 de l'app n'est plus prise en charge !", __FILE__));
-		}
+		//} else {
+			//log::add('mobile', 'error', __("Échec de l'envoi de notification : la version 1 de l'app n'est plus prise en charge !", __FILE__));
+		//}
 		log::add('mobile', 'debug', '|└────────────────────');
 	}
 
@@ -1549,7 +1591,7 @@ class mobile extends eqLogic
 			$key = config::genKey(32);
 			$this->setLogicalId($key);
 		}
-		if($this->getConfiguration('appVersion', 1) == 2) {
+		if ($this->getConfiguration('appVersion', 1) == 2) {
 			$this->setConfiguration('defaultIdMobile', $this->getId());
 		}		
 		$this->save();
@@ -1560,28 +1602,29 @@ class mobile extends eqLogic
 	 */
 	public function postSave()
 	{
-		if ($this->getConfiguration('appVersion', 1) == 2) {
-			$order = count($this->getCmd());
-			// Commande notification
-			$cmd = $this->getCmd(null, 'notif');
-			if (!is_object($cmd)) {
-				$cmd = new mobileCmd();
-				$cmd->setIsVisible(1);
-				$cmd->setName(__('Notification', __FILE__));
-				$cmd->setLogicalId('notif');
-				$cmd->setGeneric_type('GENERIC_ACTION');
-				$cmd->setDisplay('icon', '<i class="icon far fa-comment"></i>');
-				$cmd->setDisplay('forceReturnLineAfter', 1);
-				$cmd->setDisplay('showIconAndNamedashboard', 1);
-				$cmd->setDisplay('showIconAndNamemobile', 1);
-				$cmd->setOrder($order);
-				$order++;
-			}
-			$cmd->setEqLogic_id($this->getId());
-			$cmd->setType('action');
-			$cmd->setSubType('message');
-			if ($cmd->getChanged() === true) $cmd->save();
+		$order = count($this->getCmd());
 
+		// Commande notification
+		$cmd = $this->getCmd(null, 'notif');
+		if (!is_object($cmd)) {
+			$cmd = new mobileCmd();
+			$cmd->setIsVisible(1);
+			$cmd->setName(__('Notification', __FILE__));
+			$cmd->setLogicalId('notif');
+			$cmd->setGeneric_type('GENERIC_ACTION');
+			$cmd->setDisplay('icon', '<i class="icon far fa-comment"></i>');
+			$cmd->setDisplay('forceReturnLineAfter', 1);
+			$cmd->setDisplay('showIconAndNamedashboard', 1);
+			$cmd->setDisplay('showIconAndNamemobile', 1);
+			$cmd->setOrder($order);
+			$order++;
+		}
+		$cmd->setEqLogic_id($this->getId());
+		$cmd->setType('action');
+		$cmd->setSubType('message');
+		if ($cmd->getChanged() === true) $cmd->save();
+
+		if ($this->getConfiguration('appVersion', 1) == 2) {
 			// Commande notification Critique
 			$cmd = $this->getCmd(null, 'notifCritical');
 			if (!is_object($cmd)) {
@@ -1597,6 +1640,11 @@ class mobile extends eqLogic
 				$cmd->setOrder($order);
 				$order++;
 			}
+			$cmd->setEqLogic_id($this->getId());
+			$cmd->setType('action');
+			$cmd->setSubType('message');
+			if ($cmd->getChanged() === true) $cmd->save();
+
 			$cmd = $this->getCmd(null, 'notifSilent'); 
 			if (!is_object($cmd)) {
 				$cmd = new mobileCmd();
@@ -1658,8 +1706,6 @@ class mobile extends eqLogic
 			$cmd->setConfiguration('listValue', $listValue);
 			if ($cmd->getChanged() === true) $cmd->save();
 		}
-
-
 
 		if ($this->getConfiguration('appVersion', 1) != 2) {
 			$cmdaskText = $this->getCmd(null, 'ask_Text');
@@ -1801,7 +1847,6 @@ class mobileCmd extends cmd
 
 			log::add('mobile', 'debug', '└────────────────────');
 		}
-
 
 		if ($this->getLogicalId() == 'notif' || $this->getLogicalId() == 'notifCritical' || $this->getLogicalId() == 'notifSpecific' || $this->getLogicalId() == 'notifSilent') {
 			$critical = false;

@@ -16,14 +16,6 @@
 
 //  AppV2  \\\
 
-document.querySelector("#info_app")?.addEventListener("click", function (event) {
-  jeeDialog.dialog({
-    id: "infosApp",
-    title: "{{Informations envoyées à l'app}}",
-    contentUrl: "index.php?v=d&plugin=mobile&modal=info_app.mobile"
-  })
-})
-
 document.querySelector("#bt_handlePhones")?.addEventListener("click", function (event) {
   jeeDialog.dialog({
     id: "menuCustom",
@@ -41,12 +33,19 @@ document.querySelector("#bt_qrCodev2")?.addEventListener("click", function (even
   })
 })
 
-
 document.querySelector("#bt_doc")?.addEventListener("click", function (event) {
  jeedomUtils.loadPage('index.php?v=d&m=mobile&p=wizard')
 });
 
 //  AppV1  \\
+
+document.querySelector("#info_app")?.addEventListener("click", function (event) {
+  jeeDialog.dialog({
+    id: "infosApp",
+    title: "{{Informations envoyées - Application V1}}",
+    contentUrl: "index.php?v=d&plugin=mobile&modal=AppV1Info"
+  })
+})
 
 document.querySelector("#bt_pluginmobile")?.addEventListener("click", function (event) {
   jeeDialog.dialog({
@@ -103,7 +102,6 @@ document.getElementById("copy-monitoring")?.addEventListener("click", function (
     return false;
   }
 });
-
 /////////////////
 
 
@@ -301,11 +299,7 @@ function addCmdToTable(_cmd) {
   })
 }
 
-
-
-
 // WIZARD 
-
 
 var _contentContainer = document.getElementById('wizard_container');
 var currentStep = getUrlVars('step'); 
@@ -499,5 +493,3 @@ function allowNavigation(_direction = 'both', _allowed = true) {
 function exitWizard() {
   window.location.href = 'index.php?v=d&m=mobile&p=mobile';
 }
-
-

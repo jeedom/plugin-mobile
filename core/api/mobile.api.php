@@ -795,48 +795,39 @@ if ($jsonrpc->getMethod() == 'sync') {
 		$mobile->setConfiguration('type_mobile', $params['platform']);
 		$mobile->setConfiguration('affect_user', $userId);
 		$mobile->setConfiguration('validate', 'no');
-		if (isset($params['notificationProvider'])) {
+		if (isset($params['notificationProvider']) && $params['notificationProvider'] != '') {
 			$mobile->setConfiguration('notificationArn', substr($params['notificationProvider'], 1, -1));
 		}
-      	if (isset($params['notificationRegistrationToken'])) {
-        	if($params['notificationRegistrationToken'] != 'nok'){
-             $mobile->setConfiguration('notificationRegistrationToken', $params['notificationRegistrationToken']);
-            }
-        }
+      	if (isset($params['notificationRegistrationToken']) && $params['notificationRegistrationToken'] != '') {
+        	if ($params['notificationRegistrationToken'] != 'nok') {
+				$mobile->setConfiguration('notificationRegistrationToken', $params['notificationRegistrationToken']);
+			}
+		}
 		$mobile->setIsEnable(1);
 		$mobile->save();
 		$params['Iq'] = $mobile->getLogicalId();
 	}
-	if (isset($params['notificationProvider']) && $params['notificationProvider'] != '' || isset($params['notificationRegistrationToken']) && $params['notificationRegistrationToken'] != 'nok') {
-		log::add('mobile', 'debug', 'notificationProvider Disponible');
-		log::add('mobile', 'debug', 'EqLogic dispo');
-		$arn = $mobile->getConfiguration('notificationArn', null);
-      	$token = $mobile->getConfiguration('notificationRegistrationToken', null);
+
+	if (isset($params['notificationProvider']) && $params['notificationProvider'] != '') {
+		log::add('mobile', 'debug', 'notificationProvider disponible');
+		$arn = $mobile->getConfiguration('notificationArn', '');
 		$arnMobile = substr($params['notificationProvider'], 1, -1);
-      	$tokenMobile = $params['notificationRegistrationToken'];
-		if ($arn == null) {
-			log::add('mobile', 'debug', 'arn null dans la configuration > ' . $arn);
+		if ($arn != $arnMobile) {
 			$mobile->setConfiguration('notificationArn', $arnMobile);
 			$mobile->save();
-		} else {
-			log::add('mobile', 'debug', 'arn NON null dans la configuration > ' . $arn);
-			if ($arn != $arnMobile) {
-				$mobile->setConfiguration('notificationArn', $arnMobile);
-				$mobile->save();
-			}
 		}
-      	if ($token == 'nok') {
-			log::add('mobile', 'debug', 'token null dans la configuration > ' . $token);
+    }
+
+	if (isset($params['notificationRegistrationToken']) && $params['notificationRegistrationToken'] != 'nok' && $params['notificationRegistrationToken'] != '') {
+		log::add('mobile', 'debug', 'notificationRegistrationToken disponible');
+		$token = $mobile->getConfiguration('notificationRegistrationToken', '');
+		$tokenMobile = $params['notificationRegistrationToken'];
+		if ($arn != $arnMobile && $arnMobile != null) {
 			$mobile->setConfiguration('notificationRegistrationToken', $tokenMobile);
 			$mobile->save();
-        } else {
-          log::add('mobile', 'debug', 'Token dans la configuration > ' . $token);
-			if ($token != $tokenMobile) {
-				$mobile->setConfiguration('notificationRegistrationToken', $tokenMobile);
-				$mobile->save();
-            }
-        }
+		}
 	}
+
 	if (isset($params['gen_json']) && $params['gen_json'] == 1) {
 		mobile::makeTemplateJson();
 	}

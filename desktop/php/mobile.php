@@ -168,6 +168,7 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 		<div class="input-group pull-right" style="display:inline-flex">
 			<span class="input-group-btn">
 				<a class="btn btn-sm btn-default eqLogicAction roundedLeft" data-action="configure"><i class="fas fa-cogs"></i> {{Configuration avancée}}
+				</a><a class="btn btn-sm btn-info paramV1" id="info_app"><i class="fas fa-question-circle"></i> {{Infos envoyées à l'app}}
 				</a><a class="btn btn-sm btn-success eqLogicAction" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}
 				</a><a class="btn btn-sm btn-danger eqLogicAction roundedRight" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}
 				</a>
@@ -279,7 +280,7 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 								<div class="form-group paramV1">
 									<label class="col-sm-4 control-label">ARN Mobile</label>
 									<div class="col-sm-6">
-										<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notificationArn" placeholder="ARN" disabled="">
+										<input id="arnComplet" type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notificationArn" placeholder="ARN" disabled="">
 									</div>
 								</div>
 								<div class="form-group paramV1">
@@ -314,7 +315,7 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 							<div class="form-group">
 								<label class="col-sm-3 control-label">TOKEN Mobile</label>
 								<div class="col-sm-8">
-									<span id="arnComplet" class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="notificationRegistrationToken"></span>
+									<span class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="notificationRegistrationToken"></span>
 								</div>
 							</div>
 							<div class="form-group paramV1">

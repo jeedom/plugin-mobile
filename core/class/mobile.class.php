@@ -46,13 +46,11 @@ class mobile extends eqLogic
 		mobile::makeTemplateJsonV1();
 	}
 
-
-  public static function getWizardSteps(): array {
-     
-	  $wizard['doc1'] =  __('Accueil', __FILE__);
-	  $wizard['doc2'] =  __('Page2', __FILE__);
-	  $wizard['doc3'] =  __('Page3', __FILE__);
-	  return $wizard;
+	public static function getWizardSteps(): array {
+		$wizard['doc1'] =  __('Accueil', __FILE__);
+		$wizard['doc2'] =  __('Page2', __FILE__);
+		$wizard['doc3'] =  __('Page3', __FILE__);
+		return $wizard;
 	}
 
 	/**
@@ -137,6 +135,7 @@ class mobile extends eqLogic
 
 	public static function makeTemplateJson()
 	{
+		log::add(__CLASS__, 'debug', '┌─────▶︎ makeTemplateJson ───────────────');
 		$pluginToSend = mobile::pluginToSend();
 		$discover_eqLogic = mobile::discovery_eqLogic($pluginToSend);
 		$sync_new = mobile::change_cmdAndeqLogic(mobile::discovery_cmd($pluginToSend, $discover_eqLogic), $discover_eqLogic);
@@ -162,11 +161,14 @@ class mobile extends eqLogic
 			unlink(dirname(__FILE__) . '/../../data/mobile.json');
 		}
 		file_put_contents(dirname(__FILE__) . '/../../data/mobile.json', json_encode($data));
+		log::add(__CLASS__, 'debug', '| mobile.json > ' . json_encode($data));
 		$event_cmd = array();
 		foreach ($data['cmds'] as $cmd) {
 			$event_cmd[] = $cmd['id'];
 		}
 		cache::set('mobile::event', $event_cmd);
+		log::add(__CLASS__, 'debug', '| cache set mobile::event > ' . json_encode($event_cmd));
+		log::add(__CLASS__, 'debug', '└───────────────────────────────────────────');
 	}
 
 	public static function getTemplateJson()

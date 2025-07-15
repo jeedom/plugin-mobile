@@ -100,7 +100,7 @@ function mobile_update()
 		'/../desktop/modal/sixPage.php',
 		'/../desktop/modal/wizard.php',
 		'/../core/data/wizard.json',
-		'/../data/mobile.json'
+		//'/../data/mobile.json'
 	];
 	foreach ($oldFiles as $oldFile) {
 		if (file_exists(dirname(__FILE__) . $oldFile)) {
@@ -159,12 +159,12 @@ function mobile_update()
 		}
 	}
 
-	/* cleaning data folder */
+	/* cleaning data folder AppV1
 	$path = dirname(__FILE__) . '/../data/';
 	foreach (scandir($path) as $file) {
 		if ($file != "." && $file != ".." && $file != ".htaccess" && $file != "images") {
 			if (is_dir($path . '/' . $file)) {
-				/* delete dashboard.json and favdash.json if exists */
+				// delete dashboard.json and favdash.json if exists //
 				if (file_exists($path . $file . '/dashboard.json')) {
 					log::add('mobile', 'debug', '| Deleting ' . $path . $file . '/dashboard.json');
 					shell_exec('rm ' . $path . $file . '/dashboard.json');
@@ -173,7 +173,7 @@ function mobile_update()
 					log::add('mobile', 'debug', '| Deleting ' . $path . $file .  '/favdash.json');
 					shell_exec('rm ' . $path . $file . '/favdash.json');
 				}
-				/* delete folder if empty */
+				// delete folder if empty //
 				if (!glob($path . $file . '/*')) {
 					log::add('mobile', 'debug', '| Deleting empty folder : ' . $path . $file);
 					shell_exec('rm -rf ' . $path . $file);
@@ -181,7 +181,7 @@ function mobile_update()
 			}
 		}
 	}
-
+	*/
 	/* Generate ApiKey if no exist */
 	jeedom::getApiKey('mobile');
 

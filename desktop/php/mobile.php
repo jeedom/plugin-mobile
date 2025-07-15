@@ -42,6 +42,10 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 				<i class="fas fa-qrcode"></i><br>
 				<span>{{QR Code}}</span>
 			</div>
+			<div class="cursor eqLogicAction logoSecondary" id="bt_doc">
+				<i class='icon fas fa-book'></i><br>
+				<span>{{Documentation}}</span>
+			</div>
 		</div>
 		<legend><i class="fas fa-mobile"></i> {{Mes Téléphones Mobiles}}</legend>
 		<div class="input-group" style="margin:5px;">

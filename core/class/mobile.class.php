@@ -46,6 +46,15 @@ class mobile extends eqLogic
 		mobile::makeTemplateJsonV1();
 	}
 
+
+  public static function getWizardSteps(): array {
+     
+	  $wizard['welcome'] =  __('Accueil', __FILE__);
+	  $wizard['doc2'] =  __('Page2', __FILE__);
+	  $wizard['doc3'] =  __('Page3', __FILE__);
+	  return $wizard;
+	}
+
 	/**
 	 * Core callback to provide additional information for a new Community post
 	 *

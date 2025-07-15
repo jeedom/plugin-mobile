@@ -41,6 +41,11 @@ document.querySelector("#bt_qrCodev2")?.addEventListener("click", function (even
   })
 })
 
+
+document.querySelector("#bt_doc")?.addEventListener("click", function (event) {
+ jeedomUtils.loadPage('index.php?v=d&m=mobile&p=wizard')
+});
+
 //  AppV1  \\
 
 document.querySelector("#bt_pluginmobile")?.addEventListener("click", function (event) {
@@ -295,3 +300,204 @@ function addCmdToTable(_cmd) {
     }
   })
 }
+
+
+
+
+// WIZARD 
+
+
+var _contentContainer = document.getElementById('wizard_container');
+var currentStep = getUrlVars('step'); 
+
+if (!currentStep) {
+    currentStep = localStorage.getItem('wizardStep') || document.querySelector('.navDot')?.dataset.step;
+}
+document.querySelector('.navDot[data-step="' + currentStep + '"]')?.classList.add('active');
+if (window.updateQuitButtonVisibility) window.updateQuitButtonVisibility();
+loadStep(currentStep);
+
+var slideOut = {
+  opacity: [1, 0],
+  transform: ['translateX(0)', 'translateX(-10%)']
+}
+var slideIn = {
+  opacity: [0, 1],
+  transform: ['translateX(10%)', 'translateX(0)']
+}
+var slideOutReverse = {
+  opacity: [1, 0],
+  transform: ['translateX(0)', 'translateX(10%)']
+}
+var slideInReverse = {
+  opacity: [0, 1],
+  transform: ['translateX(-10%)', 'translateX(0)']
+}
+
+document.querySelectorAll('.navDot').forEach(_dot => {
+  _dot.addEventListener('click', function() {
+    let current = document.querySelector('.navDot.active')
+    
+    if (this == current || this.classList.contains('blocked')) {
+      return false
+    }
+    if (current.nextElementSibling?.classList.contains('blocked')) {
+      allowNavigation()
+    }
+
+    let outAnimation = slideOut
+    let inAnimation = slideIn
+    if (Number(this.innerText) < Number(current.innerText)) {
+      outAnimation = slideOutReverse
+      inAnimation = slideInReverse
+    }
+
+    _contentContainer.animate(outAnimation, {
+      duration: 500
+    })
+    setTimeout(() => {
+      document.querySelector('.navDot.active').classList.remove('active')
+      this.classList.add('active')
+      _contentContainer.empty()
+      localStorage.setItem('wizardStep', this.dataset.step);
+      loadStep(this.dataset.step)
+      _contentContainer.animate(inAnimation, {
+        duration: 500
+      })
+      if (window.updateQuitButtonVisibility) window.updateQuitButtonVisibility();
+    }, 450)
+  })
+})
+
+document.querySelectorAll('.navBtn').forEach(_navBtn => {
+  _navBtn.addEventListener('click', function() {
+    let activeNavDot = document.querySelector('.navDot.active')
+    if (this.classList.value.includes('bt_next')) {
+      activeNavDot.nextElementSibling.triggerEvent('click')
+    } else if (this.classList.value.includes('bt_prev')) {
+      activeNavDot.previousElementSibling.triggerEvent('click')
+    }
+  })
+})
+
+
+var quitBtn = document.getElementById('bt_quitmobileWizard');
+if (quitBtn) {
+  quitBtn.addEventListener('click', function() {
+    let confirm
+      confirm = "{{Voulez-vous vraiment fermer la documentation ?}}"
+      confirm += '<br><br>'
+
+    bootbox.confirm(confirm, function(result) {
+      if (result) {
+        exitWizard()
+      }
+    })
+  })
+}
+
+var readyBtn = document.getElementById('bt_jeedom_ready');
+if (readyBtn) {
+  readyBtn.addEventListener('click', function() {
+    exitWizard()
+  })
+}
+
+function loadStep(_step) {
+    updateNavigation(_step);
+    updateContent('index.php?v=d&plugin=mobile&modal=' + _step);
+}
+
+function updateContent(_url) {
+    if (!_contentContainer) return;
+    _contentContainer.style.visibility = 'hidden';
+    fetch(_url)
+        .then(response => response.text())
+        .then(data => {
+            if (!_contentContainer) return;
+            _contentContainer.innerHTML = data;
+
+            _contentContainer.querySelectorAll('script').forEach(_script => {
+                let newScript = document.createElement('script');
+                if (_script.src) {
+                    newScript.src = _script.src;
+                } else {
+                    newScript.textContent = _script.textContent;
+                }
+                _contentContainer.appendChild(newScript);
+                _contentContainer.removeChild(newScript);
+            });
+
+            _contentContainer.style.visibility = 'visible';
+            jeedomUtils.initTooltips(_contentContainer);
+            const stepOrder = Array.from(document.querySelectorAll('.navDot')).map(dot => dot.dataset.step);
+        })
+        .catch(error => {
+            console.error('{{Erreur au chargement de la page}}:', error);
+            domUtils.hideLoading();
+            if (_contentContainer) {
+                _contentContainer.style.visibility = 'visible';
+            }
+        });
+}
+
+
+
+function updateNavigation(_step) {
+    let current = document.querySelector('.navDot[data-step="' + _step + '"]');
+    if (!current) {
+        return;
+    }
+    document.querySelector('.navBtn.bt_next').dataset.step = _step
+  if (!current.previousElementSibling) {
+    document.querySelector('.navBtn.bt_prev')?.classList.add('hidden')
+  } else {
+    document.querySelector('.navBtn.bt_prev').title = current.previousElementSibling.dataset.title
+    document.querySelector('.navBtn.bt_prev.hidden')?.classList.remove('hidden')
+  }
+  if (!current.nextElementSibling) {
+    document.querySelector('.navBtn.bt_next')?.classList.add('hidden')
+    if (_step == 'ready') {
+      document.getElementById('bt_jeedom_ready')?.classList.remove('hidden')
+    }
+  } else {
+    document.getElementById('bt_jeedom_ready')?.classList.add('hidden')
+    document.querySelector('.navBtn.bt_next').title = current.nextElementSibling.dataset.title
+    document.querySelector('.navBtn.bt_next.hidden')?.classList.remove('hidden')
+  }
+  jeedomUtils.addOrUpdateUrl('step', _step);
+    localStorage.setItem('wizardStep', _step);
+    if (window.updateQuitButtonVisibility) window.updateQuitButtonVisibility();
+}
+
+function allowNavigation(_direction = 'both', _allowed = true) {
+    let current = document.querySelector('.navDot.active');
+    if (_direction != 'next') {
+        let prevDot = current.previousElementSibling;
+        while (prevDot) {
+            if (!_allowed) {
+                prevDot.classList.add('blocked');
+            } else {
+                prevDot.classList.remove('blocked');
+            }
+            prevDot = prevDot.previousElementSibling;
+        }
+    }
+    if (_direction != 'prev') {
+        let nextDot = current.nextElementSibling;
+        while (nextDot) {
+            if (!_allowed) {
+                nextDot.classList.add('blocked');
+            } else {
+                nextDot.classList.remove('blocked');
+            }
+            nextDot = nextDot.nextElementSibling;
+        }
+    }
+}
+
+function exitWizard() {
+  window.location.href = 'index.php?v=d&m=mobile&p=mobile';
+}
+
+

@@ -1954,7 +1954,8 @@ class mobileCmd extends cmd
 					mobile::notification($eqLogic->getConfiguration('notificationArn', null), $eqLogic->getConfiguration('type_mobile', null), $_options['title'], $_options['message'], $askType, $idNotif, $answer,  $timeout, $eqLogic->getConfiguration('notificationRegistrationToken', null), null, $eqLogic->getConfiguration('appVersion', 1), $optionsNotif, $critical, $eqLogic->getLogicalId(), $specific, $silent);
 				}
 			} else {
-				log::add('mobile', 'debug', '| [ERROR] ARN non configuré ');
+				if ($eqLogic->getConfiguration('type_mobile', null) == null) log::add('mobile', 'debug', '| [ERROR] Type de Mobile non configuré ');
+				else log::add('mobile', 'debug', '| [ERROR] ARN non configuré ');
 			}
 			log::add('mobile', 'debug', '└────────────────────');
 		}

@@ -167,10 +167,10 @@ function printEqLogic(_eqLogic) {
         let saveFav = document.querySelector("#SaveFav")
         if (is_object(saveFav)) {
           if (data.result == true) {
-            saveFav.removeClass('danger').addClass('success')
+            saveFav.removeClass('label-warning', 'label-danger').addClass('label-success')
             saveFav.innerHTML = "OK"
           } else if (data.result == false) {
-            saveFav.removeClass('success').addClass('danger')
+            saveFav.removeClass('label-success', 'label-warning').addClass('label-danger')
             saveFav.innerHTML = "NOK"
           }
         }
@@ -197,10 +197,10 @@ function printEqLogic(_eqLogic) {
         let savedash = document.querySelector("#SaveDash");
         if (is_object(savedash)) {
           if (data.result == true) {
-            savedash.removeClass('danger').addClass('success')
+            savedash.removeClass('label-warning', 'label-danger').addClass('label-success')
             savedash.innerHTML = "OK";
           } else if (data.result == false) {
-            savedash.removeClass('success').addClass('danger')
+            savedash.removeClass('label-success', 'label-warning').addClass('label-danger')
             savedash.innerHTML = "NOK";
           }
         }
@@ -210,31 +210,25 @@ function printEqLogic(_eqLogic) {
     document.getElementById("copy-monitoring")?.click()
   }
   
-  /// if delete code appV1 in mobile.php into Paramètres spécifiques -> 
+  /// if delete code AppV1 in mobile.php into Paramètres spécifiques -> 
   /// change <span class="label label-primary type_mobile"></span> by <span class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="type_mobile"></span> 
-  if (_eqLogic.configuration.type_mobile) {
-    let el = document.querySelector(".type_mobile")
-    if (is_object(el)) {
-      let select = document.querySelector('.eqLogicAttr[data-l1key="configuration"][data-l2key="type_mobile"]')
-      if (is_object(select)) el.innerHTML = select.options[select.selectedIndex].text
-    }
+  let el_type = document.querySelector(".type_mobile")
+  let select_type = document.querySelector('.eqLogicAttr[data-l1key="configuration"][data-l2key="type_mobile"]')
+  let value_type = ''
+  if (is_object(select_type)) {
+    value_type = select_type.options[select_type.selectedIndex].text
   }
-  /// if delete code appV1 in mobile.php into Paramètres spécifiques -> 
+  if (is_object(el_type)) el_type.innerHTML = value_type
+
+  /// if delete code AppV1 in mobile.php into Paramètres spécifiques -> 
   /// change <span class="label label-primary affect_user"></span> by <span class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="affect_user"></span> 
-  if (_eqLogic.configuration.affect_user) {
-    let el = document.querySelector(".affect_user")
-    if (is_object(el)) {
-      let select = document.querySelector('.eqLogicAttr[data-l1key="configuration"][data-l2key="affect_user"]')
-      if (is_object(select)) el.innerHTML = select.options[select.selectedIndex].text
-    }
+  let el_affect_user = document.querySelector(".affect_user")
+  let select_affect_user = document.querySelector('.eqLogicAttr[data-l1key="configuration"][data-l2key="affect_user"]')
+  let value_affect_user = ''
+  if (is_object(select_affect_user)) {
+    value_affect_user = select_affect_user.options[select_affect_user.selectedIndex].text
   }
-  // AppV1
-  if (_eqLogic.configuration.notificationRegistrationToken) {
-    let el = document.getElementById("notificationRegistrationToken")
-    if (is_object(el)) {
-      el.value = _eqLogic.configuration.notificationRegistrationToken
-    }
-  }
+  if (is_object(el_affect_user)) el_affect_user.innerHTML = value_affect_user
 }
 
 function addCmdToTable(_cmd) {

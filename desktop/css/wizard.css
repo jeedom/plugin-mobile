@@ -39,14 +39,23 @@ body {
 	right: 5%;
 }
 
-#wizard_container {
+/* #wizard_container {
 	height: 600px;
 	display: grid;
 	justify-items: center;
 	align-items: center;
 	grid-template-columns: 100%;
 	grid-template-rows: 50px 225px 0 25px auto;
+} */
+
+#wizard_container {
+	height: 600px;
+	display: flex;
+	flex-direction: column;
+	justify-items: center;
+	align-items: center;
 }
+
 
 #wizard_container>h3 {
 	grid-row-start: 1
@@ -54,7 +63,7 @@ body {
 
 #wizard_container>img {
 	max-width: 350px;
-	max-height: 225px;
+	max-height: 500px;
 	grid-row-start: 2
 }
 

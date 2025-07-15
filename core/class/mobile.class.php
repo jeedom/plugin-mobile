@@ -49,7 +49,7 @@ class mobile extends eqLogic
 
   public static function getWizardSteps(): array {
      
-	  $wizard['welcome'] =  __('Accueil', __FILE__);
+	  $wizard['doc1'] =  __('Accueil', __FILE__);
 	  $wizard['doc2'] =  __('Page2', __FILE__);
 	  $wizard['doc3'] =  __('Page3', __FILE__);
 	  return $wizard;

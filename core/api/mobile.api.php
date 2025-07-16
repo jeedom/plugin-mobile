@@ -766,9 +766,9 @@ if ($jsonrpc->getMethod() == 'getScenarios') {
 // APP V1 //
 
 if ($jsonrpc->getMethod() == 'sync') {
+	log::add('mobile', 'debug', '┌─────▶︎ Sync App V1 ───────────────');
 	if (jeedom::version() >= '3.2.0') {
-		log::add('mobile', 'debug', 'SYNC');
-		log::add('mobile', 'debug', 'Demande du RDK');
+		log::add('mobile', 'debug', '| Demande du RDK');
 		$registerDevice = $_USER_GLOBAL->getOptions('registerDevice', array());
 		if (!is_array($registerDevice)) {
 			$registerDevice = array();
@@ -780,7 +780,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 		$registerDevice[sha512($rdk)]['session_id'] = session_id();
 		$_USER_GLOBAL->setOptions('registerDevice', $registerDevice);
 		$_USER_GLOBAL->save();
-		log::add('mobile', 'debug', 'RDK :' . $rdk);
+		log::add('mobile', 'debug', '| RDK :' . $rdk);
 	}
 	$mobile = null;
 	if (isset($params['Iq'])) {
@@ -809,7 +809,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 	}
 
 	if (isset($params['notificationProvider']) && $params['notificationProvider'] != '') {
-		log::add('mobile', 'debug', 'notificationProvider disponible');
+		log::add('mobile', 'debug', '| notificationProvider disponible');
 		$arn = $mobile->getConfiguration('notificationArn', '');
 		$arnMobile = substr($params['notificationProvider'], 1, -1);
 		if ($arn != $arnMobile) {
@@ -819,7 +819,7 @@ if ($jsonrpc->getMethod() == 'sync') {
     }
 
 	if (isset($params['notificationRegistrationToken']) && $params['notificationRegistrationToken'] != 'nok' && $params['notificationRegistrationToken'] != '') {
-		log::add('mobile', 'debug', 'notificationRegistrationToken disponible');
+		log::add('mobile', 'debug', '| notificationRegistrationToken disponible');
 		$token = $mobile->getConfiguration('notificationRegistrationToken', '');
 		$tokenMobile = $params['notificationRegistrationToken'];
 		if ($arn != $arnMobile && $arnMobile != null) {
@@ -840,7 +840,8 @@ if ($jsonrpc->getMethod() == 'sync') {
 	if (isset($rdk)) {
 		$return['config']['rdk'] = $rdk;
 	}
-	log::add('mobile', 'debug', 'Return $discovery_summaryValue > ' . json_encode($return['summaryValue']));
+	log::add('mobile', 'debug', '| Return $discovery_summaryValue > ' . json_encode($return['summaryValue']));
+	log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	$jsonrpc->makeSuccess($return);
 }
 

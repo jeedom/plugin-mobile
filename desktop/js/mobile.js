@@ -219,9 +219,13 @@ function printEqLogic(_eqLogic) {
   let select_type = document.querySelector('.eqLogicAttr[data-l1key="configuration"][data-l2key="type_mobile"]')
   let value_type = ''
   if (is_object(select_type)) {
-    value_type = select_type.options[select_type.selectedIndex].text
+    value_type = select_type.options[select_type.selectedIndex]?.text || 'INCONNU'
   }
-  if (is_object(el_type)) el_type.innerHTML = value_type
+  if (is_object(el_type)) {
+    el_type.innerHTML = value_type
+    if (value_type == 'INCONNU') el_type.removeClass('label-primary').addClass('label-danger')
+    else el_type.removeClass('label-danger').addClass('label-primary')
+  }
 
   /// if delete code AppV1 in mobile.php into Paramètres spécifiques -> 
   /// change <span class="label label-primary affect_user"></span> by <span class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="affect_user"></span> 
@@ -229,9 +233,13 @@ function printEqLogic(_eqLogic) {
   let select_affect_user = document.querySelector('.eqLogicAttr[data-l1key="configuration"][data-l2key="affect_user"]')
   let value_affect_user = ''
   if (is_object(select_affect_user)) {
-    value_affect_user = select_affect_user.options[select_affect_user.selectedIndex].text
+    value_affect_user = select_affect_user.options[select_affect_user.selectedIndex]?.text || 'INCONNU'
   }
-  if (is_object(el_affect_user)) el_affect_user.innerHTML = value_affect_user
+  if (is_object(el_affect_user)) {
+    el_affect_user.innerHTML = value_affect_user
+    if (value_affect_user == 'INCONNU' || value_affect_user == 'Aucun') el_affect_user.removeClass('label-primary').addClass('label-danger')
+    else el_affect_user.removeClass('label-danger').addClass('label-primary')
+  }
 }
 
 function addCmdToTable(_cmd) {

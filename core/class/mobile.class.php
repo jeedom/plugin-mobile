@@ -43,7 +43,7 @@ class mobile extends eqLogic
 		
 		}
 		// App V1
-		mobile::makeTemplateJsonV1();
+		mobile::makeTemplateJson();
 	}
 
 	public static function getWizardSteps(): array {

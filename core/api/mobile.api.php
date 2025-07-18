@@ -818,13 +818,21 @@ if ($jsonrpc->getMethod() == 'sync') {
 		}
     }
 
-	if (isset($params['notificationRegistrationToken']) && $params['notificationRegistrationToken'] != 'nok' && $params['notificationRegistrationToken'] != '') {
+	if (isset($params['notificationRegistrationToken']) && $params['notificationRegistrationToken'] != '') {
 		log::add('mobile', 'debug', '| notificationRegistrationToken disponible');
-		$token = $mobile->getConfiguration('notificationRegistrationToken', '');
+		$token = $mobile->getConfiguration('notificationRegistrationToken', 'nok');
 		$tokenMobile = $params['notificationRegistrationToken'];
-		if ($arn != $arnMobile && $arnMobile != null) {
+		if ($token == 'nok') {
+			log::add('mobile', 'debug', '| notificationRegistrationToken null dans la configuration > ' . $token);
 			$mobile->setConfiguration('notificationRegistrationToken', $tokenMobile);
 			$mobile->save();
+        } else {
+			log::add('mobile', 'debug', '| Token dans la configuration > ' . $token);
+			if ($token != $tokenMobile) {
+				log::add('mobile', 'debug', '| Token config != Token mobile  > ' . $token . ' != ' . $tokenMobile);
+				$mobile->setConfiguration('notificationRegistrationToken', $tokenMobile);
+				$mobile->save();
+			}
 		}
 	}
 

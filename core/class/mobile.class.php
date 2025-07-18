@@ -578,7 +578,7 @@ class mobile extends eqLogic
 	}
 
 
-	public function SaveGeoloc($geoloc)
+	public static function SaveGeoloc($geoloc)
 	{
 		log::add('mobile', 'debug', '|-----------------------------------');
 		log::add('mobile', 'debug', '|--debut de la fonction SaveGeoLoc--');
@@ -609,7 +609,7 @@ class mobile extends eqLogic
 		}
 	}
 
-	public function delGeoloc($geoloc)
+	public static function delGeoloc($geoloc)
 	{
 		log::add('mobile', 'debug', 'Geoloc lancement DEL du mobile > ' . $geoloc['Iq'] . ' pour ' . $geoloc['id']);
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
@@ -620,7 +620,7 @@ class mobile extends eqLogic
 	}
 
 
-	public function EventGeoloc($geoloc)
+	public static function EventGeoloc($geoloc)
 	{
 		log::add('mobile', 'debug', 'Geoloc Event du mobile > ' . $geoloc['Iq'] . ' pour ' . $geoloc['id']);
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');

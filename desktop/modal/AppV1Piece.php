@@ -47,18 +47,20 @@ $plugin_widget = mobile::$_pluginWidget;
 //include_file('desktop', 'mobile', 'js', 'mobile');
 //include_file('core', 'plugin.template', 'js');
 ?>
- 
+
 <script>
-function clickobject(id_object) {
-  if (typeof jeeDialog !== "undefined") {
-    jeeDialog.dialog({
-      id: "configMobilePiece",
-      title: "{{Configuration Mobile de la Pièce - Application V1}}",
-      contentUrl: "index.php?v=d&plugin=mobile&modal=AppV1Object.mobile&object_id=" + id_object
-    });
-  } else {
-    $("#md_modal").dialog({title: "{{Configuration Mobile de la Pièce - Application V1}}"});
-    $("#md_modal").load("index.php?v=d&plugin=mobile&modal=AppV1Object.mobile&object_id=" + id_object).dialog("open");
-  }
-}
-  </script>
+	function clickobject(id_object) {
+		if (typeof jeeDialog !== "undefined") {
+			jeeDialog.dialog({
+				id: "configMobilePiece",
+				title: "{{Configuration Mobile de la Pièce - Application V1}}",
+				contentUrl: "index.php?v=d&plugin=mobile&modal=AppV1Object.mobile&object_id=" + id_object
+			});
+		} else {
+			$("#md_modal").dialog({
+				title: "{{Configuration Mobile de la Pièce - Application V1}}"
+			});
+			$("#md_modal").load("index.php?v=d&plugin=mobile&modal=AppV1Object.mobile&object_id=" + id_object).dialog("open");
+		}
+	}
+</script>

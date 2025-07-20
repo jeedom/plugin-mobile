@@ -36,7 +36,7 @@ if ($params['Iq']) {
 		//createMobile($params, 3);
 		log::add('mobile', 'debug', '| [WARNING] mobile non detecté !');
 	} else {
-		log::add('mobile', 'debug', '| Mobile demandeur > ' . mobile::whoIsIq($params['Iq']));
+		log::add('mobile', 'debug', '| Mobile demandeur  ' . mobile::whoIsIq($params['Iq']));
 	}
 } else {
 	log::add('mobile', 'debug', '| [WARNING] Paramètre Iq inexistant !');
@@ -137,7 +137,7 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 		$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	}
 	if (!is_object($mobile)) {
-		$mobile = createMobile($params,3);
+		$mobile = createMobile($params, 3);
 	}
 	$mobile->setConfiguration('type_mobile', $notification['platform']);
 	if (isset($notification['token'])) {
@@ -798,8 +798,8 @@ if ($jsonrpc->getMethod() == 'sync') {
 		if (isset($params['notificationProvider']) && $params['notificationProvider'] != '') {
 			$mobile->setConfiguration('notificationArn', substr($params['notificationProvider'], 1, -1));
 		}
-      	if (isset($params['notificationRegistrationToken']) && $params['notificationRegistrationToken'] != '') {
-        	if ($params['notificationRegistrationToken'] != 'nok') {
+		if (isset($params['notificationRegistrationToken']) && $params['notificationRegistrationToken'] != '') {
+			if ($params['notificationRegistrationToken'] != 'nok') {
 				$mobile->setConfiguration('notificationRegistrationToken', $params['notificationRegistrationToken']);
 			}
 		}
@@ -816,7 +816,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 			$mobile->setConfiguration('notificationArn', $arnMobile);
 			$mobile->save();
 		}
-    }
+	}
 
 	if (isset($params['notificationRegistrationToken']) && $params['notificationRegistrationToken'] != '') {
 		log::add('mobile', 'debug', '| notificationRegistrationToken disponible');
@@ -826,7 +826,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 			log::add('mobile', 'debug', '| notificationRegistrationToken null dans la configuration > ' . $token);
 			$mobile->setConfiguration('notificationRegistrationToken', $tokenMobile);
 			$mobile->save();
-        } else {
+		} else {
 			log::add('mobile', 'debug', '| Token dans la configuration > ' . $token);
 			if ($token != $tokenMobile) {
 				log::add('mobile', 'debug', '| Token config != Token mobile  > ' . $token . ' != ' . $tokenMobile);
@@ -841,7 +841,7 @@ if ($jsonrpc->getMethod() == 'sync') {
 	}
 	$return = mobile::getTemplateJson();
 	$return['messages'] = mobile::discovery_message();
-  	$return['summaryValue'] = mobile::discovery_summaryValue($return['objects']);
+	$return['summaryValue'] = mobile::discovery_summaryValue($return['objects']);
 	$return['config']['datetime'] = getmicrotime();
 	$return['config']['Iq'] = $params['Iq'];
 	$return['config']['NameMobile'] = $mobile->getName();
@@ -893,9 +893,9 @@ if ($jsonrpc->getMethod() == 'event') {
 }
 
 if ($jsonrpc->getMethod() == 'askText') {
-  log::add('mobile', 'debug', 'TESTAPIASK');
+	log::add('mobile', 'debug', 'TESTAPIASK');
 	log::add('mobile', 'debug', 'Arrivée reponse ask Textuel depuis le mobile > ' . $params['Iq']);
-  	/*$configs = $params['configs'];
+	/*$configs = $params['configs'];
   	$menu = $configs['menu'];
   	$notification = $configs['notification'];*/
 	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
@@ -912,7 +912,7 @@ if ($jsonrpc->getMethod() == 'askText') {
 		if ($cmd->askResponse($textCasse)) {
 			log::add('mobile', 'debug', 'ask bien trouvé : Réponse validée');
 			$jsonrpc->makeSuccess();
-		}else{
+		} else {
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $cmd->generateAskResponseLink($params['text']));
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -924,35 +924,36 @@ if ($jsonrpc->getMethod() == 'askText') {
 	}
 }
 
-if ($jsonrpc->getMethod() == 'saveMobile'){
-	log::add('mobile', 'debug', 'Demande de sauvegarde ' . $params['type'] .' > ' . $params['Iq'] . ' > ' . mobile::whoIsIq($params['Iq']));
-	mobile::makeSaveJson($params['Iq'],$params['Json'], $params['type']);
+if ($jsonrpc->getMethod() == 'saveMobile') {
+	log::add('mobile', 'debug', ':fg-success: ─────▶︎ Demande de sauvegarde ::/fg: ' . $params['type'] . ' ─▶︎ ' . $params['Iq'] . ' > ' . mobile::whoIsIq($params['Iq']));
+	//log::add('mobile', 'debug', 'Demande de sauvegarde ' . $params['type'] . ' > ' . $params['Iq'] . ' > ' . mobile::whoIsIq($params['Iq']));
+	mobile::makeSaveJson($params['Iq'], $params['Json'], $params['type']);
 	$jsonrpc->makeSuccess();
 }
 
-if ($jsonrpc->getMethod() == 'getMobile'){
-	log::add('mobile', 'debug', 'Demande de recuperation '. $params['type'] .' > ' . $params['Iq'] .'('.mobile::whoIsIq($params['Iq']).') recuperation save du > ' . $params['IqRestore'] . ' ('. mobile::whoIsIq($params['IqRestore']) .')');
+if ($jsonrpc->getMethod() == 'getMobile') {
+	log::add('mobile', 'debug', ':fg-success: ─────▶︎ Demande de recuperation ::/fg: ' . $params['type'] . ' ─▶︎ ' . $params['Iq'] . '(' . mobile::whoIsIq($params['Iq']) . ') recuperation save du > ' . $params['IqRestore'] . ' (' . mobile::whoIsIq($params['IqRestore']) . ')');
 	$jsonrpc->makeSuccess(mobile::getSaveJson($params['IqRestore'], $params['type']));
 }
 
-if ($jsonrpc->getMethod() == 'geoloc'){
-	log::add('mobile', 'debug', 'Geoloc '. $params['id'] .' > ' . $params['name'] .' > ' .$params['value']);
+if ($jsonrpc->getMethod() == 'geoloc') {
+	log::add('mobile', 'debug', 'Geoloc ' . $params['id'] . ' > ' . $params['name'] . ' > ' . $params['value']);
 	mobile::EventGeoloc($params);
 	$jsonrpc->makeSuccess();
 }
 
-if ($jsonrpc->getMethod() == 'geolocSave'){
-	log::add('mobile', 'debug', 'Geoloc SAVE '. $params['id'] .' > ' . $params['name']);
-  	if($params['id'] != '' || $params['id'] != null){
+if ($jsonrpc->getMethod() == 'geolocSave') {
+	log::add('mobile', 'debug', ':fg-success: ─────▶︎ Geoloc SAVE ::/fg: ' . $params['id'] . ' ─▶︎ ' . $params['name']);
+	if ($params['id'] != '' || $params['id'] != null) {
 		mobile::SaveGeoloc($params);
 		$jsonrpc->makeSuccess();
-    }else{
-     	throw new Exception(__('pas d\'id : ', __FILE__) . $params['name']);
-    }
+	} else {
+		throw new Exception(__('pas d\'id : ', __FILE__) . $params['name']);
+	}
 }
 
-if ($jsonrpc->getMethod() == 'geolocDel'){
-	log::add('mobile', 'debug', 'Geoloc DEL '. $params['id'] .' > ' . $params['name']);
+if ($jsonrpc->getMethod() == 'geolocDel') {
+	log::add('mobile', 'debug', 'Geoloc DEL ' . $params['id'] . ' > ' . $params['name']);
 	mobile::delGeoloc($params);
 	$jsonrpc->makeSuccess();
 }

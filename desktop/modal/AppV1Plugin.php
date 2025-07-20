@@ -189,18 +189,19 @@ $plugin_widget = mobile::$_pluginWidget;
 	$(window).resize(function() {
 		$('.pluginListContainer').packery()
 	})
-    
-function clickplugin(id_plugin, name_plugin) {
-  if (typeof jeeDialog !== "undefined") {
-    jeeDialog.dialog({
-      id: "configMobile",
-      title: "{{Configuration Mobile du Plugin " + name_plugin + " - Application V1}}",
-      contentUrl: "index.php?v=d&plugin=mobile&modal=AppV1Plugin.mobile&plugin_id=" + id_plugin,
-    });
-  } else {
-    $("#md_modal").dialog({ title: "{{Configuration Mobile du Plugin " + name_plugin + " - Application V1}}"});
-    $("#md_modal").load("index.php?v=d&plugin=mobile&modal=AppV1Plugin.mobile&plugin_id=" + id_plugin).dialog("open");
-  }
-}
 
+	function clickplugin(id_plugin, name_plugin) {
+		if (typeof jeeDialog !== "undefined") {
+			jeeDialog.dialog({
+				id: "configMobile",
+				title: "{{Configuration Mobile du Plugin " + name_plugin + " - Application V1}}",
+				contentUrl: "index.php?v=d&plugin=mobile&modal=AppV1Plugin.mobile&plugin_id=" + id_plugin,
+			});
+		} else {
+			$("#md_modal").dialog({
+				title: "{{Configuration Mobile du Plugin " + name_plugin + " - Application V1}}"
+			});
+			$("#md_modal").load("index.php?v=d&plugin=mobile&modal=AppV1Plugin.mobile&plugin_id=" + id_plugin).dialog("open");
+		}
+	}
 </script>

@@ -893,8 +893,8 @@ if ($jsonrpc->getMethod() == 'event') {
 }
 
 if ($jsonrpc->getMethod() == 'askText') {
-	log::add('mobile', 'debug', 'TESTAPIASK');
-	log::add('mobile', 'debug', 'Arrivée reponse ask Textuel depuis le mobile > ' . $params['Iq']);
+	log::add('mobile', 'debug', '┌──:fg-success: TESTAPIASK :/fg:──');
+	log::add('mobile', 'debug', '| Arrivée reponse ask Textuel depuis le mobile ─▶︎ ' . $params['Iq']);
 	/*$configs = $params['configs'];
   	$menu = $configs['menu'];
   	$notification = $configs['notification'];*/
@@ -906,11 +906,11 @@ if ($jsonrpc->getMethod() == 'askText') {
 		if ($askCasse == false) {
 			$textCasse = strtolower($params['text']);
 		}
-		log::add('mobile', 'debug', 'Mobile bien trouvé casse -> ' . $askCasse . ' text : ' . $textCasse);
+		log::add('mobile', 'debug', '| Mobile bien trouvé casse ─▶︎ ' . $askCasse . ' text : ' . $textCasse);
 		$cmd = $mobile->getCmd(null, 'notif');
-		log::add('mobile', 'debug', 'IQ > ' . $params['Iq'] . ' demande cmd > ' . $cmd->getId());
+		log::add('mobile', 'debug', '| IQ > ' . $params['Iq'] . ' demande cmd ─▶︎ ' . $cmd->getId());
 		if ($cmd->askResponse($textCasse)) {
-			log::add('mobile', 'debug', 'ask bien trouvé : Réponse validée');
+			log::add('mobile', 'debug', '| ask bien trouvé ─▶︎ Réponse validée');
 			$jsonrpc->makeSuccess();
 		} else {
 			$ch = curl_init();
@@ -918,10 +918,11 @@ if ($jsonrpc->getMethod() == 'askText') {
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			$output = curl_exec($ch);
 			curl_close($ch);
-			log::add('mobile', 'debug', $output);
+			log::add('mobile', 'debug', '| ' . $output);
 			$jsonrpc->makeSuccess();
 		}
 	}
+	log::add('mobile', 'debug', '└────────────────────');
 }
 
 if ($jsonrpc->getMethod() == 'saveMobile') {

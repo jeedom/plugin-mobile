@@ -62,14 +62,14 @@ try {
 
 	// APP V1
 
-	if (init('action') == 'AppV1Savescenario'){
+	if (init('action') == 'AppV1Savescenario') {
 		$id = init('id');
 		$sendApp = init('valueSend');
 		$scenario = scenario::byId($id);
-		if(!is_object($scenario)){
+		if (!is_object($scenario)) {
 			throw new Exception(__('scenario non trouvé', __FILE__));
 		}
-		$scenario->setDisplay("sendToApp",$sendApp);
+		$scenario->setDisplay("sendToApp", $sendApp);
 		$scenario->save();
 		ajax::success();
 	}
@@ -77,7 +77,7 @@ try {
 		mobile::makeTemplateJson();
 		ajax::success();
 	}
-	if (init('action') == 'AppV2GetSaveFavDash'){
+	if (init('action') == 'AppV2GetSaveFavDash') {
 		$iq = init('iq');
 		$jsonFavDash = mobile::getSaveJson($iq, 'favdash');
 		if ($jsonFavDash == "") {
@@ -87,7 +87,7 @@ try {
 		}
 		ajax::success($reponse);
 	}
-	if (init('action') == 'AppV2GetSaveDashboard'){
+	if (init('action') == 'AppV2GetSaveDashboard') {
 		$iq = init('iq');
 		$jsonDashboard = mobile::getSaveJson($iq, 'dashboard');
 		if ($jsonDashboard == "") {

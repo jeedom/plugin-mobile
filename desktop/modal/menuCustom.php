@@ -106,10 +106,16 @@ $eqLogics = mobile::byType('mobile');
         },
         success: function(data) {
           if (data.state != 'ok') {
-            jeedomUtils.showAlert({ message: data.result, level: "danger"})
+            jeedomUtils.showAlert({
+              message: data.result,
+              level: "danger"
+            })
             return
           }
-          jeedomUtils.showAlert({ message: '{{Configuration Menu Enregistrée}}', level: "success"})
+          jeedomUtils.showAlert({
+            message: '{{Configuration Menu Enregistrée}}',
+            level: "success"
+          })
         }
       })
     })

@@ -4,6 +4,10 @@
 >
 > Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte
 
+# xx/07/2025
+
+- Intégration Application V1 
+
 
 # 08/07/2025
 

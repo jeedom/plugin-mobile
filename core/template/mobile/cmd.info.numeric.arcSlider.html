@@ -40,7 +40,7 @@
         .css("transform", "scale(0.94) rotate(" + angle + "deg)");
       cmd.find(".state strong").first().text(_options.display_value);
     });
-
+      
     if (is_numeric("#state#")) {
       jeedom.cmd.refreshValue([
         {

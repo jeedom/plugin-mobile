@@ -531,7 +531,7 @@ class mobile extends eqLogic
 	 * Call by configMenuCustom()
 	 * @return array
 	 */
-	public static function generateTypeObject($pluginPanelMobile, $menuCustomArray)
+	public static function generateTypeObject($pluginPanelMobile, $menuCustomArray, $mobileInstance = null)
 	{
 		$webviewUrl = 'd';
 		$objectId = isset($menuCustomArray['selectNameMenu']) ? $menuCustomArray['selectNameMenu'] : '';
@@ -557,7 +557,16 @@ class mobile extends eqLogic
 						$tabUrl = "/index.php?v={$webviewUrl}&p=plan&fullscreen=1&plan_id={$objectId}";
 						break;
 					case 'panel':
-						$tabUrl = (isset($pluginPanelMobile[$objectId]) && $pluginPanelMobile[$objectId] == $objectId) ? "/index.php?v=m&p={$objectId}" : "/index.php?v=m&p={$objectId}&app_mode=1";
+						// Récupération de l'IQ pour les redirections personnalisées
+						$Iq = is_object($mobileInstance) ? $mobileInstance->getLogicalId() : '';
+						
+						if (isset($pluginPanelMobile[$objectId]) && $pluginPanelMobile[$objectId] == $objectId) {
+							// $tabUrl = "/index.php?v=m&p={$objectId}";
+							$tabUrl = "/index.php?v=d&m=logistique&p=logistique&p=panelBL&Iq=" . $Iq;
+						} else {
+							// $tabUrl = "/index.php?v=m&p={$objectId}&app_mode=1";
+							$tabUrl = "/index.php?v=d&m=logistique&p=logistique&p=panelBL&Iq=" . $Iq;
+						}
 						break;
 					default:
 						break;
@@ -569,13 +578,22 @@ class mobile extends eqLogic
 
 				switch ($objectId) {
 					case 'overview':
-						$tabUrl = "/index.php?v=m&p=overview";
+						// Récupération de l'IQ pour les redirections personnalisées
+						$Iq = is_object($mobileInstance) ? $mobileInstance->getLogicalId() : '';
+						// $tabUrl = "/index.php?v=m&p=overview";
+						$tabUrl = "/index.php?v=d&m=rma&p=panelScanRma&Iq=" . $Iq;
 						break;
 					case 'home':
-						$tabUrl = "/index.php?v=m&p=home";
+						// Récupération de l'IQ pour les redirections personnalisées
+						$Iq = is_object($mobileInstance) ? $mobileInstance->getLogicalId() : '';
+						// $tabUrl = "/index.php?v=m&p=home";
+						$tabUrl = "/index.php?v=d&m=logistique&p=logistique&p=panelBL&Iq=" . $Iq;
 						break;
 					case 'health':
-						$tabUrl = "/index.php?v=m&p=health";
+						// Récupération de l'IQ pour les redirections personnalisées
+						$Iq = is_object($mobileInstance) ? $mobileInstance->getLogicalId() : '';
+						// $tabUrl = "/index.php?v=m&p=health";
+						$tabUrl = "/index.php?v=d&m=logistique&p=logistique&p=bordereaux&Iq=" . $Iq;
 						break;
 					case 'timeline':
 						$tabUrl = "/index.php?v=m&p=timeline";
@@ -699,7 +717,7 @@ class mobile extends eqLogic
 
 			// GENERATE URLS FOR MENU CUSTOM 
 			//$result = self::generateTypeObject($objectId, $i, $webviewUrl, $pluginPanelMobile);
-			$result = self::generateTypeObject($pluginPanelMobile, isset($menuCustomArray[$i]) ? $menuCustomArray[$i] : '');
+			$result = self::generateTypeObject($pluginPanelMobile, isset($menuCustomArray[$i]) ? $menuCustomArray[$i] : '', $this);
 			$typeObject = $result['typeObject'];
 			$typewebviewurl = $result['typewebviewurl'];
 			$typeobjectId = $result['typeobjectId'];

@@ -624,26 +624,26 @@ class mobile extends eqLogic
 	{
 		/******************** APP V1  *************************/
 		log::add('mobile', 'debug', '|┌──:fg-success: jsonPublish :/fg:──');
-		log::add('mobile', 'debug', '| Geoloc Event du mobile > ' . $geoloc['Iq'] . ' pour ' . $geoloc['id']);
+		log::add('mobile', 'debug', '| Geoloc Event du mobile ─▶︎ ' . $geoloc['Iq'] . ' pour ' . $geoloc['id']);
 		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
 		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
 		$cmdgeolocv2 = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geoloc['id']);
 		if (is_object($cmdgeoloc)) {
-			log::add('mobile', 'debug', 'commande trouvé');
+			log::add('mobile', 'debug', '| commande trouvé');
 			if ($geoloc['value'] !== $cmdgeoloc->execCmd()) {
-				log::add('mobile', 'debug', 'Valeur non pareille.');
+				log::add('mobile', 'debug', '| Valeur non identique');
 				$cmdgeoloc->event($geoloc['value']);
 			} else {
-				log::add('mobile', 'debug', '| Valeur pareille. ─▶︎ ' . $geoloc['value'] . ' / ' . $cmdgeoloc->execCmd());
+				log::add('mobile', 'debug', '| Valeur identique ─▶︎ ' . $geoloc['value'] . ' / ' . $cmdgeoloc->execCmd());
 			}
 		}
 		if (is_object($cmdgeolocv2)) {
-			log::add('mobile', 'debug', 'commande trouvé');
+			log::add('mobile', 'debug', '| commande trouvé');
 			if ($geoloc['value'] !== $cmdgeolocv2->execCmd()) {
-				log::add('mobile', 'debug', 'Valeur non pareille.');
+				log::add('mobile', 'debug', '| Valeur non identique');
 				$cmdgeolocv2->event($geoloc['value']);
 			} else {
-				log::add('mobile', 'debug', '| Valeur pareille. ─▶︎ ' . $geoloc['value'] . ' / ' . $cmdgeolocv2->execCmd());
+				log::add('mobile', 'debug', '| Valeur identique ─▶︎ ' . $geoloc['value'] . ' / ' . $cmdgeolocv2->execCmd());
 			}
 		}
 		log::add('mobile', 'debug', '|└────────────────────');

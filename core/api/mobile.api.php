@@ -131,7 +131,7 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 	log::add('mobile', 'debug', '| [INFO] Configs > ' . json_encode($configs));
 	log::add('mobile', 'debug', '| [INFO] Geolocs > ' . json_encode($geolocs));
 	//log::add('mobile', 'debug', '| [INFO] Menu > ' . json_encode($menu));
-	log::add('mobile', 'debug', '| [INFO] Notification > ' . json_encode($notification));
+	log::add('mobile', 'debug', '| [INFO] Notification ─▶︎ ' . json_encode($notification));
 	$mobile = null;
 	if (isset($params['Iq'])) {
 		$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
@@ -142,7 +142,7 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 	$mobile->setConfiguration('type_mobile', $notification['platform']);
 	if (isset($notification['token'])) {
 		if ($notification['token'] != '') {
-			log::add('mobile', 'debug', '| Token à ajouter > ' . $notification['token']);
+			log::add('mobile', 'debug', '| Token à ajouter ─▶︎ ' . $notification['token']);
 			$mobile->setConfiguration('notificationRegistrationToken', $notification['token']);
 			if ($notification['token'] == 'notifsBGDisabled') {
 				message::removeAll("mobile", 'alertNotifs');
@@ -156,12 +156,12 @@ if ($jsonrpc->getMethod() == 'setConfigs') {
 		$notifsTime = intval($notification['notifsTime']);
 		if ($mobile->getConfiguration('notifsTime', 30) != $notifsTime) {
 			$mobile->setConfiguration('notifsTime', $notifsTime);
-			log::add('mobile', 'debug', '| [INFO] New notifsTime > ' . intval($notification['notifsTime']));
+			log::add('mobile', 'debug', '| [INFO] New notifsTime ─▶︎ ' . intval($notification['notifsTime']));
 			$mobile->cleaningNotifications();
 		}
 	}
 	if (is_object($user = user::byHash($params['apikey']))) {
-		log::add('mobile', 'debug', '| [INFO] affect_user > ' . $user->getLogin() . ' (' . $user->getId() . ')');
+		log::add('mobile', 'debug', '| [INFO] affect_user ─▶︎ ' . $user->getLogin() . ' (' . $user->getId() . ')');
 		$mobile->setConfiguration('affect_user', $user->getId());
 	}
 	$mobile->save();
@@ -195,8 +195,8 @@ if ($jsonrpc->getMethod() == 'setCustomMenu') {
 	log::add('mobile', 'debug', '┌─────▶︎ AppV2 setCustomMenu ─────────────────');
 	$configs = $params['configs'];
 	$menu = $configs['menu'];
-	log::add('mobile', 'debug', '| [INFO] Configs > ' . json_encode($configs));
-	log::add('mobile', 'debug', '| [INFO] Menu > ' . json_encode($menu));
+	log::add('mobile', 'debug', '| [INFO] Configs ─▶︎ ' . json_encode($configs));
+	log::add('mobile', 'debug', '| [INFO] Menu ─▶︎ ' . json_encode($menu));
 	$mobile = null;
 	if (isset($params['Iq']) && is_object($mobile = eqLogic::byLogicalId($params['Iq'], 'mobile'))) {
 		saveMenuFromAppV2($menu, $mobile);
@@ -255,7 +255,7 @@ if ($jsonrpc->getMethod() == 'getPlugins') {
 	$return[$idBox]['informations']['plugins'] = $arrayPlugins;
 	$return[$idBox]['informations']['changelog'] = $changeLogs;
 	$return[$idBox]['informations']['infosDemon'] = $deamons_infos;
-	log::add('mobile', 'debug', '| [INFO] Retour vers App > ' . json_encode($return));
+	log::add('mobile', 'debug', '| [INFO] Retour vers App ─▶︎ ' . json_encode($return));
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	$jsonrpc->makeSuccess($return);
 }
@@ -336,8 +336,8 @@ if ($jsonrpc->getMethod() == 'getJson') {
 	$return[$idBox]['jeedom_version'] = jeedom::version();
 	$return[$idBox]['rdk'] = $rdk;
 	$return[$idBox]['name'] = config::byKey('name') == '' ? 'Jeedom' : config::byKey('name');
-	log::add('mobile', 'debug', '| [INFO] Retour de base > ' . json_encode($return));
-	log::add('mobile', 'debug', '| Recherche du mobile via sont Iq > ' . $params['Iq']);
+	log::add('mobile', 'debug', '| [INFO] Retour de base ─▶︎ ' . json_encode($return));
+	log::add('mobile', 'debug', '| Recherche du mobile via sont Iq ─▶︎ ' . $params['Iq']);
 	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	$return[$idBox]['configs'] = array();
 	$return[$idBox]['miscellanousParams'] = array();
@@ -367,15 +367,15 @@ if ($jsonrpc->getMethod() == 'getJson') {
  */
 if ($jsonrpc->getMethod() == 'getCustomMenu') {
 	log::add('mobile', 'debug', '┌─────◀︎ AppV2 getCustomMenu ────────────────────');
-	log::add('mobile', 'debug', '| Recherche du mobile via sont Iq > ' . $params['Iq']);
+	log::add('mobile', 'debug', '| Recherche du mobile via sont Iq ─▶︎ ' . $params['Iq']);
 	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	if (is_object($mobile)) {
-		log::add('mobile', 'debug', '|  OK  Mobile trouvé > ' . $mobile->getName());
+		log::add('mobile', 'debug', '|  OK  Mobile trouvé ─▶︎ ' . $mobile->getName());
 		$menu = $mobile->configMenuCustom();
 	} else {
 		$menu = mobile::getMenuDefaultTab();
 	}
-	log::add('mobile', 'debug', '| [INFO] Retour vers App > ' . json_encode($menu));
+	log::add('mobile', 'debug', '| [INFO] Retour vers App ─▶︎ ' . json_encode($menu));
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	$jsonrpc->makeSuccess($menu);
 }
@@ -462,7 +462,7 @@ if ($jsonrpc->getMethod() == 'askText') {
 			$textCasse = strtolower($params['text']);
 		}
 		$cmd = $mobile->getCmd(null, 'notif');
-		log::add('mobile', 'debug', '| Réponse : ' . $textCasse . ' - IQ > ' . $params['Iq'] . ' -- Demande cmd > ' . $cmd->getId());
+		log::add('mobile', 'debug', '| Réponse : ' . $textCasse . ' - IQ ─▶︎ ' . $params['Iq'] . ' -- Demande cmd ─▶︎ ' . $cmd->getId());
 		if ($cmd->askResponse($textCasse)) {
 			log::add('mobile', 'debug', '| ASK bien trouvé : Réponse validée');
 		} else {
@@ -491,7 +491,7 @@ if ($jsonrpc->getMethod() == 'getAskResponse') {
 	$filePath = dirname(__FILE__) . '/../data/notifications/' . $Iq . '.json';
 	$idNotif = $params['idNotif'];
 	$choiceAsk = $params['choiceAsk'];
-	log::add('mobile', 'debug', '| Réponse ASK > ' . $Iq . ' > ' . $idNotif . ' > ' . $choiceAsk);
+	log::add('mobile', 'debug', '| Réponse ASK ─▶︎ ' . $Iq . ' > ' . $idNotif . ' > ' . $choiceAsk);
 	if (file_exists($filePath)) {
 		$notifications = file_get_contents($filePath);
 		$notificationsArray = json_decode($notifications, true);

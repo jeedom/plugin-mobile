@@ -34,6 +34,16 @@ class mobile extends eqLogic
 
 	/*     * ***********************Methode static*************************** */
 
+	/**
+	 * Core callback to returns the directory of data not to be saved in the Jeedom backup
+	 *
+	 * @return array
+	 */
+	public static function backupExclude()
+	{
+		return ['data'];
+	}
+
 	public static function cronDaily()
 	{
 		foreach (eqLogic::byType('mobile') as $mobile) {

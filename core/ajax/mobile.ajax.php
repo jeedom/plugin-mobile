@@ -59,6 +59,20 @@ try {
 		}
 		ajax::success($return);
 	}
+  
+	if (init('action') == 'getNotificationsV2') {
+		$return = '';
+		$iq = init('iq');
+		$mobile = eqLogic::byLogicalId($iq, 'mobile');
+		if (is_object($mobile)) {
+			$return = mobile::getNotificationsV2($iq);
+		}
+		ajax::success($return);
+	}
+
+	if (init('action') == 'removeNotificationV2') {
+      ajax::success(mobile::removeNotification(init('iq', ''), init('id', '')));
+    }
 
 	// APP V1
 

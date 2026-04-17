@@ -71,7 +71,7 @@ try {
 	}
 
 	if (init('action') == 'removeNotificationV2') {
-      ajax::success(mobile::removeNotification(init('iq', ''), init('id', '')));
+      ajax::success(mobile::removeNotificationV2(init('iq', ''), init('id', '')));
     }
 
 	// APP V1

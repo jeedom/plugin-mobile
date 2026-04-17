@@ -178,6 +178,7 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 			<li role="presentation"><a class="eqLogicAction cursor" aria-controls="home" role="tab" data-action="returnToThumbnailDisplay"><i class="fas fa-arrow-circle-left"></i></a></li>
 			<li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Mobile}}</a></li>
 			<li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list"></i> {{Commandes}}</a></li>
+			<li role="presentation"><a href="#notificationtab" aria-controls="notification" role="tab" data-toggle="tab"><i class="far fa-comment"></i> {{Notifications}}</a></li>
 		</ul>
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane active" id="eqlogictabin">
@@ -362,8 +363,14 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 					</table>
 				</div>
 			</div>
+			<div role="tabpanel" class="tab-pane" id="notificationtab">
+				<div class="notification-box">
+					<div class="alert alert-warning">Compatible AppV2 uniquement.</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
+<?php include_file('desktop', 'notification', 'css', 'mobile'); ?>
 <?php include_file('desktop', 'mobile', 'js', 'mobile'); ?>
 <?php include_file('core', 'plugin.template', 'js'); ?>

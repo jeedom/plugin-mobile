@@ -54,6 +54,7 @@ document.querySelector("#bt_pluginmobile")?.addEventListener("click", function (
     contentUrl: "index.php?v=d&plugin=mobile&modal=AppV1Plugin",
   });
 });
+
 document.querySelector("#bt_piecemobile")?.addEventListener("click", function (event) {
   jeeDialog.dialog({
     id: "objectsModal",
@@ -61,6 +62,7 @@ document.querySelector("#bt_piecemobile")?.addEventListener("click", function (e
     contentUrl: "index.php?v=d&plugin=mobile&modal=AppV1Piece",
   });
 });
+
 document.querySelector("#bt_scenariomobile")?.addEventListener("click", function (event) {
   jeeDialog.dialog({
     id: "scenariosModal",
@@ -68,6 +70,7 @@ document.querySelector("#bt_scenariomobile")?.addEventListener("click", function
     contentUrl: "index.php?v=d&plugin=mobile&modal=AppV1Scenario",
   });
 });
+
 document.querySelector("#bt_regenConfig")?.addEventListener("click", function (event) {
   domUtils.ajax({
     type: "POST",
@@ -89,6 +92,48 @@ document.querySelector("#bt_regenConfig")?.addEventListener("click", function (e
   });
 });
 
+// NotificationsV2
+document.querySelector(".notification-box")?.addEventListener("click", function (event) {
+  var _target = null
+  if (_target = event.target.closest('.bt_removeNotification')) {
+    let notification = _target.closest('.notification-step')
+    let id = notification.getAttribute('data-id');
+    let iq = notification.getAttribute('data-iq');
+    domUtils.ajax({
+      type: "POST",
+      url: "plugins/mobile/core/ajax/mobile.ajax.php",
+      data: {
+        action: "removeNotificationV2",
+        id: id,
+        iq: iq
+      },
+      dataType: "json",
+      error: function (request, status, error) {
+        domUtils.handleAjaxError(request, status, error)
+      },
+      success: function (data) {
+        if (data.state != "ok") {
+          jeedomUtils.showAlert({ message: data.result, level: "danger" })
+          return
+        }
+        notification.remove()
+        if (data.result == '0' && is_object(el = document.querySelector(".notification-box"))) {
+          el.innerHTML = '<div class="alert alert-warning">{{Aucune notifications}}</div>' 
+        }
+        jeedomUtils.showAlert({ message: "{{Notification supprimées.}}", level: "success"});
+      },
+    });
+    return
+  }
+
+  if (_target = event.target.closest('.bt_refreshNotifications')) {
+    let iq = _target.getAttribute('data-iq')
+     printNotification(iq)
+    jeedomUtils.showAlert({ message: "{{Terminé.}}", level: "success"});
+    return
+  }
+});
+
 // Copie pour monitoring
 var toCopy = document.getElementById("to-copy-monitoring");
 var arnComplet = document.getElementById("arnComplet");
@@ -107,14 +152,13 @@ document.getElementById("copy-monitoring")?.addEventListener("click", function (
 
 function printEqLogic(_eqLogic) {
   let appVersion = _eqLogic.configuration.appVersion;
-  console.log(appVersion)
   if (appVersion == 2) {
     document.querySelectorAll(".paramV1").unseen()
     document.querySelectorAll(".paramV2").seen()
+    printNotification(_eqLogic.logicalId)
   } else {
     document.querySelectorAll(".paramV2").unseen()
     document.querySelectorAll(".paramV1").seen()
-    
   }
   
   // AppV1
@@ -243,7 +287,6 @@ function printEqLogic(_eqLogic) {
 }
 
 function addCmdToTable(_cmd) {
-  console.log('addCmdToTable')
   if (document.getElementById('table_cmd') == null) return
   if (!isset(_cmd)) {
     var _cmd = { configuration: {} }
@@ -305,6 +348,96 @@ function addCmdToTable(_cmd) {
       jeedom.cmd.changeType(newRow, init(_cmd.subType))
     }
   })
+}
+
+function printNotification(_iq) {
+  domUtils.ajax({
+    type: "POST",
+    url: "plugins/mobile/core/ajax/mobile.ajax.php",
+    data: {
+      action: "getNotificationsV2",
+      iq: _iq,
+    },
+    dataType: "json",
+    global: false,
+    error: function (request, status, error) {
+      domUtils.handleAjaxError(request, status, error)
+    },
+    success: function (data) {
+      if (data.state != "ok") {
+        jeedomUtils.showAlert({ message: data.result, level: "danger" })
+        return
+      }
+        
+      let el = document.querySelector(".notification-box");
+      
+      try {
+        var objectData = JSON.parse(data.result);
+      } catch {
+        el.innerHTML = '<div class="alert alert-warning">' + data.result + '</div>'
+        return
+      }
+
+      if (typeof objectData == "object") {
+        let notification = ''
+        notification += '<div class="notification-button bt_refreshNotifications" data-iq="' + _iq + '"><a class="btn btn-sm btn-default"><i class="fas fa-sync-alt"></i> Rafraichir</a></div>'
+        moment.locale(jeeFrontEnd.language.substring(0, 2))
+        for (var i in objectData) { 
+          // ASK
+          let askStatus = ''
+          let askChoice = ''
+          if (isset(objectData[i].data.choiceAsk)) {
+            askStatus = 'ask-success'
+            askChoice = objectData[i].data.choiceAsk
+          } else if (objectData[i].data.askVariable != 'rien') {
+            let notifTime = moment(objectData[i].data.date, "YYYY-MM-DD hh:mm:ss").unix()
+            let currentTime = moment().unix()
+            try {
+              let askParams = (isset(objectData[i].data.askParams)) ? JSON.parse(objectData[i].data.askParams) : ''
+              if (isset(askParams.timeout)) {
+                let timeout = askParams.timeout / 1000
+                if ((currentTime - notifTime) > timeout) {
+                  askStatus = 'ask-timeout'
+                  askChoice = '{{Timeout}}'
+                } else {
+                  askStatus += 'ask-in-progress'
+                  askChoice = '{{En cours...}}'
+                }
+              }
+            } catch { }
+          }
+          
+          notification += '<div class="notification-step ' + ((objectData[i].data.critical == 'true') ? 'stepper-critical ' : (askStatus != '') ? askStatus : '') + '" data-id="' + objectData[i].data.idNotif + '" data-iq="' + _iq + '">'
+            notification += '<div class="notification-date">' + objectData[i].data.date + '</div>'
+            if (objectData[i].data.askVariable != 'rien') {
+              notification += '<div class="notification-circle" title="variable : ' + objectData[i].data.askVariable + '">ASK</div>'
+            } else if (objectData[i].data.critical == 'true') {
+              notification += '<div class="notification-circle" title="{{Notification critique}}">N</div>'
+            } else if (objectData[i].data.silent == 'true') {
+              notification += '<div class="notification-circle" title="{{Notification silencieuse}}">N<sub>S</sub></div>'
+            } else {
+              notification += '<div class="notification-circle" title="{{Notification}}">N</div>'
+            }
+            notification += '<div class="notification-line"></div>'
+            notification += '<div class="notification-content">'
+              //notification += '<a class="btn btn-sm btn-danger pull-right bt_removeNotification" data-action="removeNotification"><i class="fas fa-minus-circle"></i> {{Supprimer}}</a>'
+              notification += '<i class="fas fa-minus-circle pull-right bt_removeNotification cursor" title="Supprimer"></i>'
+              notification += '<div class="notification-title">' + objectData[i].data.title + '</div>'
+              notification += '<div class="notification-body">' + objectData[i].data.body + '</div>'
+              if (isset(objectData[i].data.image)) {
+                notification += '<div class="notification-img"><img src="' + objectData[i].data.image + '"></img></div>'
+              }
+              if (askChoice != '') notification += '<div class="notification-status">' + askChoice + '</div>'
+            notification += '</div>'
+          notification += '</div>'
+          //console.log(objectData[i])
+        }
+        el.innerHTML = notification
+        jeedomUtils.initTooltips(el)
+      }
+    },
+  });
+  
 }
 
 // WIZARD 

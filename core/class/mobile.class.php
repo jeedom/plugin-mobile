@@ -1019,14 +1019,11 @@ class mobile extends eqLogic
 	 */
 	public static function getNotificationsV2($Iq)
 	{
-		$return = '';
+		$return = __('Aucune notification.', __FILE__);
 		$filePath = dirname(__FILE__) . '/../data/notifications/' . $Iq . '.json';
 		if (file_exists($filePath)) {
 			$notifs = json_decode(file_get_contents($filePath), true);
 			if (is_array($notifs) && count($notifs) > 0) $return = json_encode(array_reverse($notifs));
-			else $return = __('Aucune notifications.', __FILE__);
-		} else {
-			$return = __('Fichier de notifications non trouvé.', __FILE__);
 		}
 		return $return;
 	}

@@ -159,6 +159,8 @@ function printEqLogic(_eqLogic) {
   } else {
     document.querySelectorAll(".paramV2").unseen()
     document.querySelectorAll(".paramV1").seen()
+    let el = document.querySelector(".notification-box");
+    el.innerHTML = '<div class="alert alert-warning">Compatible AppV2 uniquement.</div>'
   }
   
   // AppV1

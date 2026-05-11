@@ -539,12 +539,25 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 			log::add('mobile', 'debug', '|  OK  Mobile trouvé -> ' . $mobile->getName() . ' (' . $params['Iq'] . ')');
 			$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $geofence['identifier']);
 			if (is_object($cmdgeoloc)) {
-				if ($geofence['action'] == 'ENTER') {
-					log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 1');
-					$cmdgeoloc->event(1);
-				} else if ($geofence['action'] == 'EXIT') {
-					log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 0');
-					$cmdgeoloc->event(0);
+				if ($geofence['action'] == 'ENTER' || $geofence['action'] == 'EXIT') {
+					$eventAge = time() - intval(strtotime($geofence['timestamp']));
+					if ($eventAge > 1800) {
+						log::add('mobile', 'debug', '| SKIP stale event (' . round($eventAge / 60) . 'min) ' . $geofence['action'] . ' geoloc_' . $geofence['identifier']);
+					} else {
+						$dedupKey = 'mobile::geofence_dedup::' . $params['Iq'] . '_' . $geofence['identifier'] . '_' . $geofence['action'] . '_' . intval(strtotime($geofence['timestamp']));
+						if (cache::exist($dedupKey)) {
+							log::add('mobile', 'debug', '| SKIP duplicate ' . $geofence['action'] . ' geoloc_' . $geofence['identifier']);
+						} else {
+							cache::set($dedupKey, 1, 60);
+							if ($geofence['action'] == 'ENTER') {
+								log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 1');
+								$cmdgeoloc->event(1);
+							} else {
+								log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 0');
+								$cmdgeoloc->event(0);
+							}
+						}
+					}
 				} else {
 					log::add('mobile', 'debug', '| Event -> ' . $geofence['action']);
 				}
@@ -560,12 +573,25 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 					log::add('mobile', 'debug', '|  OK  Mobile trouvé -> ' . $mobile->getName() . ' (' . $params['Iq'] . ')');
 					$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $geofence['identifier']);
 					if (is_object($cmdgeoloc)) {
-						if ($geofence['action'] == 'ENTER') {
-							log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 1');
-							$cmdgeoloc->event(1);
-						} else if ($geofence['action'] == 'EXIT') {
-							log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 0');
-							$cmdgeoloc->event(0);
+						if ($geofence['action'] == 'ENTER' || $geofence['action'] == 'EXIT') {
+							$eventAge = time() - intval(strtotime($geofence['timestamp']));
+							if ($eventAge > 1800) {
+								log::add('mobile', 'debug', '| SKIP stale event (' . round($eventAge / 60) . 'min) ' . $geofence['action'] . ' geoloc_' . $geofence['identifier']);
+							} else {
+								$dedupKey = 'mobile::geofence_dedup::' . $params['Iq'] . '_' . $geofence['identifier'] . '_' . $geofence['action'] . '_' . intval(strtotime($geofence['timestamp']));
+								if (cache::exist($dedupKey)) {
+									log::add('mobile', 'debug', '| SKIP duplicate ' . $geofence['action'] . ' geoloc_' . $geofence['identifier']);
+								} else {
+									cache::set($dedupKey, 1, 60);
+									if ($geofence['action'] == 'ENTER') {
+										log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 1');
+										$cmdgeoloc->event(1);
+									} else {
+										log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 0');
+										$cmdgeoloc->event(0);
+									}
+								}
+							}
 						} else {
 							log::add('mobile', 'debug', '| [INFO] Event -> ' . $geofence['action']);
 						}

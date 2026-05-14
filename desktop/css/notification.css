@@ -1,0 +1,129 @@
+.notification-box {
+  padding: 32px;
+}
+
+.notification-step {
+  display: flex;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.notification-step:last-child {
+  margin-bottom: 0px;
+}
+
+.notification-line {
+  position: absolute;
+  left: 114px;
+  top: 40px;
+  bottom: -32px;
+  width: 2px;
+  background-color: var(--logo-primary-color);
+  z-index: 1;
+}
+
+.notification-date {
+  display: flex;
+  height: 40px;
+  align-items: center;
+  margin-right: 16px;
+  width: 79px;
+  font-size: 12px;
+  padding: 5px;
+  text-align: center;
+  border-radius: var(--border-radius) var(--border-radius) var(--border-radius) var(--border-radius) !important;
+  background-color: var(--form-bg-color);
+  /* z-index: 1;*/
+}
+
+.notification-step:last-child .notification-line {
+  display: none;
+}
+
+.notification-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  background-color: var(--form-bg-color);
+  border: 2px solid var(--txt-color);
+  z-index: 2;
+}
+
+.ask-timeout .notification-circle {
+  color: var(--linkHoverLight-color) !important;
+  background-color: var(--al-info-color) !important;
+  border: none;
+}
+
+.ask-success .notification-circle {
+  color: var(--linkHoverLight-color) !important;
+  background-color: var(--al-success-color) !important;
+  border: none;
+}
+
+.ask-in-progress .notification-circle {
+  color: var(--linkHoverLight-color) !important;
+  background-color: var(--al-warning-color) !important;
+  border: none;
+}
+
+.stepper-critical .notification-circle {
+  border: 1px solid red;
+}
+
+.notification-content {
+  flex: 1;
+  padding: 10px;
+  border-radius: var(--border-radius) var(--border-radius) var(--border-radius) var(--border-radius);
+  background-color: var(--form-bg-color);
+}
+
+.notification-img {
+  margin-top: 10px;
+}
+
+.notification-img img {
+  max-width: 250px;
+}
+
+.notification-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-size: 18px;
+}
+
+.notification-status {
+  font-size: 13px;
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-top: 4px;
+}
+
+.ask-success .notification-status {
+  color: var(--linkHoverLight-color) !important;
+  background-color: var(--al-success-color) !important;
+  border: none;
+}
+
+.ask-timeout .notification-status {
+  color: var(--linkHoverLight-color) !important;
+  background-color: var(--al-info-color) !important;
+  border: none;
+}
+
+.ask-in-progress .notification-status {
+  color: var(--linkHoverLight-color) !important;
+  background-color: var(--al-warning-color) !important;
+  border: none;
+}
+
+.notification-button {
+  display: flex;
+  margin-bottom: 32px;
+  justify-content: end;
+}

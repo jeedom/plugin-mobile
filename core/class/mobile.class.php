@@ -1013,6 +1013,48 @@ class mobile extends eqLogic
 	}
 
 	/**
+	 * Get all notifications from Iq
+	 * Call by ajax getNotificationsV2
+	 * @return array
+	 */
+	public static function getNotificationsV2($Iq)
+	{
+		$return = __('Aucune notification.', __FILE__);
+		$filePath = dirname(__FILE__) . '/../data/notifications/' . $Iq . '.json';
+		if (file_exists($filePath)) {
+			$notifs = json_decode(file_get_contents($filePath), true);
+			if (is_array($notifs) && count($notifs) > 0) $return = json_encode(array_reverse($notifs));
+		}
+		return $return;
+	}
+  
+	/**
+	 * remove notification from Id into filepath id
+	 * Call by ajax removeNotificationV2
+	 */
+	public static function removeNotificationV2($_iq, $_id)
+	{
+		$pathNotificationData = '/../data/notifications';
+		$filePath = dirname(__FILE__) . $pathNotificationData . '/' . $_iq . '.json';
+		if (file_exists($filePath)) {
+			$notificationsContent = file_get_contents($filePath);
+			$notifications = json_decode($notificationsContent, true);
+			if ($notifications === null) {
+				throw new Exception(__('Fichier de notification vide !.', __FILE__));
+			}
+			if (isset($notifications[$_id])) {
+				unset($notifications[$_id]);
+				file_put_contents($filePath, json_encode($notifications));
+				return count($notifications);
+			} else {
+				throw new Exception(__('Id notification introuvable :', __FILE__) . ' ' . $_id);
+			}
+		} else {
+			throw new Exception(__('Fichier de notifications non trouvé : ', __FILE__) . $filePath);
+		}
+	}
+
+	/**
 	 * Create and update cmd geoloc
 	 * Call By api : setConfigs
 	 */
@@ -1851,7 +1893,7 @@ class mobileCmd extends cmd
 						$askParams = json_decode($notif['data']['askParams'], true);
 						$notifTime = strtotime($notif['data']['date']);
 						$currentTime = time();
-						$timeout = $askParams['timeout'] / 1000;
+						$timeout = (isset($askParams['timeout'])) ? $askParams['timeout'] / 1000 : 0;
 						return $notif['data']['askVariable'] == 'rien' || ($currentTime - $notifTime) < $timeout;
 					});
 					file_put_contents($filePath, json_encode($notifs));
@@ -1860,7 +1902,7 @@ class mobileCmd extends cmd
 				case 3:
 					$notifs = json_decode(file_get_contents($filePath), true);
 					$notifs = array_filter($notifs, function ($notif) {
-						return $notif['data']['choiceAsk'] == '';
+						return !isset($notif['data']['choiceAsk']) || $notif['data']['choiceAsk'] == '';
 					});
 					file_put_contents($filePath, json_encode($notifs));
 					log::add('mobile', 'info', '| Suppression des asks répondus effectuée');

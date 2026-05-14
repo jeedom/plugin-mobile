@@ -544,19 +544,9 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 					if ($eventAge > 1800) {
 						log::add('mobile', 'debug', '| SKIP stale event (' . round($eventAge / 60) . 'min) ' . $geofence['action'] . ' geoloc_' . $geofence['identifier']);
 					} else {
-						$dedupKey = 'mobile::geofence_dedup::' . $params['Iq'] . '_' . $geofence['identifier'] . '_' . $geofence['action'] . '_' . intval(strtotime($geofence['timestamp']));
-						if (cache::exist($dedupKey)) {
-							log::add('mobile', 'debug', '| SKIP duplicate ' . $geofence['action'] . ' geoloc_' . $geofence['identifier']);
-						} else {
-							cache::set($dedupKey, 1, 60);
-							if ($geofence['action'] == 'ENTER') {
-								log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 1');
-								$cmdgeoloc->event(1);
-							} else {
-								log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 0');
-								$cmdgeoloc->event(0);
-							}
-						}
+						$value = ($geofence['action'] == 'ENTER') ? 1 : 0;
+						log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" -> ' . $value);
+						$mobile->checkAndUpdateCmd('geoloc_' . $geofence['identifier'], $value);
 					}
 				} else {
 					log::add('mobile', 'debug', '| Event -> ' . $geofence['action']);
@@ -578,19 +568,9 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 							if ($eventAge > 1800) {
 								log::add('mobile', 'debug', '| SKIP stale event (' . round($eventAge / 60) . 'min) ' . $geofence['action'] . ' geoloc_' . $geofence['identifier']);
 							} else {
-								$dedupKey = 'mobile::geofence_dedup::' . $params['Iq'] . '_' . $geofence['identifier'] . '_' . $geofence['action'] . '_' . intval(strtotime($geofence['timestamp']));
-								if (cache::exist($dedupKey)) {
-									log::add('mobile', 'debug', '| SKIP duplicate ' . $geofence['action'] . ' geoloc_' . $geofence['identifier']);
-								} else {
-									cache::set($dedupKey, 1, 60);
-									if ($geofence['action'] == 'ENTER') {
-										log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 1');
-										$cmdgeoloc->event(1);
-									} else {
-										log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 0');
-										$cmdgeoloc->event(0);
-									}
-								}
+								$value = ($geofence['action'] == 'ENTER') ? 1 : 0;
+								log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" -> ' . $value);
+								$mobile->checkAndUpdateCmd('geoloc_' . $geofence['identifier'], $value);
 							}
 						} else {
 							log::add('mobile', 'debug', '| [INFO] Event -> ' . $geofence['action']);

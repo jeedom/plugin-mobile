@@ -43,6 +43,7 @@ function mobile_update()
 	}
 
 	$mobiles = eqLogic::byType('mobile');
+	$migrateLogicalId = array('phoneBattery'=>'battery::level', 'phoneCharging'=>'battery::isCharging');
 	foreach ($mobiles as $mobile) {
 		/* Delete mobile with bad logicalId */
 		if ($mobile->getLogicalId() == null || $mobile->getLogicalId() == "") {
@@ -60,6 +61,16 @@ function mobile_update()
 			$mobile->setConfiguration('menuCustomArray', $menuCustomArray);
 		}
 		$mobile->save();
+		/* Migrate logicalId for cmdForSpecificChannel */
+		if ($mobile->getConfiguration('appVersion', 1) == '1') continue;
+		foreach ($migrateLogicalId as $oldLogical => $newLogical) {
+			$cmd = cmd::byEqLogicIdAndLogicalId($mobile->getId(), $oldLogical);
+			if (is_object($cmd)) {
+				log::add('mobile', 'debug', '| Migrate logicalId ' . $oldLogical . ' to ' . $newLogical . ' for the command ' . $cmd->getHumanName());
+				$cmd->setLogicalId($newLogical);
+				$cmd->save();
+			}
+		}
 	}
 
 	/* Delete old "menuCustom_" and "NoCut" save into config of plugin */

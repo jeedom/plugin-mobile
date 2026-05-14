@@ -1031,6 +1031,12 @@ class mobile extends eqLogic
 				$cmd->setOrder($order);
 				$order++;
 			}
+			$cmd->setEqLogic_id($this->getId());
+			$cmd->setType('action');
+			$cmd->setSubType('message');
+			if ($cmd->getChanged() === true) $cmd->save();
+
+			// Commande notification Silencieuse
 			$cmd = $this->getCmd(null, 'notifSilent'); 
 			if (!is_object($cmd)) {
 				$cmd = new mobileCmd();

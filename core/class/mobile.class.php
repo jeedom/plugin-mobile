@@ -389,6 +389,20 @@ class mobile extends eqLogic
 				$cmd = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $index);
 				$logicalId = 'geoloc_' . $index;
 				if (!is_object($cmd)) {
+					if (!preg_match('/^geoloc_\d+$/', $logicalId)) {
+						foreach ($mobile->getCmd() as $existing) {
+							if (preg_match('/^geoloc_\d+$/', $existing->getLogicalId())
+								&& $existing->getName() === $geoloc['name']) {
+								log::add('mobile', 'debug', '|| Migration UUID : renommage ' . $existing->getLogicalId() . ' -> ' . $logicalId);
+								$existing->setLogicalId($logicalId);
+								$existing->save();
+								$cmd = $existing;
+								break;
+							}
+						}
+					}
+				}
+				if (!is_object($cmd)) {
 					$noExistCmd = 1;
 					$cmd = new mobileCmd();
 					$cmd->setLogicalId($logicalId);

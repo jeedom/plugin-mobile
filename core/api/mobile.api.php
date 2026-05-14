@@ -517,57 +517,60 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 	log::add('mobile', 'debug', '┌─────▶︎ GeoLocV2 geofencing ───────────────');
 	$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 	if (is_object($mobile)) {
-		if (isset($params['transmition']) && isset($params['transmition']['extras']) && isset($params['transmition']['extras']['method'])) {
-			if ($params['transmition']['extras']['method'] == 'getDeviceInformations') {
-				log::add('mobile', 'debug', '| ───:fg-success: methodeForSpecificChannel in Background :/fg: ───');
-				$mobile->cmdForSpecificChannel($params, 'transmition');
-			}
-		} else if (isset($params['transmition']) && isset($params['transmition']['event']) && $params['transmition']['event'] == 'geofence') {
-			log::add('mobile', 'debug', '| Event > ' . $params['transmition']['event']);
-			$geofence = $params['transmition']['geofence'];
-			log::add('mobile', 'debug', '| Event > ' . json_encode($geofence));
-			log::add('mobile', 'debug', '|  OK  Mobile trouvé -> ' . $mobile->getName() . ' (' . $params['Iq'] . ')');
-			$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $geofence['identifier']);
-			if (is_object($cmdgeoloc)) {
-				if ($geofence['action'] == 'ENTER') {
-					log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 1');
-					$cmdgeoloc->event(1);
-				} else if ($geofence['action'] == 'EXIT') {
-					log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 0');
-					$cmdgeoloc->event(0);
-				} else {
-					log::add('mobile', 'debug', '| Event -> ' . $geofence['action']);
-				}
-			}
-		} else {
-			$transmitions = $params['transmition'];
-			$errorCount = 0;
-			foreach ($transmitions as $transmition) {
-				if (isset($transmition['event']) && $transmition['event'] == 'geofence') {
-					log::add('mobile', 'debug', '| Transmition :' . json_encode($params['transmition']));
-					$geofence = $transmition['geofence'];
-					log::add('mobile', 'debug', '| Event > ' . json_encode($geofence));
-					log::add('mobile', 'debug', '|  OK  Mobile trouvé -> ' . $mobile->getName() . ' (' . $params['Iq'] . ')');
-					$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $geofence['identifier']);
-					if (is_object($cmdgeoloc)) {
-						if ($geofence['action'] == 'ENTER') {
-							log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 1');
-							$cmdgeoloc->event(1);
-						} else if ($geofence['action'] == 'EXIT') {
-							log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" passée à 0');
-							$cmdgeoloc->event(0);
+		log::add('mobile', 'debug', '|  OK  Mobile trouvé -> ' . $mobile->getName() . ' (' . $params['Iq'] . ')');
+		if (isset($params['transmition'])) {
+			$mobile->cmdForSpecificChannel($params, 'transmition');
+			if (isset($params['transmition']['event']) && $params['transmition']['event'] == 'geofence') {
+				log::add('mobile', 'debug', '| Event > ' . $params['transmition']['event']);
+				$geofence = $params['transmition']['geofence'];
+				log::add('mobile', 'debug', '| Event > ' . json_encode($geofence));
+				$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $geofence['identifier']);
+				if (is_object($cmdgeoloc)) {
+					if ($geofence['action'] == 'ENTER' || $geofence['action'] == 'EXIT') {
+						$eventAge = time() - intval(strtotime($geofence['timestamp']));
+						if ($eventAge > 1800) {
+							log::add('mobile', 'debug', '| SKIP stale event (' . round($eventAge / 60) . 'min) ' . $geofence['action'] . ' geoloc_' . $geofence['identifier']);
 						} else {
-							log::add('mobile', 'debug', '| [INFO] Event -> ' . $geofence['action']);
+							$value = ($geofence['action'] == 'ENTER') ? 1 : 0;
+							log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" -> ' . $value);
+							$mobile->checkAndUpdateCmd('geoloc_' . $geofence['identifier'], $value);
 						}
 					} else {
-						log::add('mobile', 'debug', '| [ERROR] Commande geoloc_' . $geofence['identifier'] . ' inexistante.');
+						log::add('mobile', 'debug', '| Event -> ' . $geofence['action']);
 					}
-				} else {
-					$errorCount++;
 				}
-			}
-			if ($errorCount > 0) {
-				log::add('mobile', 'debug', __('| Pas de paramètre de geofencing', __FILE__));
+			} else {
+				$transmitions = $params['transmition'];
+				$errorCount = 0;
+				foreach ($transmitions as $transmition) {
+					if (isset($transmition['event']) && $transmition['event'] == 'geofence') {
+						log::add('mobile', 'debug', '| Transmition :' . json_encode($params['transmition']));
+						$geofence = $transmition['geofence'];
+						log::add('mobile', 'debug', '| Event > ' . json_encode($geofence));
+						$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $geofence['identifier']);
+						if (is_object($cmdgeoloc)) {if ($geofence['action'] == 'ENTER' || $geofence['action'] == 'EXIT') {
+								$eventAge = time() - intval(strtotime($geofence['timestamp']));
+								log::add('mobile', 'debug', '| $eventAge > ' . $eventAge);
+								if ($eventAge > 1800) {
+									log::add('mobile', 'debug', '| SKIP stale event (' . round($eventAge / 60) . 'min) ' . $geofence['action'] . ' geoloc_' . $geofence['identifier']);
+								} else {
+									$value = ($geofence['action'] == 'ENTER') ? 1 : 0;
+									log::add('mobile', 'debug', '|  OK  Commande "' . $cmdgeoloc->getName() . '" -> ' . $value);
+									$mobile->checkAndUpdateCmd('geoloc_' . $geofence['identifier'], $value);
+								}
+							} else {
+								log::add('mobile', 'debug', '| [INFO] Event -> ' . $geofence['action']);
+							}
+						} else {
+							log::add('mobile', 'debug', '| [ERROR] Commande geoloc_' . $geofence['identifier'] . ' inexistante.');
+						}
+					} else {
+						$errorCount++;
+					}
+				}
+				if ($errorCount > 0) {
+					log::add('mobile', 'debug', __('| Pas de paramètre de geofencing', __FILE__));
+				}
 			}
 		}
 	} else {

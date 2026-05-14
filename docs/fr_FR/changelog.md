@@ -10,13 +10,11 @@
 - Exclusion du répertoire "data" des sauvegardes
 - Meilleure gestion des commandes spécifiques
 
-## Notifications
-
-## Notifications
+### Notifications
 
 - Ajout d'un onglet pour manager les notifications
 
-## Géofencing
+### Géofencing
 
 - Correction : un même événement ENTER/EXIT n'est plus traité plusieurs fois en cas d'envoi dupliqué par l'app
 - Correction : les événements géofence trop anciens (> 30 min) sont ignorés pour éviter de déclencher des scénarios hors contexte

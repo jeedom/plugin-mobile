@@ -694,7 +694,7 @@ class mobile extends eqLogic
 	public static function jsonPublish($os, $titre, $message, $type, $idNotif, $answer, $timeout, $token, $photo, $version, $optionsNotif = [], $critical = false, $Iq = null, $specific = false, $silent = false)
 	{
 		log::add('mobile', 'debug', '||┌──:fg-success: jsonPublish :/fg:──');
-		log::add('mobile', 'debug', '||┌──:fg-success: PARAMS :/fg:──' . $silent);
+		if ($silent) log::add('mobile', 'debug', '||| Silent notification');
 		if (isset($Iq)) log::add('mobile', 'debug', '||| IQ for jsonPublish > ' . $Iq);
 
 		$dateNotif = date("Y-m-d H:i:s");
@@ -1027,7 +1027,7 @@ class mobile extends eqLogic
 		}
 		return $return;
 	}
-  
+
 	/**
 	 * remove notification from Id into filepath id
 	 * Call by ajax removeNotificationV2
@@ -1504,86 +1504,131 @@ class mobile extends eqLogic
 		if (isset($params['Iq'])) {
 			if (isset($params[$_trigger])) {
 				$order = count($this->getCmd());
+				$getDeviceInformations = (isset($params[$_trigger]['extras']) && isset($params[$_trigger]['extras']['method']) && $params[$_trigger]['extras']['method'] == 'getDeviceInformations');
 				// Battery
 				if (isset($params[$_trigger]['battery'])) {
 					// level
 					if (isset($params[$_trigger]['battery']['level'])) {
-						$cmd = $this->getCmd(null, 'phoneBattery');
-						if (!is_object($cmd)) {
-							$cmd = new mobileCmd();
-							$cmd->setLogicalId('phoneBattery');
-							$cmd->setName(__('Batterie du téléphone', __FILE__));
-							$cmd->setDisplay('icon', '<i class="icon fas fa-battery-three-quarters"></i>');
-							$cmd->setDisplay('showIconAndNamedashboard', 1);
-							$cmd->setDisplay('showIconAndNamemobile', 1);
-							$cmd->setDisplay('forceReturnLineAfter', 1);
-							$cmd->setConfiguration('historizeRound', 2);
-							$cmd->setConfiguration('minValue', 0);
-							$cmd->setConfiguration('maxValue', 100);
-							$cmd->setUnite('%');
-							$cmd->setIsVisible(0);
-							$cmd->setOrder($order);
-							$order++;
-							log::add('mobile', 'debug', 'Creation commande Batterie du téléphone');
+						if ($getDeviceInformations) {
+							$cmd = $this->getCmd(null, 'phoneBattery');
+							if (!is_object($cmd)) {
+								$cmd = new mobileCmd();
+								$cmd->setLogicalId('phoneBattery');
+								$cmd->setName(__('Batterie du téléphone', __FILE__));
+								$cmd->setDisplay('icon', '<i class="icon fas fa-battery-three-quarters"></i>');
+								$cmd->setDisplay('showIconAndNamedashboard', 1);
+								$cmd->setDisplay('showIconAndNamemobile', 1);
+								$cmd->setDisplay('forceReturnLineAfter', 1);
+								$cmd->setConfiguration('historizeRound', 2);
+								$cmd->setConfiguration('minValue', 0);
+								$cmd->setConfiguration('maxValue', 100);
+								$cmd->setUnite('%');
+								$cmd->setIsVisible(0);
+								$cmd->setOrder($order);
+								$order++;
+								log::add('mobile', 'debug', '| Création de la commande Batterie du téléphone'); //PR
+							}
+							$cmd->setEqLogic_id($this->getId());
+							$cmd->setType('info');
+							$cmd->setConfiguration('calculValueOffset', '#value# * 100');
+							$cmd->setSubType('numeric');
+							if ($cmd->getChanged() === true) $cmd->save();
+                      	}
+						if ($params[$_trigger]['battery']['level'] != -1) {
+							if ($this->checkAndUpdateCmd('phoneBattery', $params[$_trigger]['battery']['level'])) {
+								log::add('mobile', 'debug', '| ' . (__('Batterie du téléphone', __FILE__)) . ' = ' . $params[$_trigger]['battery']['level'] * 100 . '%');
+							}
+						} else {
+							log::add('mobile', 'debug', '| ' . (__('Batterie du téléphone', __FILE__)) . ' : ' . 'Absence de donnée ─▶︎ ' . $params[$_trigger]['battery']['level']);
 						}
-						$cmd->setEqLogic_id($this->getId());
-						$cmd->setType('info');
-						$cmd->setSubType('numeric');
-						if ($cmd->getChanged() === true) $cmd->save();
-						log::add('mobile', 'debug', '|  OK  phoneBattery = ' . $params[$_trigger]['battery']['level'] * 100);
-						$this->checkAndUpdateCmd('phoneBattery', $params[$_trigger]['battery']['level'] * 100);
 					}
 					// charging
 					if (isset($params[$_trigger]['battery']['is_charging'])) {
-						$cmd = $this->getCmd(null, 'phoneCharging');
-						if (!is_object($cmd)) {
-							$cmd = new mobileCmd();
-							$cmd->setLogicalId('phoneCharging');
-							$cmd->setName(__('En charge', __FILE__));
-							$cmd->setDisplay('icon', '<i class="icon techno-charging"></i>');
-							$cmd->setDisplay('showIconAndNamedashboard', 1);
-							$cmd->setDisplay('showIconAndNamemobile', 1);
-							$cmd->setDisplay('forceReturnLineAfter', 1);
-							$cmd->setTemplate('dashboard', 'core::line');
-							$cmd->setTemplate('mobile', 'core::line');
-							$cmd->setIsVisible(0);
-							$cmd->setOrder($order);
-							$order++;
-							log::add('mobile', 'debug', 'Creation commande En charge');
+						if ($getDeviceInformations) {
+							$cmd = $this->getCmd(null, 'phoneCharging');
+							if (!is_object($cmd)) {
+								$cmd = new mobileCmd();
+								$cmd->setLogicalId('phoneCharging');
+								$cmd->setName(__('En charge', __FILE__));
+								$cmd->setDisplay('icon', '<i class="icon techno-charging"></i>');
+								$cmd->setDisplay('showIconAndNamedashboard', 1);
+								$cmd->setDisplay('showIconAndNamemobile', 1);
+								$cmd->setDisplay('forceReturnLineAfter', 1);
+								$cmd->setTemplate('dashboard', 'core::line');
+								$cmd->setTemplate('mobile', 'core::line');
+								$cmd->setIsVisible(0);
+								$cmd->setOrder($order);
+								$order++;
+								log::add('mobile', 'debug', '| ' . __('Création de la commande', __FILE__) . ' > ' . __('En charge', __FILE__)); //PR
+							}
+							$cmd->setEqLogic_id($this->getId());
+							$cmd->setType('info');
+							$cmd->setSubType('binary');
+							if ($cmd->getChanged() === true) $cmd->save();
 						}
-						$cmd->setEqLogic_id($this->getId());
-						$cmd->setType('info');
-						$cmd->setSubType('binary');
-						if ($cmd->getChanged() === true) $cmd->save();
-						log::add('mobile', 'debug', '|  OK  phoneCharging = ' . intval($params[$_trigger]['battery']['is_charging']));
-						$this->checkAndUpdateCmd('phoneCharging', intval($params[$_trigger]['battery']['is_charging']));
+						if ($this->checkAndUpdateCmd('phoneCharging', intval($params[$_trigger]['battery']['is_charging']))) {
+							log::add('mobile', 'debug', '| ' . (__('En charge', __FILE__)) . ' = ' . intval($params[$_trigger]['battery']['is_charging']));
+						}
 					}
 				}
 				// coords
 				if (isset($params[$_trigger]['coords'])) {
 					if (isset($params[$_trigger]['coords']['latitude']) && isset($params[$_trigger]['coords']['longitude'])) {
-						$cmd = $this->getCmd(null, 'coords');
-						if (!is_object($cmd)) {
-							$cmd = new mobileCmd();
-							$cmd->setLogicalId('coords');
-							$cmd->setName(__('Coordonnées', __FILE__));
-							$cmd->setDisplay('icon', '<i class="icon fas fa-map-marker-alt"></i>');
-							$cmd->setDisplay('showIconAndNamedashboard', 1);
-							$cmd->setDisplay('showIconAndNamemobile', 1);
-							$cmd->setDisplay('forceReturnLineAfter', 1);
-							$cmd->setTemplate('dashboard', 'core::line');
-							$cmd->setTemplate('mobile', 'core::line');
-							$cmd->setIsVisible(0);
-							$cmd->setOrder($order);
-							$order++;
-							log::add('mobile', 'debug', 'Create cmd for coords');
+						if ($getDeviceInformations) {
+							$cmd = $this->getCmd(null, 'coords');
+							if (!is_object($cmd)) {
+								$cmd = new mobileCmd();
+								$cmd->setLogicalId('coords');
+								$cmd->setName(__('Coordonnées', __FILE__));
+								$cmd->setDisplay('icon', '<i class="icon fas fa-map-marker-alt"></i>');
+								$cmd->setDisplay('showIconAndNamedashboard', 1);
+								$cmd->setDisplay('showIconAndNamemobile', 1);
+								$cmd->setDisplay('forceReturnLineAfter', 1);
+								$cmd->setTemplate('dashboard', 'core::line');
+								$cmd->setTemplate('mobile', 'core::line');
+								$cmd->setIsVisible(0);
+								$cmd->setOrder($order);
+								$order++;
+								log::add('mobile', 'debug', '| ' . __('Création de la commande', __FILE__) . ' > ' . __('Coordonnées', __FILE__)); //PR
+							}
+							$cmd->setEqLogic_id($this->getId());
+							$cmd->setType('info');
+							$cmd->setSubType('string');
+							if ($cmd->getChanged() === true) $cmd->save();
 						}
-						$cmd->setEqLogic_id($this->getId());
-						$cmd->setType('info');
-						$cmd->setSubType('string');
-						if ($cmd->getChanged() === true) $cmd->save();
-						log::add('mobile', 'debug', '|  OK  coords = ' . $params[$_trigger]['coords']['latitude'] . ',' . $params[$_trigger]['coords']['longitude']);
-						$this->checkAndUpdateCmd('coords', $params[$_trigger]['coords']['latitude'] . ',' . $params[$_trigger]['coords']['longitude']);
+						$coord = $params[$_trigger]['coords']['latitude'] . ',' . $params[$_trigger]['coords']['longitude'];
+						if ($this->checkAndUpdateCmd('coords', $coord)) {
+							log::add('mobile', 'debug', '| ' . (__('Coordonnées', __FILE__)) . ' = ' . $coord);
+						}
+
+					}
+					if (isset($params[$_trigger]['coords']['altitude'])) {
+						if ($getDeviceInformations) {
+							$cmd = $this->getCmd(null, 'altitude');
+							if (!is_object($cmd)) {
+								$cmd = new mobileCmd();
+								$cmd->setLogicalId('altitude');
+								$cmd->setName(__('Altitude', __FILE__));
+								$cmd->setDisplay('icon', '<i class="icon fas fa-map-marked-alt"></i>');
+								$cmd->setDisplay('showIconAndNamedashboard', 1);
+								$cmd->setDisplay('showIconAndNamemobile', 1);
+								$cmd->setDisplay('forceReturnLineAfter', 1);
+								$cmd->setTemplate('dashboard', 'core::line');
+								$cmd->setTemplate('mobile', 'core::line');
+								$cmd->setIsVisible(0);
+								$cmd->setUnite('m');
+								$cmd->setOrder($order);
+								$order++;
+								log::add('mobile', 'debug', '| ' . __('Création de la commande', __FILE__) . ' > ' . __('Altitude', __FILE__)); //PR
+							}
+							$cmd->setEqLogic_id($this->getId());
+							$cmd->setType('info');
+							$cmd->setSubType('string');
+							if ($cmd->getChanged() === true) $cmd->save();
+						}
+						if ($this->checkAndUpdateCmd('altitude', $params[$_trigger]['coords']['altitude'])) {
+							log::add('mobile', 'debug', '| ' . (__('Altitude', __FILE__)) . ' = ' . $params[$_trigger]['coords']['altitude'] . 'm');
+						}
 					}
 				}
 			}
@@ -1598,7 +1643,7 @@ class mobile extends eqLogic
 	{
 		$notifsTime = $this->getConfiguration('notifsTime', 30);
 		log::add('mobile', 'debug', '┌──────────▶︎ :fg-warning: Nettoyage des Notifications et Images :/fg: ──────────');
-		log::add('mobile', 'debug', '| Durée de retention actuelle : ' . $notifsTime . ' jours');
+		log::add('mobile', 'debug', '| Durée de rétention actuelle : ' . $notifsTime . ' jours');
 		// Images
 		$retentionSeconds = intVal($notifsTime) * 24 * 60 * 60;
 		$currentTime = time();
@@ -1610,7 +1655,7 @@ class mobile extends eqLogic
 					$fileCreationTime = filemtime($image);
 					if ($fileCreationTime < ($currentTime - $retentionSeconds)) {
 						if (!unlink($image)) {
-							log::add('mobile', 'error', 'Erreur lors de la suppression de: ' . $image);
+							log::add('mobile', 'error', 'Erreur lors de la suppression de : ' . $image);
 						} else {
 							log::add('mobile', 'debug', '| ─▶︎ :fg-danger:suppression image:/fg: > ' . $image);
 						}
@@ -1885,7 +1930,7 @@ class mobileCmd extends cmd
 			switch ($valueUser) {
 				case 1:
 					file_put_contents($filePath, '');
-					log::add('mobile', 'info', '| Suppression des notifications effectuée');
+					log::add('mobile', 'info', '| Suppression des notifications réalisée');
 					break;
 				case 2:
 					$notifs = json_decode(file_get_contents($filePath), true);
@@ -1897,7 +1942,7 @@ class mobileCmd extends cmd
 						return $notif['data']['askVariable'] == 'rien' || ($currentTime - $notifTime) < $timeout;
 					});
 					file_put_contents($filePath, json_encode($notifs));
-					log::add('mobile', 'info', '| Suppression des asks expirés effectuée');
+					log::add('mobile', 'info', '| Suppression des asks expirés réalisée');
 					break;
 				case 3:
 					$notifs = json_decode(file_get_contents($filePath), true);
@@ -1905,7 +1950,7 @@ class mobileCmd extends cmd
 						return !isset($notif['data']['choiceAsk']) || $notif['data']['choiceAsk'] == '';
 					});
 					file_put_contents($filePath, json_encode($notifs));
-					log::add('mobile', 'info', '| Suppression des asks répondus effectuée');
+					log::add('mobile', 'info', '| Suppression des asks répondus réalisée');
 					break;
 			}
 

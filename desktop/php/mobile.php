@@ -15,17 +15,16 @@ foreach ($eqLogics as $eqLogic) {
 	}
 }
 $isApi = config::byKey('api::mobile::mode');
-if($isApi == 'whiteip' || $isApi == 'disable'){
+if ($isApi == 'whiteip' || $isApi == 'disable') {
 	message::add('mobile', 'L\'API mobile est désactivée ou en mode whitelist IP');
 }
 $isCoreApi = config::byKey('api::core::mode');
-if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
+if ($isCoreApi == 'whiteip' || $isCoreApi == 'disable') {
 	message::add('mobile', 'L\'API core est désactivée ou en mode whitelist IP');
 }
 ?>
 
 <div class="row row-overflow">
-
 	<!-- APP V2 -->
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
 		<legend><i class="fas fa-mobile-alt"></i> {{App V2}}</legend>
@@ -94,7 +93,7 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 				echo '<div class="alert alert-info text-center" style="width: 100%; background-color: var(--al-info-color) !important;">';
 				echo '{{Pour ajouter un téléphone, il y a 2 méthodes possible :}} <br> {{Sur le premier écran de l\'application, il vous est proposé de connecter votre compte market, et ainsi de retrouver toutes les boxs associées à ce compte, ou bien simplement ajouter une box.}}';
 				echo '</div>';
-            }
+			}
 			?>
 		</div>
 	</div>
@@ -125,6 +124,9 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 			</div>
 		</div>
 		<legend><i class="fas fa-mobile"></i> {{Mes Téléphones Mobiles}}</legend>
+		<div class="alert alert-warning" style="background-color: var(--al-warning-color) !important; font-size:1.2em;font-weight:bold;">
+			{{Attention, l'APP V1 ne sera plus mise à jour}}
+		</div>
 		<div class="eqLogicThumbnailContainer">
 			<?php
 			if (count($eqLogicsV1) >= 0) {  // AppV1
@@ -237,13 +239,13 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 								</div>
 							</div>
 							<div class="form-group paramV2">
-								<label class="col-sm-4 control-label">{{Verrouiller le menu custom}}  <sup><i class="fa fa-question-circle tooltips" title="Si activé, l'application verrouillera la modification du menu custom."></i></sup></label>
+								<label class="col-sm-4 control-label">{{Verrouiller le menu custom}} <sup><i class="fa fa-question-circle tooltips" title="Si activé, l'application verrouillera la modification du menu custom."></i></sup></label>
 								<div class="col-sm-6">
 									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="hideMenuCustom">
 								</div>
 							</div>
 							<div class="form-group paramV2">
-								<label class="col-sm-4 control-label">{{NFC : Envoi direct}}  <sup><i class="fa fa-question-circle tooltips" title="Envoyer directement les informations du Tag au plugin Mobile"></i></sup></label>
+								<label class="col-sm-4 control-label">{{NFC : Envoi direct}} <sup><i class="fa fa-question-circle tooltips" title="Envoyer directement les informations du Tag au plugin Mobile"></i></sup></label>
 								<div class="col-sm-2">
 									<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="sendNFCDirectly">
 										<option value="0">{{Non}}</option>
@@ -277,7 +279,7 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 								</div>
 							</div>
 							<div class="paramV1">
-								<legend><i class="fas fa-mobile-alt"></i> {{Notifications}}  <sup>(V1)</sup></legend>
+								<legend><i class="fas fa-mobile-alt"></i> {{Notifications}} <sup>(V1)</sup></legend>
 								<div class="form-group paramV1">
 									<label class="col-sm-4 control-label">ARN Mobile</label>
 									<div class="col-sm-6">
@@ -307,7 +309,7 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 									<span class="label label-primary affect_user"></span>
 								</div>
 							</div>
-							<div class="form-group" id="formGroupIq"> 
+							<div class="form-group" id="formGroupIq">
 								<label class="col-sm-3 control-label">{{Iq Mobile}}</label>
 								<div class="col-sm-8">
 									<span class="eqLogicAttr label label-primary" data-l1key="logicalId"></span>
@@ -343,7 +345,6 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 					</fieldset>
 				</form>
 			</div>
-
 			<div role="tabpanel" class="tab-pane" id="commandtab">
 				<br><br>
 				<div class="table-responsive">

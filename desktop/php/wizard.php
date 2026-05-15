@@ -17,7 +17,7 @@ include_file('desktop', 'wizard', 'css', 'mobile');
 			<i class="far fa-arrow-alt-circle-left navBtn bt_prev hidden"></i>
 		</div>
 		<div>
-        <?php
+			<?php
 			$i = 1;
 			$wizard = mobile::getWizardSteps();
 			foreach ($wizard as $step => $title) {
@@ -39,43 +39,40 @@ include_file('desktop', 'wizard', 'css', 'mobile');
 <?php include_file('desktop', 'mobile', 'js', 'mobile'); ?>
 
 <script>
+	window.mobileStepLoaded = function() {
+		domUtils.hideLoading();
+		document.getElementById('mobile_initial_loader')?.remove();
+		document.getElementById('wizard_container').style.visibility = 'visible';
+	};
 
-window.mobileStepLoaded = function() {
-    domUtils.hideLoading();
-    document.getElementById('mobile_initial_loader')?.remove();
-    document.getElementById('wizard_container').style.visibility = 'visible';
-};
-
-setTimeout(function() {
-    document.getElementById('mobile_initial_loader')?.remove();
-    document.getElementById('wizard_container').style.visibility = 'visible';
-}, 10000);
+	setTimeout(function() {
+		document.getElementById('mobile_initial_loader')?.remove();
+		document.getElementById('wizard_container').style.visibility = 'visible';
+	}, 10000);
 
 
-document.addEventListener('DOMContentLoaded', function() {
-	var activeFinal = document.querySelector('.navDot.active[data-finalization="1"]');
-	if (activeFinal) {
-		document.getElementById('bt_quitmobileWizard')?.classList.add('hidden');
-	}
-});
-
-function updateQuitButtonVisibility() {
-	var activeFinal = document.querySelector('.navDot.active[data-finalization="1"]');
-	var quitBtn = document.getElementById('bt_quitmobileWizard');
-	if (quitBtn) {
+	document.addEventListener('DOMContentLoaded', function() {
+		var activeFinal = document.querySelector('.navDot.active[data-finalization="1"]');
 		if (activeFinal) {
-			quitBtn.classList.add('hidden');
-		} else {
-			quitBtn.classList.remove('hidden');
+			document.getElementById('bt_quitmobileWizard')?.classList.add('hidden');
+		}
+	});
+
+	function updateQuitButtonVisibility() {
+		var activeFinal = document.querySelector('.navDot.active[data-finalization="1"]');
+		var quitBtn = document.getElementById('bt_quitmobileWizard');
+		if (quitBtn) {
+			if (activeFinal) {
+				quitBtn.classList.add('hidden');
+			} else {
+				quitBtn.classList.remove('hidden');
+			}
 		}
 	}
-}
 
-document.addEventListener('DOMContentLoaded', function() {
-	updateQuitButtonVisibility();
-});
+	document.addEventListener('DOMContentLoaded', function() {
+		updateQuitButtonVisibility();
+	});
 
-window.updateQuitButtonVisibility = updateQuitButtonVisibility;
+	window.updateQuitButtonVisibility = updateQuitButtonVisibility;
 </script>
-
-

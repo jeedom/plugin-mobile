@@ -1560,7 +1560,7 @@ class mobile extends eqLogic
 								$cmd->setConfiguration('calculValueOffset', '#value# * 100');
 								$cmd->setSubType('numeric');
 								if ($cmd->getChanged() === true) $cmd->save();
-                      		}
+							}
 							if ($params[$_trigger]['battery']['level'] != -1) {
 								if ($this->checkAndUpdateCmd('battery::level', $params[$_trigger]['battery']['level'])) {
 									log::add('mobile', 'debug', '| ' . (__('Batterie du téléphone', __FILE__)) . ' = ' . $params[$_trigger]['battery']['level'] * 100 . '%');
@@ -1627,7 +1627,6 @@ class mobile extends eqLogic
 							if ($this->checkAndUpdateCmd('coords', $coord)) {
 								log::add('mobile', 'debug', '| ' . (__('Coordonnées', __FILE__)) . ' = ' . $coord);
 							}
-
 						}
 						if (isset($params[$_trigger]['coords']['altitude'])) {
 							if ($getDeviceInformations) {
@@ -1683,7 +1682,7 @@ class mobile extends eqLogic
 					$fileCreationTime = filemtime($image);
 					if ($fileCreationTime < ($currentTime - $retentionSeconds)) {
 						if (!unlink($image)) {
-							log::add('mobile', 'error', 'Erreur lors de la suppression de : ' . $image);
+							log::add('mobile', 'error', __("Erreur lors de la suppression de", __FILE__) . ' : ' . $image);
 						} else {
 							log::add('mobile', 'debug', '| ─▶︎ :fg-danger:suppression image:/fg: ─▶︎ ' . $image);
 						}
@@ -1699,7 +1698,7 @@ class mobile extends eqLogic
 			if ($notifications) {
 				$notifications = json_decode($notifications, true);
 				if (json_last_error() !== JSON_ERROR_NONE) {
-					log::add('mobile', 'error', 'Erreur decodage du JSON : ' . json_last_error_msg());
+					log::add('mobile', 'error', __("Erreur decodage du JSON", __FILE__) . ' : ' . json_last_error_msg());
 					return;
 				}
 				$notificationsModified = false;
@@ -2065,7 +2064,7 @@ class mobileCmd extends cmd
 								mkdir($path);
 							}
 							if (!copy($file, $newfile)) {
-								log::add('mobile', 'error', 'la copie de l\'image a echoué');
+								log::add('mobile', 'error', __("la copie de l\'image a echoué", __FILE__));
 							}
 							$keyFile = md5_file($newfile);
 							$url .= 'key=' . $keyFile . '&name=' . $nameFile;

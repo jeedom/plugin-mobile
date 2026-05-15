@@ -43,7 +43,7 @@ function mobile_update()
 	}
 
 	$mobiles = eqLogic::byType('mobile');
-	$migrateLogicalId = array('phoneBattery'=>'battery::level', 'phoneCharging'=>'battery::isCharging');
+	$migrateLogicalId = array('phoneBattery' => 'battery::level', 'phoneCharging' => 'battery::isCharging');
 	foreach ($mobiles as $mobile) {
 		/* Delete mobile with bad logicalId */
 		if ($mobile->getLogicalId() == null || $mobile->getLogicalId() == "") {

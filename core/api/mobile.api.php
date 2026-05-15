@@ -548,7 +548,8 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 						$geofence = $transmition['geofence'];
 						log::add('mobile', 'debug', '| Event ─▶︎ ' . json_encode($geofence));
 						$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $geofence['identifier']);
-						if (is_object($cmdgeoloc)) {if ($geofence['action'] == 'ENTER' || $geofence['action'] == 'EXIT') {
+						if (is_object($cmdgeoloc)) {
+							if ($geofence['action'] == 'ENTER' || $geofence['action'] == 'EXIT') {
 								$eventAge = time() - intval(strtotime($geofence['timestamp']));
 								log::add('mobile', 'debug', '| $eventAge ─▶︎ ' . $eventAge);
 								if ($eventAge > 1800) {

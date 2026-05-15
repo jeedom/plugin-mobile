@@ -969,7 +969,7 @@ class mobile extends eqLogic
 			];
 
 			$post = ['message' => $publish, 'options' => $options];
-			log::add('mobile', 'debug', '|| [INFO] JSON envoyé en mode FCM > ' . json_encode($post));
+			log::add('mobile', 'debug', '|| [INFO] JSON envoyé en mode FCM ─▶︎ ' . json_encode($post));
 		} elseif ($token == null && $version == 2) {
 			log::add('mobile', 'debug', '|| [ERROR] NOTIFICATION NON ENVOYEE : PAS DE TOKEN ENREGISTRE SUR LE TELEPHONE :  ');
 			//message::removeAll(__CLASS__, 'noValidToken');

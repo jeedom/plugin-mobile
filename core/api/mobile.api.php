@@ -942,7 +942,7 @@ if ($jsonrpc->getMethod() == 'getMobile') {
 }
 
 if ($jsonrpc->getMethod() == 'geoloc') {
-	log::add('mobile', 'debug', 'Geoloc ' . $params['id'] . ' > ' . $params['name'] . ' ─▶︎ ' . $params['value']);
+	log::add('mobile', 'debug', '| Geoloc ' . $params['id'] . ' ─▶︎ ' . $params['name'] . ' ─▶︎ ' . $params['value']);
 	mobile::EventGeoloc($params);
 	$jsonrpc->makeSuccess();
 }
@@ -958,7 +958,7 @@ if ($jsonrpc->getMethod() == 'geolocSave') {
 }
 
 if ($jsonrpc->getMethod() == 'geolocDel') {
-	log::add('mobile', 'debug', 'Geoloc DEL ' . $params['id'] . ' ─▶︎ ' . $params['name']);
+	log::add('mobile', 'debug', '| Geoloc DEL ' . $params['id'] . ' ─▶︎ ' . $params['name']);
 	mobile::delGeoloc($params);
 	$jsonrpc->makeSuccess();
 }

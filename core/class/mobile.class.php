@@ -177,7 +177,7 @@ class mobile extends eqLogic
 			$event_cmd[] = $cmd['id'];
 		}
 		cache::set('mobile::event', $event_cmd);
-		log::add(__CLASS__, 'debug', '| cache set mobile::event > ' . json_encode($event_cmd));
+		log::add(__CLASS__, 'debug', '| cache set mobile::event ─▶︎ ' . json_encode($event_cmd));
 		log::add(__CLASS__, 'debug', '└───────────────────────────────────────────');
 	}
 
@@ -1586,7 +1586,7 @@ class mobile extends eqLogic
 									$cmd->setIsVisible(0);
 									$cmd->setOrder($order);
 									$order++;
-									log::add('mobile', 'debug', '| ' . __('Création de la commande', __FILE__) . ' > ' . __('En charge', __FILE__));
+									log::add('mobile', 'debug', '| ' . __('Création de la commande', __FILE__) . ' ─▶︎ ' . __('En charge', __FILE__));
 								}
 								$cmd->setEqLogic_id($this->getId());
 								$cmd->setType('info');
@@ -1616,7 +1616,7 @@ class mobile extends eqLogic
 									$cmd->setIsVisible(0);
 									$cmd->setOrder($order);
 									$order++;
-									log::add('mobile', 'debug', '| ' . __('Création de la commande', __FILE__) . ' > ' . __('Coordonnées', __FILE__));
+									log::add('mobile', 'debug', '| ' . __('Création de la commande', __FILE__) . ' ─▶︎ ' . __('Coordonnées', __FILE__));
 								}
 								$cmd->setEqLogic_id($this->getId());
 								$cmd->setType('info');
@@ -1645,7 +1645,7 @@ class mobile extends eqLogic
 									$cmd->setUnite('m');
 									$cmd->setOrder($order);
 									$order++;
-									log::add('mobile', 'debug', '| ' . __('Création de la commande', __FILE__) . ' > ' . __('Altitude', __FILE__));
+									log::add('mobile', 'debug', '| ' . __('Création de la commande', __FILE__) . ' ─▶︎ ' . __('Altitude', __FILE__));
 								}
 								$cmd->setEqLogic_id($this->getId());
 								$cmd->setType('info');

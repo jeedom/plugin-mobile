@@ -1065,14 +1065,13 @@ class mobile extends eqLogic
 		if (is_object($mobile)) {
 			log::add('mobile', 'debug', '||  OK  Mobile existant ─▶︎ ' . $mobile->getName());
 			log::add('mobile', 'debug', '|| [INFO] GEOLOCS ─▶︎ ' . $geolocs);
-
 			$order = count($mobile->getCmd());
 			$decodedGeolocs = json_decode($geolocs, true);
 			foreach ($decodedGeolocs as $index => $geoloc) {
 				if (!isset($geoloc['name'])) continue;
-				log::add('mobile', 'debug', '|| geoloc_' . $index . ' ─▶︎ ' . $geoloc['name'] . ' ─▶︎ ' . $geoloc['value']);
-				$cmd = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $index);
 				$logicalId = 'geoloc_' . $index;
+				log::add('mobile', 'debug', '|| ' . $logicalId . ' ─▶︎ ' . $geoloc['name']);
+				$cmd = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $index);
 				/* PR Migrate geoloc logicalId by name
 					When creating geoloc_X commands, add a migration step to handle cases where the command UUID/logicalId changed: 
 					if no command is found by the expected logicalId, iterate existing commands to find one with a geoloc_N pattern and the same name,
@@ -1085,7 +1084,7 @@ class mobile extends eqLogic
 								preg_match('/^geoloc_\d+$/', $existing->getLogicalId())
 								&& $existing->getName() === $geoloc['name']
 							) {
-								log::add('mobile', 'debug', '|| Migration UUID : renommage ' . $existing->getLogicalId() . ' ─▶︎ ' . $logicalId);
+								log::add('mobile', 'debug', '|| ↳ Migration UUID : renommage ' . $existing->getLogicalId() . ' ─▶︎ ' . $logicalId);
 								$existing->setLogicalId($logicalId);
 								$existing->save();
 								$cmd = $existing;
@@ -1108,7 +1107,7 @@ class mobile extends eqLogic
 					$cmd->setIsHistorized(1);
 					$cmd->setOrder($order);
 					$order++;
-					log::add('mobile', 'debug', '|| Ajout geofencing ─▶︎ ' . $geoloc['name']);
+					log::add('mobile', 'debug', '|| ↳ Adding geofence point ─▶︎ ' . $geoloc['name']);
 				}
 				$cmd->setName($geoloc['name']);
 				$cmd->setType('info');
@@ -1118,7 +1117,7 @@ class mobile extends eqLogic
 				$cmd->setConfiguration('radius', $geoloc['radius']);
 				if ($cmd->getChanged() === true) $cmd->save();
 				if ($mobile->checkAndUpdateCmd($logicalId, $geoloc['value'])) {
-					log::add('mobile', 'debug', '| Update geofencing ' . $geoloc['name'] . ' ─▶︎ ' . $geoloc['value']);
+					log::add('mobile', 'debug', '|| ↳ Update geofence point ─▶︎ ' . $geoloc['value']);
 				}
 			}
 		} else {

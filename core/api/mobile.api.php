@@ -941,8 +941,8 @@ if ($jsonrpc->getMethod() == 'getMobile') {
 }
 
 if ($jsonrpc->getMethod() == 'geoloc') {
-	log::add('mobile', 'debug', '| Geoloc ' . $params['id'] . ' ─▶︎ ' . $params['name'] . ' ─▶︎ ' . $params['value']);
 	if (isset($params['id'])) {
+		log::add('mobile', 'debug', '| Geoloc ' . $params['id'] . ' ─▶︎ ' . $params['name'] . ' ─▶︎ ' . $params['value']);
 		if ($params['id'] != '' || $params['id'] != null) {
 			mobile::EventGeoloc($params);
 			$jsonrpc->makeSuccess();

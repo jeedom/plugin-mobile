@@ -1067,11 +1067,10 @@ class mobile extends eqLogic
 			log::add('mobile', 'debug', '|| [INFO] GEOLOCS ─▶︎ ' . $geolocs);
 
 			$order = count($mobile->getCmd());
-			$noExistCmd = 0;
 			$decodedGeolocs = json_decode($geolocs, true);
 			foreach ($decodedGeolocs as $index => $geoloc) {
 				if (!isset($geoloc['name'])) continue;
-				log::add('mobile', 'debug', '|| geoloc_' . $index . ' ─▶︎ ' . $geoloc['name']);
+				log::add('mobile', 'debug', '|| geoloc_' . $index . ' ─▶︎ ' . $geoloc['name'] . ' ─▶︎ ' . $geoloc['value']);
 				$cmd = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $index);
 				$logicalId = 'geoloc_' . $index;
 				/* PR Migrate geoloc logicalId by name
@@ -1097,7 +1096,6 @@ class mobile extends eqLogic
 				}
 				/* End PR Migrate */
 				if (!is_object($cmd)) {
-					$noExistCmd = 1;
 					$cmd = new mobileCmd();
 					$cmd->setLogicalId($logicalId);
 					$cmd->setEqLogic_id($mobile->getId());
@@ -1119,11 +1117,9 @@ class mobile extends eqLogic
 				$cmd->setConfiguration('longitude', $geoloc['longitude']);
 				$cmd->setConfiguration('radius', $geoloc['radius']);
 				if ($cmd->getChanged() === true) $cmd->save();
-				if ($noExistCmd == 1) {
-					$mobile->checkAndUpdateCmd($logicalId, $geoloc['value']);
-					log::add('mobile', 'debug', '|| Valeur enregistrée ─▶︎ ' . $geoloc['value']);
+				if ($mobile->checkAndUpdateCmd($logicalId, $geoloc['value'])) {
+					log::add('mobile', 'debug', '| Update geofencing ' . $geoloc['name'] . ' ─▶︎ ' . $geoloc['value']);
 				}
-				$noExistCmd = 0;
 			}
 		} else {
 			log::add('mobile', 'debug', '| [ERROR] Mobile inexistant !');

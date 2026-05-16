@@ -931,7 +931,6 @@ if ($jsonrpc->getMethod() == 'askText') {
 
 if ($jsonrpc->getMethod() == 'saveMobile') {
 	log::add('mobile', 'debug', ':fg-success: ─────▶︎ Demande de sauvegarde ::/fg: ' . $params['type'] . ' ─▶︎ ' . $params['Iq'] . ' > ' . mobile::whoIsIq($params['Iq']));
-	//log::add('mobile', 'debug', 'Demande de sauvegarde ' . $params['type'] . ' > ' . $params['Iq'] . ' > ' . mobile::whoIsIq($params['Iq']));
 	mobile::makeSaveJson($params['Iq'], $params['Json'], $params['type']);
 	$jsonrpc->makeSuccess();
 }
@@ -942,9 +941,15 @@ if ($jsonrpc->getMethod() == 'getMobile') {
 }
 
 if ($jsonrpc->getMethod() == 'geoloc') {
-	log::add('mobile', 'debug', '| Geoloc ' . $params['id'] . ' ─▶︎ ' . $params['name'] . ' ─▶︎ ' . $params['value']);
-	mobile::EventGeoloc($params);
-	$jsonrpc->makeSuccess();
+	if (isset($params['id'])) {
+		if ($params['id'] != '' || $params['id'] != null) {
+			log::add('mobile', 'debug', '| Geoloc ' . $params['id'] . ' ─▶︎ ' . $params['name'] . ' ─▶︎ ' . $params['value']);
+			mobile::EventGeoloc($params);
+			$jsonrpc->makeSuccess();
+		} else {
+			throw new Exception(__('pas d\'id : ', __FILE__));
+		}
+	}
 }
 
 if ($jsonrpc->getMethod() == 'geolocSave') {

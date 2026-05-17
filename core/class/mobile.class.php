@@ -597,101 +597,6 @@ class mobile extends eqLogic
 		return $return;
 	}
 
-/*
-	public static function SaveGeoloc($geoloc)
-	{
-		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
-		if (is_object($eqLogicMobile)) {
-			log::add('mobile', 'debug', '┌──:fg-success: SaveGeoloc - V1 :/fg:──');
-			log::add('mobile', 'debug', '| Iq = ' . $geoloc['Iq']);
-			log::add('mobile', 'debug', '| Mobile bien trouvé dans cette Jeedom');
-			log::add('mobile', 'debug', '| Objet = ' . $eqLogicMobile->getId());
-			log::add('mobile', 'debug', '└────────────────────');
-			$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
-			if (!is_object($cmdgeoloc)) {
-				$cmdgeoloc = new mobileCmd();
-				$cmdgeoloc->setLogicalId('geoId_' . $geoloc['id']);
-				$cmdgeoloc->setEqLogic_id($eqLogicMobile->getId());
-				$cmdgeoloc->setType('info');
-				$cmdgeoloc->setSubType('binary');
-				$cmdgeoloc->setGeneric_type('PRESENCE');
-				$cmdgeoloc->setIsVisible(1);
-			}
-			$cmdgeoloc->setName(__($geoloc['id'] . '-' . $geoloc['name'], __FILE__));
-			$cmdgeoloc->setConfiguration('latitude', $geoloc['latitude']);
-			$cmdgeoloc->setConfiguration('longitude', $geoloc['longitude']);
-			$cmdgeoloc->setConfiguration('subtitle', $geoloc['subtitle']);
-			$cmdgeoloc->setConfiguration('radius', $geoloc['radius']);
-			$cmdgeoloc->save();
-			$cmdgeoloc->event($geoloc['value']);
-		}
-	}
-*/
-/*
-	public static function delGeoloc($geoloc)
-	{
-		log::add('mobile', 'debug', '|┌──:fg-success: Lancement DEL du mobile - V1 :/fg:──');
-		log::add('mobile', 'debug', '|| Mobile ' . $geoloc['Iq'] . ' pour ' . $geoloc['id']);
-		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
-		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
-		if (isset($cmdgeoloc)) {
-			$cmdgeoloc->remove();
-		}
-		log::add('mobile', 'debug', '|└──────────────────────────────────');
-	}
-*/
-/*
-	public static function EventGeoloc($geoloc)
-	{
-		// ******************* APP V1  ************************
-		log::add('mobile', 'debug', '|┌──:fg-success: jsonPublish :/fg:──');
-		log::add('mobile', 'debug', '|| Geoloc Event du mobile ─▶︎ ' . $geoloc['Iq'] . ' pour ' . $geoloc['id']);
-		$eqLogicMobile = eqLogic::byLogicalId($geoloc['Iq'], 'mobile');
-		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoId_' . $geoloc['id']);
-		$cmdgeolocv2 = cmd::byEqLogicIdAndLogicalId($eqLogicMobile->getId(), 'geoloc_' . $geoloc['id']);
-		if (is_object($cmdgeoloc)) {
-			log::add('mobile', 'debug', '| commande trouvé');
-			if ($geoloc['value'] !== $cmdgeoloc->execCmd()) {
-				log::add('mobile', 'debug', '| Valeur non identique');
-				$cmdgeoloc->event($geoloc['value']);
-			} else {
-				log::add('mobile', 'debug', '| Valeur identique ─▶︎ ' . $geoloc['value'] . ' / ' . $cmdgeoloc->execCmd());
-			}
-		}
-		if (is_object($cmdgeolocv2)) {
-			log::add('mobile', 'debug', '| commande trouvé');
-			if ($geoloc['value'] !== $cmdgeolocv2->execCmd()) {
-				log::add('mobile', 'debug', '| Valeur non identique');
-				$cmdgeolocv2->event($geoloc['value']);
-			} else {
-				log::add('mobile', 'debug', '| Valeur identique ─▶︎ ' . $geoloc['value'] . ' / ' . $cmdgeolocv2->execCmd());
-			}
-		}
-		log::add('mobile', 'debug', '|└─────────────────');
-	}
-*/
-/*
-	public static function deleteFileImg()
-	{
-		$directory = dirname(__FILE__) . '/../../data/images'; // Chemin vers le répertoire contenant les fichiers
-		// Récupérer la liste des fichiers dans le répertoire
-		$files = glob($directory . '/*');
-		// Date actuelle
-		$currentDate = time();
-		// Parcourir tous les fichiers
-		foreach ($files as $file) {
-			// Vérifier la date de modification du fichier
-			$modifiedDate = filemtime($file);
-			$differenceInDays = floor(($currentDate - $modifiedDate) / (60 * 60 * 24));
-			// Vérifier si le fichier a plus de 30 jours
-			if ($differenceInDays > 30) {
-				// Supprimer le fichier
-				unlink($file);
-			}
-		}
-	}
-*/
-
 	/************************************************************/
 	/******************** APP V1 && V2  *************************/
 	/************************************************************/
@@ -1063,12 +968,8 @@ class mobile extends eqLogic
 				$logicalId = 'geoloc_' . $index;
 				log::add('mobile', 'debug', '|| ' . $logicalId . ' ─▶︎ ' . $geoloc['name']);
 				$cmd = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $index);
-				/* PR Migrate geoloc logicalId by name
-					When creating geoloc_X commands, add a migration step to handle cases where the command UUID/logicalId changed: 
-					if no command is found by the expected logicalId, iterate existing commands to find one with a geoloc_N pattern and the same name,
-					rename its logicalId to the expected value, save it and reuse it. This prevents duplicate geoloc commands after UUID/ID changes.
-				*/
 				if (!is_object($cmd)) {
+					//Migrate geoloc logicalId by name
 					if (!preg_match('/^geoloc_\d+$/', $logicalId)) {
 						foreach ($mobile->getCmd() as $existing) {
 							if (
@@ -1084,7 +985,6 @@ class mobile extends eqLogic
 						}
 					}
 				}
-				/* End PR Migrate */
 				if (!is_object($cmd)) {
 					$cmd = new mobileCmd();
 					$cmd->setLogicalId($logicalId);
@@ -1379,14 +1279,8 @@ class mobile extends eqLogic
 			$tabIconName = $resultTabIcon['tabIconName'];
 			$tabLibName = $resultTabIcon['tabLibName'];
 			$tabRenameInput = $resultTabIcon['tabRenameInput'];
-			//$objectId = $menuCustomArray[$i]['selectNameMenu'];
-			//$objectId = isset($menuCustomArray[$i]['selectNameMenu']) ? $menuCustomArray[$i]['selectNameMenu'] : '';
 			$isActive = true;
-			//$webviewUrl = 'd';
-			//if (!empty($objectId)) log::add('mobile', 'debug', '|| - objectId ─▶︎ ' . $objectId);
-
-			// GENERATE URLS FOR MENU CUSTOM 
-			//$result = self::generateTypeObject($objectId, $i, $webviewUrl, $pluginPanelMobile);
+			// GENERATE URLS FOR MENU CUSTOM
 			$result = self::generateTypeObject($pluginPanelMobile, isset($menuCustomArray[$i]) ? $menuCustomArray[$i] : '');
 			$typeObject = $result['typeObject'];
 			$typewebviewurl = $result['typewebviewurl'];
@@ -1900,7 +1794,6 @@ class mobileCmd extends cmd
 		$dataArray = explode('|', $data);
 		$result = array();
 		foreach ($dataArray as $item) {
-
 			$arg = explode('=', trim($item), 2);
 			if (count($arg) == 2) {
 				$result[trim($arg[0])] = trim($arg[1]);

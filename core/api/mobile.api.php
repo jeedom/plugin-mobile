@@ -940,7 +940,7 @@ if ($jsonrpc->getMethod() == 'geolocSave') {
 				$cmdgeoloc->setConfiguration('subtitle', $params['subtitle']);
 				$cmdgeoloc->setConfiguration('radius', $params['radius']);
 				$cmdgeoloc->save();
-				log::add('mobile', 'debug', '| geoId_' . $params['id'] . ' ─▶︎ ' . $params['name'] . ' ─▶︎ ' . $params['value']);
+				log::add('mobile', 'debug', '| geoId_' . $params['id'] . ' ─▶︎ ' . $name . ' ─▶︎ ' . $params['value']);
 				if ($mobile->checkAndUpdateCmd('geoId_' . $params['id'], $params['value'])) {
 					log::add('mobile', 'debug', '| ↳ Update geofence point ─▶︎ ' . $params['value']);
 				}

@@ -918,14 +918,14 @@ if ($jsonrpc->getMethod() == 'geolocSave') {
 	if (isset($params['Iq'])) {
 		$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 		if (is_object($mobile)) {
-			if (isset($params['id']) && $params['id'] != '' && isset($params['name']) && $params['name'] != '') {
+			if (isset($params['id']) && $params['id'] != '') {
 				$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoId_' . $params['id']);
+				if ($params['name'] == "") {
+					$name = $params['id'];
+				} else {
+					$name = $params['name'];
+				}
 				if (!is_object($cmdgeoloc)) {
-					if ($params['name'] == "") {
-						$name = $params['id'];
-					} else {
-						$name = $params['name'];
-					}
 					$cmdgeoloc = new mobileCmd();
 					$cmdgeoloc->setLogicalId('geoId_' . $params['id']);
 					$cmdgeoloc->setEqLogic_id($mobile->getId());

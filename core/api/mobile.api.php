@@ -931,6 +931,11 @@ if ($jsonrpc->getMethod() == 'geolocSave') {
 					$cmdgeoloc->setEqLogic_id($mobile->getId());
 					$cmdgeoloc->setType('info');
 					$cmdgeoloc->setSubType('binary');
+					$cmdgeoloc->setTemplate('dashboard', 'core::presence');
+					$cmdgeoloc->setTemplate('mobile', 'core::presence');
+					$cmdgeoloc->setDisplay('icon', '<i class="icon fas fa-location-arrow"></i>');
+					$cmdgeoloc->setDisplay('showIconAndNamedashboard', 1);
+					$cmdgeoloc->setIsHistorized(1);
 					$cmdgeoloc->setGeneric_type('PRESENCE');
 					$cmdgeoloc->setIsVisible(1);
 					$cmdgeoloc->setName($name);

@@ -909,8 +909,6 @@ if ($jsonrpc->getMethod() == 'geoloc') {
 	}
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	$jsonrpc->makeSuccess();
-	// mobile::EventGeoloc($params);
-	// throw new Exception(__('pas d\'id : ', __FILE__));
 }
 
 if ($jsonrpc->getMethod() == 'geolocSave') {
@@ -954,8 +952,6 @@ if ($jsonrpc->getMethod() == 'geolocSave') {
 	}
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	$jsonrpc->makeSuccess();
-	// mobile::SaveGeoloc($params);
-	//throw new Exception(__('pas d\'id : ', __FILE__) . $params['name']);
 }
 
 if ($jsonrpc->getMethod() == 'geolocDel') {
@@ -973,7 +969,6 @@ if ($jsonrpc->getMethod() == 'geolocDel') {
 		} else log::add('mobile', 'debug', '| [ERROR] EqLogic unknown ─▶︎ ' . $params['Iq']);
 	}
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');
-	//mobile::delGeoloc($params);
 	$jsonrpc->makeSuccess();
 }
 

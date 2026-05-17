@@ -41,12 +41,12 @@ class mobile extends eqLogic
 	{
 		return ['data/images'];
 	}
-  
-    /**
-     * cron callback
-     * clean notification V2
-     * makeTemplate V1
-     */
+
+	/**
+	 * cron callback
+	 * clean notification V2
+	 * makeTemplate V1
+	 */
 	public static function cronDaily()
 	{
 		// APP V2
@@ -59,11 +59,11 @@ class mobile extends eqLogic
 		mobile::makeTemplateJson();
 	}
 
-    /**
-     * wizard AppV2
-     * Call by wizard.php
+	/**
+	 * wizard AppV2
+	 * Call by wizard.php
 	 * @return array
-     */
+	 */
 	public static function getWizardSteps(): array
 	{
 		$wizard['doc1'] =  __('Accueil', __FILE__);

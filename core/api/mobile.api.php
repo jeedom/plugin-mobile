@@ -206,7 +206,7 @@ if ($jsonrpc->getMethod() == 'setCustomMenu') {
 		} else {
 			log::add('mobile', 'debug', '| [WARNING] A required parameter Iq does not exist !');
 		}
-    }
+	}
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');
 	$jsonrpc->makeSuccess('ok');
 }
@@ -693,8 +693,7 @@ if ($jsonrpc->getMethod() == 'deleteGeolocCommand') {
 			log::add('mobile', 'debug', '| [WARNING] Suppression de la commande "' . $cmd->getName() . '"');
 			$cmd->remove();
 		}
-	}
-	else if (isset($params['Iq'])) log::add('mobile', 'debug', '| [ERROR] EqLogic unknown ─▶︎ ' . $params['Iq']);
+	} else if (isset($params['Iq'])) log::add('mobile', 'debug', '| [ERROR] EqLogic unknown ─▶︎ ' . $params['Iq']);
 	else log::add('mobile', 'debug', '[WARNING] Parameter Iq does not exist !');
 	log::add('mobile', 'debug', '└───────────────────────────────────────────────');
 	$jsonrpc->makeSuccess('ok');
@@ -919,8 +918,13 @@ if ($jsonrpc->getMethod() == 'geolocSave') {
 	if (isset($params['Iq'])) {
 		$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 		if (is_object($mobile)) {
-			if (isset($params['id']) && $params['id'] != '' && isset($params['name']) && $params['name'] != '') {
+			if (isset($params['id']) && $params['id'] != '') {
 				$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoId_' . $params['id']);
+				if ($params['name'] == "") {
+					$name = $params['id'];
+				} else {
+					$name = $params['name'];
+				}
 				if (!is_object($cmdgeoloc)) {
 					$cmdgeoloc = new mobileCmd();
 					$cmdgeoloc->setLogicalId('geoId_' . $params['id']);
@@ -929,14 +933,14 @@ if ($jsonrpc->getMethod() == 'geolocSave') {
 					$cmdgeoloc->setSubType('binary');
 					$cmdgeoloc->setGeneric_type('PRESENCE');
 					$cmdgeoloc->setIsVisible(1);
-					$cmdgeoloc->setName(__($params['id'] . '-' . $params['name'], __FILE__));
+					$cmdgeoloc->setName($name);
 				}
 				$cmdgeoloc->setConfiguration('latitude', $params['latitude']);
 				$cmdgeoloc->setConfiguration('longitude', $params['longitude']);
 				$cmdgeoloc->setConfiguration('subtitle', $params['subtitle']);
 				$cmdgeoloc->setConfiguration('radius', $params['radius']);
 				$cmdgeoloc->save();
-				log::add('mobile', 'debug', '| geoId_' . $params['id'] . ' ─▶︎ ' . $params['name'] . ' ─▶︎ ' . $params['value']);
+				log::add('mobile', 'debug', '| geoId_' . $params['id'] . ' ─▶︎ ' . $name . ' ─▶︎ ' . $params['value']);
 				if ($mobile->checkAndUpdateCmd('geoId_' . $params['id'], $params['value'])) {
 					log::add('mobile', 'debug', '| ↳ Update geofence point ─▶︎ ' . $params['value']);
 				}
@@ -944,7 +948,7 @@ if ($jsonrpc->getMethod() == 'geolocSave') {
 		} else log::add('mobile', 'debug', '| [ERROR] EqLogic unknown ─▶︎ ' . $params['Iq']);
 	}
 	log::add('mobile', 'debug', '└───────────────────────────────────────────');
-  	$jsonrpc->makeSuccess();
+	$jsonrpc->makeSuccess();
 	// mobile::SaveGeoloc($params);
 	//throw new Exception(__('pas d\'id : ', __FILE__) . $params['name']);
 }
@@ -955,7 +959,7 @@ if ($jsonrpc->getMethod() == 'geolocDel') {
 		$mobile = eqLogic::byLogicalId($params['Iq'], 'mobile');
 		if (is_object($mobile)) {
 			if (isset($params['id']) && $params['id'] != '') {
-          		$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoId_' . $params['id']);
+				$cmdgeoloc = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoId_' . $params['id']);
 				if (is_object($cmdgeoloc)) {
 					$cmdgeoloc->remove();
 					log::add('mobile', 'debug', '| geoId_' . $params['id'] . ' (' . $params['name'] .  ') is deleted with success.');

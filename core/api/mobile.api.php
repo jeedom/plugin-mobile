@@ -523,6 +523,7 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 						}
 					} else log::add('mobile', 'debug', '| [WARNING] Action unknown ─▶︎ ' . $geofence['action']);
 				} else log::add('mobile', 'debug', '| [ERROR] geofencing command unknown ─▶︎ ' . 'geoloc_' . $geofence['identifier']);
+				$mobile->cmdForSpecificChannel($params, 'transmition');
 			} else {
 				$transmitions = $params['transmition'];
 				$errorCount = 0;
@@ -550,7 +551,6 @@ if ($jsonrpc->getMethod() == 'mobile::geoloc') {
 					log::add('mobile', 'debug', '| [ERROR] No geofencing settings');
 				}
 			}
-			$mobile->cmdForSpecificChannel($params, 'transmition');
 		}
 	} else {
 		if (isset($params['Iq'])) llog::add('mobile', 'debug', '| [ERROR] EqLogic unknown ─▶︎ ' . $params['Iq']);

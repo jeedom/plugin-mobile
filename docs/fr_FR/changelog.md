@@ -4,15 +4,15 @@
 >
 > Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte
 
-# xx/07/2025
+# 17/05/2026
 
-- Intégration Application V1
+- Réintégration de l'Application V1 (cohabitation V1/V2)
 - Exclusion du répertoire "data" des sauvegardes
-- Meilleure gestion des commandes spécifiques
 
 ### Notifications
 
-- Ajout d'un onglet pour manager les notifications
+- Nouvel onglet de visualisation des notifications sur la page d'un équipement mobile.
+
 
 ### Géofencing
 

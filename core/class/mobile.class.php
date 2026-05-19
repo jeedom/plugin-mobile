@@ -967,7 +967,7 @@ class mobile extends eqLogic
 			foreach ($decodedGeolocs as $index => $geoloc) {
 				if (!isset($geoloc['name'])) continue;
 				$logicalId = 'geoloc_' . $index;
-				log::add('mobile', 'debug', '|| ' . $logicalId . ' ─▶︎ ' . $geoloc['name']);
+				log::add('mobile', 'debug', '|| ' . $logicalId . ' ─▶︎ ' . $geoloc['name'] . ' ─▶︎ ' . $geoloc['value']);
 				$cmd = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $index);
 				if (!is_object($cmd)) {
 					//Migrate geoloc logicalId by name
@@ -1399,138 +1399,136 @@ class mobile extends eqLogic
 	public function cmdForSpecificChannel($params = array(), $_trigger = 'location')
 	{
 		log::add('mobile', 'debug', '|┌──:fg-success: cmdForSpecificChannel :/fg:──');
-		if (isset($params['Iq'])) {
-			if (isset($params[$_trigger])) {
-				$order = count($this->getCmd());
-				$getDeviceInformations = (isset($params[$_trigger]['extras']) && isset($params[$_trigger]['extras']['method']) && $params[$_trigger]['extras']['method'] == 'getDeviceInformations');
-				$eventAge = time() - intval(strtotime($params[$_trigger]['timestamp']));
-				if ($eventAge > 1800) {
-					log::add('mobile', 'debug', '|| SKIP stale specific event (' . round($eventAge / 60) . 'min) ');
-				} else {
-					log::add('mobile', 'debug', '|| eventAge = ' . $eventAge . ' s');
-					// Battery
-					if (isset($params[$_trigger]['battery'])) {
-						// level
-						if (isset($params[$_trigger]['battery']['level'])) {
-							if ($getDeviceInformations) {
-								$cmd = $this->getCmd(null, 'battery::level');
-								if (!is_object($cmd)) {
-									$cmd = new mobileCmd();
-									$cmd->setLogicalId('battery::level');
-									$cmd->setName(__('Batterie du téléphone', __FILE__));
-									$cmd->setDisplay('icon', '<i class="icon fas fa-battery-three-quarters"></i>');
-									$cmd->setDisplay('showIconAndNamedashboard', 1);
-									$cmd->setDisplay('showIconAndNamemobile', 1);
-									$cmd->setDisplay('forceReturnLineAfter', 1);
-									$cmd->setConfiguration('historizeRound', 2);
-									$cmd->setConfiguration('minValue', 0);
-									$cmd->setConfiguration('maxValue', 100);
-									$cmd->setUnite('%');
-									$cmd->setIsVisible(0);
-									$cmd->setOrder($order);
-									$order++;
-									log::add('mobile', 'debug', '|| Creating the "phone battery" command');
-								}
-								$cmd->setEqLogic_id($this->getId());
-								$cmd->setType('info');
-								$cmd->setConfiguration('calculValueOffset', '#value# * 100');
-								$cmd->setSubType('numeric');
-								if ($cmd->getChanged() === true) $cmd->save();
+		if (isset($params[$_trigger])) {
+			$order = count($this->getCmd());
+			$getDeviceInformations = (isset($params[$_trigger]['extras']) && isset($params[$_trigger]['extras']['method']) && $params[$_trigger]['extras']['method'] == 'getDeviceInformations');
+			$eventAge = time() - intval(strtotime($params[$_trigger]['timestamp']));
+			if ($eventAge > 1800) {
+				log::add('mobile', 'debug', '|| SKIP stale specific event (' . round($eventAge / 60) . 'min) ');
+			} else {
+				log::add('mobile', 'debug', '|| eventAge = ' . $eventAge . ' s');
+				// Battery
+				if (isset($params[$_trigger]['battery'])) {
+					// level
+					if (isset($params[$_trigger]['battery']['level'])) {
+						if ($getDeviceInformations) {
+							$cmd = $this->getCmd(null, 'battery::level');
+							if (!is_object($cmd)) {
+								$cmd = new mobileCmd();
+								$cmd->setLogicalId('battery::level');
+								$cmd->setName(__('Batterie du téléphone', __FILE__));
+								$cmd->setDisplay('icon', '<i class="icon fas fa-battery-three-quarters"></i>');
+								$cmd->setDisplay('showIconAndNamedashboard', 1);
+								$cmd->setDisplay('showIconAndNamemobile', 1);
+								$cmd->setDisplay('forceReturnLineAfter', 1);
+								$cmd->setConfiguration('historizeRound', 2);
+								$cmd->setConfiguration('minValue', 0);
+								$cmd->setConfiguration('maxValue', 100);
+								$cmd->setUnite('%');
+								$cmd->setIsVisible(0);
+								$cmd->setOrder($order);
+								$order++;
+								log::add('mobile', 'debug', '|| Creating the "phone battery" command');
 							}
-							if ($params[$_trigger]['battery']['level'] != -1) {
-								if ($this->checkAndUpdateCmd('battery::level', $params[$_trigger]['battery']['level'])) {
-									log::add('mobile', 'debug', '|| Updating "phone battery" value ─▶︎ ' . $params[$_trigger]['battery']['level'] * 100 . '%');
-								}
-							} else {
-								log::add('mobile', 'debug', '|| [WARNING] No data available for battery level ─▶︎ ' . $params[$_trigger]['battery']['level']);
-							}
+							$cmd->setEqLogic_id($this->getId());
+							$cmd->setType('info');
+							$cmd->setConfiguration('calculValueOffset', '#value# * 100');
+							$cmd->setSubType('numeric');
+							if ($cmd->getChanged() === true) $cmd->save();
 						}
-						// charging
-						if (isset($params[$_trigger]['battery']['is_charging'])) {
-							if ($getDeviceInformations) {
-								$cmd = $this->getCmd(null, 'battery::isCharging');
-								if (!is_object($cmd)) {
-									$cmd = new mobileCmd();
-									$cmd->setLogicalId('battery::isCharging');
-									$cmd->setName(__('En charge', __FILE__));
-									$cmd->setDisplay('icon', '<i class="icon techno-charging"></i>');
-									$cmd->setDisplay('showIconAndNamedashboard', 1);
-									$cmd->setDisplay('showIconAndNamemobile', 1);
-									$cmd->setDisplay('forceReturnLineAfter', 1);
-									$cmd->setTemplate('dashboard', 'core::line');
-									$cmd->setTemplate('mobile', 'core::line');
-									$cmd->setIsVisible(0);
-									$cmd->setOrder($order);
-									$order++;
-									log::add('mobile', 'debug', '|| Creating the "in charge" command');
-								}
-								$cmd->setEqLogic_id($this->getId());
-								$cmd->setType('info');
-								$cmd->setSubType('binary');
-								if ($cmd->getChanged() === true) $cmd->save();
+						if ($params[$_trigger]['battery']['level'] != -1) {
+							if ($this->checkAndUpdateCmd('battery::level', $params[$_trigger]['battery']['level'])) {
+								log::add('mobile', 'debug', '|| Updating "phone battery" value ─▶︎ ' . $params[$_trigger]['battery']['level'] * 100 . '%');
 							}
-							if ($this->checkAndUpdateCmd('battery::isCharging', intval($params[$_trigger]['battery']['is_charging']))) {
-								log::add('mobile', 'debug', '|| Updating "in charge" value ─▶︎ ' . intval($params[$_trigger]['battery']['is_charging']));
-							}
+						} else {
+							log::add('mobile', 'debug', '|| [WARNING] No data available for battery level ─▶︎ ' . $params[$_trigger]['battery']['level']);
 						}
 					}
-					// coords
-					if (isset($params[$_trigger]['coords'])) {
-						if (isset($params[$_trigger]['coords']['latitude']) && isset($params[$_trigger]['coords']['longitude'])) {
-							if ($getDeviceInformations) {
-								$cmd = $this->getCmd(null, 'coords');
-								if (!is_object($cmd)) {
-									$cmd = new mobileCmd();
-									$cmd->setLogicalId('coords');
-									$cmd->setName(__('Coordonnées', __FILE__));
-									$cmd->setDisplay('icon', '<i class="icon fas fa-map-marker-alt"></i>');
-									$cmd->setDisplay('showIconAndNamedashboard', 1);
-									$cmd->setDisplay('showIconAndNamemobile', 1);
-									$cmd->setDisplay('forceReturnLineAfter', 1);
-									$cmd->setTemplate('dashboard', 'core::line');
-									$cmd->setTemplate('mobile', 'core::line');
-									$cmd->setIsVisible(0);
-									$cmd->setOrder($order);
-									$order++;
-									log::add('mobile', 'debug', '|| Creating the "coordinates" command');
-								}
-								$cmd->setEqLogic_id($this->getId());
-								$cmd->setType('info');
-								$cmd->setSubType('string');
-								if ($cmd->getChanged() === true) $cmd->save();
+					// charging
+					if (isset($params[$_trigger]['battery']['is_charging'])) {
+						if ($getDeviceInformations) {
+							$cmd = $this->getCmd(null, 'battery::isCharging');
+							if (!is_object($cmd)) {
+								$cmd = new mobileCmd();
+								$cmd->setLogicalId('battery::isCharging');
+								$cmd->setName(__('En charge', __FILE__));
+								$cmd->setDisplay('icon', '<i class="icon techno-charging"></i>');
+								$cmd->setDisplay('showIconAndNamedashboard', 1);
+								$cmd->setDisplay('showIconAndNamemobile', 1);
+								$cmd->setDisplay('forceReturnLineAfter', 1);
+								$cmd->setTemplate('dashboard', 'core::line');
+								$cmd->setTemplate('mobile', 'core::line');
+								$cmd->setIsVisible(0);
+								$cmd->setOrder($order);
+								$order++;
+								log::add('mobile', 'debug', '|| Creating the "in charge" command');
 							}
-							$coord = $params[$_trigger]['coords']['latitude'] . ',' . $params[$_trigger]['coords']['longitude'];
-							if ($this->checkAndUpdateCmd('coords', $coord)) {
-								log::add('mobile', 'debug', '|| Updating "coordinates" value ─▶︎ ' . $coord);
-							}
+							$cmd->setEqLogic_id($this->getId());
+							$cmd->setType('info');
+							$cmd->setSubType('binary');
+							if ($cmd->getChanged() === true) $cmd->save();
 						}
-						if (isset($params[$_trigger]['coords']['altitude'])) {
-							if ($getDeviceInformations) {
-								$cmd = $this->getCmd(null, 'altitude');
-								if (!is_object($cmd)) {
-									$cmd = new mobileCmd();
-									$cmd->setLogicalId('altitude');
-									$cmd->setName(__('Altitude', __FILE__));
-									$cmd->setDisplay('icon', '<i class="icon fas fa-map-marked-alt"></i>');
-									$cmd->setDisplay('showIconAndNamedashboard', 1);
-									$cmd->setDisplay('showIconAndNamemobile', 1);
-									$cmd->setDisplay('forceReturnLineAfter', 1);
-									$cmd->setTemplate('dashboard', 'core::line');
-									$cmd->setTemplate('mobile', 'core::line');
-									$cmd->setIsVisible(0);
-									$cmd->setUnite('m');
-									$cmd->setOrder($order);
-									$order++;
-									log::add('mobile', 'debug', '|| Creating the "altitude" command');
-								}
-								$cmd->setEqLogic_id($this->getId());
-								$cmd->setType('info');
-								$cmd->setSubType('string');
-								if ($cmd->getChanged() === true) $cmd->save();
+						if ($this->checkAndUpdateCmd('battery::isCharging', intval($params[$_trigger]['battery']['is_charging']))) {
+							log::add('mobile', 'debug', '|| Updating "in charge" value ─▶︎ ' . intval($params[$_trigger]['battery']['is_charging']));
+						}
+					}
+				}
+				// coords
+				if (isset($params[$_trigger]['coords'])) {
+					if (isset($params[$_trigger]['coords']['latitude']) && isset($params[$_trigger]['coords']['longitude'])) {
+						if ($getDeviceInformations) {
+							$cmd = $this->getCmd(null, 'coords');
+							if (!is_object($cmd)) {
+								$cmd = new mobileCmd();
+								$cmd->setLogicalId('coords');
+								$cmd->setName(__('Coordonnées', __FILE__));
+								$cmd->setDisplay('icon', '<i class="icon fas fa-map-marker-alt"></i>');
+								$cmd->setDisplay('showIconAndNamedashboard', 1);
+								$cmd->setDisplay('showIconAndNamemobile', 1);
+								$cmd->setDisplay('forceReturnLineAfter', 1);
+								$cmd->setTemplate('dashboard', 'core::line');
+								$cmd->setTemplate('mobile', 'core::line');
+								$cmd->setIsVisible(0);
+								$cmd->setOrder($order);
+								$order++;
+								log::add('mobile', 'debug', '|| Creating the "coordinates" command');
 							}
-							if ($this->checkAndUpdateCmd('altitude', $params[$_trigger]['coords']['altitude'])) {
-								log::add('mobile', 'debug', '|| Updating "Altitude" value ─▶︎ ' . $params[$_trigger]['coords']['altitude'] . 'm');
+							$cmd->setEqLogic_id($this->getId());
+							$cmd->setType('info');
+							$cmd->setSubType('string');
+							if ($cmd->getChanged() === true) $cmd->save();
+						}
+						$coord = $params[$_trigger]['coords']['latitude'] . ',' . $params[$_trigger]['coords']['longitude'];
+						if ($this->checkAndUpdateCmd('coords', $coord)) {
+							log::add('mobile', 'debug', '|| Updating "coordinates" value ─▶︎ ' . $coord);
+						}
+					}
+					if (isset($params[$_trigger]['coords']['altitude'])) {
+						if ($getDeviceInformations) {
+							$cmd = $this->getCmd(null, 'altitude');
+							if (!is_object($cmd)) {
+								$cmd = new mobileCmd();
+								$cmd->setLogicalId('altitude');
+								$cmd->setName(__('Altitude', __FILE__));
+								$cmd->setDisplay('icon', '<i class="icon fas fa-map-marked-alt"></i>');
+								$cmd->setDisplay('showIconAndNamedashboard', 1);
+								$cmd->setDisplay('showIconAndNamemobile', 1);
+								$cmd->setDisplay('forceReturnLineAfter', 1);
+								$cmd->setTemplate('dashboard', 'core::line');
+								$cmd->setTemplate('mobile', 'core::line');
+								$cmd->setIsVisible(0);
+								$cmd->setUnite('m');
+								$cmd->setOrder($order);
+								$order++;
+								log::add('mobile', 'debug', '|| Creating the "altitude" command');
 							}
+							$cmd->setEqLogic_id($this->getId());
+							$cmd->setType('info');
+							$cmd->setSubType('string');
+							if ($cmd->getChanged() === true) $cmd->save();
+						}
+						if ($this->checkAndUpdateCmd('altitude', $params[$_trigger]['coords']['altitude'])) {
+							log::add('mobile', 'debug', '|| Updating "Altitude" value ─▶︎ ' . $params[$_trigger]['coords']['altitude'] . 'm');
 						}
 					}
 				}

@@ -701,6 +701,7 @@ class mobile extends eqLogic
 						'aps' => array_merge([
 							'content-available' => true,
 						], $silent ? [] : [
+							'mutable-content' => 1,
 							'sound' => [
 								'name' => 'default',
 								'critical' => $critical

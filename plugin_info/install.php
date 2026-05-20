@@ -90,6 +90,7 @@ function mobile_update()
 	$oldFiles = [
 		'/../desktop/css/panel.css',
 		'/../desktop/php/panelMenuCustom.php',
+		'/../desktop/php/panelWebApp.php',
 		'/../desktop/php/modalConfigPlugin.php',
 		'/../desktop/js/panelMenuCustom.js',
 		'/../desktop/modal/health.php',
@@ -111,6 +112,7 @@ function mobile_update()
 		'/../desktop/modal/sixPage.php',
 		'/../desktop/modal/wizard.php',
 		'/../core/data/wizard.json',
+		'/../core/class/bellaMobile.class.php',
 		//'/../data/mobile.json'
 	];
 	foreach ($oldFiles as $oldFile) {

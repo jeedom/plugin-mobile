@@ -970,7 +970,6 @@ class mobile extends eqLogic
 				log::add('mobile', 'debug', '|| ' . $logicalId . ' ─▶︎ ' . $geoloc['name'] . ' ─▶︎ ' . $geoloc['value']);
 				$cmd = cmd::byEqLogicIdAndLogicalId($mobile->getId(), 'geoloc_' . $index);
 				if (!is_object($cmd)) {
-					//Migrate geoloc logicalId by name
 					if (!preg_match('/^geoloc_\d+$/', $logicalId)) {
 						foreach ($mobile->getCmd() as $existing) {
 							if (

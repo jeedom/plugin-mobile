@@ -19,6 +19,15 @@
 - Correction : un même événement ENTER/EXIT n'est plus traité plusieurs fois en cas d'envoi dupliqué par l'app
 - Correction : les événements géofence trop anciens (> 30 min) sont ignorés pour éviter de déclencher des scénarios hors contexte
 
+
+# 11/05/2026
+
+  ### Géofencing
+  - Correction : un même événement ENTER/EXIT n'est plus traité plusieurs fois en cas d'envoi dupliqué par
+  l'app
+  - Correction : les événements géofence trop anciens (> 30 min) sont ignorés pour éviter de déclencher des
+  scénarios hors contexte
+
 # 08/07/2025
 
 - Mise à jour de la doc sur droits utilisateurs partagés

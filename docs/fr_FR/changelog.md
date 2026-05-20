@@ -4,6 +4,20 @@
 >
 > Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte
 
+# 17/05/2026
+
+- Réintégration de l'Application V1 (cohabitation V1/V2)
+- Exclusion du répertoire "data" des sauvegardes
+
+### Notifications
+
+- Nouvel onglet de visualisation des notifications sur la page d'un équipement mobile.
+
+
+### Géofencing
+
+- Correction : un même événement ENTER/EXIT n'est plus traité plusieurs fois en cas d'envoi dupliqué par l'app
+- Correction : les événements géofence trop anciens (> 30 min) sont ignorés pour éviter de déclencher des scénarios hors contexte
 
 
 # 11/05/2026
@@ -26,25 +40,13 @@
 
 - Ajout pour Max 8 Icones sur le menuCustom
 
-
 # 24/04/2025
 
 - Ajout Commande Notifications Silencieuses pour Builds : IOS 491 et Android 875
 
-
 # 11/04/2025
 
 - Ajout paramètre Envoi NFC Direct au plugin après lecture
-
-# xx/08/2024
-
-> **App V1**
->
-> Attention, à partir de cette version, l'appV1 n'est plus prise en charge.
-> Il sera toujours possible d'accéder à votre équipement, pour éventuellement, remplacer vos commandes de géolocalisation et de notification.
-
-- Suppression des fichiers concernant l'AppV1.
-- Nettoyage des infos stockées en BDD (config).
 
 # 20/08/2024
 

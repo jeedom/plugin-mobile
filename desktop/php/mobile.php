@@ -15,18 +15,19 @@ foreach ($eqLogics as $eqLogic) {
 	}
 }
 $isApi = config::byKey('api::mobile::mode');
-if($isApi == 'whiteip' || $isApi == 'disable'){
+if ($isApi == 'whiteip' || $isApi == 'disable') {
 	message::add('mobile', 'L\'API mobile est désactivée ou en mode whitelist IP');
 }
 $isCoreApi = config::byKey('api::core::mode');
-if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
+if ($isCoreApi == 'whiteip' || $isCoreApi == 'disable') {
 	message::add('mobile', 'L\'API core est désactivée ou en mode whitelist IP');
 }
 ?>
 
 <div class="row row-overflow">
+	<!-- APP V2 -->
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
-		<legend><i class="fas fa-mobile-alt"></i> {{App V2 - (VERSION BETA SEULEMENT)}}</legend>
+		<legend><i class="fas fa-mobile-alt"></i> {{App V2}}</legend>
 		<div class="eqLogicThumbnailContainer">
 			<div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
 				<i class="fas fa-wrench"></i><br>
@@ -39,6 +40,10 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 			<div class="cursor eqLogicAction logoSecondary" data-action="bt_qrCodev2" id="bt_qrCodev2">
 				<i class="fas fa-qrcode"></i><br>
 				<span>{{QR Code}}</span>
+			</div>
+			<div class="cursor eqLogicAction logoSecondary" id="bt_doc">
+				<i class='icon fas fa-book'></i><br>
+				<span>{{Documentation}}</span>
 			</div>
 		</div>
 		<legend><i class="fas fa-mobile"></i> {{Mes Téléphones Mobiles}}</legend>
@@ -53,59 +58,78 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 			<?php
 			if (count($eqLogicsV2) >= 1) {  // AppV2
 				foreach ($eqLogicsV2 as $eqLogic) {
-					if ($eqLogic->getConfiguration('appVersion', '1') == '2') {
-						$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-						echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
-						/* getImage : 
-							core 4.4 - returns plugin image
-							core 4.5 - returns the custom image if exist or else the plugin image 
-						*/
-						if ($eqLogic->getImage() != 'plugins/mobile/plugin_info/mobile_icon.png') $logoV2 = $eqLogic->getImage();
-						else if (file_exists('plugins/mobile/plugin_info/mobileV2_icon.png')) $logoV2 = 'plugins/mobile/plugin_info/mobileV2_icon.png';
-						else $logoV2 = $eqLogic->getImage();
-						echo '<img src="' . $logoV2 . '" height="105" width="95">';
-						echo '<a style="width: 30px;height: 30px;border-radius: 15px;background-color: #94CA02;position: absolute;bottom: 65px;right: 7px;">';
-						if ($eqLogic->getConfiguration('type_mobile') == 'android') {
-							echo '<i class="fab fa-android" style="margin: 8px;color: #FFFFFF;"></i>';
-						} else {
-							echo '<i class="fab fa-apple" style="margin: 8px;color: #FFFFFF;"></i>';
-						}
-						echo '</a>';
-						echo '<br>';
-						echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
-						echo '<span class="hiddenAsCard displayTableRight hidden">';
-						echo '<span class="label">' . $eqLogic->getConfiguration('type_mobile')  .  '</span>';
-						$user = $eqLogic->getConfiguration('affect_user');
-						$username = user::byId($user);
-						if (is_object($username)) {
-							$user = $username->getLogin();
-						}
-						echo '<span class="label">' . $user  .  '</span>';
-						echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Équipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Équipement non visible}}"></i>';
-						echo '</span>';
-						echo '</div>';
+					$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+					echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
+					/* getImage : 
+						core 4.4 - returns plugin image
+						core 4.5 - returns the custom image if exist or else the plugin image 
+					*/
+					if ($eqLogic->getImage() != 'plugins/mobile/plugin_info/mobile_icon.png') $logoV2 = $eqLogic->getImage();
+					else if (file_exists('plugins/mobile/plugin_info/mobileV2_icon.png')) $logoV2 = 'plugins/mobile/plugin_info/mobileV2_icon.png';
+					else $logoV2 = $eqLogic->getImage();
+					echo '<img src="' . $logoV2 . '" height="105" width="95">';
+					echo '<a style="width: 30px;height: 30px;border-radius: 15px;background-color: #94CA02;position: absolute;bottom: 65px;right: 7px;">';
+					if ($eqLogic->getConfiguration('type_mobile') == 'android') {
+						echo '<i class="fab fa-android" style="margin: 8px;color: #FFFFFF;"></i>';
+					} else {
+						echo '<i class="fab fa-apple" style="margin: 8px;color: #FFFFFF;"></i>';
 					}
+					echo '</a>';
+					echo '<br>';
+					echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+					echo '<span class="hiddenAsCard displayTableRight hidden">';
+					echo '<span class="label">' . $eqLogic->getConfiguration('type_mobile')  .  '</span>';
+					$user = $eqLogic->getConfiguration('affect_user');
+					$username = user::byId($user);
+					if (is_object($username)) {
+						$user = $username->getLogin();
+					}
+					echo '<span class="label">' . $user  .  '</span>';
+					echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Équipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Équipement non visible}}"></i>';
+					echo '</span>';
+					echo '</div>';
 				}
 			} else {
 				echo '<div class="alert alert-info text-center" style="width: 100%; background-color: var(--al-info-color) !important;">';
 				echo '{{Pour ajouter un téléphone, il y a 2 méthodes possible :}} <br> {{Sur le premier écran de l\'application, il vous est proposé de connecter votre compte market, et ainsi de retrouver toutes les boxs associées à ce compte, ou bien simplement ajouter une box.}}';
 				echo '</div>';
-            }
+			}
 			?>
 		</div>
 	</div>
 
-    <?php if (count($eqLogicsV1) >= 1) {  // AppV1
-      ?>
-		<div class="col-xs-12 eqLogicThumbnailDisplay">
-			<legend><i class="fas fa-mobile-alt"></i> {{App V1}}</legend>
-			<div class="eqLogicThumbnailContainer">
-				<div class="alert alert-danger" style="background-color: var(--al-danger-color) !important; font-size:1.2em;font-weight:bold;">
-					{{Attention, en beta il n'est plus possible d'utiliser l'APP V1}}</div>
-				</div>
-				<legend><i class="fas fa-mobile"></i> {{Mes Téléphones Mobiles}}</legend>
-				<div class="eqLogicThumbnailContainer">
-				<?php
+	<!-- APP V1 -->
+	<div class="col-xs-12 eqLogicThumbnailDisplay">
+		<legend><i class="fas fa-mobile-alt"></i> {{App V1}}</legend>
+		<div class="eqLogicThumbnailContainer">
+			<div class="cursor eqLogicAction logoPrimary" data-action="add">
+				<i class="fas fa-plus-circle"></i><br>
+				<span>{{Ajouter}}</span>
+			</div>
+			<div class="cursor eqLogicAction logoSecondary" data-action="bt_pluginmobile" id="bt_pluginmobile">
+				<i class="fas jeedomapp-plugin"></i><br>
+				<span>{{Plugins}}</span>
+			</div>
+			<div class="cursor eqLogicAction logoSecondary" data-action="bt_piecemobile" id="bt_piecemobile">
+				<i class="fas icon jeedomapp-piece-jeedom"></i><br>
+				<span>{{Objets/Pièces}}</span>
+			</div>
+			<div class="cursor eqLogicAction logoSecondary" data-action="bt_piecemobile" id="bt_scenariomobile">
+				<i class="fas icon jeedomapp-scenario-jeedom"></i><br>
+				<span>{{Scénarios}}</span>
+			</div>
+			<div class="cursor eqLogicAction logoSecondary" data-action="bt_regenConfig" id="bt_regenConfig">
+				<i class="fas fa-cogs"></i><br>
+				<span>{{Régénérer la configuration}}</span>
+			</div>
+		</div>
+		<legend><i class="fas fa-mobile"></i> {{Mes Téléphones Mobiles}}</legend>
+		<div class="alert alert-warning" style="background-color: var(--al-warning-color) !important; font-size:1.2em;font-weight:bold;">
+			{{Attention, l'APP V1 ne sera plus mise à jour}}
+		</div>
+		<div class="eqLogicThumbnailContainer">
+			<?php
+			if (count($eqLogicsV1) >= 0) {  // AppV1
 				foreach ($eqLogicsV1 as $eqLogic) {
 					if ($eqLogic->getConfiguration('appVersion', '1') != '2') {
 						$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
@@ -137,15 +161,16 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 						echo '</div>';
 					}
 				}
-				?>
-			</div>
+			}
+			?>
 		</div>
-    <?php } ?>
+	</div>
 
 	<div id="div_editSmartphone" class="col-xs-12 eqLogic" style="display: none;">
 		<div class="input-group pull-right" style="display:inline-flex">
 			<span class="input-group-btn">
 				<a class="btn btn-sm btn-default eqLogicAction roundedLeft" data-action="configure"><i class="fas fa-cogs"></i> {{Configuration avancée}}
+				</a><a class="btn btn-sm btn-info paramV1" id="info_app"><i class="fas fa-question-circle"></i> {{Infos envoyées à l'app}}
 				</a><a class="btn btn-sm btn-success eqLogicAction" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}
 				</a><a class="btn btn-sm btn-danger eqLogicAction roundedRight" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}
 				</a>
@@ -155,6 +180,7 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 			<li role="presentation"><a class="eqLogicAction cursor" aria-controls="home" role="tab" data-action="returnToThumbnailDisplay"><i class="fas fa-arrow-circle-left"></i></a></li>
 			<li role="presentation" class="active"><a href="#eqlogictabin" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Mobile}}</a></li>
 			<li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-list"></i> {{Commandes}}</a></li>
+			<li role="presentation"><a href="#notificationtab" aria-controls="notification" role="tab" data-toggle="tab"><i class="far fa-comment"></i> {{Notifications}}</a></li>
 		</ul>
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane active" id="eqlogictabin">
@@ -206,25 +232,66 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 							</div>
 
 							<legend><i class="fas fa-cogs"></i> {{Paramètres spécifiques}}</legend>
-							<div class="form-group">
+							<div class="form-group paramV2">
 								<label class="col-sm-4 control-label">{{Verrouiller le menu géolocalisation}} <sup><i class="fa fa-question-circle tooltips" title="Si activé, l'application verrouillera la modification des points de geofencing."></i></sup></label>
 								<div class="col-sm-6">
 									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="hideMenuGeoloc">
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-4 control-label">{{Verrouiller le menu custom}}  <sup><i class="fa fa-question-circle tooltips" title="Si activé, l'application verrouillera la modification du menu custom."></i></sup></label>
+							<div class="form-group paramV2">
+								<label class="col-sm-4 control-label">{{Verrouiller le menu custom}} <sup><i class="fa fa-question-circle tooltips" title="Si activé, l'application verrouillera la modification du menu custom."></i></sup></label>
 								<div class="col-sm-6">
 									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="hideMenuCustom">
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-4 control-label">{{NFC : Envoi direct}}  <sup><i class="fa fa-question-circle tooltips" title="Envoyer directement les informations du Tag au plugin Mobile"></i></sup></label>
+							<div class="form-group paramV2">
+								<label class="col-sm-4 control-label">{{NFC : Envoi direct}} <sup><i class="fa fa-question-circle tooltips" title="Envoyer directement les informations du Tag au plugin Mobile"></i></sup></label>
 								<div class="col-sm-2">
 									<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="sendNFCDirectly">
 										<option value="0">{{Non}}</option>
 										<option value="1">{{Oui}}</option>
 									</select>
+								</div>
+							</div>
+							<div class="form-group paramV1">
+								<label class="col-sm-4 control-label">{{Type de Mobile}}</label>
+								<div class="col-sm-6">
+									<select class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="type_mobile">
+										<option value="ios">{{iPhone}}</option>
+										<option value="android">{{Android}}</option>
+										<option value="windows">{{Windows (non officiel)}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group paramV1">
+								<label class="col-sm-4 control-label">{{Utilisateur}}</label>
+								<div class="col-sm-6">
+									<select class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="affect_user">
+										<option value="">{{Aucun}}</option>
+										<?php
+										$hidden_user = array('jeedom_support', 'internal_report');
+										foreach (user::all() as $user) {
+											if (in_array($user->getLogin(), $hidden_user) || $user->getEnable() != 1) continue;
+											echo '<option value="' . $user->getId() . '">' . ucfirst($user->getLogin()) . '</option>';
+										}
+										?>
+									</select>
+								</div>
+							</div>
+							<div class="paramV1">
+								<legend><i class="fas fa-mobile-alt"></i> {{Notifications}} <sup>(V1)</sup></legend>
+								<div class="form-group paramV1">
+									<label class="col-sm-4 control-label">ARN Mobile</label>
+									<div class="col-sm-6">
+										<input id="arnComplet" type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notificationArn" placeholder="ARN" disabled="">
+									</div>
+								</div>
+								<div class="form-group paramV1">
+									<label class="col-sm-4 control-label">ARN pour Monitoring</label>
+									<div class="col-sm-6">
+										<input type="text" id="to-copy-monitoring" class="eqLogicAttr form-control" placeholder="ARN pour Monitoring" disabled="">
+										<button class="btn btn-info eqLogicAction pull-right" id="copy-monitoring" type="button">Copier pour Monitoring</button>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -233,25 +300,45 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Type de Mobile}}</label>
 								<div class="col-sm-8">
-									<span class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="type_mobile"></span>
+									<span class="label label-primary type_mobile"></span>
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="form-group" id="formGroupUser">
 								<label class="col-sm-3 control-label">{{Utilisateur}}</label>
 								<div class="col-sm-8">
 									<span class="label label-primary affect_user"></span>
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="form-group" id="formGroupIq">
 								<label class="col-sm-3 control-label">{{Iq Mobile}}</label>
 								<div class="col-sm-8">
 									<span class="eqLogicAttr label label-primary" data-l1key="logicalId"></span>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">{{TOKEN Mobile}}</label>
+								<label class="col-sm-3 control-label">TOKEN Mobile</label>
 								<div class="col-sm-8">
-									<span id="arnComplet" class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="notificationRegistrationToken"></span>
+									<span class="eqLogicAttr label label-primary" data-l1key="configuration" data-l2key="notificationRegistrationToken"></span>
+								</div>
+							</div>
+							<div class="form-group paramV1">
+								<label class="col-sm-3 control-label">{{Sauvegarde Dashboard}}</label>
+								<div class="col-sm-8">
+									<span id="SaveDash" class="label label-warning">{{Vérification en Cours}}</span>
+								</div>
+							</div>
+							<div class="form-group paramV1">
+								<label class="col-sm-3 control-label">{{Sauvegarde Favoris}}</label>
+								<div class="col-sm-8">
+									<span id="SaveFav" class="label label-warning">{{Vérification en Cours}}</span>
+								</div>
+							</div>
+							<div class="form-group paramV1">
+								<div class="col-sm-8">
+									<legend><i class="fas fa-qrcode"></i> {{QRCode}} <sup>(V1)</sup></legend>
+									<center>
+										<div class="qrCodeImg"></div>
+									</center>
 								</div>
 							</div>
 						</div>
@@ -277,8 +364,14 @@ if($isCoreApi == 'whiteip' || $isCoreApi == 'disable'){
 					</table>
 				</div>
 			</div>
+			<div role="tabpanel" class="tab-pane" id="notificationtab">
+				<div class="notification-box">
+					<div class="alert alert-warning">Compatible AppV2 uniquement.</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
+<?php include_file('desktop', 'notification', 'css', 'mobile'); ?>
 <?php include_file('desktop', 'mobile', 'js', 'mobile'); ?>
 <?php include_file('core', 'plugin.template', 'js'); ?>

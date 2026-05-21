@@ -67,8 +67,8 @@ function mobile_update()
 			$cmd = cmd::byEqLogicIdAndLogicalId($mobile->getId(), $oldLogical);
 			if (is_object($cmd)) {
 				if ($oldLogical == 'phoneBattery'){
-				log::add('mobile', 'debug', '| Migrate Calcul Value Offset : #value# * 100');
-				$cmd->setConfiguration('calculValueOffset', '#value# * 100');
+					log::add('mobile', 'debug', '| Migrate Calcul Value Offset : #value# * 100');
+					$cmd->setConfiguration('calculValueOffset', '#value# * 100');
 				}
 				log::add('mobile', 'debug', '| Migrate logicalId ' . $oldLogical . ' to ' . $newLogical . ' for the command ' . $cmd->getHumanName());
 				$cmd->setLogicalId($newLogical);

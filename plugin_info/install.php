@@ -66,6 +66,10 @@ function mobile_update()
 		foreach ($migrateLogicalId as $oldLogical => $newLogical) {
 			$cmd = cmd::byEqLogicIdAndLogicalId($mobile->getId(), $oldLogical);
 			if (is_object($cmd)) {
+				if ($oldLogical == 'phoneBattery'){
+					log::add('mobile', 'debug', '| Migrate Calcul Value Offset : #value# * 100');
+					$cmd->setConfiguration('calculValueOffset', '#value# * 100');
+				}
 				log::add('mobile', 'debug', '| Migrate logicalId ' . $oldLogical . ' to ' . $newLogical . ' for the command ' . $cmd->getHumanName());
 				$cmd->setLogicalId($newLogical);
 				$cmd->save();
@@ -90,6 +94,7 @@ function mobile_update()
 	$oldFiles = [
 		'/../desktop/css/panel.css',
 		'/../desktop/php/panelMenuCustom.php',
+		'/../desktop/php/panelWebApp.php',
 		'/../desktop/php/modalConfigPlugin.php',
 		'/../desktop/js/panelMenuCustom.js',
 		'/../desktop/modal/health.php',
@@ -111,6 +116,7 @@ function mobile_update()
 		'/../desktop/modal/sixPage.php',
 		'/../desktop/modal/wizard.php',
 		'/../core/data/wizard.json',
+		'/../core/class/bellaMobile.class.php',
 		//'/../data/mobile.json'
 	];
 	foreach ($oldFiles as $oldFile) {

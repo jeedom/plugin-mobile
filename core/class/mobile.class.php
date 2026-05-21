@@ -19,7 +19,6 @@
 /* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
-include_file('core', 'bellaMobile', 'class', 'mobile');
 
 class mobile extends eqLogic
 {

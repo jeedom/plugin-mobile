@@ -622,19 +622,9 @@ if ($jsonrpc->getMethod() == "nfc") {
 	$jsonrpc->makeSuccess();
 }
 
-/**
- * coming soon
- * 
- * @return
- */
-if ($jsonrpc->getMethod() == "syncBella") {
-	log::add('mobile', 'debug', '┌──────────▶︎ syncBella ─────────────────────');
-	log::add('mobile', 'debug', '| JeedomApp ─▶︎ syncBella');
-	log::add('mobile', 'debug', '└───────────────────────────────────────────');
-}
 
 /**
- * get notifiactions present in json file
+ * get notifications present in json file
  * 
  * @return array
  */

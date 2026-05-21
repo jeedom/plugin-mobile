@@ -16,50 +16,20 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-header('Content-Type: application/json');
 try {
 	require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 	include_file('core', 'authentification', 'php');
+
+	ajax::init();
 
 	if (!isConnect('admin')) {
 		throw new Exception(__('401 - Accès non autorisé', __FILE__));
 	}
 
-	if (init('action') == 'updatemobile') {
-		mobile::updatemobile();
+	if (init('action') == 'menuDefault') {
+		mobile::handleMenuDefaultBySelect(init('eqId'), init('eqIdDefault'));
 		ajax::success();
 	}
-
-	if (init('action') == 'constructMenu') {
-      $reponse = mobile::constructMenu(init('eqId'));
-      ajax::success($reponse);
-      }
-
-
-if (init('action') == 'getEqLogicConfigs') {
-
-	$eqLogic = eqLogic::byId(intval(init('eqId')));
-	if(is_object($eqLogic)){
-		$j = 0;
-		$arrayMenuConfig = array();
-		 for($i=1;$i < 5;$i++){
-				 $arrayTemp = [];
-				 ${ 'spanIcon' . $i} = $eqLogic->getConfiguration('spanIcon'.$i ,'pasencorela');
-				 ${ 'renameIcon' . $i} = $eqLogic->getConfiguration('renameIcon'.$i ,'pasencorela');
-				 ${ 'selectNameMenu' . $i} = $eqLogic->getConfiguration('selectNameMenu'.$i, 'pasencorela');
-					array_push($arrayMenuConfig, [${ 'spanIcon' . $i}, ${ 'renameIcon' . $i}, ${ 'selectNameMenu' . $i}]);
-				$j++;
-		 }
-		log::add('mobile','debug','RETURNAJAXGETCONFIG ' . json_encode($arrayMenuConfig));
-	}
-ajax::success($arrayMenuConfig);
-}
-
-if(init('action') == 'menuDefault'){
-	mobile::handleMenuDefaultBySelect(init('eqId'), init('eqIdDefault'));
-	ajax::success();
-}
-
 
 	if (init('action') == 'getQrCode') {
 		$eqLogic = mobile::byId(init('id'));
@@ -70,7 +40,7 @@ if(init('action') == 'menuDefault'){
 		}
 	}
 
-  	if (init('action') == 'getQrCodeV2') {
+	if (init('action') == 'getQrCodeV2') {
 		$user = user::byId(init('chooseUser'));
 		if (!is_object($user)) {
 			throw new Exception(__('User inexistant : ', __FILE__));
@@ -79,52 +49,69 @@ if(init('action') == 'menuDefault'){
 		}
 	}
 
+	if (init('action') == 'getAffectUserByEqlogic') {
+		$eqLogic = mobile::byId(init('id'));
+		$return = '';
+		if (is_object($eqLogic)) {
+			if (is_object($user = user::byId($eqLogic->getConfiguration('affect_user')))) {
+				$return = $user->getLogin();
+			}
+		}
+		ajax::success($return);
+	}
 
+	if (init('action') == 'getNotificationsV2') {
+		$return = '';
+		$iq = init('iq');
+		$mobile = eqLogic::byLogicalId($iq, 'mobile');
+		if (is_object($mobile)) {
+			$return = mobile::getNotificationsV2($iq);
+		}
+		ajax::success($return);
+	}
 
+	if (init('action') == 'removeNotificationV2') {
+		ajax::success(mobile::removeNotificationV2(init('iq', ''), init('id', '')));
+	}
 
-	if (init('action') == 'regenConfig') {
+	// APP V1
+
+	if (init('action') == 'AppV1Savescenario') {
+		$id = init('id');
+		$sendApp = init('valueSend');
+		$scenario = scenario::byId($id);
+		if (!is_object($scenario)) {
+			throw new Exception(__('scenario non trouvé', __FILE__));
+		}
+		$scenario->setDisplay("sendToApp", $sendApp);
+		$scenario->save();
+		ajax::success();
+	}
+	if (init('action') == 'AppV1RegenConfig') {
 		mobile::makeTemplateJson();
 		ajax::success();
 	}
-
-
-	if (init('action') == 'getSaveDashboard'){
-		$iq = init('iq');
-		$jsonDashboard = mobile::getSaveJson($iq, 'dashboard');
-		if ($jsonDashboard == ""){
-			$reponse = false;
-		}else{
-			$reponse = true;
-		}
-		ajax::success($reponse);
-	    }
-
-	  if (init('action') == 'getSaveFavDash'){
+	if (init('action') == 'AppV2GetSaveFavDash') {
 		$iq = init('iq');
 		$jsonFavDash = mobile::getSaveJson($iq, 'favdash');
-		if ($jsonFavDash == ""){
+		if ($jsonFavDash == "") {
 			$reponse = false;
-		}else{
+		} else {
 			$reponse = true;
 		}
 		ajax::success($reponse);
-	    }
-
-  if (init('action') == 'savescenario'){
-    $id = init('id');
-    $sendApp = init('valueSend');
-    $scenario = scenario::byId($id);
-    if(!is_object($scenario)){
-      throw new Exception(__('scenario non trouvé', __FILE__));
-    }
-    $scenario->setDisplay("sendToApp",$sendApp);
-    $scenario->save();
-    ajax::success();
-  }
-
+	}
+	if (init('action') == 'AppV2GetSaveDashboard') {
+		$iq = init('iq');
+		$jsonDashboard = mobile::getSaveJson($iq, 'dashboard');
+		if ($jsonDashboard == "") {
+			$reponse = false;
+		} else {
+			$reponse = true;
+		}
+		ajax::success($reponse);
+	}
 	throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
-
 } catch (Exception $e) {
 	ajax::error(displayException($e), $e->getCode());
 }
-?>

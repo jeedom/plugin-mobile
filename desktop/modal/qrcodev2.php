@@ -54,8 +54,6 @@ $eqLogics = mobile::byType('mobile');
 </div>
 
 <script>
-
-
     var selectQrCode = document.getElementById('selectUserqrCodeV2');
 
     selectQrCode.addEventListener('change', function() {
@@ -106,8 +104,3 @@ $eqLogics = mobile::byType('mobile');
 
     }
 </script>
-
-<?php
-
-include_file('desktop', 'mobile', 'js', 'mobile');
-include_file('core', 'plugin.template', 'js');

@@ -6,3 +6,5 @@ plugins
 .project
 .DS_Store
 .vscode
+.history
+graphify-out

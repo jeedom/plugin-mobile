@@ -1,0 +1,372 @@
+body {
+	padding-top: unset;
+}
+
+#jeedomMenuBar {
+	display: none;
+}
+
+#div_mainContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#div_pageContainer {
+	background-color: rgba(var(--eq-bg-color), var(--opacity));
+	border-radius: var(--border-radius);
+}
+
+#mobile_wizard .flex-evenly {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+#mobile_wizard .flex-column {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#bt_quitmobile {
+	position: absolute;
+	top: 5%;
+	right: 5%;
+}
+
+/* #wizard_container {
+	height: 600px;
+	display: grid;
+	justify-items: center;
+	align-items: center;
+	grid-template-columns: 100%;
+	grid-template-rows: 50px 225px 0 25px auto;
+} */
+
+#wizard_container {
+	height: 600px;
+	display: flex;
+	flex-direction: column;
+	justify-items: center;
+	align-items: center;
+}
+
+
+#wizard_container>h3 {
+	grid-row-start: 1
+}
+
+#wizard_container>img {
+	max-width: 350px;
+	max-height: 500px;
+	grid-row-start: 2
+}
+
+#wizard_container>.logo {
+	grid-row-start: 2
+}
+
+#wizard_container .input-group {
+	max-width: 450px;
+	margin: auto;
+}
+
+#wizard_container .form-control {
+	font-weight: bold;
+	text-align-last: center;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+/*** OBJECTS ***/
+#wizard_container>.step_father .sel_father,
+#wizard_container>.step_childs .sel_child {
+	border-radius: var(--border-radius);
+	background-color: var(--el-defaultColor);
+	overflow: hidden;
+}
+
+#wizard_container>.step_father .sel_father:hover,
+#wizard_container>.step_father .sel_father.selected {
+	transform: scale(1.2);
+}
+
+#wizard_container>.step_childs .sel_child {
+	opacity: .25;
+}
+
+#wizard_container>.step_childs .sel_child:hover {
+	opacity: 1;
+}
+
+#wizard_container>.step_childs .sel_child.selected {
+	opacity: 1;
+	border: solid 3px var(--logo-primary-color);
+}
+
+#wizard_container>.step_father img {
+	width: 250px;
+	max-width: 100%;
+	max-height: 150px;
+}
+
+#wizard_container>.step_childs .panel {
+	width: 100%;
+	max-width: 1000px;
+}
+
+#wizard_container>.step_childs .panel-body {
+	padding: 12px 0 10px 10px;
+}
+
+#wizard_container>.step_childs img {
+	width: 180px;
+	max-width: 100%;
+	max-height: 100px;
+}
+
+#wizard_container>.step_father .object_name,
+#wizard_container>.step_childs .object_name {
+	font-weight: bold;
+	color: white;
+	padding: 2px;
+	background-color: var(--al-info-color);
+}
+
+/*** PLUGINS ***/
+#wizard_container>#plugins {
+	min-height: 250px;
+}
+
+#wizard_container>#plugins>.plugin {
+	max-height: 50%;
+	min-width: 10%;
+	opacity: .5;
+	border: solid 3px var(--linkHover-color);
+	border-radius: var(--border-radius);
+	padding: 6px 0;
+}
+
+#wizard_container>#plugins>.plugin:hover {
+	opacity: 1;
+}
+
+#wizard_container>#plugins>.plugin.selected {
+	opacity: 1;
+	border: solid 3px var(--logo-primary-color);
+}
+
+#wizard_container>#plugins>.plugin.selected[data-installed="true"] {
+	border: solid 3px var(--al-info-color);
+}
+
+#wizard_container>#plugins>.plugin>img {
+	max-height: 95px;
+	max-width: 85%;
+}
+
+/*** NAVIGATION ***/
+#wizard_navigation {
+	margin: 15px auto;
+}
+
+#wizard_navigation>div {
+	margin: auto 10px;
+	min-width: 50px;
+}
+
+.navBtn,
+#bt_jeedom_ready {
+	font-size: 45px;
+	cursor: pointer !important;
+	color: #F18D15;
+}
+
+.navDot {
+	width: 25px;
+	height: 25px;
+	margin: 5px;
+	border-radius: 50%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	background-color: rgb(var(--contrast-color), .7);
+	user-select: none;
+}
+
+.navDot:hover,
+.navDot.active {
+	transform: scale(1.5);
+}
+
+.navDot.active {
+	margin: 0 10px;
+}
+
+.navDot.blocked {
+	opacity: .5;
+}
+
+
+
+/* 
+
+@media (max-width: 768px) {
+	#wizard_container {
+		height: auto;
+		grid-template-rows: auto auto auto auto auto;
+		padding: 10px;
+	}
+
+	#wizard_container>img {
+		max-width: 250px;
+		max-height: 150px;
+	}
+
+	#wizard_navigation {
+		flex-direction: row;
+		justify-content: center;
+		position: fixed;
+		bottom: 10px;
+		width: 100%;
+		padding-bottom: 10px;
+		background-color: rgba(var(--panel-bg-color), 0.9);
+	}
+
+	#wizard_navigation>div {
+		margin: 0 5px;
+	}
+
+	.navBtn,
+	#bt_jeedom_ready {
+		font-size: 30px;
+	}
+
+	.navDot {
+		width: 20px;
+		height: 20px;
+		margin: 3px;
+	}
+
+	.navDot:hover,
+	.navDot.active {
+		transform: scale(1.2);
+	}
+
+	#wizard_container>#updates>.update,
+	#wizard_container>#plugins>.plugin {
+		width: 70px;
+		height: auto;
+	}
+
+	#wizard_container>#updates>.update>img,
+	#wizard_container>#plugins>.plugin>img {
+		width: 60px;
+	}
+
+	#wizard_container>.services .service {
+		height: 150px;
+		max-width: 100%;
+	}
+} */
+
+
+
+/* TABLETS (portrait) */
+@media (max-width: 1024px) {
+	#div_mainContainer {
+		flex-direction: column;
+		padding: 10px;
+	}
+
+	#wizard_container {
+		height: auto;
+		grid-template-rows: auto auto auto auto auto;
+	}
+
+	#wizard_container>img,
+	#wizard_container>.logo {
+		max-width: 250px;
+		max-height: 180px;
+	}
+
+	#wizard_container .input-group {
+		width: 90%;
+	}
+
+	#wizard_container>#plugins>.plugin {
+		max-height: 120px;
+		min-width: 25%;
+	}
+}
+
+/* PHONES */
+@media (max-width: 768px) {
+  	#wizard_container .input-group {
+		width: 100%;
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	#wizard_container .input-group label {
+		display: block;
+		margin-bottom: 5px;
+		width: 100%;
+		text-align: left;
+		font-size: 14px;
+	}
+
+	#wizard_container .input-group select,
+	#wizard_container .input-group input,
+	#wizard_container .form-control {
+		width: 100%;
+		box-sizing: border-box;
+	}
+	#bt_quitJeeasyWizard {
+		top: 10px;
+		right: 10px;
+	}
+
+	#wizard_container {
+		padding: 10px;
+		grid-template-rows: auto auto auto auto auto;
+		text-align: center;
+	}
+
+	#wizard_container>img,
+	#wizard_container>.logo {
+		max-width: 200px;
+		max-height: 150px;
+	}
+
+	#wizard_container .form-control {
+		font-size: 16px;
+	}
+
+	#wizard_container>#plugins>.plugin {
+		min-width: 40%;
+		margin-bottom: 10px;
+	}
+
+	.navBtn,
+	#bt_jeedom_ready {
+		font-size: 30px;
+	}
+
+	.navDot {
+		width: 18px;
+		height: 18px;
+		margin: 3px;
+	}
+}
+
+
+

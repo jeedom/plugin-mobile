@@ -18,29 +18,29 @@
 
 require_once dirname(__FILE__) . "/../../../../core/php/core.inc.php";
 
-if(init('name') == null || init('key') == null){
-	die();
+if (init('name') == null || init('key') == null) {
+  die();
 }
 
 /* Variables */
 $keyFile = init('key');
 $nameFile = init('name');
-$file = dirname(__FILE__) .'/../../data/images/'.$nameFile;
+$file = dirname(__FILE__) . '/../../data/images/' . $nameFile;
 
 
-if(!file_exists($file)){
+if (!file_exists($file)) {
   echo "FILE NON EXISTE !";
-  	die(); 
+  die();
 }
 
 $nameMD5 = md5_file($file);
 
-if($nameMD5 != $keyFile){
+if ($nameMD5 != $keyFile) {
   echo "KEY NOK !";
   die();
 }
 //ob_clean();
-header('Content-Type: image/'.pathinfo($file, PATHINFO_EXTENSION));
-  echo file_get_contents($file);
+header('Content-Type: image/' . pathinfo($file, PATHINFO_EXTENSION));
+echo file_get_contents($file);
 
 //unlink($file);

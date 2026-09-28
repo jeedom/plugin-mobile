@@ -1329,7 +1329,7 @@ class mobile extends eqLogic
 			return 'internalError';
 		}
 		if ($externe == null || $externe == 'http://:80' || $externe == 'https://:80') {
-			return 'externalError';
+			$externe = null;
 		}
 		if ($this->getConfiguration('affect_user') == '') {
 			return 'UserError';
@@ -1370,7 +1370,7 @@ class mobile extends eqLogic
 			return 'internalError';
 		}
 		if ($externe == null || $externe == 'http://:80' || $externe == 'https://:80') {
-			return 'externalError';
+			$externe = null;
 		}
 		if (!is_object(user::byId($userId))) {
 			return 'UserError';

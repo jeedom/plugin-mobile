@@ -34,5 +34,29 @@ if (!isConnect()) {
 			</div>
 		</div>
 		</div>
+		<legend>
+			<i class="fas fa-map-marker-alt"></i> {{Logs de géolocalisation}}
+		</legend>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">{{Commande mail de réception}}
+				<sup><i class="fas fa-question-circle tooltips" title="{{Les apps en mode développeur ou bêta envoient chaque jour leur journal de géolocalisation à cette commande. Vide : envoi refusé.}}"></i></sup>
+			</label>
+			<div class="col-sm-5">
+				<div class="input-group">
+					<input class="configKey input-sm form-control" data-l1key="geolocLogMailCmd" />
+					<span class="input-group-btn">
+						<a class="btn btn-default btn-sm" id="bt_selectGeolocLogMailCmd"><i class="fas fa-list-alt"></i></a>
+					</span>
+				</div>
+			</div>
+		</div>
 	</fieldset>
 </form>
+<script>
+	$('#bt_selectGeolocLogMailCmd').on('click', function () {
+		var el = $(this).closest('.form-group').find('.configKey');
+		jeedom.cmd.getSelectModal({cmd: {type: 'action', subType: 'message'}}, function (result) {
+			el.value(result.human);
+		});
+	});
+</script>

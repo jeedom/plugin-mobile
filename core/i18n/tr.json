@@ -105,7 +105,6 @@
         "Aucune methode correspondante à : ": "Aşağıdakilere karşılık gelen bir yöntem yok:"
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {
-        "Les quotas pour fcm sont dépassés. Le maximum autorisé est de 5 requêtes par minute.": "Les quotas pour fcm sont dépassés. Le maximum autorisé est de 5 requêtes par minute",
         "Echec de l\\'envoi de la notification :": "Echec de l\\'envoi de la notification :",
         "Échec de l'envoi de notification : la version 1 de l'app n'est plus prise en charge !": "Échec de l'envoi de notification : la version 1 de l'app n'est plus prise en charge !",
         "Batterie du téléphone": "Batterie du téléphone",

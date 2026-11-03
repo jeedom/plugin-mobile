@@ -6,7 +6,7 @@
 
 # 03/11/2026
 
-- Les notifications refusées par le quota du service cloud sont mises en file d'attente et renvoyées automatiquement dans l'ordre, au lieu d'être perdues (les Asks expirés ne sont pas renvoyés)
+- Les notifications refusées par le quota du service cloud sont mises en file d'attente et renvoyées automatiquement dans l'ordre, au lieu d'être perdues (30 notifications maximum, abandonnées après 15 minutes ; les Asks expirés ne sont pas renvoyés)
 
 # 17/05/2026
 

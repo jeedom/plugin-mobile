@@ -870,12 +870,7 @@ class mobile extends eqLogic
 			log::add('mobile', 'debug', '|| [INFO] JSON sent in FCM mode ─▶︎ ' . json_encode($post));
 
 
-			$queued = mobile::withFcmQueue(function (&$queue) use ($post, $Iq) {
-				if (count($queue) == 0) return false;
-				$queue[] = mobile::buildFcmQueueItem($post, $Iq);
-				return true;
-			});
-			if ($queued) {
+			if (mobile::queueFcmNotification($post, $Iq, true)) {
 				log::add('mobile', 'debug', '|| [INFO] FCM queue not empty ─▶︎ notification ' . $idNotif . ' queued behind pending ones');
 				log::add('mobile', 'debug', '|└─────────────────────────────');
 				return;
@@ -902,10 +897,7 @@ class mobile extends eqLogic
 		}
 		if (!mobile::isCloudSuccess($result)) {
 			if (mobile::isQuotaError($result) && $token != null) {
-				mobile::withFcmQueue(function (&$queue) use ($post, $Iq) {
-					$queue[] = mobile::buildFcmQueueItem($post, $Iq);
-				});
-				log::add('mobile', 'warning', __('Quota de notifications atteint, la notification est mise en file d\'attente et sera renvoyée automatiquement', __FILE__) . ' ─▶︎ ' . $result['error']);
+				mobile::queueFcmNotification($post, $Iq);
 			} else {
 				throw new Exception(__('Echec de l\'envoi de la notification', __FILE__) . ' ─▶︎ ' . json_encode($result));
 			}
@@ -924,7 +916,8 @@ class mobile extends eqLogic
 	 * The cloud service accepts a limited number of FCM requests per minute.
 	 * Refused notifications are kept in a file queue and resent by the cron, in order.
 	 */
-	const FCM_QUEUE_MAX_AGE = 3600;
+	const FCM_QUEUE_MAX_AGE = 900;
+	const FCM_QUEUE_MAX_SIZE = 30;
 	const FCM_QUEUE_MAX_ATTEMPTS = 3;
 	const FCM_QUEUE_MAX_SEND_PER_RUN = 20;
 
@@ -988,6 +981,32 @@ class mobile extends eqLogic
 			fclose($fp);
 		}
 		return $return;
+	}
+
+	/**
+	 * Add a notification at the end of the queue, unless the queue is full (the notification is then dropped).
+	 * @param bool $onlyIfPending queue only when other notifications are already waiting
+	 * @return bool true if the notification was handled by the queue (queued or dropped), false if it must be sent now
+	 */
+	public static function queueFcmNotification($post, $Iq, $onlyIfPending = false)
+	{
+		$status = mobile::withFcmQueue(function (&$queue) use ($post, $Iq, $onlyIfPending) {
+			if ($onlyIfPending && count($queue) == 0) return 'notQueued';
+			if (count($queue) >= self::FCM_QUEUE_MAX_SIZE) return 'full';
+			$queue[] = mobile::buildFcmQueueItem($post, $Iq);
+			return 'queued';
+		});
+		$title = $post['message']['data']['title'] ?? '';
+		if ($status == 'queued') {
+			log::add('mobile', 'warning', __('Quota de notifications atteint, la notification est mise en file d\'attente et sera renvoyée automatiquement', __FILE__) . ' ─▶︎ ' . $title);
+			return true;
+		}
+		if ($status == 'full') {
+			log::add('mobile', 'warning', __('File d\'attente des notifications pleine, notification abandonnée', __FILE__) . ' ─▶︎ ' . $title);
+			message::add(__CLASS__, __('Trop de notifications envoyées en peu de temps, certaines ont été abandonnées. Regroupez les notifications de vos scénarios.', __FILE__), '', 'fcmQueueFull');
+			return true;
+		}
+		return false;
 	}
 
 	/**

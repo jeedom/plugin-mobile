@@ -120,7 +120,9 @@
         "Supprimer les Asks répondus": "Delete answered Asks",
         "Quota de notifications atteint, la notification est mise en file d'attente et sera renvoyée automatiquement": "Notification quota reached, the notification is queued and will be resent automatically",
         "Impossible d'ouvrir la file d'attente des notifications": "Unable to open the notification queue",
-        "Notification en file d'attente expirée, elle ne sera pas envoyée": "Queued notification expired, it will not be sent"
+        "Notification en file d'attente expirée, elle ne sera pas envoyée": "Queued notification expired, it will not be sent",
+        "File d'attente des notifications pleine, notification abandonnée": "Notification queue full, notification dropped",
+        "Trop de notifications envoyées en peu de temps, certaines ont été abandonnées. Regroupez les notifications de vos scénarios.": "Too many notifications sent in a short time, some were dropped. Group the notifications of your scenarios."
     },
     "plugins\/mobile\/core\/template\/widgets.html": {
         "Couleur de l'indicateur de valeur": "Value indicator color",

@@ -41,6 +41,11 @@ class mobile extends eqLogic
 		return ['data/images'];
 	}
 
+	public static function cron()
+	{
+		mobile::flushFcmQueue();
+	}
+
 	/**
 	 * cron callback
 	 * clean notification V2
@@ -863,6 +868,13 @@ class mobile extends eqLogic
 
 			$post = ['message' => $publish, 'options' => $options];
 			log::add('mobile', 'debug', '|| [INFO] JSON sent in FCM mode ─▶︎ ' . json_encode($post));
+
+
+			if (mobile::queueFcmNotification($post, $Iq, true)) {
+				log::add('mobile', 'debug', '|| [INFO] FCM queue not empty ─▶︎ notification ' . $idNotif . ' queued behind pending ones');
+				log::add('mobile', 'debug', '|└─────────────────────────────');
+				return;
+			}
 		} elseif ($token == null && $version == 2) {
 			log::add('mobile', 'debug', '|| [ERROR] NOTIFICATION NOT SENT ─▶︎ No token registered on the phone');
 			message::add(__CLASS__, __('Echec de l\'envoi de la notification', __FILE__) . ' ─▶︎ ' . __('pas de token enregistré sur le téléphone', __FILE__), 'noValidTok', 'noValidToken');
@@ -876,24 +888,16 @@ class mobile extends eqLogic
 			$url = config::byKey('service::cloud::url', 'core', 'https://cloud.jeedom.com') . '/service/notif';
 		}
 
-		$request_http = new com_http($url);
-		$request_http->setHeader(array(
-			'Content-Type: application/json',
-			'Autorization: ' . sha512(strtolower(config::byKey('market::username')) . ':' . config::byKey('market::password'))
-		));
-		//$request_http->setLogError(true);
-		$request_http->setPost(json_encode($post));
-		$result = json_decode($request_http->exec(30, 3), true);
-		if (!isset($result['state']) || $result['state'] != 'ok') {
+		$result = mobile::sendToCloud($url, $post);
+		if (!mobile::isCloudSuccess($result) && !mobile::isQuotaError($result)) {
 			log::add('mobile', 'debug', '|| [WARNING] First attempt to send notification failed.');
 			log::add('mobile', 'debug', '|| New attempt ....');
 			sleep(rand(1, 10));
-			$result = json_decode($request_http->exec(30, 3), true);
+			$result = mobile::sendToCloud($url, $post);
 		}
-		if (!isset($result['state']) || $result['state'] != 'ok') {
-			if (isset($result['error']) && strpos($result['error'], 'Quotas exceeded') !== false) {
-				log::add('mobile', 'error', __("Les quotas pour fcm sont dépassés. Le maximum autorisé est de 5 requêtes par minute.", __FILE__));
-				log::add('mobile', 'debug', __('Echec de l\'envoi de la notification', __FILE__) . ' ─▶︎ ' . json_encode($result));
+		if (!mobile::isCloudSuccess($result)) {
+			if (mobile::isQuotaError($result) && $token != null) {
+				mobile::queueFcmNotification($post, $Iq);
 			} else {
 				throw new Exception(__('Echec de l\'envoi de la notification', __FILE__) . ' ─▶︎ ' . json_encode($result));
 			}
@@ -902,6 +906,209 @@ class mobile extends eqLogic
 		//log::add('mobile', 'error', __('Echec de l\'envoi de la notification', __FILE__) . ' ─▶︎ ' . __('la version 1 de l\'app n\'est plus prise en charge', __FILE__));
 		//}
 		log::add('mobile', 'debug', '|└─────────────────────────────');
+	}
+
+	/*****************************************************/
+	/*************** FCM QUOTA QUEUE *********************/
+	/*****************************************************/
+
+	/**
+	 * The cloud service accepts a limited number of FCM requests per minute.
+	 * Refused notifications are kept in a file queue and resent by the cron, in order.
+	 */
+	const FCM_QUEUE_MAX_AGE = 900;
+	const FCM_QUEUE_MAX_SIZE = 30;
+	const FCM_QUEUE_MAX_ATTEMPTS = 3;
+	const FCM_QUEUE_MAX_SEND_PER_RUN = 20;
+
+	/**
+	 * Post a payload to the Jeedom cloud notification service
+	 * @return array|null decoded answer
+	 */
+	public static function sendToCloud($url, $post)
+	{
+		$request_http = new com_http($url);
+		$request_http->setHeader(array(
+			'Content-Type: application/json',
+			'Autorization: ' . sha512(strtolower(config::byKey('market::username')) . ':' . config::byKey('market::password'))
+		));
+		$request_http->setPost(json_encode($post));
+		return json_decode($request_http->exec(30, 3), true);
+	}
+
+	public static function isCloudSuccess($result)
+	{
+		return isset($result['state']) && $result['state'] == 'ok';
+	}
+
+	public static function isQuotaError($result)
+	{
+		return isset($result['error']) && strpos($result['error'], 'Quotas exceeded') !== false;
+	}
+
+	public static function getFcmQueuePath()
+	{
+		return dirname(__FILE__) . '/../data/fcmQueue.json';
+	}
+
+	/**
+	 * Run $callback(&$queue) under an exclusive lock: several scenarios and the cron
+	 * can touch the queue at the same time and must not overwrite each other.
+	 * @return mixed value returned by the callback
+	 */
+	public static function withFcmQueue(callable $callback)
+	{
+		$path = mobile::getFcmQueuePath();
+		if (!is_dir(dirname($path))) {
+			mkdir(dirname($path), 0775, true);
+		}
+		$fp = fopen($path, 'c+');
+		if ($fp === false) {
+			log::add('mobile', 'error', __('Impossible d\'ouvrir la file d\'attente des notifications', __FILE__) . ' ─▶︎ ' . $path);
+			return null;
+		}
+		flock($fp, LOCK_EX);
+		$queue = json_decode(stream_get_contents($fp), true);
+		if (!is_array($queue)) $queue = [];
+		try {
+			$return = $callback($queue);
+		} finally {
+			ftruncate($fp, 0);
+			rewind($fp);
+			fwrite($fp, json_encode(array_values($queue)));
+			fflush($fp);
+			flock($fp, LOCK_UN);
+			fclose($fp);
+		}
+		return $return;
+	}
+
+	/**
+	 * Add a notification at the end of the queue, unless the queue is full (the notification is then dropped).
+	 * @param bool $onlyIfPending queue only when other notifications are already waiting
+	 * @return bool true if the notification was handled by the queue (queued or dropped), false if it must be sent now
+	 */
+	public static function queueFcmNotification($post, $Iq, $onlyIfPending = false)
+	{
+		$status = mobile::withFcmQueue(function (&$queue) use ($post, $Iq, $onlyIfPending) {
+			if ($onlyIfPending && count($queue) == 0) return 'notQueued';
+			if (count($queue) >= self::FCM_QUEUE_MAX_SIZE) return 'full';
+			$queue[] = mobile::buildFcmQueueItem($post, $Iq);
+			return 'queued';
+		});
+		$title = $post['message']['data']['title'] ?? '';
+		if ($status == 'queued') {
+			log::add('mobile', 'warning', __('Quota de notifications atteint, la notification est mise en file d\'attente et sera renvoyée automatiquement', __FILE__) . ' ─▶︎ ' . $title);
+			return true;
+		}
+		if ($status == 'full') {
+			log::add('mobile', 'warning', __('File d\'attente des notifications pleine, notification abandonnée', __FILE__) . ' ─▶︎ ' . $title);
+			message::add(__CLASS__, __('Trop de notifications envoyées en peu de temps, certaines ont été abandonnées. Regroupez les notifications de vos scénarios.', __FILE__), '', 'fcmQueueFull');
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * An ask must not be delivered after its timeout: the scenario is no longer waiting for the answer.
+	 */
+	public static function buildFcmQueueItem($post, $Iq)
+	{
+		$expire = time() + self::FCM_QUEUE_MAX_AGE;
+		$askExpire = null;
+		$askParams = isset($post['message']['data']['askParams']) ? json_decode($post['message']['data']['askParams'], true) : null;
+		if (is_array($askParams) && isset($askParams['timeout']) && $askParams['timeout'] > 0) {
+			$askExpire = time() + intdiv((int) $askParams['timeout'], 1000);
+			$expire = min($expire, $askExpire);
+		}
+		return [
+			'id' => uniqid('', true),
+			'Iq' => $Iq,
+			'queuedAt' => time(),
+			'expire' => $expire,
+			'askExpire' => $askExpire,
+			'attempts' => 0,
+			'post' => $post
+		];
+	}
+
+	/**
+	 * The ask timeout sent to the app is relative, so it must be shortened by the time spent in the queue.
+	 */
+	private static function refreshAskTimeout($item)
+	{
+		if ($item['askExpire'] === null) return $item['post'];
+		$post = $item['post'];
+		$remainingMs = max(0, $item['askExpire'] - time()) * 1000;
+		foreach (['data', 'android'] as $key) {
+			$data = ($key == 'data') ? ($post['message']['data'] ?? null) : ($post['message']['android']['data'] ?? null);
+			if (!isset($data['askParams'])) continue;
+			$askParams = json_decode($data['askParams'], true);
+			if (!is_array($askParams)) continue;
+			$askParams['timeout'] = $remainingMs;
+			if ($key == 'data') {
+				$post['message']['data']['askParams'] = json_encode($askParams);
+			} else {
+				$post['message']['android']['data']['askParams'] = json_encode($askParams);
+			}
+		}
+		return $post;
+	}
+
+	/**
+	 * Resend queued notifications, oldest first, until the queue is empty or the quota is reached again.
+	 * Items are removed one by one so that notifications arriving meanwhile stay behind them.
+	 */
+	public static function flushFcmQueue()
+	{
+		if (!file_exists(mobile::getFcmQueuePath())) return;
+		// Prevents two overlapping cron runs from sending the same notification twice
+		$runLock = fopen(mobile::getFcmQueuePath() . '.lock', 'c');
+		if ($runLock === false || !flock($runLock, LOCK_EX | LOCK_NB)) return;
+
+		$url = config::byKey('service::cloud::url', 'core', 'https://cloud.jeedom.com') . '/service/fcm';
+		try {
+			for ($i = 0; $i < self::FCM_QUEUE_MAX_SEND_PER_RUN; $i++) {
+				$item = mobile::withFcmQueue(function (&$queue) {
+					foreach ($queue as $index => $queued) {
+						if ($queued['expire'] < time()) {
+							log::add('mobile', 'warning', __('Notification en file d\'attente expirée, elle ne sera pas envoyée', __FILE__) . ' ─▶︎ ' . ($queued['post']['message']['data']['title'] ?? '') . ' (' . date('Y-m-d H:i:s', $queued['queuedAt']) . ')');
+							unset($queue[$index]);
+						}
+					}
+					$queue = array_values($queue);
+					return $queue[0] ?? null;
+				});
+				if ($item === null) break;
+
+				$result = mobile::sendToCloud($url, mobile::refreshAskTimeout($item));
+				if (mobile::isQuotaError($result)) {
+					log::add('mobile', 'debug', '[FCM queue] Quota still reached, ' . $item['id'] . ' kept for next run');
+					break;
+				}
+				$success = mobile::isCloudSuccess($result);
+				mobile::withFcmQueue(function (&$queue) use ($item, $success, $result) {
+					foreach ($queue as $index => $queued) {
+						if ($queued['id'] != $item['id']) continue;
+						if ($success) {
+							unset($queue[$index]);
+						} elseif (++$queue[$index]['attempts'] >= self::FCM_QUEUE_MAX_ATTEMPTS) {
+							log::add('mobile', 'error', __('Echec de l\'envoi de la notification', __FILE__) . ' ─▶︎ ' . json_encode($result));
+							unset($queue[$index]);
+						}
+						break;
+					}
+				});
+				if ($success) {
+					log::add('mobile', 'debug', '[FCM queue] Notification ' . $item['id'] . ' sent after ' . (time() - $item['queuedAt']) . 's in queue');
+				} else {
+					break;
+				}
+			}
+		} finally {
+			flock($runLock, LOCK_UN);
+			fclose($runLock);
+		}
 	}
 
 	/*****************************************************/
@@ -1329,7 +1536,7 @@ class mobile extends eqLogic
 			return 'internalError';
 		}
 		if ($externe == null || $externe == 'http://:80' || $externe == 'https://:80') {
-			return 'externalError';
+			$externe = null;
 		}
 		if ($this->getConfiguration('affect_user') == '') {
 			return 'UserError';
@@ -1370,7 +1577,7 @@ class mobile extends eqLogic
 			return 'internalError';
 		}
 		if ($externe == null || $externe == 'http://:80' || $externe == 'https://:80') {
-			return 'externalError';
+			$externe = null;
 		}
 		if (!is_object(user::byId($userId))) {
 			return 'UserError';

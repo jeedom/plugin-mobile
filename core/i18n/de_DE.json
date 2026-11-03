@@ -105,7 +105,6 @@
         "Aucune methode correspondante à : ": "Keine Methode entsprechend:"
     },
     "plugins\/mobile\/core\/class\/mobile.class.php": {
-        "Les quotas pour fcm sont dépassés. Le maximum autorisé est de 5 requêtes par minute.": "Die Kontingente für fcm sind überschritten. Es sind maximal 5 Anfragen pro Minute zulässig",
         "Echec de l\\'envoi de la notification :": "Benachrichtigung konnte nicht gesendet werden:",
         "Échec de l'envoi de notification : la version 1 de l'app n'est plus prise en charge !": "Benachrichtigung konnte nicht gesendet werden: Version 1 der App wird nicht mehr unterstützt!",
         "Batterie du téléphone": "Telefonbatterie",
